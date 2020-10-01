@@ -28,8 +28,8 @@
 #include "StringBuilder.hpp"
 #include "exceptions/StrangerAutomatonException.hpp"
 #include "RegExp.hpp"
-#include "stranger_lib_internal.h"
-#include "stranger.h"
+#include "stranger/stranger_lib_internal.h"
+#include "stranger/stranger.h"
 
 #include <stdexcept>
 #include <vector>

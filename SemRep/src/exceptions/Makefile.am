@@ -1,1 +1,2 @@
-semrep_SOURCES = StrangerAutomatonException.cpp  UnsupportedRegexException.cpp
+noinst_LIBRARIES = libexceptions.a
+libexceptions_a_SOURCES = StrangerAutomatonException.cpp  UnsupportedRegexException.cpp
