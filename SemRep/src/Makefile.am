@@ -5,13 +5,13 @@ libsemrep_a_SOURCES = ImageComputer.cpp  PerfInfo.cpp  RegExp.cpp  SemRepair.cpp
 bin_PROGRAMS = semrep
 semrep_SOURCES = main.cpp
 semrep_LDADD = libsemrep.a \
-               $(STRANGERLIB) \
+               depgraph/libdepgraph.a \
+               exceptions/libexceptions.a \
                $(MONADFALIB) \
                $(MONABDDLIB) \
-               $(BOOST_REGEX_LIB) \
+               $(STRANGERLIB) \
                $(BOOST_IO_STREAMS_LIB) \
                $(BOOST_PROGRAM_OPTIONS_LIB) \
                $(BOOST_FILESYSTEM_LIB) \
                $(BOOST_SYSTEM_LIB) \
-               depgraph/libdepgraph.a \
-               exceptions/libexceptions.a
+               $(BOOST_REGEX_LIB)
