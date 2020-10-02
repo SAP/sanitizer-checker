@@ -21,8 +21,14 @@ MinCut/bin/*
 *.exe
 *.out
 *.app
-SemRep/Debug/SemRep
+SemRep/src/semrep
 
 *.d
 *.launch
 console_output
+
+# Editor files
+*~
+\#*\#
+.\#*
+
