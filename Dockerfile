@@ -1,3 +1,19 @@
+# Build and run the development environment:
+#
+# docker build --target semrep-dev -t semrep-dev .
+#
+# And the run with:
+#
+# docker run -it --rm -v /mnt/workspace/stranger/SemRep:/work/SemRep --entrypoint="/bin/bash" semrep-dev
+#
+# To build the command line container:
+#
+# docker build -t semrep .
+#
+# And run with:
+#
+# docker run -it --rm semrep
+#
 FROM ubuntu:latest as semrep-dev
 
 RUN apt-get update &&    \
@@ -28,11 +44,6 @@ WORKDIR /work/SemRep
 
 # The MONA header defines an function called export, which is a C++ keyword
 RUN sed -i '1i#define export _export_' /usr/local/include/mona/bdd_external.h
-
-# Build and run the development environment:
-# docker build -t semrep .
-# docker run -it --rm -v /mnt/workspace/stranger/SemRep:/work/SemRep --entrypoint="/bin/bash" semrep
-
 
 FROM semrep-dev as semrep
 
