@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:latest as semrep-dev
 
 RUN apt-get update &&    \
     DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
@@ -15,6 +15,7 @@ RUN git clone https://github.com/cs-au-dk/MONA.git . && \
     make -j && make install && \
     cp BDD/bdd_external.h /usr/local/include/mona && \
     cp BDD/bdd_dump.h /usr/local/include/mona 
+
 WORKDIR /work/LibStranger
 
 RUN git clone https://github.com/vlab-cs-ucsb/LibStranger.git . && \
@@ -25,9 +26,26 @@ RUN git clone https://github.com/vlab-cs-ucsb/LibStranger.git . && \
 
 WORKDIR /work/SemRep
 
+# The MONA header defines an function called export, which is a C++ keyword
 RUN sed -i '1i#define export _export_' /usr/local/include/mona/bdd_external.h
 
-
+# Build and run the development environment:
 # docker build -t semrep .
 # docker run -it --rm -v /mnt/workspace/stranger/SemRep:/work/SemRep --entrypoint="/bin/bash" semrep
 
+
+FROM semrep-dev as semrep
+
+WORKDIR /work/SemRep
+
+COPY . .
+
+WORKDIR /work/SemRep/SemRep
+
+RUN autoreconf -f -i && \
+    ./configure && \
+    make clean && make -j
+
+ENV LD_LIBRARY_PATH /usr/local/lib
+
+ENTRYPOINT ["/work/SemRep/SemRep/src/semrep"]
