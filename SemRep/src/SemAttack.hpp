@@ -38,16 +38,14 @@ public:
     virtual ~SemAttack();
 
     StrangerAutomaton* computeValidationPatch();
-    StrangerAutomaton* computeSanitizationPatch();
+    StrangerAutomaton* computeAttackPatternOverlap();
 
-    StrangerAutomaton* computeReferenceFWAnalysis();
-    AnalysisResult computeTargetFWAnalysis();
+    StrangerAutomaton* computeTargetFWAnalysis();
+
     StrangerAutomaton* computeTargetLengthPatch(StrangerAutomaton* initialAuto, AnalysisResult& fwAnalysisResult);
     StrangerAutomaton* computeTargetSanitizationPatch(StrangerAutomaton* initialAuto, const AnalysisResult& fwAnalysisResult);
 
-    StrangerAutomaton* getValidationPatchAuto() { return validation_patch_auto; }
-    StrangerAutomaton* getLengthPatchAuto() { return length_patch_auto; }
-    StrangerAutomaton* getSanitizationPatchAuto() { return sanitization_patch_auto; }
+    StrangerAutomaton* getTargetAuto() { return target_sink_auto; }
 
     void testNewFunctions();
 
@@ -73,11 +71,7 @@ private:
     DepGraphNode* reference_uninit_field_node;
     DepGraphNode* target_uninit_field_node;
 
-    StrangerAutomaton* reference_sink_auto;
-
-    StrangerAutomaton* length_patch_auto;
-    StrangerAutomaton* validation_patch_auto;
-    StrangerAutomaton* sanitization_patch_auto;
+    StrangerAutomaton* target_sink_auto;
 
     void message(string msg);
     string generateOutputFilePath(string folder_name, bool unique_name);
