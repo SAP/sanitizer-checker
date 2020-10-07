@@ -268,7 +268,7 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
         string inputLine;
         while (ifs.good()) {
             getline(ifs, inputLine);
-//            cout << "\t parsing : " << inputLine << endl;
+            cout << "\t parsing : " << inputLine << endl;
             if (boost::regex_match(inputLine, sm, regxNode)){
 
                 //process node
@@ -295,7 +295,7 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
                         depGraph.addNode(node);
                     }else if (boost::regex_match(nodeLabel, sm, regxNodeLit)){
 						litValue = sm[1];
-//						cout << "litval original" << litValue << endl;
+						cout << "litval original:  " << litValue << endl;
 						//if we are not parsing a regular expression then remove escaping
 						//surprisingly, dot special chars (\,") are also special to our
 						// regular expression engine
@@ -309,7 +309,7 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
 							litValue = boost::regex_replace(litValue, bsBs, newStr);
 //							cout << "litval" << litValue << endl;
                         }
-//						cout << "result litval:  " << litValue << endl << endl;
+						cout << "result litval:  " << litValue << endl;
                         TacPlace* place = new Literal(litValue);
                         node = new DepGraphNormalNode("noFile", -1, nodeID, -1, -1, place);
                         depGraph.addNode(node);
@@ -317,7 +317,7 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
                         opName = sm[1];
                         node = new DepGraphOpNode("noFile", -1, nodeID, -1, -1, opName, false);
                         depGraph.addNode(node);
-
+                        cout << "Op: " << opName << endl;
                     }
                     else {
                         throw invalid_argument("error parsing the dependency graph dot file. Can not parse node label (type)");
@@ -337,6 +337,7 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
                 DepGraphNode* fromNode = depGraph.getNode(fromNodeID);
                 DepGraphNode* toNode = depGraph.getNode(toNodeID);
                 depGraph.addEdge(fromNode, toNode);
+                cout << "Found edge: " << fromNodeID << "(" << fromNode << ") --> " << toNodeID << "(" << toNode << ")" << endl;
             }
         }
         ifs.close();

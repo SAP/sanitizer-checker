@@ -1,0 +1,16 @@
+digraph cfg {
+  n1 [shape=doubleoctagon, label="Return: x"];
+  n2 [shape=box, label="Var: x"];
+  n3 [shape=ellipse, label="preg_replace"];
+  n4 [shape=box, label="Lit: /</"];
+  n5 [shape=box, label="Lit: "];
+  n6 [shape=box, label="Var: x"];
+  n7 [shape=house, label="Input: x"];
+
+  n3 -> n4;
+  n3 -> n5;
+  n3 -> n6;
+  n2 -> n3;
+  n1 -> n2;
+  n6 -> n7;
+}

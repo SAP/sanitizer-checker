@@ -2530,10 +2530,11 @@ StrangerAutomaton* StrangerAutomaton::getUndesiredXSSTest()
 {
     //
     //    StrangerAutomaton* autoKleensStar = StrangerAutomaton::makeAnyString(int32_t(1));
-    //    StrangerAutomaton* retMe = regExToAuto("/.*\\<SCRIPT .*\\>.*/", true, int32_t(0));
-    //    return retMe;
-	throw new std::runtime_error("not implemented");
-    
+//    StrangerAutomaton* retMe = regExToAuto("/.*\\<SCRIPT .*\\>.*/", true, int32_t(0));
+    StrangerAutomaton* retMe = regExToAuto("/.*[<>'\"&].*/", true, int32_t(0));
+//    StrangerAutomaton* retMe = regExToAuto("/.*<.*/", true, int32_t(0));
+    return retMe;
+
 }
 
 StrangerAutomaton* StrangerAutomaton::getUndesiredMFETest()

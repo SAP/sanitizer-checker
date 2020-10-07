@@ -45,13 +45,8 @@ SemAttack::SemAttack(string target_dep_graph_file_name, string input_field_name)
     // initialize input relevant graphs
     this->target_field_relevant_graph = target_dep_graph.getInputRelevantGraph(target_uninit_field_node);
 
-    if (DEBUG_ENABLED_INIT != 0) {
-        DEBUG_MESSAGE("------------ Debugging Initalization ------------");
-        DEBUG_MESSAGE("Target Dependency Graph");
-        this->target_dep_graph.toDot();
-        DEBUG_MESSAGE("Target Field Relevant Dependency Graph");
-        this->target_field_relevant_graph.toDot();
-    }
+    message(this->target_dep_graph.toDot());
+    message(this->target_field_relevant_graph.toDot());
 
     ImageComputer::perfInfo = &SemAttack::perfInfo;
     ImageComputer::staticInit();
@@ -197,6 +192,19 @@ StrangerAutomaton* SemAttack::computeAttackPatternOverlap() {
 		DEBUG_MESSAGE("Target Sink Auto - First forward analysis");
 		DEBUG_AUTO(targetSinkAuto);
 	}
+
+        StrangerAutomaton* xss = StrangerAutomaton::getUndesiredXSSTest();
+        StrangerAutomaton* intersection = targetSinkAuto->intersect(xss);
+
+        targetSinkAuto->toDotAscii(1);
+        xss->toDotAscii(1);
+        intersection->toDotAscii(1);
+        
+        if (intersection->isEmpty()) {
+            message("No intersection, validation function is good!");
+        } else {
+            message("Intersection between attack pattern and sanitizer!");
+        }
         return targetSinkAuto;
 }
 

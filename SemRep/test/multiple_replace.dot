@@ -1,0 +1,58 @@
+digraph cfg {
+  n1 [shape=doubleoctagon, label="Return: x"];
+  n2 [shape=box, label="Var: x"];
+  n3 [shape=ellipse, label="preg_replace"];
+  n4 [shape=box, label="Lit: /</"];
+  n5 [shape=box, label="Lit: "];
+  n6 [shape=box, label="Var: x"];
+  n7 [shape=ellipse, label="preg_replace"];
+  n8 [shape=box, label="Lit: />/"];
+  n9 [shape=box, label="Lit: "];
+  n10 [shape=box, label="Var: x"];
+  n11 [shape=ellipse, label="preg_replace"];
+  n12 [shape=box, label="Lit: /'/"];
+  n13 [shape=box, label="Lit: "];
+  n14 [shape=box, label="Var: x"];
+  n15 [shape=ellipse, label="preg_replace"];
+  n16 [shape=box, label="Lit: /\"/"];
+  n17 [shape=box, label="Lit: "];
+  n18 [shape=box, label="Var: x"];
+  n19 [shape=ellipse, label="preg_replace"];
+  n20 [shape=box, label="Lit: /&/"];
+  n21 [shape=box, label="Lit: "];
+  n22 [shape=box, label="Var: x"];
+  n23 [shape=house, label="Input: x"];
+  
+  n22 -> n23;
+
+  n19 -> n20;
+  n19 -> n21;
+  n19 -> n22;
+
+  n18 -> n19;
+
+  n15 -> n16;
+  n15 -> n17;
+  n15 -> n18;
+
+  n14 -> n15;
+
+  n11 -> n12;
+  n11 -> n13;
+  n11 -> n14;
+
+  n10 -> n11;
+
+  n7 -> n8;
+  n7 -> n9;
+  n7 -> n10;
+
+  n6 -> n7;
+
+  n3 -> n4;
+  n3 -> n5;
+  n3 -> n6;
+
+  n2 -> n3;
+  n1 -> n2;
+}

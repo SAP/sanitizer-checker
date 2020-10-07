@@ -1,5 +1,8 @@
 # Build and run the development environment:
 #
+# First set your github root:
+ARG gitremote=https://github.wdf.sap.corp/i505600/
+#
 # docker build --target semrep-dev -t semrep-dev .
 #
 # And the run with:
@@ -34,7 +37,7 @@ WORKDIR /work/MONA
 
 
 #  https://github.com/cs-au-dk/MONA.git
-RUN GIT_SSL_NO_VERIFY=true git clone https://github.wdf.sap.corp/i505600/mona.git . && \
+RUN GIT_SSL_NO_VERIFY=true git clone $gitremote/mona.git . && \
     autoreconf -f -i && \
     ./configure 'CFLAGS=-O0 -g' && \
     make -j && make install && \

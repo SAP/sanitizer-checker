@@ -1,3 +1,35 @@
+SemAttack
+========
+SemAttack is a version of SemRep for comparing attack patterns with sanitization functions.
+
+Building
+---------
+To build the development container, use Docker:
+```bash
+$> docker build --buildarg gitremote=GIT_REMOTE --target semrep-dev -t semrep-dev .
+$> docker run -it --rm -v /mnt/workspace/stranger/SemRep:/work/SemRep --entrypoint="/bin/bash" semrep-dev
+$> cd SemRep
+$> autoreconf -i -f
+&> ./configure
+&> make -j
+```
+where GIT_REMOTE is the git remote of MONA, SemRep and LibStranger.
+
+Running tests
+---------
+Get a shell in the docker container:
+```bash
+$> docker run -it --rm -v /mnt/workspace/stranger/SemRep:/work/SemRep --entrypoint="/bin/bash" semrep-dev
+```
+SemAttack compares a dot file to the XSS attack pattern (currently hard-coded in StrangerAutomaton.cpp:getUndesiredXSSTest()).
+```bash
+$> export LD_LIBRARY_PATH=/usr/local/lib
+$> cd test
+$> ../src/semattack --fieldname x --target single_replace.dot
+```
+will compare with a sanitization funtion that contains a single replace operation.
+
+
 SemRep
 =========
 SemRep is Semantic Differential Repair tool for input validation and sanitization code. The tool analyzes and repairs validation and sanitization functions against each other. The tool does not need any manual specification or intervention. It takes two functions as Dependency Graphs then it looks for differences in validation and sanitization operations for string variables. If a difference is found, the tool suggests a set of three patch functions that can be used to fix the difference.
