@@ -1,0 +1,26 @@
+# Autoconf stuff
+Makefile
+Makefile.in
+aclocal.m4
+ar-lib
+autom4te.cache
+compile
+config.guess
+config.log
+config.status
+config.sub
+configure
+depcomp
+install-sh
+missing
+.deps
+
+# Binaries
+src/semattack
+src/semrep
+
+# Clang tooling
+.clang-tidy
+compile_commands.commands.json
+compile_commands.json
+.clangd
