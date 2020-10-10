@@ -204,7 +204,13 @@ StrangerAutomaton* SemAttack::computeAttackPatternOverlap() {
             message("No intersection, validation function is good!");
         } else {
             message("Intersection between attack pattern and sanitizer!");
+            message(intersection->generateSatisfyingExample());
         }
+
+        delete xss;
+        delete targetSinkAuto;
+        delete intersection;
+
         return targetSinkAuto;
 }
 
