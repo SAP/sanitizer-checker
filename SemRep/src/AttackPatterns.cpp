@@ -63,7 +63,7 @@ StrangerAutomaton* AttackPatterns::getJavascriptPattern()
 StrangerAutomaton* AttackPatterns::getUrlPattern()
 {
     // Only allow alphanumeric, "-", "_", "." "~" and URL escaped characters
-    return getAttackPatternFromAllowedRegEx("/([a-zA-Z0-9-_.~]+|((%[a-fA-F0-9]{2})))+/");
+    return getAttackPatternFromAllowedRegEx("/([a-zA-Z0-9-_.!~*'()]+|((%[a-fA-F0-9]{2})))+/");
 }
 
 StrangerAutomaton* AttackPatterns::getUndesiredSQLTest()
