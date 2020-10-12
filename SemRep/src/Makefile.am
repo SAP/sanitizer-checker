@@ -1,6 +1,13 @@
 SUBDIRS = depgraph exceptions
 noinst_LIBRARIES = libsemrep.a
-libsemrep_a_SOURCES = ImageComputer.cpp  PerfInfo.cpp  RegExp.cpp  SemRepair.cpp  SemRepairDebugger.cpp  StrangerAutomaton.cpp SemAttack.cpp
+libsemrep_a_SOURCES = ImageComputer.cpp \
+                      PerfInfo.cpp \
+                      RegExp.cpp \
+                      SemRepair.cpp \
+                      SemRepairDebugger.cpp \
+                      StrangerAutomaton.cpp \
+                      SemAttack.cpp \
+                      AttackPatterns.cpp
 
 bin_PROGRAMS = semrep semattack
 

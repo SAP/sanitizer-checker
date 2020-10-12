@@ -195,9 +195,6 @@ public:
     static StrangerAutomaton* pre_mysql_real_escape_string(StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* nl2br(StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* pre_nl2br(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* getUndesiredSQLTest();
-    static StrangerAutomaton* getUndesiredXSSTest();
-    static StrangerAutomaton* getUndesiredMFETest();
 //    std::set<char> mincut();
 
     void printAutomaton();

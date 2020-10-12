@@ -2514,45 +2514,6 @@ StrangerAutomaton* StrangerAutomaton::pre_nl2br(StrangerAutomaton* subjectAuto, 
     
 }
 
-StrangerAutomaton* StrangerAutomaton::getUndesiredSQLTest()
-{
-    
-    //    debug("Building automaton for SQL vulnerabilities");
-    //    debug("----------------------------------------");
-    //    StrangerAutomaton* autoAttackPattern = regExToAuto("/.*'or 1=1'.*/", true, int32_t(0));
-    //    debug("----------------------------------------");
-    //    return autoAttackPattern;
-	throw new std::runtime_error("not implemented");
-    
-}
-
-StrangerAutomaton* StrangerAutomaton::getUndesiredXSSTest()
-{
-//    StrangerAutomaton* autoKleensStar = StrangerAutomaton::makeAnyString(int32_t(1));
-//    StrangerAutomaton* retMe = regExToAuto("/.*\\<SCRIPT .*\\>.*/", true, int32_t(0));
-//    StrangerAutomaton* retMe = regExToAuto("/.*[<>'\"&].*/", true, int32_t(0));
-
-    // Allowed characters in innerHTML
-    StrangerAutomaton* retMe = regExToAuto("/([^<>'\"&\\/]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/");
-    // Also accept the empty string
-    StrangerAutomaton* retMeEmpty = retMe->unionWithEmptyString();
-    delete retMe;
-    // Take the complement to generate strings which are not allowed
-    StrangerAutomaton* complement = retMeEmpty->complement(int32_t(0));
-    delete retMeEmpty;
-    return complement;
-}
-
-StrangerAutomaton* StrangerAutomaton::getUndesiredMFETest()
-{
-    
-    //    StrangerAutomaton* retMe = regExToAuto("//evil/", true, int32_t(0));
-    //    return retMe;
-	throw new std::runtime_error("not implemented");
-    
-}
-
-
 //std::set<char> StrangerAutomaton::mincut(){
 //    using namespace boost;
 //    

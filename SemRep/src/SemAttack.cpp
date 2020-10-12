@@ -24,6 +24,7 @@
  */
 
 #include "SemAttack.hpp"
+#include "AttackPatterns.hpp"
 
 PerfInfo SemAttack::perfInfo;
 
@@ -193,7 +194,7 @@ StrangerAutomaton* SemAttack::computeAttackPatternOverlap() {
 		DEBUG_AUTO(targetSinkAuto);
 	}
 
-        StrangerAutomaton* xss = StrangerAutomaton::getUndesiredXSSTest();
+        StrangerAutomaton* xss = AttackPatterns::getHtmlPattern();
         StrangerAutomaton* intersection = targetSinkAuto->intersect(xss);
 
         targetSinkAuto->toDotAscii(1);
