@@ -3208,7 +3208,7 @@ int stringAcceptedFromState(DFA* M, int state, char* string, int var, int* indic
                 //the following for loop can be avoided if the indices are in order
                 for (tp = pp->trace; tp && (tp->index != indices[j]); tp
                      = tp->next)
-                    ;
+                   ;
                 if (tp) {
                     if (tp->value)
                         symbol[j] = '1';
@@ -3528,4 +3528,66 @@ DFA *dfaPreHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t fl
         dfaFree(a2);
     }
     return result;
+}
+
+static const char encodeUriComponentChars[128] =
+//   0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F
+{
+     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 0x
+     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 1x
+     1,   0,   1,   1,   1,   1,   1,   0,   0,   0,   0,   1,   1,   0,   0,   1,  // 2x   !"#$%&'()*+,-./
+     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   1,   1,  // 3x  0123456789:;<=>?
+     1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 4x  @ABCDEFGHIJKLMNO
+     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   0,  // 5x  PQRSTUVWXYZ[\]^_
+     1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 6x  `abcdefghijklmno
+     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   0,   1   // 7x  pqrstuvwxyz{|}~ DEL
+};
+
+DFA *dfaEncodeUriComponent(DFA *inputAuto, int var, int *indices){
+
+    DFA *a = dfaCopy(inputAuto);
+    DFA *b = NULL;
+
+    for (unsigned int c = 0; c < 128; ++c) {
+        if (encodeUriComponentChars[c]) {
+            char percent[4];
+            sprintf(percent, "%%%02X", c);
+            b = dfa_replace_char_with_string(a, var, indices, c, percent);
+            dfaFree(a);
+            a = b;
+        }
+    }
+    return b;
+}
+
+DFA *dfaDecodeUriComponent(DFA *inputAuto, int var, int *indices){
+
+    DFA *a = dfaCopy(inputAuto);
+    DFA *b = NULL;
+
+    // Replace all valid sequences
+    for (unsigned int c = 0; c < 128; ++c) {
+        char str[2];
+        char encoded[4];
+        sprintf(str, "%c", c);
+        sprintf(encoded, "%%%02X", c);
+
+        DFA *p = dfa_construct_string(encoded, var, indices);
+        b = dfa_replace_extrabit(a, p, str, var, indices);
+
+        dfaFree(p);
+        dfaFree(a);
+        a = b;
+    }
+
+    // Anything else containing a % is invalid and will throw an error
+    // Contains nothing, not even empty string
+    DFA* phi = dfaASCIIOnlyNullString(var, indices);
+    // Construct % string
+    char* percent = "%";
+    DFA* percent_auto = dfa_construct_string(percent, var, indices);
+    a = dfa_general_replace_extrabit(b, percent_auto, phi, var, indices);
+
+    dfaFree(b);
+    return a;
 }

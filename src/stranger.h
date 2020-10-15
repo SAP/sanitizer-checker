@@ -444,7 +444,10 @@ extern "C" {
     DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char replacedChar, char *string);
     DFA *dfaHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t flags);
     DFA *dfaPreHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t flags);
-    
+
+    DFA *dfaEncodeUriComponent(DFA *inputAuto, int var, int *indices);
+    DFA *dfaDecodeUriComponent(DFA *inputAuto, int var, int *indices);
+
     //Utility function
     int getVar();
     int* getIndices();
