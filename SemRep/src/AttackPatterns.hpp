@@ -29,7 +29,7 @@
 class AttackPatterns {
 
 public:
-
+    static StrangerAutomaton* getLiteralPattern();
     static StrangerAutomaton* getHtmlPattern();
     static StrangerAutomaton* getHtmlAttributePattern();
     static StrangerAutomaton* getJavascriptPattern();

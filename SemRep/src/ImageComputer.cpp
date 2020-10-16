@@ -948,8 +948,8 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments");
 		}
 
-		DepGraphNode* patternNode = successors[0];
-		DepGraphNode* replaceNode = successors[1];
+		DepGraphNode* patternNode = successors[1];
+		DepGraphNode* replaceNode = successors[2];
 
 		StrangerAutomaton* subjectAuto = opAuto;
 
@@ -974,8 +974,8 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		if (successors.size() != 3) {
 			throw StrangerStringAnalysisException(stringbuilder() << "substr invalid number of arguments");
 		}
-		DepGraphNode* startNode = successors[1];
-		DepGraphNode* lengthNode = successors[2];
+		DepGraphNode* startNode = successors[0];
+		DepGraphNode* lengthNode = successors[1];
 
 		StrangerAutomaton* subjectAuto = opAuto;
 		StrangerAutomaton* startAuto = fwAnalysisResult.find(startNode->getID())->second;

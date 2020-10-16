@@ -40,6 +40,10 @@ StrangerAutomaton* AttackPatterns::getAttackPatternFromAllowedRegEx(const std::s
     delete retMeEmpty;
     return complement;
 }
+StrangerAutomaton* AttackPatterns::getLiteralPattern()
+{
+    return StrangerAutomaton::regExToAuto("/foobarz/");
+}
 
 StrangerAutomaton* AttackPatterns::getHtmlPattern()
 {

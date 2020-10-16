@@ -23,12 +23,12 @@
  * Authors: Abdulbaki Aydin, Muath Alkhalaf, Thomas Barber
  */
 
-#include "SemAttack.hpp"
+#include "SemAttackBw.hpp"
 #include "AttackPatterns.hpp"
 
-PerfInfo SemAttack::perfInfo;
+PerfInfo SemAttackBw::perfInfo;
 
-SemAttack::SemAttack(string target_dep_graph_file_name, string input_field_name) {
+SemAttackBw::SemAttackBw(string target_dep_graph_file_name, string input_field_name) : enable_debug(true) {
 
     this->target_dep_graph_file_name = target_dep_graph_file_name;
     this->input_field_name = input_field_name;
@@ -38,30 +38,30 @@ SemAttack::SemAttack(string target_dep_graph_file_name, string input_field_name)
 
     // initialize input nodes
     this->target_uninit_field_node = target_dep_graph.findInputNode(input_field_name);
-    if (target_uninit_field_node == NULL) {
+    if (this->target_uninit_field_node == NULL) {
         throw StrangerStringAnalysisException("Cannot find input node " + input_field_name + " in target dep graph.");
     }
-    message(stringbuilder() << "target uninit node(" << target_uninit_field_node->getID() << ") found for field " << input_field_name << ".");
-
+    message(stringbuilder() << "target uninit node(" << this->target_uninit_field_node->getID() << ") found for field " << input_field_name << ".");
+    ImageComputer::perfInfo = &SemAttackBw::perfInfo;
+    ImageComputer::staticInit();
     // initialize input relevant graphs
-    this->target_field_relevant_graph = target_dep_graph.getInputRelevantGraph(target_uninit_field_node);
-
+    this->target_field_relevant_graph = this->target_dep_graph.getInputRelevantGraph(this->target_uninit_field_node);
+    this->attack_pattern_auto = AttackPatterns::getLiteralPattern();
     message(this->target_dep_graph.toDot());
     message(this->target_field_relevant_graph.toDot());
 
-    ImageComputer::perfInfo = &SemAttack::perfInfo;
-    ImageComputer::staticInit();
+
 }
 
-SemAttack::~SemAttack() {
+SemAttackBw::~SemAttackBw() {
     delete this->target_uninit_field_node;
 }
 
-void SemAttack::message(string msg) {
-    cout << endl << "~~~~~~~~~~~>>> SemAttack says: " << msg << endl;
+void SemAttackBw::message(string msg) {
+    cout << endl << "~> SemAttackBW says: " << msg << endl;
 }
 
-string SemAttack::generateOutputFilePath(string folder_name, bool unique_name) {
+string SemAttackBw::generateOutputFilePath(string folder_name, bool unique_name) {
     boost::filesystem::path curr_dir(boost::filesystem::current_path());
     boost::filesystem::path output_dir(curr_dir / folder_name);
 
@@ -95,16 +95,16 @@ string SemAttack::generateOutputFilePath(string folder_name, bool unique_name) {
     return stringbuilder() << output_dir.string() << "/" << ref_file << "_" << tar_file << "_" << input_field_name;
 }
 
-void SemAttack::printAnalysisResults(AnalysisResult& result) {
+void SemAttackBw::printAnalysisResults(AnalysisResult& result) {
     cout << endl;
     for (auto& entry : result ) {
         cout << "Printing automata for node ID: " << entry.first << endl;
-        (entry.second)->toDot();
+        (entry.second)->toDotAscii(2);
         cout << endl << endl;
     }
 }
 
-void SemAttack::printNodeList(NodesList nodes) {
+void SemAttackBw::printNodeList(NodesList nodes) {
     cout << endl;
     for (auto node : nodes ) {
         cout << node->getID() << " ";
@@ -113,10 +113,10 @@ void SemAttack::printNodeList(NodesList nodes) {
 }
 
 // TODO add output file option
-void SemAttack::printResults() {
+void SemAttackBw::printResults() {
     string file_path =  generateOutputFilePath("outputs/generated_patch_automata", false);
 
-    if (is_validation_patch_required) {
+    if (this->is_validation_patch_required) {
         cout << "\t    - validation patch is generated" << endl;
         string vp_fname = stringbuilder() << file_path << "validation_patch_dfa_with_ASCII_transitions.dot";
         string vp_mn_fname = stringbuilder() << file_path << "validation_patch_dfa_with_MONA_transitions.dot";
@@ -124,18 +124,18 @@ void SemAttack::printResults() {
         cout << "\t file : " << vp_fname << endl;
         cout << "\t file : " << vp_mn_fname << endl;
         cout << "\t file : " << vp_bdd_fname << endl;
-        DEBUG_AUTO_TO_FILE(target_sink_auto, vp_fname);
-        DEBUG_AUTO_TO_FILE_MN(target_sink_auto,vp_mn_fname);
-        target_sink_auto->toDotBDDFile(vp_bdd_fname);
+        DEBUG_AUTO_TO_FILE(this->target_sink_auto, vp_fname);
+        DEBUG_AUTO_TO_FILE_MN(this->target_sink_auto,vp_mn_fname);
+        this->target_sink_auto->toDotBDDFile(vp_bdd_fname);
 
-        cout << "\t size : states " << target_sink_auto->get_num_of_states() << " : "
-             << "bddnodes " << target_sink_auto->get_num_of_bdd_nodes() << endl;
+        cout << "\t size : states " << this->target_sink_auto->get_num_of_states() << " : "
+             << "bddnodes " << this->target_sink_auto->get_num_of_bdd_nodes() << endl;
 
         //cout << "\t    - validation patch is generated" << endl;
 
         if (DEBUG_ENABLED_RESULTS != 0) {
             DEBUG_MESSAGE("validation patch auto:");
-            DEBUG_AUTO(target_sink_auto);
+            DEBUG_AUTO(this->target_sink_auto);
         }
 
     } else {
@@ -149,11 +149,87 @@ void SemAttack::printResults() {
     perfInfo.reset();
 }
 
+AnalysisResult SemAttackBw::analyzePostImages() {
+    AnalysisResult analysis_result;
+
+    UninitNodesList uninit_nodes = this->target_dep_graph.getUninitNodes();
+    message(stringbuilder() << "initializing inputs with bottom other than: " << this->input_field_name );
+    for (auto uninit_node : uninit_nodes) {
+        analysis_result[uninit_node->getID()] = StrangerAutomaton::makePhi(uninit_node->getID());
+    }
+
+    message(stringbuilder() << "initializing input node: "<< input_field_name << "(" << this->target_uninit_field_node->getID() << ") with sigma star");
+    delete analysis_result[this->target_uninit_field_node->getID()];
+    analysis_result[this->target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(this->target_uninit_field_node->getID());
+
+    ImageComputer analyzer;
+
+    try {
+
+        message("starting forward analysis...");
+        analyzer.doForwardAnalysis_SingleInput(this->target_dep_graph, this->target_field_relevant_graph, analysis_result);
+        message("...finished forward analysis.");
+
+    } catch (StrangerStringAnalysisException const &e) {
+        cerr << e.what();
+        exit(EXIT_FAILURE);
+    }
+
+    return analysis_result;
+}
+
+AnalysisResult SemAttackBw::analyzePreImages(StrangerAutomaton* intersection_auto, const AnalysisResult& fwAnalysisResult) {
+    ImageComputer analyzer;
+
+    try {
+        message("starting backward analysis...");
+        AnalysisResult analysis_result = analyzer.doBackwardAnalysis_GeneralCase(this->target_dep_graph, this->target_field_relevant_graph, intersection_auto, fwAnalysisResult);
+        message("...finished backward analysis.");
+        return analysis_result;
+
+    } catch (StrangerStringAnalysisException const &e) {
+        cerr << e.what();
+        exit(EXIT_FAILURE);
+    }
+}
+
+StrangerAutomaton* SemAttackBw::generateAttack() {
+
+    AnalysisResult fwAnalysisResult = analyzePostImages();
+    printAnalysisResults(fwAnalysisResult);
+    this->sink_auto = fwAnalysisResult[this->target_field_relevant_graph.getRoot()->getID()];
+    if (this->enable_debug) {
+        message("Post image of sink node:");
+        debug_auto(this->sink_auto, 0);
+    }
+
+    StrangerAutomaton* intersection = this->sink_auto->intersect(this->attack_pattern_auto,this->target_dep_graph.getRoot()->getID());
+
+    if (enable_debug) {
+        message("Intersection:");
+        intersection->printAutomaton();
+        debug_auto(intersection, 0);
+    }
+    if (intersection->isEmpty()) {
+        message("Attack pattern can not be exploited, no vulnerability signature");
+        return nullptr;
+    }
+    std::cout.flush();
+
+    AnalysisResult bwAnalysisResult = analyzePreImages(intersection, fwAnalysisResult);
+    vs_auto = bwAnalysisResult[this->target_uninit_field_node->getID()];
+    if (enable_debug) {
+        message("Vulnerability Signature:");
+        debug_auto(vs_auto, 0);
+    }
+    message(vs_auto->generateSatisfyingExample());
+    return vs_auto;
+}
 
 /**
  * Computes sink post image for target, first time
  */
-StrangerAutomaton* SemAttack::computeTargetFWAnalysis() {
+StrangerAutomaton* SemAttackBw::computeTargetFWAnalysis() {
     message("computing target sink post image...");
     AnalysisResult targetAnalysisResult;
     UninitNodesList targetUninitNodes = target_dep_graph.getUninitNodes();
@@ -184,7 +260,7 @@ StrangerAutomaton* SemAttack::computeTargetFWAnalysis() {
     return target_sink_auto;
 }
 
-StrangerAutomaton* SemAttack::computeAttackPatternOverlap() {
+StrangerAutomaton* SemAttackBw::computeAttackPatternOverlap() {
 	message("BEGIN SANITIZATION ANALYSIS PHASE........................................");
 	boost::posix_time::ptime start_time = perfInfo.current_time();
 	StrangerAutomaton* targetSinkAuto = computeTargetFWAnalysis();
@@ -215,5 +291,21 @@ StrangerAutomaton* SemAttack::computeAttackPatternOverlap() {
         return targetSinkAuto;
 }
 
+void SemAttackBw::debug_auto(StrangerAutomaton* automaton, int type) {
+    switch (type) {
+        case 0:
+            automaton->toDotAscii(0);
+            break;
+        case 1:
+            automaton->toDotAscii(1);
+            break;
+        case 2:
+            automaton->toDot();
+            break;
+        default:
+            automaton->toDotAscii(0);
+            break;
+    }
+}
 
 

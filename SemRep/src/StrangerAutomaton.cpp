@@ -2894,13 +2894,13 @@ void StrangerAutomaton::toDotFileAscii(std::string file_name, int printSink) {
     delete indices_main_unsigned;
 }
 
-int StrangerAutomaton::debugLevel = 1;
+int StrangerAutomaton::debugLevel = 0;
 
 void StrangerAutomaton::debug(std::string s)
 {
     
-//    if(debugLevel >= 1)
-//        std::cout << s << endl;
+    if(debugLevel >= 1)
+       std::cout << s << endl;
     
 }
 
@@ -2970,6 +2970,8 @@ void StrangerAutomaton::closeCtraceFile()
 
 void StrangerAutomaton::debugToFile(std::string str)
 {
+
+    debug(str);
     //
     //    if(fstream_ == NULL) {
     //        std::string property = "java.io.tmpdir";
