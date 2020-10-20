@@ -166,7 +166,9 @@ StrangerAutomaton* SemAttack::computeTargetFWAnalysis() {
     // initialize uninit node that we are interested in with sigma star
     message(stringbuilder() << "initializing input node(" << target_uninit_field_node->getID() << ") with sigma star");
     delete targetAnalysisResult[target_uninit_field_node->getID()];
-    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(target_uninit_field_node->getID());
+    
+//    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(target_uninit_field_node->getID());
+    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeString("ABC>DEF", target_uninit_field_node->getID());
 
     ImageComputer targetAnalyzer;
 
@@ -175,7 +177,7 @@ StrangerAutomaton* SemAttack::computeTargetFWAnalysis() {
         targetAnalyzer.doForwardAnalysis_SingleInput(target_dep_graph, target_field_relevant_graph, targetAnalysisResult);
         message("...finished forward analysis for target.");        
     } catch (StrangerStringAnalysisException const &e) {
-        cerr << e.what();
+      cerr << e.what();
         exit(EXIT_FAILURE);
     }
 
@@ -195,10 +197,14 @@ StrangerAutomaton* SemAttack::computeAttackPatternOverlap() {
 	}
 
         targetSinkAuto->toDotAscii(1);
+        message("Example sanitizer string:");
+        message(targetSinkAuto->generateSatisfyingExample());
         
         StrangerAutomaton* xss = AttackPatterns::getHtmlPattern();
         xss->toDotAscii(1);
-
+        message("Example attack pattern string:");
+        message(xss->generateSatisfyingExample());
+        
         StrangerAutomaton* intersection = targetSinkAuto->intersect(xss);
         intersection->toDotAscii(1);
         

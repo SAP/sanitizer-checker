@@ -1332,7 +1332,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 		retMe = StrangerAutomaton::general_replace(patternAuto,replaceAuto,subjectAuto, opNode->getID());
 
-	} else if (opName == "char_replace") {
+	} else if (opName == "str_replace_once") {
 		if (successors.size() != 3) {
 			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
 		}
@@ -1356,7 +1356,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		StrangerAutomaton* patternAuto = analysisResult[patternNode->getID()];
 		StrangerAutomaton* replaceAuto = analysisResult[replaceNode->getID()];
 
-		retMe = StrangerAutomaton::char_replace(patternAuto,replaceAuto,subjectAuto, opNode->getID());
+		retMe = StrangerAutomaton::str_replace_once(patternAuto,replaceAuto,subjectAuto, opNode->getID());
 
 	} else if (opName == "addslashes") {
 		if (successors.size() != 1) {

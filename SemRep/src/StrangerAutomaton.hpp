@@ -113,8 +113,8 @@ public:
     static StrangerAutomaton* general_replace(StrangerAutomaton* patternAuto, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, std::string replaceStr, StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, std::string replaceStr, StrangerAutomaton* subjectAuto);
-    static StrangerAutomaton* char_replace(StrangerAutomaton* character, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* char_replace(StrangerAutomaton* character, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto);
+    static StrangerAutomaton* str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto);
     StrangerAutomaton* preReplace(StrangerAutomaton* searchAuto, std::string replaceString, int id);
     StrangerAutomaton* preReplace(StrangerAutomaton* searchAuto, std::string replaceString);
     StrangerAutomaton* getUnaryAutomaton(int id);

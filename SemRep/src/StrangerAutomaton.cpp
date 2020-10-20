@@ -1363,6 +1363,7 @@ StrangerAutomaton* StrangerAutomaton::regExToAuto(std::string phpRegexOrig,
     			debug(stringbuilder() << id <<  ": regExToString = "
     					<< regExp->toStringBuilder(regExpStringVal));
     			retMe = regExp->toAutomaton();
+                        free(regExp);
     		}
 
     
@@ -1579,24 +1580,65 @@ StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
     return str_replace(searchAuto, replaceStr, subjectAuto, traceID);
 }
 
-StrangerAutomaton* StrangerAutomaton::char_replace(StrangerAutomaton* character, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id) {
     boost::posix_time::ptime start_time = perfInfo->current_time();
-    StrangerAutomaton* retMe = new StrangerAutomaton(
-        dfa_replace_char_with_string_once(subjectAuto->dfa, num_ascii_track, indices_main,
-                                     character->getStr().c_str()[0],
-                                     StrangerAutomaton::strToCharStar(replaceAuto->getStr())));
-    perfInfo->replace_total_time += perfInfo->current_time() - start_time;
-    perfInfo->num_of_replace++;
+
+    // Check if the subject contains the matching string
+    StrangerAutomaton* intersection = subjectAuto->intersect(str, id);
+
+    StrangerAutomaton* retMe = NULL;
+
+    // Only compute if there is an intersection
+    if (!intersection->isEmpty()) {
+        // Do first string occurance matching with a series of RegExps
+        // Create an empty Automaton
+        StrangerAutomaton* empty = StrangerAutomaton::makeEmptyString(id);    
+        // Get the match string
+        std::string str_match = str->getStr();
+        // Escape special characters:
     
-    {
-        retMe->ID = id;
-//        retMe->debugAutomaton();
+        // Now construct a RegExp which matches the first occurence of this string
+        // and everything after it
+        std::string matchToEnd = "/(" + str_match + ").*/";
+        //                        <- match string -> ^-- everything after it
+        std::cout << "MatchToEnd: " << matchToEnd << std::endl;
+        StrangerAutomaton* matchToEndAuto = regExToAuto(matchToEnd);
+        // Now apply this to the subject to remove everything after and including the match
+        // This gets the first part of the string
+        StrangerAutomaton* beforeMatch = general_replace(matchToEndAuto, empty, subjectAuto, id);
+        // Now match everying before and including the string
+        std::string matchStart = "/^.*?(?=" + str_match + ")" + str_match + "/";
+        //                        ^--^ ^-----------------^     ^-------^
+        //              Anything --+      Until the string    Including the string
+        // ^.*?(?=abc)abc
+        StrangerAutomaton* matchFromStartAuto = regExToAuto(matchStart);
+        // Do the replace to get second half of string
+        StrangerAutomaton* afterMatch = general_replace(matchFromStartAuto, empty, subjectAuto, id);
+        // Now put it all together with concatination
+        // beforeMatch + replace + afterMatch
+        StrangerAutomaton* beforePlusReplace = beforeMatch->concatenate(replaceAuto, id);
+        StrangerAutomaton* replaced = beforePlusReplace->concatenate(afterMatch, id);
+
+        retMe = replaced;
+
+        delete empty;
+        delete matchToEndAuto;
+        delete beforeMatch;
+        delete matchFromStartAuto;
+        delete afterMatch;
+        delete beforePlusReplace;
+    } else {
+        retMe = new StrangerAutomaton(dfaCopy(subjectAuto->dfa));
     }
+    
+    // Cleanup
+    delete intersection;
+
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::char_replace(StrangerAutomaton* character, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto) {
-    return char_replace(character, replaceAuto, subjectAuto, traceID);
+StrangerAutomaton* StrangerAutomaton::str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto) {
+    return str_replace_once(str, replaceAuto, subjectAuto, traceID);
 }
 
 
