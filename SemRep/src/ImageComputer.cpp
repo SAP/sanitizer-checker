@@ -458,8 +458,6 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_ValidationCase(DepGraph
 			throw StrangerStringAnalysisException(stringbuilder() << "SNH: child node (" << childNode->getID() << ") of preg_replace (" << opNode->getID() << ") is not in backward path,\ncheck implementation: "
 					"makeBackwardAutoForOpChild_ValidationPhase()");
 		}
-
-
 	}  else if (opName == "substr"){
 
 		if (successors.size() != 3) {
@@ -1334,6 +1332,32 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 		retMe = StrangerAutomaton::general_replace(patternAuto,replaceAuto,subjectAuto, opNode->getID());
 
+	} else if (opName == "char_replace") {
+		if (successors.size() != 3) {
+			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
+		}
+
+		DepGraphNode* subjectNode = successors[2];
+		DepGraphNode* patternNode = successors[0];
+		DepGraphNode* replaceNode = successors[1];
+
+		if (analysisResult.find(subjectNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, subjectNode, analysisResult);
+		}
+		if (analysisResult.find(patternNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, patternNode, analysisResult);
+		}
+
+		if (analysisResult.find(replaceNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, replaceNode, analysisResult);
+		}
+
+		StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
+		StrangerAutomaton* patternAuto = analysisResult[patternNode->getID()];
+		StrangerAutomaton* replaceAuto = analysisResult[replaceNode->getID()];
+
+		retMe = StrangerAutomaton::char_replace(patternAuto,replaceAuto,subjectAuto, opNode->getID());
+
 	} else if (opName == "addslashes") {
 		if (successors.size() != 1) {
 			throw new StrangerStringAnalysisException(stringbuilder() << "addslashes should have one child: " << opNode->getID());
@@ -1450,6 +1474,16 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 	} else if (opName == "md5") {
 		//conservative desicion
 		retMe = StrangerAutomaton::regExToAuto("/[aAbBcCdDeEfF0-9]{32,32}/",true, opNode->getID());
+	} else if (opName == "encodeURIComponent") {
+		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		StrangerAutomaton* uriAuto = StrangerAutomaton::encodeURIComponent(paramAuto, opNode->getID());
+		retMe = uriAuto;
+
+	} else if (opName == "decodeURIComponent") {
+		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		StrangerAutomaton* uriAuto = StrangerAutomaton::decodeURIComponent(paramAuto, opNode->getID());
+		retMe = uriAuto;
+
 	} else {
 		cout << "!!! Warning: Unmodeled builtin general function : " << opName << endl;
 		f_unmodeled.push_back(opNode);

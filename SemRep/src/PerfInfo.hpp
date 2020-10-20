@@ -125,6 +125,8 @@ public:
 	 unsigned int number_of_pre_addslashes;
 	 unsigned int number_of_htmlspecialchars;
 	 unsigned int number_of_pre_htmlspecialchars;
+    	 unsigned int number_of_encodeuricomponent;
+         unsigned int number_of_decodeuricomponent;
 	 unsigned int number_of_stripslashes;
 	 unsigned int number_of_pre_stripslashes;
 	 unsigned int number_of_mysql_escape_string;

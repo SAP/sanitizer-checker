@@ -55,7 +55,8 @@ RUN git clone https://github.com/vlab-cs-ucsb/LibStranger.git . && \
 WORKDIR /work/SemRep
 
 # The MONA header defines an function called export, which is a C++ keyword
-RUN sed -i '1i#define export _export_' /usr/local/include/mona/bdd_external.h
+# This has been fixed properly by protecting the include
+#RUN sed -i '1i#define export _export_' /usr/local/include/mona/bdd_external.h
 
 FROM semrep-dev as semrep
 

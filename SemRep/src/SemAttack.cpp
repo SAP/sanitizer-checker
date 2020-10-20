@@ -194,11 +194,12 @@ StrangerAutomaton* SemAttack::computeAttackPatternOverlap() {
 		DEBUG_AUTO(targetSinkAuto);
 	}
 
-        StrangerAutomaton* xss = AttackPatterns::getHtmlPattern();
-        StrangerAutomaton* intersection = targetSinkAuto->intersect(xss);
-
         targetSinkAuto->toDotAscii(1);
+        
+        StrangerAutomaton* xss = AttackPatterns::getHtmlPattern();
         xss->toDotAscii(1);
+
+        StrangerAutomaton* intersection = targetSinkAuto->intersect(xss);
         intersection->toDotAscii(1);
         
         if (intersection->isEmpty()) {

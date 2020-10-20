@@ -28,8 +28,10 @@
 #include "StringBuilder.hpp"
 #include "exceptions/StrangerAutomatonException.hpp"
 #include "RegExp.hpp"
+#define export _export_
 #include "stranger/stranger_lib_internal.h"
 #include "stranger/stranger.h"
+#undef export
 
 #include <stdexcept>
 #include <vector>
@@ -111,6 +113,8 @@ public:
     static StrangerAutomaton* general_replace(StrangerAutomaton* patternAuto, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, std::string replaceStr, StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, std::string replaceStr, StrangerAutomaton* subjectAuto);
+    static StrangerAutomaton* char_replace(StrangerAutomaton* character, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* char_replace(StrangerAutomaton* character, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto);
     StrangerAutomaton* preReplace(StrangerAutomaton* searchAuto, std::string replaceString, int id);
     StrangerAutomaton* preReplace(StrangerAutomaton* searchAuto, std::string replaceString);
     StrangerAutomaton* getUnaryAutomaton(int id);
@@ -197,6 +201,11 @@ public:
     static StrangerAutomaton* pre_nl2br(StrangerAutomaton* subjectAuto, int id);
 //    std::set<char> mincut();
 
+    static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto){return encodeURIComponent(subjectAuto, traceID);};
+    static StrangerAutomaton* decodeURIComponent(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* decodeURIComponent(StrangerAutomaton* subjectAuto){return decodeURIComponent(subjectAuto, traceID);};
+    
     void printAutomaton();
     void printAutomatonVitals();
     void toDot();

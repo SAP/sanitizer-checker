@@ -1579,6 +1579,27 @@ StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
     return str_replace(searchAuto, replaceStr, subjectAuto, traceID);
 }
 
+StrangerAutomaton* StrangerAutomaton::char_replace(StrangerAutomaton* character, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id) {
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(
+        dfa_replace_char_with_string_once(subjectAuto->dfa, num_ascii_track, indices_main,
+                                     character->getStr().c_str()[0],
+                                     StrangerAutomaton::strToCharStar(replaceAuto->getStr())));
+    perfInfo->replace_total_time += perfInfo->current_time() - start_time;
+    perfInfo->num_of_replace++;
+    
+    {
+        retMe->ID = id;
+//        retMe->debugAutomaton();
+    }
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::char_replace(StrangerAutomaton* character, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto) {
+    return char_replace(character, replaceAuto, subjectAuto, traceID);
+}
+
+
 //***************************************************************************************
 //*                                  Backward Replacement                               *
 //***************************************************************************************
@@ -2513,6 +2534,35 @@ StrangerAutomaton* StrangerAutomaton::pre_nl2br(StrangerAutomaton* subjectAuto, 
 	throw new std::runtime_error("not implemented");
     
 }
+
+StrangerAutomaton* StrangerAutomaton::encodeURIComponent(StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = encodeURIComponent(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaEncodeUriComponent(subjectAuto->dfa, num_ascii_track, indices_main));
+    perfInfo->htmlspecialchars_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_encodeuricomponent++;
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::decodeURIComponent(StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = decodeURIComponent(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaDecodeUriComponent(subjectAuto->dfa, num_ascii_track, indices_main));
+    perfInfo->htmlspecialchars_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_decodeuricomponent++;
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
 
 //std::set<char> StrangerAutomaton::mincut(){
 //    using namespace boost;
