@@ -2897,6 +2897,275 @@ bool checkExtraBitNeeded(DFA *M, int var, int *indices, int state, char *lambda)
     return retMe;
 }
 
+DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char replacedChar, char *string){
+    if (check_emptiness_minimized(M)){
+        return dfaCopy(M);
+    }
+    assert(string != NULL);
+    //assert we do not do delete
+    assert(strlen(string) == 1);
+    //if replacing a char with itself just copy
+    if (strlen(string) == 1 && string[0] == replacedChar){
+        return dfaCopy(M);
+    }
+    DFA *result = NULL;
+    char* replacedCharBin = bintostr(replacedChar, var);
+    bool extraBitNeeded = false;
+    char firstChar = string[0];
+    char *firstCharBin = bintostr(firstChar, var);
+    size_t strLength = strlen(string);
+    paths state_paths, pp;
+    trace_descr tp;
+    int i, j, k, z;
+    char *exeps;
+    int *to_states;
+    long max_exeps;
+    char *statuces;
+    int sink;
+    char *symbol = (char *) malloc((var + 1) * sizeof(char));
+
+    max_exeps = 1 << var; //maybe exponential
+    sink = find_sink(M);
+    assert(sink > -1);
+
+    PStatePairArrayList replaceTransitions = createStatePairArrayList(32, 0);
+
+    /**************      PREPROCESSING PHASE     ******************/
+    for (i = 0; i < M->ns; i++){
+        state_paths = pp = make_paths(M->bddm, M->q[i]);
+        while (pp) {
+            if (pp->to != sink){
+                for (j = 0; j < var; j++){
+                    // The following for loop can be avoided if the indices are in order
+                    for (tp = pp->trace; tp && (tp->index != oldIndices[j]); tp = tp->next);
+                    if (tp) {
+                        if (tp->value) {
+                            symbol[j] = '1';
+                        } else {
+                            symbol[j] = '0';
+                        }
+                    } else {
+                        symbol[j] = 'X';
+                    }
+                }
+                symbol[var] = '\0';
+                if (isIncludeLambda(symbol, replacedCharBin, var)){
+                    if (!searchStatePairArrayListBS(replaceTransitions, i, pp->to, NULL)){
+                        insertIntoStatePairSortedArrayList(replaceTransitions, i, pp->to, replacedChar);
+                    }
+                    if (!extraBitNeeded && (isIncludeLambda(symbol, firstCharBin, var) || checkExtraBitNeeded(M, var, oldIndices, i, firstCharBin))) {
+                        extraBitNeeded = true;
+                    }
+                }
+            }
+            pp = pp->next;
+        }
+        kill_paths(state_paths);
+    }
+
+    /**************      BUILDING AUTOMATON PHASE     ******************/
+    int len = extraBitNeeded? (var + 1): var;
+    int *indices = allocateArbitraryIndex(len);
+    //Invariant: each pair in replacedTransitions is unique i.e. no two pairs share the same first state
+    // Need to make a complete copy of the automaton, so double the number of states
+    // Currently just replace a single char, but number of states will need to increase if replacing with a string
+    int num_of_states = M->ns * 2;
+
+    // Create new DFA
+    dfaSetup(num_of_states, len, indices); //add one new accept state
+
+    // Allocate array to hold the exceptions for each state
+    exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char)); //plus 1 for \0 end of the string
+
+    // Array to hold the total number of states
+    to_states = (int *) malloc(max_exeps * sizeof(int));
+
+    // Arary to hold the statuses as input for dfaBuild
+    statuces = (char *) malloc((num_of_states + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
+    int toState = -1;
+    int numOfChars = 1 << var;
+    char **charachters = (char**) malloc(numOfChars * (sizeof(char*)));
+    int size = 0;
+
+    // for each original state
+    for (i = 0; i < M->ns; i++) {
+        state_paths = pp = make_paths(M->bddm, M->q[i]);
+        k = 0;
+        toState = -1;
+        // for each transition out from current state (state i)
+        while (pp) {
+            if (pp->to != sink) {
+                for (j = 0; j < var; j++) {
+                    //the following for loop can be avoided if the indices are in order
+                    for (tp = pp->trace; tp && (tp->index != oldIndices[j]); tp = tp->next);
+                    if (tp) {
+                        if (tp->value) {
+                            symbol[j] = '1';
+                        } else {
+                            symbol[j] = '0';
+                        }
+                    } else {
+                        symbol[j] = 'X';
+                    }
+                }
+                symbol[var] = '\0';
+                /*
+                  if we need to replace "replace char" between these two states then
+                  remove transition to old dest and add a new one to a new state.
+                  At the end of the whole for loop we will add other states for
+                  remaining of the string
+                */
+                if (searchStatePairArrayListBS(replaceTransitions, i, pp->to, NULL)){
+                    if (isIncludeLambda(symbol, replacedCharBin, var)){
+                        //if we are replacing one char with another char
+                        if (strLength == 1){
+                            //add first char of the string to the new dest state
+                            to_states[k] = pp->to + M->ns;
+                            for (j = 0; j < var; j++) {
+                                exeps[k * (len + 1) + j] = firstCharBin[j];
+                            }
+                            exeps[k * (len + 1) + var] = '1';
+                            exeps[k * (len + 1) + len] = '\0';
+                            k++;
+                        } else {
+                            // Not yet supported
+                            assert(false);
+                        }
+                        // remove replace char from old dest state
+                        removeTransitionOnChar(symbol, replacedCharBin, var, charachters, &size);
+                        for (z = 0; z < size; z++) {
+                            to_states[k] = pp->to;
+                            for (j = 0; j < var; j++) {
+                                exeps[k * (len + 1) + j] = charachters[z][j];
+                            }
+                            exeps[k * (len + 1) + var] = '0';
+                            exeps[k * (len + 1) + len] = '\0';
+                            k++;
+                            free(charachters[z]);
+                        }
+                    } else { // does not include symbol no need to replace anything
+                        to_states[k] = pp->to;
+                        for (j = 0; j < var; j++) {
+                            exeps[k * (len + 1) + j] = symbol[j];
+                        }
+                        exeps[k * (len + 1) + var] = '0';
+                        exeps[k * (len + 1) + len] = '\0';
+                        k++;
+                    }
+                } else { // Not in replacement list, no need to replace anything
+                    to_states[k] = pp->to;
+                    for (j = 0; j < var; j++) {
+                        exeps[k * (len + 1) + j] = symbol[j];
+                    }
+                    exeps[k * (len + 1) + var] = '0';
+                    exeps[k * (len + 1) + len] = '\0';
+                    k++;
+                }
+            }
+            pp = pp->next;
+        } // Loop over transitions
+
+        dfaAllocExceptions(k);
+        for (k--; k >= 0; k--) {
+            dfaStoreException(to_states[k], exeps + k * (len + 1));
+        }
+        // Default state is the sink (rejection)
+        dfaStoreState(sink);
+        if (M->f[i] == 1) {
+            statuces[i] = '+';
+        } else {
+            statuces[i] = '-';
+        }
+        kill_paths(state_paths);
+
+    } // end for each original state
+
+    // Now create a complete copy of the original DFA, representing the
+    // automaton states after the first character has been replaced
+    // for each original state, all the state indices shifted by M->ns
+    for (i = 0; i < M->ns; i++) {
+        state_paths = pp = make_paths(M->bddm, M->q[i]);
+        k = 0;
+        toState = -1;
+        // for each transition out from current state (state i)
+        while (pp) {
+            if (pp->to != sink) {
+                for (j = 0; j < var; j++) {
+                    //the following for loop can be avoided if the indices are in order
+                    for (tp = pp->trace; tp && (tp->index != oldIndices[j]); tp = tp->next);
+                    if (tp) {
+                        if (tp->value) {
+                            symbol[j] = '1';
+                        } else {
+                            symbol[j] = '0';
+                        }
+                    } else {
+                        symbol[j] = 'X';
+                    }
+                }
+                symbol[var] = '\0';
+                /*
+                  Not replacing anything this time
+                */
+                to_states[k] = pp->to + M->ns;
+                for (j = 0; j < var; j++) {
+                    exeps[k * (len + 1) + j] = symbol[j];
+                }
+                exeps[k * (len + 1) + var] = '0';
+                exeps[k * (len + 1) + len] = '\0';
+                k++;
+            }
+            pp = pp->next;
+        } // Loop over transitions
+
+        dfaAllocExceptions(k);
+        for (k--; k >= 0; k--) {
+            dfaStoreException(to_states[k], exeps + k * (len + 1));
+        }
+        dfaStoreState(sink);
+        if (M->f[i] == 1) {
+            statuces[i + M->ns] = '+';
+        } else {
+            statuces[i + M->ns] = '-';
+        }
+        kill_paths(state_paths);
+    } // end for each original state
+    statuces[num_of_states] = '\0';
+    result = dfaBuild(statuces);
+    free(exeps);
+    //	//printf("FREE ToState\n");
+    free(to_states);
+    //	//printf("FREE STATUCES\n");
+    free(statuces);
+    free(replacedCharBin);
+    free(symbol);
+    free(indices);
+    free(charachters);
+    freeStatePairArrayList(replaceTransitions);
+    //    dfaPrintVerbose(result);
+    DFA *tmp;
+    if(extraBitNeeded){
+        if( DEBUG_SIZE_INFO )
+            printf("\t peak : replace_char_with_string : states %d : bddnodes %u : before projection \n", result->ns, bdd_size(result->bddm) );
+        tmp = dfaProject(result, var);
+        dfaFree(result);
+        if( DEBUG_SIZE_INFO )
+            printf("\t peak : replace_char_with_string : states %d : bddnodes %u : after projection \n", tmp->ns, bdd_size(tmp->bddm) );
+        result = dfaMinimize(tmp);
+        dfaFree(tmp);
+    } else {
+        if( DEBUG_SIZE_INFO )
+            printf("\t peak : replace_char_with_string : states %d : bddnodes %u \n", result->ns, bdd_size(result->bddm) );
+        tmp = dfaMinimize(result);
+        dfaFree(result);
+        result = tmp;
+    }
+    //    dfaPrintVerbose(tmp);
+    //	printf("dfaAfterRightTrimBeforeMinimize\n");
+    //	dfaPrintGraphviz(result, len, indices);
+    return result;
+}
+
 DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replacedChar, char *string){
     if (check_emptiness_minimized(M)){
         return dfaCopy(M);
@@ -2941,18 +3210,18 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
         while (pp) {
             if (pp->to != sink){
                 for (j = 0; j < var; j++){
-                    //the following for loop can be avoided if the indices are in order
-                    for (tp = pp->trace; tp && (tp->index != oldIndices[j]); tp =
-                             tp->next)
-                        ;
+                    // The following for loop can be avoided if the indices are in order
+                    for (tp = pp->trace; tp && (tp->index != oldIndices[j]); tp = tp->next);
                     
                     if (tp) {
-                        if (tp->value)
+                        if (tp->value) {
                             symbol[j] = '1';
-                        else
+                        } else {
                             symbol[j] = '0';
-                    } else
+                        }
+                    } else {
                         symbol[j] = 'X';
+                    }
                 }
                 symbol[var] = '\0';
                 if (isIncludeLambda(symbol, replacedCharBin, var)){
@@ -2960,8 +3229,9 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
                         insertIntoStatePairSortedArrayList(replaceTransitions, i, pp->to, replacedChar);
                         numOfAddedStates += (strLength - 1);
                     }
-                    if (!extraBitNeeded && (isIncludeLambda(symbol, firstCharBin, var) || checkExtraBitNeeded(M, var, oldIndices, i, firstCharBin)))
+                    if (!extraBitNeeded && (isIncludeLambda(symbol, firstCharBin, var) || checkExtraBitNeeded(M, var, oldIndices, i, firstCharBin))) {
                         extraBitNeeded = true;
+                    }
                 }
             }
             pp = pp->next;
@@ -2974,7 +3244,6 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
     int len = extraBitNeeded? (var + 1): var;
     int *indices = allocateArbitraryIndex(len);
 
-    
     
     //Invariant: each pair in replacedTransitions is unique i.e. no two pairs share the same first state
     

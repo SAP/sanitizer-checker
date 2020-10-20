@@ -440,6 +440,7 @@ extern "C" {
     
     DFA *dfa_escape(DFA *M, int var, int *oldindices, char escapeChar, char *escapedChars, unsigned numOfEscapedChars);
     DFA *dfa_pre_escape(DFA *M, int var, int *indices, char escapeChar, char *escapedChars, unsigned numOfEscapedChars);
+    DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char replacedChar, char *string);
     DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replacedChar, char *string);
     DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char replacedChar, char *string);
     DFA *dfaHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t flags);
