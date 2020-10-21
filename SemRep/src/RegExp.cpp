@@ -766,7 +766,6 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
         if(i == string::npos) {
             if(!check(AUTOMATON))
             	throw std::invalid_argument((stringbuilder() << "interval syntax error at position " << (pos - 1)));
-
             return makeAutomaton(s);
         } else {
             if(!check(INTERVAL))
@@ -801,8 +800,32 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
 
 char RegExp::parseCharExp() /* //throws(IllegalArgumentException) */
 {
-    match('\\');
-    return next();
+    // Loop for escaped chars...
+    if (match('\\')) {
+        // ... of the form \x26
+        if (match('x')) {
+            std::string allowedHexChars = "01234567890ABCDEFabcdef";
+            if (peek(allowedHexChars)) {
+                char first = next();
+                if (peek(allowedHexChars)) {
+                    // Match \xNM (= 0xNM)
+                    char second = next();
+                    return from_hex_chars(first, second);
+                } else {
+                    // Match \xN (= 0xN)
+                    return from_hex_char(first);
+                }
+            } else {
+                // Match \x alone (= 0)
+                return 0;
+            }
+        } else {
+            // TODO: No 'x', but might be followed by numbers for a decimal
+            return next();
+        }
+    } else {
+        return next();
+    }
 }
 
 
@@ -846,3 +869,18 @@ int to_int(std::string input)
      return negate ? result : -result; //-result is positive!
 }
 
+int from_hex_char(char c) {
+    unsigned int x;
+    std::stringstream ss;
+    ss << std::hex << c;
+    ss >> x;
+    return x;
+}
+
+int from_hex_chars(char c1, char c2) {
+    unsigned int x;
+    std::stringstream ss;
+    ss << std::hex << c1 << c2;
+    ss >> x;
+    return x;
+}
