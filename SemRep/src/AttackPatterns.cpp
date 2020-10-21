@@ -41,6 +41,12 @@ StrangerAutomaton* AttackPatterns::getAttackPatternFromAllowedRegEx(const std::s
     return complement;
 }
 
+StrangerAutomaton* AttackPatterns::lessThanPattern()
+{
+    // Exclused just the "<" char
+    return getAttackPatternFromAllowedRegEx("/[^<]+/");
+}
+
 StrangerAutomaton* AttackPatterns::getHtmlPattern()
 {
     // Allowed characters in innerHTML, excludes ">", "<", "'", """, "\"

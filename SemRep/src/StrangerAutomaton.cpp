@@ -1583,56 +1583,52 @@ StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
 StrangerAutomaton* StrangerAutomaton::str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id) {
     boost::posix_time::ptime start_time = perfInfo->current_time();
 
-    // Check if the subject contains the matching string
-    StrangerAutomaton* intersection = subjectAuto->intersect(str, id);
-
     StrangerAutomaton* retMe = NULL;
 
-    // Only compute if there is an intersection
-    if (!intersection->isEmpty()) {
-        // Do first string occurance matching with a series of RegExps
-        // Create an empty Automaton
-        StrangerAutomaton* empty = StrangerAutomaton::makeEmptyString(id);    
-        // Get the match string
-        std::string str_match = str->getStr();
-        // Escape special characters:
-    
-        // Now construct a RegExp which matches the first occurence of this string
-        // and everything after it
-        std::string matchToEnd = "/(" + str_match + ").*/";
-        //                        <- match string -> ^-- everything after it
-        std::cout << "MatchToEnd: " << matchToEnd << std::endl;
-        StrangerAutomaton* matchToEndAuto = regExToAuto(matchToEnd);
-        // Now apply this to the subject to remove everything after and including the match
-        // This gets the first part of the string
-        StrangerAutomaton* beforeMatch = general_replace(matchToEndAuto, empty, subjectAuto, id);
-        // Now match everying before and including the string
-        std::string matchStart = "/^.*?(?=" + str_match + ")" + str_match + "/";
-        //                        ^--^ ^-----------------^     ^-------^
-        //              Anything --+      Until the string    Including the string
-        // ^.*?(?=abc)abc
-        StrangerAutomaton* matchFromStartAuto = regExToAuto(matchStart);
-        // Do the replace to get second half of string
-        StrangerAutomaton* afterMatch = general_replace(matchFromStartAuto, empty, subjectAuto, id);
-        // Now put it all together with concatination
-        // beforeMatch + replace + afterMatch
-        StrangerAutomaton* beforePlusReplace = beforeMatch->concatenate(replaceAuto, id);
-        StrangerAutomaton* replaced = beforePlusReplace->concatenate(afterMatch, id);
+    // Do first string occurance matching with a series of RegExps
 
-        retMe = replaced;
+    // Get the match string
+    std::string str_match = str->getStr();
+    std::string str_replace = replaceAuto->getStr();
 
-        delete empty;
-        delete matchToEndAuto;
-        delete beforeMatch;
-        delete matchFromStartAuto;
-        delete afterMatch;
-        delete beforePlusReplace;
-    } else {
-        retMe = new StrangerAutomaton(dfaCopy(subjectAuto->dfa));
-    }
-    
-    // Cleanup
-    delete intersection;
+    std::cout << "Replacing " << str_match << " with " << str_replace << std::endl;
+    // Escape special characters:
+    std::cout << "Subject" << std::endl;
+    subjectAuto->toDotAscii(1);
+ 
+    // Now construct a RegExp which matches the first occurence of this string
+    // and everything after it
+    std::string matchToEnd = "/" + str_match + ".*/";
+    //                        <- match string -> ^-- everything after it
+    // (abc).*
+    std::cout << "MatchToEnd: " << matchToEnd << std::endl;
+    StrangerAutomaton* matchToEndAuto = regExToAuto(matchToEnd);
+    matchToEndAuto->toDotAscii(1);
+    // Now apply this to the subject to remove everything after and including the match
+    // This gets the first part of the string
+    StrangerAutomaton* beforeMatch = reg_replace(matchToEndAuto, "Z", subjectAuto, id);
+    beforeMatch->toDotAscii(1);
+    // Now match everying before and including the string
+    std::string matchStart = "/.+?" + str_match + ".*/";
+    std::cout << "MatchFromStart: " << matchStart << std::endl;
+    // ^(.+?)abc
+    StrangerAutomaton* matchFromStartAuto = regExToAuto(matchStart);
+    matchFromStartAuto->toDotAscii(1);
+    // Do the replace to get second half of string
+    StrangerAutomaton* afterMatch = reg_replace(matchFromStartAuto, "Y", subjectAuto, id);
+    afterMatch->toDotAscii(1);
+    // Now put it all together with concatination
+    // beforeMatch + replace + afterMatch
+    StrangerAutomaton* beforePlusReplace = beforeMatch->concatenate(replaceAuto, id);
+    StrangerAutomaton* replaced = replaceAuto->concatenate(afterMatch, id);
+
+    retMe = replaced;
+
+    delete matchToEndAuto;
+    delete beforeMatch;
+    delete matchFromStartAuto;
+    delete afterMatch;
+    delete beforePlusReplace;
 
     return retMe;
 }
