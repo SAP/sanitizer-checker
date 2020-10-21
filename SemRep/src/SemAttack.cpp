@@ -167,8 +167,8 @@ StrangerAutomaton* SemAttack::computeTargetFWAnalysis() {
     message(stringbuilder() << "initializing input node(" << target_uninit_field_node->getID() << ") with sigma star");
     delete targetAnalysisResult[target_uninit_field_node->getID()];
     
-//    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(target_uninit_field_node->getID());
-    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeString("ABC>DEF", target_uninit_field_node->getID());
+    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(target_uninit_field_node->getID());
+//    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeString("ABC>DEF", target_uninit_field_node->getID());
 
     ImageComputer targetAnalyzer;
 
@@ -200,7 +200,7 @@ StrangerAutomaton* SemAttack::computeAttackPatternOverlap() {
         message("Example sanitizer string:");
         message(targetSinkAuto->generateSatisfyingExample());
         
-        StrangerAutomaton* xss = AttackPatterns::getHtmlPattern();
+        StrangerAutomaton* xss = AttackPatterns::lessThanPattern();
         xss->toDotAscii(1);
         message("Example attack pattern string:");
         message(xss->generateSatisfyingExample());

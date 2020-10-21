@@ -1054,12 +1054,14 @@ StrangerAutomaton* ImageComputer::getLiteralorConstantNodeAuto(DepGraphNode* nod
 				regString = "/" + regString + "/";
 			}
 			retMe = StrangerAutomaton::regExToAuto(regString, true, node->getID());
-		}
-		else {
+		} else {
+                    if (value == "NUL") {
+                        retMe = StrangerAutomaton::makeChar(0);
+                    } else {
 			retMe = StrangerAutomaton::makeString(value, node->getID());
+                    }
 		}
-	}
-	else {
+	} else {
 		throw StrangerStringAnalysisException(stringbuilder() << "Unhandled node type, node id: " << node->getID());
 	}
 
