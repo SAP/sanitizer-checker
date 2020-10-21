@@ -252,7 +252,13 @@ extern "C" {
     //str: the replace string
     // replace ALL strings that match L(M2) in L(M1) with string str
     DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, char *str, int var, int *indices);
-    
+
+    //M1: subject automaton that replace will occur on
+    //M2: search automaton representing the pattern that we will match against
+    //str: the replace string
+    // replace ALL strings that match L(M2) in L(M1) with string str
+    DFA *dfa_replace_once_extrabit(DFA *M1, DFA *M2, char *str, int var, int *indices);
+
     /**
      * General replace
      * M1: subject automaton that replace will occur on
