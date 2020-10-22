@@ -128,7 +128,6 @@ DFA* dfa_pre_concat_const(DFA* ML, char* str, int pos, int var, int* indices){
  }
 
 DFA* dfa_pre_replace(DFA* M1, DFA* M2, DFA* M3, int var, int* indices){
-
   return dfa_general_replace_extrabit(M1, M3, dfa_union(M2, M3), var, indices);
 }
 

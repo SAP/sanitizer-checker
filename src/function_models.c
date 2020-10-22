@@ -3804,7 +3804,7 @@ static const char encodeUriComponentChars[128] =
 {
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 0x
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 1x
-    1,   0,   1,   1,   1,   1,   1,   0,   0,   0,   0,   1,   1,   0,   0,   1,  // 2x   !"#$%&'()*+,-./
+    1,   0,   1,   1,   1,   0,   1,   0,   0,   0,   0,   1,   1,   0,   0,   1,  // 2x   !"#$%&'()*+,-./
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   1,   1,  // 3x  0123456789:;<=>?
     1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 4x  @ABCDEFGHIJKLMNO
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   0,  // 5x  PQRSTUVWXYZ[\]^_
@@ -3815,7 +3815,10 @@ static const char encodeUriComponentChars[128] =
 DFA *dfaEncodeUriComponent(DFA *inputAuto, int var, int *indices){
 
     DFA *a = dfaCopy(inputAuto);
-    DFA *b = NULL;
+    // Do percent first to prevent double encoding
+    DFA *b = dfa_replace_char_with_string(a, var, indices, '%', "%25");;
+    dfaFree(a);
+    a = b;
 
     for (unsigned int c = 0; c < 128; ++c) {
         if (encodeUriComponentChars[c]) {
@@ -3859,4 +3862,44 @@ DFA *dfaDecodeUriComponent(DFA *inputAuto, int var, int *indices){
 
     dfaFree(b);
     return a;
+}
+
+static const char jsonEncodeChars[128] = {
+    'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'b', 't',
+    'n', 'u', 'f', 'r', 'u', 'u', 'u', 'u', 'u', 'u',
+    'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u',
+    'u', 'u', 0,   0,  '\"', 0,   0,   0,   0,   0,
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
+    0,   0,   0, // rest are all zeros
+};
+// Escape as defined in https://www.ecma-international.org/ecma-262/5.1/#sec-15.12.3
+DFA *dfaJsonStringify(DFA *inputAuto, int var, int *indices) {
+
+    DFA *a = dfaCopy(inputAuto);
+    // Escape backslash first to prevent double escape
+    DFA *b = dfa_replace_char_with_string(a, var, indices, '\\', "\\\\");
+    dfaFree(a);
+    a = b;
+
+    for (unsigned int c = 0; c < 128; c++) {
+        char j = jsonEncodeChars[c];
+        if (j != 0) {
+            char uEncoded[8];
+            if (j == 'u') {
+                // Encode as \\u00xy
+                sprintf(uEncoded, "\\u00%02x", c);
+            } else {
+                // Add single escape char
+                sprintf(uEncoded, "\\%c", j);
+            }
+            b = dfa_replace_char_with_string(a, var, indices, c, uEncoded);
+            dfaFree(a);
+            a = b;
+        }
+    }
+    return b;
 }

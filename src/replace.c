@@ -1229,7 +1229,7 @@ DFA *dfa_replace_once_extrabit(M1, M2, str, var, indices)
   //printf("Insert sharp1 and sharp2 for duplicate M1\n");
   M1_bar = dfa_replace_step1_duplicate(M1, var, indices);
   //printf("M1_bar: var %d\n", var);
-  dfaPrintGraphvizAsciiRange(M1_bar, var, indices, 1);
+  //dfaPrintGraphvizAsciiRange(M1_bar, var, indices, 1);
   //printf("Generate M2 bar sharp1 M2 and sharp2\n");
   M2_bar = dfa_replace_once_step2_match_compliment(M2, var, indices);
   //printf("M2_bar: var %d\n", var);
