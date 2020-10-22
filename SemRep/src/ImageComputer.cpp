@@ -955,9 +955,12 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 
 		StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
 		StrangerAutomaton* replaceAuto = fwAnalysisResult.find(replaceNode->getID())->second;
-		string replaceStr = replaceAuto->getStr();
-
-		// checking for special case where a character is escaped by another character
+    std::cout << "PatternAuto to dot:\n";
+    patternAuto->toDotAscii(2);
+		std::cout << "ReplaceAuto to dot:\n";
+		replaceAuto->toDotAscii(2);
+    string replaceStr = replaceAuto->getStr();
+        // checking for special case where a character is escaped by another character
 		if (patternAuto->isSingleton()) {
 			string patternStr = patternAuto->generateSatisfyingExample();
 			if ( replaceStr.length() == 2 && patternStr.length() == 1 && patternStr[0] == replaceStr[1]) {
@@ -980,10 +983,12 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		StrangerAutomaton* subjectAuto = opAuto;
 		StrangerAutomaton* startAuto = fwAnalysisResult.find(startNode->getID())->second;
 		StrangerAutomaton* lengthAuto = fwAnalysisResult.find(lengthNode->getID())->second;
-
+    std::cout << "StartAuto:\n";
+    startAuto->toDotAscii(2);
 		string startValue = startAuto->getStr();
 		int start = stoi(startValue);
-
+    std::cout << "LengthAuto:\n";
+    startAuto->toDotAscii(2);
 		string lengthValue = lengthAuto->getStr();
 		int length = stoi(lengthValue);
 
