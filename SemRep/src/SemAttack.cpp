@@ -168,7 +168,7 @@ StrangerAutomaton* SemAttack::computeTargetFWAnalysis() {
     delete targetAnalysisResult[target_uninit_field_node->getID()];
     
     targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(target_uninit_field_node->getID());
-//    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeString("ABC>DEF", target_uninit_field_node->getID());
+//    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeString("baab", target_uninit_field_node->getID());
 
     ImageComputer targetAnalyzer;
 
