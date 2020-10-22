@@ -34,17 +34,11 @@ using namespace std;
 
 class SemAttackBw {
 public:
-    SemAttackBw(string target_dep_graph_file_name, string input_field_name);
+    SemAttackBw(const string& target_dep_graph_file_name, const string& input_field_name);
     virtual ~SemAttackBw();
-
-    StrangerAutomaton* computeValidationPatch();
-    StrangerAutomaton* computeAttackPatternOverlap();
 
     StrangerAutomaton* computeTargetFWAnalysis();
     StrangerAutomaton* generateAttack();
-
-    StrangerAutomaton* computeTargetLengthPatch(StrangerAutomaton* initialAuto, AnalysisResult& fwAnalysisResult);
-    StrangerAutomaton* computeTargetSanitizationPatch(StrangerAutomaton* initialAuto, const AnalysisResult& fwAnalysisResult);
 
     StrangerAutomaton* getTargetAuto() { return target_sink_auto; }
 
@@ -67,7 +61,7 @@ private:
 
     AnalysisResult analyzePostImages();
     AnalysisResult analyzePreImages(StrangerAutomaton* intersection_auto, const AnalysisResult& fwAnalysisResult);
-    void message(string msg);
+    void message(const string& msg);
     void debug_auto(StrangerAutomaton* automaton, int type);
     bool enable_debug;
 
@@ -75,14 +69,9 @@ private:
     string target_dep_graph_file_name;
     string input_field_name;
 
-    DepGraph reference_dep_graph;
     DepGraph target_dep_graph;
-    DepGraph reference_field_relevant_graph;
     DepGraph target_field_relevant_graph;
-
-    DepGraphNode* reference_uninit_field_node;
     DepGraphNode* target_uninit_field_node;
-
     StrangerAutomaton* target_sink_auto;
 
     string generateOutputFilePath(string folder_name, bool unique_name);

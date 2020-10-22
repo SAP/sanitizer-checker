@@ -28,17 +28,14 @@
 
 PerfInfo SemAttackBw::perfInfo;
 
-SemAttackBw::SemAttackBw(string target_dep_graph_file_name, string input_field_name) : enable_debug(true) {
-
-    this->target_dep_graph_file_name = target_dep_graph_file_name;
-    this->input_field_name = input_field_name;
+SemAttackBw::SemAttackBw(const string& target_dep_graph_file_name, const string& input_field_name) : enable_debug(true), target_dep_graph_file_name(target_dep_graph_file_name), input_field_name(input_field_name) {
 
     // read dep graphs
     this->target_dep_graph = DepGraph::parseDotFile(target_dep_graph_file_name);
 
     // initialize input nodes
     this->target_uninit_field_node = target_dep_graph.findInputNode(input_field_name);
-    if (this->target_uninit_field_node == NULL) {
+    if (this->target_uninit_field_node == nullptr) {
         throw StrangerStringAnalysisException("Cannot find input node " + input_field_name + " in target dep graph.");
     }
     message(stringbuilder() << "target uninit node(" << this->target_uninit_field_node->getID() << ") found for field " << input_field_name << ".");
@@ -46,7 +43,7 @@ SemAttackBw::SemAttackBw(string target_dep_graph_file_name, string input_field_n
     ImageComputer::staticInit();
     // initialize input relevant graphs
     this->target_field_relevant_graph = this->target_dep_graph.getInputRelevantGraph(this->target_uninit_field_node);
-    this->attack_pattern_auto = AttackPatterns::getLiteralPattern();
+    this->attack_pattern_auto = AttackPatterns::getHtmlPattern();
     message(this->target_dep_graph.toDot());
     message(this->target_field_relevant_graph.toDot());
 
@@ -57,7 +54,7 @@ SemAttackBw::~SemAttackBw() {
     delete this->target_uninit_field_node;
 }
 
-void SemAttackBw::message(string msg) {
+void SemAttackBw::message(const string& msg) {
     cout << endl << "~> SemAttackBW says: " << msg << endl;
 }
 
@@ -154,7 +151,7 @@ AnalysisResult SemAttackBw::analyzePostImages() {
 
     UninitNodesList uninit_nodes = this->target_dep_graph.getUninitNodes();
     message(stringbuilder() << "initializing inputs with bottom other than: " << this->input_field_name );
-    for (auto uninit_node : uninit_nodes) {
+    for (auto *uninit_node : uninit_nodes) {
         analysis_result[uninit_node->getID()] = StrangerAutomaton::makePhi(uninit_node->getID());
     }
 
@@ -197,7 +194,7 @@ StrangerAutomaton* SemAttackBw::generateAttack() {
 
     AnalysisResult fwAnalysisResult = analyzePostImages();
     printAnalysisResults(fwAnalysisResult);
-    this->sink_auto = fwAnalysisResult[this->target_field_relevant_graph.getRoot()->getID()];
+    this->sink_auto = fwAnalysisResult[this->target_dep_graph.getRoot()->getID()];
     if (this->enable_debug) {
         message("Post image of sink node:");
         debug_auto(this->sink_auto, 0);
@@ -236,7 +233,7 @@ StrangerAutomaton* SemAttackBw::computeTargetFWAnalysis() {
 
     // initialize reference input nodes to bottom
     message("initializing reference inputs with bottom");
-    for (auto uninit_node : targetUninitNodes) {
+    for (auto* uninit_node : targetUninitNodes) {
         targetAnalysisResult[uninit_node->getID()] = StrangerAutomaton::makePhi(uninit_node->getID());
     }
     // initialize uninit node that we are interested in with sigma star
@@ -258,37 +255,6 @@ StrangerAutomaton* SemAttackBw::computeTargetFWAnalysis() {
     target_sink_auto = targetAnalysisResult[target_field_relevant_graph.getRoot()->getID()];
     message("...computed target sink post image.");
     return target_sink_auto;
-}
-
-StrangerAutomaton* SemAttackBw::computeAttackPatternOverlap() {
-	message("BEGIN SANITIZATION ANALYSIS PHASE........................................");
-	boost::posix_time::ptime start_time = perfInfo.current_time();
-	StrangerAutomaton* targetSinkAuto = computeTargetFWAnalysis();
-	perfInfo.sanitization_target_first_forward_time = perfInfo.current_time() - start_time;
-	if (DEBUG_ENABLED_SC != 0) {
-		DEBUG_MESSAGE("Target Sink Auto - First forward analysis");
-		DEBUG_AUTO(targetSinkAuto);
-	}
-
-        StrangerAutomaton* xss = AttackPatterns::getLiteralPattern();
-        StrangerAutomaton* intersection = targetSinkAuto->intersect(xss, this->target_uninit_field_node->getID());
-
-        targetSinkAuto->toDotAscii(1);
-        xss->toDotAscii(1);
-        intersection->toDotAscii(1);
-        
-        if (intersection->isEmpty()) {
-            message("No intersection, validation function is good!");
-        } else {
-            message("Intersection between attack pattern and sanitizer!");
-            message(intersection->generateSatisfyingExample());
-        }
-
-        delete xss;
-        delete targetSinkAuto;
-        delete intersection;
-
-        return targetSinkAuto;
 }
 
 void SemAttackBw::debug_auto(StrangerAutomaton* automaton, int type) {

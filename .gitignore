@@ -22,6 +22,8 @@ MinCut/bin/*
 *.out
 *.app
 SemRep/src/semrep
+SemRep/src/semattack
+SemRep/src/semattack_bw
 
 *.d
 *.launch
