@@ -1486,6 +1486,14 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		StrangerAutomaton* uriAuto = StrangerAutomaton::decodeURIComponent(paramAuto, opNode->getID());
 		retMe = uriAuto;
 
+	} else if (opName == "JSON.stringify") {
+		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		StrangerAutomaton* json = StrangerAutomaton::jsonStringify(paramAuto, opNode->getID());
+		retMe = json;
+	} else if (opName == "JSON.parse") {
+		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		StrangerAutomaton* json = StrangerAutomaton::jsonParse(paramAuto, opNode->getID());
+		retMe = json;
 	} else {
 		cout << "!!! Warning: Unmodeled builtin general function : " << opName << endl;
 		f_unmodeled.push_back(opNode);

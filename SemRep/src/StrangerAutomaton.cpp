@@ -2542,8 +2542,6 @@ StrangerAutomaton* StrangerAutomaton::encodeURIComponent(StrangerAutomaton* subj
 
     boost::posix_time::ptime start_time = perfInfo->current_time();
     StrangerAutomaton* retMe = new StrangerAutomaton(dfaEncodeUriComponent(subjectAuto->dfa, num_ascii_track, indices_main));
-    perfInfo->htmlspecialchars_total_time += perfInfo->current_time() - start_time;
-    perfInfo->number_of_encodeuricomponent++;
 
     retMe->ID = id;
     retMe->debugAutomaton();
@@ -2556,8 +2554,30 @@ StrangerAutomaton* StrangerAutomaton::decodeURIComponent(StrangerAutomaton* subj
 
     boost::posix_time::ptime start_time = perfInfo->current_time();
     StrangerAutomaton* retMe = new StrangerAutomaton(dfaDecodeUriComponent(subjectAuto->dfa, num_ascii_track, indices_main));
-    perfInfo->htmlspecialchars_total_time += perfInfo->current_time() - start_time;
-    perfInfo->number_of_decodeuricomponent++;
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::jsonStringify(StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = jsonStringify(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaJsonStringify(subjectAuto->dfa, num_ascii_track, indices_main));
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::jsonParse(StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = jsonParse(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaJsonParse(subjectAuto->dfa, num_ascii_track, indices_main));
 
     retMe->ID = id;
     retMe->debugAutomaton();

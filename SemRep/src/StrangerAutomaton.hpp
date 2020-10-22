@@ -205,7 +205,12 @@ public:
     static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto){return encodeURIComponent(subjectAuto, traceID);};
     static StrangerAutomaton* decodeURIComponent(StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* decodeURIComponent(StrangerAutomaton* subjectAuto){return decodeURIComponent(subjectAuto, traceID);};
-    
+
+    static StrangerAutomaton* jsonStringify(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* jsonStringify(StrangerAutomaton* subjectAuto){return jsonStringify(subjectAuto, traceID);};
+    static StrangerAutomaton* jsonParse(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* jsonParse(StrangerAutomaton* subjectAuto){return jsonParse(subjectAuto, traceID);};
+
     void printAutomaton();
     void printAutomatonVitals();
     void toDot();
