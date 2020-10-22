@@ -85,6 +85,7 @@ int get_number_of_sharp1_state(struct int_list_type **pairs, int size);
 DFA *dfa_replace_step1_duplicate(DFA *M, int var, int *indices);
 DFA *dfa_replace_once_step1_duplicate(DFA *M, int var, int *indices);
 DFA *dfa_replace_step2_match_compliment(DFA *M, int var, int *indices);
+DFA *dfa_replace_once_step2_match_compliment(DFA *M, int var, int *indices);
 DFA *dfa_general_replace_extrabit(DFA* M1, DFA* M2, DFA* M3, int var, int* indices);
 DFA* dfa_pre_replace(DFA* M1, DFA* M2, DFA* M3, int var, int* indices);
 DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, char *str, int var, int* indices);

@@ -1226,31 +1226,31 @@ DFA *dfa_replace_once_extrabit(M1, M2, str, var, indices)
   DFA *M_rep;
   DFA *M_sharp = dfaSharpStringWithExtraBit(var, indices);
 
-  printf("Insert sharp1 and sharp2 for duplicate M1\n");
-  M1_bar = dfa_replace_once_step1_duplicate(M1, var, indices);
-  printf("M1_bar: var %d\n", var);
+  //printf("Insert sharp1 and sharp2 for duplicate M1\n");
+  M1_bar = dfa_replace_step1_duplicate(M1, var, indices);
+  //printf("M1_bar: var %d\n", var);
   dfaPrintGraphvizAsciiRange(M1_bar, var, indices, 1);
-  printf("Generate M2 bar sharp1 M2 and sharp2\n");
-  M2_bar = dfa_replace_step2_match_compliment(M2, var, indices);
-  printf("M2_bar: var %d\n", var);
-  dfaPrintGraphvizAsciiRange(M2_bar, var, indices, 1);
+  //printf("Generate M2 bar sharp1 M2 and sharp2\n");
+  M2_bar = dfa_replace_once_step2_match_compliment(M2, var, indices);
+  //printf("M2_bar: var %d\n", var);
+  //dfaPrintGraphvizAsciiRange(M2_bar, var, indices, 1);
 
-  printf("Generate Intersection\n");
+  //printf("Generate Intersection\n");
   M_inter = dfa_intersect(M1_bar, M2_bar);
-  printf("M_inter\n");
-  dfaPrintGraphvizAsciiRange(M_inter, var, indices, 1);
+  //printf("M_inter\n");
+  //dfaPrintGraphvizAsciiRange(M_inter, var, indices, 1);
  
-  printf("Check Intersection\n");
+  //printf("Check Intersection\n");
   if(check_intersection(M_sharp, M_inter, var, indices)>0) {
 
-    printf("Start Replacement!\n");
+      //printf("Start Replacement!\n");
     //replace match patterns
     M_rep = dfa_replace_step3_replace(M_inter, str, var, indices);
     temp1=dfaProject(M_rep, (unsigned) var);
     dfaFree(M_rep);
 
   } else { //no match
-    printf("No match found");
+      //printf("No match found");
     temp1 = dfaCopy(M1);
   }
 
@@ -1279,36 +1279,20 @@ DFA *dfa_general_replace_extrabit(DFA* M1, DFA* M2, DFA* M3, int var, int* indic
   DFA *M_rep;
   DFA *M_sharp = dfaSharpStringWithExtraBit(var, indices);
 
-  printf("M_sharp\n");
-  dfaPrintGraphvizAsciiRange(M_sharp, var, indices, 1);
-
-  printf("Insert sharp1 and sharp2 for duplicate M1\n");
   M1_bar = dfa_replace_step1_duplicate(M1, var, indices);
-  printf("M1_bar: var %d\n", var);
-  dfaPrintGraphvizAsciiRange(M1_bar, var, indices, 1);
-  printf("Generate M2 bar sharp1 M2 and sharp2\n");
+  dfaPrintGraphvizAsciiRange(M1_bar, var, indices, 0);
   M2_bar = dfa_replace_step2_match_compliment(M2, var, indices);
-  printf("M2_bar: var %d\n", var);
-  dfaPrintGraphvizAsciiRange(M2_bar, var, indices, 1);
 
-  printf("Generate Intersection\n");
   M_inter = dfa_intersect(M1_bar, M2_bar);
-  printf("M_inter\n");
-  dfaPrintGraphvizAsciiRange(M_inter, var, indices, 1);
 
   if(check_intersection(M_sharp, M_inter, var, indices)>0){
 
-      printf("Start Replacement!\n");
       // replace match patterns
-
     M_rep = dfa_replace_step3_general_replace(M_inter, M3, var, indices);
-
-    if(_FANG_DFA_DEBUG) dfaPrintVerbose(M_rep);
     result = dfaProject(M_rep, (unsigned) var);
     dfaFree(M_rep);
 
   }else { //no match
-      printf("No match\n");
     result = dfaCopy(M1);
   }
 

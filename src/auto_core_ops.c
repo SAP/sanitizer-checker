@@ -1685,7 +1685,7 @@ DFA *dfa_replace_once_step1_duplicate(DFA *M, int var, int *indices) {
         duplicate_id--;
       }
       if (M->f[i] == 1)
-        statuces[duplicate_id] = '0';
+        statuces[duplicate_id] = '+';
       else if (M->f[i] == -1)
         statuces[duplicate_id] = '-';
       else
@@ -1708,6 +1708,238 @@ DFA *dfa_replace_once_step1_duplicate(DFA *M, int var, int *indices) {
 
   return result;
 }
+
+DFA *dfa_replace_once_step2_match_compliment(DFA *M, int var, int *indices) {
+  DFA *result;
+    DFA *temp;
+  DFA *M_neg;
+  DFA *M_tneg;
+  //  DFA *M_e;
+  paths state_paths, pp;
+  trace_descr tp;
+  int i, j, y, k;
+  char *exeps;
+  int *to_states;
+  long max_exeps;
+  char *statuces;
+  int len, shift, newns, sink, sink_M_neg;
+  char *sharp1;
+  char *sharp0;
+  sharp1 = getSharp1WithExtraBit(var);
+  sharp0 = getSharp0WithExtraBit(var);
+
+  /*  //Union empty string via MONA
+   M_e = dfaASCIIOnlyNullString(); //null string
+   printf("NULL string\n");
+   dfaPrintVerbose(M_e);
+
+
+   M_tneg = dfa_star_M_star(M, var, indices);
+   dfaNegation(M_tneg);
+   printf("The Compliment of Star M Star\n");
+   dfaPrintVerbose(M_tneg);
+
+   M_neg = dfaProduct(M_tneg, M_e, dfaOR);
+   printf("Compliment Union NULL string\n");
+   dfaPrintVerbose(M_neg);
+   */
+
+  M_tneg = dfa_star_M_star(M, var, indices);
+  dfaNegation(M_tneg);
+  //printf("The Compliment of Star M Star\n");
+  //dfaPrintVerbose(M_tneg);
+
+  //Union empty string manually
+  M_neg = dfa_union_empty_M(M_tneg, var, indices);
+  //printf("Compliment Union NULL string\n");
+  //dfaPrintVerbose(M_neg);
+
+  sink_M_neg = find_sink(M_neg);
+  if (sink_M_neg < 0) {
+    //THERE IS no SINK STATES
+    //printf("No Sink of M_neg :[%d]\n", sink_M_neg);
+    shift = M_neg->ns; // map M transitions to new M
+    newns = M->ns + M_neg->ns; //number of states for new M. Note that there maybe no sink state in M_neg.
+  } else {
+    //THERE IS no SINK STATES
+    //printf("Sink of M_neg :[%d] will be removed.\n", sink_M_neg);
+    shift = M_neg->ns - 1; // map M transitions to new M
+    newns = M->ns + M_neg->ns - 1; //number of states for new M. Note that there maybe no sink state in M_neg.
+  }
+  // Add a single additional state to accept everything
+  newns += 1;
+  
+  len = var + 1; //one extra bit for bar
+
+  max_exeps = 1 << len; //maybe exponential (= 2**len)
+  sink = find_sink(M);
+  assert(sink>-1);
+  sink += shift;
+
+  dfaSetup(newns, len, indices);
+  exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char));
+  to_states = (int *) malloc(max_exeps * sizeof(int));
+  statuces = (char *) malloc((newns + 1) * sizeof(char));
+
+  //the initial state
+  for (i = 0, y = 0; i < M_neg->ns; i++) {
+    if (i != sink_M_neg) {
+      state_paths = pp = make_paths(M_neg->bddm, M_neg->q[i]);
+      k = 0;
+
+      while (pp) {
+        if (pp->to != sink_M_neg) {
+          if (pp->to > sink_M_neg)
+            to_states[k] = pp->to - 1;
+          else
+            to_states[k] = pp->to;
+          for (j = 0; j < var; j++) {
+            //the following for loop can be avoided if the indices are in order
+            for (tp = pp->trace; tp && (tp->index != indices[j]); tp
+                = tp->next)
+              ;
+
+            if (tp) {
+              if (tp->value)
+                exeps[k * (len + 1) + j] = '1';
+              else
+                exeps[k * (len + 1) + j] = '0';
+            } else
+              exeps[k * (len + 1) + j] = 'X';
+          }
+          exeps[k * (len + 1) + var] = '0'; //original value
+          exeps[k * (len + 1) + len] = '\0';
+          k++;
+        }
+        pp = pp->next;
+      }
+
+      if (M_neg->f[i] == 1) {
+        dfaAllocExceptions(k + 1);
+        for (k--; k >= 0; k--)
+          dfaStoreException(to_states[k], exeps + k * (len + 1));
+        dfaStoreException(shift, sharp1);
+        dfaStoreState(sink);
+        statuces[y] = '+';
+      } else {
+        dfaAllocExceptions(k);
+        for (k--; k >= 0; k--)
+          dfaStoreException(to_states[k], exeps + k * (len + 1));
+        dfaStoreState(sink);
+        if (M_neg->f[i] == -1)
+          statuces[y + shift] = '-';
+        else
+          statuces[y + shift] = '0';
+      }
+      kill_paths(state_paths);
+      y++; //y is the number of visited non sink states
+    }
+    /*    else {
+     //if M_neg exists sink state
+     dfaAllocExceptions(0);
+     dfaStoreState(sink);
+     statuces[i]='0';
+     }
+     */
+  }
+  if (sink_M_neg < 0)
+    assert(y==M_neg->ns);
+  else
+    assert(y+1==M_neg->ns);
+
+  for (i = 0; i < M->ns; i++) {
+    if (i != sink - shift) {
+      state_paths = pp = make_paths(M->bddm, M->q[i]);
+      k = 0;
+
+      while (pp) {
+        if (pp->to != sink - shift) {
+          to_states[k] = pp->to + shift;
+          for (j = 0; j < var; j++) {
+            //the following for loop can be avoided if the indices are in order
+            for (tp = pp->trace; tp && (tp->index != indices[j]); tp = tp->next);
+            if (tp) {
+              if (tp->value)
+                exeps[k * (len + 1) + j] = '1';
+              else
+                exeps[k * (len + 1) + j] = '0';
+            } else
+              exeps[k * (len + 1) + j] = 'X';
+          }
+          exeps[k * (len + 1) + var] = '1'; //bar value
+          exeps[k * (len + 1) + len] = '\0';
+          k++;
+        }
+        pp = pp->next;
+      }
+
+      if (M->f[i] == 1) {
+        dfaAllocExceptions(k + 1);
+        for (k--; k >= 0; k--)
+          dfaStoreException(to_states[k], exeps + k * (len + 1));
+        dfaStoreException(newns - 1, sharp0); // Add sharp1 to final state accepting original language
+        dfaStoreState(sink);
+        statuces[i + shift] = '0';
+      } else {
+        dfaAllocExceptions(k);
+        for (k--; k >= 0; k--)
+          dfaStoreException(to_states[k], exeps + k * (len + 1));
+        dfaStoreState(sink);
+        if (M->f[i] == -1)
+          statuces[i + shift] = '-';
+        else
+          statuces[i + shift] = '0';
+      }
+      kill_paths(state_paths);
+    } else { //sink state
+      dfaAllocExceptions(0);
+      dfaStoreState(sink);
+      statuces[i + shift] = '-';
+    }
+  }
+
+  // Construct final state accepting eveything from the original language
+  // to effectively halt the replacement
+  unsigned int originalStates = 1 << var;
+  for (k = 0; k < originalStates; k++) {
+      for (j = 0; j < var; j++) {
+          if (k & (1 << j)) {
+              exeps[k * (len + 1) + j] = '1';
+          } else {
+              exeps[k * (len + 1) + j] = '0';
+          }
+      }
+      exeps[k * (len + 1) + var] = '0'; // Original language only
+      exeps[k * (len + 1) + len] = '\0';
+  }
+  dfaAllocExceptions(k + 2);
+  for (k--; k >= 0; k--)
+      dfaStoreException(newns - 1, exeps + k * (len + 1));
+  dfaStoreException(sink, sharp0);
+  dfaStoreException(sink, sharp1);
+  dfaStoreState(sink);
+  // Set as accepting state
+  statuces[newns - 1] = '+';
+  
+  
+  statuces[newns] = '\0';
+  assert(i+shift+1 == newns);
+  temp = dfaBuild(statuces);
+  //dfaPrintVitals(result);
+  //printf("FREE EXEPS\n");
+  free(exeps);
+  //printf("FREE ToState\n");
+  free(to_states);
+  //printf("FREE STATUCES\n");
+  free(statuces);
+  dfaFree(M_neg);
+  dfaFree(M_tneg);
+  //dfaFree(M_e);
+    result = dfaMinimize(temp);
+    dfaFree(temp);
+  return result;
+} //END dfa_replace_step2_match_negation
+
 
 //Output M so that L(M)={w|w=x0#1\bar{x1}#2.., where x0x1... \in L(M1)}
 DFA *dfa_replace_step1_duplicate(DFA *M, int var, int *indices) {
