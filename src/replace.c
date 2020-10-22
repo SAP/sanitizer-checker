@@ -1280,7 +1280,6 @@ DFA *dfa_general_replace_extrabit(DFA* M1, DFA* M2, DFA* M3, int var, int* indic
   DFA *M_sharp = dfaSharpStringWithExtraBit(var, indices);
 
   M1_bar = dfa_replace_step1_duplicate(M1, var, indices);
-  dfaPrintGraphvizAsciiRange(M1_bar, var, indices, 0);
   M2_bar = dfa_replace_step2_match_compliment(M2, var, indices);
 
   M_inter = dfa_intersect(M1_bar, M2_bar);

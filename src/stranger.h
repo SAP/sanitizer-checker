@@ -456,6 +456,7 @@ extern "C" {
     DFA *dfaDecodeUriComponent(DFA *inputAuto, int var, int *indices);
 
     DFA *dfaJsonStringify(DFA *inputAuto, int var, int *indices);
+    DFA *dfaJsonParse(DFA *inputAuto, int var, int *indices);
 
     //Utility function
     int getVar();

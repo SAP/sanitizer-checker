@@ -3854,12 +3854,13 @@ DFA *dfaDecodeUriComponent(DFA *inputAuto, int var, int *indices){
 
     // Anything else containing a % is invalid and will throw an error
     // Contains just the empty string
+    // TODO: this will also kill the % you have just decoded! :-(
     DFA* phi = dfaASCIIOnlyNullString(var, indices);
     // Construct % string
     char* percent = "%";
     DFA* percent_auto = dfa_construct_string(percent, var, indices);
     a = dfa_general_replace_extrabit(b, percent_auto, phi, var, indices);
-
+    dfaFree(phi);
     dfaFree(b);
     return a;
 }
@@ -3901,5 +3902,92 @@ DFA *dfaJsonStringify(DFA *inputAuto, int var, int *indices) {
             a = b;
         }
     }
+
     return b;
+}
+
+static const char jsonDecodeChars[128] = {
+ 0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,
+ 0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,
+ 0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,
+ 0xFF,0xFF,   0,   0, '\"',  0,   0,   0,   0,   0, // 30
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, // 40
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, // 50
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, // 60
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, // 70
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0, // 80
+    0,   0,  '\\',  0,   0,   0,   0,   0,   8,   0, // 90
+    0,   0,  12,   0,   0,   0,   0,   0,   0,   0, // 100
+   10,   0,   0,   0,   0,   0,   9,   0,   0,   0, // 110
+};
+
+DFA *dfaJsonParse(DFA *inputAuto, int var, int *indices){
+
+    DFA *a = dfaCopy(inputAuto);
+    DFA *b = NULL;
+    DFA *p = NULL;
+    DFA* phi = dfaASCIIOnlyNullString(var, indices);
+
+    // Replace all valid sequences
+    char str[2];
+    char encoded[8];
+
+    // First unescape backslash pairs to char 255
+    // TODO: this should be done by adding an extra bit
+    sprintf(str, "%c", 255);
+    sprintf(encoded, "\\\\");
+    p = dfa_construct_string(encoded, var, indices);
+    b = dfa_replace_extrabit(a, p, str, var, indices);
+    dfaFree(p);
+    dfaFree(a);
+    a = b;
+
+    for (unsigned int e = 0; e < 128; e++) {
+        char decodeChar = jsonDecodeChars[e];
+        if (e == 'u') {
+            for (unsigned int c = 0; c < 128; c++) {
+                sprintf(str, "%c", c);
+                sprintf(encoded, "\\u00%02X", c);
+                printf("%u Replacing %s with %s\n", c, encoded, str);
+                p = dfa_construct_string(encoded, var, indices);
+                b = dfa_replace_extrabit(a, p, str, var, indices);
+
+                dfaFree(p);
+                dfaFree(a);
+                a = b;
+            }
+        } else if ((decodeChar > 0) && (decodeChar < 0xFF)) {
+            sprintf(str, "%c", jsonDecodeChars[e]);
+            sprintf(encoded, "\\%c", e);
+            printf("%u Replacing %s with %s\n", e, encoded, str);
+            p = dfa_construct_string(encoded, var, indices);
+            b = dfa_replace_extrabit(a, p, str, var, indices);
+
+            dfaFree(p);
+            dfaFree(a);
+            a = b;
+        } else if (decodeChar == 0) {
+            sprintf(str, "%c", e);
+            sprintf(encoded, "\\%c", e);
+            printf("%u Replacing %s with %s\n", e, encoded, str);
+            p = dfa_construct_string(encoded, var, indices);
+            b = dfa_general_replace_extrabit(a, p, phi, var, indices);
+
+            dfaFree(p);
+            dfaFree(a);
+            a = b;
+        }
+    }
+
+    // Convert the backslash back again
+    sprintf(str, "\\");
+    sprintf(encoded, "%c", 255);
+    p = dfa_construct_string(encoded, var, indices);
+    b = dfa_replace_extrabit(a, p, str, var, indices);
+    dfaFree(p);
+    dfaFree(a);
+    dfaFree(phi);
+    a = b;
+
+    return a;
 }
