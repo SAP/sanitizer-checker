@@ -44,13 +44,89 @@ Replace function
 ***************************************************/
 
 
+void print_value(paths pp, int var, int *indices, int len) {
+    int j;
+    trace_descr tp;
+    for (j = 0; j < len; j++) {
+        //the following for loop can be avoided if the indices are in order
+        for (tp = pp->trace; tp && (tp->index != indices[j]); tp =tp->next);
+        if (tp) {
+            if (tp->value) {
+                printf("1");
+            } else {
+                printf("0");
+            }
+        } else {
+            printf("X");
+        }
+    }
+    for (j = var; j < len; j++) {
+        printf("0");
+    }
+    printf("\n");
+}
 
+int is_sharp1(paths pp, int var, int *indices) {
+    char *sharp1;
+    sharp1 = getSharp1WithExtraBit(var);
+    int j;
+    trace_descr tp;
+    int yes = 1;
 
+    for (j = 0; j < var + 1; j++) {
+        for (tp = pp->trace; tp && (tp->index != indices[j]); tp =tp->next);
+        if (tp) {
+            if (tp->value) {
+                if (sharp1[j] != '1') {
+                    yes = 0;
+                    break;
+                }
+            } else {
+                if (sharp1[j] != '0') {
+                    yes = 0;
+                    break;
+                }
+            }
+        } else {
+            if (sharp1[j] != 'X') {
+                yes = 0;
+                break;
+            }
+        }
+    }
+
+    free(sharp1);
+    return yes;
+}
+
+int state_already_included(char* exeps, int k, int len, int var) {
+    int l, j;
+    // Check whether this transition is already included
+    int match = 1;
+    printf("\n----------------------------\n");
+    for (l = 0; l < k; l++) {
+        match = 1;
+        printf("\n");
+        for (j = 0; j < len; j++) {
+            printf("Checking transition value %d of %d compare with %d values: %c, %c\n",
+                   l, k, j, exeps[k*(len+1)+j], exeps[l*(len+1)+j]);
+            if (exeps[k*(len+1)+j] != exeps[l*(len+1)+j]) {
+                match = 0;
+                break;
+            }
+        }
+        if (match == 1) {
+            printf("Found a match states\n");
+            break;
+        }
+    }
+    return match;
+}
 
 //Replace any c \in {sharp1} \vee bar \vee {sharp2} with \epsilon (Assume 00000000000)
 DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
 {
-      DFA *result = NULL;
+  DFA *result = NULL;
   DFA *tmpM2 = NULL;
   DFA *tmpM1 = NULL;
   int aux=0;
@@ -59,7 +135,7 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
 
   paths state_paths, pp;
   trace_descr tp;
-  int i, j, o, z, k;
+  int i, j, o, z, k, l;
   char *exeps;
   int *to_states;
   long max_exeps;
@@ -69,7 +145,7 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
   int *indices=oldindices;
   char *auxbit=NULL;
   struct int_type *tmp=NULL;
-
+  
   //printf("Start get match exclude\n");
   pairs = get_match_exclude_self(M, var, indices); //for deletion, exclude self state from the closure
   //printf("End get match exclude\n");
@@ -94,21 +170,56 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((M->ns+1)*sizeof(char));
 
+  // For the starting state we need to do something special
+  // Check whether there are any closure paths from state 0
+  k = 0;
+  if(pairs[0]!=NULL && pairs[0]->count>0) {
+      // Loop over states reachable from state 0
+      for(z=0, tmp=pairs[0]->head;z<pairs[0]->count; z++, tmp = tmp->next) {
+          i = tmp->value;
+          // Loop over all the paths attached to the closure state
+          state_paths = pp = make_paths(M->bddm, M->q[i]);
+          while (pp) {
+            if(pp->to != sink) {
+              for (tp = pp->trace; tp && (tp->index != indices[var]); tp = tp->next);
+              if (!tp || !(tp->value)) { // pp->value indicates a bar value
+                // Transitions to states which we are interested in 
+                to_states[k]=pp->to;
+                for (j = 0; j < var; j++) {
+                  //the following for loop can be avoided if the indices are in order
+                  for (tp = pp->trace; tp && (tp->index != indices[j]); tp = tp->next);
+                  if (tp) {
+                    if (tp->value) exeps[k*(len+1)+j]='1';
+                    else exeps[k*(len+1)+j]='0';
+                  }
+                  else
+                    exeps[k*(len+1)+j]='X';
+                }
+                set_bitvalue(auxbit, aux, z+1); // aux = 3, z=4, auxbit 001
+                for (j = var; j < len; j++) { //set to xxxxxxxx100 (= not bar?)
+                    exeps[k*(len+1)+j]=auxbit[len-j-1];
+                }
+                exeps[k*(len+1)+len]='\0';
+                k++;
+              }
+            }
+            pp = pp->next;
+          }
+          kill_paths(state_paths);
+      }
+  }
 
   for (i = 0; i < M->ns; i++) {
-
     state_paths = pp = make_paths(M->bddm, M->q[i]);
-    k=0;
-
+    // Do not reset k here, as we want to add states from the special case above
     while (pp) {
-      if(pp->to!=sink){
-	for (tp = pp->trace; tp && (tp->index != indices[var]); tp =tp->next); //find the bar value
-	if (!tp || !(tp->value)) {//it is bar value
+      if(pp->to!=sink) {
+        for (tp = pp->trace; tp && (tp->index != indices[var]); tp = tp->next);
+	if (!tp || !(tp->value)) { // it is a bar value
 	  to_states[k]=pp->to;
 	  for (j = 0; j < var; j++) {
 	    //the following for loop can be avoided if the indices are in order
-	    for (tp = pp->trace; tp && (tp->index != indices[j]); tp =tp->next);
-
+	    for (tp = pp->trace; tp && (tp->index != indices[j]); tp = tp->next);
 	    if (tp) {
 	      if (tp->value) exeps[k*(len+1)+j]='1';
 	      else exeps[k*(len+1)+j]='0';
@@ -117,17 +228,19 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
 	      exeps[k*(len+1)+j]='X';
 	  }
 	  for (j = var; j < len; j++) {
-	    exeps[k*(len+1)+j]='0';
+            exeps[k*(len+1)+j]='0';
 	  }
 	  exeps[k*(len+1)+len]='\0';
-	  k++;
-	  if(pairs[pp->to]!=NULL && pairs[pp->to]->count>0){ //need to add extra edges to states in reachable closure
+          k++;
+	  if(pairs[pp->to]!=NULL && pairs[pp->to]->count>0) { // Need to add extra edges to states in reachable closure
 	    o=k-1; //the original path
 	    for(z=0, tmp=pairs[pp->to]->head;z<pairs[pp->to]->count; z++, tmp = tmp->next){
+              // Add an extra edge to the reachable closure state directly
+              // bypassing the other states and in effect deleting the characters
 	      to_states[k]=tmp->value;
 	      for (j = 0; j < var; j++) exeps[k*(len+1)+j]=exeps[o*(len+1)+j];
 	      set_bitvalue(auxbit, aux, z+1); // aux = 3, z=4, auxbit 001
-	      for (j = var; j < len; j++) { //set to xxxxxxxx100
+	      for (j = var; j < len; j++) { //set to xxxxxxxx100 (= not bar?)
 		exeps[k*(len+1)+j]=auxbit[len-j-1];
 	      }
               exeps[k*(len+1)+len]='\0';
@@ -140,8 +253,9 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
     }//end while
 
     dfaAllocExceptions(k);
-    for(k--;k>=0;k--)
+    for(k--;k>=0;k--) {
       dfaStoreException(to_states[k],exeps+k*(len+1));
+    }
     dfaStoreState(sink);
 
     if(M->f[i]==1)
@@ -152,10 +266,13 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
       statuces[i]='0';
 
     kill_paths(state_paths);
+    k = 0;
   }
 
   statuces[M->ns]='\0';
   tmpM2=dfaBuild(statuces);
+
+  //dfaPrintGraphvizAsciiRange(tmpM2, var, indices, 1);  
   //dfaPrintVitals(result);
   for(i=0; i<aux; i++){
     j=len -i;
@@ -1084,6 +1201,7 @@ DFA *dfa_replace_string(DFA *M, char *str, int var, int *oldindices)
 DFA *dfa_replace_step3_replace(DFA *M, char *str, int var, int *indices)
 {
   DFA *result=NULL;
+
   if((str ==NULL)||strlen(str)==0){
 //    printf("Replacement [%s]!\n", str);
     result = dfa_replace_delete(M, var, indices);
@@ -1105,6 +1223,8 @@ DFA *dfa_replace_step3_general_replace(DFA *M, DFA* Mr, int var, int *indices)
   DFA *result2 = NULL;
   DFA *result = NULL;
   DFA *tmp = NULL;
+
+  //dfaPrintGraphvizAsciiRange(M, var, indices, 1);
 
   if(Mr->f[M->s]==1){
     //printf("Replacement [%s]!\n", str);

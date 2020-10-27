@@ -25,7 +25,7 @@
 
 #include <stdbool.h>
 #include <string.h>
-
+#include "stranger.h"
 
 typedef struct UIntArrayList_ {
     unsigned *list;
@@ -67,6 +67,8 @@ bool searchStatePairArrayListBS(PStatePairArrayList pStatePairArrayList, unsigne
 void sortStatePairArrayList(PStatePairArrayList pStatePairArrayList);
 void printStatePairArrayList(PStatePairArrayList pStatePairArrayList);
 void freeStatePairArrayList(PStatePairArrayList pStatePairArrayList);
+
+void printIntListType(struct int_list_type* ilt);
 
 unsigned roundToNextPow2(unsigned v);
 

@@ -62,6 +62,8 @@ DFA* mdfaMEqualLRc(DFA *M1, DFA *M2, char* str, int i_track, int j_track, int m,
 
 char *getSharp1(int k);
 char *getSharp0(int k);
+char *getSharp0WithExtraBit(int k);
+char *getSharp1WithExtraBit(int k);
 char *bintostr(unsigned long n, int k);
 char *bintostrWithExtraBit(unsigned long n, int k);
 unsigned char strtobin(char* binChar, int var);
