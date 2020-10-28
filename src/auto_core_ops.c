@@ -2546,12 +2546,13 @@ struct int_list_type **get_match_exclude_self(DFA *M, int var, int *indices) {
   for (i = 0; i < M->ns; i++) {
       //printf("Start exist sharp1\n");
     next = exist_sharp1_path(M, i, var);
-    //printf("End exist sharp1: from %d state[%d]\n", i, next);
-    if (next > -1) //result[i]= remove_value(reachable_closure(M, next, var, indices), i);
+    //printf("End exist sharp1: from %d to %d\n", i, next);
+    if (next > -1) {//result[i]= remove_value(reachable_closure(M, next, var, indices), i);
       result[i] = reachable_closure(M, next, var, indices);
+      //printIntListType(result[i]);
+    }
     else
       result[i] = new_ilt();
-    //printIntListType(result[i]);
   }
   return result;
 }

@@ -66,6 +66,16 @@ void print_value(paths pp, int var, int *indices, int len) {
     printf("\n");
 }
 
+void print_exep_value(char *exep, int len) {
+    int j;
+    trace_descr tp;
+    for (j = 0; j < len; j++, exep++) {
+        printf("%c", *exep);
+    }
+    printf("\n");
+}
+
+
 int is_sharp1(paths pp, int var, int *indices) {
     char *sharp1;
     sharp1 = getSharp1WithExtraBit(var);
@@ -145,7 +155,8 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
   int *indices=oldindices;
   char *auxbit=NULL;
   struct int_type *tmp=NULL;
-  
+
+  //dfaPrintGraphvizAsciiRange(M, var, indices, 1);  
   //printf("Start get match exclude\n");
   pairs = get_match_exclude_self(M, var, indices); //for deletion, exclude self state from the closure
   //printf("End get match exclude\n");
@@ -180,9 +191,10 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
           // Loop over all the paths attached to the closure state
           state_paths = pp = make_paths(M->bddm, M->q[i]);
           while (pp) {
-            if(pp->to != sink) {
+              if ((pp->to != sink) && (pp->to != i)) {
               for (tp = pp->trace; tp && (tp->index != indices[var]); tp = tp->next);
               if (!tp || !(tp->value)) { // pp->value indicates a bar value
+                  //printf("Starting state: path to %d ", pp->to);
                 // Transitions to states which we are interested in 
                 to_states[k]=pp->to;
                 for (j = 0; j < var; j++) {
@@ -200,6 +212,7 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
                     exeps[k*(len+1)+j]=auxbit[len-j-1];
                 }
                 exeps[k*(len+1)+len]='\0';
+                //print_exep_value( &exeps[k*(len+1)], len);
                 k++;
               }
             }
@@ -232,21 +245,23 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
 	  }
 	  exeps[k*(len+1)+len]='\0';
           k++;
-	  if(pairs[pp->to]!=NULL && pairs[pp->to]->count>0) { // Need to add extra edges to states in reachable closure
-	    o=k-1; //the original path
-	    for(z=0, tmp=pairs[pp->to]->head;z<pairs[pp->to]->count; z++, tmp = tmp->next){
+          if(pairs[pp->to]!=NULL && pairs[pp->to]->count>0) { // Need to add extra edges to states in reachable closure
+            o=k-1; //the original path
+            for(z=0, tmp=pairs[pp->to]->head;z<pairs[pp->to]->count; z++, tmp = tmp->next){
+              //printf("%d to %d reaches %d ", i, pp->to, tmp->value);
               // Add an extra edge to the reachable closure state directly
               // bypassing the other states and in effect deleting the characters
-	      to_states[k]=tmp->value;
-	      for (j = 0; j < var; j++) exeps[k*(len+1)+j]=exeps[o*(len+1)+j];
-	      set_bitvalue(auxbit, aux, z+1); // aux = 3, z=4, auxbit 001
-	      for (j = var; j < len; j++) { //set to xxxxxxxx100 (= not bar?)
-		exeps[k*(len+1)+j]=auxbit[len-j-1];
-	      }
+              to_states[k]=tmp->value;
+              for (j = 0; j < var; j++) exeps[k*(len+1)+j]=exeps[o*(len+1)+j];
+                set_bitvalue(auxbit, aux, z+1); // aux = 3, z=4, auxbit 001
+              for (j = var; j < len; j++) { //set to xxxxxxxx100 (= not bar?)
+                exeps[k*(len+1)+j]=auxbit[len-j-1];
+              }
               exeps[k*(len+1)+len]='\0';
-	      k++;
-	    }
-	  }
+              //print_exep_value(&exeps[k*(len+1)], len);
+              k++;
+            }
+          }
 	}
       }
       pp = pp->next;

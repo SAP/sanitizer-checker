@@ -565,8 +565,10 @@ void printStatePairArrayList(PStatePairArrayList pStatePairArrayList ){
 void printIntListType(struct int_list_type* ilt) {
     struct int_type *tmp;
     int z = 0;
-    for (tmp = ilt->head; z < ilt->count; z++, tmp = tmp->next) {
-        printf("Entry: %d, value: %d\n", z, tmp->value);
+    if ((ilt != NULL) && (ilt->count > 0)) {
+        for (tmp = ilt->head; z < ilt->count; z++, tmp = tmp->next) {
+            printf("Entry: %d, value: %d\n", z, tmp->value);
+        }
     }
 }
 
