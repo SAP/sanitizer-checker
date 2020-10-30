@@ -112,21 +112,22 @@ int is_sharp1(paths pp, int var, int *indices) {
 int state_already_included(char* exeps, int k, int len, int var) {
     int l, j;
     // Check whether this transition is already included
-    int match = 1;
-    printf("\n----------------------------\n");
+    int match = -1;
+    int matchFound = 0;
     for (l = 0; l < k; l++) {
-        match = 1;
-        printf("\n");
+        matchFound = 1;
+//        printf("\n");
         for (j = 0; j < len; j++) {
-            printf("Checking transition value %d of %d compare with %d values: %c, %c\n",
-                   l, k, j, exeps[k*(len+1)+j], exeps[l*(len+1)+j]);
+//            printf("Checking transition value %d of %d compare with %d values: %c, %c\n",
+//                   l, k, j, exeps[k*(len+1)+j], exeps[l*(len+1)+j]);
             if (exeps[k*(len+1)+j] != exeps[l*(len+1)+j]) {
-                match = 0;
+                matchFound = 0;
                 break;
             }
         }
-        if (match == 1) {
-            printf("Found a match states\n");
+        if (matchFound == 1) {
+//            printf("Found a match states\n");
+            match = l;
             break;
         }
     }
@@ -134,8 +135,10 @@ int state_already_included(char* exeps, int k, int len, int var) {
 }
 
 //Replace any c \in {sharp1} \vee bar \vee {sharp2} with \epsilon (Assume 00000000000)
-DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
+DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
 {
+
+  dfaPrintGraphvizAsciiRange(M, var, oldindices, 1);
   DFA *result = NULL;
   DFA *tmpM2 = NULL;
   DFA *tmpM1 = NULL;
@@ -191,12 +194,17 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
           // Loop over all the paths attached to the closure state
           state_paths = pp = make_paths(M->bddm, M->q[i]);
           while (pp) {
-              if ((pp->to != sink) && (pp->to != i)) {
+              if ((pp->to != sink) && (pp->to != 0)) {
               for (tp = pp->trace; tp && (tp->index != indices[var]); tp = tp->next);
               if (!tp || !(tp->value)) { // pp->value indicates a bar value
-                  //printf("Starting state: path to %d ", pp->to);
-                // Transitions to states which we are interested in 
-                to_states[k]=pp->to;
+                  printf("Stating state has closure to state %d -> %d\n", i, pp->to);
+                  // Check if the transition is a loop to the same state
+                  if (pp->to == i) {
+                      to_states[k] = 0;
+                      printf("LOOP! to_states[%d] = %d\n", k, to_states[k]);                       
+                  } else {
+                      to_states[k]=pp->to;
+                  }
                 for (j = 0; j < var; j++) {
                   //the following for loop can be avoided if the indices are in order
                   for (tp = pp->trace; tp && (tp->index != indices[j]); tp = tp->next);
@@ -214,6 +222,7 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
                 exeps[k*(len+1)+len]='\0';
                 //print_exep_value( &exeps[k*(len+1)], len);
                 k++;
+                if ((pp->to == i) && remove_loops) k--;
               }
             }
             pp = pp->next;
@@ -248,18 +257,20 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
           if(pairs[pp->to]!=NULL && pairs[pp->to]->count>0) { // Need to add extra edges to states in reachable closure
             o=k-1; //the original path
             for(z=0, tmp=pairs[pp->to]->head;z<pairs[pp->to]->count; z++, tmp = tmp->next){
-              //printf("%d to %d reaches %d ", i, pp->to, tmp->value);
               // Add an extra edge to the reachable closure state directly
               // bypassing the other states and in effect deleting the characters
               to_states[k]=tmp->value;
+              printf("to_states[%d] = %d\n", k, to_states[k]); 
               for (j = 0; j < var; j++) exeps[k*(len+1)+j]=exeps[o*(len+1)+j];
                 set_bitvalue(auxbit, aux, z+1); // aux = 3, z=4, auxbit 001
               for (j = var; j < len; j++) { //set to xxxxxxxx100 (= not bar?)
                 exeps[k*(len+1)+j]=auxbit[len-j-1];
               }
               exeps[k*(len+1)+len]='\0';
-              //print_exep_value(&exeps[k*(len+1)], len);
               k++;
+              if (state_already_included(exeps, k, len, var)) {
+                  k--;
+              }
             }
           }
 	}
@@ -269,6 +280,8 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices)
 
     dfaAllocExceptions(k);
     for(k--;k>=0;k--) {
+        printf("%2d to %2d with value ", i, to_states[k]);
+        print_exep_value(&exeps[k*(len+1)], len);
       dfaStoreException(to_states[k],exeps+k*(len+1));
     }
     dfaStoreState(sink);
@@ -1219,7 +1232,24 @@ DFA *dfa_replace_step3_replace(DFA *M, char *str, int var, int *indices)
 
   if((str ==NULL)||strlen(str)==0){
 //    printf("Replacement [%s]!\n", str);
-    result = dfa_replace_delete(M, var, indices);
+      result = dfa_replace_delete(M, var, indices, 1);
+  }else if(strlen(str)==1){
+//    printf("Replacement [%s]!\n", str);
+    result = dfa_replace_char(M, str[0], var, indices);
+  }else {
+//    printf("Replacement [%s]!\n", str);
+    result = dfa_replace_string(M, str, var, indices);
+  }
+  return result;
+} //END dfa_replace_stpe3_replace
+
+DFA *dfa_replace_once_step3_replace(DFA *M, char *str, int var, int *indices)
+{
+  DFA *result=NULL;
+
+  if((str ==NULL)||strlen(str)==0){
+//    printf("Replacement [%s]!\n", str);
+      result = dfa_replace_delete(M, var, indices, 0);
   }else if(strlen(str)==1){
 //    printf("Replacement [%s]!\n", str);
     result = dfa_replace_char(M, str[0], var, indices);
@@ -1243,7 +1273,7 @@ DFA *dfa_replace_step3_general_replace(DFA *M, DFA* Mr, int var, int *indices)
 
   if(Mr->f[M->s]==1){
     //printf("Replacement [%s]!\n", str);
-    result0 = dfa_replace_delete(M, var, indices);
+      result0 = dfa_replace_delete(M, var, indices, 1);
     result = result0;
   }
 
@@ -1361,26 +1391,26 @@ DFA *dfa_replace_once_extrabit(M1, M2, str, var, indices)
   DFA *M_rep;
   DFA *M_sharp = dfaSharpStringWithExtraBit(var, indices);
 
-  //printf("Insert sharp1 and sharp2 for duplicate M1\n");
+  printf("Insert sharp1 and sharp2 for duplicate M1\n");
   M1_bar = dfa_replace_step1_duplicate(M1, var, indices);
-  //printf("M1_bar: var %d\n", var);
-  //dfaPrintGraphvizAsciiRange(M1_bar, var, indices, 1);
-  //printf("Generate M2 bar sharp1 M2 and sharp2\n");
+  printf("M1_bar: var %d\n", var);
+  dfaPrintGraphvizAsciiRange(M1_bar, var, indices, 1);
+  printf("Generate M2 bar sharp1 M2 and sharp2\n");
   M2_bar = dfa_replace_once_step2_match_compliment(M2, var, indices);
-  //printf("M2_bar: var %d\n", var);
-  //dfaPrintGraphvizAsciiRange(M2_bar, var, indices, 1);
+  printf("M2_bar: var %d\n", var);
+  dfaPrintGraphvizAsciiRange(M2_bar, var, indices, 1);
 
-  //printf("Generate Intersection\n");
+  printf("Generate Intersection\n");
   M_inter = dfa_intersect(M1_bar, M2_bar);
-  //printf("M_inter\n");
-  //dfaPrintGraphvizAsciiRange(M_inter, var, indices, 1);
+  printf("M_inter\n");
+  dfaPrintGraphvizAsciiRange(M_inter, var, indices, 1);
  
   //printf("Check Intersection\n");
   if(check_intersection(M_sharp, M_inter, var, indices)>0) {
 
       //printf("Start Replacement!\n");
     //replace match patterns
-    M_rep = dfa_replace_step3_replace(M_inter, str, var, indices);
+    M_rep = dfa_replace_once_step3_replace(M_inter, str, var, indices);
     temp1=dfaProject(M_rep, (unsigned) var);
     dfaFree(M_rep);
 

@@ -470,6 +470,8 @@ extern "C" {
     int main_test (int argc, const char *argv[]);
     
     // BAKI DEBUG
+    struct int_list_type *reachable_closure_delete(DFA *M, int start, int var, int *indices, int deleting);
+
     struct int_list_type *reachable_closure(DFA *M, int start, int var, int *indices);
 
 #endif
