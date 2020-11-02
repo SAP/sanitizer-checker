@@ -198,6 +198,10 @@ extern "C" {
     DFA *dfa_construct_range(char a, char b, int var, int *indices);
     
 
+    // Create a copy of the automaton, but set all states
+    // e.g. call with state = '+' to set all states to accept
+    DFA *dfaSetAllStatesTo(DFA *M, char state, int var, int *indices);
+
     /**
      Constructs and automaton that accepts any string s where |s| is in the
      set "lengths".
@@ -237,6 +241,8 @@ extern "C" {
     DFA *dfa_union_add_empty_M(DFA *M, int var, int *indices);
     
     DFA *dfa_intersect(DFA *M1, DFA *M2);
+
+    DFA *dfa_product_impl(DFA *M1, DFA *M2);
     
     DFA *dfa_negate(DFA *M1, int var, int *indices);
     

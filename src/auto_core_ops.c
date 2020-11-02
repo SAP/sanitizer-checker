@@ -126,6 +126,76 @@ DFA *dfa_construct_range(char a, char b, int var, int *indices){
   return dfaBuild("-+-");
 }
 
+// Create a copy of the automaton, but set all states
+// e.g. call with state = '+' to set all states to accept
+DFA *dfaSetAllStatesTo(DFA *M, char state, int var, int *indices) {
+  DFA *result;
+  paths state_paths, pp;
+  trace_descr tp;
+  int i, j, k;
+  char *exeps;
+  int *to_states;
+  int sink;
+  long max_exeps;
+  char *statuces;
+  int len = var;
+
+  max_exeps = 1 << len; //maybe exponential
+  sink = find_sink(M);
+  assert(sink > -1);
+
+  dfaSetup(M->ns, len, indices);
+  exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char));
+  to_states = (int *) malloc(max_exeps * sizeof(int));
+  statuces = (char *) malloc((M->ns + 1) * sizeof(char));
+
+  for (i = 0; i < M->ns; i++) {
+    state_paths = pp = make_paths(M->bddm, M->q[i]);
+    k = 0;
+    while (pp) {
+      if (pp->to != sink) {
+        to_states[k] = pp->to;
+        for (j = 0; j < var; j++) {
+          //the following for loop can be avoided if the indices are in order
+          for (tp = pp->trace; tp && (tp->index != indices[j]); tp = tp->next);
+          if (tp) {
+            if (tp->value)
+              exeps[k * (len + 1) + j] = '1';
+            else
+              exeps[k * (len + 1) + j] = '0';
+          } else
+            exeps[k * (len + 1) + j] = 'X';
+        }
+        exeps[k * (len + 1) + len] = '\0';
+        k++;
+      }
+      pp = pp->next;
+    }
+    dfaAllocExceptions(k);
+    for (k--; k >= 0; k--)
+      dfaStoreException(to_states[k], exeps + k * (len + 1));
+    dfaStoreState(sink);
+
+    // Set all states to same state (except sink)
+    if (i == sink) {
+        statuces[i] = '-';
+    } else {
+        statuces[i] = state;
+    }
+    kill_paths(state_paths);
+  }
+  statuces[i] = '\0';
+  result = dfaBuild(statuces);
+
+  // Don't project or minimize
+
+  free(exeps);
+  free(to_states);
+  free(statuces);
+  return result;
+}
+
+
 
 //Construct DFA From another automaton (author muath)
 // n_state is the number of states
@@ -919,6 +989,17 @@ DFA *dfa_union_with_emptycheck(DFA* M1, DFA* M2, int var, int* indices){
     dfaFree(result); result = NULL;
     result = tmpM;
   }
+  return result;
+}
+
+DFA *dfa_product_impl(M1, M2)
+  DFA *M1;DFA *M2; {
+  DFA *result, *tmpM;
+  tmpM = dfaProduct(M1, M2, dfaIMPL);
+  if( DEBUG_SIZE_INFO )
+    printf("\t peak : intersect : states %d : bddnodes %u \n", tmpM->ns, bdd_size(tmpM->bddm) );
+  result = dfaMinimize(tmpM);
+  dfaFree(tmpM);
   return result;
 }
 
