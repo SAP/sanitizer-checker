@@ -2252,40 +2252,51 @@ StrangerAutomaton* StrangerAutomaton::preTrimSpacesRigth(int id){
     return retMe;
 }
 
+StrangerAutomaton* StrangerAutomaton::substr_first_part(int start, int id) {
+	if (start < 0)
+		throw new std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
+
+        // Create a string with length up to start
+        StrangerAutomaton* len1Auto = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
+        StrangerAutomaton* empty = StrangerAutomaton::makeEmptyString(id);
+        // Replace the first start characters with the empty string (once)
+        StrangerAutomaton* chopped = StrangerAutomaton::str_replace_once(len1Auto, empty, this, id);
+
+        delete len1Auto;
+        delete empty;
+	return chopped;
+}
+
+StrangerAutomaton* StrangerAutomaton::substr(int start, int id) {
+	boost::posix_time::ptime start_time = perfInfo->current_time();
+
+        StrangerAutomaton* retMe = this->substr_first_part(start, id);
+
+	perfInfo->substr_total_time += perfInfo->current_time() - start_time;
+	perfInfo->number_of_substr++;
+	return retMe;
+}
+
+
 StrangerAutomaton* StrangerAutomaton::substr(int start, int length, int id) {
-	if (start < 0 || length < 0)
+	if (length < 0)
 		throw new std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
 	boost::posix_time::ptime start_time = perfInfo->current_time();
 	StrangerAutomaton* retMe = NULL;
 	if (length == 0) {
 		retMe = StrangerAutomaton::makeEmptyString(id);
 	} else {
-            this->toDotAscii(1);
-            // Remove a single char from the start of the string "start" times
-            StrangerAutomaton* len1Auto = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
-            StrangerAutomaton* empty = StrangerAutomaton::makeEmptyString(id);
-            std::cout << "Removing " << start << " chars from the start of the string." << std::endl;
-            StrangerAutomaton* chopped = StrangerAutomaton::str_replace_once(len1Auto, empty, this, id);
-            std::cout << "Chopped" << std::endl;
-            chopped->toDotAscii(1);
-
-            // Now try only selecting the next length chars
+            // First remove the characters from start -> start + length
+            StrangerAutomaton* chopped =  this->substr_first_part(start, id);
+            // Now make an automaton which accepts all strings of a certain length
             StrangerAutomaton* len2Auto = StrangerAutomaton::makeAnyStringL1ToL2(length, length);
-            std::cout << "Selecting " << length << " chars" << std::endl;
-            // Copy the chopped automaton with only rejected states
+            // Copy the chopped automaton and accept ALL states
             StrangerAutomaton* rejectAll = new StrangerAutomaton(dfaSetAllStatesTo(chopped->getDfa(), '+', num_ascii_track, indices_main));
-            rejectAll->toDotAscii(1);
-            // Intersect will only select strings in the automaton with the required length,
-            // NOT change the length of existing strings.
+            // Intersect the length and chopped automata
             StrangerAutomaton* substring = rejectAll->intersect(len2Auto, id);
-            len2Auto->toDotAscii(1);
-            substring->toDotAscii(1);
             delete rejectAll;
             delete chopped;
-            delete len1Auto;
-            delete empty;
             delete len2Auto;
-
             retMe = substring;
 	}
 	perfInfo->substr_total_time += perfInfo->current_time() - start_time;

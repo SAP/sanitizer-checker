@@ -179,7 +179,9 @@ public:
     StrangerAutomaton* preTrimSpaces() { return preTrimSpaces(traceID);};
     StrangerAutomaton* preTrimSpacesLeft(int id);
     StrangerAutomaton* preTrimSpacesRigth(int id);
+    // Modelling the JavaScript substr function
     StrangerAutomaton* substr(int start, int length, int id);
+    StrangerAutomaton* substr(int start, int id);
     StrangerAutomaton* pre_substr(int start, int length, int id);
 
     static StrangerAutomaton* addslashes(StrangerAutomaton* subjectAuto, int id);
@@ -310,6 +312,7 @@ private:
     static bool& initialized();
     static void resetTraceID();
     static std::string escapeSpecialChars(std::string s);
+    StrangerAutomaton* substr_first_part(int start, int id);
 };
 
 

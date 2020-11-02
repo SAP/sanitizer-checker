@@ -1413,32 +1413,40 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		retMe = nl2brAuto;
 
 	}  else if (opName == "substr"){
-		if (successors.size() != 3) {
+		if (successors.size() < 2) {
 			throw StrangerStringAnalysisException(stringbuilder() << "SNH: substr invalid number of arguments: " << opNode->getID());
 		}
 
 		DepGraphNode* subjectNode = successors[0];
 		DepGraphNode* startNode = successors[1];
-		DepGraphNode* lengthNode = successors[2];
 
+                // Get the subject automaton
 		if (analysisResult.find(subjectNode->getID()) == analysisResult.end()) {
 			doForwardAnalysis_GeneralCase(depGraph, subjectNode, analysisResult);
 		}
+                StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
+
+                // Compute the starting index
 		if (analysisResult.find(startNode->getID()) == analysisResult.end()) {
 			doForwardAnalysis_GeneralCase(depGraph, startNode, analysisResult);
 		}
-		if (analysisResult.find(lengthNode->getID()) == analysisResult.end()) {
-			doForwardAnalysis_GeneralCase(depGraph, lengthNode, analysisResult);
-		}
-
-		StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
 		string startValue = analysisResult[startNode->getID()]->getStr();
 		int start = stoi(startValue);
-		string lengthValue = analysisResult[lengthNode->getID()]->getStr();
-		int length = stoi(lengthValue);
-		StrangerAutomaton* substrAuto = subjectAuto->substr(start,length,opNode->getID());
-		retMe = substrAuto;
 
+                // Check if there is also a length argument
+                if (successors.size() >=3) {
+                    DepGraphNode* lengthNode = successors[2];
+                    if (analysisResult.find(lengthNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, lengthNode, analysisResult);
+                    }
+                    string lengthValue = analysisResult[lengthNode->getID()]->getStr();
+                    int length = stoi(lengthValue);
+                    StrangerAutomaton* substrAuto = subjectAuto->substr(start,length,opNode->getID());
+                    retMe = substrAuto;
+                } else {
+                    StrangerAutomaton* substrAuto = subjectAuto->substr(start,opNode->getID());
+                    retMe = substrAuto;
+                }
 	} else if (opName == "strtoupper" || opName == "strtolower") {
 		if (successors.size() != 1) {
 			throw new StrangerStringAnalysisException(stringbuilder() << opName << " has more than one successor in depgraph" );

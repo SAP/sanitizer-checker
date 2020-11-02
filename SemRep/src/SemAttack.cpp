@@ -167,8 +167,8 @@ StrangerAutomaton* SemAttack::computeTargetFWAnalysis() {
     message(stringbuilder() << "initializing input node(" << target_uninit_field_node->getID() << ") with sigma star");
     delete targetAnalysisResult[target_uninit_field_node->getID()];
     
-    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(target_uninit_field_node->getID());
-//    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeString("bbcc", target_uninit_field_node->getID());
+//  targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(target_uninit_field_node->getID());
+    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeString("aabbcc", target_uninit_field_node->getID());
 
     ImageComputer targetAnalyzer;
 
