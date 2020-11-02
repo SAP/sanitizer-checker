@@ -2566,7 +2566,7 @@ struct int_list_type *reachable_closure_delete(DFA *M, int start, int var,
       barlist = enqueue(barlist, start);
       while (barlist->count > 0) {
           current = dequeue(barlist);
-          printf("Current state: %d\n", current);
+//          printf("Current state: %d\n", current);
           visited[current] = 1;
           assert(current!=-1);
           state_paths = pp = make_paths(M->bddm, M->q[current]);
@@ -2588,9 +2588,9 @@ struct int_list_type *reachable_closure_delete(DFA *M, int start, int var,
                   }
                   if (finalflag != 0) {
                       if (current == start) {
-                          printf("Ignoring direct transition from sharp1 to sharp0 (%d to %d)\n", current, pp->to);
+//                          printf("Ignoring direct transition from sharp1 to sharp0 (%d to %d)\n", current, pp->to);
                       } else {
-                          printf("Found sharp0 transition from %d to %d\n", current, pp->to);
+//                          printf("Found sharp0 transition from %d to %d\n", current, pp->to);
                           sharp0list = enqueue(sharp0list, pp->to);
                           // If we are deleting characters, we need to carry on following
                           // the sharp1 -> bar -> sharp0 states to find the first transition
@@ -2600,7 +2600,7 @@ struct int_list_type *reachable_closure_delete(DFA *M, int start, int var,
                               int has_sharp1 = exist_sharp1_path(M, pp->to, var);
                               if ((has_sharp1 > -1) && (visited[has_sharp1] == 0)) {
                                   // Add next state to list
-                                  printf("Adding new sharp1 path from %d to %d\n", pp->to, has_sharp1);
+//                                  printf("Adding new sharp1 path from %d to %d\n", pp->to, has_sharp1);
                                   sharp1list = enqueue(sharp1list, has_sharp1);
                               }
                           }
@@ -2609,7 +2609,7 @@ struct int_list_type *reachable_closure_delete(DFA *M, int start, int var,
 
                   for (tp = pp->trace; tp && (tp->index != var); tp = tp->next);
                   if (((tp && tp->value) || !tp) && (visited[pp->to] == 0)) {
-                      printf("Found bar transition from %d to %d\n", current, pp->to);
+//                      printf("Found bar transition from %d to %d\n", current, pp->to);
                       barlist = enqueue(barlist, pp->to);
                   }
               }
@@ -2655,14 +2655,14 @@ struct int_list_type **get_match_exclude_self(DFA *M, int var, int *indices) {
   result = (struct int_list_type **) malloc((M->ns)
       * sizeof(struct int_list_type *));
   for (i = 0; i < M->ns; i++) {
-    printf("Start exist sharp1\n");
+//    printf("Start exist sharp1\n");
     next = exist_sharp1_path(M, i, var);
-    printf("End exist sharp1: from %d to %d\n", i, next);
+//    printf("End exist sharp1: from %d to %d\n", i, next);
     if (next > -1) {//result[i]= remove_value(reachable_closure(M, next, var, indices), i);
         // Set the deleting flag to follow multiple sharp1 -> bar -> sharp0 transitions
         result[i] = reachable_closure_delete(M, next, var, indices, 1);
-        printf("State %d has closure to:\n", i);
-        printIntListType(result[i]);
+//        printf("State %d has closure to:\n", i);
+//        printIntListType(result[i]);
     }
     else
       result[i] = new_ilt();
