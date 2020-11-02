@@ -92,6 +92,7 @@ public:
     StrangerAutomaton* unionWithEmptyString();
     StrangerAutomaton* intersect(StrangerAutomaton* auto_, int id);
     StrangerAutomaton* intersect(StrangerAutomaton* auto_);
+    StrangerAutomaton* productImpl(StrangerAutomaton* otherAuto, int id);
     StrangerAutomaton* preciseWiden(StrangerAutomaton* auto_, int id);
     StrangerAutomaton* preciseWiden(StrangerAutomaton* auto_);
     StrangerAutomaton* coarseWiden(StrangerAutomaton* auto_, int id);

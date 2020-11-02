@@ -66,6 +66,7 @@ public:
 //    concat, union, intersection, closure, replace...
 
 	 boost::posix_time::time_duration intersect_total_time;
+         boost::posix_time::time_duration product_total_time;
 	 boost::posix_time::time_duration union_total_time;
 	 boost::posix_time::time_duration closure_total_time;
 	 boost::posix_time::time_duration complement_total_time;
@@ -81,6 +82,7 @@ public:
 
 
 	 unsigned int num_of_intersect;
+    	 unsigned int num_of_product;
 	 unsigned int num_of_union;
 	 unsigned int num_of_closure;
 	 unsigned int num_of_complement;

@@ -930,6 +930,31 @@ StrangerAutomaton* StrangerAutomaton::intersect(StrangerAutomaton* otherAuto, in
     return retMe;
 }
 
+StrangerAutomaton* StrangerAutomaton::productImpl(StrangerAutomaton* otherAuto, int id) {
+    debug(stringbuilder() << id <<  " = intersect("  << this->ID <<  ", " << otherAuto->ID << ")");
+
+    // if top or bottom then do not use the c library as dfa == NULL
+    if (this->isBottom() || otherAuto->isBottom())
+        return makeBottom(id);
+    else if (this->isTop())
+        return otherAuto->clone(id);
+    else if (otherAuto->isTop())
+        return this->clone(id);
+
+    debugToFile(stringbuilder() << "M[" << traceID << "] = dfa_product_impl(M[" << this->autoTraceID << "], M["<< otherAuto->autoTraceID  << "]);//"<<id << " = intersect("  << this->ID <<  ", " << otherAuto->ID << ")");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_product_impl(this->dfa, otherAuto->dfa));
+    perfInfo->product_total_time += perfInfo->current_time() - start_time;
+    perfInfo->num_of_product++;
+
+    {
+        retMe->setID(id);
+        retMe->debugAutomaton();
+    }
+    return retMe;
+}
+
 /**
  * Returns a new automaton auto with L(auto)= L(this) intersect L(auto)
  */
@@ -1661,7 +1686,6 @@ StrangerAutomaton* StrangerAutomaton::preReplace(StrangerAutomaton* searchAuto,
     return this->preReplace(searchAuto, replaceString, traceID);
 }
 
-
 //***************************************************************************************
 //*                                  Length Operations                                  *
 //*									-------------------									*
@@ -1691,10 +1715,10 @@ StrangerAutomaton* StrangerAutomaton::restrictLengthByOtherAutomatonFinite(Stran
     unsigned *lengths = pDFAFiniteLengths->lengths;
     const unsigned size = pDFAFiniteLengths->size;
 
-//    unsigned i;
-//    for(i = 0; i < size; i++)
-//        cout << lengths[i] << ", ";
-//    cout << endl;
+    unsigned i;
+    for(i = 0; i < size; i++)
+        cout << lengths[i] << ", ";
+    cout << endl;
 
 //    vector<unsigned> vec(lengths, lengths + size);
 	debug(stringbuilder() << id <<  " = dfaRestrictByFiniteLengths("  << this->ID << ", " << otherAuto->ID << ")");
@@ -2224,7 +2248,6 @@ StrangerAutomaton* StrangerAutomaton::preTrimSpacesRigth(int id){
     StrangerAutomaton* retMe = new StrangerAutomaton(dfaPreRightTrim(this->dfa, ' ', num_ascii_track, indices_main));
 	perfInfo->pre_trim_spaces_rigth_total_time += perfInfo->current_time() - start_time;
 	perfInfo->number_of_pre_trim_spaces_rigth++;
-
     retMe->setID(id);
     return retMe;
 }
@@ -2236,14 +2259,34 @@ StrangerAutomaton* StrangerAutomaton::substr(int start, int length, int id) {
 	StrangerAutomaton* retMe = NULL;
 	if (length == 0) {
 		retMe = StrangerAutomaton::makeEmptyString(id);
-	}
-	else {
-		// start index is zero based in php, increase it by one
-		start = start + 1;
-		string regString = stringbuilder() << "/.{" << start << "," << length << "}/";
-		StrangerAutomaton* regx = StrangerAutomaton::regExToAuto(regString, true, id);
-		retMe = this->intersect(regx, id);
-		delete regx;
+	} else {
+            this->toDotAscii(1);
+            // Remove a single char from the start of the string "start" times
+            StrangerAutomaton* len1Auto = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
+            StrangerAutomaton* empty = StrangerAutomaton::makeEmptyString(id);
+            std::cout << "Removing " << start << " chars from the start of the string." << std::endl;
+            StrangerAutomaton* chopped = StrangerAutomaton::str_replace_once(len1Auto, empty, this, id);
+            std::cout << "Chopped" << std::endl;
+            chopped->toDotAscii(1);
+
+            // Now try only selecting the next length chars
+            StrangerAutomaton* len2Auto = StrangerAutomaton::makeAnyStringL1ToL2(length, length);
+            std::cout << "Selecting " << length << " chars" << std::endl;
+            // Copy the chopped automaton with only rejected states
+            StrangerAutomaton* rejectAll = new StrangerAutomaton(dfaSetAllStatesTo(chopped->getDfa(), '+', num_ascii_track, indices_main));
+            rejectAll->toDotAscii(1);
+            // Intersect will only select strings in the automaton with the required length,
+            // NOT change the length of existing strings.
+            StrangerAutomaton* substring = rejectAll->intersect(len2Auto, id);
+            len2Auto->toDotAscii(1);
+            substring->toDotAscii(1);
+            delete rejectAll;
+            delete chopped;
+            delete len1Auto;
+            delete empty;
+            delete len2Auto;
+
+            retMe = substring;
 	}
 	perfInfo->substr_total_time += perfInfo->current_time() - start_time;
 	perfInfo->number_of_substr++;
