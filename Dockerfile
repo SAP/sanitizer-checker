@@ -1,7 +1,7 @@
 # Build and run the development environment:
 #
 # First set your github root:
-ARG gitremote=https://github.wdf.sap.corp/i505600/
+ARG gitremote=https://github.wdf.sap.corp/i505600
 #
 # docker build --target semrep-dev -t semrep-dev .
 #
@@ -33,11 +33,12 @@ RUN apt-get update &&    \
             git libboost-all-dev \
             gdb
 
+ARG gitremote
+
 WORKDIR /work/MONA
 
-
 #  https://github.com/cs-au-dk/MONA.git
-RUN GIT_SSL_NO_VERIFY=true git clone $gitremote/mona.git . && \
+RUN GIT_SSL_NO_VERIFY=true git clone ${gitremote}/mona.git . && \
     autoreconf -f -i && \
     ./configure 'CFLAGS=-O0 -g' && \
     make -j && make install && \
@@ -46,11 +47,13 @@ RUN GIT_SSL_NO_VERIFY=true git clone $gitremote/mona.git . && \
 
 WORKDIR /work/LibStranger
 
-RUN git clone https://github.com/vlab-cs-ucsb/LibStranger.git . && \
+RUN GIT_SSL_NO_VERIFY=true git clone ${gitremote}/LibStranger.git . && \
     chmod u+x autogen.sh && \
     ./autogen.sh && \
     ./configure 'CFLAGS=-O0 -g' && \
     make -j && make install
+
+ENV LD_LIBRARY_PATH /usr/local/lib
 
 WORKDIR /work/SemRep
 
