@@ -197,19 +197,22 @@ StrangerAutomaton* SemAttackBw::generateAttack() {
     this->sink_auto = fwAnalysisResult[this->target_dep_graph.getRoot()->getID()];
     if (this->enable_debug) {
         message("Post image of sink node:");
-        debug_auto(this->sink_auto, 0);
+        debug_auto(this->sink_auto, 1);
     }
 
-    StrangerAutomaton* intersection = this->sink_auto->intersect(this->attack_pattern_auto,this->target_dep_graph.getRoot()->getID());
+    StrangerAutomaton* intersection = this->sink_auto->intersect(this->attack_pattern_auto,this->target_field_relevant_graph.getRoot()->getID());
 
     if (enable_debug) {
         message("Intersection:");
         intersection->printAutomaton();
-        debug_auto(intersection, 0);
+        debug_auto(intersection, 1);
     }
     if (intersection->isEmpty()) {
         message("Attack pattern can not be exploited, no vulnerability signature");
         return nullptr;
+    } else {
+        std::cout << "Overlap between attack pattern and sanitizer, example:" << std::endl;
+        message(intersection->generateSatisfyingExample());
     }
     std::cout.flush();
 

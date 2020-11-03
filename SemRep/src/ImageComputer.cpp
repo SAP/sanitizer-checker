@@ -946,19 +946,20 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments");
 		}
 
-		DepGraphNode* patternNode = successors[1];
-		DepGraphNode* replaceNode = successors[2];
+		DepGraphNode* patternNode = successors[0];
+		DepGraphNode* replaceNode = successors[1];
 
 		StrangerAutomaton* subjectAuto = opAuto;
-
+                std::cout << "opAuto to dot:\n";
+                subjectAuto->toDotAscii(1);
 		StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
 		StrangerAutomaton* replaceAuto = fwAnalysisResult.find(replaceNode->getID())->second;
-    std::cout << "PatternAuto to dot:\n";
-    patternAuto->toDotAscii(2);
-		std::cout << "ReplaceAuto to dot:\n";
-		replaceAuto->toDotAscii(2);
-    string replaceStr = replaceAuto->getStr();
-        // checking for special case where a character is escaped by another character
+                std::cout << "PatternAuto to dot:" << patternNode->getID() << std::endl;
+                patternAuto->toDotAscii(1);
+		std::cout << "ReplaceAuto to dot:" << replaceNode->getID() << std::endl;
+		replaceAuto->toDotAscii(1);
+                string replaceStr = replaceAuto->getStr();
+                // checking for special case where a character is escaped by another character
 		if (patternAuto->isSingleton()) {
 			string patternStr = patternAuto->generateSatisfyingExample();
 			if ( replaceStr.length() == 2 && patternStr.length() == 1 && patternStr[0] == replaceStr[1]) {
@@ -981,12 +982,12 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		StrangerAutomaton* subjectAuto = opAuto;
 		StrangerAutomaton* startAuto = fwAnalysisResult.find(startNode->getID())->second;
 		StrangerAutomaton* lengthAuto = fwAnalysisResult.find(lengthNode->getID())->second;
-    std::cout << "StartAuto:\n";
-    startAuto->toDotAscii(2);
+                std::cout << "StartAuto:\n";
+                startAuto->toDotAscii(2);
 		string startValue = startAuto->getStr();
 		int start = stoi(startValue);
-    std::cout << "LengthAuto:\n";
-    startAuto->toDotAscii(2);
+                std::cout << "LengthAuto:\n";
+                startAuto->toDotAscii(2);
 		string lengthValue = lengthAuto->getStr();
 		int length = stoi(lengthValue);
 
