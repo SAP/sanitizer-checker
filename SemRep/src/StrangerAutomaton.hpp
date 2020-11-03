@@ -28,8 +28,10 @@
 #include "StringBuilder.hpp"
 #include "exceptions/StrangerAutomatonException.hpp"
 #include "RegExp.hpp"
+#define export _export_
 #include "stranger/stranger_lib_internal.h"
 #include "stranger/stranger.h"
+#undef export
 
 #include <stdexcept>
 #include <vector>
@@ -90,6 +92,7 @@ public:
     StrangerAutomaton* unionWithEmptyString();
     StrangerAutomaton* intersect(StrangerAutomaton* auto_, int id);
     StrangerAutomaton* intersect(StrangerAutomaton* auto_);
+    StrangerAutomaton* productImpl(StrangerAutomaton* otherAuto, int id);
     StrangerAutomaton* preciseWiden(StrangerAutomaton* auto_, int id);
     StrangerAutomaton* preciseWiden(StrangerAutomaton* auto_);
     StrangerAutomaton* coarseWiden(StrangerAutomaton* auto_, int id);
@@ -111,6 +114,8 @@ public:
     static StrangerAutomaton* general_replace(StrangerAutomaton* patternAuto, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, std::string replaceStr, StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, std::string replaceStr, StrangerAutomaton* subjectAuto);
+    static StrangerAutomaton* str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto);
     StrangerAutomaton* preReplace(StrangerAutomaton* searchAuto, std::string replaceString, int id);
     StrangerAutomaton* preReplace(StrangerAutomaton* searchAuto, std::string replaceString);
     StrangerAutomaton* getUnaryAutomaton(int id);
@@ -174,7 +179,9 @@ public:
     StrangerAutomaton* preTrimSpaces() { return preTrimSpaces(traceID);};
     StrangerAutomaton* preTrimSpacesLeft(int id);
     StrangerAutomaton* preTrimSpacesRigth(int id);
+    // Modelling the JavaScript substr function
     StrangerAutomaton* substr(int start, int length, int id);
+    StrangerAutomaton* substr(int start, int id);
     StrangerAutomaton* pre_substr(int start, int length, int id);
 
     static StrangerAutomaton* addslashes(StrangerAutomaton* subjectAuto, int id);
@@ -196,6 +203,16 @@ public:
     static StrangerAutomaton* nl2br(StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* pre_nl2br(StrangerAutomaton* subjectAuto, int id);
 //    std::set<char> mincut();
+
+    static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto){return encodeURIComponent(subjectAuto, traceID);};
+    static StrangerAutomaton* decodeURIComponent(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* decodeURIComponent(StrangerAutomaton* subjectAuto){return decodeURIComponent(subjectAuto, traceID);};
+
+    static StrangerAutomaton* jsonStringify(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* jsonStringify(StrangerAutomaton* subjectAuto){return jsonStringify(subjectAuto, traceID);};
+    static StrangerAutomaton* jsonParse(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* jsonParse(StrangerAutomaton* subjectAuto){return jsonParse(subjectAuto, traceID);};
 
     void printAutomaton();
     void printAutomatonVitals();
@@ -295,6 +312,7 @@ private:
     static bool& initialized();
     static void resetTraceID();
     static std::string escapeSpecialChars(std::string s);
+    StrangerAutomaton* substr_first_part(int start, int id);
 };
 
 

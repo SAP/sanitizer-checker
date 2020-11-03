@@ -164,6 +164,7 @@ private:
 };
 
 int to_int(std::string input);
-
+int from_hex_char(char x);
+int from_hex_chars(char c1, char c2);
 
 #endif /* REGEXP_HPP_ */

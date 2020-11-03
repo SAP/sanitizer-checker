@@ -458,8 +458,6 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_ValidationCase(DepGraph
 			throw StrangerStringAnalysisException(stringbuilder() << "SNH: child node (" << childNode->getID() << ") of preg_replace (" << opNode->getID() << ") is not in backward path,\ncheck implementation: "
 					"makeBackwardAutoForOpChild_ValidationPhase()");
 		}
-
-
 	}  else if (opName == "substr"){
 
 		if (successors.size() != 3) {
@@ -1061,12 +1059,14 @@ StrangerAutomaton* ImageComputer::getLiteralorConstantNodeAuto(DepGraphNode* nod
 				regString = "/" + regString + "/";
 			}
 			retMe = StrangerAutomaton::regExToAuto(regString, true, node->getID());
-		}
-		else {
+		} else {
+                    if (value == "NUL") {
+                        retMe = StrangerAutomaton::makeChar(0);
+                    } else {
 			retMe = StrangerAutomaton::makeString(value, node->getID());
+                    }
 		}
-	}
-	else {
+	} else {
 		throw StrangerStringAnalysisException(stringbuilder() << "Unhandled node type, node id: " << node->getID());
 	}
 
@@ -1339,6 +1339,32 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 		retMe = StrangerAutomaton::general_replace(patternAuto,replaceAuto,subjectAuto, opNode->getID());
 
+	} else if (opName == "str_replace_once") {
+		if (successors.size() != 3) {
+			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
+		}
+
+		DepGraphNode* subjectNode = successors[2];
+		DepGraphNode* patternNode = successors[0];
+		DepGraphNode* replaceNode = successors[1];
+
+		if (analysisResult.find(subjectNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, subjectNode, analysisResult);
+		}
+		if (analysisResult.find(patternNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, patternNode, analysisResult);
+		}
+
+		if (analysisResult.find(replaceNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, replaceNode, analysisResult);
+		}
+
+		StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
+		StrangerAutomaton* patternAuto = analysisResult[patternNode->getID()];
+		StrangerAutomaton* replaceAuto = analysisResult[replaceNode->getID()];
+
+		retMe = StrangerAutomaton::str_replace_once(patternAuto,replaceAuto,subjectAuto, opNode->getID());
+
 	} else if (opName == "addslashes") {
 		if (successors.size() != 1) {
 			throw new StrangerStringAnalysisException(stringbuilder() << "addslashes should have one child: " << opNode->getID());
@@ -1392,32 +1418,40 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		retMe = nl2brAuto;
 
 	}  else if (opName == "substr"){
-		if (successors.size() != 3) {
+		if (successors.size() < 2) {
 			throw StrangerStringAnalysisException(stringbuilder() << "SNH: substr invalid number of arguments: " << opNode->getID());
 		}
 
 		DepGraphNode* subjectNode = successors[0];
 		DepGraphNode* startNode = successors[1];
-		DepGraphNode* lengthNode = successors[2];
 
+                // Get the subject automaton
 		if (analysisResult.find(subjectNode->getID()) == analysisResult.end()) {
 			doForwardAnalysis_GeneralCase(depGraph, subjectNode, analysisResult);
 		}
+                StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
+
+                // Compute the starting index
 		if (analysisResult.find(startNode->getID()) == analysisResult.end()) {
 			doForwardAnalysis_GeneralCase(depGraph, startNode, analysisResult);
 		}
-		if (analysisResult.find(lengthNode->getID()) == analysisResult.end()) {
-			doForwardAnalysis_GeneralCase(depGraph, lengthNode, analysisResult);
-		}
-
-		StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
 		string startValue = analysisResult[startNode->getID()]->getStr();
 		int start = stoi(startValue);
-		string lengthValue = analysisResult[lengthNode->getID()]->getStr();
-		int length = stoi(lengthValue);
-		StrangerAutomaton* substrAuto = subjectAuto->substr(start,length,opNode->getID());
-		retMe = substrAuto;
 
+                // Check if there is also a length argument
+                if (successors.size() >=3) {
+                    DepGraphNode* lengthNode = successors[2];
+                    if (analysisResult.find(lengthNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, lengthNode, analysisResult);
+                    }
+                    string lengthValue = analysisResult[lengthNode->getID()]->getStr();
+                    int length = stoi(lengthValue);
+                    StrangerAutomaton* substrAuto = subjectAuto->substr(start,length,opNode->getID());
+                    retMe = substrAuto;
+                } else {
+                    StrangerAutomaton* substrAuto = subjectAuto->substr(start,opNode->getID());
+                    retMe = substrAuto;
+                }
 	} else if (opName == "strtoupper" || opName == "strtolower") {
 		if (successors.size() != 1) {
 			throw new StrangerStringAnalysisException(stringbuilder() << opName << " has more than one successor in depgraph" );
@@ -1455,6 +1489,24 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 	} else if (opName == "md5") {
 		//conservative desicion
 		retMe = StrangerAutomaton::regExToAuto("/[aAbBcCdDeEfF0-9]{32,32}/",true, opNode->getID());
+	} else if (opName == "encodeURIComponent") {
+		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		StrangerAutomaton* uriAuto = StrangerAutomaton::encodeURIComponent(paramAuto, opNode->getID());
+		retMe = uriAuto;
+
+	} else if (opName == "decodeURIComponent") {
+		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		StrangerAutomaton* uriAuto = StrangerAutomaton::decodeURIComponent(paramAuto, opNode->getID());
+		retMe = uriAuto;
+
+	} else if (opName == "JSON.stringify") {
+		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		StrangerAutomaton* json = StrangerAutomaton::jsonStringify(paramAuto, opNode->getID());
+		retMe = json;
+	} else if (opName == "JSON.parse") {
+		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		StrangerAutomaton* json = StrangerAutomaton::jsonParse(paramAuto, opNode->getID());
+		retMe = json;
 	} else {
 		cout << "!!! Warning: Unmodeled builtin general function : " << opName << endl;
 		f_unmodeled.push_back(opNode);

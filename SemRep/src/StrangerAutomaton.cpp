@@ -930,6 +930,31 @@ StrangerAutomaton* StrangerAutomaton::intersect(StrangerAutomaton* otherAuto, in
     return retMe;
 }
 
+StrangerAutomaton* StrangerAutomaton::productImpl(StrangerAutomaton* otherAuto, int id) {
+    debug(stringbuilder() << id <<  " = intersect("  << this->ID <<  ", " << otherAuto->ID << ")");
+
+    // if top or bottom then do not use the c library as dfa == NULL
+    if (this->isBottom() || otherAuto->isBottom())
+        return makeBottom(id);
+    else if (this->isTop())
+        return otherAuto->clone(id);
+    else if (otherAuto->isTop())
+        return this->clone(id);
+
+    debugToFile(stringbuilder() << "M[" << traceID << "] = dfa_product_impl(M[" << this->autoTraceID << "], M["<< otherAuto->autoTraceID  << "]);//"<<id << " = intersect("  << this->ID <<  ", " << otherAuto->ID << ")");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_product_impl(this->dfa, otherAuto->dfa));
+    perfInfo->product_total_time += perfInfo->current_time() - start_time;
+    perfInfo->num_of_product++;
+
+    {
+        retMe->setID(id);
+        retMe->debugAutomaton();
+    }
+    return retMe;
+}
+
 /**
  * Returns a new automaton auto with L(auto)= L(this) intersect L(auto)
  */
@@ -1363,6 +1388,7 @@ StrangerAutomaton* StrangerAutomaton::regExToAuto(std::string phpRegexOrig,
     			debug(stringbuilder() << id <<  ": regExToString = "
     					<< regExp->toStringBuilder(regExpStringVal));
     			retMe = regExp->toAutomaton();
+                        free(regExp);
     		}
 
     
@@ -1579,6 +1605,27 @@ StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
     return str_replace(searchAuto, replaceStr, subjectAuto, traceID);
 }
 
+StrangerAutomaton* StrangerAutomaton::str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id) {
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    std::string replaceStr = replaceAuto->getStr();
+    StrangerAutomaton* retMe = new StrangerAutomaton(
+        dfa_replace_once_extrabit(subjectAuto->dfa, str->dfa, StrangerAutomaton::strToCharStar(replaceStr), num_ascii_track, indices_main)
+        );
+    perfInfo->replace_total_time += perfInfo->current_time() - start_time;
+    perfInfo->num_of_replace++;
+
+    {
+        retMe->ID = id;
+        //        retMe->debugAutomaton();
+    }
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto) {
+    return str_replace_once(str, replaceAuto, subjectAuto, traceID);
+}
+
+
 //***************************************************************************************
 //*                                  Backward Replacement                               *
 //***************************************************************************************
@@ -1639,7 +1686,6 @@ StrangerAutomaton* StrangerAutomaton::preReplace(StrangerAutomaton* searchAuto,
     return this->preReplace(searchAuto, replaceString, traceID);
 }
 
-
 //***************************************************************************************
 //*                                  Length Operations                                  *
 //*									-------------------									*
@@ -1669,10 +1715,10 @@ StrangerAutomaton* StrangerAutomaton::restrictLengthByOtherAutomatonFinite(Stran
     unsigned *lengths = pDFAFiniteLengths->lengths;
     const unsigned size = pDFAFiniteLengths->size;
 
-//    unsigned i;
-//    for(i = 0; i < size; i++)
-//        cout << lengths[i] << ", ";
-//    cout << endl;
+    unsigned i;
+    for(i = 0; i < size; i++)
+        cout << lengths[i] << ", ";
+    cout << endl;
 
 //    vector<unsigned> vec(lengths, lengths + size);
 	debug(stringbuilder() << id <<  " = dfaRestrictByFiniteLengths("  << this->ID << ", " << otherAuto->ID << ")");
@@ -2202,26 +2248,56 @@ StrangerAutomaton* StrangerAutomaton::preTrimSpacesRigth(int id){
     StrangerAutomaton* retMe = new StrangerAutomaton(dfaPreRightTrim(this->dfa, ' ', num_ascii_track, indices_main));
 	perfInfo->pre_trim_spaces_rigth_total_time += perfInfo->current_time() - start_time;
 	perfInfo->number_of_pre_trim_spaces_rigth++;
-
     retMe->setID(id);
     return retMe;
 }
 
+StrangerAutomaton* StrangerAutomaton::substr_first_part(int start, int id) {
+	if (start < 0)
+		throw new std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
+
+        // Create a string with length up to start
+        StrangerAutomaton* len1Auto = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
+        StrangerAutomaton* empty = StrangerAutomaton::makeEmptyString(id);
+        // Replace the first start characters with the empty string (once)
+        StrangerAutomaton* chopped = StrangerAutomaton::str_replace_once(len1Auto, empty, this, id);
+
+        delete len1Auto;
+        delete empty;
+	return chopped;
+}
+
+StrangerAutomaton* StrangerAutomaton::substr(int start, int id) {
+	boost::posix_time::ptime start_time = perfInfo->current_time();
+
+        StrangerAutomaton* retMe = this->substr_first_part(start, id);
+
+	perfInfo->substr_total_time += perfInfo->current_time() - start_time;
+	perfInfo->number_of_substr++;
+	return retMe;
+}
+
+
 StrangerAutomaton* StrangerAutomaton::substr(int start, int length, int id) {
-	if (start < 0 || length < 0)
+	if (length < 0)
 		throw new std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
 	boost::posix_time::ptime start_time = perfInfo->current_time();
 	StrangerAutomaton* retMe = NULL;
 	if (length == 0) {
 		retMe = StrangerAutomaton::makeEmptyString(id);
-	}
-	else {
-		// start index is zero based in php, increase it by one
-		start = start + 1;
-		string regString = stringbuilder() << "/.{" << start << "," << length << "}/";
-		StrangerAutomaton* regx = StrangerAutomaton::regExToAuto(regString, true, id);
-		retMe = this->intersect(regx, id);
-		delete regx;
+	} else {
+            // First remove the characters from start -> start + length
+            StrangerAutomaton* chopped =  this->substr_first_part(start, id);
+            // Now make an automaton which accepts all strings of a certain length
+            StrangerAutomaton* len2Auto = StrangerAutomaton::makeAnyStringL1ToL2(length, length);
+            // Copy the chopped automaton and accept ALL states
+            StrangerAutomaton* rejectAll = new StrangerAutomaton(dfaSetAllStatesTo(chopped->getDfa(), '+', num_ascii_track, indices_main));
+            // Intersect the length and chopped automata
+            StrangerAutomaton* substring = rejectAll->intersect(len2Auto, id);
+            delete rejectAll;
+            delete chopped;
+            delete len2Auto;
+            retMe = substring;
 	}
 	perfInfo->substr_total_time += perfInfo->current_time() - start_time;
 	perfInfo->number_of_substr++;
@@ -2513,6 +2589,55 @@ StrangerAutomaton* StrangerAutomaton::pre_nl2br(StrangerAutomaton* subjectAuto, 
 	throw new std::runtime_error("not implemented");
     
 }
+
+StrangerAutomaton* StrangerAutomaton::encodeURIComponent(StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = encodeURIComponent(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaEncodeUriComponent(subjectAuto->dfa, num_ascii_track, indices_main));
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::decodeURIComponent(StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = decodeURIComponent(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaDecodeUriComponent(subjectAuto->dfa, num_ascii_track, indices_main));
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::jsonStringify(StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = jsonStringify(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaJsonStringify(subjectAuto->dfa, num_ascii_track, indices_main));
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::jsonParse(StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = jsonParse(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaJsonParse(subjectAuto->dfa, num_ascii_track, indices_main));
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
 
 //std::set<char> StrangerAutomaton::mincut(){
 //    using namespace boost;
