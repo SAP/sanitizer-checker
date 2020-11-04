@@ -3,8 +3,8 @@ digraph cfg {
   n2 [shape=box, label="Var: x"];
   n3 [shape=ellipse, label="substr"];
   n4 [shape=box, label="Var: x"];
-  n5 [shape=box, label="Lit: 1"];
-  n6 [shape=box, label="Lit: 2"];
+  n5 [shape=box, label="Lit: 5"];
+  n6 [shape=box, label="Lit: 5"];
   n7 [shape=house, label="Input: x"];
 
   n3 -> n4;

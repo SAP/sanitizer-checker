@@ -2284,7 +2284,7 @@ StrangerAutomaton* StrangerAutomaton::substr(int start, int length, int id) {
 	boost::posix_time::ptime start_time = perfInfo->current_time();
 	StrangerAutomaton* retMe = NULL;
 	if (length == 0) {
-		retMe = StrangerAutomaton::makeEmptyString(id);
+            retMe = StrangerAutomaton::makeEmptyString(id);
 	} else {
             // First remove the characters from start -> start + length
             StrangerAutomaton* chopped =  this->substr_first_part(start, id);
@@ -2310,23 +2310,50 @@ StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int length, int id) 
 	boost::posix_time::ptime start_time = perfInfo->current_time();
 	StrangerAutomaton* retMe = NULL;
 	if (length == 0) {
-		retMe = StrangerAutomaton::makeEmptyString(id);
-	}
-	else if (start == 0) {
-		StrangerAutomaton* right_side = StrangerAutomaton::makeAnyString(id);
-		retMe = this->concatenate(right_side,id);
-		delete right_side;
-	}
-	else {
-		string left_side_regString = stringbuilder() << "/.{0," << start << "}/";
-		StrangerAutomaton* left_side_regx = StrangerAutomaton::regExToAuto(left_side_regString, true, id);
-		StrangerAutomaton* right_side = StrangerAutomaton::makeAnyString(id);
-		StrangerAutomaton* left_concatane = left_side_regx->concatenate(this,id);
-		retMe = left_concatane->concatenate(right_side,id);
-		delete left_side_regx;
-		delete right_side;
-		delete left_concatane;
-	}
+            // Here we can do a short cut - if length is zero,
+            // the output string will be empty, and the input
+            // could be anything!
+            retMe = StrangerAutomaton::makeAnyString(id);
+	} else {
+            // substr operation selects part of a string
+            // s = "abcdefghij", start = 3, length = 3
+            //         +++
+            // s.substr(start, length) = "def"
+            // The pre-image is constructed from three parts:
+            // 1) Any chars, length "start"
+            // 2) The output string
+            // 3) Any string (we do not know the original length)
+            StrangerAutomaton* left_side = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
+            StrangerAutomaton* left_middle = left_side->concatenate(this,id);
+            StrangerAutomaton* right_side = StrangerAutomaton::makeAnyString(id);
+            retMe = left_middle->concatenate(right_side, id);
+            delete right_side;
+            delete left_side;
+            delete left_middle;
+        }
+	perfInfo->pre_substr_total_time += perfInfo->current_time() - start_time;
+	perfInfo->number_of_pre_substr++;
+	return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int id) {
+	if (start < 0)
+		throw new std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
+	boost::posix_time::ptime start_time = perfInfo->current_time();
+	StrangerAutomaton* retMe = NULL;
+
+        // substr operation selects part of a string
+        // with one argument, it removes first s chars
+        // s = "abcdefghij", start = 3
+        //         +++++++
+        // s.substr(start) = "defghij"
+        // The pre-image is constructed from three parts:
+        // 1) Any chars, length "start"
+        // 2) The output string
+        StrangerAutomaton* left_side = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
+        retMe = left_side->concatenate(this,id);
+        delete left_side;
+
 	perfInfo->pre_substr_total_time += perfInfo->current_time() - start_time;
 	perfInfo->number_of_pre_substr++;
 	return retMe;
@@ -2608,6 +2635,30 @@ StrangerAutomaton* StrangerAutomaton::decodeURIComponent(StrangerAutomaton* subj
 
     boost::posix_time::ptime start_time = perfInfo->current_time();
     StrangerAutomaton* retMe = new StrangerAutomaton(dfaDecodeUriComponent(subjectAuto->dfa, num_ascii_track, indices_main));
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::encodeURI(StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = encodeURI(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaEncodeUri(subjectAuto->dfa, num_ascii_track, indices_main));
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::decodeURI(StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = decodeURI(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaDecodeUri(subjectAuto->dfa, num_ascii_track, indices_main));
 
     retMe->ID = id;
     retMe->debugAutomaton();

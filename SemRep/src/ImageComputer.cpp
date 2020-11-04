@@ -973,26 +973,32 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 
 	} else if (opName == "substr"){
 
-		if (successors.size() != 3) {
+		if (successors.size() < 2) {
 			throw StrangerStringAnalysisException(stringbuilder() << "substr invalid number of arguments");
 		}
-		DepGraphNode* startNode = successors[0];
-		DepGraphNode* lengthNode = successors[1];
+                StrangerAutomaton* subjectAuto = opAuto;
 
-		StrangerAutomaton* subjectAuto = opAuto;
+                // Compute the start parameter
+		DepGraphNode* startNode = successors[1];
 		StrangerAutomaton* startAuto = fwAnalysisResult.find(startNode->getID())->second;
-		StrangerAutomaton* lengthAuto = fwAnalysisResult.find(lengthNode->getID())->second;
                 std::cout << "StartAuto:\n";
                 startAuto->toDotAscii(2);
 		string startValue = startAuto->getStr();
 		int start = stoi(startValue);
-                std::cout << "LengthAuto:\n";
-                startAuto->toDotAscii(2);
-		string lengthValue = lengthAuto->getStr();
-		int length = stoi(lengthValue);
 
-		StrangerAutomaton* substrAuto = subjectAuto->pre_substr(start,length,opNode->getID());
-		retMe = substrAuto;
+                // Check if there is a length argument
+                if (successors.size() >=3) {
+                    DepGraphNode* lengthNode = successors[2];
+                    StrangerAutomaton* lengthAuto = fwAnalysisResult.find(lengthNode->getID())->second;
+                    std::cout << "LengthAuto:\n";
+                    startAuto->toDotAscii(2);
+                    string lengthValue = lengthAuto->getStr();
+                    int length = stoi(lengthValue);
+
+                    retMe = subjectAuto->pre_substr(start, length, opNode->getID());
+                } else {
+                    retMe = subjectAuto->pre_substr(start, opNode->getID());
+                }
 
 	} else if (opName == "md5") {
 		retMe = StrangerAutomaton::makeAnyString(opNode->getID());
@@ -1498,6 +1504,16 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 	} else if (opName == "decodeURIComponent") {
 		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
 		StrangerAutomaton* uriAuto = StrangerAutomaton::decodeURIComponent(paramAuto, opNode->getID());
+		retMe = uriAuto;
+
+	} else if (opName == "encodeURI") {
+		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		StrangerAutomaton* uriAuto = StrangerAutomaton::encodeURI(paramAuto, opNode->getID());
+		retMe = uriAuto;
+
+	} else if (opName == "decodeURI") {
+		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		StrangerAutomaton* uriAuto = StrangerAutomaton::decodeURI(paramAuto, opNode->getID());
 		retMe = uriAuto;
 
 	} else if (opName == "JSON.stringify") {

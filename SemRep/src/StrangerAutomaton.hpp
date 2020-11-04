@@ -183,6 +183,7 @@ public:
     StrangerAutomaton* substr(int start, int length, int id);
     StrangerAutomaton* substr(int start, int id);
     StrangerAutomaton* pre_substr(int start, int length, int id);
+    StrangerAutomaton* pre_substr(int start, int id);
 
     static StrangerAutomaton* addslashes(StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* addslashes(StrangerAutomaton* subjectAuto){return addslashes(subjectAuto, traceID);};
@@ -208,6 +209,11 @@ public:
     static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto){return encodeURIComponent(subjectAuto, traceID);};
     static StrangerAutomaton* decodeURIComponent(StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* decodeURIComponent(StrangerAutomaton* subjectAuto){return decodeURIComponent(subjectAuto, traceID);};
+
+    static StrangerAutomaton* encodeURI(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* encodeURI(StrangerAutomaton* subjectAuto){return encodeURI(subjectAuto, traceID);};
+    static StrangerAutomaton* decodeURI(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* decodeURI(StrangerAutomaton* subjectAuto){return decodeURI(subjectAuto, traceID);};
 
     static StrangerAutomaton* jsonStringify(StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* jsonStringify(StrangerAutomaton* subjectAuto){return jsonStringify(subjectAuto, traceID);};
