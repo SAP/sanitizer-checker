@@ -1658,7 +1658,6 @@ StrangerAutomaton* StrangerAutomaton::preReplace(StrangerAutomaton* searchAuto,
     
     
     debugToFile(stringbuilder() << "M[" << (traceID) << "] = dfa_pre_replace_str(M[" << this->autoTraceID << "], M[" << searchAuto->autoTraceID << "], \"" << replaceString << "\" , NUM_ASCII_TRACKS, indices_main);//"<<id << " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
-    replaceString = "";
     boost::posix_time::ptime start_time = perfInfo->current_time();
     StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_replace_str(this->dfa, searchAuto->dfa, StrangerAutomaton::strToCharStar(replaceString), num_ascii_track, indices_main));
     perfInfo->pre_replace_total_time += perfInfo->current_time() - start_time;
@@ -1701,7 +1700,6 @@ StrangerAutomaton* StrangerAutomaton::preReplaceOnce(StrangerAutomaton* searchAu
 
     
     debugToFile(stringbuilder() << "M[" << (traceID) << "] = dfa_pre_replace_str(M[" << this->autoTraceID << "], M[" << searchAuto->autoTraceID << "], \"" << replaceString << "\" , NUM_ASCII_TRACKS, indices_main);//"<<id << " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
-    replaceString = "";
     boost::posix_time::ptime start_time = perfInfo->current_time();
     StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_replace_once_str(this->dfa, searchAuto->dfa, StrangerAutomaton::strToCharStar(replaceString), num_ascii_track, indices_main));
     perfInfo->pre_replace_total_time += perfInfo->current_time() - start_time;
