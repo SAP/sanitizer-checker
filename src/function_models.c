@@ -3799,7 +3799,9 @@ DFA *dfaPreHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t fl
     return result;
 }
 
-static const char encodeUriComponentChars[128] =
+#define URI_ENCODE_CHARS 128
+
+static const char encodeUriComponentChars[URI_ENCODE_CHARS] =
 //   0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F
 {
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 0x
@@ -3812,7 +3814,20 @@ static const char encodeUriComponentChars[128] =
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   0,   1   // 7x  pqrstuvwxyz{|}~ DEL
 };
 
-DFA *dfaEncodeUriComponent(DFA *inputAuto, int var, int *indices){
+static const char encodeUriChars[URI_ENCODE_CHARS] =
+//   0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F
+{
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 0x
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 1x
+    1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 2x   !"#$%&'()*+,-./
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   0,   1,   0,  // 3x  0123456789:;<=>?
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 4x  @ABCDEFGHIJKLMNO
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   0,  // 5x  PQRSTUVWXYZ[\]^_
+    1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 6x  `abcdefghijklmno
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   0,   1   // 7x  pqrstuvwxyz{|}~ DEL
+};
+
+static DFA *dfaEncodeUriGeneric(DFA *inputAuto, int var, int *indices, const char* encoding){
 
     DFA *a = dfaCopy(inputAuto);
     // Do percent first to prevent double encoding
@@ -3820,8 +3835,8 @@ DFA *dfaEncodeUriComponent(DFA *inputAuto, int var, int *indices){
     dfaFree(a);
     a = b;
 
-    for (unsigned int c = 0; c < 128; ++c) {
-        if (encodeUriComponentChars[c]) {
+    for (unsigned int c = 0; c < URI_ENCODE_CHARS; ++c) {
+        if (encoding[c]) {
             char percent[4];
             sprintf(percent, "%%%02X", c);
             b = dfa_replace_char_with_string(a, var, indices, c, percent);
@@ -3832,13 +3847,23 @@ DFA *dfaEncodeUriComponent(DFA *inputAuto, int var, int *indices){
     return b;
 }
 
+DFA* dfaEncodeUriComponent(DFA *inputAuto, int var, int *indices) {
+    return dfaEncodeUriGeneric(inputAuto, var, indices, encodeUriComponentChars);
+}
+
+DFA* dfaEncodeUri(DFA *inputAuto, int var, int *indices) {
+    return dfaEncodeUriGeneric(inputAuto, var, indices, encodeUriChars);
+}
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent
+// Replaces each escape sequence in the encoded URI component with the character that it represents.
 DFA *dfaDecodeUriComponent(DFA *inputAuto, int var, int *indices){
 
     DFA *a = dfaCopy(inputAuto);
     DFA *b = NULL;
 
     // Replace all valid sequences
-    for (unsigned int c = 0; c < 128; ++c) {
+    for (unsigned int c = 0; c < URI_ENCODE_CHARS; ++c) {
         char str[2];
         char encoded[4];
         sprintf(str, "%c", c);
@@ -3865,6 +3890,34 @@ DFA *dfaDecodeUriComponent(DFA *inputAuto, int var, int *indices){
     return a;
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURI
+// Replaces each escape sequence in the encoded URI with the character that it represents,
+// but does not decode escape sequences that could not have been introduced by encodeURI.
+// The character “#” is not decoded from escape sequences.
+DFA *dfaDecodeUri(DFA *inputAuto, int var, int *indices){
+
+    DFA *a = dfaCopy(inputAuto);
+    DFA *b = NULL;
+
+    // Replace all sequences which could have been introduced by dfaEncodeUri
+    for (unsigned int c = 0; c < URI_ENCODE_CHARS; ++c) {
+        if (encodeUriChars[c]) {
+            char str[2];
+            char encoded[4];
+            sprintf(str, "%c", c);
+            sprintf(encoded, "%%%02X", c);
+
+            DFA *p = dfa_construct_string(encoded, var, indices);
+            b = dfa_replace_extrabit(a, p, str, var, indices);
+
+            dfaFree(p);
+            dfaFree(a);
+            a = b;
+        }
+    }
+    return a;
+}
+
 static const char jsonEncodeChars[128] = {
     'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'b', 't',
     'n', 'u', 'f', 'r', 'u', 'u', 'u', 'u', 'u', 'u',
@@ -3886,7 +3939,7 @@ DFA *dfaJsonStringify(DFA *inputAuto, int var, int *indices) {
     dfaFree(a);
     a = b;
 
-    for (unsigned int c = 0; c < 128; c++) {
+    for (unsigned int c = 0; c < URI_ENCODE_CHARS; c++) {
         char j = jsonEncodeChars[c];
         if (j != 0) {
             char uEncoded[8];

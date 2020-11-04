@@ -460,6 +460,8 @@ extern "C" {
 
     DFA *dfaEncodeUriComponent(DFA *inputAuto, int var, int *indices);
     DFA *dfaDecodeUriComponent(DFA *inputAuto, int var, int *indices);
+    DFA *dfaEncodeUri(DFA *inputAuto, int var, int *indices);
+    DFA *dfaDecodeUri(DFA *inputAuto, int var, int *indices);
 
     DFA *dfaJsonStringify(DFA *inputAuto, int var, int *indices);
     DFA *dfaJsonParse(DFA *inputAuto, int var, int *indices);
