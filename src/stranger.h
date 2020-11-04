@@ -283,6 +283,7 @@ extern "C" {
     DFA* dfa_pre_concat_const(DFA* ML, char* str, int pos, int var, int* indices);
     DFA* dfa_pre_concat(DFA* ML, DFA* MR, int pos, int var, int* indices);
     DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, char *str, int var, int* indices);
+    DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, char *str, int var, int* indices);
     
     //Given M, output a DFA accepting S*.w.S* where w \in M
     DFA *dfa_star_M_star(DFA *M, int var, int *indices);

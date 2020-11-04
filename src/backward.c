@@ -148,3 +148,22 @@ DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, char *str, int var, int* indices){
   return result;
 }
 
+DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, char *str, int var, int* indices){
+
+  DFA *result=NULL;
+  DFA *M3 = dfa_construct_string(str, var, indices);
+  // Union here as the replaced string could have been replace or not
+  // Check if this assumption is OK for replace_once
+  DFA* U = dfa_union(M2, M3);
+  if((str ==NULL)||strlen(str)==0){
+    // In the replace_once case, just add the replace string to the start
+    result = dfa_insert_everywhere(M1, U, var, indices);
+  } else {
+    result = dfa_general_replace_extrabit(M1, M3, U, var, indices);
+
+  }
+  dfaFree(U);
+  dfaFree(M3);
+  return result;
+}
+
