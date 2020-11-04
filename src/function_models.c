@@ -4001,7 +4001,7 @@ DFA *dfaJsonParse(DFA *inputAuto, int var, int *indices){
             for (unsigned int c = 0; c < 128; c++) {
                 sprintf(str, "%c", c);
                 sprintf(encoded, "\\u00%02X", c);
-                printf("%u Replacing %s with %s\n", c, encoded, str);
+                //printf("%u Replacing %s with %s\n", c, encoded, str);
                 p = dfa_construct_string(encoded, var, indices);
                 b = dfa_replace_extrabit(a, p, str, var, indices);
 
@@ -4012,7 +4012,7 @@ DFA *dfaJsonParse(DFA *inputAuto, int var, int *indices){
         } else if ((decodeChar > 0) && (decodeChar < 0xFF)) {
             sprintf(str, "%c", jsonDecodeChars[e]);
             sprintf(encoded, "\\%c", e);
-            printf("%u Replacing %s with %s\n", e, encoded, str);
+            //printf("%u Replacing %s with %s\n", e, encoded, str);
             p = dfa_construct_string(encoded, var, indices);
             b = dfa_replace_extrabit(a, p, str, var, indices);
 
@@ -4022,7 +4022,7 @@ DFA *dfaJsonParse(DFA *inputAuto, int var, int *indices){
         } else if (decodeChar == 0) {
             sprintf(str, "%c", e);
             sprintf(encoded, "\\%c", e);
-            printf("%u Replacing %s with %s\n", e, encoded, str);
+            //printf("%u Replacing %s with %s\n", e, encoded, str);
             p = dfa_construct_string(encoded, var, indices);
             b = dfa_general_replace_extrabit(a, p, phi, var, indices);
 
