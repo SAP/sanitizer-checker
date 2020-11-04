@@ -991,6 +991,18 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		replaceAuto->toDotAscii(1);
                 string replaceStr = replaceAuto->getStr();
                 retMe = subjectAuto->preReplaceOnce(patternAuto, replaceStr, childNode->getID());
+	} else if (opName == "split") {
+                // Model split as simply replacing the split character with an empty string
+		if (successors.size() != 2) {
+			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
+		}
+
+		DepGraphNode* subjectNode = successors[1];
+		DepGraphNode* patternNode = successors[0];
+		StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
+		StrangerAutomaton* subjectAuto = opAuto;
+
+		retMe = subjectAuto->preReplace(patternAuto,"", childNode->getID());
 
 	} else if (opName == "substr"){
 
@@ -1023,13 +1035,29 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 
 	} else if (opName == "md5") {
 		retMe = StrangerAutomaton::makeAnyString(opNode->getID());
+	} else if (opName == "encodeURIComponent") {
+                // Backwards analysis, so perform the inversion function
+                retMe = StrangerAutomaton::decodeURIComponent(opAuto, opNode->getID());
+	} else if (opName == "decodeURIComponent") {
+                // Backwards analysis, so perform the inversion function
+		retMe = StrangerAutomaton::encodeURIComponent(opAuto, opNode->getID());
+	} else if (opName == "encodeURI") {
+                // Backwards analysis, so perform the inversion function
+                retMe = StrangerAutomaton::decodeURI(opAuto, opNode->getID());
+	} else if (opName == "decodeURI") {
+                // Backwards analysis, so perform the inversion function
+               retMe = StrangerAutomaton::encodeURI(opAuto, opNode->getID());
+	} else if (opName == "JSON.stringify") {
+                // Backwards analysis, so perform the inversion function
+                retMe = StrangerAutomaton::jsonParse(opAuto, opNode->getID());
+	} else if (opName == "JSON.parse") {
+                // Backwards analysis, so perform the inversion function
+                retMe = StrangerAutomaton::jsonStringify(opAuto, opNode->getID());
 	} else {
 		throw StrangerStringAnalysisException( "Not implemented yet for regular validation phase: " + opName);
 	}
 
 	return retMe;
-
-
 }
 
 // ********************************************************************************
@@ -1392,6 +1420,30 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		StrangerAutomaton* replaceAuto = analysisResult[replaceNode->getID()];
 
 		retMe = StrangerAutomaton::str_replace_once(patternAuto,replaceAuto,subjectAuto, opNode->getID());
+
+	} else if (opName == "split") {
+                // Model split as simply replacing the split character with an empty string
+		if (successors.size() != 2) {
+			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
+		}
+
+		DepGraphNode* subjectNode = successors[1];
+		DepGraphNode* patternNode = successors[0];
+
+		if (analysisResult.find(subjectNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, subjectNode, analysisResult);
+		}
+		if (analysisResult.find(patternNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, patternNode, analysisResult);
+		}
+
+		StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
+		StrangerAutomaton* patternAuto = analysisResult[patternNode->getID()];
+		StrangerAutomaton* replaceAuto = StrangerAutomaton::makeEmptyString();
+
+		retMe = StrangerAutomaton::general_replace(patternAuto,replaceAuto,subjectAuto, opNode->getID());
+
+                delete replaceAuto;
 
 	} else if (opName == "addslashes") {
 		if (successors.size() != 1) {
