@@ -140,7 +140,9 @@ DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, char *str, int var, int* indices){
     result = dfa_insert_everywhere(M1, M2, var, indices);
   }else {
     //printf("Replacement [%s]!\n", str);
-    result = dfa_general_replace_extrabit(M1, M3, dfa_union(M2, M3), var, indices);
+    DFA* U = dfa_union(M2, M3);
+    result = dfa_general_replace_extrabit(M1, M3, U, var, indices);
+    dfaFree(U);
   }
   dfaFree(M3);
   return result;
