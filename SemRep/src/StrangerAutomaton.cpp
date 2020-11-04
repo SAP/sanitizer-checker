@@ -1686,6 +1686,40 @@ StrangerAutomaton* StrangerAutomaton::preReplace(StrangerAutomaton* searchAuto,
     return this->preReplace(searchAuto, replaceString, traceID);
 }
 
+StrangerAutomaton* StrangerAutomaton::preReplaceOnce(StrangerAutomaton* searchAuto,
+                                                     std::string replaceString, int id) {
+    debug(stringbuilder() << id <<  " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
+    if (searchAuto->isBottom() || this->isBottom())
+        throw new StrangerAutomatonException(
+            "SNH: In StrangerAutoatmon.preReplace: either searchAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
+    else if (searchAuto->isTop())
+        throw new StrangerAutomatonException(
+            "SNH: In StrangerAutoatmon.preReplace: searchAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
+    else if (this->isTop())
+        throw new StrangerAutomatonException(
+            "SNH: In StrangerAutoatmon.preReplace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
+
+    
+    debugToFile(stringbuilder() << "M[" << (traceID) << "] = dfa_pre_replace_str(M[" << this->autoTraceID << "], M[" << searchAuto->autoTraceID << "], \"" << replaceString << "\" , NUM_ASCII_TRACKS, indices_main);//"<<id << " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
+    replaceString = "";
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_replace_once_str(this->dfa, searchAuto->dfa, StrangerAutomaton::strToCharStar(replaceString), num_ascii_track, indices_main));
+    perfInfo->pre_replace_total_time += perfInfo->current_time() - start_time;
+    perfInfo->num_of_pre_replace++;
+    
+    {
+        retMe->setID(id);
+        retMe->debugAutomaton();
+    }
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::preReplaceOnce(StrangerAutomaton* searchAuto,
+                                                 std::string replaceString) {
+    return this->preReplaceOnce(searchAuto, replaceString, traceID);
+}
+
+
 //***************************************************************************************
 //*                                  Length Operations                                  *
 //*									-------------------									*

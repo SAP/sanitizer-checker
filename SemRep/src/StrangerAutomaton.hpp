@@ -118,6 +118,8 @@ public:
     static StrangerAutomaton* str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto);
     StrangerAutomaton* preReplace(StrangerAutomaton* searchAuto, std::string replaceString, int id);
     StrangerAutomaton* preReplace(StrangerAutomaton* searchAuto, std::string replaceString);
+    StrangerAutomaton* preReplaceOnce(StrangerAutomaton* searchAuto, std::string replaceString, int id);
+    StrangerAutomaton* preReplaceOnce(StrangerAutomaton* searchAuto, std::string replaceString);
     StrangerAutomaton* getUnaryAutomaton(int id);
     StrangerAutomaton* getUnaryAutomaton() { return getUnaryAutomaton(traceID); };
     StrangerAutomaton* restrictLengthByOtherAutomaton(StrangerAutomaton* otherAuto, int id);

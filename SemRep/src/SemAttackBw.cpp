@@ -222,6 +222,7 @@ StrangerAutomaton* SemAttackBw::generateAttack() {
         message("Vulnerability Signature:");
         debug_auto(vs_auto, 0);
     }
+    message("Example pre-image attack string");
     message(vs_auto->generateSatisfyingExample());
     return vs_auto;
 }

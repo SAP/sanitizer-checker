@@ -23,7 +23,7 @@ digraph cfg {
   n22 [shape=box, label="Var: x"];
   n23 [shape=ellipse, label="preg_replace"];
   n24 [shape=box, label="Lit: /&/"];
-  n25 [shape=box, label="Lit: B"];
+  n25 [shape=box, label="Lit: "];
   n26 [shape=box, label="Var: x"];
   n27 [shape=house, label="Input: x"];
  

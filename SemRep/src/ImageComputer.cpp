@@ -971,6 +971,27 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 			retMe = subjectAuto->preReplace(patternAuto, replaceStr, childNode->getID());
 		}
 
+	} else if (opName == "str_replace_once") {
+
+		if (successors.size() != 3) {
+			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments");
+		}
+
+		DepGraphNode* patternNode = successors[0];
+		DepGraphNode* replaceNode = successors[1];
+
+		StrangerAutomaton* subjectAuto = opAuto;
+                std::cout << "opAuto to dot:\n";
+                subjectAuto->toDotAscii(1);
+		StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
+		StrangerAutomaton* replaceAuto = fwAnalysisResult.find(replaceNode->getID())->second;
+                std::cout << "PatternAuto to dot:" << patternNode->getID() << std::endl;
+                patternAuto->toDotAscii(1);
+		std::cout << "ReplaceAuto to dot:" << replaceNode->getID() << std::endl;
+		replaceAuto->toDotAscii(1);
+                string replaceStr = replaceAuto->getStr();
+                retMe = subjectAuto->preReplaceOnce(patternAuto, replaceStr, childNode->getID());
+
 	} else if (opName == "substr"){
 
 		if (successors.size() < 2) {
