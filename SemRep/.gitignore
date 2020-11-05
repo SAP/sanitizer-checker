@@ -16,6 +16,7 @@ missing
 .deps
 
 # Binaries
+src/semattack_bw
 src/semattack
 src/semrep
 
