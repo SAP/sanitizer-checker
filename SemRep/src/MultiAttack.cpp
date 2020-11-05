@@ -44,11 +44,20 @@ MultiAttack::~MultiAttack() {
 
 void MultiAttack::printResults() const
 {
-  std::cout << "Found " << this->m_dot_paths.size() << " dot files" << std::endl;  
+  std::cout << "Found " << this->m_dot_paths.size() << " dot files" << std::endl;
 }
 
 void MultiAttack::computePostImages() {
   findDotFiles();
+  for (auto file : this->m_dot_paths) {
+    try {
+      std::cout << "Analysing file: " << file << std::endl;
+      SemAttack attack(file, this->m_input_name);
+      attack.computeTargetFWAnalysis();
+    } catch (StrangerStringAnalysisException const &e) {
+      std::cerr << e.what() << std::endl;
+    }
+  }
 }
 
 void MultiAttack::findDotFiles() {
@@ -78,7 +87,7 @@ std::vector<fs::path> MultiAttack::getFilesInPath(fs::path const & root, std::st
     for (auto const & entry : fs::recursive_directory_iterator(root))
     {
       if (fs::is_regular_file(entry) && entry.path().extension() == ext)
-        paths.emplace_back(entry.path().filename());
+        paths.emplace_back(entry.path());
     }
   }
 
