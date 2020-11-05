@@ -225,7 +225,7 @@ public:
     void printAutomaton();
     void printAutomatonVitals();
     void toDot();
-    void toDotAscii(int printSink);
+    void toDotAscii(int printSink) const;
     void toDotFile(std::string file_name);
     void toDotFileAscii(std::string file_name, int printSink);
     void toDotBDDFile(std::string file_name);

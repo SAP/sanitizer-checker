@@ -26,6 +26,7 @@
 #include "SemAttack.hpp"
 #include "AttackPatterns.hpp"
 #include "MultiAttack.hpp"
+#include "StrangerAutomaton.hpp"
 
 #include <iostream>
 
@@ -33,18 +34,30 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   : m_graph_directory(graph_directory)
   , m_input_name(input_field_name)
   , m_dot_paths()
+  , m_attacks()
+  , m_automata()
   , m_groups()
 {
-
+  fillCommonPatterns();
 }
 
 MultiAttack::~MultiAttack() {
 
+  for (auto iter : m_attacks) {
+    delete iter;
+  }
+  m_attacks.clear();
+
+  for (auto iter : m_automata) {
+    delete iter;
+  }
+  m_automata.clear();
 }
 
 void MultiAttack::printResults() const
 {
   std::cout << "Found " << this->m_dot_paths.size() << " dot files" << std::endl;
+  m_groups.printGroups();
 }
 
 void MultiAttack::computePostImages() {
@@ -52,12 +65,30 @@ void MultiAttack::computePostImages() {
   for (auto file : this->m_dot_paths) {
     try {
       std::cout << "Analysing file: " << file << std::endl;
-      SemAttack attack(file, this->m_input_name);
-      attack.computeTargetFWAnalysis();
+      SemAttack* attack = new SemAttack(file, this->m_input_name);
+      StrangerAutomaton* automaton = attack->computeTargetFWAnalysis();
+      m_groups.addAutomaton(automaton, attack);
+      m_attacks.emplace_back(attack);
     } catch (StrangerStringAnalysisException const &e) {
       std::cerr << e.what() << std::endl;
     }
   }
+}
+
+void MultiAttack::fillCommonPatterns() {
+
+  StrangerAutomaton* a = nullptr;
+
+  // Add empty automaton
+  a = StrangerAutomaton::makeEmptyString();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "Empty");
+
+  // Add all strings
+  a = StrangerAutomaton::makeAnyString();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "SigmaStar");
+
 }
 
 void MultiAttack::findDotFiles() {

@@ -25,6 +25,7 @@
 #define MULTIATTACK_HPP_
 
 #include "AutomatonGroups.hpp"
+#include "StrangerAutomaton.hpp"
 
 #define BOOST_FILESYSTEM_VERSION 3
 #define BOOST_FILESYSTEM_NO_DEPRECATED
@@ -46,6 +47,7 @@ public:
     void printResults() const;
 
 private:
+    void fillCommonPatterns();
     void findDotFiles();
     static std::vector<std::string> getDotFilesInDir(std::string const &dir);
     static std::vector<fs::path> getFilesInPath(fs::path const & root, std::string const & ext);
@@ -53,6 +55,8 @@ private:
     std::string m_graph_directory;
     std::string m_input_name;
     std::vector<std::string> m_dot_paths;
+    std::vector<SemAttack*> m_attacks;
+    std::vector<StrangerAutomaton*> m_automata;
     AutomatonGroups m_groups;
 
 };

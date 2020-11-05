@@ -25,6 +25,8 @@
 
 #include "AutomatonGroups.hpp"
 
+#include <iostream>
+
 AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name)
   : m_automaton(automaton)
   , m_graphs()
@@ -61,8 +63,21 @@ const StrangerAutomaton* AutomatonGroup::getAutomaton() const
   return m_automaton;
 }
 
-void AutomatonGroup::addDepGraph(const DepGraph* graph) {
+void AutomatonGroup::addSemAttack(const SemAttack* graph) {
   m_graphs.emplace_back(graph);
+}
+
+void AutomatonGroup::printMembers() const {
+  std::cout << getName()
+            << " entries: "
+            << getEntries()
+            << std::endl;
+  std::cout << "     Files:";
+  for (auto iter : m_graphs) {
+    std::cout << iter->getFileName() << ", ";
+  }
+  std::cout << std::endl;
+  //m_automaton->toDotAscii(0);
 }
 
 AutomatonGroups::AutomatonGroups() :
@@ -90,11 +105,11 @@ AutomatonGroup* AutomatonGroups::createGroup(const StrangerAutomaton* automaton,
   return group;
 }
 
-AutomatonGroup* AutomatonGroups::addAutomaton(const StrangerAutomaton* automaton, const DepGraph* graph)
+AutomatonGroup* AutomatonGroups::addAutomaton(const StrangerAutomaton* automaton, const SemAttack* graph)
 {
   AutomatonGroup* existingGroup = getGroupForAutomaton(automaton);
   if (existingGroup) {
-    existingGroup->addDepGraph(graph);
+    existingGroup->addSemAttack(graph);
   } else {
     existingGroup = addNewEntry(automaton, graph);
   }
@@ -107,10 +122,10 @@ AutomatonGroup* AutomatonGroups::addGroup(const StrangerAutomaton* automaton) {
   return &m_groups.back(); 
 }
 
-AutomatonGroup* AutomatonGroups::addNewEntry(const StrangerAutomaton* automaton, const DepGraph* graph)
+AutomatonGroup* AutomatonGroups::addNewEntry(const StrangerAutomaton* automaton, const SemAttack* graph)
 {
   AutomatonGroup* group = addGroup(automaton);
-  group->addDepGraph(graph);
+  group->addSemAttack(graph);
   return group;
 }
 
@@ -123,4 +138,14 @@ AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutomaton* a
     }
   }
   return nullptr;
+}
+
+void AutomatonGroups::printGroups() const {
+  std::cout << "Total of " << m_groups.size() << " unique post-images." << std::endl;
+  unsigned int i = 0;
+  for (auto iter : m_groups) {
+    std::cout << i << ": ";
+    iter.printMembers();
+    i++;
+  }
 }

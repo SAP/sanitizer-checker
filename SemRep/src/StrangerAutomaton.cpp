@@ -3077,7 +3077,7 @@ void StrangerAutomaton::toDotBDDFile(std::string file_name) {
  * Unfortunately until now there is no interface to provide a file to the C library
  * to print the output into yet :-(
  */
-void StrangerAutomaton::toDotAscii(int printSink)
+void StrangerAutomaton::toDotAscii(int printSink) const
 {
 	unsigned* indices_main_unsigned = getUnsignedIndices(num_ascii_track);
 	std::cout.flush();

@@ -45,6 +45,10 @@ public:
 
     void printResults();
 
+    std::string getFileName() const { return target_dep_graph_file_name; }
+
+    const StrangerAutomaton* getPostImage() const { return target_sink_auto; }
+
     static PerfInfo perfInfo;
 private:
     std::string target_dep_graph_file_name;

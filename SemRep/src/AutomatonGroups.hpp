@@ -29,7 +29,7 @@
 #include <vector>
 
 #include "StrangerAutomaton.hpp"
-#include "depgraph/DepGraph.hpp"
+#include "SemAttack.hpp"
 
 
 // Create a class to group equal Automata
@@ -43,11 +43,15 @@ public:
     void setName(const std::string& name);
     std::string getName() const;
     const StrangerAutomaton* getAutomaton() const;
-    void addDepGraph(const DepGraph* graph);
+    void addSemAttack(const SemAttack* graph);
+
+    unsigned int getEntries() const { return m_graphs.size(); }
+
+    void printMembers() const;
 
 private:
     const StrangerAutomaton* m_automaton;
-    std::vector<const DepGraph*> m_graphs;
+    std::vector<const SemAttack*> m_graphs;
     std::string m_name;
 };
 
@@ -61,17 +65,17 @@ public:
     AutomatonGroup* createGroup(const StrangerAutomaton* automaton, const std::string& name);
     // If automaton exists in the group, add the depgraph to that grouping
     // otherwise add a new group with the automaton and graph
-    AutomatonGroup* addAutomaton(const StrangerAutomaton* automaton, const DepGraph* graph);
+    AutomatonGroup* addAutomaton(const StrangerAutomaton* automaton, const SemAttack* graph);
 
     AutomatonGroup* addGroup(const StrangerAutomaton* automaton);
     
-    void printGroups();
+    void printGroups() const;
 
 private:
 
     std::vector<AutomatonGroup> m_groups;
 
-    AutomatonGroup* addNewEntry(const StrangerAutomaton* automaton, const DepGraph* graph);
+    AutomatonGroup* addNewEntry(const StrangerAutomaton* automaton, const SemAttack* graph);
     AutomatonGroup* getGroupForAutomaton(const StrangerAutomaton* automaton);
 };
 
