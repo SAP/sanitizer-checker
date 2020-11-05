@@ -30,20 +30,14 @@
 #include "SemRepairDebugger.hpp"
 #include "depgraph/DepGraph.hpp"
 
-using namespace std;
-
 class SemAttack {
 public:
     SemAttack(string target_dep_graph_file_name, string input_field_name);
     virtual ~SemAttack();
 
-    StrangerAutomaton* computeValidationPatch();
     StrangerAutomaton* computeAttackPatternOverlap();
 
     StrangerAutomaton* computeTargetFWAnalysis();
-
-    StrangerAutomaton* computeTargetLengthPatch(StrangerAutomaton* initialAuto, AnalysisResult& fwAnalysisResult);
-    StrangerAutomaton* computeTargetSanitizationPatch(StrangerAutomaton* initialAuto, const AnalysisResult& fwAnalysisResult);
 
     StrangerAutomaton* getTargetAuto() { return target_sink_auto; }
 
@@ -51,17 +45,10 @@ public:
 
     void printResults();
 
-    bool is_validation_patch_required = false;
-    bool is_length_patch_required = false;
-    bool is_sanitization_patch_required = false;
-
-    bool calculate_rejected_set = false;
-
     static PerfInfo perfInfo;
 private:
-    string reference_dep_graph_file_name;
-    string target_dep_graph_file_name;
-    string input_field_name;
+    std::string target_dep_graph_file_name;
+    std::string input_field_name;
 
     DepGraph reference_dep_graph;
     DepGraph target_dep_graph;

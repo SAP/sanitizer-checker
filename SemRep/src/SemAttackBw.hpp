@@ -37,7 +37,6 @@ public:
     SemAttackBw(const string& target_dep_graph_file_name, const string& input_field_name);
     virtual ~SemAttackBw();
 
-    StrangerAutomaton* computeTargetFWAnalysis();
     StrangerAutomaton* generateAttack();
 
     StrangerAutomaton* getTargetAuto() { return target_sink_auto; }

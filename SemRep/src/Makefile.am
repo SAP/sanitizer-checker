@@ -8,7 +8,8 @@ libsemrep_a_SOURCES = ImageComputer.cpp \
                       StrangerAutomaton.cpp \
                       SemAttack.cpp \
                       SemAttackBw.cpp \
-                      AttackPatterns.cpp
+                      AttackPatterns.cpp \
+                      AutomatonGroups.cpp
 
 bin_PROGRAMS = semrep semattack semattack_bw
 

@@ -227,40 +227,6 @@ StrangerAutomaton* SemAttackBw::generateAttack() {
     return vs_auto;
 }
 
-/**
- * Computes sink post image for target, first time
- */
-StrangerAutomaton* SemAttackBw::computeTargetFWAnalysis() {
-    message("computing target sink post image...");
-    AnalysisResult targetAnalysisResult;
-    UninitNodesList targetUninitNodes = target_dep_graph.getUninitNodes();
-
-    // initialize reference input nodes to bottom
-    message("initializing reference inputs with bottom");
-    for (auto* uninit_node : targetUninitNodes) {
-        targetAnalysisResult[uninit_node->getID()] = StrangerAutomaton::makePhi(uninit_node->getID());
-    }
-    // initialize uninit node that we are interested in with sigma star
-    message(stringbuilder() << "initializing input node(" << target_uninit_field_node->getID() << ") with sigma star");
-    delete targetAnalysisResult[target_uninit_field_node->getID()];
-    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(target_uninit_field_node->getID());
-
-    ImageComputer targetAnalyzer;
-
-    try {
-        message("starting forward analysis for target...");
-        targetAnalyzer.doForwardAnalysis_SingleInput(target_dep_graph, target_field_relevant_graph, targetAnalysisResult);
-        message("...finished forward analysis for target.");        
-    } catch (StrangerStringAnalysisException const &e) {
-        cerr << e.what();
-        exit(EXIT_FAILURE);
-    }
-
-    target_sink_auto = targetAnalysisResult[target_field_relevant_graph.getRoot()->getID()];
-    message("...computed target sink post image.");
-    return target_sink_auto;
-}
-
 void SemAttackBw::debug_auto(StrangerAutomaton* automaton, int type) {
     switch (type) {
         case 0:

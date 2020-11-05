@@ -93,6 +93,23 @@ StrangerAutomaton* AttackPatterns::getUndesiredMFETest()
     
     //    StrangerAutomaton* retMe = regExToAuto("//evil/", true, int32_t(0));
     //    return retMe;
-	throw new std::runtime_error("not implemented");
-    
+	throw new std::runtime_error("not implemented");   
+}
+
+
+StrangerAutomaton* AttackPatterns::getAttackPatternForContext(AttackContext context)
+{
+    switch (context) {
+    case AttackContext::Html:
+        return getHtmlPattern();
+    case AttackContext::HtmlAttr:
+        return getHtmlAttributePattern();
+    case AttackContext::JavaScript:
+        return getJavascriptPattern();
+    case AttackContext::Url:
+        return getUrlPattern();
+    default:
+        return StrangerAutomaton::makeEmptyString();
+    }
+    return StrangerAutomaton::makeEmptyString();
 }

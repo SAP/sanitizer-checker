@@ -71,15 +71,6 @@ string SemAttack::generateOutputFilePath(string folder_name, bool unique_name) {
     if (!unique_name) {
         return stringbuilder() << output_dir.string() << "/";
     }
-    size_t ref_ext_index = reference_dep_graph_file_name.find_last_of('.');
-    if (ref_ext_index == string::npos) {
-        ref_ext_index = reference_dep_graph_file_name.length() - 1;
-    }
-    size_t ref_index =  reference_dep_graph_file_name.find_last_of('/');
-    if (ref_index == string::npos) {
-        ref_index = 0;
-    }
-    string ref_file = reference_dep_graph_file_name.substr(ref_index + 1, ref_ext_index - ref_index - 1);
 
     size_t tar_ext_index = target_dep_graph_file_name.find_last_of('.');
     if (tar_ext_index == string::npos) {
@@ -92,7 +83,7 @@ string SemAttack::generateOutputFilePath(string folder_name, bool unique_name) {
 
     string tar_file = target_dep_graph_file_name.substr(tar_index + 1, tar_ext_index - tar_index - 1);
 
-    return stringbuilder() << output_dir.string() << "/" << ref_file << "_" << tar_file << "_" << input_field_name;
+    return stringbuilder() << output_dir.string() << tar_file << "_" << input_field_name;
 }
 
 void SemAttack::printAnalysisResults(AnalysisResult& result) {
@@ -116,31 +107,24 @@ void SemAttack::printNodeList(NodesList nodes) {
 void SemAttack::printResults() {
     string file_path =  generateOutputFilePath("outputs/generated_patch_automata", false);
 
-    if (is_validation_patch_required) {
-        cout << "\t    - validation patch is generated" << endl;
-        string vp_fname = stringbuilder() << file_path << "validation_patch_dfa_with_ASCII_transitions.dot";
-        string vp_mn_fname = stringbuilder() << file_path << "validation_patch_dfa_with_MONA_transitions.dot";
-        string vp_bdd_fname = stringbuilder() << file_path << "validation_patch_BDD.dot";
-        cout << "\t file : " << vp_fname << endl;
-        cout << "\t file : " << vp_mn_fname << endl;
-        cout << "\t file : " << vp_bdd_fname << endl;
-        DEBUG_AUTO_TO_FILE(target_sink_auto, vp_fname);
-        DEBUG_AUTO_TO_FILE_MN(target_sink_auto,vp_mn_fname);
-        target_sink_auto->toDotBDDFile(vp_bdd_fname);
+    string vp_fname = stringbuilder() << file_path << "validation_patch_dfa_with_ASCII_transitions.dot";
+    string vp_mn_fname = stringbuilder() << file_path << "validation_patch_dfa_with_MONA_transitions.dot";
+    string vp_bdd_fname = stringbuilder() << file_path << "validation_patch_BDD.dot";
+    cout << "\t file : " << vp_fname << endl;
+    cout << "\t file : " << vp_mn_fname << endl;
+    cout << "\t file : " << vp_bdd_fname << endl;
+    //DEBUG_AUTO_TO_FILE(target_sink_auto, vp_fname);
+    //DEBUG_AUTO_TO_FILE_MN(target_sink_auto,vp_mn_fname);
+    //target_sink_auto->toDotBDDFile(vp_bdd_fname);
 
-        cout << "\t size : states " << target_sink_auto->get_num_of_states() << " : "
-             << "bddnodes " << target_sink_auto->get_num_of_bdd_nodes() << endl;
+    cout << "\t size : states " << target_sink_auto->get_num_of_states() << " : "
+         << "bddnodes " << target_sink_auto->get_num_of_bdd_nodes() << endl;
 
-        //cout << "\t    - validation patch is generated" << endl;
+    //cout << "\t    - validation patch is generated" << endl;
 
-        if (DEBUG_ENABLED_RESULTS != 0) {
-            DEBUG_MESSAGE("validation patch auto:");
-            DEBUG_AUTO(target_sink_auto);
-        }
-
-    } else {
-        cout << "\t    - no validation patch" << endl;
-        cout << "\t size : states 0 : bddnodes 0" << endl;
+    if (DEBUG_ENABLED_RESULTS != 0) {
+      DEBUG_MESSAGE("validation patch auto:");
+      DEBUG_AUTO(target_sink_auto);
     }
 
     perfInfo.print_validation_extraction_info();

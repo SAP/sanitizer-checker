@@ -14,15 +14,15 @@ digraph cfg {
   n13 [shape=box, label="Lit: "];
   n14 [shape=box, label="Var: x"];
   n15 [shape=ellipse, label="str_replace_once"];
-  n16 [shape=box, label="Lit: \\""];
+  n16 [shape=box, label="Lit: \""];
   n17 [shape=box, label="Lit: "];
   n18 [shape=box, label="Var: x"];
   n19 [shape=ellipse, label="str_replace_once"];
-  n20 [shape=box, label="Lit: \\\/"];
+  n20 [shape=box, label="Lit: \/"];
   n21 [shape=box, label="Lit: "];
   n22 [shape=box, label="Var: x"];
   n23 [shape=ellipse, label="str_replace_once"];
-  n24 [shape=box, label="Lit: \&"];
+  n24 [shape=box, label="Lit: &"];
   n25 [shape=box, label="Lit: "];
   n26 [shape=box, label="Var: x"];
   n27 [shape=house, label="Input: x"];

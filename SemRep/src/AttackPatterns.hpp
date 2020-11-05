@@ -25,17 +25,20 @@
 #define ATTACKPATTERNS_HPP_
 
 #include "StrangerAutomaton.hpp"
+#include "AttackContext.hpp"
 
 class AttackPatterns {
 
 public:
+
+    static StrangerAutomaton* getAttackPatternForContext(AttackContext context);
+
     static StrangerAutomaton* getLiteralPattern();
     static StrangerAutomaton* lessThanPattern();
     static StrangerAutomaton* getHtmlPattern();
     static StrangerAutomaton* getHtmlAttributePattern();
     static StrangerAutomaton* getJavascriptPattern();
     static StrangerAutomaton* getUrlPattern();
-    
     static StrangerAutomaton* getUndesiredSQLTest();
     static StrangerAutomaton* getUndesiredMFETest();
 

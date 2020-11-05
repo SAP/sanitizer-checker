@@ -1898,7 +1898,7 @@ bool StrangerAutomaton::checkInclusion(StrangerAutomaton* otherAuto) {
  *            : id of node associated with this auto; used for debugging
  *            purposes only * @return
  */
-bool StrangerAutomaton::checkEquivalence(StrangerAutomaton* otherAuto, int id1, int id2) {
+bool StrangerAutomaton::checkEquivalence(const StrangerAutomaton* otherAuto, int id1, int id2) const {
     std::string debugStr = stringbuilder() << "checkEquivalence("  << this->ID <<  ", " << otherAuto->ID << ") = ";
     
     if ((this->isTop() && otherAuto->isTop()) || (this->isBottom() && otherAuto->isBottom())){
@@ -1912,7 +1912,8 @@ bool StrangerAutomaton::checkEquivalence(StrangerAutomaton* otherAuto, int id1, 
     
     debugToFile(stringbuilder() << "check_equivalence(M[" << this->autoTraceID << "],M["<< otherAuto->autoTraceID  << "], NUM_ASCII_TRACKS, indices_main);//check_equivalence("  << this->ID <<  ", " << otherAuto->ID << ")");
     int result = check_equivalence(this->dfa,
-                                   otherAuto->dfa, num_ascii_track,
+                                   otherAuto->dfa,
+                                   num_ascii_track,
                                    indices_main);
     
     {
@@ -1938,7 +1939,7 @@ bool StrangerAutomaton::checkEquivalence(StrangerAutomaton* otherAuto, int id1, 
  * @param auto
  * @return
  */
-bool StrangerAutomaton::checkEquivalence(StrangerAutomaton* otherAuto) {
+bool StrangerAutomaton::checkEquivalence(const StrangerAutomaton* otherAuto) const {
     return this->checkEquivalence(otherAuto, -1, -1);
 }
 
@@ -1997,7 +1998,7 @@ unsigned StrangerAutomaton::getMinLength() {
 /**
  * returns the result of this->checkEquivalence(other)
  */
-bool StrangerAutomaton::equals(StrangerAutomaton* otherAuto) {
+bool StrangerAutomaton::equals(const StrangerAutomaton* otherAuto) const {
     return (otherAuto != NULL) &&
     this->checkEquivalence(otherAuto);
 }
@@ -2083,7 +2084,7 @@ string StrangerAutomaton::getStr(){
  * check if this automaton represents the bottom of the lattice.
  * @return
  */
-bool StrangerAutomaton::isBottom() {
+bool StrangerAutomaton::isBottom() const {
     //TODO: checkEmptiness causes lots of crashes so be careful here
     return (this->bottom == true);
 }
@@ -2092,7 +2093,7 @@ bool StrangerAutomaton::isBottom() {
  * check if this automaton represents the top of the lattice.
  * @return
  */
-bool StrangerAutomaton::isTop() {
+bool StrangerAutomaton::isTop() const {
     return (this->top == true);
 }
 

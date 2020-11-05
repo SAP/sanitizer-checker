@@ -34,8 +34,8 @@ void call_sem_attack(string target_name, string field_name){
     try {
         cout << endl << "\t------ Starting Analysis for: " << field_name << " ------" << endl;
         cout << endl << "\t       Target: " << target_name  << endl;
+
         SemAttack semAttack(target_name, field_name);
-        semAttack.calculate_rejected_set = true;
         semAttack.computeAttackPatternOverlap();
 
         cout << endl << "\t------ OVERALL RESULT for: " << field_name << " ------" << endl;
