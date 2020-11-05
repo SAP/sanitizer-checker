@@ -21,8 +21,8 @@
  * Authors: Abdulbaki Aydin, Muath Alkhalaf, Thomas Barber
  */
 
-#ifndef SEMREPAIR_HPP_
-#define SEMREPAIR_HPP_
+#ifndef SEMATTACK_HPP_
+#define SEMATTACK_HPP_
 
 #include <boost/filesystem.hpp>
 #include "StrangerAutomaton.hpp"
@@ -32,7 +32,7 @@
 
 class SemAttack {
 public:
-    SemAttack(string target_dep_graph_file_name, string input_field_name);
+    SemAttack(std::string target_dep_graph_file_name, std::string input_field_name);
     virtual ~SemAttack();
 
     StrangerAutomaton* computeAttackPatternOverlap();
@@ -60,13 +60,12 @@ private:
 
     StrangerAutomaton* target_sink_auto;
 
-    void message(string msg);
-    string generateOutputFilePath(string folder_name, bool unique_name);
+    void message(std::string msg);
+    std::string generateOutputFilePath(std::string folder_name, bool unique_name);
     void printAnalysisResults(AnalysisResult& result);
     void printNodeList(NodesList nodes);
-    int isLengthAnIssue(StrangerAutomaton* patcherAuto, StrangerAutomaton*patcheeAuto);
 };
 
 
 
-#endif /* SEMREPAIR_HPP_ */
+#endif /* SEMATTACK_HPP_ */

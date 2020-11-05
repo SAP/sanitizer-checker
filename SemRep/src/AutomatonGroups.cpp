@@ -61,6 +61,10 @@ const StrangerAutomaton* AutomatonGroup::getAutomaton() const
   return m_automaton;
 }
 
+void AutomatonGroup::addDepGraph(const DepGraph* graph) {
+  m_graphs.emplace_back(graph);
+}
+
 AutomatonGroups::AutomatonGroups() :
   m_groups()
 {

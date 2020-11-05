@@ -38,7 +38,7 @@ class AutomatonGroup {
 public:
     AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name);
     AutomatonGroup(const StrangerAutomaton* automaton);
-    ~AutomatonGroup();
+    virtual ~AutomatonGroup();
 
     void setName(const std::string& name);
     std::string getName() const;
@@ -55,7 +55,7 @@ class AutomatonGroups {
 
 public:
     AutomatonGroups();
-    ~AutomatonGroups();
+    virtual ~AutomatonGroups();
 
     // Create an empty group with a name
     AutomatonGroup* createGroup(const StrangerAutomaton* automaton, const std::string& name);
