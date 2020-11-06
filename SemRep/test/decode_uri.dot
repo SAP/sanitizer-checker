@@ -1,0 +1,11 @@
+digraph cfg {
+  n1 [shape=doubleoctagon, label="Return: x"];
+  n3 [shape=house, label="Input: x"];
+  n4 [shape=ellipse, label="decodeURI"];
+  n2 [shape=box, label="Var: x"];
+  n7 [shape=box, label="Var: x"];
+  n4 -> n2;
+  n2 -> n3;
+  n1 -> n7;
+  n7 -> n4;
+} 
