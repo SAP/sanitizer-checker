@@ -2041,7 +2041,6 @@ bool StrangerAutomaton::checkEmptiness() const {
                                      "Error in checkEmptiness result for StrangerAutomaton.");
 }
 
-
 /**
  * returns true if this L(automaton) == bottom
  * if you need to check if the language is actual phi use {@link checkEmptiness}
@@ -2057,7 +2056,7 @@ bool StrangerAutomaton::isEmpty() const {
  *
  * @return
  */
-bool StrangerAutomaton::checkEmptyString() {
+bool StrangerAutomaton::checkEmptyString() const {
     if (this->isBottom() || this->isTop())
         return false;
     debugToFile(stringbuilder() << "checkEmptyString(M[" << this->autoTraceID << "]);//checkEmptyString("  << this->ID <<  ")");

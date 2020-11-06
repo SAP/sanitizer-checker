@@ -46,9 +46,17 @@ void CombinedAnalysisResult::printResult() const
   for (auto bwResult : m_bwAnalysisMap) {
     AttackContext c = bwResult.first;
     const BackwardAnalysisResult& result = bwResult.second;
+    bool vulnerable = result.isVulnerable();
     std::cout << AttackContextHelper::getName(c) << ": "
-              << (result.isVulnerable() ? "true" : "false")
-              << ", ";
+              << (vulnerable ? "true" : "false");
+    if (vulnerable) {
+      std::cout << "("
+                << result.getIntersection()->generateSatisfyingExample()
+                << ")";
+      // std::cout << std::endl;
+      // result.getIntersection()->toDotAscii(0);
+    }
+    std::cout << ", ";
   }
 }
 

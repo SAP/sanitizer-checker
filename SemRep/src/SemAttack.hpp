@@ -116,7 +116,7 @@ public:
 
     const StrangerAutomaton* getPreImage() const { return getAttack()->getPreImage(m_result); }
     const StrangerAutomaton* getIntersection() const { return m_intersection; }
-    bool isSafe() const { return getIntersection()->isEmpty(); }
+    bool isSafe() const { return (getIntersection()->isEmpty() || getIntersection()->checkEmptyString()); }
     bool isVulnerable() const { return !isSafe(); }
 
 private:

@@ -148,7 +148,7 @@ public:
     bool equals(const StrangerAutomaton* other) const;
     bool checkEmptiness() const;
     bool isEmpty() const;
-    bool checkEmptyString();
+    bool checkEmptyString() const;
     bool isSingleton();
     std::string getStr();
     bool isBottom() const;
