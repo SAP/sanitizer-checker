@@ -47,6 +47,7 @@ public:
     unsigned int getEntries() const { return m_graphs.size(); }
 
     void printMembers() const;
+    static void printHeaders();;
 
 private:
     const StrangerAutomaton* m_automaton;

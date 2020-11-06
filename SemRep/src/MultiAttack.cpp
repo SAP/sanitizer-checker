@@ -34,19 +34,20 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   : m_graph_directory(graph_directory)
   , m_input_name(input_field_name)
   , m_dot_paths()
-  , m_attacks()
+  , m_results()
   , m_automata()
   , m_groups()
+  , m_analyzed_contexts()
 {
   fillCommonPatterns();
 }
 
 MultiAttack::~MultiAttack() {
 
-  for (auto iter : m_attacks) {
+  for (auto iter : m_results) {
     delete iter;
   }
-  m_attacks.clear();
+  m_results.clear();
 
   for (auto iter : m_automata) {
     delete iter;
@@ -69,11 +70,21 @@ void MultiAttack::computePostImages() {
         new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());
       const StrangerAutomaton* postImage = result->getFwAnalysis().getPostImage();
       m_groups.addAutomaton(postImage, result);
-      m_attacks.emplace_back(result);
+      m_results.emplace_back(result);
     } catch (StrangerStringAnalysisException const &e) {
       std::cerr << e.what() << std::endl;
     }
   }
+}
+
+void MultiAttack::computeAttackPatternOverlap(AttackContext context)
+{
+  // Loop over exisiting results and compute overlap and pre-image for each one
+  for (auto result : m_results) {
+    // Consider this in a separate thread
+    result->addBackwardAnalysis(context);
+  }
+  m_analyzed_contexts.push_back(context);
 }
 
 void MultiAttack::fillCommonPatterns() {

@@ -116,7 +116,8 @@ public:
 
     const StrangerAutomaton* getPreImage() const { return getAttack()->getPreImage(m_result); }
     const StrangerAutomaton* getIntersection() const { return m_intersection; }
-    bool isVulnerable() const { return getIntersection()->isEmpty(); }
+    bool isSafe() const { return getIntersection()->isEmpty(); }
+    bool isVulnerable() const { return !isSafe(); }
 
 private:
 
@@ -141,6 +142,9 @@ public:
     const SemAttack* getAttack() const { return m_fwAnalysis.getAttack(); }
 
     const ForwardAnalysisResult& getFwAnalysis() const { return m_fwAnalysis; }
+
+    void printResult() const;
+
 private:
     ForwardAnalysisResult m_fwAnalysis;
     std::map<AttackContext, BackwardAnalysisResult> m_bwAnalysisMap;

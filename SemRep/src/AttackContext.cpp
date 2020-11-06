@@ -22,28 +22,15 @@
  *
  * Authors: Thomas Barber
  */
-#ifndef ATTACK_CONTEXT_HPP_
-#define ATTACK_CONTEXT_HPP_
+#include "AttackContext.hpp"
 
-#define SOME_ENUM(DO) \
-    DO(Html) \
-    DO(HtmlAttr) \
-    DO(JavaScript) \
-    DO(Url)
-
-#define MAKE_ENUM(VAR) VAR,
-enum class AttackContext {
-    SOME_ENUM(MAKE_ENUM)
+#define MAKE_STRINGS(VAR) #VAR,
+const char* AttackContextHelper::AttackContextName[] = {
+    SOME_ENUM(MAKE_STRINGS)
 };
 
-class AttackContextHelper {
+const char* AttackContextHelper::getName(AttackContext c)
+{
+  return AttackContextName[static_cast<int>(c)];
+}
 
-public:
-  static const char* getName(AttackContext c);
-
-private:
-  static const char* AttackContextName[];
-
-};
-
-#endif /* ATTACK_CONTEXT_HPP_ */

@@ -24,6 +24,7 @@
 
 #include <boost/program_options.hpp>
 #include "MultiAttack.hpp"
+#include "AttackContext.hpp"
 #include "exceptions/StrangerStringAnalysisException.hpp"
 
 using namespace std;
@@ -38,6 +39,10 @@ void call_sem_attack(string target_name, string field_name){
 
         MultiAttack attack(target_name, field_name);
         attack.computePostImages();
+        attack.computeAttackPatternOverlap(AttackContext::Html);
+        attack.computeAttackPatternOverlap(AttackContext::HtmlAttr);
+        attack.computeAttackPatternOverlap(AttackContext::JavaScript);
+        attack.computeAttackPatternOverlap(AttackContext::Url);
 
         cout << endl << "\t------ OVERALL RESULT for: " << field_name << " ------" << endl;
         cout << "\t    Target: " << target_name << endl;

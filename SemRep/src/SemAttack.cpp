@@ -40,7 +40,18 @@ void CombinedAnalysisResult::addBackwardAnalysis(AttackContext context)
 {
   m_bwAnalysisMap.insert(std::make_pair(context, BackwardAnalysisResult(m_fwAnalysis, context)));
 }
-  
+
+void CombinedAnalysisResult::printResult() const
+{
+  for (auto bwResult : m_bwAnalysisMap) {
+    AttackContext c = bwResult.first;
+    const BackwardAnalysisResult& result = bwResult.second;
+    std::cout << AttackContextHelper::getName(c) << ": "
+              << (result.isVulnerable() ? "true" : "false")
+              << ", ";
+  }
+}
+
 BackwardAnalysisResult::BackwardAnalysisResult(
   const ForwardAnalysisResult& fwResult, AttackContext context)
   : m_fwResult(fwResult)
@@ -55,7 +66,6 @@ BackwardAnalysisResult::BackwardAnalysisResult(
 
 BackwardAnalysisResult::~BackwardAnalysisResult()
 {
-  delete m_intersection;
 }
 
 ForwardAnalysisResult::ForwardAnalysisResult(

@@ -67,12 +67,24 @@ void AutomatonGroup::addCombinedAnalysisResult(const CombinedAnalysisResult* gra
   m_graphs.emplace_back(graph);
 }
 
+void AutomatonGroup::printHeaders() {
+  std::cout << "Name "
+            << "Entries ";
+}
+
 void AutomatonGroup::printMembers() const {
   std::cout << getName()
             << " entries: "
             << getEntries()
-            << std::endl;
-  std::cout << "     Files:";
+            << ", ";
+
+  // Get vulnerablility overlaps from first entry
+  if (m_graphs.size() > 0) {
+    m_graphs.at(0)->printResult();
+  }
+  std::cout << std::endl;
+
+  std::cout << "     Files: ";
   for (auto iter : m_graphs) {
     std::cout << iter->getAttack()->getFileName() << ", ";
   }
@@ -142,6 +154,7 @@ AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutomaton* a
 
 void AutomatonGroups::printGroups() const {
   std::cout << "Total of " << m_groups.size() << " unique post-images." << std::endl;
+  AutomatonGroup::printHeaders();
   unsigned int i = 0;
   for (auto iter : m_groups) {
     std::cout << i << ": ";
