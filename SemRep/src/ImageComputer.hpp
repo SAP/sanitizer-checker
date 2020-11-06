@@ -58,10 +58,10 @@ public:
     /*********** GENERAL PRE-IMAGE COMPUTATION METHODS *********************************************/
     /****************************************************************************************************/
 
-    AnalysisResult doBackwardAnalysis_GeneralCase(DepGraph& origDepGraph, DepGraph& inputDepGraph, StrangerAutomaton* initialAuto, const AnalysisResult& fwAnalysisResult);
-    void doPreImageComputation_GeneralCase(DepGraph& origDepGraph, DepGraphNode* node, AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult);
-    StrangerAutomaton* makePreImageForOpChild_GeneralCase(DepGraph& depGraph, DepGraphOpNode* opNode, DepGraphNode* childNode,AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult);
-    void doPreImageComputationForSCC_GeneralCase(DepGraph& origDepGraph, DepGraphNode* node, AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult);
+    AnalysisResult doBackwardAnalysis_GeneralCase(const DepGraph& origDepGraph, const DepGraph& inputDepGraph, const StrangerAutomaton* initialAuto, const AnalysisResult& fwAnalysisResult);
+    void doPreImageComputation_GeneralCase(const DepGraph& origDepGraph, const DepGraphNode* node, AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult);
+    StrangerAutomaton* makePreImageForOpChild_GeneralCase(const DepGraph& depGraph, const DepGraphOpNode* opNode, const DepGraphNode* childNode,AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult);
+    void doPreImageComputationForSCC_GeneralCase(const DepGraph& origDepGraph, const DepGraphNode* node, AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult);
     /****************************************************************************************************/
     /*********** GENERAL POST-IMAGE COMPUTATION METHODS ************************************************************************/
     /****************************************************************************************************/
@@ -82,13 +82,13 @@ private:
 
     static StrangerAutomaton* uninit_node_default_initialization;
     NodesList f_unmodeled;
-    std::string getLiteralOrConstantValue(DepGraphNode* node);
-    bool isLiteralOrConstant(DepGraphNode* node, NodesList successors);
+    std::string getLiteralOrConstantValue(const DepGraphNode* node);
+    bool isLiteralOrConstant(const DepGraphNode* node, NodesList successors);
     /**
      *
      * TODO pattern for __vlab_restrict and other replace operations handled differently. There are some cases not handled yet for this reason where a pattern variable flows into both functions.
      */
-    StrangerAutomaton* getLiteralorConstantNodeAuto(DepGraphNode* node, bool is_vlab_restrict);
+    StrangerAutomaton* getLiteralorConstantNodeAuto(const DepGraphNode* node, bool is_vlab_restrict);
 
 };
 

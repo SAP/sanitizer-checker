@@ -28,10 +28,56 @@
 
 PerfInfo SemAttack::perfInfo;
 
-SemAttack::SemAttack(string target_dep_graph_file_name, string input_field_name) {
+CombinedAnalysisResult::CombinedAnalysisResult(const std::string& target_dep_graph_file_name,
+                                               const std::string& input_field_name,
+                                               StrangerAutomaton* automaton)
+  : m_fwAnalysis(target_dep_graph_file_name, input_field_name, automaton)
+  , m_bwAnalysisMap()
+{
+}
 
-    this->target_dep_graph_file_name = target_dep_graph_file_name;
-    this->input_field_name = input_field_name;
+void CombinedAnalysisResult::addBackwardAnalysis(AttackContext context)
+{
+  m_bwAnalysisMap.insert(std::make_pair(context, BackwardAnalysisResult(m_fwAnalysis, context)));
+}
+  
+BackwardAnalysisResult::BackwardAnalysisResult(
+  const ForwardAnalysisResult& fwResult, AttackContext context)
+  : m_fwResult(fwResult)
+  , m_context(context)
+{
+  StrangerAutomaton* pattern = AttackPatterns::getAttackPatternForContext(context);
+  const StrangerAutomaton* postImage = m_fwResult.getPostImage();
+  m_intersection = this->getAttack()->computeAttackPatternOverlap(postImage, pattern);
+  m_result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+  delete pattern;
+}
+
+BackwardAnalysisResult::~BackwardAnalysisResult()
+{
+  delete m_intersection;
+}
+
+ForwardAnalysisResult::ForwardAnalysisResult(
+  const std::string& target_dep_graph_file_name,
+  const std::string& input_field_name,
+  StrangerAutomaton* automaton)
+{
+  m_attack = new SemAttack(target_dep_graph_file_name, input_field_name);
+  m_input = automaton;
+  m_result = m_attack->computeTargetFWAnalysis(m_input);
+}
+
+ForwardAnalysisResult::~ForwardAnalysisResult()
+{
+  delete m_attack;
+  delete m_input;
+}
+
+SemAttack::SemAttack(const string& target_dep_graph_file_name, const string& input_field_name)
+  : target_dep_graph_file_name(target_dep_graph_file_name)
+  , input_field_name(input_field_name)
+{
 
     // read dep graphs
     this->target_dep_graph = DepGraph::parseDotFile(target_dep_graph_file_name);
@@ -57,11 +103,11 @@ SemAttack::~SemAttack() {
     delete this->target_uninit_field_node;
 }
 
-void SemAttack::message(string msg) {
+void SemAttack::message(const std::string& msg) const {
     cout << endl << "~~~~~~~~~~~>>> SemAttack says: " << msg << endl;
 }
 
-string SemAttack::generateOutputFilePath(string folder_name, bool unique_name) {
+string SemAttack::generateOutputFilePath(string folder_name, bool unique_name) const {
     boost::filesystem::path curr_dir(boost::filesystem::current_path());
     boost::filesystem::path output_dir(curr_dir / folder_name);
 
@@ -86,7 +132,7 @@ string SemAttack::generateOutputFilePath(string folder_name, bool unique_name) {
     return stringbuilder() << output_dir.string() << tar_file << "_" << input_field_name;
 }
 
-void SemAttack::printAnalysisResults(AnalysisResult& result) {
+void SemAttack::printAnalysisResults(AnalysisResult& result) const {
     cout << endl;
     for (auto& entry : result ) {
         cout << "Printing automata for node ID: " << entry.first << endl;
@@ -95,7 +141,7 @@ void SemAttack::printAnalysisResults(AnalysisResult& result) {
     }
 }
 
-void SemAttack::printNodeList(NodesList nodes) {
+void SemAttack::printNodeList(NodesList nodes) const {
     cout << endl;
     for (auto node : nodes ) {
         cout << node->getID() << " ";
@@ -104,7 +150,7 @@ void SemAttack::printNodeList(NodesList nodes) {
 }
 
 // TODO add output file option
-void SemAttack::printResults() {
+void SemAttack::printResults() const {
     string file_path =  generateOutputFilePath("outputs/generated_patch_automata", false);
 
     string vp_fname = stringbuilder() << file_path << "validation_patch_dfa_with_ASCII_transitions.dot";
@@ -137,7 +183,7 @@ void SemAttack::printResults() {
 /**
  * Computes sink post image for target, first time
  */
-StrangerAutomaton* SemAttack::computeTargetFWAnalysis() {
+AnalysisResult SemAttack::computeTargetFWAnalysis(StrangerAutomaton* inputAuto) {
     message("computing target sink post image...");
     AnalysisResult targetAnalysisResult;
     UninitNodesList targetUninitNodes = target_dep_graph.getUninitNodes();
@@ -151,7 +197,7 @@ StrangerAutomaton* SemAttack::computeTargetFWAnalysis() {
     message(stringbuilder() << "initializing input node(" << target_uninit_field_node->getID() << ") with sigma star");
     delete targetAnalysisResult[target_uninit_field_node->getID()];
     
-    targetAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(target_uninit_field_node->getID());
+    targetAnalysisResult[target_uninit_field_node->getID()] = inputAuto;
 
     ImageComputer targetAnalyzer;
 
@@ -166,44 +212,70 @@ StrangerAutomaton* SemAttack::computeTargetFWAnalysis() {
 
     target_sink_auto = targetAnalysisResult[target_field_relevant_graph.getRoot()->getID()];
     message("...computed target sink post image.");
-    return target_sink_auto;
+    return targetAnalysisResult;
 }
 
-StrangerAutomaton* SemAttack::computeAttackPatternOverlap() {
-	message("BEGIN SANITIZATION ANALYSIS PHASE........................................");
-	boost::posix_time::ptime start_time = perfInfo.current_time();
-	StrangerAutomaton* targetSinkAuto = computeTargetFWAnalysis();
-	perfInfo.sanitization_target_first_forward_time = perfInfo.current_time() - start_time;
-	if (DEBUG_ENABLED_SC != 0) {
-		DEBUG_MESSAGE("Target Sink Auto - First forward analysis");
-		DEBUG_AUTO(targetSinkAuto);
-	}
-
-        targetSinkAuto->toDotAscii(1);
-        message("Example sanitizer string:");
-        message(targetSinkAuto->generateSatisfyingExample());
-        
-        StrangerAutomaton* xss = AttackPatterns::getHtmlPattern();
-        xss->toDotAscii(1);
-        message("Example attack pattern string:");
-        message(xss->generateSatisfyingExample());
-        
-        StrangerAutomaton* intersection = targetSinkAuto->intersect(xss);
-        intersection->toDotAscii(1);
-        
-        if (intersection->isEmpty()) {
-            message("No intersection, validation function is good!");
-        } else {
-            message("Intersection between attack pattern and sanitizer!");
-            message(intersection->generateSatisfyingExample());
-        }
-
-        delete xss;
-        delete targetSinkAuto;
-        delete intersection;
-
-        return targetSinkAuto;
+AnalysisResult SemAttack::computeTargetFWAnalysis()
+{
+  return computeTargetFWAnalysis(StrangerAutomaton::makeAnyString(target_uninit_field_node->getID()));
 }
 
+const StrangerAutomaton* SemAttack::getPostImage(const AnalysisResult& result) const
+{
+  return result.at(target_field_relevant_graph.getRoot()->getID());
+}
+
+StrangerAutomaton* SemAttack::computeAttackPatternOverlap(const StrangerAutomaton* postImage,
+                                                          const StrangerAutomaton* attackPattern) const {
+  message("BEGIN SANITIZATION ANALYSIS PHASE........................................");
+  boost::posix_time::ptime start_time = perfInfo.current_time();
+  perfInfo.sanitization_target_first_forward_time = perfInfo.current_time() - start_time;
+  if (DEBUG_ENABLED_SC != 0) {
+    DEBUG_MESSAGE("Target Sink Auto - First forward analysis");
+    DEBUG_AUTO(postImage);
+  }
+
+  postImage->toDotAscii(1);
+  message("Example sanitizer string:");
+  message(postImage->generateSatisfyingExample());
+
+  attackPattern->toDotAscii(1);
+  message("Example attack pattern string:");
+  message(attackPattern->generateSatisfyingExample());
+        
+  StrangerAutomaton* intersection = postImage->intersect(attackPattern);
+  intersection->toDotAscii(1);
+        
+  if (intersection->isEmpty()) {
+    message("No intersection, validation function is good!");
+  } else {
+    message("Intersection between attack pattern and sanitizer!");
+    message(intersection->generateSatisfyingExample());
+  }
+
+  return intersection;
+}
+
+AnalysisResult SemAttack::computePreImage(const StrangerAutomaton* intersection,
+                                          const AnalysisResult& result) const
+{
+  try {
+    message("starting backward analysis...");
+    ImageComputer analyzer;
+    AnalysisResult analysis_result = analyzer.doBackwardAnalysis_GeneralCase(
+      this->target_dep_graph, this->target_field_relevant_graph, intersection, result);
+    message("...finished backward analysis.");
+    return analysis_result;
+
+  } catch (StrangerStringAnalysisException const &e) {
+    cerr << e.what();
+  }
+  return AnalysisResult();
+}
+
+const StrangerAutomaton* SemAttack::getPreImage(const AnalysisResult& result) const
+{
+  return result.at(this->target_uninit_field_node->getID());
+}
 
 

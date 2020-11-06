@@ -52,8 +52,8 @@ public:
     bool calculate_rejected_set = false;
 
     static PerfInfo perfInfo;
-private:
 
+private:
     StrangerAutomaton* sink_auto;
     StrangerAutomaton* vs_auto;
     StrangerAutomaton* attack_pattern_auto;

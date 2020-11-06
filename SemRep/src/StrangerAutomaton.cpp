@@ -87,7 +87,7 @@ DFA* StrangerAutomaton::getDfa()
     return this->dfa;
 }
 
-StrangerAutomaton* StrangerAutomaton::clone(int id)
+StrangerAutomaton* StrangerAutomaton::clone(int id) const
 {
 	debug(stringbuilder() << id << " = clone(" << this->ID << ")");
 	if (isBottom())
@@ -105,7 +105,7 @@ StrangerAutomaton* StrangerAutomaton::clone(int id)
 	}
 }
 
-StrangerAutomaton* StrangerAutomaton::clone()
+StrangerAutomaton* StrangerAutomaton::clone() const
 {
     return this->clone(-1);
 }
@@ -478,7 +478,7 @@ StrangerAutomaton* StrangerAutomaton::makePhi() {
     return makePhi(traceID);
 }
 
-std::string StrangerAutomaton::generateSatisfyingExample()
+std::string StrangerAutomaton::generateSatisfyingExample() const
 {
 	char* example = dfaGenerateExample(this->dfa, num_ascii_track, u_indices_main);
 	if (example == NULL)
@@ -905,7 +905,7 @@ StrangerAutomaton* StrangerAutomaton::unionWithEmptyString() {
  *            : id of node associated with this auto; used for debugging
  *            purposes only
  */
-StrangerAutomaton* StrangerAutomaton::intersect(StrangerAutomaton* otherAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::intersect(const StrangerAutomaton* otherAuto, int id) const {
     debug(stringbuilder() << id <<  " = intersect("  << this->ID <<  ", " << otherAuto->ID << ")");
     
     // if top or bottom then do not use the c library as dfa == NULL
@@ -958,7 +958,7 @@ StrangerAutomaton* StrangerAutomaton::productImpl(StrangerAutomaton* otherAuto, 
 /**
  * Returns a new automaton auto with L(auto)= L(this) intersect L(auto)
  */
-StrangerAutomaton* StrangerAutomaton::intersect(StrangerAutomaton* otherAuto) {
+StrangerAutomaton* StrangerAutomaton::intersect(const StrangerAutomaton* otherAuto) const {
     return intersect(otherAuto, traceID);
 }
 
@@ -2012,7 +2012,7 @@ bool StrangerAutomaton::equals(const StrangerAutomaton* otherAuto) const {
  *            purposes only
  *
  */
-bool StrangerAutomaton::checkEmptiness() {
+bool StrangerAutomaton::checkEmptiness() const {
     std::string debugStr = stringbuilder() << "checkEmptiness("  << this->ID <<  ") = ";
     if (this->isBottom()){
         debug(stringbuilder() << debugStr << "true");
@@ -2046,7 +2046,7 @@ bool StrangerAutomaton::checkEmptiness() {
  * returns true if this L(automaton) == bottom
  * if you need to check if the language is actual phi use {@link checkEmptiness}
  */
-bool StrangerAutomaton::isEmpty() {
+bool StrangerAutomaton::isEmpty() const {
     return checkEmptiness();
 }
 

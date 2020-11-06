@@ -87,12 +87,17 @@ public:
     DepGraph& operator=(const DepGraph &other);
 	virtual ~DepGraph();
 
-	NodesList getPredecessors(const DepGraphNode* node);
-	NodesList getSuccessors(DepGraphNode* node);
+	NodesList getPredecessors(const DepGraphNode* node) const;
+	NodesList getSuccessors(const DepGraphNode* node) const;
 
-	DepGraphNormalNode *getRoot() {
+	DepGraphNormalNode* getRoot() {
 		return this->root;
 	};
+
+        const DepGraphNormalNode* getRoot() const {
+		return this->root;
+	};
+
 	void setRoot(DepGraphNormalNode* root) {
 		this->root = root;
 	};
@@ -130,9 +135,9 @@ public:
 
 	void calculateSCCs();
 
-	bool isSCCElement(DepGraphNode* node);
-	int getSCCID(DepGraphNode* node);
-	NodesList getSCCNodes(int scc_id);
+	bool isSCCElement(const DepGraphNode* node) const;
+	int getSCCID(const DepGraphNode* node) const;
+	NodesList getSCCNodes(int scc_id) const;
 	// returns the all scc nodes, given a node from that scc
 	NodesList getSCCNodes(DepGraphNode* node);
 

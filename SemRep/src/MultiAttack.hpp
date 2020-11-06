@@ -55,7 +55,7 @@ private:
     std::string m_graph_directory;
     std::string m_input_name;
     std::vector<std::string> m_dot_paths;
-    std::vector<SemAttack*> m_attacks;
+    std::vector<CombinedAnalysisResult*> m_attacks;
     std::vector<StrangerAutomaton*> m_automata;
     AutomatonGroups m_groups;
 

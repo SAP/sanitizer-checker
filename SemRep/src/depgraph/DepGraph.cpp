@@ -70,7 +70,7 @@ int DepGraph::currentID = 0;
 int DepGraph::currentSccID = 0;
 int DepGraph::currentOrder = 0;
 
-NodesList DepGraph::getPredecessors(const DepGraphNode* node) {
+NodesList DepGraph::getPredecessors(const DepGraphNode* node) const {
     NodesList retMe;
 	for (EdgesMapConstIterator it = edges.begin(); it != edges.end(); ++it) {
 		const DepGraphNode* from = it->first;
@@ -83,9 +83,9 @@ NodesList DepGraph::getPredecessors(const DepGraphNode* node) {
 	return retMe;
 }
 
-NodesList DepGraph::getSuccessors(DepGraphNode* node){
+NodesList DepGraph::getSuccessors(const DepGraphNode* node) const {
     NodesList retMe;
-	EdgesMapIterator it = edges.find(node);
+	EdgesMapConstIterator it = edges.find(node);
 	if (it != edges.end()) {
 		NodesList toList = it->second;
         retMe = NodesList(toList.size());
@@ -600,15 +600,15 @@ void DepGraph::dfsSCC(DepGraphNode* node, int& time_count, map<int, int>& lowlin
 	}
 }
 
-bool DepGraph::isSCCElement(DepGraphNode* node) {
+bool DepGraph::isSCCElement(const DepGraphNode* node) const {
 	return scc_map.find(node->getID()) != scc_map.end();
 }
 
-int DepGraph::getSCCID(DepGraphNode* node) {
-	return scc_map[node->getID()];
+int DepGraph::getSCCID(const DepGraphNode* node) const {
+        return scc_map.at(node->getID());
 }
-NodesList DepGraph::getSCCNodes(int scc_id) {
-	return scc_components[scc_id];
+NodesList DepGraph::getSCCNodes(int scc_id) const {
+        return scc_components.at(scc_id);
 }
 
 NodesList DepGraph::getSCCNodes(DepGraphNode* node) {

@@ -617,21 +617,21 @@ void ImageComputer::doPostImageComputation_SingleInput(
  *
  */
 AnalysisResult ImageComputer::doBackwardAnalysis_GeneralCase(
-		DepGraph& origDepGraph, DepGraph& depGraph, StrangerAutomaton* initialAuto, const AnalysisResult& fwAnalysisResult) {
+		const DepGraph& origDepGraph, const DepGraph& depGraph, const StrangerAutomaton* initialAuto, const AnalysisResult& fwAnalysisResult) {
 
-	queue<DepGraphNode*> process_queue;
-	set<DepGraphNode*> visited;
+	queue<const DepGraphNode*> process_queue;
+	set<const DepGraphNode*> visited;
 	set<int> processed_SCCs;
 
 	AnalysisResult bwAnalysisResult;
 
 	// initialize root node
-	bwAnalysisResult[depGraph.getRoot()->getID()] = initialAuto;
+	bwAnalysisResult[depGraph.getRoot()->getID()] = initialAuto->clone();
 
 	process_queue.push(depGraph.getRoot());
 	while (!process_queue.empty()) {
 
-	DepGraphNode *curr = process_queue.front();
+        const DepGraphNode *curr = process_queue.front();
 	if (depGraph.isSCCElement(curr)) { // handle cycles
 		// do not compute a scc more than once
 		auto isNotProcessed = processed_SCCs.insert(depGraph.getSCCID(curr));
@@ -662,20 +662,20 @@ AnalysisResult ImageComputer::doBackwardAnalysis_GeneralCase(
  *
  */
 void ImageComputer::doPreImageComputation_GeneralCase(
-		DepGraph& origDepGraph, DepGraphNode* node,
-		AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult) {
+    const DepGraph& origDepGraph, const DepGraphNode* node,
+    AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult) {
 
 	NodesList predecessors = origDepGraph.getPredecessors(node);
 	NodesList successors = origDepGraph.getSuccessors(node);
-	DepGraphNormalNode* normalNode = nullptr;
+	const DepGraphNormalNode* normalNode = nullptr;
 	StrangerAutomaton *newAuto = nullptr, *tempAuto = nullptr;
 
-	if (dynamic_cast< DepGraphNormalNode*>(node) || dynamic_cast< DepGraphUninitNode*>(node) || dynamic_cast< DepGraphOpNode*>(node)) {
+	if (dynamic_cast<const DepGraphNormalNode*>(node) || dynamic_cast<const DepGraphUninitNode*>(node) || dynamic_cast<const DepGraphOpNode*>(node)) {
 		if (predecessors.empty()) {
 			// root is already initialized
 			newAuto = bwAnalysisResult[node->getID()];
-		} else if (successors.empty() && (normalNode = dynamic_cast< DepGraphNormalNode*>(node))) {
-			newAuto = getLiteralorConstantNodeAuto(normalNode, false);
+		} else if (successors.empty() && (normalNode = dynamic_cast<const DepGraphNormalNode*>(node))) {
+                        newAuto = getLiteralorConstantNodeAuto(normalNode, false);
 		} else {
 			// the automa is union of all prodecessors and interstect with forward analysis result
 			StrangerAutomaton* forwardAuto = fwAnalysisResult.find(node->getID())->second;
@@ -684,10 +684,10 @@ void ImageComputer::doPreImageComputation_GeneralCase(
 				if (pred_node == node) {
 					// ignore simple self loop (check correctness)
 					continue;
-				} else if (dynamic_cast< DepGraphNormalNode*>(pred_node)) {
+				} else if (dynamic_cast<const DepGraphNormalNode*>(pred_node)) {
 					predAuto = bwAnalysisResult[pred_node->getID()];
-				} else if (dynamic_cast< DepGraphOpNode*>(pred_node)) {
-					predAuto = makePreImageForOpChild_GeneralCase(origDepGraph,dynamic_cast< DepGraphOpNode*>(pred_node), node,
+				} else if (dynamic_cast<const DepGraphOpNode*>(pred_node)) {
+					predAuto = makePreImageForOpChild_GeneralCase(origDepGraph,dynamic_cast<const DepGraphOpNode*>(pred_node), node,
 													bwAnalysisResult, fwAnalysisResult);
 				}
 
@@ -729,7 +729,7 @@ void ImageComputer::doPreImageComputation_GeneralCase(
 /**
  * Pre Image Computation for cycles (loops)
  */
-void ImageComputer::doPreImageComputationForSCC_GeneralCase(DepGraph& origDepGraph, DepGraphNode* node, AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult) {
+void ImageComputer::doPreImageComputationForSCC_GeneralCase(const DepGraph& origDepGraph, const DepGraphNode* node, AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult) {
 	// TODO add to command line options as an optional parameter
 	int precise_widening_limit = 5;
 	int coarse_widening_limit = 20;
@@ -770,10 +770,10 @@ void ImageComputer::doPreImageComputationForSCC_GeneralCase(DepGraph& origDepGra
 			StrangerAutomaton* tmp_auto = nullptr;
 			StrangerAutomaton* new_auto = nullptr;
 
-			if (dynamic_cast<DepGraphNormalNode*>(curr_node) != nullptr) {
+			if (dynamic_cast<const DepGraphNormalNode*>(curr_node) != nullptr) {
 				tmp_auto = bwAnalysisResult[curr_node->getID()]; // may need clone
-			} else if (dynamic_cast<DepGraphOpNode*>(curr_node) != nullptr) {
-				tmp_auto = makePreImageForOpChild_GeneralCase(origDepGraph, dynamic_cast< DepGraphOpNode*>(curr_node), succ_node,
+			} else if (dynamic_cast<const DepGraphOpNode*>(curr_node) != nullptr) {
+				tmp_auto = makePreImageForOpChild_GeneralCase(origDepGraph, dynamic_cast<const DepGraphOpNode*>(curr_node), succ_node,
 						bwAnalysisResult, fwAnalysisResult);
 			} else {
 				throw StrangerStringAnalysisException(stringbuilder() << "Node cannot be an element of SCC component!, node id: " << node->getID());
@@ -818,8 +818,8 @@ void ImageComputer::doPreImageComputationForSCC_GeneralCase(DepGraph& origDepGra
  *
  */
 StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
-		DepGraph& depGraph, DepGraphOpNode* opNode, DepGraphNode* childNode,
-		AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult) {
+    const DepGraph& depGraph, const DepGraphOpNode* opNode, const DepGraphNode* childNode,
+    AnalysisResult& bwAnalysisResult, const AnalysisResult& fwAnalysisResult) {
 
 	StrangerAutomaton* retMe = nullptr;
 	NodesList successors = depGraph.getSuccessors(opNode);
@@ -1062,9 +1062,9 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 
 // ********************************************************************************
 //
-string ImageComputer::getLiteralOrConstantValue( DepGraphNode* node) {
+string ImageComputer::getLiteralOrConstantValue( const DepGraphNode* node) {
     string retMe = "";
-    DepGraphNormalNode* normalNode = dynamic_cast< DepGraphNormalNode*>(node);
+    const DepGraphNormalNode* normalNode = dynamic_cast<const DepGraphNormalNode*>(node);
     if (normalNode == nullptr)
         throw runtime_error("can not cast DepGraphNode into DepGraphNormalNode");
     TacPlace* place = normalNode->getPlace();
@@ -1080,9 +1080,9 @@ string ImageComputer::getLiteralOrConstantValue( DepGraphNode* node) {
 
 // ********************************************************************************
 //
-bool ImageComputer::isLiteralOrConstant( DepGraphNode* node, NodesList successors) {
-    if ((dynamic_cast< DepGraphNormalNode*>(node) != nullptr)  && (successors.empty())){
-         DepGraphNormalNode* normalNode = dynamic_cast< DepGraphNormalNode*>(node);
+bool ImageComputer::isLiteralOrConstant(const DepGraphNode* node, NodesList successors) {
+    if ((dynamic_cast<const DepGraphNormalNode*>(node) != nullptr)  && (successors.empty())){
+        const DepGraphNormalNode* normalNode = dynamic_cast<const DepGraphNormalNode*>(node);
         TacPlace* place = normalNode->getPlace();
         if (dynamic_cast<Literal*>(place) != nullptr || dynamic_cast<Constant*>(place) )
             return true;
@@ -1092,9 +1092,9 @@ bool ImageComputer::isLiteralOrConstant( DepGraphNode* node, NodesList successor
         return false;
 }
 
-StrangerAutomaton* ImageComputer::getLiteralorConstantNodeAuto(DepGraphNode* node, bool is_vlab_restrict) {
-	StrangerAutomaton* retMe = nullptr;
-    DepGraphNormalNode* normalNode = dynamic_cast< DepGraphNormalNode*>(node);
+StrangerAutomaton* ImageComputer::getLiteralorConstantNodeAuto(const DepGraphNode* node, bool is_vlab_restrict) {
+    StrangerAutomaton* retMe = nullptr;
+    const DepGraphNormalNode* normalNode = dynamic_cast<const DepGraphNormalNode*>(node);
     if (normalNode == nullptr)
         throw runtime_error("can not cast DepGraphNode into DepGraphNormalNode");
 	TacPlace* place = normalNode->getPlace();

@@ -24,6 +24,7 @@ MinCut/bin/*
 SemRep/src/semrep
 SemRep/src/semattack
 SemRep/src/semattack_bw
+SemRep/src/multiattack
 
 *.d
 *.launch

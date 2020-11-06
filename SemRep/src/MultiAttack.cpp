@@ -65,10 +65,11 @@ void MultiAttack::computePostImages() {
   for (auto file : this->m_dot_paths) {
     try {
       std::cout << "Analysing file: " << file << std::endl;
-      SemAttack* attack = new SemAttack(file, this->m_input_name);
-      StrangerAutomaton* automaton = attack->computeTargetFWAnalysis();
-      m_groups.addAutomaton(automaton, attack);
-      m_attacks.emplace_back(attack);
+      CombinedAnalysisResult* result =
+        new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());
+      const StrangerAutomaton* postImage = result->getFwAnalysis().getPostImage();
+      m_groups.addAutomaton(postImage, result);
+      m_attacks.emplace_back(result);
     } catch (StrangerStringAnalysisException const &e) {
       std::cerr << e.what() << std::endl;
     }

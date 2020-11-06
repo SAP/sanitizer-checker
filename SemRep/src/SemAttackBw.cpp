@@ -28,7 +28,11 @@
 
 PerfInfo SemAttackBw::perfInfo;
 
-SemAttackBw::SemAttackBw(const string& target_dep_graph_file_name, const string& input_field_name) : enable_debug(true), target_dep_graph_file_name(target_dep_graph_file_name), input_field_name(input_field_name) {
+SemAttackBw::SemAttackBw(const string& target_dep_graph_file_name, const string& input_field_name)
+  : enable_debug(true)
+  , target_dep_graph_file_name(target_dep_graph_file_name)
+  , input_field_name(input_field_name)
+{
 
     // read dep graphs
     this->target_dep_graph = DepGraph::parseDotFile(target_dep_graph_file_name);
@@ -46,7 +50,6 @@ SemAttackBw::SemAttackBw(const string& target_dep_graph_file_name, const string&
     this->attack_pattern_auto = AttackPatterns::getHtmlPattern();
     message(this->target_dep_graph.toDot());
     message(this->target_field_relevant_graph.toDot());
-
 
 }
 

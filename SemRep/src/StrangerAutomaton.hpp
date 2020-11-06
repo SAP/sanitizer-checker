@@ -43,8 +43,8 @@ class StrangerAutomaton
 public:
     StrangerAutomaton(DFA* dfa);
     virtual ~StrangerAutomaton();
-    StrangerAutomaton* clone(int id);
-    StrangerAutomaton* clone();
+    StrangerAutomaton* clone(int id) const;
+    StrangerAutomaton* clone() const;
     int getID();
     void setID(int id);
     DFA* getDfa();
@@ -68,7 +68,7 @@ public:
     static StrangerAutomaton* makeDot();
     static StrangerAutomaton* makePhi(int id);
     static StrangerAutomaton* makePhi();
-    std::string generateSatisfyingExample();
+    std::string generateSatisfyingExample() const;
     StrangerAutomaton* optional(int id);
     StrangerAutomaton* optional();
     StrangerAutomaton* kleensStar(int id);
@@ -90,8 +90,8 @@ public:
     StrangerAutomaton* union_(StrangerAutomaton* auto_);
     StrangerAutomaton* unionWithEmptyString(int id);
     StrangerAutomaton* unionWithEmptyString();
-    StrangerAutomaton* intersect(StrangerAutomaton* auto_, int id);
-    StrangerAutomaton* intersect(StrangerAutomaton* auto_);
+    StrangerAutomaton* intersect(const StrangerAutomaton* auto_, int id) const;
+    StrangerAutomaton* intersect(const StrangerAutomaton* auto_) const;
     StrangerAutomaton* productImpl(StrangerAutomaton* otherAuto, int id);
     StrangerAutomaton* preciseWiden(StrangerAutomaton* auto_, int id);
     StrangerAutomaton* preciseWiden(StrangerAutomaton* auto_);
@@ -146,8 +146,8 @@ public:
     unsigned getMaxLength();
     unsigned getMinLength();
     bool equals(const StrangerAutomaton* other) const;
-    bool checkEmptiness();
-    bool isEmpty();
+    bool checkEmptiness() const;
+    bool isEmpty() const;
     bool checkEmptyString();
     bool isSingleton();
     std::string getStr();

@@ -24,6 +24,7 @@
 
 #include <boost/program_options.hpp>
 #include "SemAttack.hpp"
+#include "AttackPatterns.hpp"
 
 using namespace std;
 using namespace boost;
@@ -36,7 +37,10 @@ void call_sem_attack(string target_name, string field_name){
         cout << endl << "\t       Target: " << target_name  << endl;
 
         SemAttack semAttack(target_name, field_name);
-        semAttack.computeAttackPatternOverlap();
+        AnalysisResult result = semAttack.computeTargetFWAnalysis();
+        const StrangerAutomaton* postImage = semAttack.getPostImage(result);
+        StrangerAutomaton* attackPattern = AttackPatterns::getHtmlPattern();
+        StrangerAutomaton* intersection = semAttack.computeAttackPatternOverlap(postImage, attackPattern);
 
         cout << endl << "\t------ OVERALL RESULT for: " << field_name << " ------" << endl;
         cout << "\t    Target: " << target_name << endl;
