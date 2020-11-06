@@ -3799,7 +3799,7 @@ DFA *dfaPreHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t fl
     return result;
 }
 
-#define URI_ENCODE_CHARS 128
+#define URI_ENCODE_CHARS 256
 
 static const char encodeUriComponentChars[URI_ENCODE_CHARS] =
 //   0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F
@@ -3811,7 +3811,15 @@ static const char encodeUriComponentChars[URI_ENCODE_CHARS] =
     1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 4x  @ABCDEFGHIJKLMNO
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   0,  // 5x  PQRSTUVWXYZ[\]^_
     1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 6x  `abcdefghijklmno
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   0,   1   // 7x  pqrstuvwxyz{|}~ DEL
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   0,   1,  // 7x  pqrstuvwxyz{|}~ DEL
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 8x
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 9x
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // ax
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // bx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // cx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // dx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // ex
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // fx
 };
 
 static const char encodeUriChars[URI_ENCODE_CHARS] =
@@ -3824,7 +3832,15 @@ static const char encodeUriChars[URI_ENCODE_CHARS] =
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 4x  @ABCDEFGHIJKLMNO
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   0,  // 5x  PQRSTUVWXYZ[\]^_
     1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 6x  `abcdefghijklmno
-    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   0,   1   // 7x  pqrstuvwxyz{|}~ DEL
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   0,   1,  // 7x  pqrstuvwxyz{|}~ DEL
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 8x
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 9x
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // ax
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // bx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // cx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // dx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // ex
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // fx
 };
 
 static DFA *dfaEncodeUriGeneric(DFA *inputAuto, int var, int *indices, const char* encoding){
@@ -3918,7 +3934,7 @@ DFA *dfaDecodeUri(DFA *inputAuto, int var, int *indices){
     return a;
 }
 
-static const char jsonEncodeChars[128] = {
+static const char jsonEncodeChars[URI_ENCODE_CHARS] = {
     'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'b', 't',
     'n', 'u', 'f', 'r', 'u', 'u', 'u', 'u', 'u', 'u',
     'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u',
@@ -3959,7 +3975,7 @@ DFA *dfaJsonStringify(DFA *inputAuto, int var, int *indices) {
     return b;
 }
 
-static const char jsonDecodeChars[128] = {
+static const char jsonDecodeChars[URI_ENCODE_CHARS] = {
  0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,
  0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,
  0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,
