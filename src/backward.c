@@ -136,10 +136,14 @@ DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, const char *str, int var, int* indice
   DFA *result=NULL;
   DFA *M3 = dfa_construct_string(str, var, indices);
   if((str ==NULL)||strlen(str)==0){
-    //printf("Replacement [%s]!\n", str);
-    result = dfa_insert_everywhere(M1, M2, var, indices);
-  }else {
-    //printf("Replacement [%s]!\n", str);
+      if (checkOnlyEmptyString(M2, var, indices)) {
+          // If we are replacing an empty string with empty string
+          // inserting the empty string everywhere will change nothing
+          result = dfaCopy(M1);
+      } else {
+          result = dfa_insert_everywhere(M1, M2, var, indices);
+      }
+  } else {
     DFA* U = dfa_union(M2, M3);
     result = dfa_general_replace_extrabit(M1, M3, U, var, indices);
     dfaFree(U);
@@ -152,12 +156,18 @@ DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* i
 
   DFA *result=NULL;
   DFA *M3 = dfa_construct_string(str, var, indices);
-  // Union here as the replaced string could have been replace or not
+  // Union here as the replaced string could have been replaced or not
   // Check if this assumption is OK for replace_once
   DFA* U = dfa_union(M2, M3);
   if((str ==NULL)||strlen(str)==0){
-    // In the replace_once case, just add the replace string to the start
-    result = dfa_insert_everywhere(M1, U, var, indices);
+      if (checkOnlyEmptyString(U, var, indices)) {
+          // If we are replacing an empty string with empty string
+          // inserting the empty string everywhere will change nothing
+          result = dfaCopy(M1);
+      } else {
+          // In the replace_once case, just add the replace string to the start
+          result = dfa_insert_everywhere(M1, U, var, indices);
+      }
   } else {
     result = dfa_general_replace_extrabit(M1, M3, U, var, indices);
 
