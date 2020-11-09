@@ -133,8 +133,9 @@ void RegExp::init(string s, int syntax_flags){
     b = s;
     flags = syntax_flags;
     RegExp* e = parseUnionExp();
-    if(pos < b.length())
-        throw std::invalid_argument((stringbuilder() << "end-of-string expected at position " << pos));
+    if(pos < b.length()) {
+        throw std::invalid_argument((stringbuilder() << "end-of-string expected at position " << pos << " was " << b.length()));
+    }
 
     kind = e->kind;
     exp1 = e->exp1;
@@ -729,7 +730,21 @@ RegExp* RegExp::parseCharClass() /* throws(IllegalArgumentException) */
 
 RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
 {
-    if(match('.'))
+    if (match('^')) {
+        // Anchor to the start of the string
+        // TODO: this needs to be implemented...
+        // Currently ignored
+        return parseUnionExp();
+    } else if (match('$')) {
+        // Anchor to the end of the string
+        // TODO: this needs to be implemented...
+        // Currently ignored
+        if (more()) {
+            return parseUnionExp();
+        } else {
+            return makeString("");
+        }
+    } else if(match('.'))
         return makeAnyChar();
     else if(check(EMPTY) && match('#'))
         return makeEmpty();
@@ -794,8 +809,9 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
                 throw (std::invalid_argument((stringbuilder() << "interval syntax error at position " << (pos - 1))));
             }
         }
-    } else
+    } else {
         return makeChar(parseCharExp());
+    }
 }
 
 char RegExp::parseCharExp() /* //throws(IllegalArgumentException) */
