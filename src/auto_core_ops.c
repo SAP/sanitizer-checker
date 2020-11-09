@@ -767,7 +767,7 @@ DFA *dfa_construct_char_extrabit(char a, int var, int *indices) {
   return dfaBuild("-+-");
 }
 //TODO baki finals is not terminated check for problems
-DFA *dfa_construct_string(char *reg, int var, int *indices) {
+DFA *dfa_construct_string(const char *reg, int var, int *indices) {
   int i;
   char *finals;
   char* binChar;
@@ -3656,7 +3656,7 @@ char** mergeCharRanges(pCharPair charRanges[], int* p_size){
 }
 
 
-int dfaPrintBDD(DFA *a, char *filename, int var)
+int dfaPrintBDD(DFA *a, const char *filename, int var)
 {
     //table->noelems == nomber of bdd nodes
     //table->elem == bdd node

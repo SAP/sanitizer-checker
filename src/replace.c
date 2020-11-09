@@ -1006,7 +1006,7 @@ char **get_bitstrings(char *str, int var, int aux){
 }
 
 //Replace sharp1 bar sharp2 to str.
-DFA *dfa_replace_string(DFA *M, char *str, int var, int *oldindices)
+DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
 {
   DFA *result = NULL;
     DFA *tmpM1 = NULL;
@@ -1225,7 +1225,7 @@ DFA *dfa_replace_string(DFA *M, char *str, int var, int *oldindices)
 
 
 
-DFA *dfa_replace_step3_replace(DFA *M, char *str, int var, int *indices)
+DFA *dfa_replace_step3_replace(DFA *M, const char *str, int var, int *indices)
 {
   DFA *result=NULL;
 
@@ -1242,7 +1242,7 @@ DFA *dfa_replace_step3_replace(DFA *M, char *str, int var, int *indices)
   return result;
 } //END dfa_replace_stpe3_replace
 
-DFA *dfa_replace_once_step3_replace(DFA *M, char *str, int var, int *indices)
+DFA *dfa_replace_once_step3_replace(DFA *M, const char *str, int var, int *indices)
 {
   DFA *result=NULL;
 
@@ -1309,14 +1309,9 @@ DFA *dfa_replace_step3_general_replace(DFA *M, DFA* Mr, int var, int *indices)
 
 
 
-DFA *dfa_replace_extrabit(M1, M2, str, var, indices)
-     DFA *M1;
-     DFA *M2;
-     char *str;
-     int var;
-     int *indices;
+DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indices)
 {
-    DFA *temp1;
+  DFA *temp1;
   DFA *result;
   DFA *M1_bar;
   DFA *M2_bar;
@@ -1375,14 +1370,9 @@ DFA *dfa_replace_extrabit(M1, M2, str, var, indices)
   return result;
 }
 
-DFA *dfa_replace_once_extrabit(M1, M2, str, var, indices)
-     DFA *M1;
-     DFA *M2;
-     char *str;
-     int var;
-     int *indices;
+DFA *dfa_replace_once_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indices)
 {
-    DFA *temp1;
+  DFA *temp1;
   DFA *result;
   DFA *M1_bar;
   DFA *M2_bar;

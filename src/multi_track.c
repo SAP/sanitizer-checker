@@ -1056,7 +1056,7 @@ DFA* mdfaMEqualLR(DFA *M1, DFA *M2, int i_track, int j_track, int m, int var, in
 
 //return x_i = x_jc (Precise)
 //x_i \in L(M1), x_j \in L(M2)
-DFA* mdfaMEqualLRc(DFA *M1, DFA *M2, char* str, int i_track, int j_track, int m, int var, int* indices){
+DFA* mdfaMEqualLRc(DFA *M1, DFA *M2, const char* str, int i_track, int j_track, int m, int var, int* indices){
   DFA* tmp = dfa_intersect(M1, dfa_concat_extrabit(M2, dfa_construct_string(str, var, indices), var, indices));
   DFA* mtmp1 = mdfaOneToManyTrack(tmp, m, i_track, var, indices);
   DFA* mtmp2 = mdfaOneToManyTrack(M2, m, j_track, var, indices);

@@ -94,7 +94,7 @@ Backward Analysis
 
 //pos == 1, return the preimage of X for XL := X. XR
 //pos == 2. return the preimage of X for XL := XR. X
-DFA* dfa_pre_concat_const(DFA* ML, char* str, int pos, int var, int* indices){
+DFA* dfa_pre_concat_const(DFA* ML, const char* str, int pos, int var, int* indices){
   assert(1==pos || pos==2); //Computing pre-image for concatenation of two arguments
   DFA* Mtrans;
   DFA* result;
@@ -131,7 +131,7 @@ DFA* dfa_pre_replace(DFA* M1, DFA* M2, DFA* M3, int var, int* indices){
   return dfa_general_replace_extrabit(M1, M3, dfa_union(M2, M3), var, indices);
 }
 
-DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, char *str, int var, int* indices){
+DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, const char *str, int var, int* indices){
 
   DFA *result=NULL;
   DFA *M3 = dfa_construct_string(str, var, indices);
@@ -148,7 +148,7 @@ DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, char *str, int var, int* indices){
   return result;
 }
 
-DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, char *str, int var, int* indices){
+DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* indices){
 
   DFA *result=NULL;
   DFA *M3 = dfa_construct_string(str, var, indices);

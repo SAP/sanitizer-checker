@@ -58,7 +58,7 @@ DFA *dfaGetTrack(DFA *M, int i_track, int m, int var, int* indices);
 DFA* mdfaGSuffixM(DFA* M, int i_track, int j_track, int k_track, int m, int var, int* indices);
 DFA *dfaGetTrackNoPreLambda(DFA *M, int i_track, int m, int var, int* indices);
 
-DFA* mdfaMEqualLRc(DFA *M1, DFA *M2, char* str, int i_track, int j_track, int m, int var, int* indices);
+DFA* mdfaMEqualLRc(DFA *M1, DFA *M2, const char* str, int i_track, int j_track, int m, int var, int* indices);
 
 char *getSharp1(int k);
 char *getSharp0(int k);
@@ -90,7 +90,7 @@ DFA *dfa_replace_step2_match_compliment(DFA *M, int var, int *indices);
 DFA *dfa_replace_once_step2_match_compliment(DFA *M, int var, int *indices);
 DFA *dfa_general_replace_extrabit(DFA* M1, DFA* M2, DFA* M3, int var, int* indices);
 DFA* dfa_pre_replace(DFA* M1, DFA* M2, DFA* M3, int var, int* indices);
-DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, char *str, int var, int* indices);
+DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, const char *str, int var, int* indices);
 DFA *dfa_replace(DFA *M1, DFA *M2, DFA *M3, int var, int *indices);
 DFA *dfa_insert_everywhere(DFA *M, DFA* Mr, int var, int *indices);
     

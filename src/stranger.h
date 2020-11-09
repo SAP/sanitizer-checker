@@ -107,7 +107,7 @@ extern "C" {
         int b;
         int d1;
         int d0;
-        
+       
         
     };
     
@@ -182,7 +182,7 @@ extern "C" {
      * outputs a DFA M that accepts string value of *reg
      * outputs DFA M where L(M) = {*reg}
      */
-    DFA *dfa_construct_string(char *reg, int var, int *indices);
+    DFA *dfa_construct_string(const char *reg, int var, int *indices);
     
     /*
      * outputs a DFA M that accepts the set of string values in array set
@@ -257,13 +257,13 @@ extern "C" {
     //M2: search automaton representing the pattern that we will match against
     //str: the replace string
     // replace ALL strings that match L(M2) in L(M1) with string str
-    DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, char *str, int var, int *indices);
+    DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indices);
 
     //M1: subject automaton that replace will occur on
     //M2: search automaton representing the pattern that we will match against
     //str: the replace string
     // replace ALL strings that match L(M2) in L(M1) with string str
-    DFA *dfa_replace_once_extrabit(DFA *M1, DFA *M2, char *str, int var, int *indices);
+    DFA *dfa_replace_once_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indices);
 
     /**
      * General replace
@@ -280,10 +280,10 @@ extern "C" {
     
     DFA *dfaWiden(DFA *a, DFA *d); // added by Muath to be used by java StrangerLibrary
     
-    DFA* dfa_pre_concat_const(DFA* ML, char* str, int pos, int var, int* indices);
+    DFA* dfa_pre_concat_const(DFA* ML, const char* str, int pos, int var, int* indices);
     DFA* dfa_pre_concat(DFA* ML, DFA* MR, int pos, int var, int* indices);
-    DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, char *str, int var, int* indices);
-    DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, char *str, int var, int* indices);
+    DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, const char *str, int var, int* indices);
+    DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* indices);
     
     //Given M, output a DFA accepting S*.w.S* where w \in M
     DFA *dfa_star_M_star(DFA *M, int var, int *indices);
@@ -376,7 +376,7 @@ extern "C" {
     
     DFA *dfaRemoveSpace(DFA* M, int var, int* indices);
     
-    int dfaPrintBDD(DFA *a, char *filename, int var);
+    int dfaPrintBDD(DFA *a, const char *filename, int var);
     void dfaPrintGraphvizAsciiRange(DFA *a, int no_free_vars, int *offsets, int printSink);
     void dfaPrintGraphvizAsciiRangeFile(DFA *a, const char *filename, int no_free_vars, int *offsets, int printSink);
     void dfaPrintGraphvizFile(DFA *a, const char *filename, int no_free_vars, unsigned *offsets);
