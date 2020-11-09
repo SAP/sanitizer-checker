@@ -5693,7 +5693,7 @@ char *dfaGenerateExample(DFA* M, int var, unsigned indices[]){
   for (i1 = 0; i1 < jump; i1++){
     final_result[i1] = arr_to_ascii(decoded_result[i1]);
   }
-  final_result[jump+1] = '\0';
+  final_result[jump] = '\0';
   return final_result;
 }
 
