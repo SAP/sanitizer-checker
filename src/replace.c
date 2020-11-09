@@ -1612,9 +1612,7 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   int *numOfOut = (int *) malloc((Mr->ns)*sizeof(int)); // how many nonsink outgoing edges of each state
   int *numOfOutFinal = (int *) malloc((Mr->ns)*sizeof(int)); //how many final outgoing edges of each state
 
-
   initial_out_info(Mr, numOfOut, numOfOutFinal, binOfOut, toOfOut, var, 1, indices);
-
 
   max_exeps=1<<len; //maybe exponential
   sink=find_sink(M);
@@ -1713,27 +1711,38 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   for(i=M->ns; i<ns; i++) statuces[i]='-';
 
   statuces[ns]='\0';
-  result=dfaBuild(statuces);
-
+  result = dfaBuild(statuces);
 
   if(_FANG_DFA_DEBUG){
     printf("Project the %d bit\n", i);
     printf("Original:%d", i);
     dfaPrintVitals(result);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 1);
   }
 
-  // dfaPrintVerbose(dfaMinimize(result));
+  tmpM = dfaMinimize(result);
+  dfaFree(result);
+  result = tmpM;
 
-  tmpM =dfaProject(dfaMinimize(result), (unsigned) len-1);
-  //dfaPrintVerbose(tmpM);
+  if(_FANG_DFA_DEBUG){
+    printf("Minimized:%d\n", i);
+    dfaPrintVitals(result);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 1);
+  }
+
+  tmpM = dfaProject(result, (unsigned) len-1);
+  dfaFree(result);
+  result = tmpM;
 
   if(_FANG_DFA_DEBUG){
     printf("Projected:%d bit", len-1);
-    dfaPrintVitals(tmpM);
+    dfaPrintVitals(result);
   }
+
+  tmpM = dfaMinimize(result);
   dfaFree(result);
-  result = dfaMinimize(tmpM);
-  dfaFree(tmpM);
+  result = tmpM;
+
   if(_FANG_DFA_DEBUG){
     printf("Minimized:after %d bit", len-1);
     dfaPrintVitals(result);
@@ -1744,12 +1753,10 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   free(to_states);
   free(statuces);
 
-
   for(i=0; i<Mr->ns; i++){
     if(binOfOut[i]!=NULL) free(binOfOut[i]);
     if(toOfOut[i]!=NULL) free(toOfOut[i]);
   }
-
 
   free(binOfOut);
   free(toOfOut);
@@ -1757,7 +1764,7 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   free(numOfOut);
   free(numOfOutFinal);
 
-  return dfaMinimize(result);
+  return result;
 
 }//End dfa_insert_M_arbitrary
 
