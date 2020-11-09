@@ -3332,7 +3332,9 @@ int checkEmptyString(DFA *M){
  */
 int checkOnlyEmptyString(DFA *M, int var, int* indices){
   DFA *emptyString = dfaASCIIOnlyNullString(var, indices);
-  return check_equivalence(M, emptyString, var, indices);
+  int equiv = check_equivalence(M, emptyString, var, indices);
+  dfaFree(emptyString);
+  return equiv;
 }
 
 
