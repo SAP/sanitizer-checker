@@ -240,7 +240,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis()
 
 const StrangerAutomaton* SemAttack::getPostImage(const AnalysisResult& result) const
 {
-  return result.at(target_field_relevant_graph.getRoot()->getID());
+  return result.at(target_dep_graph.getRoot()->getID());
 }
 
 StrangerAutomaton* SemAttack::computeAttackPatternOverlap(const StrangerAutomaton* postImage,
@@ -253,15 +253,18 @@ StrangerAutomaton* SemAttack::computeAttackPatternOverlap(const StrangerAutomato
     DEBUG_AUTO(postImage);
   }
 
+  message("Sanitizer Automaton");
   postImage->toDotAscii(1);
   message("Example sanitizer string:");
   message(postImage->generateSatisfyingExample());
 
+  message("Attack Pattern Automaton");
   attackPattern->toDotAscii(1);
   message("Example attack pattern string:");
   message(attackPattern->generateSatisfyingExample());
-        
+
   StrangerAutomaton* intersection = postImage->intersect(attackPattern);
+  message("Intersection Automaton");
   intersection->toDotAscii(1);
         
   if (intersection->isEmpty()) {

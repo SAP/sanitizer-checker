@@ -82,6 +82,10 @@ void MultiAttack::computeAttackPatternOverlap(AttackContext context)
 {
   // Loop over exisiting results and compute overlap and pre-image for each one
   for (auto result : m_results) {
+    std::cout << "Doing backward analysis for file: "
+              << result->getAttack()->getFileName()
+              << ", context: " << AttackContextHelper::getName(context)
+              << std::endl;
     // Consider this in a separate thread
     result->addBackwardAnalysis(context);
   }
