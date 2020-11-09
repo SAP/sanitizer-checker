@@ -65,6 +65,7 @@ void MultiAttack::computePostImages() {
   findDotFiles();
   for (auto file : this->m_dot_paths) {
     try {
+      // This could be parallelized
       std::cout << "Analysing file: " << file << std::endl;
       CombinedAnalysisResult* result =
         new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());

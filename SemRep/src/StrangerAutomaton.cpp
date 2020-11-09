@@ -232,14 +232,8 @@ StrangerAutomaton* StrangerAutomaton::makeString(std::string s, int id)
         
 		debugToFile(stringbuilder() << "M[" << traceID << "] = dfa_construct_string(\"" << escapeSpecialChars(s) << "\", NUM_ASCII_TRACKS, indices_main);//" << id << " = makeString(" << escapeSpecialChars(s) << ")");
         
-        
-        char *str = StrangerAutomaton::strToCharStar(s);
-		//std::string encodedString = getEncodedString(s);
 		retMe = new StrangerAutomaton(
-                                      dfa_construct_string(str, num_ascii_track,
-                                                           indices_main));
-        free(str);
-        
+                    dfa_construct_string(s.c_str(), num_ascii_track, indices_main));
 		{
 			retMe->setID(id);
 			retMe->debugAutomaton();
@@ -1204,7 +1198,7 @@ StrangerAutomaton* StrangerAutomaton::leftPreConcatConst(std::string rightSiblin
     debugToFile(stringbuilder() << "M[" << traceID << "] = dfa_pre_concat_const(M[" << this->autoTraceID << "], \"" << escapeSpecialChars(rightSiblingString) << "\", 1, NUM_ASCII_TRACKS, indices_main);//" <<id << " = rightPreConcatConst("  << this->ID <<  ", " << escapeSpecialChars(rightSiblingString) << ")");
 
     boost::posix_time::ptime start_time = perfInfo->current_time();
-    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_concat_const(this->dfa, StrangerAutomaton::strToCharStar(rightSiblingString), 1, num_ascii_track, indices_main));
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_concat_const(this->dfa, rightSiblingString.c_str(), 1, num_ascii_track, indices_main));
     perfInfo->const_pre_concat_total_time += perfInfo->current_time() - start_time;
     perfInfo->num_of_const_pre_concat++;
     
@@ -1304,7 +1298,7 @@ StrangerAutomaton* StrangerAutomaton::rightPreConcatConst(std::string leftSiblin
 				<< escapeSpecialChars(leftSiblingString) << ")");
 
     boost::posix_time::ptime start_time = perfInfo->current_time();
-    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_concat_const(this->dfa, StrangerAutomaton::strToCharStar(leftSiblingString), 2, num_ascii_track, indices_main));
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_concat_const(this->dfa, leftSiblingString.c_str(), 2, num_ascii_track, indices_main));
     perfInfo->const_pre_concat_total_time += perfInfo->current_time() - start_time;
     perfInfo->num_of_const_pre_concat++;
     
@@ -1460,7 +1454,7 @@ StrangerAutomaton* StrangerAutomaton::reg_replace(StrangerAutomaton* patternAuto
 				<< ", " << subjectAuto->ID << ")");
 
     boost::posix_time::ptime start_time = perfInfo->current_time();
-    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_replace_extrabit(subjectAuto->dfa, patternAuto->dfa, StrangerAutomaton::strToCharStar(replaceStr), num_ascii_track, indices_main));
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_replace_extrabit(subjectAuto->dfa, patternAuto->dfa, replaceStr.c_str(), num_ascii_track, indices_main));
     perfInfo->replace_total_time += perfInfo->current_time() - start_time;
     perfInfo->num_of_replace++;
     
@@ -1573,7 +1567,7 @@ StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
 				<< subjectAuto->ID << ")");
 
     boost::posix_time::ptime start_time = perfInfo->current_time();
-    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_replace_extrabit(subjectAuto->dfa,searchAuto->dfa, StrangerAutomaton::strToCharStar(replaceStr), num_ascii_track, indices_main));
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_replace_extrabit(subjectAuto->dfa,searchAuto->dfa, replaceStr.c_str(), num_ascii_track, indices_main));
     perfInfo->replace_total_time += perfInfo->current_time() - start_time;
     perfInfo->num_of_replace++;
     
@@ -1609,7 +1603,7 @@ StrangerAutomaton* StrangerAutomaton::str_replace_once(StrangerAutomaton* str, S
     boost::posix_time::ptime start_time = perfInfo->current_time();
     std::string replaceStr = replaceAuto->getStr();
     StrangerAutomaton* retMe = new StrangerAutomaton(
-        dfa_replace_once_extrabit(subjectAuto->dfa, str->dfa, StrangerAutomaton::strToCharStar(replaceStr), num_ascii_track, indices_main)
+        dfa_replace_once_extrabit(subjectAuto->dfa, str->dfa, replaceStr.c_str(), num_ascii_track, indices_main)
         );
     perfInfo->replace_total_time += perfInfo->current_time() - start_time;
     perfInfo->num_of_replace++;
@@ -1659,7 +1653,7 @@ StrangerAutomaton* StrangerAutomaton::preReplace(StrangerAutomaton* searchAuto,
     
     debugToFile(stringbuilder() << "M[" << (traceID) << "] = dfa_pre_replace_str(M[" << this->autoTraceID << "], M[" << searchAuto->autoTraceID << "], \"" << replaceString << "\" , NUM_ASCII_TRACKS, indices_main);//"<<id << " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
     boost::posix_time::ptime start_time = perfInfo->current_time();
-    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_replace_str(this->dfa, searchAuto->dfa, StrangerAutomaton::strToCharStar(replaceString), num_ascii_track, indices_main));
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_replace_str(this->dfa, searchAuto->dfa, replaceString.c_str(), num_ascii_track, indices_main));
     perfInfo->pre_replace_total_time += perfInfo->current_time() - start_time;
     perfInfo->num_of_pre_replace++;
     
@@ -1701,7 +1695,7 @@ StrangerAutomaton* StrangerAutomaton::preReplaceOnce(StrangerAutomaton* searchAu
     
     debugToFile(stringbuilder() << "M[" << (traceID) << "] = dfa_pre_replace_str(M[" << this->autoTraceID << "], M[" << searchAuto->autoTraceID << "], \"" << replaceString << "\" , NUM_ASCII_TRACKS, indices_main);//"<<id << " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
     boost::posix_time::ptime start_time = perfInfo->current_time();
-    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_replace_once_str(this->dfa, searchAuto->dfa, StrangerAutomaton::strToCharStar(replaceString), num_ascii_track, indices_main));
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_replace_once_str(this->dfa, searchAuto->dfa, replaceString.c_str(), num_ascii_track, indices_main));
     perfInfo->pre_replace_total_time += perfInfo->current_time() - start_time;
     perfInfo->num_of_pre_replace++;
     
@@ -3066,7 +3060,7 @@ void StrangerAutomaton::toDotFile(std::string file_name) {
 void StrangerAutomaton::toDotBDDFile(std::string file_name) {
 
     debugToFile(stringbuilder() << "dfaPrintBDD(M[" << this->autoTraceID << "], NUM_ASCII_TRACKS);");
-    dfaPrintBDD(this->dfa, strToCharStar(file_name), num_ascii_track);
+    dfaPrintBDD(this->dfa, file_name.c_str(), num_ascii_track);
 
 }
 
@@ -3227,15 +3221,3 @@ std::string StrangerAutomaton::escapeSpecialChars(std::string s)
     //    return npc(b)->toString();
 	return s;
 }
-
-/**
- * Helps to convert std::string into char*
- * to pass to StrangerLibrary functions
- */
-char* StrangerAutomaton::strToCharStar( const std::string s){
-	char *a = new char[s.size()+1];
-	a[s.size()] = '\0';
-	memcpy(a,s.c_str(), s.size());
-	return a;
-}
-

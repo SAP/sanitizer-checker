@@ -239,7 +239,6 @@ public:
     static int* getIndices(){ return indices_main;};
     static int* getIndices(int length) { return allocateAscIIIndexWithExtraBit(length);};
     static unsigned *getUnsignedIndices(int length);
-    static char* strToCharStar(const std::string s);
     int get_num_of_states(){
 		return this->dfa->ns;
     }
