@@ -40,6 +40,7 @@ void call_sem_attack(string target_name, string field_name){
         MultiAttack attack(target_name, field_name);
         attack.computePostImages();
         attack.computeAttackPatternOverlap(AttackContext::Html);
+        attack.computeAttackPatternOverlap(AttackContext::HtmlPayload);
         attack.computeAttackPatternOverlap(AttackContext::HtmlAttr);
         attack.computeAttackPatternOverlap(AttackContext::JavaScript);
         attack.computeAttackPatternOverlap(AttackContext::Url);

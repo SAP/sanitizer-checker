@@ -1,0 +1,14 @@
+
+digraph cfg {
+
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeAttrString"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=doubleoctagon, label="Return: x"];
+
+n2 -> n0;
+n1 -> n2;
+n3 -> n1;
+n4 -> n3;
+}

@@ -36,15 +36,62 @@ public:
     static StrangerAutomaton* getLiteralPattern();
     static StrangerAutomaton* lessThanPattern();
 
+    /******************************************************************************************
+     * Attack Patterns
+     *****************************************************************************************/
+
+    // Allowed characters in innerHTML, excludes ">", "<", "'", """, "\"
+    // & is allowed only if escaped
     static StrangerAutomaton* getHtmlPattern();
+
+    // Allowed characters in HTML attribute, excludes all non alphanumeric chars, except & escaped 
     static StrangerAutomaton* getHtmlAttributePattern();
+
+    // Only allow alphanumeric, "," "." "_" and whitespace, all others must be JS escaped
     static StrangerAutomaton* getJavascriptPattern();
+
+    // Only allow alphanumeric, "-", "_", "." "~" and URL escaped characters
     static StrangerAutomaton* getUrlPattern();
 
+    // A sample html payload
+    static StrangerAutomaton* getHtmlPayload();
+
+    /******************************************************************************************
+     * Common Sanitizer Patterns for comparison
+     *****************************************************************************************/
+
+    // Only characters not excluded by getHtmlPattern()
     static StrangerAutomaton* getHtmlEscaped();
+
+    // Only characters not excluded by getHtmlAttrPattern()
     static StrangerAutomaton* getHtmlAttrEscaped();
+
+    // Only characters not excluded by getJavascriptPattern()
     static StrangerAutomaton* getJavascriptEscaped();
+
+    // Only characters not excluded by getUrlPattern()
     static StrangerAutomaton* getUrlEscaped();
+
+    // No HTML characters allowed (not even escaped &) <>'\"&/
+    static StrangerAutomaton* getHtmlRemoved();
+
+    // No HTML characters allowed, except slash <>'\"&
+    static StrangerAutomaton* getHtmlRemovedNoSlash();
+
+    // Characters allowed by UtiComponentEncode
+    static StrangerAutomaton* getUrlComponentEncoded();
+
+    // HTML escaped <>&
+    static StrangerAutomaton* getEncodeHtmlNoQuotes();
+
+    // HTML escaped <>&"
+    static StrangerAutomaton* getEncodeHtmlCompat();
+
+    // HTML escaped <>&"'
+    static StrangerAutomaton* getEncodeHtmlQuotes();
+
+    // HTML escaped <>&"'/
+    static StrangerAutomaton* getEncodeHtmlSlash();
 
     static StrangerAutomaton* getUndesiredSQLTest();
     static StrangerAutomaton* getUndesiredMFETest();
@@ -57,6 +104,9 @@ private:
     static std::string m_htmlAttrEscapedRegExp;
     static std::string m_javascriptEscapedRegExp;
     static std::string m_urlEscapedRegExp;
+    static std::string m_htmlPayload;
+    static std::string m_htmlRemovedRegExp;
+    static std::string m_htmlRemovedNoSlashRegExp;
 };
 
 

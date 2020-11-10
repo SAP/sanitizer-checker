@@ -890,7 +890,13 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		// only has one parameter ==>  string addslashes  ( string $str  )
 		retMe = StrangerAutomaton::pre_addslashes(opAuto,childNode->getID());
 
-	} else if (opName == "trim" ) {
+	} else if (opName == "encodeAttrString") {
+        // only has one parameter ==>  string encodeAttrString  ( string $str  )
+        retMe = StrangerAutomaton::pre_encodeAttrString(opAuto,childNode->getID());
+    } else if (opName == "encodeTextFragment") {
+        // only has one parameter ==>  string addslashes  ( string $str  )
+        retMe = StrangerAutomaton::pre_encodeTextFragment(opAuto,childNode->getID());
+    } else if (opName == "trim" ) {
 		// only has one parameter ==>  string trim  ( string $str  )
 		retMe = opAuto->preTrimSpaces(childNode->getID());
 	} else if (opName == "rtrim" ) {
@@ -1585,7 +1591,23 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
 		StrangerAutomaton* json = StrangerAutomaton::jsonParse(paramAuto, opNode->getID());
 		retMe = json;
-	} else {
+	} else if (opName == "encodeTextFragment") {
+        if (successors.size() < 1 || successors.size() > 2) {
+            throw new StrangerStringAnalysisException(stringbuilder() << "encodeTextFragment wrong number of arguments: " << opNode->getID());
+        }
+        StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+
+        StrangerAutomaton* encodedAuto = StrangerAutomaton::encodeTextFragment(paramAuto, opNode->getID());
+        retMe = encodedAuto;
+    } else if (opName == "encodeAttrString") {
+        if (successors.size() < 1 || successors.size() > 2) {
+            throw new StrangerStringAnalysisException(stringbuilder() << "encodeAttrString wrong number of arguments: " << opNode->getID());
+        }
+        StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+
+        StrangerAutomaton* encodedAuto = StrangerAutomaton::encodeAttrString(paramAuto, opNode->getID());
+        retMe = encodedAuto;
+    } else {
 		cout << "!!! Warning: Unmodeled builtin general function : " << opName << endl;
 		f_unmodeled.push_back(opNode);
 

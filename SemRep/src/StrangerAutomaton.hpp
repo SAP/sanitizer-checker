@@ -206,6 +206,15 @@ public:
     static StrangerAutomaton* nl2br(StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* pre_nl2br(StrangerAutomaton* subjectAuto, int id);
 //    std::set<char> mincut();
+    static StrangerAutomaton* encodeAttrString(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* encodeAttrString(StrangerAutomaton* subjectAuto){return encodeAttrString(subjectAuto, traceID);};
+    static StrangerAutomaton* pre_encodeAttrString(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* pre_encodeAttrString(StrangerAutomaton* subjectAuto){return pre_encodeAttrString(subjectAuto, traceID);};
+
+    static StrangerAutomaton* encodeTextFragment(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* encodeTextFragment(StrangerAutomaton* subjectAuto){return encodeTextFragment(subjectAuto, traceID);};
+    static StrangerAutomaton* pre_encodeTextFragment(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* pre_encodeTextFragment(StrangerAutomaton* subjectAuto){return pre_encodeTextFragment(subjectAuto, traceID);};
 
     static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto){return encodeURIComponent(subjectAuto, traceID);};

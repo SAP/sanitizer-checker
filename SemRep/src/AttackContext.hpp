@@ -29,7 +29,8 @@
     DO(Html) \
     DO(HtmlAttr) \
     DO(JavaScript) \
-    DO(Url)
+    DO(Url) \
+    DO(HtmlPayload)
 
 #define MAKE_ENUM(VAR) VAR,
 enum class AttackContext {
