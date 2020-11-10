@@ -23,7 +23,7 @@
 
 #include "SemRepair.hpp"
 
-PerfInfo SemRepair::perfInfo;
+PerfInfo& SemRepair::perfInfo = PerfInfo::getInstance();
 
 SemRepair::SemRepair(string reference_dep_graph_file_name,string target_dep_graph_file_name, string input_field_name) {
 
@@ -68,8 +68,6 @@ SemRepair::SemRepair(string reference_dep_graph_file_name,string target_dep_grap
 	}
 
 		DEBUG_AUTO_TO_FILE_MN(validation_patch_auto, "");
-	ImageComputer::perfInfo = &SemRepair::perfInfo;
-	ImageComputer::staticInit();
 }
 
 SemRepair::~SemRepair() {

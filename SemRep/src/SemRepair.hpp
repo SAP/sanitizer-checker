@@ -59,7 +59,7 @@ public:
 
 	bool calculate_rejected_set = false;
 
-	static PerfInfo perfInfo;
+	static PerfInfo& perfInfo;
 private:
 	string reference_dep_graph_file_name;
 	string target_dep_graph_file_name;

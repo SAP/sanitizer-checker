@@ -53,10 +53,6 @@ StrangerAutomaton::~StrangerAutomaton()
 		abort();
 }
 
-void StrangerAutomaton::staticInit() {
-    
-}
-
 // some static members
 int StrangerAutomaton::num_ascii_track = 8;
 int* StrangerAutomaton::indices_main = allocateAscIIIndexWithExtraBit(num_ascii_track);
@@ -79,7 +75,7 @@ char StrangerAutomaton::slash = '/';
 
 bool StrangerAutomaton::coarseWidening = false;
 
-PerfInfo* StrangerAutomaton::perfInfo;
+PerfInfo* StrangerAutomaton::perfInfo = &PerfInfo::getInstance();
 
 
 DFA* StrangerAutomaton::getDfa()

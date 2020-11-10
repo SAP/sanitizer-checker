@@ -59,9 +59,8 @@ public:
     void printResults() const;
 
     std::string getFileName() const { return target_dep_graph_file_name; }
+    static PerfInfo& perfInfo;
 
-
-    static PerfInfo perfInfo;
 private:
     std::string target_dep_graph_file_name;
     std::string input_field_name;

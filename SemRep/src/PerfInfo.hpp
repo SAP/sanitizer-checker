@@ -29,8 +29,12 @@
 
 class PerfInfo {
 public:
-	PerfInfo();
-	virtual ~PerfInfo();
+
+    // Make PerfInfo a singleton
+    static PerfInfo & getInstance() {
+        static PerfInfo instance;
+        return instance;
+    }
 
 	 void reset();
 
@@ -147,6 +151,15 @@ public:
 	 unsigned int number_of_pre_trim_set;
 	 unsigned int number_of_substr;
 	 unsigned int number_of_pre_substr;
+
+protected:
+    virtual ~PerfInfo();
+
+private:
+    PerfInfo();
+    PerfInfo(PerfInfo const &)  = delete;
+    void operator=(PerfInfo const &) = delete;
+
 };
 
 

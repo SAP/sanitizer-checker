@@ -242,12 +242,11 @@ public:
     int get_num_of_states(){
 		return this->dfa->ns;
     }
-	unsigned get_num_of_bdd_nodes(){
-		return bdd_size(this->dfa->bddm);
-	}
-//    static void setPerfInfo(PerfInfo& pInfo) { perfInfo = pInfo; };
-//    static PerfInfo& getPerfInfo() { return perfInfo; };
-    static void staticInit();
+
+    unsigned get_num_of_bdd_nodes(){
+        return bdd_size(this->dfa->bddm);
+    }
+
     static PerfInfo* perfInfo;
 
     StrangerAutomaton* restrict(StrangerAutomaton* otherAuto, int id){

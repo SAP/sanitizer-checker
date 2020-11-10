@@ -26,7 +26,7 @@
 #include "SemAttack.hpp"
 #include "AttackPatterns.hpp"
 
-PerfInfo SemAttack::perfInfo;
+PerfInfo& SemAttack::perfInfo = PerfInfo::getInstance();
 
 CombinedAnalysisResult::CombinedAnalysisResult(const std::string& target_dep_graph_file_name,
                                                const std::string& input_field_name,
@@ -46,10 +46,10 @@ void CombinedAnalysisResult::printResult() const
   for (auto bwResult : m_bwAnalysisMap) {
     AttackContext c = bwResult.first;
     const BackwardAnalysisResult& result = bwResult.second;
-    bool vulnerable = result.isVulnerable();
+    bool good = !result.isVulnerable();
     std::cout << AttackContextHelper::getName(c) << ": "
-              << (vulnerable ? "true" : "false");
-    if (vulnerable) {
+              << (good ? "true" : "false");
+    if (!good) {
       std::cout << "("
                 << result.getIntersection()->generateSatisfyingExample()
                 << ")";
@@ -113,8 +113,6 @@ SemAttack::SemAttack(const string& target_dep_graph_file_name, const string& inp
     message(this->target_dep_graph.toDot());
     message(this->target_field_relevant_graph.toDot());
 
-    ImageComputer::perfInfo = &SemAttack::perfInfo;
-    ImageComputer::staticInit();
 }
 
 SemAttack::~SemAttack() {

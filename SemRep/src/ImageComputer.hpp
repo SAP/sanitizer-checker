@@ -31,10 +31,8 @@
 
 class ImageComputer {
 public:
-	ImageComputer();
-	virtual ~ImageComputer();
-    static void staticInit();
-
+    ImageComputer();
+    virtual ~ImageComputer();
 
     /****************************************************************************************************/
     /********* VALIDATION FUNCTION CALCULATION METHODS ************************************************/
@@ -78,7 +76,6 @@ public:
     bool handle_concats = true;
 
 private:
-    static bool initialized;
 
     static StrangerAutomaton* uninit_node_default_initialization;
     NodesList f_unmodeled;

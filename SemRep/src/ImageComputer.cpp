@@ -26,17 +26,12 @@
 using namespace std;
 
 ImageComputer::ImageComputer() {
-	if (!initialized){
-        throw StrangerStringAnalysisException("Forward Image Computer has not been initialized.");
-    }
-
 }
 
 ImageComputer::~ImageComputer() {
 	// TODO Auto-generated destructor stub
 }
 
-bool ImageComputer::initialized = false;
 /**
  * 1- prints the dot format for result automatons
  * 2- prints the MONA internal states for result automatons
@@ -45,14 +40,7 @@ bool ImageComputer::initialized = false;
 
 StrangerAutomaton* ImageComputer::uninit_node_default_initialization = nullptr;
 
-PerfInfo* ImageComputer::perfInfo;
-//static
-void ImageComputer::staticInit() {
-    initialized =  true;
-    StrangerAutomaton::perfInfo = ImageComputer::perfInfo;
-    StrangerAutomaton::staticInit();
-}
-
+PerfInfo* ImageComputer::perfInfo = &PerfInfo::getInstance();
 
 
 /*******************************************************************************************************************************/

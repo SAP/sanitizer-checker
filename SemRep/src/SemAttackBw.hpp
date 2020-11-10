@@ -51,7 +51,7 @@ public:
 
     bool calculate_rejected_set = false;
 
-    static PerfInfo perfInfo;
+    static PerfInfo& perfInfo;
 
 private:
     StrangerAutomaton* sink_auto;
