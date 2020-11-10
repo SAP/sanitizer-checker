@@ -2413,6 +2413,66 @@ StrangerAutomaton* StrangerAutomaton::pre_addslashes(StrangerAutomaton* subjectA
 	return retMe;
 }
 
+StrangerAutomaton* StrangerAutomaton::encodeAttrString(StrangerAutomaton* subjectAuto, int id)
+{
+
+    debug(stringbuilder() << id << " = encodeAttrString(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaEncodeAttrString(subjectAuto->dfa, num_ascii_track, indices_main));
+    perfInfo->encodeattrstring_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_encodeattrstring++;
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::pre_encodeAttrString(StrangerAutomaton* subjectAuto, int id)
+{
+
+    debug(stringbuilder() << id << " = pre_encodeAttrString(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaPreEncodeAttrString(subjectAuto->dfa, num_ascii_track, indices_main));
+    perfInfo->pre_encodeattrstring_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_pre_encodeattrstring++;
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::encodeTextFragment(StrangerAutomaton* subjectAuto, int id)
+{
+
+    debug(stringbuilder() << id << " = encodeTextFragment(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaEncodeTextFragment(subjectAuto->dfa, num_ascii_track, indices_main));
+    perfInfo->encodetextfragment_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_encodetextfragment++;
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::pre_encodeTextFragment(StrangerAutomaton* subjectAuto, int id)
+{
+
+    debug(stringbuilder() << id << " = pre_encodeTextFragment(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaPreEncodeTextFragment(subjectAuto->dfa, num_ascii_track, indices_main));
+    perfInfo->pre_encodetextfragment_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_pre_encodetextfragment++;
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
 StrangerAutomaton* StrangerAutomaton::htmlSpecialChars(StrangerAutomaton* subjectAuto, string flag, int id)
 {
     hscflags_t _flag;

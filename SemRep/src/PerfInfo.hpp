@@ -124,8 +124,12 @@ public:
 	 boost::posix_time::time_duration pre_trim_set_total_time;
 	 boost::posix_time::time_duration substr_total_time;
 	 boost::posix_time::time_duration pre_substr_total_time;
+	 boost::posix_time::time_duration encodeattrstring_total_time;
+     boost::posix_time::time_duration pre_encodeattrstring_total_time;
+     boost::posix_time::time_duration encodetextfragment_total_time;
+     boost::posix_time::time_duration pre_encodetextfragment_total_time;
 
-	 unsigned int number_of_vlab_restrict;
+    unsigned int number_of_vlab_restrict;
 	 unsigned int number_of_pre_vlab_restrict;
 	 unsigned int number_of_addslashes;
 	 unsigned int number_of_pre_addslashes;
@@ -151,7 +155,10 @@ public:
 	 unsigned int number_of_pre_trim_set;
 	 unsigned int number_of_substr;
 	 unsigned int number_of_pre_substr;
-
+    unsigned int number_of_encodeattrstring;
+    unsigned int number_of_pre_encodeattrstring;
+    unsigned int number_of_encodetextfragment;
+    unsigned int number_of_pre_encodetextfragment;
 protected:
     virtual ~PerfInfo();
 
