@@ -3737,9 +3737,7 @@ DFA *dfaHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t flags
 
         result = dfa_replace_char_with_string(a5, var, indices, '\xfe', "&");
         dfaFree(a5);
-    }
-    
-    else if (flags == ENT_COMPAT){
+    } else if (flags == ENT_COMPAT){
         DFA *a3 = dfa_replace_char_with_string(a2, var, indices, '"', dq);
         dfaFree(a2);
 
@@ -3749,8 +3747,22 @@ DFA *dfaHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t flags
         result = dfa_replace_char_with_string(a4, var, indices, '\xfe', "&");
         dfaFree(a4);
 
-    }
-    else {
+    } else if (flags == ENT_SLASH){
+        DFA *a3 = dfa_replace_char_with_string(a2, var, indices, '\'', sq);
+        dfaFree(a2);
+
+        DFA *a4 = dfa_replace_char_with_string(a3, var, indices, '"', dq);
+        dfaFree(a3);
+
+        DFA *a5 = dfa_replace_char_with_string(a4, var, indices, '/', "&#x2F;");
+        dfaFree(a4);
+
+        DFA *a6 = dfa_replace_char_with_string(a5, var, indices, '&', "&amp;");
+        dfaFree(a5);
+
+        result = dfa_replace_char_with_string(a6, var, indices, '\xfe', "&");
+        dfaFree(a6);
+    } else {
         DFA *a3 = dfa_replace_char_with_string(a2, var, indices, '&', "&amp;");
         dfaFree(a2);
 
@@ -3778,8 +3790,7 @@ DFA *dfaPreHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t fl
 
         result = dfa_pre_replace_char_with_string(a4, var, indices, '<', "&lt;");
         dfaFree(a4);
-    }
-    else if (flags == ENT_COMPAT){
+    } else if (flags == ENT_COMPAT){
         DFA *a2 = dfa_pre_replace_char_with_string(a1, var, indices, '"', "&quot;");
         dfaFree(a1);
 
@@ -3788,8 +3799,22 @@ DFA *dfaPreHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t fl
 
         result = dfa_pre_replace_char_with_string(a3, var, indices, '<', "&lt;");
         dfaFree(a3);
-    }
-    else {
+    } else if (flags == ENT_SLASH){
+        DFA *a2 = dfa_pre_replace_char_with_string(a1, var, indices, '"', "&quot;");
+        dfaFree(a1);
+
+        DFA *a3 = dfa_pre_replace_char_with_string(a2, var, indices, '\'', "&apos;");
+        dfaFree(a2);
+
+        DFA *a4 = dfa_pre_replace_char_with_string(a3, var, indices, '>', "&gt;");
+        dfaFree(a3);
+
+        DFA *a5 = dfa_pre_replace_char_with_string(a4, var, indices, '/', "&#x2F;");
+        dfaFree(a4);
+
+        result = dfa_pre_replace_char_with_string(a5, var, indices, '<', "&lt;");
+        dfaFree(a5);
+    } else {
         DFA *a2 = dfa_pre_replace_char_with_string(a1, var, indices, '>', "&gt;");
         dfaFree(a1);
 

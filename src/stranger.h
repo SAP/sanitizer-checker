@@ -159,7 +159,7 @@ extern "C" {
     /*=====================================================================*/
     /* Function Helpers
      */
-    typedef enum {ENT_COMPAT, ENT_QUOTES, ENT_NOQUOTES} hscflags_t;
+    typedef enum {ENT_COMPAT, ENT_QUOTES, ENT_NOQUOTES, ENT_SLASH} hscflags_t;
 
 
     //*====================================================================
