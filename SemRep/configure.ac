@@ -7,6 +7,7 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_RANLIB
 AM_PROG_AR
+AX_PTHREAD(, [AC_MSG_ERROR([libpthread is required])])
 
 AX_CXX_COMPILE_STDCXX_11(ext, mandatory)
 

@@ -1,4 +1,7 @@
 SUBDIRS = depgraph exceptions
+AM_LIBS = @PTHREAD_LIBS@ @LIBS@
+AM_CFLAGS = @CFLAGS@ @PTHREAD_CFLAGS@
+AM_CC = @PTHREAD_CC@
 noinst_LIBRARIES = libsemrep.a
 libsemrep_a_SOURCES = ImageComputer.cpp \
                       PerfInfo.cpp \
@@ -26,7 +29,8 @@ semrep_LDADD = libsemrep.a \
                $(BOOST_PROGRAM_OPTIONS_LIB) \
                $(BOOST_FILESYSTEM_LIB) \
                $(BOOST_SYSTEM_LIB) \
-               $(BOOST_REGEX_LIB)
+               $(BOOST_REGEX_LIB) \
+							 @PTHREAD_CFLAGS@
 
 semattack_SOURCES = main_attack.cpp
 semattack_LDADD = libsemrep.a \
@@ -65,4 +69,5 @@ multiattack_LDADD = libsemrep.a \
                  $(BOOST_PROGRAM_OPTIONS_LIB) \
                  $(BOOST_FILESYSTEM_LIB) \
                  $(BOOST_SYSTEM_LIB) \
-                 $(BOOST_REGEX_LIB)
+                 $(BOOST_REGEX_LIB) \
+								@PTHREAD_CFLAGS@

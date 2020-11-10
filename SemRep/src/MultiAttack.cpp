@@ -29,6 +29,12 @@
 #include "StrangerAutomaton.hpp"
 
 #include <iostream>
+#include <thread>
+#include <algorithm>
+#include <functional>
+#include <boost/asio.hpp>
+
+namespace asio = boost::asio;
 
 MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& input_field_name)
   : m_graph_directory(graph_directory)
@@ -38,6 +44,7 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_automata()
   , m_groups()
   , m_analyzed_contexts()
+  , results_mutex()
 {
   fillCommonPatterns();
 }
@@ -61,21 +68,28 @@ void MultiAttack::printResults() const
   m_groups.printGroups();
 }
 
+void MultiAttack::computePostImage(std::string file) {
+    try {
+        // This could be parallelized
+        std::cout << "Analysing file: " << file << " in " << std::this_thread::get_id() << std::endl;
+        CombinedAnalysisResult* result =
+                new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());
+        const StrangerAutomaton* postImage = result->getFwAnalysis().getPostImage();
+        const std::lock_guard<std::mutex> lock(this->results_mutex);
+        this->m_groups.addAutomaton(postImage, result);
+        this->m_results.emplace_back(result);
+    } catch (StrangerStringAnalysisException const &e) {
+        std::cerr << e.what() << std::endl;
+    }
+}
 void MultiAttack::computePostImages() {
   findDotFiles();
+  boost::asio::thread_pool pool(2);
   for (auto file : this->m_dot_paths) {
-    try {
-      // This could be parallelized
-      std::cout << "Analysing file: " << file << std::endl;
-      CombinedAnalysisResult* result =
-        new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());
-      const StrangerAutomaton* postImage = result->getFwAnalysis().getPostImage();
-      m_groups.addAutomaton(postImage, result);
-      m_results.emplace_back(result);
-    } catch (StrangerStringAnalysisException const &e) {
-      std::cerr << e.what() << std::endl;
+      asio::post(pool, std::bind(&MultiAttack::computePostImage, this, file));
+      //this->computePostImage(file);
     }
-  }
+    pool.join();
 }
 
 void MultiAttack::computeAttackPatternOverlap(AttackContext context)

@@ -31,6 +31,7 @@
 #define BOOST_FILESYSTEM_NO_DEPRECATED
 #include <boost/filesystem.hpp>
 
+#include <thread>
 #include <vector>
 
 namespace fs = boost::filesystem;
@@ -49,6 +50,7 @@ public:
 private:
     void fillCommonPatterns();
     void findDotFiles();
+    void computePostImage(std::string file);
     static std::vector<std::string> getDotFilesInDir(std::string const &dir);
     static std::vector<fs::path> getFilesInPath(fs::path const & root, std::string const & ext);
 
@@ -59,6 +61,7 @@ private:
     std::vector<StrangerAutomaton*> m_automata;
     AutomatonGroups m_groups;
     std::vector<AttackContext> m_analyzed_contexts;
+    std::mutex results_mutex;
 };
 
 
