@@ -3712,6 +3712,55 @@ DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char rep
     
 }
 
+DFA *dfaEncodeAttrString(DFA *inputAuto, int var, int *indices){
+    // TODO(David): We don't handle 0x0A, relevant?
+    char *dq = "\xfe""quot;";
+    DFA *a1 = dfa_replace_char_with_string(inputAuto, var, indices, '"', dq);
+
+    DFA* result = dfa_replace_char_with_string(a1, var, indices, '&', "&amp;");
+    dfaFree(a1);
+    return result;
+}
+
+DFA *dfaPreEncodeAttrString(DFA *inputAuto, int var, int *indices){
+    // TODO(David): We don't handle 0x0A, relevant?
+    DFA *result = NULL;
+
+    DFA *a1 = dfa_pre_replace_char_with_string(inputAuto, var, indices, '&', "&amp;");
+
+    result = dfa_pre_replace_char_with_string(a1, var, indices, '"', "&quot;");
+    dfaFree(a1);
+    return result;
+}
+
+DFA *dfaEncodeTextFragment(DFA *inputAuto, int var, int *indices){
+    // TODO(David): We don't handle 0x0A, relevant?
+    char *lt = "\xfe""lt;";
+    char *gt = "\xfe""gt;";
+    DFA *a1 = dfa_replace_char_with_string(inputAuto, var, indices, '<', lt);
+
+    DFA *a2 = dfa_replace_char_with_string(a1, var, indices, '>', gt);
+    dfaFree(a1);
+    DFA *result = dfa_replace_char_with_string(a2, var, indices, '&', "&amp;");
+
+    dfaFree(a2);
+    return result;
+}
+
+DFA *dfaPreEncodeTextFragment(DFA *inputAuto, int var, int *indices){
+    // TODO(David): We don't handle 0x0A, relevant?
+    DFA *result = NULL;
+
+    DFA *a1 = dfa_pre_replace_char_with_string(inputAuto, var, indices, '&', "&amp;");
+
+    DFA *a2 = dfa_pre_replace_char_with_string(a1, var, indices, '>', "&gt;");
+    dfaFree(a1);
+
+    result = dfa_pre_replace_char_with_string(a2, var, indices, '<', "&lt;");
+    dfaFree(a2);
+    return result;
+}
+
 DFA *dfaHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t flags){
     char *lt = "\xfe""lt;";
     char *gt = "\xfe""gt;";
