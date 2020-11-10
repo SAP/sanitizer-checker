@@ -35,16 +35,28 @@ public:
 
     static StrangerAutomaton* getLiteralPattern();
     static StrangerAutomaton* lessThanPattern();
+
     static StrangerAutomaton* getHtmlPattern();
     static StrangerAutomaton* getHtmlAttributePattern();
     static StrangerAutomaton* getJavascriptPattern();
     static StrangerAutomaton* getUrlPattern();
+
+    static StrangerAutomaton* getHtmlEscaped();
+    static StrangerAutomaton* getHtmlAttrEscaped();
+    static StrangerAutomaton* getJavascriptEscaped();
+    static StrangerAutomaton* getUrlEscaped();
+
     static StrangerAutomaton* getUndesiredSQLTest();
     static StrangerAutomaton* getUndesiredMFETest();
 
 private:
+    static StrangerAutomaton* getAllowedFromRegEx(const std::string& regex);
     static StrangerAutomaton* getAttackPatternFromAllowedRegEx(const std::string& regex);
 
+    static std::string m_htmlEscapedRegExp;
+    static std::string m_htmlAttrEscapedRegExp;
+    static std::string m_javascriptEscapedRegExp;
+    static std::string m_urlEscapedRegExp;
 };
 
 

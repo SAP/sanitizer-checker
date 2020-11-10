@@ -106,6 +106,25 @@ void MultiAttack::fillCommonPatterns() {
   m_automata.push_back(a);
   m_groups.createGroup(a, "SigmaStar");
 
+  // HTML Escaped
+  a = AttackPatterns::getHtmlEscaped();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "HTMLEscaped");
+
+  // HTML Attribute Escaped
+  a = AttackPatterns::getHtmlAttrEscaped();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "HTMLAttrEscaped");
+
+  // Javascript Escaped
+  a = AttackPatterns::getJavascriptEscaped();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "Javascript");
+
+  // URL Escaped
+  a = AttackPatterns::getUrlEscaped();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "URL");
 }
 
 void MultiAttack::findDotFiles() {

@@ -22,6 +22,27 @@
  */
 #include "AttackPatterns.hpp"
 
+// Set of RegExps used to describe various attack patten contexts
+std::string AttackPatterns::m_htmlEscapedRegExp          =  "/([^<>'\"&\\/]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
+std::string AttackPatterns::m_htmlAttrEscapedRegExp      =  "/([a-zA-Z0-9]+|((&[a-zA-Z]+;|&#[xX][0-9]+;|&#[0-9]+;)))+/";
+std::string AttackPatterns::m_javascriptEscapedRegExp    =  "/([a-zA-Z0-9,._\\s]+|((\\\\u[a-fA-F0-9]{4})|(\\\\x[a-fA-F0-9]{2})))+/";
+std::string AttackPatterns::m_urlEscapedRegExp           =  "/([a-zA-Z0-9-_.!~*'()]+|((%[a-fA-F0-9]{2})))+/";
+
+/*
+ * getAllowedPatternFromRegEx
+ *
+ * Gets an automaton representing the regex provided (will be the inverse of getAttackPatternFromAllowedRegEx)
+ * in order to help classify certain santizer functions
+ */
+StrangerAutomaton* AttackPatterns::getAllowedFromRegEx(const std::string& regex) {
+    // Allowed characters in innerHTML
+    StrangerAutomaton* retMe = StrangerAutomaton::regExToAuto(regex);
+    // Also accept the empty string
+    StrangerAutomaton* retMeEmpty = retMe->unionWithEmptyString();
+    delete retMe;
+    return retMeEmpty;
+}
+
 /*
  * getAttackPatternFromAllowedRegEx
  *
@@ -30,16 +51,13 @@
  * The union with the empty string is required so that empty strings are allowed in the output.
  */
 StrangerAutomaton* AttackPatterns::getAttackPatternFromAllowedRegEx(const std::string& regex) {
-    // Allowed characters in innerHTML
-    StrangerAutomaton* retMe = StrangerAutomaton::regExToAuto(regex);
-    // Also accept the empty string
-    StrangerAutomaton* retMeEmpty = retMe->unionWithEmptyString();
-    delete retMe;
+    StrangerAutomaton* retMe = getAllowedFromRegEx(regex);
     // Take the complement to generate strings which are not allowed
-    StrangerAutomaton* complement = retMeEmpty->complement(int32_t(0));
-    delete retMeEmpty;
+    StrangerAutomaton* complement = retMe->complement(int32_t(0));
+    delete retMe;
     return complement;
 }
+
 StrangerAutomaton* AttackPatterns::getLiteralPattern()
 {
     return StrangerAutomaton::regExToAuto("/foobarz/");
@@ -55,25 +73,45 @@ StrangerAutomaton* AttackPatterns::getHtmlPattern()
 {
     // Allowed characters in innerHTML, excludes ">", "<", "'", """, "\"
     // "&" is only considered harmful if it is not escaped
-    return getAttackPatternFromAllowedRegEx("/([^<>'\"&\\/]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/");
+    return getAttackPatternFromAllowedRegEx(AttackPatterns::m_htmlEscapedRegExp);
 }
 
 StrangerAutomaton* AttackPatterns::getHtmlAttributePattern()
 {
     // Allowed characters in HTML attribute, excludes all non alphanumeric chars, except & escaped
-    return getAttackPatternFromAllowedRegEx("/([a-zA-Z0-9]+|((&[a-zA-Z]+;|&#[xX][0-9]+;|&#[0-9]+;)))+/");
+    return getAttackPatternFromAllowedRegEx(AttackPatterns::m_htmlAttrEscapedRegExp);
 }
 
 StrangerAutomaton* AttackPatterns::getJavascriptPattern()
 {
     // Only allow alphanumeric, "," "." "_" and whitespace, all others must be JS escaped
-    return getAttackPatternFromAllowedRegEx("/([a-zA-Z0-9,._\\s]+|((\\\\u[a-fA-F0-9]{4})|(\\\\x[a-fA-F0-9]{2})))+/");
+    return getAttackPatternFromAllowedRegEx(AttackPatterns::m_javascriptEscapedRegExp);
 }
 
 StrangerAutomaton* AttackPatterns::getUrlPattern()
 {
     // Only allow alphanumeric, "-", "_", "." "~" and URL escaped characters
-    return getAttackPatternFromAllowedRegEx("/([a-zA-Z0-9-_.!~*'()]+|((%[a-fA-F0-9]{2})))+/");
+    return getAttackPatternFromAllowedRegEx(AttackPatterns::m_urlEscapedRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getHtmlEscaped()
+{
+    return getAllowedFromRegEx(AttackPatterns::m_htmlEscapedRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getHtmlAttrEscaped()
+{
+    return getAllowedFromRegEx(AttackPatterns::m_htmlAttrEscapedRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getJavascriptEscaped()
+{
+    return getAllowedFromRegEx(AttackPatterns::m_javascriptEscapedRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getUrlEscaped()
+{
+    return getAllowedFromRegEx(AttackPatterns::m_urlEscapedRegExp);
 }
 
 StrangerAutomaton* AttackPatterns::getUndesiredSQLTest()
