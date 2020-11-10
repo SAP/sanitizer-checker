@@ -74,6 +74,8 @@ void MultiAttack::computePostImages() {
       m_results.emplace_back(result);
     } catch (StrangerStringAnalysisException const &e) {
       std::cerr << e.what() << std::endl;
+    } catch (const std::exception& e) {
+      std::cerr << e.what() << std::endl;
     }
   }
 }

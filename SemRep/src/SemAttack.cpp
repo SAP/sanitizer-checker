@@ -68,7 +68,10 @@ BackwardAnalysisResult::BackwardAnalysisResult(
   StrangerAutomaton* pattern = AttackPatterns::getAttackPatternForContext(context);
   const StrangerAutomaton* postImage = m_fwResult.getPostImage();
   m_intersection = this->getAttack()->computeAttackPatternOverlap(postImage, pattern);
-  m_result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+  // Only compute BW analysis if vulnerable
+  if (this->isVulnerable()) {
+    m_result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+  }
   delete pattern;
 }
 

@@ -28,6 +28,8 @@ std::string AttackPatterns::m_htmlAttrEscapedRegExp      =  "/([a-zA-Z0-9]+|((&[
 std::string AttackPatterns::m_javascriptEscapedRegExp    =  "/([a-zA-Z0-9,._\\s]+|((\\\\u[a-fA-F0-9]{4})|(\\\\x[a-fA-F0-9]{2})))+/";
 std::string AttackPatterns::m_urlEscapedRegExp           =  "/([a-zA-Z0-9-_.!~*'()]+|((%[a-fA-F0-9]{2})))+/";
 
+std::string AttackPatterns::m_htmlPayload                = "<script>alert(\"XSS\");</script>";
+
 std::string AttackPatterns::m_htmlRemovedRegExp          =  "/[^<>'\"&\\/]*/";
 std::string AttackPatterns::m_htmlRemovedNoSlashRegExp   =  "/[^<>'\"&]*/";
 
@@ -95,6 +97,11 @@ StrangerAutomaton* AttackPatterns::getUrlPattern()
 {
     // Only allow alphanumeric, "-", "_", "." "~" and URL escaped characters
     return getAttackPatternFromAllowedRegEx(AttackPatterns::m_urlEscapedRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getHtmlPayload()
+{
+    return StrangerAutomaton::makeString(AttackPatterns::m_htmlPayload);
 }
 
 StrangerAutomaton* AttackPatterns::getHtmlEscaped()
@@ -193,6 +200,8 @@ StrangerAutomaton* AttackPatterns::getAttackPatternForContext(AttackContext cont
     switch (context) {
     case AttackContext::Html:
         return getHtmlPattern();
+    case AttackContext::HtmlPayload:
+        return getHtmlPayload();
     case AttackContext::HtmlAttr:
         return getHtmlAttributePattern();
     case AttackContext::JavaScript:

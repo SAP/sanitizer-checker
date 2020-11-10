@@ -53,6 +53,9 @@ public:
     // Only allow alphanumeric, "-", "_", "." "~" and URL escaped characters
     static StrangerAutomaton* getUrlPattern();
 
+    // A sample html payload
+    static StrangerAutomaton* getHtmlPayload();
+
     /******************************************************************************************
      * Common Sanitizer Patterns for comparison
      *****************************************************************************************/
@@ -101,7 +104,7 @@ private:
     static std::string m_htmlAttrEscapedRegExp;
     static std::string m_javascriptEscapedRegExp;
     static std::string m_urlEscapedRegExp;
-
+    static std::string m_htmlPayload;
     static std::string m_htmlRemovedRegExp;
     static std::string m_htmlRemovedNoSlashRegExp;
 };

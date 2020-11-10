@@ -46,7 +46,7 @@ SemAttackBw::SemAttackBw(const string& target_dep_graph_file_name, const string&
 
     // initialize input relevant graphs
     this->target_field_relevant_graph = this->target_dep_graph.getInputRelevantGraph(this->target_uninit_field_node);
-    this->attack_pattern_auto = AttackPatterns::getHtmlPattern();
+    this->attack_pattern_auto = AttackPatterns::getHtmlPayload();
     message(this->target_dep_graph.toDot());
     message(this->target_field_relevant_graph.toDot());
 
