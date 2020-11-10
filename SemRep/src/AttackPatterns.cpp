@@ -28,6 +28,9 @@ std::string AttackPatterns::m_htmlAttrEscapedRegExp      =  "/([a-zA-Z0-9]+|((&[
 std::string AttackPatterns::m_javascriptEscapedRegExp    =  "/([a-zA-Z0-9,._\\s]+|((\\\\u[a-fA-F0-9]{4})|(\\\\x[a-fA-F0-9]{2})))+/";
 std::string AttackPatterns::m_urlEscapedRegExp           =  "/([a-zA-Z0-9-_.!~*'()]+|((%[a-fA-F0-9]{2})))+/";
 
+std::string AttackPatterns::m_htmlRemovedRegExp          =  "/[^<>'\"&\\/]*/";
+std::string AttackPatterns::m_htmlRemovedNoSlashRegExp   =  "/[^<>'\"&]*/";
+
 /*
  * getAllowedPatternFromRegEx
  *
@@ -99,6 +102,48 @@ StrangerAutomaton* AttackPatterns::getHtmlEscaped()
     return getAllowedFromRegEx(AttackPatterns::m_htmlEscapedRegExp);
 }
 
+StrangerAutomaton* AttackPatterns::getHtmlRemoved()
+{
+    return getAllowedFromRegEx(AttackPatterns::m_htmlRemovedRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getHtmlRemovedNoSlash()
+{
+    return getAllowedFromRegEx(AttackPatterns::m_htmlRemovedNoSlashRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getEncodeHtmlNoQuotes()
+{
+    StrangerAutomaton* star = StrangerAutomaton::makeAnyString();
+    StrangerAutomaton* encoded = StrangerAutomaton::htmlSpecialChars(star, "ENT_NOQUOTES");
+    delete star;
+    return encoded;
+}
+
+StrangerAutomaton* AttackPatterns::getEncodeHtmlCompat()
+{
+    StrangerAutomaton* star = StrangerAutomaton::makeAnyString();
+    StrangerAutomaton* encoded = StrangerAutomaton::htmlSpecialChars(star, "ENT_COMPAT");
+    delete star;
+    return encoded;
+}
+
+StrangerAutomaton* AttackPatterns::getEncodeHtmlQuotes()
+{
+    StrangerAutomaton* star = StrangerAutomaton::makeAnyString();
+    StrangerAutomaton* encoded = StrangerAutomaton::htmlSpecialChars(star, "ENT_QUOTES");
+    delete star;
+    return encoded;
+}
+
+StrangerAutomaton* AttackPatterns::getEncodeHtmlSlash()
+{
+    StrangerAutomaton* star = StrangerAutomaton::makeAnyString();
+    StrangerAutomaton* encoded = StrangerAutomaton::htmlSpecialChars(star, "ENT_SLASH");
+    delete star;
+    return encoded;
+}
+
 StrangerAutomaton* AttackPatterns::getHtmlAttrEscaped()
 {
     return getAllowedFromRegEx(AttackPatterns::m_htmlAttrEscapedRegExp);
@@ -112,6 +157,14 @@ StrangerAutomaton* AttackPatterns::getJavascriptEscaped()
 StrangerAutomaton* AttackPatterns::getUrlEscaped()
 {
     return getAllowedFromRegEx(AttackPatterns::m_urlEscapedRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getUrlComponentEncoded()
+{
+    StrangerAutomaton* star = StrangerAutomaton::makeAnyString();
+    StrangerAutomaton* encoded = StrangerAutomaton::encodeURIComponent(star);
+    delete star;
+    return encoded;
 }
 
 StrangerAutomaton* AttackPatterns::getUndesiredSQLTest()

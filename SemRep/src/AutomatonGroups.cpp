@@ -161,4 +161,5 @@ void AutomatonGroups::printGroups() const {
     iter.printMembers();
     i++;
   }
+  SemAttack::perfInfo.print_operations_info();
 }

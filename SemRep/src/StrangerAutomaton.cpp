@@ -2422,6 +2422,8 @@ StrangerAutomaton* StrangerAutomaton::htmlSpecialChars(StrangerAutomaton* subjec
 		_flag = ENT_QUOTES;
     else if (flag == "ENT_NOQUOTES")
 		_flag = ENT_NOQUOTES;
+    else if (flag == "ENT_SLASH")
+		_flag = ENT_SLASH;
     else
 		throw new std::runtime_error(stringbuilder() << "htmlspecialchar is not supporting the flag: " << flag);
 

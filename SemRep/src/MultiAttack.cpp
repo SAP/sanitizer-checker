@@ -111,6 +111,36 @@ void MultiAttack::fillCommonPatterns() {
   m_automata.push_back(a);
   m_groups.createGroup(a, "HTMLEscaped");
 
+  // HTML Removed
+  a = AttackPatterns::getHtmlRemoved();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "HTMLRemoved");
+
+  // HTML Removed with slashes allowed
+  a = AttackPatterns::getHtmlRemovedNoSlash();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "HTMLRemovedNoSlash");
+
+  // HTML Escape < > &
+  a = AttackPatterns::getEncodeHtmlCompat();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "HTMLEscape<>&");
+
+  // HTML Escape < > & "
+  a = AttackPatterns::getEncodeHtmlNoQuotes();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "HTMLEscape<>&\"");
+
+  // HTML Escape < > & "
+  a = AttackPatterns::getEncodeHtmlQuotes();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "HTMLEscape<>&\"'");
+
+  // HTML Escape < > & " /
+  a = AttackPatterns::getEncodeHtmlSlash();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "HTMLEscape<>&\"'/");
+
   // HTML Attribute Escaped
   a = AttackPatterns::getHtmlAttrEscaped();
   m_automata.push_back(a);
@@ -125,6 +155,11 @@ void MultiAttack::fillCommonPatterns() {
   a = AttackPatterns::getUrlEscaped();
   m_automata.push_back(a);
   m_groups.createGroup(a, "URL");
+
+  // After UriComponentEncode
+  a = AttackPatterns::getUrlComponentEncoded();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "UriComponentEncoded");
 }
 
 void MultiAttack::findDotFiles() {
@@ -153,8 +188,9 @@ std::vector<fs::path> MultiAttack::getFilesInPath(fs::path const & root, std::st
   {
     for (auto const & entry : fs::recursive_directory_iterator(root))
     {
-      if (fs::is_regular_file(entry) && entry.path().extension() == ext)
+      if (fs::is_regular_file(entry) && entry.path().extension() == ext) {
         paths.emplace_back(entry.path());
+      }
     }
   }
 
