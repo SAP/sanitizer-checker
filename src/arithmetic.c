@@ -104,44 +104,44 @@ DFA *build_DFA_eq_nocoef(int vars, int constant, int *indices) {
 	s[vars] = '\0';
 
 	if (constant == 0) {
-		dfaSetup(2, vars, indices);
+		DFABuilder *b = dfaSetup(2, vars, indices);
 
-		dfaAllocExceptions(1);
+		dfaAllocExceptions(b, 1);
 		for (i = 0; i < vars; i++)
 			s[i] = '0';
-		dfaStoreException(0, s);
-		dfaStoreState(1);
+		dfaStoreException(b, 0, s);
+		dfaStoreState(b, 1);
 
-		dfaAllocExceptions(0);
-		dfaStoreState(1);
+		dfaAllocExceptions(b, 0);
+		dfaStoreState(b, 1);
 
-		return dfaBuild("+-");
+		return dfaBuild(b, "+-");
 	}
 
 	if (constant == 1) {
-		dfaSetup(3, vars, indices);
+		DFABuilder *b = dfaSetup(3, vars, indices);
 
-		dfaAllocExceptions(vars);
+		dfaAllocExceptions(b, vars);
 		for (i = 0; i < vars; i++) {
 			for (j = 0; j < vars; j++)
 				if (j == i)
 					s[j] = '1';
 				else
 					s[j] = '0';
-			dfaStoreException(1, s);
+			dfaStoreException(b, 1, s);
 		}
-		dfaStoreState(2);
+		dfaStoreState(b, 2);
 
-		dfaAllocExceptions(1);
+		dfaAllocExceptions(b, 1);
 		for (i = 0; i < vars; i++)
 			s[i] = '0';
-		dfaStoreException(1, s);
-		dfaStoreState(2);
+		dfaStoreException(b, 1, s);
+		dfaStoreState(b, 2);
 
-		dfaAllocExceptions(0);
-		dfaStoreState(2);
+		dfaAllocExceptions(b, 0);
+		dfaStoreState(b, 2);
 
-		return dfaBuild("-+-");
+		return dfaBuild(b, "-+-");
 	}
 	return 0; //added by Muath to avoid compiler warning
 }
@@ -209,11 +209,11 @@ DFA *build_DFA_eq(int vars, int *coeffs, int constant, int *indices) {
 	transitions = 1 << vars; //number of transitions from each state
 
 	//Begin building
-	dfaSetup(states, vars, indices);
+	DFABuilder *b = dfaSetup(states, vars, indices);
 
 	while (next_label < max + 1) { //there is a state to expand (excuding sink)
 		map[next_label].s = 2;
-		dfaAllocExceptions(transitions / 2);
+		dfaAllocExceptions(b, transitions / 2);
 		for (j = 0; j < transitions; j++) {
 			result = next_label + count_ones(j, vars, coeffs);
 			if (!(result & 1)) {
@@ -223,10 +223,10 @@ DFA *build_DFA_eq(int vars, int *coeffs, int constant, int *indices) {
 					next_index++;
 					map[target].i = next_index;
 				}
-				dfaStoreException(map[target].i, bintostr(j, vars));
+				dfaStoreException(b, map[target].i, bintostr(j, vars));
 			}
 		}
-		dfaStoreState(states - 1);
+		dfaStoreState(b, states - 1);
 		count++;
 		for (next_label = min; (next_label <= max) && (map[next_label].i
 				!= count); next_label++)
@@ -234,8 +234,8 @@ DFA *build_DFA_eq(int vars, int *coeffs, int constant, int *indices) {
 		//find next state to expand
 	}
 	for (; count < states; count++) {
-		dfaAllocExceptions(0);
-		dfaStoreState(states - 1);
+		dfaAllocExceptions(b, 0);
+		dfaStoreState(b, states - 1);
 	}
 
 	//define accepting and rejecting states
@@ -245,7 +245,7 @@ DFA *build_DFA_eq(int vars, int *coeffs, int constant, int *indices) {
 	if (map[0].s == 2)
 		statuces[map[0].i] = '+';
 	statuces[states] = '\0';
-	temp = dfaBuild(statuces);
+	temp = dfaBuild(b, statuces);
 	equality = dfaMinimize(temp);
 	dfaFree(temp);
 	return equality;
@@ -293,15 +293,15 @@ DFA *build_DFA_eq_new(int vars, int *coeffs, int constant, int *indices) {
 	transitions = 1 << vars; //number of transitions from each state
 
 	//Begin building
-	dfaSetup(states + 1, vars, indices);
+	DFABuilder *b = dfaSetup(states + 1, vars, indices);
 
-	dfaAllocExceptions(0);
-	dfaStoreState(1);
+	dfaAllocExceptions(b, 0);
+	dfaStoreState(b, 1);
 	//count++;
 
 	while (next_label < max + 1) { //there is a state to expand (excuding sink)
 		map[next_label].s = 2;
-		dfaAllocExceptions(transitions / 2);
+		dfaAllocExceptions(b, transitions / 2);
 		for (j = 0; j < transitions; j++) {
 			result = next_label + count_ones(j, vars, coeffs);
 			if (!(result & 1)) {
@@ -311,10 +311,10 @@ DFA *build_DFA_eq_new(int vars, int *coeffs, int constant, int *indices) {
 					next_index++;
 					map[target].i = next_index;
 				}
-				dfaStoreException(map[target].i + 1, bintostr(j, vars));
+				dfaStoreException(b, map[target].i + 1, bintostr(j, vars));
 			}
 		}
-		dfaStoreState(states);
+		dfaStoreState(b, states);
 		count++;
 		for (next_label = min; (next_label <= max) && (map[next_label].i
 				!= count); next_label++)
@@ -322,8 +322,8 @@ DFA *build_DFA_eq_new(int vars, int *coeffs, int constant, int *indices) {
 		//find next state to expand
 	}
 	for (; count <= states; count++) {
-		dfaAllocExceptions(0);
-		dfaStoreState(states);
+		dfaAllocExceptions(b, 0);
+		dfaStoreState(b, states);
 	}
 
 	//define accepting and rejecting states
@@ -333,7 +333,7 @@ DFA *build_DFA_eq_new(int vars, int *coeffs, int constant, int *indices) {
 	if (map[0].s == 2)
 		statuces[map[0].i + 1] = '+';
 	statuces[states + 1] = '\0';
-	temp = dfaBuild(statuces);
+	temp = dfaBuild(b, statuces);
 	equality = dfaMinimize(temp);
 	dfaFree(temp);
 	return equality;
@@ -386,14 +386,14 @@ DFA *build_DFA_eq_2sc(int vars, int *coeffs, int constant, int *indices) {
 	transitions = 1 << vars; //number of transitions from each state
 
 	//Begin building
-	dfaSetup(states, vars, indices);
+	DFABuilder *b = dfaSetup(states, vars, indices);
 
 	while (next_label < max + 1) { //there is a state to expand (excuding sink)
 		if (map[next_label].i == count)
 			map[next_label].s = 2;
 		else
 			map[next_label].sr = 2;
-		dfaAllocExceptions(transitions / 2);
+		dfaAllocExceptions(b, transitions / 2);
 		for (j = 0; j < transitions; j++) {
 			result = next_label + count_ones(j, vars, coeffs);
 			if (!(result & 1)) {
@@ -404,18 +404,18 @@ DFA *build_DFA_eq_2sc(int vars, int *coeffs, int constant, int *indices) {
 						next_index++;
 						map[target].i = next_index;
 					}
-					dfaStoreException(map[target].i, bintostr(j, vars));
+					dfaStoreException(b, map[target].i, bintostr(j, vars));
 				} else {
 					if (map[target].sr == 0) {
 						map[target].sr = 1;
 						next_index++;
 						map[target].ir = next_index;
 					}
-					dfaStoreException(map[target].ir, bintostr(j, vars));
+					dfaStoreException(b, map[target].ir, bintostr(j, vars));
 				}
 			}
 		}
-		dfaStoreState(states - 1);
+		dfaStoreState(b, states - 1);
 		count++;
 		for (next_label = min; (next_label <= max) && (map[next_label].i
 				!= count) && (map[next_label].ir != count); next_label++)
@@ -423,8 +423,8 @@ DFA *build_DFA_eq_2sc(int vars, int *coeffs, int constant, int *indices) {
 		//find next state to expand
 	}
 	for (; count < states; count++) {
-		dfaAllocExceptions(0);
-		dfaStoreState(states - 1);
+		dfaAllocExceptions(b, 0);
+		dfaStoreState(b, states - 1);
 	}
 
 	//define accepting and rejecting states
@@ -435,7 +435,7 @@ DFA *build_DFA_eq_2sc(int vars, int *coeffs, int constant, int *indices) {
 		if (map[next_label].s == 2)
 			statuces[map[next_label].i] = '+';
 	statuces[states] = '\0';
-	temp = dfaBuild(statuces);
+	temp = dfaBuild(b, statuces);
 	equality = dfaMinimize(temp);
 	dfaFree(temp);
 	return equality;
@@ -483,11 +483,11 @@ DFA *build_DFA_ineq(int vars, int *coeffs, int constant, int *indices) {
 	transitions = 1 << vars; //number of transitions from each state
 
 	//Begin building
-	dfaSetup(states, vars, indices);
+	DFABuilder *b = dfaSetup(states, vars, indices);
 
 	while (next_label < max + 1) { //there is a state to expand
 		map[next_label].s = 2;
-		dfaAllocExceptions(transitions);
+		dfaAllocExceptions(b, transitions);
 		for (j = 0; j < transitions; j++) {
 			result = next_label + count_ones(j, vars, coeffs);
 			if (result >= 0)
@@ -499,9 +499,9 @@ DFA *build_DFA_ineq(int vars, int *coeffs, int constant, int *indices) {
 				next_index++;
 				map[target].i = next_index;
 			}
-			dfaStoreException(map[target].i, bintostr(j, vars));
+			dfaStoreException(b, map[target].i, bintostr(j, vars));
 		}
-		dfaStoreState(count);
+		dfaStoreState(b, count);
 		count++;
 		for (next_label = min; (next_label <= max) && (map[next_label].i
 				!= count); next_label++)
@@ -509,8 +509,8 @@ DFA *build_DFA_ineq(int vars, int *coeffs, int constant, int *indices) {
 		//find next state to expand
 	}
 	for (i = count; i < states; i++) {
-		dfaAllocExceptions(0);
-		dfaStoreState(i);
+		dfaAllocExceptions(b, 0);
+		dfaStoreState(b, i);
 	}
 
 	//define accepting and rejecting states
@@ -523,7 +523,7 @@ DFA *build_DFA_ineq(int vars, int *coeffs, int constant, int *indices) {
 		if (map[i].s == 2)
 			statuces[map[i].i] = '+';
 	statuces[states] = '\0';
-	temp = dfaBuild(statuces);
+	temp = dfaBuild(b, statuces);
 	temp->ns -= states - count;
 	inequality = dfaMinimize(temp);
 	return inequality;
@@ -571,15 +571,15 @@ DFA *build_DFA_ineq_new(int vars, int *coeffs, int constant, int *indices) {
 	transitions = 1 << vars; //number of transitions from each state
 
 	//Begin building
-	dfaSetup(states + 1, vars, indices);
+	DFABuilder *b = dfaSetup(states + 1, vars, indices);
 
-	dfaAllocExceptions(0);
-	dfaStoreState(1);
+	dfaAllocExceptions(b, 0);
+	dfaStoreState(b, 1);
 	//count++;
 
 	while (next_label < max + 1) { //there is a state to expand
 		map[next_label].s = 2;
-		dfaAllocExceptions(transitions);
+		dfaAllocExceptions(b, transitions);
 		for (j = 0; j < transitions; j++) {
 			result = next_label + count_ones(j, vars, coeffs);
 			if (result >= 0)
@@ -591,9 +591,9 @@ DFA *build_DFA_ineq_new(int vars, int *coeffs, int constant, int *indices) {
 				next_index++;
 				map[target].i = next_index;
 			}
-			dfaStoreException(map[target].i + 1, bintostr(j, vars));
+			dfaStoreException(b, map[target].i + 1, bintostr(j, vars));
 		}
-		dfaStoreState(count);
+		dfaStoreState(b, count);
 		count++;
 		for (next_label = min; (next_label <= max) && (map[next_label].i
 				!= count); next_label++)
@@ -601,8 +601,8 @@ DFA *build_DFA_ineq_new(int vars, int *coeffs, int constant, int *indices) {
 		//find next state to expand
 	}
 	for (i = count; i <= states; i++) {
-		dfaAllocExceptions(0);
-		dfaStoreState(i);
+		dfaAllocExceptions(b, 0);
+		dfaStoreState(b, i);
 	}
 
 	//define accepting and rejecting states
@@ -615,7 +615,7 @@ DFA *build_DFA_ineq_new(int vars, int *coeffs, int constant, int *indices) {
 		if (map[i].s == 2)
 			statuces[map[i].i + 1] = '+';
 	statuces[states + 1] = '\0';
-	temp = dfaBuild(statuces);
+	temp = dfaBuild(b, statuces);
 	temp->ns -= states - count;
 	inequality = dfaMinimize(temp);
 	return inequality;
@@ -673,14 +673,14 @@ DFA *build_DFA_ineq_2sc(int vars, int *coeffs, int constant, int *indices) {
 	transitions = 1 << vars; //number of transitions from each state
 
 	//Begin building
-	dfaSetup(states, vars, indices);
+	DFABuilder *b = dfaSetup(states, vars, indices);
 
 	while (next_label < max + 1) { //there is a state to expand (excuding sink)
 		if (map[next_label].i == count)
 			map[next_label].s = 2;
 		else
 			map[next_label].sr = 2;
-		dfaAllocExceptions(transitions);
+		dfaAllocExceptions(b, transitions);
 		for (j = 0; j < transitions; j++) {
 			co = count_ones(j, vars, coeffs);
 			result = next_label + co;
@@ -708,17 +708,17 @@ DFA *build_DFA_ineq_2sc(int vars, int *coeffs, int constant, int *indices) {
 					next_index++;
 					map[target].i = next_index;
 				}
-				dfaStoreException(map[target].i, bintostr(j, vars));
+				dfaStoreException(b, map[target].i, bintostr(j, vars));
 			} else {
 				if (map[target].sr == 0) {
 					map[target].sr = 1;
 					next_index++;
 					map[target].ir = next_index;
 				}
-				dfaStoreException(map[target].ir, bintostr(j, vars));
+				dfaStoreException(b, map[target].ir, bintostr(j, vars));
 			}
 		}
-		dfaStoreState(count);
+		dfaStoreState(b, count);
 		count++;
 		for (next_label = min; (next_label <= max) && (map[next_label].i
 				!= count) && (map[next_label].ir != count); next_label++)
@@ -726,8 +726,8 @@ DFA *build_DFA_ineq_2sc(int vars, int *coeffs, int constant, int *indices) {
 		//find next state to expand
 	}
 	for (i = count; i < states; i++) {
-		dfaAllocExceptions(0);
-		dfaStoreState(i);
+		dfaAllocExceptions(b, 0);
+		dfaStoreState(b, i);
 	}
 
 	//define accepting and rejecting states
@@ -738,7 +738,7 @@ DFA *build_DFA_ineq_2sc(int vars, int *coeffs, int constant, int *indices) {
 		if (map[next_label].s == 2)
 			statuces[map[next_label].i] = '+';
 	statuces[states] = '\0';
-	temp = dfaBuild(statuces);
+	temp = dfaBuild(b, statuces);
 	temp->ns -= states - count;
 	inequality = dfaMinimize(temp);
 	return inequality;

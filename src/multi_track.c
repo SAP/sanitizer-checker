@@ -90,30 +90,30 @@ DFA *dfaLambdaStar(int var, int* indices){
 
   char *lambda;
   lambda = getLambda(var);
-  dfaSetup(3,var,indices);
-  dfaAllocExceptions(1);
-  dfaStoreException(1, lambda);
-  dfaStoreState(2);
-  dfaAllocExceptions(1);
-  dfaStoreException(1, lambda);
-  dfaStoreState(2);
-  dfaAllocExceptions(0);
-  dfaStoreState(2);
+  DFABuilder *b = dfaSetup(3,var,indices);
+  dfaAllocExceptions(b, 1);
+  dfaStoreException(b, 1, lambda);
+  dfaStoreState(b, 2);
+  dfaAllocExceptions(b, 1);
+  dfaStoreException(b, 1, lambda);
+  dfaStoreState(b, 2);
+  dfaAllocExceptions(b, 0);
+  dfaStoreState(b, 2);
 
-  return dfaBuild("++-");
+  return dfaBuild(b, "++-");
 }
 
 
 // A DFA that accepts all strings except lambda
 DFA *dfaNoLambda(int var, int *indices){
 
-  dfaSetup(2,var,indices);
-  dfaAllocExceptions(1);
-  dfaStoreException(1, getLambda(var));
-  dfaStoreState(0);
-  dfaAllocExceptions(0);
-  dfaStoreState(1);
-  return dfaBuild("+-");
+  DFABuilder *b = dfaSetup(2,var,indices);
+  dfaAllocExceptions(b, 1);
+  dfaStoreException(b, 1, getLambda(var));
+  dfaStoreState(b, 0);
+  dfaAllocExceptions(b, 0);
+  dfaStoreState(b, 1);
+  return dfaBuild(b, "+-");
 }
 
 
@@ -176,7 +176,7 @@ DFA *mdfaOneToManyTrack( DFA* M1, int m, int i_track, int var, int* indices){ //
   assert(sink >-1);
   //printf("\n\n SINK %d\n\n\n", sink);
 
-  dfaSetup(M->ns, len, mindices);
+  DFABuilder *b = dfaSetup(M->ns, len, mindices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((M->ns+1)*sizeof(char));
@@ -221,10 +221,10 @@ DFA *mdfaOneToManyTrack( DFA* M1, int m, int i_track, int var, int* indices){ //
       pp = pp->next;
     }
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink);
     if(M->f[i]==-1)
       statuces[i]='-';
     else if(M->f[i]==1)
@@ -234,7 +234,7 @@ DFA *mdfaOneToManyTrack( DFA* M1, int m, int i_track, int var, int* indices){ //
     kill_paths(state_paths);
   }
   statuces[i]='\0';
-  result = dfaBuild(statuces);
+  result = dfaBuild(b, statuces);
   dfaFree(M);
   free(exeps);
   free(to_states);
@@ -265,7 +265,7 @@ DFA *mdfaOneToManyTrackNoLambda( DFA* M, int m, int i_track, int var, int* indic
   assert(sink >-1);
   //printf("\n\n SINK %d\n\n\n", sink);
 
-  dfaSetup(M->ns, len, mindices);
+  DFABuilder *b = dfaSetup(M->ns, len, mindices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((M->ns+1)*sizeof(char));
@@ -310,10 +310,10 @@ DFA *mdfaOneToManyTrackNoLambda( DFA* M, int m, int i_track, int var, int* indic
       pp = pp->next;
     }
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink);
     if(M->f[i]==-1)
       statuces[i]='-';
     else if(M->f[i]==1)
@@ -323,7 +323,7 @@ DFA *mdfaOneToManyTrackNoLambda( DFA* M, int m, int i_track, int var, int* indic
     kill_paths(state_paths);
   }
   statuces[i]='\0';
-  result = dfaBuild(statuces);
+  result = dfaBuild(b, statuces);
   free(exeps);
   free(to_states);
   free(statuces);
@@ -352,7 +352,7 @@ DFA *mdfaMDuplicate(DFA* M, int i_track, int j_track, int m, int var, int* indic
   assert(sink >-1);
   //printf("\n\n SINK %d\n\n\n", sink);
 
-  dfaSetup(M->ns, len, mindices);
+  DFABuilder *b = dfaSetup(M->ns, len, mindices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((M->ns+1)*sizeof(char));
@@ -410,10 +410,10 @@ DFA *mdfaMDuplicate(DFA* M, int i_track, int j_track, int m, int var, int* indic
       pp = pp->next;
     }
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink);
     if(M->f[i]==-1)
       statuces[i]='-';
     else
@@ -421,7 +421,7 @@ DFA *mdfaMDuplicate(DFA* M, int i_track, int j_track, int m, int var, int* indic
     kill_paths(state_paths);
   }
   statuces[i]='\0';
-  tmpM = dfaMinimize(dfaBuild(statuces));
+  tmpM = dfaMinimize(dfaBuild(b, statuces));
   result = dfaAppendLambda(tmpM, len, mindices);
   dfaFree(tmpM);
   free(exeps);
@@ -450,10 +450,10 @@ DFA *mdfaGEqual(int i_track, int j_track, int m, int var, int* indices){
  int* mindices =allocateMutipleAscIIIndex(m, var);
  int i, j, n, shift;
  int nump = 1<<var;
- dfaSetup(3,len,mindices);
+ DFABuilder *b = dfaSetup(3,len,mindices);
  exeps=(char *)malloc((len+1)*sizeof(char));
  exeps[len]='\0';
- dfaAllocExceptions(nump);
+ dfaAllocExceptions(b, nump);
  for(i=0; i<nump-1; i++){
    str = bintostr((unsigned long) i, var);
    for(n=0; n<m; n++){
@@ -468,7 +468,7 @@ DFA *mdfaGEqual(int i_track, int j_track, int m, int var, int* indices){
    }//end for
    assert(len == n*var);
    //exeps[len]='\0';
-   dfaStoreException(0, exeps);
+   dfaStoreException(b, 0, exeps);
  }
  assert(i==nump-1); //Add lambda
  str = bintostr((unsigned long) i, var);
@@ -484,15 +484,15 @@ DFA *mdfaGEqual(int i_track, int j_track, int m, int var, int* indices){
  }//end for
  assert(len == n*var);
  //exeps[len]='\0';
- dfaStoreException(1, exeps);
- dfaStoreState(2);
- dfaAllocExceptions(1);
- dfaStoreException(1, exeps);
- dfaStoreState(2);
- dfaAllocExceptions(0);
- dfaStoreState(2);
+ dfaStoreException(b, 1, exeps);
+ dfaStoreState(b, 2);
+ dfaAllocExceptions(b, 1);
+ dfaStoreException(b, 1, exeps);
+ dfaStoreState(b, 2);
+ dfaAllocExceptions(b, 0);
+ dfaStoreState(b, 2);
  free(exeps);
- return dfaMinimize(dfaBuild("++-"));
+ return dfaMinimize(dfaBuild(b, "++-"));
 }
 
 
@@ -506,10 +506,10 @@ DFA* mdfaGPrefix(int i_track, int j_track, int m, int var, int* indices){
  int* mindices =allocateMutipleAscIIIndex(m, var);
  int i, j, n, shift;
  int nump = 1<<var; //add (***lambda***)
- dfaSetup(3,len,mindices);
+ DFABuilder *b = dfaSetup(3,len,mindices);
  exeps=(char *)malloc((len+1)*sizeof(char));
  exeps[len]='\0';
- dfaAllocExceptions(2*nump-1);
+ dfaAllocExceptions(b, 2*nump-1);
  for(i=0; i<nump-1; i++){
    str = bintostr((unsigned long) i, var);
    for(n=0; n<m; n++){
@@ -524,7 +524,7 @@ DFA* mdfaGPrefix(int i_track, int j_track, int m, int var, int* indices){
    }//end for
    assert(len == n*var);
    //exeps[len]='\0';
-   dfaStoreException(0, exeps);
+   dfaStoreException(b, 0, exeps);
  }
  assert(i==nump-1);
  lambda = bintostr((unsigned long) i, var);
@@ -547,7 +547,7 @@ DFA* mdfaGPrefix(int i_track, int j_track, int m, int var, int* indices){
    }//end for
    assert(len == n*var);
    //exeps[len]='\0';
-   dfaStoreException(0, exeps);
+   dfaStoreException(b, 0, exeps);
  }
 
  // Add lambda, lambda
@@ -563,16 +563,16 @@ DFA* mdfaGPrefix(int i_track, int j_track, int m, int var, int* indices){
  }//end for
  assert(len == n*var);
  //exeps[len]='\0';
- dfaStoreException(1, exeps);
- dfaStoreState(2);
- dfaAllocExceptions(1);
- dfaStoreException(1, exeps);
- dfaStoreState(2);
- dfaAllocExceptions(0);
- dfaStoreState(2);
+ dfaStoreException(b, 1, exeps);
+ dfaStoreState(b, 2);
+ dfaAllocExceptions(b, 1);
+ dfaStoreException(b, 1, exeps);
+ dfaStoreState(b, 2);
+ dfaAllocExceptions(b, 0);
+ dfaStoreState(b, 2);
  free(exeps);
  free(lambda);
- return dfaMinimize(dfaBuild("++-"));
+ return dfaMinimize(dfaBuild(b, "++-"));
 } //End Prefix
 
 
@@ -602,10 +602,10 @@ DFA* mdfaGPrefixConst(int i_track, int j_track, char* tail, int m, int var, int*
  if(strlength==0) return mdfaGPrefix(i_track, j_track, m, var, indices);
 
  statuces=(char *)malloc((ns+1)*sizeof(char));
- dfaSetup(ns,len,mindices);
+ DFABuilder *b = dfaSetup(ns,len,mindices);
  exeps=(char *)malloc((len+1)*sizeof(char));
  exeps[len]='\0';
- dfaAllocExceptions(nump);
+ dfaAllocExceptions(b, nump);
  for(i=0; i<nump-1; i++){
    str = bintostr((unsigned long) i, var);
    for(n=0; n<m; n++){
@@ -620,7 +620,7 @@ DFA* mdfaGPrefixConst(int i_track, int j_track, char* tail, int m, int var, int*
    }//end for
    assert(len == n*var);
    //exeps[len]='\0';
-   dfaStoreException(0, exeps);
+   dfaStoreException(b, 0, exeps);
  }
  assert(i==nump-1);
 
@@ -645,8 +645,8 @@ DFA* mdfaGPrefixConst(int i_track, int j_track, char* tail, int m, int var, int*
  }//end for
  assert(len == n*var);
  //exeps[len]='\0';
- dfaStoreException(1, exeps);
- dfaStoreState(strlength+1);
+ dfaStoreException(b, 1, exeps);
+ dfaStoreState(b, strlength+1);
 
  for(k=1; k<strlength; k++){
    str = bintostr((unsigned long) tail[k], var);
@@ -664,12 +664,12 @@ DFA* mdfaGPrefixConst(int i_track, int j_track, char* tail, int m, int var, int*
      }
    }//end for
    assert(len == n*var);
-   dfaAllocExceptions(1);
-   dfaStoreException(k+1, exeps);
-   dfaStoreState(strlength+1);
+   dfaAllocExceptions(b, 1);
+   dfaStoreException(b, k+1, exeps);
+   dfaStoreState(b, strlength+1);
  }
 
- dfaAllocExceptions(1);
+ dfaAllocExceptions(b, 1);
 // Add lambda, lambda
  for(n=0; n<m; n++){
    shift = n*var;
@@ -683,11 +683,11 @@ DFA* mdfaGPrefixConst(int i_track, int j_track, char* tail, int m, int var, int*
  }//end for
  assert(len == n*var);
  //exeps[len]='\0';
- dfaStoreException(strlength, exeps);
- dfaStoreState(strlength+1);
+ dfaStoreException(b, strlength, exeps);
+ dfaStoreState(b, strlength+1);
 
- dfaAllocExceptions(0);
- dfaStoreState(strlength+1);
+ dfaAllocExceptions(b, 0);
+ dfaStoreState(b, strlength+1);
  free(exeps);
  free(lambda);
 
@@ -697,7 +697,7 @@ DFA* mdfaGPrefixConst(int i_track, int j_track, char* tail, int m, int var, int*
  }
  statuces[i]='\0';
  assert(i==ns);
- return dfaMinimize(dfaBuild(statuces));
+ return dfaMinimize(dfaBuild(b, statuces));
 } //End PrefixConst
 
 
@@ -751,7 +751,7 @@ DFA* mdfaGPrefixM(DFA* M, int i_track, int j_track, int k_track, int m, int var,
   max_exeps=1<<var; //remain the same as M
   assert(sink >-1); //assume there is a sink state in M
 
-  dfaSetup(ns, len, mindices);
+  DFABuilder *b = dfaSetup(ns, len, mindices);
 
   //used to traverse M
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
@@ -804,7 +804,7 @@ DFA* mdfaGPrefixM(DFA* M, int i_track, int j_track, int k_track, int m, int var,
       //build a new initial state by adding num paths
       numexeps=(char *)malloc((len+1)*sizeof(char));
       numexeps[len]='\0';
-      dfaAllocExceptions(nump-1+k); //nump-1 + k
+      dfaAllocExceptions(b, nump-1+k); //nump-1 + k
 
       //add (n, n, lambda)
       for(ni=0; ni<nump-1; ni++){
@@ -824,29 +824,29 @@ DFA* mdfaGPrefixM(DFA* M, int i_track, int j_track, int k_track, int m, int var,
 	}//end for
 	assert(len == n*var);
 	//exeps[len]='\0';
-	dfaStoreException(0, numexeps);
+	dfaStoreException(b, 0, numexeps);
       }
       //add k (a, lambda, a)
       tmp = k; //tmp is used to duplicate the original initial state if needed
       for(k--;k>=0;k--)
-	dfaStoreException(to_states[k],exeps+k*(len+1));
-      dfaStoreState(sink);
+	dfaStoreException(b, to_states[k],exeps+k*(len+1));
+      dfaStoreState(b, sink);
       statuces[0]=(M->f[M->s]==1)?'+':'-';
 
       if(iniflag){ //duplicate the original initial state
 	k = tmp;
-	dfaAllocExceptions(k);
+	dfaAllocExceptions(b, k);
 	for(k--;k>=0;k--)
-	  dfaStoreException(to_states[k],exeps+k*(len+1));
-	dfaStoreState(sink);
+	  dfaStoreException(b, to_states[k],exeps+k*(len+1));
+	dfaStoreState(b, sink);
 	statuces[0+iniflag]=statuces[0];
       }
     }
     else{ //build the rest states (after state 0,and state 1 if iniflag==1 )
-      dfaAllocExceptions(k);
+      dfaAllocExceptions(b, k);
       for(k--;k>=0;k--)
-	dfaStoreException(to_states[k],exeps+k*(len+1));
-      dfaStoreState(sink);
+	dfaStoreException(b, to_states[k],exeps+k*(len+1));
+      dfaStoreState(b, sink);
       statuces[i+iniflag]=(M->f[i]==1)?'+':'-';
     }
 
@@ -856,7 +856,7 @@ DFA* mdfaGPrefixM(DFA* M, int i_track, int j_track, int k_track, int m, int var,
   assert(i+iniflag == ns);
 
   statuces[i+iniflag]='\0';
-  result = dfaBuild(statuces);
+  result = dfaBuild(b, statuces);
   free(exeps);
   free(numexeps);
   free(to_states);
@@ -920,7 +920,7 @@ DFA* mdfaGSuffixM(DFA* M, int i_track, int j_track, int k_track, int m, int var,
   statuces=(char *)malloc((ns+1)*sizeof(char));
 
 
-  dfaSetup(ns, len, mindices);
+  DFABuilder *b = dfaSetup(ns, len, mindices);
 
   //traverse M
   for (i = 0; i < M->ns; i++) {
@@ -964,14 +964,14 @@ DFA* mdfaGSuffixM(DFA* M, int i_track, int j_track, int k_track, int m, int var,
     }//end while
 
     if(M->f[i]!=1){
-      dfaAllocExceptions(k);
+      dfaAllocExceptions(b, k);
       for(k--;k>=0;k--)
-	dfaStoreException(to_states[k],exeps+k*(len+1));
-      dfaStoreState(sink);
+	dfaStoreException(b, to_states[k],exeps+k*(len+1));
+      dfaStoreState(b, sink);
       statuces[i]='-';
     }
     else{
-      dfaAllocExceptions(nump-1+k);
+      dfaAllocExceptions(b, nump-1+k);
       //add (n,\lambda, n)
       for(ni=0; ni<nump-1; ni++){
 	str = bintostr((unsigned long) ni, var);
@@ -990,18 +990,18 @@ DFA* mdfaGSuffixM(DFA* M, int i_track, int j_track, int k_track, int m, int var,
 	}//end for
 	assert(len == n*var);
 	//exeps[len]='\0';
-	dfaStoreException(M->ns, numexeps); //new state is M->ns
+	dfaStoreException(b, M->ns, numexeps); //new state is M->ns
       }
       for(k--;k>=0;k--)
-	dfaStoreException(to_states[k],exeps+k*(len+1));
-      dfaStoreState(sink);
+	dfaStoreException(b, to_states[k],exeps+k*(len+1));
+      dfaStoreState(b, sink);
       statuces[i]='+';
     }
     kill_paths(state_paths);
   }//end for traverse M
 
   //build the added final state
-  dfaAllocExceptions(nump-1);
+  dfaAllocExceptions(b, nump-1);
   //add (n,\lambda, n)
   for(ni=0; ni<nump-1; ni++){
     str = bintostr((unsigned long) ni, var);
@@ -1020,14 +1020,14 @@ DFA* mdfaGSuffixM(DFA* M, int i_track, int j_track, int k_track, int m, int var,
     }//end for
     assert(len == n*var);
     //exeps[len]='\0';
-    dfaStoreException(M->ns, numexeps); //new state is M->ns
+    dfaStoreException(b, M->ns, numexeps); //new state is M->ns
   }
-  dfaStoreState(sink);
+  dfaStoreState(b, sink);
   assert(i==M->ns);
   statuces[i]='+';
 
   statuces[ns]='\0';
-  result = dfaBuild(statuces);
+  result = dfaBuild(b, statuces);
   free(exeps);
   free(numexeps);
   free(to_states);
@@ -1234,7 +1234,7 @@ DFA *dfaRemoveLambda(DFA* M, int var, int* indices){
   assert(sink >-1);
   //printf("\n\n SINK %d\n\n\n", sink);
 
-  dfaSetup(M->ns, var, indices);
+  DFABuilder *b = dfaSetup(M->ns, var, indices);
   exeps=(char *)malloc(max_exeps*(var+1)*sizeof(char));
   symbol=(char *)malloc((var+1)*sizeof(char));
   to_states=(int *)malloc(max_exeps*sizeof(int));
@@ -1272,15 +1272,15 @@ DFA *dfaRemoveLambda(DFA* M, int var, int* indices){
     	pp = pp->next;
     }//end while
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(var+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(var+1));
+    dfaStoreState(b, sink);
 
     kill_paths(state_paths);
   }//end for
   statuces[i]='\0';
-  result = dfaBuild(statuces);
+  result = dfaBuild(b, statuces);
   if(_FANG_DFA_DEBUG) dfaPrintVerbose(result);
   free(exeps);
   free(symbol);
@@ -1343,7 +1343,7 @@ DFA *dfaRemovePreLambda(DFA *M, char* lambda, int var, int *oldindices)
   //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
 
 
-  dfaSetup(M->ns+1, len, indices); //add one new initial state
+  DFABuilder *b = dfaSetup(M->ns+1, len, indices); //add one new initial state
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((M->ns+2)*sizeof(char));
@@ -1391,10 +1391,10 @@ DFA *dfaRemovePreLambda(DFA *M, char* lambda, int var, int *oldindices)
 		tmpState = tmpState->next;
 	} //end for
 
-  dfaAllocExceptions(k);
+  dfaAllocExceptions(b, k);
   for(k--;k>=0;k--)
-    dfaStoreException(to_states[k],exeps+k*(len+1));
-  dfaStoreState(sink+1);
+    dfaStoreException(b, to_states[k],exeps+k*(len+1));
+  dfaStoreState(b, sink+1);
 
   if(check_accept(M, states))	statuces[0]='+';
   else 	statuces[0]='-';
@@ -1439,10 +1439,10 @@ DFA *dfaRemovePreLambda(DFA *M, char* lambda, int var, int *oldindices)
 			pp = pp->next;
 		} //end while
 
-		dfaAllocExceptions(k);
+		dfaAllocExceptions(b, k);
 		for (k--; k >= 0; k--)
-			dfaStoreException(to_states[k], exeps + k * (len + 1));
-		dfaStoreState(sink + 1);
+			dfaStoreException(b, to_states[k], exeps + k * (len + 1));
+		dfaStoreState(b, sink + 1);
 
 		if (M->f[i] == 1)
 			statuces[i + 1] = '+';
@@ -1452,7 +1452,7 @@ DFA *dfaRemovePreLambda(DFA *M, char* lambda, int var, int *oldindices)
 	}
 
 	statuces[M->ns + 1] = '\0';
-	result = dfaBuild(statuces);
+	result = dfaBuild(b, statuces);
 	//	dfaPrintVerbose(result);
 	for (i = 0; i < aux; i++) {
 		j = len - i - 1;
@@ -1589,7 +1589,7 @@ DFA *mdfaShiftToExtraTrack(DFA *M, int i_track, int m , int var, int* indices){
   assert(sink >-1);
   //printf("\n\n SINK %d\n\n\n", sink);
 
-  dfaSetup(M->ns, len, mindices);
+  DFABuilder *b = dfaSetup(M->ns, len, mindices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((M->ns+1)*sizeof(char));
@@ -1637,15 +1637,15 @@ DFA *mdfaShiftToExtraTrack(DFA *M, int i_track, int m , int var, int* indices){
       pp = pp->next;
     }//end while
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(var+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(var+1));
+    dfaStoreState(b, sink);
 
     kill_paths(state_paths);
   }//end for
   statuces[M->ns]='\0';
-  result = dfaBuild(statuces);
+  result = dfaBuild(b, statuces);
   //dfaPrintVerbose(M);
   //dfaPrintVerbose(result);
   free(exeps);

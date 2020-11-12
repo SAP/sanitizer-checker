@@ -58,10 +58,10 @@ DFA *mdfaSignatureInput(int i_track, int m, int var, int* indices){
  int nump = 1<<var;
  char *lambda = bintostr((unsigned long) (nump-1), var);
 
- dfaSetup(2,len,mindices);
+ DFABuilder *b = dfaSetup(2,len,mindices);
  exeps=(char *)malloc((len+1)*sizeof(char));
  exeps[len]='\0';
- dfaAllocExceptions(nump-1);
+ dfaAllocExceptions(b, nump-1);
  for(i=0; i<nump-1; i++){
    str = bintostr((unsigned long) i, var);
    for(n=0; n<m; n++){
@@ -76,14 +76,17 @@ DFA *mdfaSignatureInput(int i_track, int m, int var, int* indices){
    }//end for
    assert(len == n*var);
    //exeps[len]='\0';
-   dfaStoreException(0, exeps);
+   dfaStoreException(b, 0, exeps);
  }
 
- dfaStoreState(1);
- dfaAllocExceptions(0);
- dfaStoreState(1);
+ dfaStoreState(b, 1);
+ dfaAllocExceptions(b, 0);
+ dfaStoreState(b, 1);
  free(exeps);
- return dfaMinimize(dfaBuild("+-"));
+ DFA *dfa = dfaBuild(b, "+-");
+ DFA *min = dfaMinimize(dfa);
+ dfaFree(dfa);
+ return min;
 }
 
 
@@ -112,7 +115,7 @@ DFA *mdfaSignatureConstant( DFA* M, int m, int var, int* indices){
   assert(sink >-1);
   //printf("\n\n SINK %d\n\n\n", sink);
 
-  dfaSetup(M->ns, len, mindices);
+  DFABuilder *b = dfaSetup(M->ns, len, mindices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((M->ns+1)*sizeof(char));
@@ -157,10 +160,10 @@ DFA *mdfaSignatureConstant( DFA* M, int m, int var, int* indices){
       pp = pp->next;
     }
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink);
     if(M->f[i]==-1)
       statuces[i]='-';
     else if(M->f[i]==1)
@@ -170,7 +173,7 @@ DFA *mdfaSignatureConstant( DFA* M, int m, int var, int* indices){
     kill_paths(state_paths);
   }
   statuces[i]='\0';
-  result = dfaBuild(statuces);
+  result = dfaBuild(b, statuces);
   free(exeps);
   free(to_states);
   free(statuces);

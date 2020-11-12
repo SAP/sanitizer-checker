@@ -178,7 +178,7 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
   //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
 
 
-  dfaSetup(M->ns, len, indices);
+  DFABuilder *b = dfaSetup(M->ns, len, indices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((M->ns+1)*sizeof(char));
@@ -277,13 +277,13 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
       pp = pp->next;
     }//end while
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--) {
 //        printf("%2d to %2d with value ", i, to_states[k]);
 //        print_exep_value(&exeps[k*(len+1)], len);
-      dfaStoreException(to_states[k],exeps+k*(len+1));
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
     }
-    dfaStoreState(sink);
+    dfaStoreState(b, sink);
 
     if(M->f[i]==1)
       statuces[i]='+';
@@ -297,7 +297,7 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
   }
 
   statuces[M->ns]='\0';
-  tmpM2=dfaBuild(statuces);
+  tmpM2=dfaBuild(b, statuces);
 
   //dfaPrintGraphvizAsciiRange(tmpM2, var, indices, 1);  
   //dfaPrintVitals(result);
@@ -380,7 +380,7 @@ DFA *dfa_replace_char(DFA *M, char a, int var, int *oldindices)
   //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
 
 
-  dfaSetup(M->ns, len, indices);
+  DFABuilder *b = dfaSetup(M->ns, len, indices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((M->ns+1)*sizeof(char));
@@ -434,10 +434,10 @@ DFA *dfa_replace_char(DFA *M, char a, int var, int *oldindices)
       }
     }
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink);
 
     if(M->f[i]==1)
       statuces[i]='+';
@@ -450,7 +450,7 @@ DFA *dfa_replace_char(DFA *M, char a, int var, int *oldindices)
   }
 
   statuces[M->ns]='\0';
-  tmpM1=dfaBuild(statuces);
+  tmpM1=dfaBuild(b, statuces);
   //dfaPrintVitals(result);
   for(i=0; i<aux; i++){
     j=len-i; //len = var
@@ -578,7 +578,7 @@ DFA *dfa_replace_M_dot(DFA *M, DFA* Mr, int var, int *oldindices)
   //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
 
 
-  dfaSetup(M->ns, len, indices);
+  DFABuilder *b = dfaSetup(M->ns, len, indices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((M->ns+1)*sizeof(char));
@@ -634,10 +634,10 @@ DFA *dfa_replace_M_dot(DFA *M, DFA* Mr, int var, int *oldindices)
       }	//end for z
     }
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink);
 
     if(M->f[i]==1)
       statuces[i]='+';
@@ -650,7 +650,7 @@ DFA *dfa_replace_M_dot(DFA *M, DFA* Mr, int var, int *oldindices)
   }
 
   statuces[M->ns]='\0';
-  result=dfaBuild(statuces);
+  result=dfaBuild(b, statuces);
   //dfaPrintVitals(result);
   for(i=0; i<aux; i++){
     j=len-i;
@@ -823,7 +823,7 @@ DFA *dfa_replace_M_arbitrary(DFA *M, DFA *Mr, int var, int *oldindices)
   ns = M->ns + numberOfSharp*extrastates;
 
   //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
-  dfaSetup(ns, len, indices);
+  DFABuilder *b = dfaSetup(ns, len, indices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((ns+1)*sizeof(char));
@@ -875,10 +875,10 @@ DFA *dfa_replace_M_arbitrary(DFA *M, DFA *Mr, int var, int *oldindices)
       s++;
     }
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink);
 
     if(M->f[i]==1)
       statuces[i]='+';
@@ -900,15 +900,15 @@ DFA *dfa_replace_M_arbitrary(DFA *M, DFA *Mr, int var, int *oldindices)
     numsharp2 = pairs[startStates[n]]->count;
     for(i=0; i<Mr->ns; i++){ //internal M (exclude the first and the last char)
       if(numOfOutFinal[i]==0){
-	dfaAllocExceptions(numOfOut[i]);
+	dfaAllocExceptions(b, numOfOut[i]);
 	for(o =0; o<numOfOut[i]; o++){
-	  dfaStoreException(M->ns+n*(extrastates)+toOfOut[i][o], binOfOut[i][o]);
+	  dfaStoreException(b, M->ns+n*(extrastates)+toOfOut[i][o], binOfOut[i][o]);
 	}
-	dfaStoreState(sink);
+	dfaStoreState(b, sink);
       }else{//need to add aux edges back to sharp destination, for each edge leads to accepting state
-	dfaAllocExceptions(numOfOut[i]+numOfOutFinal[i]*numsharp2);
+	dfaAllocExceptions(b, numOfOut[i]+numOfOutFinal[i]*numsharp2);
 	for(o =0; o<numOfOut[i]; o++){
-	  dfaStoreException(M->ns+n*(extrastates)+toOfOut[i][o], binOfOut[i][o]);
+	  dfaStoreException(b, M->ns+n*(extrastates)+toOfOut[i][o], binOfOut[i][o]);
 	  if(Mr->f[toOfOut[i][o]]==1){ //add auxiliary back edges
 	    for(z=0, tmp=pairs[startStates[n]]->head;z< numsharp2; z++, tmp = tmp->next){
 	      aux_to_states[z]=tmp->value;
@@ -921,10 +921,10 @@ DFA *dfa_replace_M_arbitrary(DFA *M, DFA *Mr, int var, int *oldindices)
 	    }
 
 	    for(z--;z>=0;z--)
-	      dfaStoreException(aux_to_states[z],auxexeps+z*(len+1));
+	      dfaStoreException(b, aux_to_states[z],auxexeps+z*(len+1));
 	  }
 	}
-	dfaStoreState(sink);
+	dfaStoreState(b, sink);
       }
     }//end for Mr internal
   }
@@ -932,7 +932,7 @@ DFA *dfa_replace_M_arbitrary(DFA *M, DFA *Mr, int var, int *oldindices)
   for(i=M->ns; i<ns; i++) statuces[i]='-';
 
   statuces[ns]='\0';
-  result=dfaBuild(statuces);
+  result=dfaBuild(b, statuces);
 
   for(i=0; i<aux; i++){
     j=len-i;
@@ -1067,7 +1067,7 @@ DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
   ns = M->ns + numberOfSharp* (extrastates);
 //  printf("old number of states in dfa_replace_string = %d, new number of states = %d\n", M->ns, ns);
   //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
-  dfaSetup(ns, len, indices);
+  DFABuilder *b = dfaSetup(ns, len, indices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((ns+1)*sizeof(char));
@@ -1115,10 +1115,10 @@ DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
       k++;
     }
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink);
 
     if(M->f[i]==1)
       statuces[i]='+';
@@ -1135,9 +1135,9 @@ DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
 
   for(i=0;i<numberOfSharp; i++){
     for(j=0; j<extrastates-1; j++){ //internal string (exclude the first and the last char)
-      dfaAllocExceptions(1);
-      dfaStoreException(M->ns+i*(extrastates)+j+1, binOfStr[j+1]);
-      dfaStoreState(sink);
+      dfaAllocExceptions(b, 1);
+      dfaStoreException(b, M->ns+i*(extrastates)+j+1, binOfStr[j+1]);
+      dfaStoreState(b, sink);
     }
     assert((pairs[startStates[i]]!=NULL) && (pairs[startStates[i]]->count > 0));
 
@@ -1153,16 +1153,16 @@ DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
       }
       auxexeps[z*(len+1)+len]='\0';
     }
-    dfaAllocExceptions(z);
+    dfaAllocExceptions(b, z);
     for(z--;z>=0;z--)
-      dfaStoreException(aux_to_states[z],auxexeps+z*(len+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, aux_to_states[z],auxexeps+z*(len+1));
+    dfaStoreState(b, sink);
   }
 
   for(i=M->ns; i<ns; i++) statuces[i]='0';
 
   statuces[ns]='\0';
-  result=dfaBuild(statuces);
+  result=dfaBuild(b, statuces);
     
     free(exeps);
     //printf("FREE ToState\n");
@@ -1516,7 +1516,7 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices)
 
 
 
-  dfaSetup(M->ns, len, indices);
+  DFABuilder *b = dfaSetup(M->ns, len, indices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((M->ns+1)*sizeof(char));
@@ -1556,10 +1556,10 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices)
 	k++;
       } // end for nc
     }
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink);
 
     if(M->f[i]==1)
       statuces[i]='+';
@@ -1570,7 +1570,7 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices)
   }
 
   statuces[M->ns]='\0';
-  result=dfaBuild(statuces);
+  result=dfaBuild(b, statuces);
   tmpM =dfaProject(result, (unsigned) len-1);
   result = dfaMinimize(tmpM);
 
@@ -1619,7 +1619,7 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   assert(sink >-1);
   ns = M->ns + (M->ns)*(extrastates);
 
-  dfaSetup(ns, len, indices);
+  DFABuilder *b = dfaSetup(ns, len, indices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((ns+1)*sizeof(char));
@@ -1666,10 +1666,10 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
     }
 
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-      dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink);
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink);
 
     if(M->f[i]==1)
       statuces[i]='+';
@@ -1687,23 +1687,23 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   for(n=0; n< M->ns; n++){
     for(i=0; i<Mr->ns; i++){ //internal M (exclude the first and the last char)
       if(numOfOutFinal[i]==0){
-	dfaAllocExceptions(numOfOut[i]);
+	dfaAllocExceptions(b, numOfOut[i]);
 	for(o =0; o<numOfOut[i]; o++){
-	  dfaStoreException(M->ns+n*(extrastates)+toOfOut[i][o], binOfOut[i][o]);
+	  dfaStoreException(b, M->ns+n*(extrastates)+toOfOut[i][o], binOfOut[i][o]);
 	}
-	dfaStoreState(sink);
+	dfaStoreState(b, sink);
       }else{//need to add aux edges back to sharp destination, for each edge leads to accepting state
-	dfaAllocExceptions(numOfOut[i]+numOfOutFinal[i]);
+	dfaAllocExceptions(b, numOfOut[i]+numOfOutFinal[i]);
 	for(o =0; o<numOfOut[i]; o++){
-	  dfaStoreException(M->ns+n*(extrastates)+toOfOut[i][o], binOfOut[i][o]);
+	  dfaStoreException(b, M->ns+n*(extrastates)+toOfOut[i][o], binOfOut[i][o]);
 	  if(Mr->f[toOfOut[i][o]]==1){ //add auxiliary back edge to n
 	    for (j = 0; j < var; j++) auxexeps[j]=binOfOut[i][o][j];
 	    auxexeps[j]='1';
 	    auxexeps[len]='\0';
-	    dfaStoreException(n,auxexeps);
+	    dfaStoreException(b, n,auxexeps);
 	  }
 	}
-	dfaStoreState(sink);
+	dfaStoreState(b, sink);
       }
     }//end for Mr internal
   }//end for n
@@ -1711,7 +1711,7 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   for(i=M->ns; i<ns; i++) statuces[i]='-';
 
   statuces[ns]='\0';
-  result = dfaBuild(statuces);
+  result = dfaBuild(b, statuces);
 
   if(_FANG_DFA_DEBUG){
     printf("Project the %d bit\n", i);

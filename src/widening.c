@@ -37,27 +37,27 @@ int *corresP; //used by dfaEquivalence
 // A DFA that accepts everything except for the null (empty) string
 DFA *dfaNotNullString() {
 
-	dfaSetup(2, 0, NULL);
+	DFABuilder *b = dfaSetup(2, 0, NULL);
 
-	dfaAllocExceptions(0);
-	dfaStoreState(1);
-	dfaAllocExceptions(0);
-	dfaStoreState(1);
+	dfaAllocExceptions(b, 0);
+	dfaStoreState(b, 1);
+	dfaAllocExceptions(b, 0);
+	dfaStoreState(b, 1);
 
-	return dfaBuild("-+");
+	return dfaBuild(b, "-+");
 }
 
 // A DFA that accepts only the null (empty) string
 DFA *dfaOnlyNullString() {
 
-	dfaSetup(2, 0, NULL);
+	DFABuilder *b = dfaSetup(2, 0, NULL);
 
-	dfaAllocExceptions(0);
-	dfaStoreState(1);
-	dfaAllocExceptions(0);
-	dfaStoreState(1);
+	dfaAllocExceptions(b, 0);
+	dfaStoreState(b, 1);
+	dfaAllocExceptions(b, 0);
+	dfaStoreState(b, 1);
 
-	return dfaBuild("+-");
+	return dfaBuild(b, "+-");
 }
 
 //recursively checks if state sa of a is equivalent to state sb of b
@@ -737,7 +737,7 @@ DFA *dfaClean(DFA *a) {
 	j = 0;
 	for (i = 0; i < a->ns; i++)
 		if (reachable[i]) {
-			(void) bdd_apply1(a->bddm, a->q[i], c->bddm, &fn_identity);
+                      (void) bdd_apply1(a->bddm, a->q[i], c->bddm, NULL, &fn_identity);
 			c->f[j++] = a->f[i];
 		}
 
@@ -1244,44 +1244,44 @@ void dfaPrefixClose1(DFA *a) {
 }
 
 DFA *dfatrue() {
-	dfaSetup(1, 0, NULL);
+	DFABuilder *b = dfaSetup(1, 0, NULL);
 
-	dfaAllocExceptions(0);
-	dfaStoreState(0);
+	dfaAllocExceptions(b, 0);
+	dfaStoreState(b, 0);
 
-	return dfaBuild("+");
+	return dfaBuild(b, "+");
 }
 
 DFA *dfafalse() {
-	dfaSetup(1, 0, NULL);
+	DFABuilder *b = dfaSetup(1, 0, NULL);
 
 	/* boolvar */
-	dfaAllocExceptions(0);
-	dfaStoreState(0);
+	dfaAllocExceptions(b, 0);
+	dfaStoreState(b, 0);
 
-	return dfaBuild("-");
+	return dfaBuild(b, "-");
 }
 
 DFA *dfaBoolVar(int b) {
 	int var_index[1];
 	var_index[0] = b;
 
-	dfaSetup(3, 1, var_index);
+	DFABuilder *builder = dfaSetup(3, 1, var_index);
 
 	/* boolvar */
-	dfaAllocExceptions(1);
-	dfaStoreException(2, "0");
-	dfaStoreState(1);
+	dfaAllocExceptions(builder, 1);
+	dfaStoreException(builder, 2, "0");
+	dfaStoreState(builder, 1);
 
 	/* state 1 */
-	dfaAllocExceptions(0);
-	dfaStoreState(1);
+	dfaAllocExceptions(builder, 0);
+	dfaStoreState(builder, 1);
 
 	/* state 2 */
-	dfaAllocExceptions(0);
-	dfaStoreState(2);
+	dfaAllocExceptions(builder, 0);
+	dfaStoreState(builder, 2);
 
-	return dfaBuild("-+-");
+	return dfaBuild(builder, "-+-");
 }
 
 bdd_ptr target;
@@ -1392,7 +1392,7 @@ DFA * dfaPrefixClose3(DFA *a) {
 	mem_copy(c->f, a->f, sizeof(*a->f) * a->ns);
 	bdd_prepare_apply1(a->bddm);
 	for (i = 0; i < a->ns; i++)
-		(void) bdd_apply1(a->bddm, a->q[i], c->bddm, &fn_identity);
+            (void) bdd_apply1(a->bddm, a->q[i], c->bddm, NULL, &fn_identity);
 	mem_copy(c->q, bdd_roots(c->bddm), sizeof(bdd_ptr) * a->ns);
 	j = a->ns;
 	for (i = 0; i < a->ns; i++)

@@ -217,7 +217,7 @@ void transition_print_ilt(struct transition_list_type *list) {
   strcpy(symbol, lambda); symbol[var] = '1'; symbol[len] = '\0';
 
 
-  dfaSetup(ns, len, indices);
+  DFABuilder *b = dfaSetup(ns, len, indices);
   for (i = 0; i < M->ns; i++) {
   state_paths = pp = make_paths(M->bddm, M->q[i]);
   k = 0;
@@ -247,15 +247,15 @@ void transition_print_ilt(struct transition_list_type *list) {
 
   // if accept state create a self loop on lambda
   if (M->f[i] == 1){
-  dfaAllocExceptions(k+1);
-  dfaStoreException(i, symbol);
+  dfaAllocExceptions(b, k+1);
+  dfaStoreException(b, i, symbol);
   }
   else
-  dfaAllocExceptions(k);
+  dfaAllocExceptions(b, k);
 
   for (k--; k >= 0; k--)
-  dfaStoreException(to_states[k], exeps + k * (len + 1));
-  dfaStoreState(sink);
+  dfaStoreException(b, to_states[k], exeps + k * (len + 1));
+  dfaStoreState(b, sink);
 
   if (M->f[i] == -1)
   statuces[i] = '-';
@@ -266,7 +266,7 @@ void transition_print_ilt(struct transition_list_type *list) {
   }
 
   statuces[ns] = '\0';
-  DFA* tmpM = dfaBuild(statuces);
+  DFA* tmpM = dfaBuild(b, statuces);
   result = dfaProject(tmpM, ((unsigned)var));
   dfaFree(tmpM); tmpM = NULL;
   tmpM = dfaMinimize(result);
@@ -347,7 +347,7 @@ void transition_print_ilt(struct transition_list_type *list) {
   len = extraBitNeeded? var + 1: var;
   indices = extraBitNeeded? allocateArbitraryIndex(len) : oldIndices;
   max_exeps = 1 << len; //maybe exponential
-  dfaSetup(ns, len, indices);
+  DFABuilder *b = dfaSetup(ns, len, indices);
   exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char));
   to_states = (int *) malloc(max_exeps * sizeof(int));
   statuces = (char *) malloc((ns + 1) * sizeof(char));
@@ -389,14 +389,14 @@ void transition_print_ilt(struct transition_list_type *list) {
   symbol[var] = '1';
   symbol[len] = '\0';
   }
-  dfaAllocExceptions(k+1);
-  dfaStoreException(M->s, symbol);
+  dfaAllocExceptions(b, k+1);
+  dfaStoreException(b, M->s, symbol);
   }
   else
-  dfaAllocExceptions(k);
+  dfaAllocExceptions(b, k);
   for (k--; k >= 0; k--)
-  dfaStoreException(to_states[k], exeps + k * (len + 1));
-  dfaStoreState(sink);
+  dfaStoreException(b, to_states[k], exeps + k * (len + 1));
+  dfaStoreState(b, sink);
 
   if (M->f[i] == -1)
   statuces[i] = '-';
@@ -407,7 +407,7 @@ void transition_print_ilt(struct transition_list_type *list) {
   }
 
   statuces[ns] = '\0';
-  DFA* tmpM = dfaBuild(statuces);
+  DFA* tmpM = dfaBuild(b, statuces);
 
 
   free(exeps);
@@ -582,7 +582,7 @@ DFA *dfaRightTrim(DFA *M, char c, int var, int *oldindices) {
 
     //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
 
-    dfaSetup(M->ns + 1, len, indices); //add one new accept state
+    DFABuilder *b = dfaSetup(M->ns + 1, len, indices); //add one new accept state
     exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char)); //plus 1 for \0 end of the string
     to_states = (int *) malloc(max_exeps * sizeof(int));
     statuces = (char *) malloc((M->ns + 2) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
@@ -650,22 +650,22 @@ DFA *dfaRightTrim(DFA *M, char c, int var, int *oldindices) {
             pp = pp->next;
         } //end while
 
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
-            dfaStoreException(to_states[k], exeps + k * (len + 1));
-        dfaStoreState(sink);
+            dfaStoreException(b, to_states[k], exeps + k * (len + 1));
+        dfaStoreState(b, sink);
         statuces[i] = '-';
 
         kill_paths(state_paths);
     } // end for each original state
 
     // add new accept state
-    dfaAllocExceptions(0);
-    dfaStoreState(sink);
+    dfaAllocExceptions(b, 0);
+    dfaStoreState(b, sink);
     statuces[new_accept_state] = '+';
 
     statuces[M->ns + 1] = '\0';
-    result = dfaBuild(statuces);
+    result = dfaBuild(b, statuces);
 //	printf("dfaAfterRightTrimBeforeMinimize\n");
 //	dfaPrintGraphviz(result, len, indices);
     if( DEBUG_SIZE_INFO )
@@ -727,7 +727,9 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
     char** charachters;
     
     char *symbol;
-    
+
+    DFABuilder *b = NULL;
+
     sink=find_sink(M);
     assert(sink >-1);
     
@@ -753,12 +755,11 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
     if (M->f[M->s] == 1){
         //if start state is accepting then
         //one new start state and one new accept state
-        dfaSetup(M->ns+2, len, indices); //add one new initial state as start state
+        b = dfaSetup(M->ns+2, len, indices); //add one new initial state as start state
         shift = 1;
         statuces=(char *)malloc((M->ns+3)*sizeof(char));//two states + null
-    }
-    else {
-        dfaSetup(M->ns+1, len, indices); //add one new initial state as start state
+    } else {
+        b = dfaSetup(M->ns+1, len, indices); //add one new initial state as start state
         shift = 0;
         statuces=(char *)malloc((M->ns+2)*sizeof(char));//1 state + null
     }
@@ -898,11 +899,11 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
         k++;
         
         //original out trans from origianl start state + 1 for lambda self cycle
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         //copy out edges from original start state
         for(k--;k>=0;k--)
-            dfaStoreException(to_states[k],exeps+k*(len+1));
-        dfaStoreState(sink+shift);
+            dfaStoreException(b, to_states[k],exeps+k*(len+1));
+        dfaStoreState(b, sink+shift);
         
         // new one should be accepting
         statuces[0]='+';
@@ -993,10 +994,10 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
         } //end while
         kill_paths(state_paths);
         
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
-            dfaStoreException(to_states[k], exeps + k * (len + 1));
-        dfaStoreState(sink + shift);
+            dfaStoreException(b, to_states[k], exeps + k * (len + 1));
+        dfaStoreState(b, sink + shift);
         statuces[i + shift] = '-';
 		
     }
@@ -1019,11 +1020,11 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
     k++;
     
     //original out trans from origianl start state + 1 for lambda self cycle
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     //copy out edges from original start state
     for(k--;k>=0;k--)
-        dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink+shift);
+        dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink+shift);
     
     // new one should be accepting
     statuces[newAcceptState]='+';
@@ -1034,7 +1035,7 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
      *************************************************/
     
     statuces[M->ns + 1 + shift] = '\0';
-    result = dfaBuild(statuces);
+    result = dfaBuild(b, statuces);
     
     free(exeps);
     //printf("FREE ToState\n");
@@ -1295,7 +1296,7 @@ DFA *dfaLeftTrim(DFA *M, char c, int var, int *oldindices)
     //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
 
 
-    dfaSetup(M->ns+1, len, indices); //add one new initial state
+    DFABuilder *b = dfaSetup(M->ns+1, len, indices); //add one new initial state
     exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
     to_states=(int *)malloc(max_exeps*sizeof(int));
     statuces=(char *)malloc((M->ns+2)*sizeof(char));
@@ -1362,10 +1363,10 @@ DFA *dfaLeftTrim(DFA *M, char c, int var, int *oldindices)
         tmpState = tmpState->next;
     } //end for
 
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
-        dfaStoreException(to_states[k],exeps+k*(len+1));
-    dfaStoreState(sink+1);
+        dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    dfaStoreState(b, sink+1);
 
     // if we can reach an accept state on lambda* then
     // accept epsilon (start state becomes an accepting state)
@@ -1410,10 +1411,10 @@ DFA *dfaLeftTrim(DFA *M, char c, int var, int *oldindices)
             pp = pp->next;
         } //end while
 
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
-            dfaStoreException(to_states[k], exeps + k * (len + 1));
-        dfaStoreState(sink + 1);
+            dfaStoreException(b, to_states[k], exeps + k * (len + 1));
+        dfaStoreState(b, sink + 1);
 
         if (M->f[i] == 1)
             statuces[i + 1] = '+';
@@ -1423,7 +1424,7 @@ DFA *dfaLeftTrim(DFA *M, char c, int var, int *oldindices)
     }
 
     statuces[M->ns + 1] = '\0';
-    result = dfaBuild(statuces);
+    result = dfaBuild(b, statuces);
     
     
     free(exeps);
@@ -1548,7 +1549,7 @@ DFA *dfaPreLeftTrim(DFA *M, char c, int var, int *oldIndices)
     //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
     
     
-    dfaSetup(M->ns+1, var, indices); //add one new initial state as start state
+    DFABuilder *b = dfaSetup(M->ns+1, var, indices); //add one new initial state as start state
     exeps=(char *)malloc(max_exeps*(var+1)*sizeof(char)); //plus 1 for \0 end of the string
     to_states=(int *)malloc(max_exeps*sizeof(int));
     statuces=(char *)malloc((M->ns+2)*sizeof(char));
@@ -1610,11 +1611,11 @@ DFA *dfaPreLeftTrim(DFA *M, char c, int var, int *oldIndices)
     k++;
 
     //original out trans from origianl start state + 1 for lambda self cycle
-    dfaAllocExceptions(k);
+    dfaAllocExceptions(b, k);
     //copy out edges from original start state
     for(k--;k>=0;k--)
-        dfaStoreException(to_states[k],exeps+k*(var+1));
-    dfaStoreState(sink+1);
+        dfaStoreException(b, to_states[k],exeps+k*(var+1));
+    dfaStoreState(b, sink+1);
     
     // if original start state is accepting then
     // new one should be 
@@ -1660,10 +1661,10 @@ DFA *dfaPreLeftTrim(DFA *M, char c, int var, int *oldIndices)
             pp = pp->next;
         } //end while
         
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
-            dfaStoreException(to_states[k], exeps + k * (var + 1));
-        dfaStoreState(sink + 1);
+            dfaStoreException(b, to_states[k], exeps + k * (var + 1));
+        dfaStoreState(b, sink + 1);
         
         if (M->f[i] == 1)
             statuces[i + 1] = '+';
@@ -1673,7 +1674,7 @@ DFA *dfaPreLeftTrim(DFA *M, char c, int var, int *oldIndices)
     }
     
     statuces[M->ns + 1] = '\0';
-    result = dfaBuild(statuces);
+    result = dfaBuild(b, statuces);
     
     free(exeps);
     //printf("FREE ToState\n");
@@ -2085,7 +2086,7 @@ DFA* dfaPrePostToLowerUpperCaseHelper(DFA* M, int var, int* oldIndices, boolean 
     int size = 0;
 
 
-    dfaSetup(ns, len, indices);
+    DFABuilder *b = dfaSetup(ns, len, indices);
     for (i = 0; i < M->ns; i++) {
         state_paths = pp = make_paths(M->bddm, M->q[i]);
         k = 0;
@@ -2124,10 +2125,10 @@ DFA* dfaPrePostToLowerUpperCaseHelper(DFA* M, int var, int* oldIndices, boolean 
         kill_paths(state_paths);
 
         // if accept state create a self loop on lambda
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
-            dfaStoreException(to_states[k], exeps + k * (len + 1));
-        dfaStoreState(sink);
+            dfaStoreException(b, to_states[k], exeps + k * (len + 1));
+        dfaStoreState(b, sink);
 
         if (M->f[i] == -1)
             statuces[i] = '-';
@@ -2138,7 +2139,7 @@ DFA* dfaPrePostToLowerUpperCaseHelper(DFA* M, int var, int* oldIndices, boolean 
     }
 
     statuces[ns] = '\0';
-    DFA* tmpM = dfaBuild(statuces);
+    DFA* tmpM = dfaBuild(b, statuces);
 //		dfaPrintGraphviz(tmpM, len, indices);
 //		dfaPrintVerbose(tmpM);
     flush_output();
@@ -2269,7 +2270,7 @@ DFA *dfa_escape(DFA *M, int var, int *oldindices, char escapeChar, char *escaped
 //    printStatePairArrayList(statePairs);
     int num_new_states = (int) statePairs->index;
     
-    dfaSetup(M->ns + num_new_states, len, indices); //add one new accept state
+    DFABuilder *b = dfaSetup(M->ns + num_new_states, len, indices); //add one new accept state
     exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char)); //plus 1 for \0 end of the string
     to_states = (int *) malloc(max_exeps * sizeof(int));
     statuces = (char *) malloc((M->ns + num_new_states + 1) * sizeof(char)); //plus 1 for \0 end of the string
@@ -2338,11 +2339,11 @@ DFA *dfa_escape(DFA *M, int var, int *oldindices, char escapeChar, char *escaped
             numOfEscapeStates++;
         }
         
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--){
-            dfaStoreException(to_states[k], exeps + k * (len + 1));
+            dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
-        dfaStoreState(sink);
+        dfaStoreState(b, sink);
         if (M->f[i] == 1)
             statuces[i] = '+';
         else
@@ -2378,15 +2379,15 @@ DFA *dfa_escape(DFA *M, int var, int *oldindices, char escapeChar, char *escaped
             }
             z++;
         }
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--){
-            dfaStoreException(to_states[k], exeps + k * (len + 1));
+            dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
-        dfaStoreState(sink);
+        dfaStoreState(b, sink);
         statuces[i + M->ns] = '-';
     }
     statuces[M->ns + num_new_states] = '\0';
-    result = dfaBuild(statuces);
+    result = dfaBuild(b, statuces);
     
     //	printf("dfaAfterRightTrimBeforeMinimize\n");
     //	dfaPrintGraphviz(result, len, indices);
@@ -2694,7 +2695,7 @@ DFA *dfa_pre_escape(DFA *M, int var, int *indices, char escapeChar, char *escape
 //        printf("shift[%d] == %d\n", i, shiftArray[i]);
 //    }
     
-    dfaSetup(num_of_states, var, indices); //add one new accept state
+    DFABuilder *b = dfaSetup(num_of_states, var, indices); //add one new accept state
     exeps = (char *) malloc(max_exeps * (var + 1) * sizeof(char)); //plus 1 for \0 end of the string
     to_states = (int *) malloc(max_exeps * sizeof(int));
     statuces = (char *) malloc((num_of_states + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
@@ -2783,10 +2784,10 @@ DFA *dfa_pre_escape(DFA *M, int var, int *indices, char escapeChar, char *escape
             pp = pp->next;
         } //end while
         
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
-            dfaStoreException(to_states[k], exeps + k * (var + 1));
-        dfaStoreState(sink);
+            dfaStoreException(b, to_states[k], exeps + k * (var + 1));
+        dfaStoreState(b, sink);
         if (M->f[i] == 1)
             statuces[i - shiftArray[i]] = '+';
         else
@@ -2796,7 +2797,7 @@ DFA *dfa_pre_escape(DFA *M, int var, int *indices, char escapeChar, char *escape
     } // end for each original state
     //    assert(new_state_counter == (num_new_states - 1));
     statuces[num_of_states] = '\0';
-    result = dfaBuild(statuces);
+    result = dfaBuild(b, statuces);
 
     free(exeps);
 //	printf("FREE ToState\n");
@@ -2972,7 +2973,7 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
     int num_of_states = M->ns * 2;
 
     // Create new DFA
-    dfaSetup(num_of_states, len, indices); //add one new accept state
+    DFABuilder *b = dfaSetup(num_of_states, len, indices); //add one new accept state
 
     // Allocate array to hold the exceptions for each state
     exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char)); //plus 1 for \0 end of the string
@@ -3065,12 +3066,12 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
             pp = pp->next;
         } // Loop over transitions
 
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--) {
-            dfaStoreException(to_states[k], exeps + k * (len + 1));
+            dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
         // Default state is the sink (rejection)
-        dfaStoreState(sink);
+        dfaStoreState(b, sink);
         if (M->f[i] == 1) {
             statuces[i] = '+';
         } else {
@@ -3118,11 +3119,11 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
             pp = pp->next;
         } // Loop over transitions
 
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--) {
-            dfaStoreException(to_states[k], exeps + k * (len + 1));
+            dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
-        dfaStoreState(sink);
+        dfaStoreState(b, sink);
         if (M->f[i] == 1) {
             statuces[i + M->ns] = '+';
         } else {
@@ -3131,7 +3132,7 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
         kill_paths(state_paths);
     } // end for each original state
     statuces[num_of_states] = '\0';
-    result = dfaBuild(statuces);
+    result = dfaBuild(b, statuces);
     free(exeps);
     //	//printf("FREE ToState\n");
     free(to_states);
@@ -3257,7 +3258,7 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
 //        printf("shift[%d] == %d\n", i, shiftArray[i]);
 //    }
     
-    dfaSetup(num_of_states, len, indices); //add one new accept state
+    DFABuilder *b = dfaSetup(num_of_states, len, indices); //add one new accept state
     exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char)); //plus 1 for \0 end of the string
     to_states = (int *) malloc(max_exeps * sizeof(int));
     statuces = (char *) malloc((num_of_states + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
@@ -3355,11 +3356,11 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
             pp = pp->next;
         } //end while
         
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--){
-            dfaStoreException(to_states[k], exeps + k * (len + 1));
+            dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
-        dfaStoreState(sink + shiftArray[sink]);
+        dfaStoreState(b, sink + shiftArray[sink]);
         if (M->f[i] == 1)
             statuces[i + shiftArray[i]] = '+';
         else
@@ -3372,12 +3373,12 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
             assert(strLength >= 2);
             for (z = 1; z < strLength; z++){
                 char *binChar = extraBitNeeded? bintostrWithExtraBit(string[z], var): bintostr(string[z], var);
-                dfaAllocExceptions(1);
+                dfaAllocExceptions(b, 1);
                 if (z == strLength - 1)
-                    dfaStoreException(toState, binChar);
+                    dfaStoreException(b, toState, binChar);
                 else
-                    dfaStoreException(new_state_counter, binChar);
-                dfaStoreState(sink + shiftArray[sink]);
+                    dfaStoreException(b, new_state_counter, binChar);
+                dfaStoreState(b, sink + shiftArray[sink]);
                 statuces[new_state_counter - 1] = '-';
                 free(binChar);
                 new_state_counter++;
@@ -3388,7 +3389,7 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
     } // end for each original state
     //    assert(new_state_counter == (num_new_states - 1));
     statuces[num_of_states] = '\0';
-    result = dfaBuild(statuces);
+    result = dfaBuild(b, statuces);
     
     free(exeps);
     //	//printf("FREE ToState\n");
@@ -3562,7 +3563,7 @@ DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char rep
     int len = extraBitNeeded? (var + 1): var;
     int *indices = allocateArbitraryIndex(len);
     
-    dfaSetup(M->ns, len, indices); //add one new accept state
+    DFABuilder *b = dfaSetup(M->ns, len, indices); //add one new accept state
     exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char)); //plus 1 for \0 end of the string
     to_states = (int *) malloc(max_exeps * sizeof(int));
     statuces = (char *) malloc((M->ns + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
@@ -3658,11 +3659,11 @@ DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char rep
             pp = pp->next;
         } //end while
         
-        dfaAllocExceptions(k);
+        dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--){
-            dfaStoreException(to_states[k], exeps + k * (len + 1));
+            dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
-        dfaStoreState(sink);
+        dfaStoreState(b, sink);
         if (M->f[i] == 1)
             statuces[i] = '+';
         else
@@ -3671,7 +3672,7 @@ DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char rep
     } // end for each original state
 
     statuces[M->ns] = '\0';
-    result = dfaBuild(statuces);
+    result = dfaBuild(b, statuces);
     
         
 #if MORE_WORDS_LESS_NDTRANS == 1
