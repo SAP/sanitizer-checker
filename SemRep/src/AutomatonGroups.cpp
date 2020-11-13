@@ -73,8 +73,6 @@ void AutomatonGroup::printHeaders() {
 }
 
 void AutomatonGroup::printMembers() const {
-  // Switch to decimal
-  std::cout << std::dec;
   std::cout << getName()
             << " entries: "
             << getEntries()
@@ -155,7 +153,10 @@ AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutomaton* a
 }
 
 void AutomatonGroups::printGroups() const {
-  std::cout << "Total of " << m_groups.size() << " unique post-images." << std::endl;
+  // Switch to decimal
+  std::cout << std::dec;
+  //  SemAttack::perfInfo.print_operations_info();
+  std::cout << "Total of " << m_groups.size() << " unique post-images with " << getEntries() << " entries." << std::endl;
   AutomatonGroup::printHeaders();
   unsigned int i = 0;
   for (auto iter : m_groups) {
@@ -163,5 +164,12 @@ void AutomatonGroups::printGroups() const {
     iter.printMembers();
     i++;
   }
-  SemAttack::perfInfo.print_operations_info();
+}
+
+unsigned int AutomatonGroups::getEntries() const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getEntries();
+  }
+  return total;
 }

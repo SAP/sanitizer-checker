@@ -90,9 +90,11 @@ void MultiAttack::computePostImage(std::string file) {
         std::cout << "Finished inserting results into groups for " << file << std::endl;
         this->printResults();
     } catch (StrangerStringAnalysisException const &e) {
+        std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
         std::cerr << e.what() << std::endl;
     } catch (const std::exception& e) {
-      std::cerr << e.what() << std::endl;
+        std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
+        std::cerr << e.what() << std::endl;
     }
 }
 void MultiAttack::computePostImages() {
@@ -107,15 +109,18 @@ void MultiAttack::computePostImages() {
 
 void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context)
 {
+  const std::string& file = result->getAttack()->getFileName();
     std::cout << "Doing backward analysis for file: "
-              << result->getAttack()->getFileName()
+              << file
               << ", context: " << AttackContextHelper::getName(context)
               << std::endl;
     try {
       result->addBackwardAnalysis(context);
     } catch (StrangerStringAnalysisException const &e) {
+      std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
       std::cerr << e.what() << std::endl;
     } catch (const std::exception& e) {
+      std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
       std::cerr << e.what() << std::endl;
     }
 }

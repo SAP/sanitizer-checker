@@ -68,7 +68,8 @@ public:
     AutomatonGroup* addAutomaton(const StrangerAutomaton* automaton, const CombinedAnalysisResult* graph);
 
     AutomatonGroup* addGroup(const StrangerAutomaton* automaton);
-    
+
+    unsigned int getEntries() const;
     void printGroups() const;
 
 private:

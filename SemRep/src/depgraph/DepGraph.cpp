@@ -263,12 +263,14 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
         string nodeShape;
         string varName;
         string litValue;
-        string opName;
-
+        string opName;        
         string inputLine;
+
+        std::stringstream cout_local;
+        
         while (ifs.good()) {
             getline(ifs, inputLine);
-            cout << "\t parsing : " << inputLine << endl;
+            cout_local << "\t parsing : " << inputLine << endl;
             if (boost::regex_match(inputLine, sm, regxNode)){
 
                 //process node
@@ -295,7 +297,7 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
                         depGraph.addNode(node);
                     }else if (boost::regex_match(nodeLabel, sm, regxNodeLit)){
 						litValue = sm[1];
-						cout << "litval original:  " << litValue << endl;
+						cout_local << "litval original:  " << litValue << endl;
 						//if we are not parsing a regular expression then remove escaping
 						//surprisingly, dot special chars (\,") are also special to our
 						// regular expression engine
@@ -303,13 +305,13 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
 							boost::regex bsDQuote("\\\\\"");//this will match \"
 							string newStr = "\"";
 							litValue = boost::regex_replace(litValue, bsDQuote, newStr);
-//							cout << "litval" << litValue << endl;
+//							cout_local << "litval" << litValue << endl;
 							boost::regex bsBs("\\\\\\\\");//this will match \\ (do not remove this text. Really unless you remove the two backslashes)
 							newStr = "\\";
 							litValue = boost::regex_replace(litValue, bsBs, newStr);
-//							cout << "litval" << litValue << endl;
+//							cout_local << "litval" << litValue << endl;
                         }
-						cout << "result litval:  " << litValue << endl;
+						cout_local << "result litval:  " << litValue << endl;
                         TacPlace* place = new Literal(litValue);
                         node = new DepGraphNormalNode("noFile", -1, nodeID, -1, -1, place);
                         depGraph.addNode(node);
@@ -317,7 +319,7 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
                         opName = sm[1];
                         node = new DepGraphOpNode("noFile", -1, nodeID, -1, -1, opName, false);
                         depGraph.addNode(node);
-                        cout << "Op: " << opName << endl;
+                        cout_local << "Op: " << opName << endl;
                     }
                     else {
                         throw invalid_argument("error parsing the dependency graph dot file. Can not parse node label (type)");
@@ -337,7 +339,7 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
                 DepGraphNode* fromNode = depGraph.getNode(fromNodeID);
                 DepGraphNode* toNode = depGraph.getNode(toNodeID);
                 depGraph.addEdge(fromNode, toNode);
-                cout << "Found edge: " << fromNodeID << "(" << fromNode << ") --> " << toNodeID << "(" << toNode << ")" << endl;
+                cout_local << "Found edge: " << fromNodeID << "(" << fromNode << ") --> " << toNodeID << "(" << toNode << ")" << endl;
             }
         }
         ifs.close();
