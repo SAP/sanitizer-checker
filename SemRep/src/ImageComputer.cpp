@@ -940,14 +940,14 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		DepGraphNode* replaceNode = successors[1];
 
 		StrangerAutomaton* subjectAuto = opAuto;
-                std::cout << "opAuto to dot:\n";
-                subjectAuto->toDotAscii(1);
+                // std::cout << "opAuto to dot:\n";
+                // subjectAuto->toDotAscii(1);
 		StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
 		StrangerAutomaton* replaceAuto = fwAnalysisResult.find(replaceNode->getID())->second;
-                std::cout << "PatternAuto to dot:" << patternNode->getID() << std::endl;
-                patternAuto->toDotAscii(1);
-		std::cout << "ReplaceAuto to dot:" << replaceNode->getID() << std::endl;
-		replaceAuto->toDotAscii(1);
+                // std::cout << "PatternAuto to dot:" << patternNode->getID() << std::endl;
+                // patternAuto->toDotAscii(1);
+		// std::cout << "ReplaceAuto to dot:" << replaceNode->getID() << std::endl;
+		// replaceAuto->toDotAscii(1);
                 string replaceStr = replaceAuto->getStr();
                 // checking for special case where a character is escaped by another character
 		if (patternAuto->isSingleton()) {
@@ -971,14 +971,14 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		DepGraphNode* replaceNode = successors[1];
 
 		StrangerAutomaton* subjectAuto = opAuto;
-                std::cout << "opAuto to dot:\n";
-                subjectAuto->toDotAscii(1);
+                // std::cout << "opAuto to dot:\n";
+                // subjectAuto->toDotAscii(1);
 		StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
 		StrangerAutomaton* replaceAuto = fwAnalysisResult.find(replaceNode->getID())->second;
-                std::cout << "PatternAuto to dot:" << patternNode->getID() << std::endl;
-                patternAuto->toDotAscii(1);
-		std::cout << "ReplaceAuto to dot:" << replaceNode->getID() << std::endl;
-		replaceAuto->toDotAscii(1);
+                // std::cout << "PatternAuto to dot:" << patternNode->getID() << std::endl;
+                // patternAuto->toDotAscii(1);
+		// std::cout << "ReplaceAuto to dot:" << replaceNode->getID() << std::endl;
+		// replaceAuto->toDotAscii(1);
                 string replaceStr = replaceAuto->getStr();
                 retMe = subjectAuto->preReplaceOnce(patternAuto, replaceStr, childNode->getID());
 	} else if (opName == "split") {
@@ -1004,8 +1004,8 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
                 // Compute the start parameter
 		DepGraphNode* startNode = successors[1];
 		StrangerAutomaton* startAuto = fwAnalysisResult.find(startNode->getID())->second;
-                std::cout << "StartAuto:\n";
-                startAuto->toDotAscii(2);
+                // std::cout << "StartAuto:\n";
+                // startAuto->toDotAscii(2);
 		string startValue = startAuto->getStr();
 		int start = stoi(startValue);
 
@@ -1013,8 +1013,8 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
                 if (successors.size() >=3) {
                     DepGraphNode* lengthNode = successors[2];
                     StrangerAutomaton* lengthAuto = fwAnalysisResult.find(lengthNode->getID())->second;
-                    std::cout << "LengthAuto:\n";
-                    startAuto->toDotAscii(2);
+                    // std::cout << "LengthAuto:\n";
+                    // startAuto->toDotAscii(2);
                     string lengthValue = lengthAuto->getStr();
                     int length = stoi(lengthValue);
 
