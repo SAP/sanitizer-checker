@@ -4078,8 +4078,8 @@ DFA *dfaJsonParse(DFA *inputAuto, int var, int *indices){
 
     // First unescape backslash pairs to char 255
     // TODO: this should be done by adding an extra bit
-    sprintf(str, "%c", 255);
     sprintf(encoded, "\\\\");
+    sprintf(str, "%c", 254);
     p = dfa_construct_string(encoded, var, indices);
     b = dfa_replace_extrabit(a, p, str, var, indices);
     dfaFree(p);
@@ -4087,10 +4087,16 @@ DFA *dfaJsonParse(DFA *inputAuto, int var, int *indices){
     a = b;
 
     for (unsigned int e = 0; e < 128; e++) {
+        //dfaPrintGraphvizAsciiRange(a, var, indices, 1);
         char decodeChar = jsonDecodeChars[e];
         if (e == 'u') {
             for (unsigned int c = 0; c < 128; c++) {
-                sprintf(str, "%c", c);
+                //dfaPrintGraphvizAsciiRange(a, var, indices, 1);
+                if (c == '\\') {
+                    sprintf(str, "%c", 254);
+                } else {
+                    sprintf(str, "%c", c);
+                }
                 sprintf(encoded, "\\u00%02X", c);
                 //printf("%u Replacing %s with %s\n", c, encoded, str);
                 p = dfa_construct_string(encoded, var, indices);
@@ -4125,7 +4131,7 @@ DFA *dfaJsonParse(DFA *inputAuto, int var, int *indices){
 
     // Convert the backslash back again
     sprintf(str, "\\");
-    sprintf(encoded, "%c", 255);
+    sprintf(encoded, "%c", 254);
     p = dfa_construct_string(encoded, var, indices);
     b = dfa_replace_extrabit(a, p, str, var, indices);
     dfaFree(p);
