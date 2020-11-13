@@ -39,11 +39,11 @@ void call_sem_attack(string target_name, string field_name){
 
         MultiAttack attack(target_name, field_name);
         attack.computePostImages();
-        attack.computeAttackPatternOverlap(AttackContext::Html);
-        attack.computeAttackPatternOverlap(AttackContext::HtmlPayload);
-        attack.computeAttackPatternOverlap(AttackContext::HtmlAttr);
-        attack.computeAttackPatternOverlap(AttackContext::JavaScript);
-        attack.computeAttackPatternOverlap(AttackContext::Url);
+        attack.computeAttackPatternOverlaps(AttackContext::Html);
+        attack.computeAttackPatternOverlaps(AttackContext::HtmlPayload);
+        attack.computeAttackPatternOverlaps(AttackContext::HtmlAttr);
+        attack.computeAttackPatternOverlaps(AttackContext::JavaScript);
+        attack.computeAttackPatternOverlaps(AttackContext::Url);
 
         cout << endl << "\t------ OVERALL RESULT for: " << field_name << " ------" << endl;
         cout << "\t    Target: " << target_name << endl;

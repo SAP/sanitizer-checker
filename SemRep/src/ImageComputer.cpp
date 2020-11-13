@@ -25,11 +25,13 @@
 
 using namespace std;
 
-ImageComputer::ImageComputer() {
+ImageComputer::ImageComputer()
+    : uninit_node_default_initialization(StrangerAutomaton::makePhi())
+{
 }
 
 ImageComputer::~ImageComputer() {
-	// TODO Auto-generated destructor stub
+    delete uninit_node_default_initialization;
 }
 
 /**
@@ -38,7 +40,7 @@ ImageComputer::~ImageComputer() {
  */
 
 
-StrangerAutomaton* ImageComputer::uninit_node_default_initialization = nullptr;
+
 
 PerfInfo* ImageComputer::perfInfo = &PerfInfo::getInstance();
 
@@ -511,12 +513,6 @@ void ImageComputer::doForwardAnalysis_SingleInput(
 
 	stack<DepGraphNode*> process_stack;
 	set<DepGraphNode*> visited;
-
-	// TODO remove that from here for a general option
-	if (uninit_node_default_initialization)
-		delete uninit_node_default_initialization;
-	uninit_node_default_initialization = StrangerAutomaton::makePhi();
-
 
 	process_stack.push( inputDepGraph.getRoot() );
 	while (!process_stack.empty()) {
@@ -1132,10 +1128,6 @@ void ImageComputer::doForwardAnalysis_GeneralCase(DepGraph& depGraph, DepGraphNo
 	stack<DepGraphNode*> process_stack;
 	set<DepGraphNode*> visited;
 	set<int> processed_SCCs;
-
-	// TODO remove that from here for a general option
-	if (!uninit_node_default_initialization)
-		uninit_node_default_initialization = StrangerAutomaton::makePhi();
 
 	process_stack.push(node);
 	while (!process_stack.empty()) {

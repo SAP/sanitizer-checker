@@ -44,13 +44,14 @@ public:
     virtual ~MultiAttack();
 
     void computePostImages();
-    void computeAttackPatternOverlap(AttackContext context);
+    void computeAttackPatternOverlaps(AttackContext context);
     void printResults() const;
 
 private:
     void fillCommonPatterns();
     void findDotFiles();
     void computePostImage(std::string file);
+    void computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context);
     static std::vector<std::string> getDotFilesInDir(std::string const &dir);
     static std::vector<fs::path> getFilesInPath(fs::path const & root, std::string const & ext);
 
@@ -62,6 +63,7 @@ private:
     AutomatonGroups m_groups;
     std::vector<AttackContext> m_analyzed_contexts;
     std::mutex results_mutex;
+    unsigned int m_nThreads;
 };
 
 

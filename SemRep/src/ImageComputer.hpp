@@ -77,7 +77,7 @@ public:
 
 private:
 
-    static StrangerAutomaton* uninit_node_default_initialization;
+    StrangerAutomaton* uninit_node_default_initialization;
     NodesList f_unmodeled;
     std::string getLiteralOrConstantValue(const DepGraphNode* node);
     bool isLiteralOrConstant(const DepGraphNode* node, NodesList successors);

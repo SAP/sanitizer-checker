@@ -16,6 +16,7 @@ AX_BOOST_SYSTEM
 AX_BOOST_FILESYSTEM
 AX_BOOST_PROGRAM_OPTIONS
 AX_BOOST_REGEX
+AX_BOOST_THREAD
 
 AC_CHECK_HEADERS([stranger/stranger_lib_internal.h stranger/stranger.h] 
                  ,[],AC_MSG_ERROR(required Stranger library header file not found),[])

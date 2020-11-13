@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <functional>
 #include <boost/asio.hpp>
+#include <boost/thread.hpp>
 
 namespace asio = boost::asio;
 
@@ -45,7 +46,13 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_groups()
   , m_analyzed_contexts()
   , results_mutex()
+  , m_nThreads(boost::thread::hardware_concurrency())
 {
+
+  if (m_nThreads <= 0) {
+    m_nThreads = 1;
+  }
+  
   fillCommonPatterns();
 }
 
@@ -65,19 +72,23 @@ MultiAttack::~MultiAttack() {
 void MultiAttack::printResults() const
 {
   std::cout << "Found " << this->m_dot_paths.size() << " dot files" << std::endl;
+  std::cout << "Computed images with pool of " << m_nThreads << " threads." << std::endl;
   m_groups.printGroups();
 }
 
 void MultiAttack::computePostImage(std::string file) {
     try {
-        // This could be parallelized
-        std::cout << "Analysing file: " << file << " in " << std::this_thread::get_id() << std::endl;
+        std::cout << "Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
         CombinedAnalysisResult* result =
                 new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());
         const StrangerAutomaton* postImage = result->getFwAnalysis().getPostImage();
         const std::lock_guard<std::mutex> lock(this->results_mutex);
+        std::cout << "Finished forward analysis of " << file << std::endl;
+        std::cout << "Inserting results into groups for " << file << std::endl;
         this->m_groups.addAutomaton(postImage, result);
         this->m_results.emplace_back(result);
+        std::cout << "Finished inserting results into groups for " << file << std::endl;
+        this->printResults();
     } catch (StrangerStringAnalysisException const &e) {
         std::cerr << e.what() << std::endl;
     } catch (const std::exception& e) {
@@ -86,26 +97,38 @@ void MultiAttack::computePostImage(std::string file) {
 }
 void MultiAttack::computePostImages() {
   findDotFiles();
-  boost::asio::thread_pool pool(2);
+  boost::asio::thread_pool pool(m_nThreads);
+  std::cout << "Computing post images with pool of " << m_nThreads << " threads." << std::endl;
   for (auto file : this->m_dot_paths) {
       asio::post(pool, std::bind(&MultiAttack::computePostImage, this, file));
-      //this->computePostImage(file);
-    }
-    pool.join();
+  }
+  pool.join();
 }
 
-void MultiAttack::computeAttackPatternOverlap(AttackContext context)
+void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context)
 {
-  // Loop over exisiting results and compute overlap and pre-image for each one
-  for (auto result : m_results) {
     std::cout << "Doing backward analysis for file: "
               << result->getAttack()->getFileName()
               << ", context: " << AttackContextHelper::getName(context)
               << std::endl;
-    // Consider this in a separate thread
-    result->addBackwardAnalysis(context);
+    try {
+      result->addBackwardAnalysis(context);
+    } catch (StrangerStringAnalysisException const &e) {
+      std::cerr << e.what() << std::endl;
+    } catch (const std::exception& e) {
+      std::cerr << e.what() << std::endl;
+    }
+}
+
+void MultiAttack::computeAttackPatternOverlaps(AttackContext context)
+{
+  // Loop over exisiting results and compute overlap and pre-image for each one
+  boost::asio::thread_pool pool(m_nThreads);
+  std::cout << "Computing pre images with pool of " << m_nThreads << " threads." << std::endl;
+  for (auto result : m_results) {
+    asio::post(pool, std::bind(&MultiAttack::computeAttackPatternOverlap, this, result, context));
   }
-  m_analyzed_contexts.push_back(context);
+  pool.join();
 }
 
 void MultiAttack::fillCommonPatterns() {

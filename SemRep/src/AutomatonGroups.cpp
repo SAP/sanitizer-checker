@@ -73,6 +73,8 @@ void AutomatonGroup::printHeaders() {
 }
 
 void AutomatonGroup::printMembers() const {
+  // Switch to decimal
+  std::cout << std::dec;
   std::cout << getName()
             << " entries: "
             << getEntries()

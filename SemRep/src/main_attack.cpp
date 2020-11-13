@@ -37,6 +37,7 @@ void call_sem_attack(string target_name, string field_name){
         cout << endl << "\t       Target: " << target_name  << endl;
 
         SemAttack semAttack(target_name, field_name);
+        semAttack.setPrintDots(true);
         AnalysisResult result = semAttack.computeTargetFWAnalysis();
         const StrangerAutomaton* postImage = semAttack.getPostImage(result);
         StrangerAutomaton* attackPattern = AttackPatterns::getHtmlPattern();

@@ -30,7 +30,8 @@ semrep_LDADD = libsemrep.a \
                $(BOOST_FILESYSTEM_LIB) \
                $(BOOST_SYSTEM_LIB) \
                $(BOOST_REGEX_LIB) \
-							 @PTHREAD_CFLAGS@
+               $(BOOST_THREAD_LIB) \
+               @PTHREAD_CFLAGS@
 
 semattack_SOURCES = main_attack.cpp
 semattack_LDADD = libsemrep.a \
@@ -70,4 +71,5 @@ multiattack_LDADD = libsemrep.a \
                  $(BOOST_FILESYSTEM_LIB) \
                  $(BOOST_SYSTEM_LIB) \
                  $(BOOST_REGEX_LIB) \
-								@PTHREAD_CFLAGS@
+                 $(BOOST_THREAD_LIB) \
+                 @PTHREAD_CFLAGS@

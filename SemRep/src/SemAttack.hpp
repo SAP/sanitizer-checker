@@ -58,6 +58,7 @@ public:
     
     void printResults() const;
 
+    void setPrintDots(bool print) { m_print_dots = print; }
     std::string getFileName() const { return target_dep_graph_file_name; }
     static PerfInfo& perfInfo;
 
@@ -79,6 +80,8 @@ private:
     std::string generateOutputFilePath(std::string folder_name, bool unique_name) const;
     void printAnalysisResults(AnalysisResult& result) const;
     void printNodeList(NodesList nodes) const;
+
+    bool m_print_dots;
 };
 
 // Class containing all revelant forward analysis results

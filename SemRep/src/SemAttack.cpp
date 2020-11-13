@@ -98,8 +98,8 @@ ForwardAnalysisResult::~ForwardAnalysisResult()
 SemAttack::SemAttack(const string& target_dep_graph_file_name, const string& input_field_name)
   : target_dep_graph_file_name(target_dep_graph_file_name)
   , input_field_name(input_field_name)
+  , m_print_dots(false)
 {
-
     // read dep graphs
     this->target_dep_graph = DepGraph::parseDotFile(target_dep_graph_file_name);
 
@@ -113,9 +113,10 @@ SemAttack::SemAttack(const string& target_dep_graph_file_name, const string& inp
     // initialize input relevant graphs
     this->target_field_relevant_graph = target_dep_graph.getInputRelevantGraph(target_uninit_field_node);
 
-    message(this->target_dep_graph.toDot());
-    message(this->target_field_relevant_graph.toDot());
-
+    if (m_print_dots) {
+      message(this->target_dep_graph.toDot());
+      message(this->target_field_relevant_graph.toDot());
+    }
 }
 
 SemAttack::~SemAttack() {
@@ -254,25 +255,30 @@ StrangerAutomaton* SemAttack::computeAttackPatternOverlap(const StrangerAutomato
     DEBUG_AUTO(postImage);
   }
 
-  message("Sanitizer Automaton");
-  postImage->toDotAscii(1);
-  message("Example sanitizer string:");
-  message(postImage->generateSatisfyingExample());
+  if (m_print_dots) {
+    message("Sanitizer Automaton");
+    postImage->toDotAscii(1);
+    message("Example sanitizer string:");
+    message(postImage->generateSatisfyingExample());
 
-  message("Attack Pattern Automaton");
-  attackPattern->toDotAscii(1);
-  message("Example attack pattern string:");
-  message(attackPattern->generateSatisfyingExample());
-
+    message("Attack Pattern Automaton");
+    attackPattern->toDotAscii(1);
+    message("Example attack pattern string:");
+    message(attackPattern->generateSatisfyingExample());
+  }
+  
   StrangerAutomaton* intersection = postImage->intersect(attackPattern);
-  message("Intersection Automaton");
-  intersection->toDotAscii(1);
-        
-  if (intersection->isEmpty()) {
-    message("No intersection, validation function is good!");
-  } else {
-    message("Intersection between attack pattern and sanitizer!");
-    message(intersection->generateSatisfyingExample());
+
+  if (m_print_dots) {
+    message("Intersection Automaton");
+    intersection->toDotAscii(1);
+
+    if (intersection->isEmpty()) {
+      message("No intersection, validation function is good!");
+    } else {
+      message("Intersection between attack pattern and sanitizer!");
+      message(intersection->generateSatisfyingExample());
+    }
   }
 
   return intersection;
