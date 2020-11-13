@@ -3894,7 +3894,7 @@ static const char encodeUriComponentChars[URI_ENCODE_CHARS] =
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // cx
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // dx
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // ex
-    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // fx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   0,  // fx  // insertIntoStatePairSortedArrayList asserts if escapeChar = 255
 };
 
 static const char encodeUriChars[URI_ENCODE_CHARS] =
@@ -3915,7 +3915,7 @@ static const char encodeUriChars[URI_ENCODE_CHARS] =
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // cx
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // dx
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // ex
-    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // fx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   0,  // fx   // insertIntoStatePairSortedArrayList asserts if escapeChar = 255
 };
 
 static DFA *dfaEncodeUriGeneric(DFA *inputAuto, int var, int *indices, const char* encoding){
