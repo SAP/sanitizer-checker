@@ -23,13 +23,20 @@
 #include "AttackPatterns.hpp"
 
 // Set of RegExps used to describe various attack patten contexts
+// HTML Context
 std::string AttackPatterns::m_htmlEscapedRegExp          =  "/([^<>'\"&\\/]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
+std::string AttackPatterns::m_htmlEscapedNoSlashRegExp   =  "/([^<>'\"&]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
+std::string AttackPatterns::m_htmlEscapedBacktickRegExp  =  "/([^<>'\"&`]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
+
+// HTML Attributes
 std::string AttackPatterns::m_htmlAttrEscapedRegExp      =  "/([a-zA-Z0-9]+|((&[a-zA-Z]+;|&#[xX][0-9]+;|&#[0-9]+;)))+/";
 std::string AttackPatterns::m_javascriptEscapedRegExp    =  "/([a-zA-Z0-9,._\\s]+|((\\\\u[a-fA-F0-9]{4})|(\\\\x[a-fA-F0-9]{2})))+/";
 std::string AttackPatterns::m_urlEscapedRegExp           =  "/([a-zA-Z0-9-_.!~*'()]+|((%[a-fA-F0-9]{2})))+/";
 
+// Sample Payload
 std::string AttackPatterns::m_htmlPayload                = "<script>alert(\"XSS\");</script>";
 
+// Removing characters
 std::string AttackPatterns::m_htmlRemovedRegExp          =  "/[^<>'\"&\\/]*/";
 std::string AttackPatterns::m_htmlRemovedNoSlashRegExp   =  "/[^<>'\"&]*/";
 
@@ -79,6 +86,20 @@ StrangerAutomaton* AttackPatterns::getHtmlPattern()
     // Allowed characters in innerHTML, excludes ">", "<", "'", """, "\"
     // "&" is only considered harmful if it is not escaped
     return getAttackPatternFromAllowedRegEx(AttackPatterns::m_htmlEscapedRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getHtmlNoSlashesPattern()
+{
+    // Allowed characters in innerHTML, excludes ">", "<", "'", """,
+    // "&" is only considered harmful if it is not escaped
+    return getAttackPatternFromAllowedRegEx(AttackPatterns::m_htmlEscapedNoSlashRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getHtmlBacktickPattern()
+{
+    // Allowed characters in innerHTML, excludes ">", "<", "'", """, "`"
+    // "&" is only considered harmful if it is not escaped
+    return getAttackPatternFromAllowedRegEx(AttackPatterns::m_htmlEscapedBacktickRegExp);
 }
 
 StrangerAutomaton* AttackPatterns::getHtmlAttributePattern()
@@ -147,6 +168,14 @@ StrangerAutomaton* AttackPatterns::getEncodeHtmlSlash()
 {
     StrangerAutomaton* star = StrangerAutomaton::makeAnyString();
     StrangerAutomaton* encoded = StrangerAutomaton::htmlSpecialChars(star, "ENT_SLASH");
+    delete star;
+    return encoded;
+}
+
+StrangerAutomaton* AttackPatterns::getEncodeHtmlTagsOnly()
+{
+    StrangerAutomaton* star = StrangerAutomaton::makeAnyString();
+    StrangerAutomaton* encoded = StrangerAutomaton::escapeHtmlTags(star);
     delete star;
     return encoded;
 }

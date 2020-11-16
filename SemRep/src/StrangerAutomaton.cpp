@@ -2473,6 +2473,36 @@ StrangerAutomaton* StrangerAutomaton::pre_encodeTextFragment(StrangerAutomaton* 
     return retMe;
 }
 
+StrangerAutomaton* StrangerAutomaton::escapeHtmlTags(StrangerAutomaton* subjectAuto, int id)
+{
+
+    debug(stringbuilder() << id << " = escapeHtmlTags(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaHtmlEscapeTags(subjectAuto->dfa, num_ascii_track, indices_main));
+    perfInfo->escapehtmltags_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_escapehtmltags++;
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::pre_escapeHtmlTags(StrangerAutomaton* subjectAuto, int id)
+{
+
+    debug(stringbuilder() << id << " = pre_escapeHtmlTags(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaPreHtmlEscapeTags(subjectAuto->dfa, num_ascii_track, indices_main));
+    perfInfo->pre_escapehtmltags_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_pre_escapehtmltags++;
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
 StrangerAutomaton* StrangerAutomaton::htmlSpecialChars(StrangerAutomaton* subjectAuto, string flag, int id)
 {
     hscflags_t _flag;

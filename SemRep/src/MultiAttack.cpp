@@ -155,6 +155,23 @@ void MultiAttack::fillCommonPatterns() {
   m_automata.push_back(a);
   m_groups.createGroup(a, "HTMLEscaped");
 
+  // HTML Escape < >
+  a = AttackPatterns::getEncodeHtmlTagsOnly();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "HTMLEscapeTags");
+
+  // Allowed characters in innerHTML, excludes ">", "<", "'", """,
+  // "&" is only considered harmful if it is not escaped
+  a = AttackPatterns::getHtmlNoSlashesPattern();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "HTMLEscapeNoSlashes");
+
+  // Allowed characters in innerHTML, excludes ">", "<", "'", """, "`"
+  // "&" is only considered harmful if it is not escaped
+  a = AttackPatterns::getHtmlBacktickPattern();
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "HTMLEscapeBacktick");
+
   // HTML Removed
   a = AttackPatterns::getHtmlRemoved();
   m_automata.push_back(a);
@@ -175,7 +192,7 @@ void MultiAttack::fillCommonPatterns() {
   m_automata.push_back(a);
   m_groups.createGroup(a, "HTMLEscape<>&\"");
 
-  // HTML Escape < > & "
+  // HTML Escape < > & " '
   a = AttackPatterns::getEncodeHtmlQuotes();
   m_automata.push_back(a);
   m_groups.createGroup(a, "HTMLEscape<>&\"'");

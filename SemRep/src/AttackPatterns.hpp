@@ -44,6 +44,14 @@ public:
     // & is allowed only if escaped
     static StrangerAutomaton* getHtmlPattern();
 
+    // Allowed characters in innerHTML, excludes ">", "<", "'", """,
+    // "&" is only considered harmful if it is not escaped
+    static StrangerAutomaton* getHtmlNoSlashesPattern();
+
+    // Allowed characters in innerHTML, excludes ">", "<", "'", """, "`"
+    // "&" is only considered harmful if it is not escaped
+    static StrangerAutomaton* getHtmlBacktickPattern();
+
     // Allowed characters in HTML attribute, excludes all non alphanumeric chars, except & escaped 
     static StrangerAutomaton* getHtmlAttributePattern();
 
@@ -93,6 +101,9 @@ public:
     // HTML escaped <>&"'/
     static StrangerAutomaton* getEncodeHtmlSlash();
 
+    // HTML escape <>
+    static StrangerAutomaton* getEncodeHtmlTagsOnly();
+    
     static StrangerAutomaton* getUndesiredSQLTest();
     static StrangerAutomaton* getUndesiredMFETest();
 
@@ -101,6 +112,8 @@ private:
     static StrangerAutomaton* getAttackPatternFromAllowedRegEx(const std::string& regex);
 
     static std::string m_htmlEscapedRegExp;
+    static std::string m_htmlEscapedNoSlashRegExp;
+    static std::string m_htmlEscapedBacktickRegExp;
     static std::string m_htmlAttrEscapedRegExp;
     static std::string m_javascriptEscapedRegExp;
     static std::string m_urlEscapedRegExp;

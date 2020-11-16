@@ -128,6 +128,8 @@ public:
      boost::posix_time::time_duration pre_encodeattrstring_total_time;
      boost::posix_time::time_duration encodetextfragment_total_time;
      boost::posix_time::time_duration pre_encodetextfragment_total_time;
+     boost::posix_time::time_duration escapehtmltags_total_time;
+     boost::posix_time::time_duration pre_escapehtmltags_total_time;
 
     unsigned int number_of_vlab_restrict;
 	 unsigned int number_of_pre_vlab_restrict;
@@ -159,6 +161,8 @@ public:
     unsigned int number_of_pre_encodeattrstring;
     unsigned int number_of_encodetextfragment;
     unsigned int number_of_pre_encodetextfragment;
+    unsigned int number_of_escapehtmltags;
+    unsigned int number_of_pre_escapehtmltags;
 protected:
     virtual ~PerfInfo();
 

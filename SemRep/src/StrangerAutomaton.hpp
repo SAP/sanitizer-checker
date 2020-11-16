@@ -216,6 +216,11 @@ public:
     static StrangerAutomaton* pre_encodeTextFragment(StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* pre_encodeTextFragment(StrangerAutomaton* subjectAuto){return pre_encodeTextFragment(subjectAuto, traceID);};
 
+    static StrangerAutomaton* escapeHtmlTags(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* escapeHtmlTags(StrangerAutomaton* subjectAuto){return escapeHtmlTags(subjectAuto, traceID);};
+    static StrangerAutomaton* pre_escapeHtmlTags(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* pre_escapeHtmlTags(StrangerAutomaton* subjectAuto){return pre_escapeHtmlTags(subjectAuto, traceID);};
+
     static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto){return encodeURIComponent(subjectAuto, traceID);};
     static StrangerAutomaton* decodeURIComponent(StrangerAutomaton* subjectAuto, int id);
