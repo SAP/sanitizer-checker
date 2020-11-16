@@ -3778,13 +3778,60 @@ DFA *dfaHtmlEscapeTags(DFA *inputAuto, int var, int *indices){
     return result;
 }
 
-DFA *dfaPreEscapeTags(DFA *inputAuto, int var, int *indices){
+DFA *dfaPreHtmlEscapeTags(DFA *inputAuto, int var, int *indices){
     DFA *result = NULL;
 
     DFA *a2 = dfa_pre_replace_char_with_string(inputAuto, var, indices, '>', "&gt;");
 
     result = dfa_pre_replace_char_with_string(a2, var, indices, '<', "&lt;");
     dfaFree(a2);
+
+    return result;
+}
+
+DFA *dfaHtmlEscapeDecimal(DFA *inputAuto, int var, int *indices){
+    char *lt = "\xfe""#60;";
+    char *gt = "\xfe""#62;";
+    char *sq = "\xfe""#39;";
+    char *dq = "\xfe""#34;";
+    DFA *result = NULL;
+
+    DFA *a1 = dfa_replace_char_with_string(inputAuto, var, indices, '<', lt);
+
+    DFA *a2 = dfa_replace_char_with_string(a1, var, indices, '>', gt);
+    dfaFree(a1);
+
+    DFA *a3 = dfa_replace_char_with_string(a2, var, indices, '\'', sq);
+    dfaFree(a2);
+
+    DFA *a4 = dfa_replace_char_with_string(a3, var, indices, '"', dq);
+    dfaFree(a3);
+
+    DFA *a5 = dfa_replace_char_with_string(a4, var, indices, '&', "&#38;");
+    dfaFree(a4);
+
+    result = dfa_replace_char_with_string(a5, var, indices, '\xfe', "&");
+    dfaFree(a5);
+
+    return result;
+}
+
+DFA *dfaPreHtmlEscapeDecimal(DFA *inputAuto, int var, int *indices){
+    DFA *result = NULL;
+
+    DFA *a1 = dfa_pre_replace_char_with_string(inputAuto, var, indices, '&', "&#38;");
+
+    DFA *a2 = dfa_pre_replace_char_with_string(a1, var, indices, '"', "&#34;");
+    dfaFree(a1);
+
+    DFA *a3 = dfa_pre_replace_char_with_string(a2, var, indices, '\'', "&#39;");
+    dfaFree(a2);
+
+    DFA *a4 = dfa_pre_replace_char_with_string(a3, var, indices, '>', "&#62;");
+    dfaFree(a3);
+
+    result = dfa_pre_replace_char_with_string(a4, var, indices, '<', "&#60;");
+    dfaFree(a4);
 
     return result;
 }

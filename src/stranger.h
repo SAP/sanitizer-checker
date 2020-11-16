@@ -464,6 +464,8 @@ extern "C" {
     DFA *dfaPreEncodeAttrString(DFA *inputAuto, int var, int *indices);
     DFA *dfaHtmlEscapeTags(DFA *inputAuto, int var, int *indices);
     DFA *dfaPreHtmlEscapeTags(DFA *inputAuto, int var, int *indices);
+    DFA *dfaHtmlEscapeDecimal(DFA *inputAuto, int var, int *indices);
+    DFA *dfaPreHtmlEscapeDecimal(DFA *inputAuto, int var, int *indices);
 
     DFA *dfaEncodeUriComponent(DFA *inputAuto, int var, int *indices);
     DFA *dfaDecodeUriComponent(DFA *inputAuto, int var, int *indices);
