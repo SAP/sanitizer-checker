@@ -35,8 +35,8 @@
 class AutomatonGroup {
 
 public:
-    AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name);
-    AutomatonGroup(const StrangerAutomaton* automaton);
+    AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name, int id);
+    AutomatonGroup(const StrangerAutomaton* automaton, int id);
     virtual ~AutomatonGroup();
 
     void setName(const std::string& name);
@@ -47,12 +47,14 @@ public:
     unsigned int getEntries() const { return m_graphs.size(); }
 
     void printMembers() const;
-    static void printHeaders();;
+    void printSummary() const;
+    static void printHeaders();
 
 private:
     const StrangerAutomaton* m_automaton;
     std::vector<const CombinedAnalysisResult*> m_graphs;
     std::string m_name;
+    int m_id;
 };
 
 class AutomatonGroups {
@@ -69,15 +71,17 @@ public:
 
     AutomatonGroup* addGroup(const StrangerAutomaton* automaton);
 
+    AutomatonGroup* getGroupForAutomaton(const StrangerAutomaton* automaton);
+    const AutomatonGroup* getGroupForAutomaton(const StrangerAutomaton* automaton) const;
+
     unsigned int getEntries() const;
     void printGroups() const;
 
 private:
 
     std::vector<AutomatonGroup> m_groups;
-
+    int m_id;
     AutomatonGroup* addNewEntry(const StrangerAutomaton* automaton, const CombinedAnalysisResult* graph);
-    AutomatonGroup* getGroupForAutomaton(const StrangerAutomaton* automaton);
 };
 
 #endif /* AUTOMATON_GROUPS_HPP_ */

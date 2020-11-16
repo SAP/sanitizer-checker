@@ -40,24 +40,27 @@ namespace fs = boost::filesystem;
 class MultiAttack {
 
 public:
-    MultiAttack(const std::string& graph_directory, const std::string& input_field_name);
+    MultiAttack(const std::string& graph_directory, const std::string& output_dir, const std::string& input_field_name);
     virtual ~MultiAttack();
 
     void computePostImages();
     void computeAttackPatternOverlaps(AttackContext context);
     void printResults() const;
+    void printDetailedResults() const;
 
 private:
     void fillCommonPatterns();
     void findDotFiles();
-    void computePostImage(std::string file);
+    void computePostImage(const fs::path& file);
     void computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context);
-    static std::vector<std::string> getDotFilesInDir(std::string const &dir);
+    static std::vector<fs::path> getDotFilesInDir(fs::path const &dir);
     static std::vector<fs::path> getFilesInPath(fs::path const & root, std::string const & ext);
 
-    std::string m_graph_directory;
+    fs::path m_graph_directory;
+    fs::path m_output_directory;
+
     std::string m_input_name;
-    std::vector<std::string> m_dot_paths;
+    std::vector<fs::path> m_dot_paths;
     std::vector<CombinedAnalysisResult*> m_results;
     std::vector<StrangerAutomaton*> m_automata;
     AutomatonGroups m_groups;

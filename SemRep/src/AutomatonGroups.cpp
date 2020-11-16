@@ -27,18 +27,20 @@
 
 #include <iostream>
 
-AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name)
+AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name, int id)
   : m_automaton(automaton)
   , m_graphs()
   , m_name(name)
+  , m_id(id)
 {
 
 }
 
-AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton)
+AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton, int id)
   : m_automaton(automaton)
   , m_graphs()
-  , m_name()
+  , m_name(std::to_string(id))
+  , m_id(id)
 {
 
 }
@@ -72,28 +74,32 @@ void AutomatonGroup::printHeaders() {
             << "Entries ";
 }
 
-void AutomatonGroup::printMembers() const {
-  std::cout << getName()
+void AutomatonGroup::printSummary() const {
+  std::cout << m_id << ": " <<getName()
             << " entries: "
-            << getEntries()
-            << ", ";
+            << getEntries();
+}
 
+void AutomatonGroup::printMembers() const {
+
+  printSummary();
+  std:: cout << ", ";
   // Get vulnerablility overlaps from first entry
   if (m_graphs.size() > 0) {
     m_graphs.at(0)->printResult();
   }
-  std::cout << std::endl;
-
-  std::cout << "     Files: ";
+  std::cout << ", Example: ";
   for (auto iter : m_graphs) {
     std::cout << iter->getAttack()->getFileName() << ", ";
+    break;
   }
   std::cout << std::endl;
   //m_automaton->toDotAscii(0);
 }
 
-AutomatonGroups::AutomatonGroups() :
-  m_groups()
+AutomatonGroups::AutomatonGroups()
+  : m_groups()
+  , m_id(0)
 {
 
 }
@@ -129,7 +135,8 @@ AutomatonGroup* AutomatonGroups::addAutomaton(const StrangerAutomaton* automaton
 }
 
 AutomatonGroup* AutomatonGroups::addGroup(const StrangerAutomaton* automaton) {
-  AutomatonGroup group(automaton);
+  AutomatonGroup group(automaton, m_id);
+  m_id++;
   m_groups.push_back(group);
   return &m_groups.back(); 
 }
@@ -152,17 +159,25 @@ AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutomaton* a
   return nullptr;
 }
 
+const AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutomaton* automaton) const
+{
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    const StrangerAutomaton* existing = iter->getAutomaton();
+    if (automaton->equals(existing)) {
+      return &(*iter);
+    }
+  }
+  return nullptr;
+}
+
 void AutomatonGroups::printGroups() const {
   // Switch to decimal
   std::cout << std::dec;
   //  SemAttack::perfInfo.print_operations_info();
   std::cout << "Total of " << m_groups.size() << " unique post-images with " << getEntries() << " entries." << std::endl;
   AutomatonGroup::printHeaders();
-  unsigned int i = 0;
   for (auto iter : m_groups) {
-    std::cout << i << ": ";
     iter.printMembers();
-    i++;
   }
 }
 

@@ -494,7 +494,7 @@ DepGraph DepGraph::parsePixyDotFile(std::string fname) {
     return depGraph;
 }
 
-std::string DepGraph::toDot(){
+std::string DepGraph::toDot() const{
     std::stringstream ss;
     NodesMapConstIterator citNodes;
     EdgesMapConstIterator citFromNode;
@@ -531,7 +531,7 @@ std::string DepGraph::toDot(){
     return ss.str();
 }
 
-void DepGraph::dumpDot(string fname){
+void DepGraph::dumpDot(string fname) const{
     ofstream ofs;
     string content;
     try {

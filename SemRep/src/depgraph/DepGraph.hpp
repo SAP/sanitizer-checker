@@ -151,8 +151,8 @@ public:
     static DepGraph parseDotFile(std::string fname);
     static DepGraph parsePixyDotFile(std::string fname);
 
-    std::string toDot();
-    void dumpDot(string fname);
+    std::string toDot() const;
+    void dumpDot(string fname) const;
 
     std::string label;
     std::string labelloc;

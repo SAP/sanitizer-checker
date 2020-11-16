@@ -37,8 +37,9 @@
 
 namespace asio = boost::asio;
 
-MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& input_field_name)
+MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& output_dir, const std::string& input_field_name)
   : m_graph_directory(graph_directory)
+  , m_output_directory(output_dir)
   , m_input_name(input_field_name)
   , m_dot_paths()
   , m_results()
@@ -73,22 +74,33 @@ void MultiAttack::printResults() const
 {
   std::cout << "Found " << this->m_dot_paths.size() << " dot files" << std::endl;
   std::cout << "Computed images with pool of " << m_nThreads << " threads." << std::endl;
+  std::cout << "Printing Groups:" << std::endl;
   m_groups.printGroups();
+  std::cout << "Printing files:" << std::endl;
+  for (auto result : m_results) {
+    const AutomatonGroup* group = this->m_groups.getGroupForAutomaton(result->getFwAnalysis().getPostImage());
+    result->printDetailedResults();
+    std::cout << "Group: ";
+    group->printSummary();
+    std::cout << std::endl;
+  }
 }
 
-void MultiAttack::computePostImage(std::string file) {
+void MultiAttack::computePostImage(const fs::path& file) {
     try {
-        std::cout << "Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
+        fs::path dir(m_output_directory / file);
+        std::cout << "Analysing file: " << file.string() << " in thread " << std::this_thread::get_id() << std::endl;
         CombinedAnalysisResult* result =
                 new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());
         const StrangerAutomaton* postImage = result->getFwAnalysis().getPostImage();
+        result->getAttack()->writeResultsToFile(dir);
+        result->getFwAnalysis().writeResultsToFile(dir);
         const std::lock_guard<std::mutex> lock(this->results_mutex);
         std::cout << "Finished forward analysis of " << file << std::endl;
         std::cout << "Inserting results into groups for " << file << std::endl;
         this->m_groups.addAutomaton(postImage, result);
         this->m_results.emplace_back(result);
         std::cout << "Finished inserting results into groups for " << file << std::endl;
-        this->printResults();
     } catch (StrangerStringAnalysisException const &e) {
         std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
         std::cerr << e.what() << std::endl;
@@ -105,6 +117,8 @@ void MultiAttack::computePostImages() {
       asio::post(pool, std::bind(&MultiAttack::computePostImage, this, file));
   }
   pool.join();
+  std::cout << "Forward analysis finished!" << std::endl;
+  this->printResults();
 }
 
 void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context)
@@ -115,7 +129,9 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
               << ", context: " << AttackContextHelper::getName(context)
               << std::endl;
     try {
-      result->addBackwardAnalysis(context);
+      fs::path dir(m_output_directory / result->getAttack()->getFile());
+      const BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
+      bw->writeResultsToFile(dir);
     } catch (StrangerStringAnalysisException const &e) {
       std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
       std::cerr << e.what() << std::endl;
@@ -227,14 +243,9 @@ void MultiAttack::findDotFiles() {
   this->m_dot_paths = getDotFilesInDir(this->m_graph_directory);
 }
 
-std::vector<std::string> MultiAttack::getDotFilesInDir(std::string const &dir)
+std::vector<fs::path> MultiAttack::getDotFilesInDir(fs::path const &dir)
 {
-  std::vector<std::string> files;
-  fs::path path_dir(dir);
-  for (auto file : getFilesInPath(path_dir, ".dot")) {
-         files.emplace_back(file.string());
-  }
-  return files;
+  return getFilesInPath(dir, ".dot");
 }
 
 /**

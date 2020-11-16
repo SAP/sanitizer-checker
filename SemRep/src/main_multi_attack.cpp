@@ -32,12 +32,12 @@ using namespace boost;
 namespace po = boost::program_options;
 
 
-void call_sem_attack(string target_name, string field_name){
+void call_sem_attack(const string& target_name, const string& output_dir, const string& field_name){
     try {
         cout << endl << "\t------ Starting Analysis for: " << field_name << " ------" << endl;
         cout << endl << "\t       Target: " << target_name  << endl;
 
-        MultiAttack attack(target_name, field_name);
+        MultiAttack attack(target_name, output_dir, field_name);
         attack.computePostImages();
         attack.computeAttackPatternOverlaps(AttackContext::Html);
         attack.computeAttackPatternOverlaps(AttackContext::HtmlPayload);
@@ -81,6 +81,7 @@ int main(int argc, char *argv[]) {
             ("help", "produce help message")
             ("verbose", po::value<string>()->implicit_value("0"), "verbosity level")
             ("target,t", po::value<string>()->required(), "Path to dependency graph file for target function.")
+            ("output,o", po::value<string>()->required(), "Path to output directory.")
             ("fieldname,f", po::value<string>()->required(), "Name of the input field for which sanitization code needs to be repaired.");
 
         po::positional_options_description p;
@@ -102,7 +103,7 @@ int main(int argc, char *argv[]) {
 
         if (vm.count("target") && vm.count("fieldname"))
         {
-            call_sem_attack(vm["target"].as<string>(), vm["fieldname"].as<string>());
+            call_sem_attack(vm["target"].as<string>(), vm["output"].as<string>(), vm["fieldname"].as<string>());
         }
         else {
             cerr << "Unknown error while parsing cmdline options!" << "\n";

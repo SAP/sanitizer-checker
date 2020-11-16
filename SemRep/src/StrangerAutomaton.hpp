@@ -41,6 +41,7 @@ class RegExp;
 class StrangerAutomaton
 {
 public:
+    StrangerAutomaton(const StrangerAutomaton* other);
     StrangerAutomaton(DFA* dfa);
     virtual ~StrangerAutomaton();
     StrangerAutomaton* clone(int id) const;
@@ -238,11 +239,11 @@ public:
 
     void printAutomaton();
     void printAutomatonVitals();
-    void toDot();
+    void toDot() const;
     void toDotAscii(int printSink) const;
-    void toDotFile(std::string file_name);
-    void toDotFileAscii(std::string file_name, int printSink);
-    void toDotBDDFile(std::string file_name);
+    void toDotFile(std::string file_name) const;
+    void toDotFileAscii(std::string file_name, int printSink) const;
+    void toDotBDDFile(std::string file_name) const;
     static void openCtraceFile(std::string name);
     static void appendCtraceFile(std::string name);
     static void closeCtraceFile();

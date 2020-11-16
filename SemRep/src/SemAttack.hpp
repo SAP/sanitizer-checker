@@ -31,9 +31,12 @@
 #include "SemRepairDebugger.hpp"
 #include "depgraph/DepGraph.hpp"
 
+namespace fs = boost::filesystem;
+
 class SemAttack {
 public:
     SemAttack(const std::string& target_dep_graph_file_name, const std::string& input_field_name);
+    SemAttack(const fs::path& target_dep_graph_file_name, const std::string& input_field_name);
     virtual ~SemAttack();
 
     // Compute the post image with sigma star input
@@ -57,27 +60,26 @@ public:
     const StrangerAutomaton* getPreImage(const AnalysisResult& result) const;
     
     void printResults() const;
-
+    void writeResultsToFile(const fs::path& dir) const;
+    
     void setPrintDots(bool print) { m_print_dots = print; }
-    std::string getFileName() const { return target_dep_graph_file_name; }
+    std::string getFileName() const { return target_dep_graph_file_name.string(); }
+    const fs::path& getFile() const { return target_dep_graph_file_name; }
     static PerfInfo& perfInfo;
 
 private:
-    std::string target_dep_graph_file_name;
+    fs::path target_dep_graph_file_name;
     std::string input_field_name;
 
-    DepGraph reference_dep_graph;
     DepGraph target_dep_graph;
-    DepGraph reference_field_relevant_graph;
     DepGraph target_field_relevant_graph;
 
-    DepGraphNode* reference_uninit_field_node;
     DepGraphNode* target_uninit_field_node;
 
     StrangerAutomaton* target_sink_auto;
 
+    void init();
     void message(const std::string& msg) const;
-    std::string generateOutputFilePath(std::string folder_name, bool unique_name) const;
     void printAnalysisResults(AnalysisResult& result) const;
     void printNodeList(NodesList nodes) const;
 
@@ -89,7 +91,7 @@ class ForwardAnalysisResult {
 
 public:
     // Do forward analysis and get result
-    ForwardAnalysisResult(const std::string& target_dep_graph_file_name,
+    ForwardAnalysisResult(const fs::path& target_dep_graph_file_name,
                           const std::string& input_field_name,
                           StrangerAutomaton* automaton);
         
@@ -98,6 +100,8 @@ public:
     const SemAttack* getAttack() const { return m_attack; }
     const StrangerAutomaton* getPostImage() const { return m_attack->getPostImage(m_result); }
     const AnalysisResult& getFwAnalysisResult() const { return m_result; }
+
+    void writeResultsToFile(const fs::path& dir) const;
 
 private:
   SemAttack* m_attack;
@@ -114,42 +118,52 @@ public:
     BackwardAnalysisResult(const ForwardAnalysisResult& result,
                            AttackContext context);
 
+    BackwardAnalysisResult(const ForwardAnalysisResult& result,
+                           const StrangerAutomaton* attack, const std::string& name);
+
     virtual ~BackwardAnalysisResult();
 
     const StrangerAutomaton* getPreImage() const { return getAttack()->getPreImage(m_result); }
     const StrangerAutomaton* getIntersection() const { return m_intersection; }
+    const StrangerAutomaton* getAttackPattern() const { return m_attack; }
     bool isSafe() const { return (getIntersection()->isEmpty() || getIntersection()->checkEmptyString()); }
     bool isVulnerable() const { return !isSafe(); }
+    const std::string& getName() const { return m_name; }
+    void writeResultsToFile(const fs::path& dir) const;
 
 private:
-
+    void init();
     const SemAttack* getAttack() const { return m_fwResult.getAttack(); }
-
     const ForwardAnalysisResult& m_fwResult;
+    std::string m_name;
+    StrangerAutomaton* m_attack;
+ 
     AttackContext m_context;
     StrangerAutomaton* m_intersection;
+
     AnalysisResult m_result;
 };
 
 class CombinedAnalysisResult {
 
 public:
-    CombinedAnalysisResult(const std::string& target_dep_graph_file_name,
+    CombinedAnalysisResult(const fs::path& target_dep_graph_file_name,
                            const std::string& input_field_name,
                            StrangerAutomaton* automaton);
-    ~CombinedAnalysisResult() {}
+    ~CombinedAnalysisResult();
 
-    void addBackwardAnalysis(AttackContext context);
+    const BackwardAnalysisResult* addBackwardAnalysis(AttackContext context);
 
     const SemAttack* getAttack() const { return m_fwAnalysis.getAttack(); }
 
     const ForwardAnalysisResult& getFwAnalysis() const { return m_fwAnalysis; }
 
     void printResult() const;
+    void printDetailedResults() const;
 
 private:
     ForwardAnalysisResult m_fwAnalysis;
-    std::map<AttackContext, BackwardAnalysisResult> m_bwAnalysisMap;
+    std::map<AttackContext, BackwardAnalysisResult*> m_bwAnalysisMap;
 };
 
 #endif /* SEMATTACK_HPP_ */

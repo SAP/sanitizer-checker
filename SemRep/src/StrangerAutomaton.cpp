@@ -31,6 +31,12 @@ StrangerAutomaton::StrangerAutomaton(DFA* dfa)
 	this->dfa = dfa;
 }
 
+StrangerAutomaton::StrangerAutomaton(const StrangerAutomaton* other)
+{
+	init();
+	this->dfa = dfaCopy(other->dfa);
+}
+
 StrangerAutomaton::StrangerAutomaton()
 {
 	init();
@@ -3127,7 +3133,7 @@ unsigned *StrangerAutomaton::getUnsignedIndices(int length){
  * Unfortunately until now there is no interface to provide a file to the C library
  * to print the output into yet :-(
  */
-void StrangerAutomaton::toDot()
+void StrangerAutomaton::toDot() const
 {
 	unsigned* indices_main_unsigned = getUnsignedIndices(num_ascii_track);
 	std::cout.flush();
@@ -3138,14 +3144,14 @@ void StrangerAutomaton::toDot()
     std::cout.flush();
 }
 
-void StrangerAutomaton::toDotFile(std::string file_name) {
+void StrangerAutomaton::toDotFile(std::string file_name) const {
 	unsigned* indices_main_unsigned = getUnsignedIndices(num_ascii_track);
     debugToFile(stringbuilder() << "dfaPrintGraphvizFile(M[" << this->autoTraceID << "], NUM_ASCII_TRACKS, indices_main);//dfaPrintGraphviz( this->ID)");
     dfaPrintGraphvizFile(this->dfa, file_name.c_str(), num_ascii_track, indices_main_unsigned);
     delete indices_main_unsigned;
 }
 
-void StrangerAutomaton::toDotBDDFile(std::string file_name) {
+void StrangerAutomaton::toDotBDDFile(std::string file_name) const {
 
     debugToFile(stringbuilder() << "dfaPrintBDD(M[" << this->autoTraceID << "], NUM_ASCII_TRACKS);");
     dfaPrintBDD(this->dfa, file_name.c_str(), num_ascii_track);
@@ -3173,7 +3179,7 @@ void StrangerAutomaton::toDotAscii(int printSink) const
     std::cout.flush();
 }
 
-void StrangerAutomaton::toDotFileAscii(std::string file_name, int printSink) {
+void StrangerAutomaton::toDotFileAscii(std::string file_name, int printSink) const {
 	unsigned* indices_main_unsigned = getUnsignedIndices(num_ascii_track);
     debugToFile(stringbuilder() << "dfaPrintGraphvizAsciiRangeFile(M[" << this->autoTraceID << "], NUM_ASCII_TRACKS, indices_main);//dfaPrintGraphviz( this->ID)");
     //if the automaton is the empty language then we must enable printing the sink
