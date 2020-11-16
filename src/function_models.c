@@ -3718,8 +3718,12 @@ DFA *dfaEncodeAttrString(DFA *inputAuto, int var, int *indices){
     char *dq = "\xfe""quot;";
     DFA *a1 = dfa_replace_char_with_string(inputAuto, var, indices, '"', dq);
 
-    DFA* result = dfa_replace_char_with_string(a1, var, indices, '&', "&amp;");
+    DFA* a2 = dfa_replace_char_with_string(a1, var, indices, '&', "&amp;");
     dfaFree(a1);
+
+    DFA* result = dfa_replace_char_with_string(a2, var, indices, '\xfe', "&");
+    dfaFree(a2);
+
     return result;
 }
 
@@ -3742,9 +3746,12 @@ DFA *dfaEncodeTextFragment(DFA *inputAuto, int var, int *indices){
 
     DFA *a2 = dfa_replace_char_with_string(a1, var, indices, '>', gt);
     dfaFree(a1);
-    DFA *result = dfa_replace_char_with_string(a2, var, indices, '&', "&amp;");
-
+    DFA *a3 = dfa_replace_char_with_string(a2, var, indices, '&', "&amp;");
     dfaFree(a2);
+
+    DFA* result = dfa_replace_char_with_string(a3, var, indices, '\xfe', "&");
+    dfaFree(a3);
+
     return result;
 }
 
