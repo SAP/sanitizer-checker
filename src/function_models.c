@@ -3762,6 +3762,26 @@ DFA *dfaPreEncodeTextFragment(DFA *inputAuto, int var, int *indices){
     return result;
 }
 
+DFA *dfaHtmlEscapeTags(DFA *inputAuto, int var, int *indices){
+    DFA *a1 = dfa_replace_char_with_string(inputAuto, var, indices, '<', "&lt;");
+
+    DFA *result = dfa_replace_char_with_string(a1, var, indices, '>', "&gt;");
+    dfaFree(a1);
+
+    return result;
+}
+
+DFA *dfaPreEscapeTags(DFA *inputAuto, int var, int *indices){
+    DFA *result = NULL;
+
+    DFA *a2 = dfa_pre_replace_char_with_string(inputAuto, var, indices, '>', "&gt;");
+
+    result = dfa_pre_replace_char_with_string(a2, var, indices, '<', "&lt;");
+    dfaFree(a2);
+
+    return result;
+}
+
 DFA *dfaHtmlSpecialChars(DFA *inputAuto, int var, int *indices, hscflags_t flags){
     char *lt = "\xfe""lt;";
     char *gt = "\xfe""gt;";
