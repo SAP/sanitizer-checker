@@ -173,7 +173,6 @@ SemAttack::SemAttack(const fs::path& target_dep_graph_file_name, const string& i
   , input_field_name(input_field_name)
   , m_print_dots(false)
 {
-  this->init();
 }
 
 SemAttack::SemAttack(const std::string& target_dep_graph_file_name, const string& input_field_name)
@@ -181,7 +180,6 @@ SemAttack::SemAttack(const std::string& target_dep_graph_file_name, const string
   , input_field_name(input_field_name)
   , m_print_dots(false)
 {
-  this->init();
 }
 
 void SemAttack::init()
@@ -286,7 +284,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(StrangerAutomaton* inputAuto) 
         targetAnalyzer.doForwardAnalysis_SingleInput(target_dep_graph, target_field_relevant_graph, targetAnalysisResult);
         message("...finished forward analysis for target.");        
     } catch (StrangerStringAnalysisException const &e) {
-        throw e;
+        throw;
     }
 
     target_sink_auto = targetAnalysisResult[target_field_relevant_graph.getRoot()->getID()];

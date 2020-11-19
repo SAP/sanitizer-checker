@@ -96,6 +96,7 @@ void MultiAttack::computePostImage(const fs::path& file) {
   CombinedAnalysisResult* result =
     new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());
   try {
+    result->getAttack()->init();
     result->getFwAnalysis().doAnalysis();
     const StrangerAutomaton* postImage = result->getFwAnalysis().getPostImage();
     result->getAttack()->writeResultsToFile(dir);
@@ -108,22 +109,12 @@ void MultiAttack::computePostImage(const fs::path& file) {
     this->m_results.emplace_back(result);
     std::cout << "Finished inserting results into groups for " << file << std::endl;
     this->printResults();
-  } catch (StrangerStringAnalysisException const &e) {
-    std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
-    std::cerr << e.what() << std::endl;
-    // Still add the results to the null group
-    const std::lock_guard<std::mutex> lock(this->results_mutex);
-    this->m_groups.addAutomaton(nullptr, result);
-    this->m_results.emplace_back(result);   
-  } catch (StrangerAutomatonException const &e) {
+  } catch (...) {
     std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
     // Still add the results to the null group
     const std::lock_guard<std::mutex> lock(this->results_mutex);
     this->m_groups.addAutomaton(nullptr, result);
     this->m_results.emplace_back(result);   
-  } catch (const std::exception& e) {
-    std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
-    std::cerr << e.what() << std::endl;
   }
 }
 

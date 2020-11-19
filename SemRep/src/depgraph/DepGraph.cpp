@@ -198,6 +198,9 @@ void DepGraph::doGetInputRelevantGraph(DepGraphNode* node,
 }
 
 void DepGraph::addEdge(DepGraphNode* from, DepGraphNode* to) {
+        if (!from || !to) {
+		throw runtime_error(stringbuilder() << "Null pointers given to addEdge");
+	}
 	NodesMapIterator it = nodes.find(from->getID());
 	NodesMapIterator it2 = nodes.find(to->getID());
 	if ( it == nodes.end() || it2 == nodes.end()) {
@@ -348,7 +351,7 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
         cerr << "Can not construct depGraph from file " << fname << ". Following exception happened:\n" << e.what();
         if (ifs.is_open())
             ifs.close();
-        exit(EXIT_FAILURE);
+        throw;
     }
 
     depGraph.calculateSCCs();

@@ -1836,7 +1836,7 @@ bool StrangerAutomaton::checkIntersection(StrangerAutomaton* otherAuto, int id1,
         return true;
     else
         // TODO: we should have our own exception for StrangerAutomaton
-        throw new std::runtime_error(
+        throw std::runtime_error(
                                      "Error in checkIntersection result for StrangerAutomaton.");
 }
 
@@ -1889,7 +1889,7 @@ bool StrangerAutomaton::checkInclusion(StrangerAutomaton* otherAuto, int id1, in
     
     else
         // TODO: we should have our own exception for StrangerAutomaton
-        throw new std::runtime_error(
+        throw std::runtime_error(
                                      "Error in checkInclusion result for StrangerAutomaton.");
 }
 
@@ -1946,7 +1946,7 @@ bool StrangerAutomaton::checkEquivalence(const StrangerAutomaton* otherAuto, int
         return true;
     else
         // TODO: we should have our own exception for StrangerAutomaton
-        throw new std::runtime_error(
+        throw std::runtime_error(
                                      "Error in checkInclusion result for StrangerAutomaton.");
 }
 
@@ -1980,7 +1980,7 @@ bool StrangerAutomaton::isLengthFinite(){
  */
 unsigned StrangerAutomaton::getMaxLength() {
 	if( !(this->isLengthFinite()) ) {
-		throw new std::runtime_error("Length of this automaton is infinite! ID: " + this->ID);
+		throw std::runtime_error("Length of this automaton is infinite! ID: " + this->ID);
 	}
 
 	P_DFAFiniteLengths finiteLengths = dfaGetLengthsFiniteLang(this->dfa, num_ascii_track, indices_main);
@@ -2000,7 +2000,7 @@ unsigned StrangerAutomaton::getMaxLength() {
  */
 unsigned StrangerAutomaton::getMinLength() {
 	if( !(this->isLengthFinite()) ) {
-		throw new std::runtime_error("Length of this automaton is infinite! ID: " + this->ID);
+		throw std::runtime_error("Length of this automaton is infinite! ID: " + this->ID);
 	}
 
 	P_DFAFiniteLengths finiteLengths = dfaGetLengthsFiniteLang(this->dfa, num_ascii_track, indices_main);
@@ -2055,7 +2055,7 @@ bool StrangerAutomaton::checkEmptiness() const {
         return true;
     else
         // TODO: we should have our own exception for StrangerAutomaton
-        throw new std::runtime_error(
+        throw std::runtime_error(
                                      "Error in checkEmptiness result for StrangerAutomaton.");
 }
 
@@ -2308,7 +2308,7 @@ StrangerAutomaton* StrangerAutomaton::preTrimSpacesRigth(int id){
 
 StrangerAutomaton* StrangerAutomaton::substr_first_part(int start, int id) {
 	if (start < 0)
-		throw new std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
+		throw std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
 
         // Create a string with length up to start
         StrangerAutomaton* len1Auto = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
@@ -2334,7 +2334,7 @@ StrangerAutomaton* StrangerAutomaton::substr(int start, int id) {
 
 StrangerAutomaton* StrangerAutomaton::substr(int start, int length, int id) {
 	if (length < 0)
-		throw new std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
+		throw std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
 	boost::posix_time::ptime start_time = perfInfo->current_time();
 	StrangerAutomaton* retMe = NULL;
 	if (length == 0) {
@@ -2360,7 +2360,7 @@ StrangerAutomaton* StrangerAutomaton::substr(int start, int length, int id) {
 
 StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int length, int id) {
 	if (start < 0 || length < 0)
-		throw new std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
+		throw std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
 	boost::posix_time::ptime start_time = perfInfo->current_time();
 	StrangerAutomaton* retMe = NULL;
 	if (length == 0) {
@@ -2392,7 +2392,7 @@ StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int length, int id) 
 
 StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int id) {
 	if (start < 0)
-		throw new std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
+		throw std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
 	boost::posix_time::ptime start_time = perfInfo->current_time();
 	StrangerAutomaton* retMe = NULL;
 
@@ -2547,7 +2547,7 @@ StrangerAutomaton* StrangerAutomaton::htmlSpecialChars(StrangerAutomaton* subjec
     else if (flag == "ENT_SLASH")
 		_flag = ENT_SLASH;
     else
-		throw new std::runtime_error(stringbuilder() << "htmlspecialchar is not supporting the flag: " << flag);
+		throw std::runtime_error(stringbuilder() << "htmlspecialchar is not supporting the flag: " << flag);
 
     debug(stringbuilder() << id << " = htmlSpecialChars(" << subjectAuto->ID << ");");
 
@@ -2574,7 +2574,7 @@ StrangerAutomaton* StrangerAutomaton::preHtmlSpecialChars(StrangerAutomaton* sub
     else if (flag == "ENT_NOQUOTES")
 		_flag = ENT_NOQUOTES;
     else
-		throw new std::runtime_error(stringbuilder() << "htmlspecialchar is not supporting the flag: " << flag);
+		throw std::runtime_error(stringbuilder() << "htmlspecialchar is not supporting the flag: " << flag);
 
 	debug(stringbuilder() << id << " = preHtmlSpecialChars(" << subjectAuto->ID << ");");
 	boost::posix_time::ptime start_time = perfInfo->current_time();
@@ -2687,7 +2687,7 @@ StrangerAutomaton* StrangerAutomaton::mysql_real_escape_string(StrangerAutomaton
     //    }
     //
     //    return retMe;
-	throw new std::runtime_error("not implemented");
+	throw std::runtime_error("not implemented");
     
 }
 
@@ -2715,7 +2715,7 @@ StrangerAutomaton* StrangerAutomaton::pre_mysql_real_escape_string(StrangerAutom
     //    }
     //
     //    return retMe;
-	throw new std::runtime_error("not implemented");
+	throw std::runtime_error("not implemented");
     
 }
 
@@ -2737,7 +2737,7 @@ StrangerAutomaton* StrangerAutomaton::nl2br(StrangerAutomaton* subjectAuto, int 
     //    }
     //
     //    return retMe;
-	throw new std::runtime_error("not implemented");
+	throw std::runtime_error("not implemented");
     
 }
 
@@ -2759,7 +2759,7 @@ StrangerAutomaton* StrangerAutomaton::pre_nl2br(StrangerAutomaton* subjectAuto, 
     //    }
     //
     //    return retMe;
-	throw new std::runtime_error("not implemented");
+	throw std::runtime_error("not implemented");
     
 }
 

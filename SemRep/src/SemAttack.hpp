@@ -39,6 +39,9 @@ public:
     SemAttack(const fs::path& target_dep_graph_file_name, const std::string& input_field_name);
     virtual ~SemAttack();
 
+    // Load the depgraph from file
+    void init();
+
     // Compute the post image with sigma star input
     AnalysisResult computeTargetFWAnalysis();
 
@@ -78,7 +81,6 @@ private:
 
     StrangerAutomaton* target_sink_auto;
 
-    void init();
     void message(const std::string& msg) const;
     void printAnalysisResults(AnalysisResult& result) const;
     void printNodeList(NodesList nodes) const;
@@ -100,6 +102,7 @@ public:
     void doAnalysis() { m_result = m_attack->computeTargetFWAnalysis(m_input); }
 
     const SemAttack* getAttack() const { return m_attack; }
+    SemAttack* getAttack() { return m_attack; }
     const StrangerAutomaton* getPostImage() const { return m_attack->getPostImage(m_result); }
     const AnalysisResult& getFwAnalysisResult() const { return m_result; }
 
@@ -157,6 +160,7 @@ public:
     const BackwardAnalysisResult* addBackwardAnalysis(AttackContext context);
 
     const SemAttack* getAttack() const { return m_fwAnalysis.getAttack(); }
+    SemAttack* getAttack() { return m_fwAnalysis.getAttack(); }
 
     const ForwardAnalysisResult& getFwAnalysis() const { return m_fwAnalysis; }
     ForwardAnalysisResult& getFwAnalysis() { return m_fwAnalysis; }

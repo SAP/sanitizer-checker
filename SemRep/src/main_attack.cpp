@@ -38,6 +38,7 @@ void call_sem_attack(string target_name, string field_name){
 
         SemAttack semAttack(target_name, field_name);
         semAttack.setPrintDots(true);
+        semAttack.init();
         AnalysisResult result = semAttack.computeTargetFWAnalysis();
         const StrangerAutomaton* postImage = semAttack.getPostImage(result);
         StrangerAutomaton* attackPattern = AttackPatterns::getHtmlPattern();
