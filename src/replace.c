@@ -134,6 +134,22 @@ int state_already_included(char* exeps, int k, int len, int var) {
     return match;
 }
 
+static DFA* project_away_sharps(DFA *M, int aux, int len) {
+    DFA *tmpM1;
+    DFA *tmpM2;
+    tmpM2 = dfaMinimize(M);
+    for(unsigned int i = len - aux; i < len; i++){
+        tmpM1 = dfaProject(tmpM2, i);
+        if (!tmpM1) {
+            return NULL;
+        }
+        dfaFree(tmpM2);
+        tmpM2 = dfaMinimize(tmpM1);
+        dfaFree(tmpM1);
+    }
+    return tmpM2;
+}
+
 //Replace any c \in {sharp1} \vee bar \vee {sharp2} with \epsilon (Assume 00000000000)
 DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
 {
@@ -301,17 +317,9 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
 
   //dfaPrintGraphvizAsciiRange(tmpM2, var, indices, 1);  
   //dfaPrintVitals(result);
-  for(i=0; i<aux; i++){
-    j=len -i;
-	if( DEBUG_SIZE_INFO )
-		printf("\t peak : replace_delete : states %d : bddnodes %u : before projection : loop %d \n", tmpM2->ns, bdd_size(tmpM2->bddm), i );
-    tmpM1 =dfaProject(tmpM2, (unsigned) j);
-      dfaFree(tmpM2); tmpM2 = NULL;
-	if( DEBUG_SIZE_INFO )
-		printf("\t peak : replace_delete : states %d : bddnodes %u : after projection : loop %d \n", tmpM1->ns, bdd_size(tmpM1->bddm), i );
-    tmpM2 = dfaMinimize(tmpM1);
-      dfaFree(tmpM1); tmpM1 = NULL;
-  }
+  result = project_away_sharps(tmpM2, aux, len);
+  dfaFree(tmpM2);
+
   free(exeps);
   //printf("FREE ToState\n");
   free(to_states);
@@ -325,10 +333,7 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
   free(pairs);
   if( DEBUG_SIZE_INFO )
 	  printf("\t peak : replace_delete : states %d : bddnodes %u \n", tmpM2->ns, bdd_size(tmpM2->bddm) );
-  result = dfaMinimize(tmpM2);	//MUST BE CAREFUL FOR INDICES..INDICES MAY NOT MATCH!!
-    dfaFree(tmpM2);
-    return result;
-
+  return result;
 }
 
 
@@ -450,19 +455,11 @@ DFA *dfa_replace_char(DFA *M, char a, int var, int *oldindices)
   }
 
   statuces[M->ns]='\0';
-  tmpM1=dfaBuild(b, statuces);
-  //dfaPrintVitals(result);
-  for(i=0; i<aux; i++){
-    j=len-i; //len = var
-	if( DEBUG_SIZE_INFO )
-		printf("\t peak : replace_char : states %d : bddnodes %u : before projection : loop %d \n", tmpM1->ns, bdd_size(tmpM1->bddm), i );
-    tmpM2 =dfaProject(tmpM1, (unsigned) j);
-      dfaFree(tmpM1); tmpM1 = NULL;
-	if( DEBUG_SIZE_INFO )
-		printf("\t peak : replace char : states %d : bddnodes %u : after projection : loop %d \n", tmpM2->ns, bdd_size(tmpM2->bddm), i );
-    tmpM1 = dfaMinimize(tmpM2);
-      dfaFree(tmpM2); tmpM2 = NULL;
-  }
+  tmpM1 = dfaBuild(b, statuces);
+
+  result = project_away_sharps(tmpM1, aux, len);
+  dfaFree(tmpM1);
+
   free(exeps);
   //printf("FREE ToState\n");
   free(to_states);
@@ -478,11 +475,8 @@ DFA *dfa_replace_char(DFA *M, char a, int var, int *oldindices)
   free(pairs);
 	if( DEBUG_SIZE_INFO )
 		printf("\t peak : replace_char : states %d : bddnodes %u \n", tmpM1->ns, bdd_size(tmpM1->bddm) );
-    result = dfaMinimize(tmpM1);
-    dfaFree(tmpM1);
+
     return result;
-
-
 }
 
 
@@ -650,13 +644,10 @@ DFA *dfa_replace_M_dot(DFA *M, DFA* Mr, int var, int *oldindices)
   }
 
   statuces[M->ns]='\0';
-  result=dfaBuild(b, statuces);
-  //dfaPrintVitals(result);
-  for(i=0; i<aux; i++){
-    j=len-i;
-    tmpM =dfaProject(result, (unsigned) j);
-    result = dfaMinimize(tmpM);
-  }
+  tmpM = dfaBuild(b, statuces);
+  result = project_away_sharps(tmpM, aux, len);
+  dfaFree(tmpM);
+
   free(exeps);
   //printf("FREE ToState\n");
   free(to_states);
@@ -675,7 +666,7 @@ DFA *dfa_replace_M_dot(DFA *M, DFA* Mr, int var, int *oldindices)
     free_ilt(pairs[i]);
   free(pairs);
 
-  return dfaMinimize(result);
+  return result;
 
 }// End dfa_replace_M_dot
 
@@ -932,30 +923,10 @@ DFA *dfa_replace_M_arbitrary(DFA *M, DFA *Mr, int var, int *oldindices)
   for(i=M->ns; i<ns; i++) statuces[i]='-';
 
   statuces[ns]='\0';
-  result=dfaBuild(b, statuces);
+  tmpM=dfaBuild(b, statuces);
+  result = project_away_sharps(M, aux, len);
+  dfaFree(tmpM);
 
-  for(i=0; i<aux; i++){
-    j=len-i;
-    if(_FANG_DFA_DEBUG){
-      printf("Project the %d bit\n", i);
-      printf("Original:%d", i);
-      dfaPrintVitals(result);
-    }
-
-    tmpM =dfaProject(dfaMinimize(result), (unsigned) j);
-
-    if(_FANG_DFA_DEBUG){
-      printf("Projected:%d", i);
-      dfaPrintVitals(tmpM);
-    }
-    dfaFree(result);
-    result = dfaMinimize(tmpM);
-    dfaFree(tmpM);
-    if(_FANG_DFA_DEBUG){
-      printf("Minimized:%d", i);
-      dfaPrintVitals(result);
-    }
-  }
   free(exeps);
   //printf("FREE ToState\n");
   free(to_states);
@@ -989,8 +960,7 @@ DFA *dfa_replace_M_arbitrary(DFA *M, DFA *Mr, int var, int *oldindices)
 
   free(pairs);
 
-  return dfaMinimize(result);
-
+  return result;
 }
 
 
@@ -1044,7 +1014,7 @@ DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
 
   if(maxCount>0){ //Need auxiliary bits when there exist some outgoing edges
     aux = get_hsig(maxCount);
-    //		printf("Replace string: %d hits, need to add %d auxiliary bits\n", maxCount, aux);
+    //printf("Replace string: %d hits, need to add %d auxiliary bits\n", maxCount, aux);
     auxbit = (char *) malloc(aux*sizeof(char));
     len = var+aux; // extra aux bits
     indices = allocateArbitraryIndex(len);
@@ -1061,17 +1031,16 @@ DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
 
 
   max_exeps=1<<len; //maybe exponential
-//  printf("len in dfa_replace_string = %d, max_exeps = %ld\n", len, max_exeps);
+  //printf("len in dfa_replace_string = %d, max_exeps = %ld\n", len, max_exeps);
   sink=find_sink(M);
   assert(sink >-1);
-  ns = M->ns + numberOfSharp* (extrastates);
-//  printf("old number of states in dfa_replace_string = %d, new number of states = %d\n", M->ns, ns);
+  ns = M->ns + numberOfSharp * (extrastates);
+  //printf("old number of states in dfa_replace_string = %d, new number of states = %d\n", M->ns, ns);
   //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
   DFABuilder *b = dfaSetup(ns, len, indices);
   exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
   to_states=(int *)malloc(max_exeps*sizeof(int));
   statuces=(char *)malloc((ns+1)*sizeof(char));
-
 
 
   for (i = 0; i < M->ns; i++) {
@@ -1143,7 +1112,6 @@ DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
 
     //for the end state add pathes to get back to pair[startStates[i]]
 
-
     for(z=0, tmp=pairs[startStates[i]]->head;z< pairs[startStates[i]]->count; z++, tmp = tmp->next){
       aux_to_states[z]=tmp->value;
       for (j = 0; j < var; j++) auxexeps[z*(len+1)+j]=binOfStr[extrastates][j];
@@ -1162,64 +1130,35 @@ DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
   for(i=M->ns; i<ns; i++) statuces[i]='0';
 
   statuces[ns]='\0';
-  result=dfaBuild(b, statuces);
-    
-    free(exeps);
-    //printf("FREE ToState\n");
-    free(to_states);
-    //printf("FREE STATUCES\n");
-    free(statuces);
-    
-    if(maxCount>0){
-        free(auxbit);
-        free(aux_to_states);
-        free(auxexeps);
-        free(indices);
-        free(startStates);
-        for(i=0; i<strlen(str); i++) free(binOfStr[i]);
-        free(binOfStr);
-    }
-    
-    for(i=0; i<M->ns; i++)
-        free_ilt(pairs[i]);
-    free(pairs);
+  tmpM1=dfaBuild(b, statuces);
 
-    
-    
-//    printf("Replace automaton built. Now minimizing and projecting\n");
-
-	if( DEBUG_SIZE_INFO )
-		printf("\t peak : replace_string : states %d : bddnodes %u : before loop \n", result->ns, bdd_size(result->bddm) );
-  tmpM1 = dfaMinimize(result);
-  dfaFree(result); result = NULL;
-    
-  for(i=0; i<aux; i++){
-    j=len-i;
-//    if(_FANG_DFA_DEBUG){
-//      printf("Project the %d bit\n", i);
-//      printf("Original:%d\n", i);
-//      dfaPrintVitals(result);
-//    }
-      if( DEBUG_SIZE_INFO )
-    	  printf("\t peak : replace_string : states %d : bddnodes %u : before projection : loop %d \n", tmpM1->ns, bdd_size(tmpM1->bddm), i );
-    tmpM2 =dfaProject(tmpM1, (unsigned) j);
-      dfaFree(tmpM1); tmpM1 = NULL;
-//    if(_FANG_DFA_DEBUG){
-//      printf("Projected:%d\n", i);
-//      dfaPrintVitals(tmpM2);
-//    }
-		if( DEBUG_SIZE_INFO )
-			printf("\t peak : replace_string : states %d : bddnodes %u : after projection : loop %d \n", tmpM2->ns, bdd_size(tmpM2->bddm), i );
-    tmpM1 = dfaMinimize(tmpM2);
-      dfaFree(tmpM2); tmpM2 = NULL;
-//    if(_FANG_DFA_DEBUG){
-//      printf("Minimized:%d\n", i);
-//      dfaPrintVitals(result);
-//    }
-  }
+  result = project_away_sharps(tmpM1, aux, len);
+  dfaFree(tmpM1);
   
-  return tmpM1;
+  free(exeps);
+    //printf("FREE ToState\n");
+  free(to_states);
+  //printf("FREE STATUCES\n");
+  free(statuces);
+    
+  if(maxCount>0){
+      free(auxbit);
+      free(aux_to_states);
+      free(auxexeps);
+      free(indices);
+      free(startStates);
+      for(i=0; i<strlen(str); i++) free(binOfStr[i]);
+      free(binOfStr);
+  }
+    
+  for(i=0; i<M->ns; i++)
+      free_ilt(pairs[i]);
+  free(pairs);
+      
+  if( DEBUG_SIZE_INFO )
+      printf("\t peak : replace_string : states %d : bddnodes %u : before loop \n", result->ns, bdd_size(result->bddm) );
 
+  return result;
 }
 
 
@@ -1321,15 +1260,15 @@ DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indic
 
 //  printf("Insert sharp1 and sharp2 for duplicate M1\n");
   M1_bar = dfa_replace_step1_duplicate(M1, var, indices);
-    //	dfaPrintVerbose(M1_bar);  //having extra bit
+//  dfaPrintVitals(M1_bar);  //having extra bit
   if(_FANG_DFA_DEBUG) printf("M1_bar: var %d\n", var);
-  //dfaPrintVerbose(M1_bar);
+//  dfaPrintVitals(M1_bar);
   //	dfaPrintGraphviz(M1_bar, var+1, allocateAscIIIndex(var+1));
 //  printf("Generate M2 bar sharp1 M2 and sharp2\n");
   M2_bar = dfa_replace_step2_match_compliment(M2, var, indices);
-  //	dfaPrintVerbose(M2_bar);  //having extra bit
+//  dfaPrintVitals(M2_bar);  //having extra bit
   if(_FANG_DFA_DEBUG) printf("M2_bar: var %d\n", var);
-  //dfaPrintVerbose(M2_bar);
+//  dfaPrintVitals(M2_bar);
   //	dfaPrintGraphviz(M2_bar, var+1, allocateAscIIIndex(var+1));
 
 //  printf("Generate Intersection\n");
@@ -1340,6 +1279,7 @@ DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indic
     dfaPrintGraphviz(M_inter, var+1, allocateAscIIIndexUnsigned(var+1));
     dfaPrintVerbose(M_inter);
   }
+//  dfaPrintVitals(M_inter);
 
 //  printf("Check Intersection\n");
   if(check_intersection(M_sharp, M_inter, var, indices)>0){
@@ -1347,6 +1287,7 @@ DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indic
 //    printf("Start Replacement!\n");
     //replace match patterns
     M_rep = dfa_replace_step3_replace(M_inter, str, var, indices);
+//    dfaPrintVitals(M_rep);
     temp1=dfaProject(M_rep, (unsigned) var);
     dfaFree(M_rep);
 
@@ -1571,7 +1512,7 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices)
 
   statuces[M->ns]='\0';
   result=dfaBuild(b, statuces);
-  tmpM =dfaProject(result, (unsigned) len-1);
+  tmpM = dfaProject(result, (unsigned) len-1);
   result = dfaMinimize(tmpM);
 
   free(exeps);
