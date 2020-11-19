@@ -110,11 +110,11 @@ public:
     StrangerAutomaton* rightPreConcatConst(std::string leftSiblingString);
     static StrangerAutomaton* regExToAuto(std::string phpRegexOrig, bool preg, int id);
     static StrangerAutomaton* regExToAuto(std::string phpRegexOrig);
-    static StrangerAutomaton* reg_replace(StrangerAutomaton* patternAuto, std::string replaceStr, StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* reg_replace(StrangerAutomaton* patternAuto, std::string replaceStr, StrangerAutomaton* subjectAuto);
+    static StrangerAutomaton* reg_replace(StrangerAutomaton* patternAuto, const std::string& replaceStr, StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* reg_replace(StrangerAutomaton* patternAuto, const std::string& replaceStr, StrangerAutomaton* subjectAuto);
     static StrangerAutomaton* general_replace(StrangerAutomaton* patternAuto, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, std::string replaceStr, StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, std::string replaceStr, StrangerAutomaton* subjectAuto);
+    static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, const std::string& replaceStr, StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, const std::string& replaceStr, StrangerAutomaton* subjectAuto);
     static StrangerAutomaton* str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto);
     StrangerAutomaton* preReplace(StrangerAutomaton* searchAuto, std::string replaceString, int id);
@@ -149,8 +149,9 @@ public:
     bool equals(const StrangerAutomaton* other) const;
     bool checkEmptiness() const;
     bool isEmpty() const;
+    bool isNull() const;
     bool checkEmptyString() const;
-    bool isSingleton();
+    bool isSingleton() const;
     std::string getStr();
     bool isBottom() const;
     bool isTop() const;

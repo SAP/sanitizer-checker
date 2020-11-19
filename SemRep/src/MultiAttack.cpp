@@ -70,48 +70,67 @@ MultiAttack::~MultiAttack() {
   m_automata.clear();
 }
 
-void MultiAttack::printResults() const
+void MultiAttack::printResults(bool printFiles) const
 {
   std::cout << "Found " << this->m_dot_paths.size() << " dot files" << std::endl;
   std::cout << "Computed images with pool of " << m_nThreads << " threads." << std::endl;
   std::cout << "Printing Groups:" << std::endl;
   m_groups.printGroups();
-  std::cout << "Printing files:" << std::endl;
-  for (auto result : m_results) {
-    const AutomatonGroup* group = this->m_groups.getGroupForAutomaton(result->getFwAnalysis().getPostImage());
-    result->printDetailedResults();
-    std::cout << "Group: ";
-    group->printSummary();
-    std::cout << std::endl;
+  if (printFiles) {
+    std::cout << "Printing files:" << std::endl;
+    int i = 0;
+    for (auto result : m_results) {
+      std::cout << i << ": ";
+      result->printDetailedResults();
+      // const AutomatonGroup* group = this->m_groups.getGroupForAutomaton(result->getFwAnalysis().getPostImage());
+      // std::cout << " Group: ";
+      // group->printSummary();
+      // std::cout << std::endl;
+    }
   }
 }
 
 void MultiAttack::computePostImage(const fs::path& file) {
-    try {
-        fs::path dir(m_output_directory / file);
-        std::cout << "Analysing file: " << file.string() << " in thread " << std::this_thread::get_id() << std::endl;
-        CombinedAnalysisResult* result =
-                new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());
-        const StrangerAutomaton* postImage = result->getFwAnalysis().getPostImage();
-        result->getAttack()->writeResultsToFile(dir);
-        result->getFwAnalysis().writeResultsToFile(dir);
-        const std::lock_guard<std::mutex> lock(this->results_mutex);
-        std::cout << "Finished forward analysis of " << file << std::endl;
-        std::cout << "Inserting results into groups for " << file << std::endl;
-        this->m_groups.addAutomaton(postImage, result);
-        this->m_results.emplace_back(result);
-        std::cout << "Finished inserting results into groups for " << file << std::endl;
-    } catch (StrangerStringAnalysisException const &e) {
-        std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
-        std::cerr << e.what() << std::endl;
-    } catch (const std::exception& e) {
-        std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
-        std::cerr << e.what() << std::endl;
-    }
+  fs::path dir(m_output_directory / file);
+  std::cout << "Analysing file: " << file.string() << " in thread " << std::this_thread::get_id() << std::endl;
+  CombinedAnalysisResult* result =
+    new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());
+  try {
+    result->getFwAnalysis().doAnalysis();
+    const StrangerAutomaton* postImage = result->getFwAnalysis().getPostImage();
+    result->getAttack()->writeResultsToFile(dir);
+    result->getFwAnalysis().writeResultsToFile(dir);
+
+    const std::lock_guard<std::mutex> lock(this->results_mutex);
+    std::cout << "Finished forward analysis of " << file << std::endl;
+    std::cout << "Inserting results into groups for " << file << std::endl;
+    this->m_groups.addAutomaton(postImage, result);
+    this->m_results.emplace_back(result);
+    std::cout << "Finished inserting results into groups for " << file << std::endl;
+    this->printResults();
+  } catch (StrangerStringAnalysisException const &e) {
+    std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
+    std::cerr << e.what() << std::endl;
+    // Still add the results to the null group
+    const std::lock_guard<std::mutex> lock(this->results_mutex);
+    this->m_groups.addAutomaton(nullptr, result);
+    this->m_results.emplace_back(result);   
+  } catch (StrangerAutomatonException const &e) {
+    std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
+    // Still add the results to the null group
+    const std::lock_guard<std::mutex> lock(this->results_mutex);
+    this->m_groups.addAutomaton(nullptr, result);
+    this->m_results.emplace_back(result);   
+  } catch (const std::exception& e) {
+    std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
+    std::cerr << e.what() << std::endl;
+  }
 }
+
 void MultiAttack::computePostImages() {
   findDotFiles();
   boost::asio::thread_pool pool(m_nThreads);
+//  boost::asio::thread_pool pool(1);
   std::cout << "Computing post images with pool of " << m_nThreads << " threads." << std::endl;
   for (auto file : this->m_dot_paths) {
       asio::post(pool, std::bind(&MultiAttack::computePostImage, this, file));
@@ -124,21 +143,21 @@ void MultiAttack::computePostImages() {
 void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context)
 {
   const std::string& file = result->getAttack()->getFileName();
-    std::cout << "Doing backward analysis for file: "
-              << file
-              << ", context: " << AttackContextHelper::getName(context)
-              << std::endl;
-    try {
-      fs::path dir(m_output_directory / result->getAttack()->getFile());
-      const BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
-      bw->writeResultsToFile(dir);
-    } catch (StrangerStringAnalysisException const &e) {
-      std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
-      std::cerr << e.what() << std::endl;
-    } catch (const std::exception& e) {
-      std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
-      std::cerr << e.what() << std::endl;
-    }
+  std::cout << "Doing backward analysis for file: "
+            << file
+            << ", context: " << AttackContextHelper::getName(context)
+            << std::endl;
+  try {
+    fs::path dir(m_output_directory / result->getAttack()->getFile());
+    const BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
+    bw->writeResultsToFile(dir);
+  } catch (StrangerStringAnalysisException const &e) {
+    std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
+    std::cerr << e.what() << std::endl;
+  } catch (const std::exception& e) {
+    std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
+    std::cerr << e.what() << std::endl;
+  }
 }
 
 void MultiAttack::computeAttackPatternOverlaps(AttackContext context)
@@ -150,11 +169,15 @@ void MultiAttack::computeAttackPatternOverlaps(AttackContext context)
     asio::post(pool, std::bind(&MultiAttack::computeAttackPatternOverlap, this, result, context));
   }
   pool.join();
+  this->printResults();
 }
 
 void MultiAttack::fillCommonPatterns() {
 
   StrangerAutomaton* a = nullptr;
+
+  // Add NULL
+  m_groups.createGroup(nullptr, "NULL");
 
   // Add empty automaton
   a = StrangerAutomaton::makeEmptyString();

@@ -45,7 +45,7 @@ public:
 
     void computePostImages();
     void computeAttackPatternOverlaps(AttackContext context);
-    void printResults() const;
+    void printResults(bool printFiles = false) const;
     void printDetailedResults() const;
 
 private:

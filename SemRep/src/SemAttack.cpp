@@ -151,7 +151,6 @@ ForwardAnalysisResult::ForwardAnalysisResult(
 {
   m_attack = new SemAttack(target_dep_graph_file_name, input_field_name);
   m_input = automaton;
-  m_result = m_attack->computeTargetFWAnalysis(m_input);
 }
 
 ForwardAnalysisResult::~ForwardAnalysisResult()
@@ -287,8 +286,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(StrangerAutomaton* inputAuto) 
         targetAnalyzer.doForwardAnalysis_SingleInput(target_dep_graph, target_field_relevant_graph, targetAnalysisResult);
         message("...finished forward analysis for target.");        
     } catch (StrangerStringAnalysisException const &e) {
-      cerr << e.what();
-        exit(EXIT_FAILURE);
+        throw e;
     }
 
     target_sink_auto = targetAnalysisResult[target_field_relevant_graph.getRoot()->getID()];

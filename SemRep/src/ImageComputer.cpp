@@ -86,7 +86,7 @@ AnalysisResult ImageComputer::doBackwardAnalysis_ValidationCase(DepGraph& origDe
 					}
 				}
 
-			} else { throw new StrangerStringAnalysisException("cannot handle node type"); }
+			} else { throw StrangerStringAnalysisException("cannot handle node type"); }
 
 		} else {
 			if (depGraph.isSCCElement(curr)) { // handle cycles
@@ -167,11 +167,11 @@ void ImageComputer::doPreImageComputation_ValidationCase(DepGraph& origDepGraph,
 		}
 
 	} else {
-		throw new StrangerStringAnalysisException("SNH: cannot handle node type: doBackwardNodeComputation_ValidationPhase()");
+		throw StrangerStringAnalysisException("SNH: cannot handle node type: doBackwardNodeComputation_ValidationPhase()");
 	}
 
 	if (newAuto == nullptr) {
-		throw new StrangerStringAnalysisException("SNH: pre-image is NULL: doBackwardNodeComputation_ValidationPhase()");
+		throw StrangerStringAnalysisException("SNH: pre-image is NULL: doBackwardNodeComputation_ValidationPhase()");
 	}
 	bwAnalysisResult[node->getID()] = newAuto;
 
@@ -699,12 +699,12 @@ void ImageComputer::doPreImageComputation_GeneralCase(
 		}
 
 	} else {
-		throw new StrangerStringAnalysisException("SNH: cannot handle node type:\ndoBackwardNodeComputation_RegularPhase()");
+		throw StrangerStringAnalysisException("SNH: cannot handle node type:\ndoBackwardNodeComputation_RegularPhase()");
 	}
 
 
 	if (newAuto == nullptr) {
-		throw new StrangerStringAnalysisException("SNH: pre-image is NULL:\ndoBackwardNodeComputation_RegularPhase()");
+		throw StrangerStringAnalysisException("SNH: pre-image is NULL:\ndoBackwardNodeComputation_RegularPhase()");
 	}
 
 	bwAnalysisResult[node->getID()] = newAuto;
@@ -1290,7 +1290,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 	NodesList successors = depGraph.getSuccessors(opNode);
 	StrangerAutomaton* retMe = nullptr;
 	string opName = opNode->getName();
-
+        //cout << "Computing : " << opName << endl;
 	// __vlab_restrict
 	if (opName.find("__vlab_restrict") != string::npos) {
 		boost::posix_time::ptime start_time = perfInfo->current_time();
@@ -1433,7 +1433,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 	} else if (opName == "addslashes") {
 		if (successors.size() != 1) {
-			throw new StrangerStringAnalysisException(stringbuilder() << "addslashes should have one child: " << opNode->getID());
+			throw StrangerStringAnalysisException(stringbuilder() << "addslashes should have one child: " << opNode->getID());
 		}
 
 		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
@@ -1441,11 +1441,11 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		retMe = slashesAuto;
 
 	} else if (opName == "stripslashes") {
-		throw new StrangerStringAnalysisException(stringbuilder() << "stripslashes is not handled yet: " << opNode->getID());
+		throw StrangerStringAnalysisException(stringbuilder() << "stripslashes is not handled yet: " << opNode->getID());
 
 	} else if (opName == "mysql_escape_string") {
 		if (successors.size() < 1 || successors.size() > 2) {
-			throw new StrangerStringAnalysisException(stringbuilder() << "mysql_escape_string wrong number of arguments: " << opNode->getID());
+			throw StrangerStringAnalysisException(stringbuilder() << "mysql_escape_string wrong number of arguments: " << opNode->getID());
 		}
 		//we only care about the first parameter
 		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
@@ -1454,7 +1454,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 	} else if (opName == "mysql_real_escape_string") {
 		if (successors.size() < 1 || successors.size() > 2) {
-			throw new StrangerStringAnalysisException(stringbuilder() << "mysql_real_escape_string wrong number of arguments: " << opNode->getID());
+			throw StrangerStringAnalysisException(stringbuilder() << "mysql_real_escape_string wrong number of arguments: " << opNode->getID());
 		}
 		//we only care about the first parameter
 		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
@@ -1476,7 +1476,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 	} else if (opName == "nl2br"){
 		if (successors.size() < 1 || successors.size() > 2) {
-			throw new StrangerStringAnalysisException(stringbuilder() << "nl2br wrong number of arguments: " << opNode->getID());
+			throw StrangerStringAnalysisException(stringbuilder() << "nl2br wrong number of arguments: " << opNode->getID());
 		}
 
 		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
@@ -1520,7 +1520,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
                 }
 	} else if (opName == "strtoupper" || opName == "strtolower") {
 		if (successors.size() != 1) {
-			throw new StrangerStringAnalysisException(stringbuilder() << opName << " has more than one successor in depgraph" );
+			throw StrangerStringAnalysisException(stringbuilder() << opName << " has more than one successor in depgraph" );
 		}
 
 		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
@@ -1533,7 +1533,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 	} else if (opName == "trim" || opName == "rtrim" || opName == "ltrim") {
 		if (successors.size() > 2) {
-			throw new StrangerStringAnalysisException(stringbuilder() << opName << " has more than one successor in depgraph" );
+			throw StrangerStringAnalysisException(stringbuilder() << opName << " has more than one successor in depgraph" );
 		} else if (successors.size() == 2) {
 			cout << "!!! Second parameter of " << opName << " ignored!!!. If it is not whitespace, modify implementation to handle that situation" << endl;
 //			if (analysisResult.find(successors[1]->getID()) == analysisResult.end()) {
@@ -1585,7 +1585,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		retMe = json;
 	} else if (opName == "encodeTextFragment") {
         if (successors.size() < 1 || successors.size() > 2) {
-            throw new StrangerStringAnalysisException(stringbuilder() << "encodeTextFragment wrong number of arguments: " << opNode->getID());
+            throw StrangerStringAnalysisException(stringbuilder() << "encodeTextFragment wrong number of arguments: " << opNode->getID());
         }
         StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
 
@@ -1593,19 +1593,25 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
         retMe = encodedAuto;
     } else if (opName == "encodeAttrString") {
         if (successors.size() < 1 || successors.size() > 2) {
-            throw new StrangerStringAnalysisException(stringbuilder() << "encodeAttrString wrong number of arguments: " << opNode->getID());
+            throw StrangerStringAnalysisException(stringbuilder() << "encodeAttrString wrong number of arguments: " << opNode->getID());
         }
         StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
 
         StrangerAutomaton* encodedAuto = StrangerAutomaton::encodeAttrString(paramAuto, opNode->getID());
         retMe = encodedAuto;
     } else {
-		cout << "!!! Warning: Unmodeled builtin general function : " << opName << endl;
-		f_unmodeled.push_back(opNode);
+            cout << "!!! Warning: Unmodeled builtin general function : " << opName << endl;
+            f_unmodeled.push_back(opNode);
 
-		 //conservative decision for operations that have not been
-		 //modeled yet: .*
-		retMe = StrangerAutomaton::makeAnyString(opNode->getID());
-	}
-	return retMe;
+            //conservative decision for operations that have not been
+            //modeled yet: .*
+            //retMe = StrangerAutomaton::makeAnyString(opNode->getID());
+            // Block anything that has not been modelled yet
+            //retMe = StrangerAutomaton::makeEmptyString(opNode->getID());
+            // Throw an exception
+            throw StrangerStringAnalysisException(stringbuilder() << "Unknown function " << opName);
+    }
+
+        //retMe->printAutomatonVitals();
+    return retMe;
 }

@@ -97,6 +97,8 @@ public:
         
     virtual ~ForwardAnalysisResult();
 
+    void doAnalysis() { m_result = m_attack->computeTargetFWAnalysis(m_input); }
+
     const SemAttack* getAttack() const { return m_attack; }
     const StrangerAutomaton* getPostImage() const { return m_attack->getPostImage(m_result); }
     const AnalysisResult& getFwAnalysisResult() const { return m_result; }
@@ -157,6 +159,7 @@ public:
     const SemAttack* getAttack() const { return m_fwAnalysis.getAttack(); }
 
     const ForwardAnalysisResult& getFwAnalysis() const { return m_fwAnalysis; }
+    ForwardAnalysisResult& getFwAnalysis() { return m_fwAnalysis; }
 
     void printResult() const;
     void printDetailedResults() const;

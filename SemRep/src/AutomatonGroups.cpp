@@ -152,7 +152,8 @@ AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutomaton* a
 {
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     const StrangerAutomaton* existing = iter->getAutomaton();
-    if (automaton->equals(existing)) {
+    if ((automaton == existing) ||
+        (automaton->equals(existing))) {
       return &(*iter);
     }
   }
@@ -175,7 +176,6 @@ void AutomatonGroups::printGroups() const {
   std::cout << std::dec;
   //  SemAttack::perfInfo.print_operations_info();
   std::cout << "Total of " << m_groups.size() << " unique post-images with " << getEntries() << " entries." << std::endl;
-  AutomatonGroup::printHeaders();
   for (auto iter : m_groups) {
     iter.printMembers();
   }

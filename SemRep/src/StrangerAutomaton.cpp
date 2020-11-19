@@ -476,11 +476,14 @@ StrangerAutomaton* StrangerAutomaton::makePhi() {
 
 std::string StrangerAutomaton::generateSatisfyingExample() const
 {
+    if (!this->isEmpty()) {
 	char* example = dfaGenerateExample(this->dfa, num_ascii_track, u_indices_main);
 	if (example == NULL)
 		throw StrangerAutomatonException("no satifying example");
 
-    return std::string (example);
+        return std::string(example);
+    }
+    return std::string();
 }
 
 //***************************************************************************************
@@ -1433,7 +1436,7 @@ StrangerAutomaton* StrangerAutomaton::regExToAuto(std::string phpRegexOrig) {
  */
 //TODO: merge this with str_replace as we no longer need preg
 StrangerAutomaton* StrangerAutomaton::reg_replace(StrangerAutomaton* patternAuto,
-                                                  std::string replaceStr, StrangerAutomaton* subjectAuto, int id) {
+                                                  const std::string& replaceStr, StrangerAutomaton* subjectAuto, int id) {
     
     debug(stringbuilder() << id <<  " = reg_replace(" << patternAuto->ID << ", " << replaceStr << ", " << subjectAuto->ID << ")");
     // Note: the replaceAuto parameter should be of type
@@ -1443,18 +1446,19 @@ StrangerAutomaton* StrangerAutomaton::reg_replace(StrangerAutomaton* patternAuto
     // automaton in Stranger Library
     debug(stringbuilder() << "calling reg_replace with the following order (" << subjectAuto->ID << ", " << patternAuto->ID << ", " << replaceStr << ")");
     if (patternAuto->isBottom() || subjectAuto->isBottom())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.reg_replace: either patternAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
     else if (patternAuto->isTop())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.reg_replace: patternAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     else if (subjectAuto->isTop())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.reg_replace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     
     debugToFile(stringbuilder() << "M[" << (traceID) << "] = dfa_replace_extrabit(M["<< subjectAuto->autoTraceID  << "], M[" << patternAuto->autoTraceID << "], \"" << replaceStr << "\" , NUM_ASCII_TRACKS, indices_main);//"<<id << " = reg_replace(" << patternAuto->ID << ", " << replaceStr
 				<< ", " << subjectAuto->ID << ")");
 
+    
     boost::posix_time::ptime start_time = perfInfo->current_time();
     StrangerAutomaton* retMe = new StrangerAutomaton(dfa_replace_extrabit(subjectAuto->dfa, patternAuto->dfa, replaceStr.c_str(), num_ascii_track, indices_main));
     perfInfo->replace_total_time += perfInfo->current_time() - start_time;
@@ -1463,6 +1467,9 @@ StrangerAutomaton* StrangerAutomaton::reg_replace(StrangerAutomaton* patternAuto
     {
         retMe->ID = id;
 //        retMe->debugAutomaton();
+    }
+    if (retMe->isNull()) {
+        throw StrangerAutomatonException("Null DFA pointer returned from MONA");
     }
     return retMe;
 }
@@ -1478,26 +1485,35 @@ StrangerAutomaton* StrangerAutomaton::general_replace(StrangerAutomaton* pattern
     // automaton in Stranger Library
     debug(stringbuilder() << "calling reg_replace with the following order (" << subjectAuto->ID << ", " << patternAuto->ID << ", " << replaceAuto->ID << ")");
     if (patternAuto->isBottom() || subjectAuto->isBottom())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.reg_replace: either patternAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
     else if (patternAuto->isTop())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.reg_replace: patternAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     else if (subjectAuto->isTop())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.reg_replace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
 
     debugToFile(stringbuilder() << "M[" << (traceID) << "] = dfa_replace_extrabit(M["<< subjectAuto->autoTraceID  << "], M[" << patternAuto->autoTraceID << "], \"" << replaceAuto->ID << "\" , NUM_ASCII_TRACKS, indices_main);//"<<id << " = reg_replace(" << patternAuto->ID << ", " << replaceAuto->ID
 				<< ", " << subjectAuto->ID << ")");
 
     boost::posix_time::ptime start_time = perfInfo->current_time();
-    StrangerAutomaton* retMe = new StrangerAutomaton(dfa_general_replace_extrabit(subjectAuto->dfa, patternAuto->dfa, replaceAuto->dfa, num_ascii_track, indices_main));
+    StrangerAutomaton* retMe = nullptr;
+    if (replaceAuto->isSingleton()) {
+        std::string replaceStr = replaceAuto->getStr();
+        retMe = new StrangerAutomaton(dfa_replace_extrabit(subjectAuto->dfa, patternAuto->dfa, replaceStr.c_str(), num_ascii_track, indices_main));
+    } else {
+        retMe = new StrangerAutomaton(dfa_general_replace_extrabit(subjectAuto->dfa, patternAuto->dfa, replaceAuto->dfa, num_ascii_track, indices_main));
+    }
     perfInfo->replace_total_time += perfInfo->current_time() - start_time;
     perfInfo->num_of_replace++;
 
     {
         retMe->ID = id;
 //        retMe->debugAutomaton();
+    }
+    if (retMe->isNull()) {
+        throw StrangerAutomatonException("Null DFA pointer returned from MONA");
     }
     return retMe;
 }
@@ -1520,7 +1536,7 @@ StrangerAutomaton* StrangerAutomaton::general_replace(StrangerAutomaton* pattern
  */
 //TODO: merge this with str_replace as we no longer need preg
 StrangerAutomaton* StrangerAutomaton::reg_replace(StrangerAutomaton* patternAuto,
-                                                  std::string replaceStr, StrangerAutomaton* subjectAuto) {
+                                                  const std::string& replaceStr, StrangerAutomaton* subjectAuto) {
     return reg_replace(patternAuto, replaceStr, subjectAuto, traceID);
 }
 
@@ -1544,7 +1560,7 @@ StrangerAutomaton* StrangerAutomaton::reg_replace(StrangerAutomaton* patternAuto
  *            purposes only
  */
 StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
-                                                  std::string replaceStr, StrangerAutomaton* subjectAuto, int id) {
+                                                  const std::string& replaceStr, StrangerAutomaton* subjectAuto, int id) {
     
     debug(stringbuilder() << id <<  " = str_replace(" << searchAuto->ID << ", " << replaceStr << ", " << subjectAuto->ID << ")");
     // Note: the original replaceAuto parameter in FSAAutomaton is of type
@@ -1554,13 +1570,13 @@ StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
     debug(stringbuilder() << "calling str_replace with the following order (" << subjectAuto->ID << ", " << searchAuto->ID << ", " << replaceStr << ")");
     
     if (searchAuto->isBottom() || subjectAuto->isBottom())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.str_replace: either searchAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
     else if (searchAuto->isTop())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.str_replace: searchAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     else if (subjectAuto->isTop())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.str_replace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     
     
@@ -1576,6 +1592,9 @@ StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
     {
         retMe->ID = id;
 //        retMe->debugAutomaton();
+    }
+    if (retMe->isNull()) {
+        throw StrangerAutomatonException("Null DFA pointer returned from MONA");
     }
     return retMe;
 }
@@ -1597,7 +1616,7 @@ StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
  *            in L(subjectAuto)
  */
 StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
-                                                  std::string replaceStr, StrangerAutomaton* subjectAuto) {
+                                                  const std::string& replaceStr, StrangerAutomaton* subjectAuto) {
     return str_replace(searchAuto, replaceStr, subjectAuto, traceID);
 }
 
@@ -1613,6 +1632,9 @@ StrangerAutomaton* StrangerAutomaton::str_replace_once(StrangerAutomaton* str, S
     {
         retMe->ID = id;
         //        retMe->debugAutomaton();
+    }
+    if (retMe->isNull()) {
+        throw StrangerAutomatonException("Null DFA pointer returned from MONA");
     }
     return retMe;
 }
@@ -1643,13 +1665,13 @@ StrangerAutomaton* StrangerAutomaton::preReplace(StrangerAutomaton* searchAuto,
                                                  std::string replaceString, int id) {
     debug(stringbuilder() << id <<  " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
     if (searchAuto->isBottom() || this->isBottom())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.preReplace: either searchAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
     else if (searchAuto->isTop())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.preReplace: searchAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     else if (this->isTop())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
                                              "SNH: In StrangerAutoatmon.preReplace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     
     
@@ -1685,13 +1707,13 @@ StrangerAutomaton* StrangerAutomaton::preReplaceOnce(StrangerAutomaton* searchAu
                                                      std::string replaceString, int id) {
     debug(stringbuilder() << id <<  " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
     if (searchAuto->isBottom() || this->isBottom())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
             "SNH: In StrangerAutoatmon.preReplace: either searchAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
     else if (searchAuto->isTop())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
             "SNH: In StrangerAutoatmon.preReplace: searchAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     else if (this->isTop())
-        throw new StrangerAutomatonException(
+        throw StrangerAutomatonException(
             "SNH: In StrangerAutoatmon.preReplace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
 
     
@@ -2045,6 +2067,10 @@ bool StrangerAutomaton::isEmpty() const {
     return checkEmptiness();
 }
 
+bool StrangerAutomaton::isNull() const {
+    return (this->dfa == nullptr);
+}
+
 
 /**
  * check if this automaton only accepts empty string i.e. string of length
@@ -2062,7 +2088,7 @@ bool StrangerAutomaton::checkEmptyString() const {
         return false;
 }
 
-bool StrangerAutomaton::isSingleton() {
+bool StrangerAutomaton::isSingleton() const {
     return (::isSingleton(this->dfa, num_ascii_track, indices_main) != NULL);
 }
 
@@ -3234,7 +3260,7 @@ void StrangerAutomaton::openCtraceFile(std::string name)
     //        out_ = (new ::java::io::BufferedWriter(fstream_));
     //        npc(out_)->write("int* indices_main = (int *) allocateAscIIIndexWithExtraBit(NUM_ASCII_TRACKS);\nint i;\nDFA* M[1000];\nfor (i = 0; i < 1000; i++)\n\t M[i] = 0;\n");
     //    } catch (::java::lang::Exception* e) {
-    //        throw (new StrangerAutomatonException("exec_trace.c file can not be opened."));
+    //        throw (StrangerAutomatonException("exec_trace.c file can not be opened."));
     //    }
 }
 
@@ -3246,7 +3272,7 @@ void StrangerAutomaton::appendCtraceFile(std::string name)
     //        fstream_ = (new ::java::io::FileWriter(name, true));
     //        out_ = (new ::java::io::BufferedWriter(fstream_));
     //    } catch (::java::lang::Exception* e) {
-    //        throw (new StrangerAutomatonException(::java::lang::StringBuilder().append("exec_trace.c file can not be opened.")->append(npc(e)->getMessage())->toString()));
+    //        throw (StrangerAutomatonException(::java::lang::StringBuilder().append("exec_trace.c file can not be opened.")->append(npc(e)->getMessage())->toString()));
     //    }
 }
 
@@ -3259,7 +3285,7 @@ void StrangerAutomaton::closeCtraceFile()
     //            npc(out_)->flush();
     //            npc(fstream_)->close();
     //        } catch (::java::io::IOException* e) {
-    //            throw (new StrangerAutomatonException("Can not close file exec_trace.c"));
+    //            throw (StrangerAutomatonException("Can not close file exec_trace.c"));
     //        }
     
 }
@@ -3278,7 +3304,7 @@ void StrangerAutomaton::debugToFile(std::string str)
     //        npc(out_)->write(::java::lang::StringBuilder().append(str)->append("\n")->toString());
     //        npc(out_)->flush();
     //    } catch (::java::io::IOException* e) {
-    //        throw (new StrangerAutomatonException("Can not write to exec_trace.c file"));
+    //        throw (StrangerAutomatonException("Can not write to exec_trace.c file"));
     //    }
 }
 
