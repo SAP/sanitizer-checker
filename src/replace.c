@@ -140,10 +140,10 @@ static DFA* project_away_sharps(DFA *M, int aux, int len) {
     tmpM2 = dfaMinimize(M);
     for(unsigned int i = len - aux; i < len; i++){
         tmpM1 = dfaProject(tmpM2, i);
+        dfaFree(tmpM2);
         if (!tmpM1) {
             return NULL;
         }
-        dfaFree(tmpM2);
         tmpM2 = dfaMinimize(tmpM1);
         dfaFree(tmpM1);
     }
@@ -1206,6 +1206,7 @@ DFA *dfa_replace_step3_general_replace(DFA *M, DFA* Mr, int var, int *indices)
   DFA *result2 = NULL;
   DFA *result = NULL;
   DFA *tmp = NULL;
+  DFA *tmp2 = NULL;
 
   //dfaPrintGraphvizAsciiRange(M, var, indices, 1);
 
@@ -1216,25 +1217,32 @@ DFA *dfa_replace_step3_general_replace(DFA *M, DFA* Mr, int var, int *indices)
   }
 
 
-  tmp = dfa_intersect(Mr, dfaDot(var, indices));
+  tmp = dfaDot(var, indices);
+  tmp2 = dfa_intersect(Mr, tmp);
+  dfaFree(tmp);
+  tmp = tmp2;
   if(!check_emptiness(tmp, var, indices)){
     result1 = dfa_replace_M_dot(M, tmp, var, indices);
     if(result){
       result = dfa_union(result, result1);
       dfaFree(result0);
       dfaFree(result1);
+    } else {
+      result = result1;
     }
-    else result = result1;
   }
-
   dfaFree(tmp);
-  tmp = dfa_intersect(Mr, dfaSigmaC1toC2(2, -1, var, indices));
+  
+  tmp = dfaSigmaC1toC2(2, -1, var, indices);
+  tmp2 = dfa_intersect(Mr, tmp);
+  dfaFree(tmp);
+  tmp = tmp2;
 
   if(!check_emptiness(tmp, var, indices)){
     //replace rest rather than single character
     result2 = dfa_replace_M_arbitrary(M, tmp, var, indices);
 
-   if(result){
+   if(result) {
      result1 = result;
      result = dfa_union(result1, result2);
      dfaFree(result1);
@@ -1455,8 +1463,6 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices)
   sink=find_sink(M);
   assert(sink>-1); //dfa_insert_M_dot
 
-
-
   DFABuilder *b = dfaSetup(M->ns, len, indices);
   exeps=(char *)calloc(max_exeps*(len+1), sizeof(char)); //plus 1 for \0 end of the string
   to_states=(int *)calloc(max_exeps, sizeof(int));
@@ -1511,8 +1517,9 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices)
   }
 
   statuces[M->ns]='\0';
-  result=dfaBuild(b, statuces);
+  result = dfaBuild(b, statuces);
   tmpM = dfaProject(result, (unsigned) len-1);
+  dfaFree(result);
   result = dfaMinimize(tmpM);
 
   free(exeps);
@@ -1717,15 +1724,23 @@ DFA *dfa_insert_everywhere(DFA *M, DFA* Mr, int var, int *indices)
   DFA *result2 = NULL;
   DFA *result = NULL;
   DFA *tmp = NULL;
-
-
-  tmp = dfa_intersect(Mr, dfaDot(var, indices));
+  DFA *tmp2 = NULL;
+  
+  tmp = dfaDot(var, indices);
+  tmp2 = dfa_intersect(Mr, tmp);
+  dfaFree(tmp);
+  tmp = tmp2;
+  
   if(!check_emptiness(tmp, var, indices)){
     result = dfa_insert_M_dot(M, tmp, var, indices);
   }
 
   dfaFree(tmp);
-  tmp = dfa_intersect(Mr, dfaSigmaC1toC2(2, -1, var, indices));
+
+  tmp = dfaSigmaC1toC2(2, -1, var, indices);
+  tmp2 = dfa_intersect(Mr, tmp);
+  dfaFree(tmp);
+  tmp = tmp2;
 
   if(!check_emptiness(tmp, var, indices)){
     //replace rest rather than single character
