@@ -329,7 +329,14 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(StrangerAutomaton* inputAuto) 
         targetAnalyzer.doForwardAnalysis_SingleInput(target_dep_graph, target_field_relevant_graph, targetAnalysisResult);
         message("...finished forward analysis for target.");        
     } catch (StrangerStringAnalysisException const &e) {
-        throw;
+      //  clean up target analysis result
+      for (auto a : targetAnalysisResult) {
+        if (a.second != nullptr) {
+          delete a.second;
+          a.second = nullptr;
+        }
+      }
+      throw;
     }
 
     target_sink_auto = targetAnalysisResult[target_field_relevant_graph.getRoot()->getID()];

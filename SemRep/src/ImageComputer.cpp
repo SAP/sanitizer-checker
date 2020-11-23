@@ -538,47 +538,47 @@ void ImageComputer::doForwardAnalysis_SingleInput(
 
 
 void ImageComputer::doPostImageComputation_SingleInput(
-		DepGraph& origDepGraph, DepGraph& inputDepGraph, DepGraphNode* node, AnalysisResult& analysisResult) {
+    DepGraph& origDepGraph, DepGraph& inputDepGraph, DepGraphNode* node, AnalysisResult& analysisResult) {
 
-	NodesList successors = origDepGraph.getSuccessors(node);
+    NodesList successors = origDepGraph.getSuccessors(node);
 
-	StrangerAutomaton* newAuto = nullptr;
+    StrangerAutomaton* newAuto = nullptr;
     DepGraphNormalNode* normalnode;
     DepGraphOpNode* opNode;
     DepGraphUninitNode* uninitNode;
     if ((normalnode = dynamic_cast<DepGraphNormalNode*>(node)) != nullptr) {
     	if (successors.empty()) {
-			newAuto = getLiteralorConstantNodeAuto(normalnode, false);
+            newAuto = getLiteralorConstantNodeAuto(normalnode, false);
     	} else {
-    		// an interior node, union of all its successors
-    		for (auto succ_node : successors) {
-    			if (succ_node->getID() == node->getID() ) {
-    				// avoid simple loops
-    				continue;
-    			}
-    			// explore new paths
-				if (analysisResult.find(succ_node->getID()) == analysisResult.end()) {
-					cout << "exploring succ_node: " << succ_node->getID() << endl;
-					doForwardAnalysis_GeneralCase(origDepGraph, succ_node, analysisResult);
-				}
+            // an interior node, union of all its successors
+            for (auto succ_node : successors) {
+                if (succ_node->getID() == node->getID() ) {
+                    // avoid simple loops
+                    continue;
+                }
+                // explore new paths
+                if (analysisResult.find(succ_node->getID()) == analysisResult.end()) {
+                    cout << "exploring succ_node: " << succ_node->getID() << endl;
+                    doForwardAnalysis_GeneralCase(origDepGraph, succ_node, analysisResult);
+                }
 
-				StrangerAutomaton *succAuto = analysisResult[succ_node->getID()];
-    			if (newAuto == nullptr) {
-    				newAuto = succAuto->clone(node->getID());
-    			} else {
-    				StrangerAutomaton* temp = newAuto;
-    				newAuto = newAuto->union_(succAuto, node->getID());
-    				delete temp;
-    			}
-    		}
+                StrangerAutomaton *succAuto = analysisResult[succ_node->getID()];
+                if (newAuto == nullptr) {
+                    newAuto = succAuto->clone(node->getID());
+                } else {
+                    StrangerAutomaton* temp = newAuto;
+                    newAuto = newAuto->union_(succAuto, node->getID());
+                    delete temp;
+                }
+            }
     	}
 
     } else if ((opNode = dynamic_cast<DepGraphOpNode*>(node)) != nullptr) {
-		newAuto = makePostImageForOp_GeneralCase(origDepGraph, opNode, analysisResult);
+        newAuto = makePostImageForOp_GeneralCase(origDepGraph, opNode, analysisResult);
     } else if ((uninitNode = dynamic_cast<DepGraphUninitNode*>(node)) != nullptr) {
     	// input node that we are interested in should have been initialized already
     	if (analysisResult.find(node->getID()) == analysisResult.end()){
-    		throw StrangerStringAnalysisException(stringbuilder() << "input node id(" << uninitNode->getID() << ") automaton must be initizalized before analysis begins!");
+            throw StrangerStringAnalysisException(stringbuilder() << "input node id(" << uninitNode->getID() << ") automaton must be initizalized before analysis begins!");
     	}
     	newAuto = analysisResult[node->getID()];
     } else {

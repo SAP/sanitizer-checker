@@ -137,6 +137,7 @@ void MultiAttack::computeImagesForFile(const fs::path& file) {
   } catch (...) {
     std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
     // Still add the results to the null group
+    result->finishAnalysis();
     const std::lock_guard<std::mutex> lock(this->results_mutex);
     this->m_groups.addAutomaton(nullptr, result);
     this->m_results.emplace_back(result);   
