@@ -47,7 +47,9 @@ Backward Analysis
 //pos == 1, return the preimage of X for XL := X. XR
 //pos == 2. return the preimage of X for XL := XR. X
  DFA* dfa_pre_concat(DFA* ML, DFA* MR, int pos, int var, int* indices){
-
+  if (!ML || !MR) {
+    return NULL;
+  }
   assert(pos==1 || pos ==2); //Computing pre-image for concatenation of two arguments
   DFA* Mtrans;
   DFA* M1;
@@ -95,6 +97,9 @@ Backward Analysis
 //pos == 1, return the preimage of X for XL := X. XR
 //pos == 2. return the preimage of X for XL := XR. X
 DFA* dfa_pre_concat_const(DFA* ML, const char* str, int pos, int var, int* indices){
+  if (!ML) {
+    return NULL;
+  }
   assert(1==pos || pos==2); //Computing pre-image for concatenation of two arguments
   DFA* Mtrans;
   DFA* result;
@@ -132,7 +137,9 @@ DFA* dfa_pre_replace(DFA* M1, DFA* M2, DFA* M3, int var, int* indices){
 }
 
 DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, const char *str, int var, int* indices){
-
+  if (!M1 || !M2) {
+    return NULL;
+  }
   DFA *result=NULL;
   DFA *M3 = dfa_construct_string(str, var, indices);
   if((str ==NULL)||strlen(str)==0){
@@ -153,7 +160,9 @@ DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, const char *str, int var, int* indice
 }
 
 DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* indices){
-
+  if (!M1 || !M2) {
+    return NULL;
+  }
   DFA *result=NULL;
   DFA *M3 = dfa_construct_string(str, var, indices);
   // Union here as the replaced string could have been replaced or not

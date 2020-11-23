@@ -3187,6 +3187,13 @@ int check_equivalence(M1, M2, var, indices)
   DFA *M[4];
   int result, i;
 
+  if (M1 == M2) {
+      return 1;
+  }
+  if (!M1 || !M2) {
+      return 0;
+  }
+
   M[0] = dfaProduct(M1, M2, dfaIMPL);
   M[1] = dfaProduct(M2, M1, dfaIMPL);
   M[2] = dfa_intersect(M[0], M[1]);
