@@ -1152,13 +1152,19 @@ DFA *dfa_closure_extrabit(M1, var, indices)
   //result = dfaBuild(b, statuces);
   tmpM = dfaBuild(b, statuces);
   result = dfaProject(tmpM, (unsigned) var); //var is the index of the extra bit
+  dfaFree(tmpM);
+    
+  tmpM = dfaMinimize(result);
+  dfaFree(result);
+  result = tmpM;
+  
   free(exeps);
   free(addedexeps);
   free(to_states);
   free(added_to_states);
   free(statuces);
-  dfaFree(tmpM);
-  return dfaMinimize(result);
+
+  return result;
 
 } // END dfa_closure_extrabit
 
@@ -1514,7 +1520,7 @@ DFA *dfa_concat_extrabit(M1, M2, var, indices)
     }
     statuces[ns]='\0';
     //result = dfaBuild(b, statuces);
-    result=dfaBuild(b, statuces);
+    result = dfaBuild(b, statuces);
     //dfaPrintVitals(result);
     //printf("Original M\n");
     //dfaPrintVerbose(M);
@@ -1556,15 +1562,14 @@ DFA *dfa_concat_extrabit(M1, M2, var, indices)
     if(checkEmptyString(M2)){
       if(state_reachable(M2, M2->s, var, indices)){
         tmp1 = dfa_shift_empty_M(M2, var, indices);
-        tmp0 =  dfa_concat_extrabit(M1, tmp1, var, indices);
+        tmp0 = dfa_concat_extrabit(M1, tmp1, var, indices);
         dfaFree(tmp1);
-      }
-      else{
+      } else {
         tmp0 =  dfa_concat_extrabit(M1, M2, var, indices);
       }
       tmp1 = dfa_union(tmp0, M1);
       dfaFree(tmp0);
-    }else{
+    } else {
       tmp1 = dfa_concat_extrabit(M1, M2, var, indices);
     }
     return tmp1;
