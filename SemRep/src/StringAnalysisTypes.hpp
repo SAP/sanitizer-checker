@@ -30,5 +30,18 @@ typedef std::map<const int, StrangerAutomaton*> AnalysisResult;
 typedef std::map<const int, StrangerAutomaton*>::iterator AnalysisResultIterator;
 typedef std::map<const int, StrangerAutomaton*>::const_iterator AnalysisResultConstIterator;
 
+class AnalysisResultHelper {
+
+public:
+    static void DeleteResults(AnalysisResult& result) {
+        for (auto a : result) {
+            if (a.second != nullptr) {
+                delete a.second;
+                a.second = nullptr;
+            }
+        }
+        result.clear();
+    }
+};
 
 #endif /* STRINGANALYSISTYPES_HPP_ */

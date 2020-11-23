@@ -132,14 +132,13 @@ void BackwardAnalysisResult::init()
   m_intersection = this->getAttack()->computeAttackPatternOverlap(postImage, m_attack);
   // Only compute BW analysis if vulnerable
   if (this->isVulnerable()) {
-    AnalysisResult result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
-    m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
-    // Delete all the result pointers
-    for (auto a : result) {
-      if (a.second != nullptr) {
-        delete a.second;
-        a.second = nullptr;
-      }
+    try {
+      AnalysisResult result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+      m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
+      //  clean up target analysis result
+      AnalysisResultHelper::DeleteResults(result);
+    } catch (StrangerStringAnalysisException const &e) {
+      throw;
     }
   }
 }
@@ -205,13 +204,7 @@ void ForwardAnalysisResult::finishAnalysis() {
     delete m_attack;
     m_attack = nullptr;
   }
-  for (auto a : m_result) {
-    if (a.second != nullptr) {
-      delete a.second;
-      a.second = nullptr;
-    }
-  }
-  m_result.clear();
+  AnalysisResultHelper::DeleteResults(m_result);
 }
 
 SemAttack::SemAttack(const fs::path& target_dep_graph_file_name, const string& input_field_name)
@@ -330,12 +323,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(StrangerAutomaton* inputAuto) 
         message("...finished forward analysis for target.");        
     } catch (StrangerStringAnalysisException const &e) {
       //  clean up target analysis result
-      for (auto a : targetAnalysisResult) {
-        if (a.second != nullptr) {
-          delete a.second;
-          a.second = nullptr;
-        }
-      }
+      AnalysisResultHelper::DeleteResults(targetAnalysisResult);
       throw;
     }
 
