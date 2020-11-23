@@ -601,45 +601,50 @@ void ImageComputer::doPostImageComputation_SingleInput(
  *
  */
 AnalysisResult ImageComputer::doBackwardAnalysis_GeneralCase(
-		const DepGraph& origDepGraph, const DepGraph& depGraph, const StrangerAutomaton* initialAuto, const AnalysisResult& fwAnalysisResult) {
+    const DepGraph& origDepGraph, const DepGraph& depGraph, const StrangerAutomaton* initialAuto, const AnalysisResult& fwAnalysisResult) {
 
-	queue<const DepGraphNode*> process_queue;
-	set<const DepGraphNode*> visited;
-	set<int> processed_SCCs;
+    queue<const DepGraphNode*> process_queue;
+    set<const DepGraphNode*> visited;
+    set<int> processed_SCCs;
 
-	AnalysisResult bwAnalysisResult;
+    AnalysisResult bwAnalysisResult;
 
-	// initialize root node
-	bwAnalysisResult[depGraph.getRoot()->getID()] = initialAuto->clone();
+    try {
+        // initialize root node
+        bwAnalysisResult[depGraph.getRoot()->getID()] = initialAuto->clone();
 
-	process_queue.push(depGraph.getRoot());
-	while (!process_queue.empty()) {
+        process_queue.push(depGraph.getRoot());
+        while (!process_queue.empty()) {
 
-        const DepGraphNode *curr = process_queue.front();
-	if (depGraph.isSCCElement(curr)) { // handle cycles
-		// do not compute a scc more than once
-		auto isNotProcessed = processed_SCCs.insert(depGraph.getSCCID(curr));
-		if (isNotProcessed.second) {
-			doPreImageComputationForSCC_GeneralCase(origDepGraph, curr, bwAnalysisResult, fwAnalysisResult);
-		}
-	} else {
-		doPreImageComputation_GeneralCase(origDepGraph, curr, bwAnalysisResult, fwAnalysisResult);
-	}
+            const DepGraphNode *curr = process_queue.front();
+            if (depGraph.isSCCElement(curr)) { // handle cycles
+                // do not compute a scc more than once
+                auto isNotProcessed = processed_SCCs.insert(depGraph.getSCCID(curr));
+                if (isNotProcessed.second) {
+                    doPreImageComputationForSCC_GeneralCase(origDepGraph, curr, bwAnalysisResult, fwAnalysisResult);
+                }
+            } else {
+                doPreImageComputation_GeneralCase(origDepGraph, curr, bwAnalysisResult, fwAnalysisResult);
+            }
 
-	process_queue.pop();
+            process_queue.pop();
 
-	NodesList successors = depGraph.getSuccessors(curr);
-		if (!successors.empty()) {
-			for (auto succ_node : successors) {
-				auto isNotVisited = visited.insert(succ_node);
-				if (isNotVisited.second) {
-					process_queue.push(succ_node);
-				}
-			}
-		}
-	}
-
-	return bwAnalysisResult;
+            NodesList successors = depGraph.getSuccessors(curr);
+            if (!successors.empty()) {
+                for (auto succ_node : successors) {
+                    auto isNotVisited = visited.insert(succ_node);
+                    if (isNotVisited.second) {
+                        process_queue.push(succ_node);
+                    }
+                }
+            }
+        }
+    } catch (...) {
+        AnalysisResultHelper::DeleteResults(bwAnalysisResult);
+        throw;
+    }
+    
+    return bwAnalysisResult;
 }
 
 /**
