@@ -22,6 +22,7 @@
  */
 
 #include "SemRepair.hpp"
+#include "ValidationImageComputer.hpp"
 
 PerfInfo& SemRepair::perfInfo = PerfInfo::getInstance();
 
@@ -261,7 +262,7 @@ StrangerAutomaton* SemRepair::computeValidationPatch() {
 
 	message("BEGIN VALIDATION ANALYSIS PHASE........................................");
 
-	ImageComputer analyzer;
+    ValidationImageComputer analyzer;
 	boost::posix_time::ptime start_time;
 	try {
 		message("extracting validation from reference");
@@ -388,7 +389,7 @@ StrangerAutomaton* SemRepair::computeReferenceFWAnalysis() {
 	delete referenceAnalysisResult[reference_uninit_field_node->getID()];
 	referenceAnalysisResult[reference_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(reference_uninit_field_node->getID());
 
-	ImageComputer referenceAnalyzer;
+    ValidationImageComputer referenceAnalyzer;
 
 	try {
 		message("starting forward analysis for reference...");
@@ -427,7 +428,7 @@ AnalysisResult SemRepair::computeTargetFWAnalysis() {
 	}
 
 
-	ImageComputer targetAnalyzer;
+    ValidationImageComputer targetAnalyzer;
 
 	try {
 
@@ -445,7 +446,7 @@ AnalysisResult SemRepair::computeTargetFWAnalysis() {
 
 StrangerAutomaton* SemRepair::computeTargetLengthPatch(StrangerAutomaton* initialAuto, AnalysisResult& fwAnalysisResult) {
 	message("starting a backward analysis to calculate length patch...");
-	ImageComputer targetAnalyzer;
+    ValidationImageComputer targetAnalyzer;
 	try {
 		fwAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(-5);
 		boost::posix_time::ptime start_time = perfInfo.current_time();
@@ -468,7 +469,7 @@ StrangerAutomaton* SemRepair::computeTargetLengthPatch(StrangerAutomaton* initia
 }
 
 StrangerAutomaton* SemRepair::computeTargetSanitizationPatch(StrangerAutomaton* initialAuto,	const AnalysisResult& fwAnalysisResult) {
-	ImageComputer targetAnalyzer;
+    ValidationImageComputer targetAnalyzer;
 	AnalysisResult bwResult = targetAnalyzer.doBackwardAnalysis_GeneralCase(target_dep_graph, target_field_relevant_graph, initialAuto, fwAnalysisResult);
 	sanitization_patch_auto = bwResult[target_uninit_field_node->getID()];
 	return sanitization_patch_auto;

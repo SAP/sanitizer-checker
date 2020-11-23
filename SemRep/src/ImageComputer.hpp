@@ -34,15 +34,7 @@ public:
     ImageComputer();
     virtual ~ImageComputer();
 
-    /****************************************************************************************************/
-    /********* VALIDATION FUNCTION CALCULATION METHODS ************************************************/
-    /****************************************************************************************************/
 
-    AnalysisResult doBackwardAnalysis_ValidationCase(DepGraph& origDepGraph, DepGraph& depGraph, StrangerAutomaton* initialAuto);
-    void doPreImageComputation_ValidationCase(DepGraph& origDepGraph, DepGraphNode* node, AnalysisResult& bwAnalysisResult);
-    StrangerAutomaton* makePreImageForOpChild_ValidationCase(DepGraph& depGraph, DepGraphOpNode* opNode,
-    			 DepGraphNode* childNode,AnalysisResult& bwAnalysisResult);
-    void doPreImageComputationForSCC_ValidationCase(DepGraph& origDepGraph, DepGraphNode* node, AnalysisResult& bwAnalysisResult);
 
     /****************************************************************************************************/
     /*********** SINGLE INPUT POST-IMAGE COMPUTATION METHODS **********************************************/
@@ -74,18 +66,21 @@ public:
     static PerfInfo* perfInfo;
 
     bool handle_concats = true;
+protected:
+    std::string getLiteralOrConstantValue(const DepGraphNode* node);
+    bool isLiteralOrConstant(const DepGraphNode* node, NodesList successors);
+    /**
+    *
+    * TODO pattern for __vlab_restrict and other replace operations handled differently. There are some cases not handled yet for this reason where a pattern variable flows into both functions.
+    */
+    StrangerAutomaton* getLiteralorConstantNodeAuto(const DepGraphNode* node, bool is_vlab_restrict);
 
 private:
 
     StrangerAutomaton* uninit_node_default_initialization;
     NodesList f_unmodeled;
-    std::string getLiteralOrConstantValue(const DepGraphNode* node);
-    bool isLiteralOrConstant(const DepGraphNode* node, NodesList successors);
-    /**
-     *
-     * TODO pattern for __vlab_restrict and other replace operations handled differently. There are some cases not handled yet for this reason where a pattern variable flows into both functions.
-     */
-    StrangerAutomaton* getLiteralorConstantNodeAuto(const DepGraphNode* node, bool is_vlab_restrict);
+
+
 
 };
 

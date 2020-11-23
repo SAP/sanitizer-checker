@@ -22,6 +22,8 @@
 
 #include <boost/program_options.hpp>
 #include "SemRepair.hpp"
+#include "StringAnalysisTypes.hpp"
+#include "exceptions/StrangerStringAnalysisException.hpp"
 
 using namespace std;
 using namespace boost;
