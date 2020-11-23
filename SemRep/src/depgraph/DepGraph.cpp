@@ -47,10 +47,6 @@ DepGraph::DepGraph(const DepGraph& other){
     this->scc_map = other.scc_map;
 }
 
-DepGraph::~DepGraph() {
-
-}
-
 DepGraph& DepGraph::operator=(const DepGraph &other){
     this->root = other.root;
     this->nodes = other.nodes;
@@ -638,3 +634,28 @@ void DepGraph::printSCCInfo() {
     cout << endl << "------------------" << endl;
 }
 
+
+
+
+
+
+NodeOwningDepGraph::NodeOwningDepGraph(const DepGraph& other) :
+    DepGraph(other)
+{
+}
+
+NodeOwningDepGraph& NodeOwningDepGraph::operator=(const DepGraph &other)
+{
+    DepGraph::operator=(other);
+    return *this;
+}
+
+NodeOwningDepGraph::~NodeOwningDepGraph() {
+    for (auto node : nodes) {
+        if (node.second) {
+            delete node.second;
+            node.second = nullptr;
+        }
+    }
+    nodes.clear();
+}

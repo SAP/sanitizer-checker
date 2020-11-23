@@ -38,12 +38,14 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
         cout << endl << "\t       Target: " << target_name  << endl;
 
         MultiAttack attack(target_name, output_dir, field_name);
-        attack.computePostImages();
-        attack.computeAttackPatternOverlaps(AttackContext::Html);
-        attack.computeAttackPatternOverlaps(AttackContext::HtmlPayload);
-        attack.computeAttackPatternOverlaps(AttackContext::HtmlAttr);
-        attack.computeAttackPatternOverlaps(AttackContext::JavaScript);
-        attack.computeAttackPatternOverlaps(AttackContext::Url);
+
+        attack.addAttackPattern(AttackContext::Html);
+        attack.addAttackPattern(AttackContext::HtmlPayload);
+        attack.addAttackPattern(AttackContext::HtmlAttr);
+        attack.addAttackPattern(AttackContext::JavaScript);
+        attack.addAttackPattern(AttackContext::Url);
+
+        attack.compute();
 
         cout << endl << "\t------ OVERALL RESULT for: " << field_name << " ------" << endl;
         cout << "\t    Target: " << target_name << endl;

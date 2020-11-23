@@ -46,7 +46,7 @@ public:
 
     unsigned int getEntries() const { return m_graphs.size(); }
 
-    void printMembers() const;
+    void printMembers(bool printAll) const;
     void printSummary() const;
     static void printHeaders();
 
@@ -75,7 +75,7 @@ public:
     const AutomatonGroup* getGroupForAutomaton(const StrangerAutomaton* automaton) const;
 
     unsigned int getEntries() const;
-    void printGroups() const;
+    void printGroups(bool printAll = false) const;
 
 private:
 

@@ -51,12 +51,10 @@ void StrangerAutomaton::init()
 
 StrangerAutomaton::~StrangerAutomaton()
 {
-	if (this->dfa != NULL ){
-		dfaFree(this->dfa);
-		this->dfa = NULL;
-	}
-	else
-		abort();
+    if (this->dfa != NULL ){
+        dfaFree(this->dfa);
+        this->dfa = NULL;
+    }
 }
 
 // some static members
@@ -3206,13 +3204,17 @@ void StrangerAutomaton::toDotAscii(int printSink) const
 }
 
 void StrangerAutomaton::toDotFileAscii(std::string file_name, int printSink) const {
-	unsigned* indices_main_unsigned = getUnsignedIndices(num_ascii_track);
+    unsigned* indices_main_unsigned = getUnsignedIndices(num_ascii_track);
     debugToFile(stringbuilder() << "dfaPrintGraphvizAsciiRangeFile(M[" << this->autoTraceID << "], NUM_ASCII_TRACKS, indices_main);//dfaPrintGraphviz( this->ID)");
     //if the automaton is the empty language then we must enable printing the sink
     // if there is one state and it is a rejecting state
-    if (this->dfa->ns == 1 && this->dfa->f[0] == -1)
-        printSink = 2;
-    dfaPrintGraphvizAsciiRangeFile(this->dfa, file_name.c_str(), num_ascii_track, indices_main, printSink);
+    if (this->dfa) {
+        if (this->dfa->ns == 1 && this->dfa->f[0] == -1)
+            printSink = 2;
+        dfaPrintGraphvizAsciiRangeFile(this->dfa, file_name.c_str(), num_ascii_track, indices_main, printSink);
+    } else {
+        std::cout << "StrangerAutomaton::toDotFileAscii: this->dfa is null" << std::endl;
+    }
     delete[] indices_main_unsigned;
 }
 

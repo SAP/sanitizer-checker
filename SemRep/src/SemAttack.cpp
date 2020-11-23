@@ -37,6 +37,8 @@ CombinedAnalysisResult::CombinedAnalysisResult(const fs::path& target_dep_graph_
                                                StrangerAutomaton* automaton)
   : m_fwAnalysis(target_dep_graph_file_name, input_field_name, automaton)
   , m_bwAnalysisMap()
+  , m_inputfile(target_dep_graph_file_name)
+  , m_input_name(input_field_name)
 {
 }
 
@@ -76,7 +78,7 @@ void CombinedAnalysisResult::printResult() const
 
 void CombinedAnalysisResult::printDetailedResults() const
 {
-  std::cout << "File: " << this->getAttack()->getFileName();
+  std::cout << "File: " << this->getFileName();
   for (auto bwResult : m_bwAnalysisMap) {
     AttackContext c = bwResult.first;
     const BackwardAnalysisResult* result = bwResult.second;
@@ -100,6 +102,7 @@ BackwardAnalysisResult::BackwardAnalysisResult(
   : m_fwResult(fwResult)
   , m_name(AttackContextHelper::getName(context))
   , m_attack(AttackPatterns::getAttackPatternForContext(context))
+  , m_preimage(nullptr)
 {
   this->init();
 }
@@ -109,8 +112,18 @@ BackwardAnalysisResult::BackwardAnalysisResult(
   : m_fwResult(fwResult)
   , m_name(name)
   , m_attack(new StrangerAutomaton(attack))
+  , m_preimage(nullptr)
 {
   this->init();
+}
+
+BackwardAnalysisResult::~BackwardAnalysisResult()
+{
+  if (m_preimage) {
+    delete m_preimage;
+    m_preimage = nullptr;
+  }
+  delete m_attack;
 }
 
 void BackwardAnalysisResult::init()
@@ -119,13 +132,16 @@ void BackwardAnalysisResult::init()
   m_intersection = this->getAttack()->computeAttackPatternOverlap(postImage, m_attack);
   // Only compute BW analysis if vulnerable
   if (this->isVulnerable()) {
-    m_result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+    AnalysisResult result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+    m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
+    // Delete all the result pointers
+    for (auto a : result) {
+      if (a.second != nullptr) {
+        delete a.second;
+        a.second = nullptr;
+      }
+    }
   }
-}
-
-BackwardAnalysisResult::~BackwardAnalysisResult()
-{
-  delete m_attack;
 }
 
 void BackwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
@@ -144,19 +160,35 @@ void BackwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
   }
 }
 
-ForwardAnalysisResult::ForwardAnalysisResult(
-  const fs::path& target_dep_graph_file_name,
-  const std::string& input_field_name,
-  StrangerAutomaton* automaton)
+ForwardAnalysisResult::ForwardAnalysisResult(const fs::path& target_dep_graph_file_name,
+                                             const std::string& input_field_name,
+                                             StrangerAutomaton* automaton)
+  : m_attack(new SemAttack(target_dep_graph_file_name, input_field_name))
+  , m_result()
+  , m_input(automaton)
+  , m_postImage(nullptr)
 {
-  m_attack = new SemAttack(target_dep_graph_file_name, input_field_name);
-  m_input = automaton;
 }
 
 ForwardAnalysisResult::~ForwardAnalysisResult()
 {
-  delete m_attack;
+  finishAnalysis();
   delete m_input;
+  if (m_postImage) {
+    delete m_postImage;
+    m_postImage = nullptr;
+  }
+}
+
+void ForwardAnalysisResult::doAnalysis()
+{
+  m_result = m_attack->computeTargetFWAnalysis(m_input);
+  const StrangerAutomaton* post = this->getAttack()->getPostImage(m_result);
+  if (post) {
+    m_postImage = new StrangerAutomaton(post);
+  } else {
+    m_postImage = nullptr;
+  }
 }
 
 void ForwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
@@ -166,6 +198,20 @@ void ForwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
   fs::path output_file(dir / fs::path("post_image_ascii.dot"));
 
   this->getPostImage()->toDotFileAscii(output_file.string(), 0);  
+}
+
+void ForwardAnalysisResult::finishAnalysis() {
+  if (m_attack) {
+    delete m_attack;
+    m_attack = nullptr;
+  }
+  for (auto a : m_result) {
+    if (a.second != nullptr) {
+      delete a.second;
+      a.second = nullptr;
+    }
+  }
+  m_result.clear();
 }
 
 SemAttack::SemAttack(const fs::path& target_dep_graph_file_name, const string& input_field_name)
@@ -204,7 +250,6 @@ void SemAttack::init()
 }
 
 SemAttack::~SemAttack() {
-    delete this->target_uninit_field_node;
 }
 
 void SemAttack::writeResultsToFile(const fs::path& dir) const
@@ -362,5 +407,3 @@ const StrangerAutomaton* SemAttack::getPreImage(const AnalysisResult& result) co
 {
   return result.at(this->target_uninit_field_node->getID());
 }
-
-

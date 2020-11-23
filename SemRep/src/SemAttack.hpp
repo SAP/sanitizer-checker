@@ -74,7 +74,7 @@ private:
     fs::path target_dep_graph_file_name;
     std::string input_field_name;
 
-    DepGraph target_dep_graph;
+    NodeOwningDepGraph target_dep_graph;
     DepGraph target_field_relevant_graph;
 
     DepGraphNode* target_uninit_field_node;
@@ -99,20 +99,21 @@ public:
         
     virtual ~ForwardAnalysisResult();
 
-    void doAnalysis() { m_result = m_attack->computeTargetFWAnalysis(m_input); }
+    void doAnalysis();
 
     const SemAttack* getAttack() const { return m_attack; }
     SemAttack* getAttack() { return m_attack; }
-    const StrangerAutomaton* getPostImage() const { return m_attack->getPostImage(m_result); }
+    const StrangerAutomaton* getPostImage() const { return m_postImage; }
     const AnalysisResult& getFwAnalysisResult() const { return m_result; }
 
     void writeResultsToFile(const fs::path& dir) const;
 
+    void finishAnalysis();
 private:
   SemAttack* m_attack;
   AnalysisResult m_result;
   StrangerAutomaton* m_input;
-  
+  StrangerAutomaton* m_postImage;
 };
 
 // Class containing all revelant backward analysis results
@@ -128,7 +129,7 @@ public:
 
     virtual ~BackwardAnalysisResult();
 
-    const StrangerAutomaton* getPreImage() const { return getAttack()->getPreImage(m_result); }
+    const StrangerAutomaton* getPreImage() const { return m_preimage; }
     const StrangerAutomaton* getIntersection() const { return m_intersection; }
     const StrangerAutomaton* getAttackPattern() const { return m_attack; }
     bool isSafe() const { return (getIntersection()->isEmpty() || getIntersection()->checkEmptyString()); }
@@ -145,8 +146,8 @@ private:
  
     AttackContext m_context;
     StrangerAutomaton* m_intersection;
+    StrangerAutomaton* m_preimage;
 
-    AnalysisResult m_result;
 };
 
 class CombinedAnalysisResult {
@@ -165,10 +166,15 @@ public:
     const ForwardAnalysisResult& getFwAnalysis() const { return m_fwAnalysis; }
     ForwardAnalysisResult& getFwAnalysis() { return m_fwAnalysis; }
 
+    std::string getFileName() const { return m_inputfile.string(); }
+    
     void printResult() const;
     void printDetailedResults() const;
-
+    void finishAnalysis() { getFwAnalysis().finishAnalysis(); }
 private:
+    fs::path m_inputfile;
+    std::string m_input_name;
+
     ForwardAnalysisResult m_fwAnalysis;
     std::map<AttackContext, BackwardAnalysisResult*> m_bwAnalysisMap;
 };

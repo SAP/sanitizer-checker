@@ -65,8 +65,8 @@ private:
 	string target_dep_graph_file_name;
 	string input_field_name;
 
-	DepGraph reference_dep_graph;
-	DepGraph target_dep_graph;
+        NodeOwningDepGraph reference_dep_graph;
+	NodeOwningDepGraph target_dep_graph;
 	DepGraph reference_field_relevant_graph;
 	DepGraph target_field_relevant_graph;
 

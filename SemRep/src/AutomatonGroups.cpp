@@ -80,7 +80,7 @@ void AutomatonGroup::printSummary() const {
             << getEntries();
 }
 
-void AutomatonGroup::printMembers() const {
+void AutomatonGroup::printMembers(bool printAll) const {
 
   printSummary();
   std:: cout << ", ";
@@ -88,10 +88,16 @@ void AutomatonGroup::printMembers() const {
   if (m_graphs.size() > 0) {
     m_graphs.at(0)->printResult();
   }
-  std::cout << ", Example: ";
+  if (printAll) {
+    std::cout << std::endl << "Examples: ";
+  } else {
+    std::cout << ", Example: ";
+  }
   for (auto iter : m_graphs) {
-    std::cout << iter->getAttack()->getFileName() << ", ";
-    break;
+    std::cout << iter->getFileName() << ", ";
+    if (!printAll) {
+      break;
+    }
   }
   std::cout << std::endl;
   //m_automaton->toDotAscii(0);
@@ -171,13 +177,13 @@ const AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutoma
   return nullptr;
 }
 
-void AutomatonGroups::printGroups() const {
+void AutomatonGroups::printGroups(bool printAll) const {
   // Switch to decimal
   std::cout << std::dec;
   //  SemAttack::perfInfo.print_operations_info();
   std::cout << "Total of " << m_groups.size() << " unique post-images with " << getEntries() << " entries." << std::endl;
   for (auto iter : m_groups) {
-    iter.printMembers();
+    iter.printMembers(printAll);
   }
 }
 

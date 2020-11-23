@@ -68,7 +68,7 @@ private:
     string target_dep_graph_file_name;
     string input_field_name;
 
-    DepGraph target_dep_graph;
+    NodeOwningDepGraph target_dep_graph;
     DepGraph target_field_relevant_graph;
     DepGraphNode* target_uninit_field_node;
     StrangerAutomaton* target_sink_auto;

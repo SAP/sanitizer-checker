@@ -43,15 +43,15 @@ public:
     MultiAttack(const std::string& graph_directory, const std::string& output_dir, const std::string& input_field_name);
     virtual ~MultiAttack();
 
-    void computePostImages();
-    void computeAttackPatternOverlaps(AttackContext context);
+    void compute();
+    void addAttackPattern(AttackContext context);
     void printResults(bool printFiles = false) const;
     void printDetailedResults() const;
 
 private:
     void fillCommonPatterns();
     void findDotFiles();
-    void computePostImage(const fs::path& file);
+    void computeImagesForFile(const fs::path& file);
     void computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context);
     static std::vector<fs::path> getDotFilesInDir(fs::path const &dir);
     static std::vector<fs::path> getFilesInPath(fs::path const & root, std::string const & ext);
