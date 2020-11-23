@@ -551,7 +551,7 @@ void DepGraph::dumpDot(string fname) const{
 }
 
 void DepGraph::calculateSCCs() {
-	int time_count;
+	int time_count = 0;
 	map<int, int> lowlink;
 	map<int, bool> used;
 	stack<int> process_stack;
