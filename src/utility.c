@@ -430,8 +430,9 @@ void insertIntoStatePairSortedArrayList(PStatePairArrayList pStatePairArrayList,
     pStatePair->second = second;
     pStatePair->escapedChars = (char *) mem_alloc( pStatePairArrayList->numOfEscapedChars * sizeof(char));
     memset(pStatePair->escapedChars, (char) 255, pStatePairArrayList->numOfEscapedChars * sizeof(char));
-    pStatePair->escapedChars[0] = escapeChar;
-    
+    if (pStatePairArrayList->numOfEscapedChars > 1) {
+        pStatePair->escapedChars[0] = escapeChar;
+    }
     /*     insert elem    */
     
     if (pStatePairArrayList->index == 0){

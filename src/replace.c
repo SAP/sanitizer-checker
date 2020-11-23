@@ -78,7 +78,7 @@ void print_exep_value(char *exep, int len) {
 
 int is_sharp1(paths pp, int var, int *indices) {
     char *sharp1;
-    sharp1 = getSharp1WithExtraBit(var);
+   sharp1 = getSharp1WithExtraBit(var);
     int j;
     trace_descr tp;
     int yes = 1;
@@ -183,7 +183,7 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
     //printf("Deletion [insert auxiliary bits]!\n");
     aux = get_hsig(maxCount);
     len = var+aux;
-    auxbit = (char *) malloc(aux*sizeof(char));
+    auxbit = (char *) calloc(aux, sizeof(char));
     indices = allocateArbitraryIndex(len);
   }
 
@@ -195,9 +195,9 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
 
 
   DFABuilder *b = dfaSetup(M->ns, len, indices);
-  exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
-  to_states=(int *)malloc(max_exeps*sizeof(int));
-  statuces=(char *)malloc((M->ns+1)*sizeof(char));
+  exeps=(char *)calloc(max_exeps*(len+1), sizeof(char)); //plus 1 for \0 end of the string
+  to_states=(int *)calloc(max_exeps, sizeof(int));
+  statuces=(char *)calloc((M->ns+1), sizeof(char));
 
   // For the starting state we need to do something special
   // Check whether there are any closure paths from state 0
@@ -370,7 +370,7 @@ DFA *dfa_replace_char(DFA *M, char a, int var, int *oldindices)
   if(maxCount>0){ //Need auxiliary bits when there exist some outgoing edges
     aux = get_hsig(maxCount);
     //	printf("Replace one char: %d hits, need to add %d auxiliary bits\n", maxCount, aux);
-    auxbit = (char *) malloc(aux*sizeof(char));
+    auxbit = (char *) calloc(aux, sizeof(char));
     len = var+aux; // extra aux bits
     indices = allocateArbitraryIndex(len);
   }
@@ -386,9 +386,9 @@ DFA *dfa_replace_char(DFA *M, char a, int var, int *oldindices)
 
 
   DFABuilder *b = dfaSetup(M->ns, len, indices);
-  exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
-  to_states=(int *)malloc(max_exeps*sizeof(int));
-  statuces=(char *)malloc((M->ns+1)*sizeof(char));
+  exeps=(char *)calloc(max_exeps*(len+1), sizeof(char)); //plus 1 for \0 end of the string
+  to_states=(int *)calloc(max_exeps, sizeof(int));
+  statuces=(char *)calloc((M->ns+1), sizeof(char));
 
   //printf("Before Replace Char\n");
   //dfaPrintVerbose(M);
@@ -558,7 +558,7 @@ DFA *dfa_replace_M_dot(DFA *M, DFA* Mr, int var, int *oldindices)
   if(maxCount>0){ //Need auxiliary bits when there exist some outgoing edges
     aux = get_hsig(maxCount);
     //	printf("Replace one char: %d hits, need to add %d auxiliary bits\n", maxCount, aux);
-    auxbit = (char *) malloc(aux*sizeof(char));
+    auxbit = (char *) calloc(aux, sizeof(char));
     len = var+aux; // extra aux bits
     indices = allocateArbitraryIndex(len);
   }
@@ -573,9 +573,9 @@ DFA *dfa_replace_M_dot(DFA *M, DFA* Mr, int var, int *oldindices)
 
 
   DFABuilder *b = dfaSetup(M->ns, len, indices);
-  exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
-  to_states=(int *)malloc(max_exeps*sizeof(int));
-  statuces=(char *)malloc((M->ns+1)*sizeof(char));
+  exeps=(char *)calloc(max_exeps*(len+1), sizeof(char)); //plus 1 for \0 end of the string
+  to_states=(int *)calloc(max_exeps, sizeof(int));
+  statuces=(char *)calloc((M->ns+1), sizeof(char));
 
   //printf("Before Replace Char\n");
   //dfaPrintVerbose(M);
@@ -793,7 +793,7 @@ DFA *dfa_replace_M_arbitrary(DFA *M, DFA *Mr, int var, int *oldindices)
 
     aux = get_hsig(maxCount);//get the highest significant bit
     if(_FANG_DFA_DEBUG) printf("Replace Arbitrary M: %d hits, need to add %d auxiliary bits\n", maxCount, aux);
-    auxbit = (char *) malloc(aux*sizeof(char));//the redundant bits to distinguish outgoing edges
+    auxbit = (char *) calloc(aux, sizeof(char));//the redundant bits to distinguish outgoing edges
     len = var+aux; // extra aux bits
     indices = allocateArbitraryIndex(len);
     s=0;
@@ -815,8 +815,8 @@ DFA *dfa_replace_M_arbitrary(DFA *M, DFA *Mr, int var, int *oldindices)
 
   //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
   DFABuilder *b = dfaSetup(ns, len, indices);
-  exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
-  to_states=(int *)malloc(max_exeps*sizeof(int));
+  exeps=(char *)calloc(max_exeps*(len+1), sizeof(char)); //plus 1 for \0 end of the string
+  to_states=(int *)calloc(max_exeps, sizeof(int));
   statuces=(char *)malloc((ns+1)*sizeof(char));
 
 
@@ -1015,7 +1015,7 @@ DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
   if(maxCount>0){ //Need auxiliary bits when there exist some outgoing edges
     aux = get_hsig(maxCount);
     //printf("Replace string: %d hits, need to add %d auxiliary bits\n", maxCount, aux);
-    auxbit = (char *) malloc(aux*sizeof(char));
+    auxbit = (char *) calloc(aux, sizeof(char));
     len = var+aux; // extra aux bits
     indices = allocateArbitraryIndex(len);
     binOfStr = get_bitstrings(str, var, aux); //initially extra bit are zero
@@ -1038,8 +1038,8 @@ DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
   //printf("old number of states in dfa_replace_string = %d, new number of states = %d\n", M->ns, ns);
   //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
   DFABuilder *b = dfaSetup(ns, len, indices);
-  exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
-  to_states=(int *)malloc(max_exeps*sizeof(int));
+  exeps=(char *)calloc(max_exeps*(len+1), sizeof(char)); //plus 1 for \0 end of the string
+  to_states=(int *)calloc(max_exeps, sizeof(int));
   statuces=(char *)malloc((ns+1)*sizeof(char));
 
 
@@ -1458,9 +1458,9 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices)
 
 
   DFABuilder *b = dfaSetup(M->ns, len, indices);
-  exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
-  to_states=(int *)malloc(max_exeps*sizeof(int));
-  statuces=(char *)malloc((M->ns+1)*sizeof(char));
+  exeps=(char *)calloc(max_exeps*(len+1), sizeof(char)); //plus 1 for \0 end of the string
+  to_states=(int *)calloc(max_exeps, sizeof(int));
+  statuces=(char *)calloc((M->ns+1), sizeof(char));
 
   for (i = 0; i < M->ns; i++) {
 
@@ -1561,8 +1561,8 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   ns = M->ns + (M->ns)*(extrastates);
 
   DFABuilder *b = dfaSetup(ns, len, indices);
-  exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
-  to_states=(int *)malloc(max_exeps*sizeof(int));
+  exeps=(char *)calloc(max_exeps*(len+1), sizeof(char)); //plus 1 for \0 end of the string
+  to_states=(int *)calloc(max_exeps, sizeof(int));
   statuces=(char *)malloc((ns+1)*sizeof(char));
   auxexeps=(char *)malloc((len+1)*sizeof(char));
 
