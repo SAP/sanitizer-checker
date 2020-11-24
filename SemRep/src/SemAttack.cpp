@@ -312,8 +312,9 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(StrangerAutomaton* inputAuto) 
     // initialize uninit node that we are interested in with sigma star
     message(stringbuilder() << "initializing input node(" << target_uninit_field_node->getID() << ") with sigma star");
     delete targetAnalysisResult[target_uninit_field_node->getID()];
-    
-    targetAnalysisResult[target_uninit_field_node->getID()] = inputAuto;
+
+    // Copy the input
+    targetAnalysisResult[target_uninit_field_node->getID()] = new StrangerAutomaton(inputAuto);
 
     ImageComputer targetAnalyzer;
 
