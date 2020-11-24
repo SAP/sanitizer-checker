@@ -26,9 +26,9 @@
 
 #include <boost/filesystem.hpp>
 #include "StrangerAutomaton.hpp"
-#include "ImageComputer.hpp"
 #include "SemRepairDebugger.hpp"
 #include "depgraph/DepGraph.hpp"
+#include "StringAnalysisTypes.hpp"
 
 using namespace std;
 
