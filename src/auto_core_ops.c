@@ -3149,11 +3149,18 @@ DFA *dfaQuestionMark(int var, int *indices){
  is very quick
  */
 bool check_emptiness_minimized(DFA *M){
+    // Assume a null pointer is empty
+    if (!M) {
+        return true;
+    }
     return (M->ns == 1 && M->f[M->s] == -1)? true : false;
 }
 
 int check_emptiness(M1, var, indices)
 DFA *M1;int var;int *indices; {
+  if (!M1) {
+    return true;
+  }
   if (M1->f[M1->s] == 1)
     return false;
     if (M1->ns == 1 && M1->f[M1->s] == -1)
