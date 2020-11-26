@@ -380,8 +380,8 @@ extern "C" {
     void dfaPrintGraphvizAsciiRange(DFA *a, int no_free_vars, int *offsets, int printSink);
     void dfaPrintGraphvizAsciiRangeFile(DFA *a, const char *filename, int no_free_vars, int *offsets, int printSink);
     void dfaPrintGraphvizFile(DFA *a, const char *filename, int no_free_vars, unsigned *offsets);
-    void dfaExportBddTable(DFA *a, char *file_name, int var);
-    DFA *dfaImportBddTable(char* file_name, int var) ;
+    void dfaExportBddTable(DFA *a, const char *file_name, int var);
+    DFA *dfaImportBddTable(const char* file_name, int var) ;
 
     void __export(bdd_manager *bddm, unsigned p, Table *table);
 
