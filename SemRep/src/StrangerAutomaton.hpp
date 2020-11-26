@@ -245,6 +245,8 @@ public:
     void toDotFile(std::string file_name) const;
     void toDotFileAscii(std::string file_name, int printSink) const;
     void toDotBDDFile(std::string file_name) const;
+    void exportToFile(const std::string& file_name) const;
+    static StrangerAutomaton* importFromFile(const std::string& file_name);
     static void openCtraceFile(std::string name);
     static void appendCtraceFile(std::string name);
     static void closeCtraceFile();

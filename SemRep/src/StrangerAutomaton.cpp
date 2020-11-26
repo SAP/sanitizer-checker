@@ -3218,6 +3218,18 @@ void StrangerAutomaton::toDotFileAscii(std::string file_name, int printSink) con
     delete[] indices_main_unsigned;
 }
 
+void StrangerAutomaton::exportToFile(const std::string& file_name) const
+{
+    if (this->dfa) {
+        dfaExportBddTable(this->dfa, file_name.c_str(), num_ascii_track);
+    }
+}
+
+StrangerAutomaton* StrangerAutomaton::importFromFile(const std::string& file_name)
+{
+    return new StrangerAutomaton(dfaImportBddTable(file_name.c_str(), num_ascii_track));
+}
+
 int StrangerAutomaton::debugLevel = 0;
 
 void StrangerAutomaton::debug(std::string s)

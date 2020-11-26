@@ -268,15 +268,20 @@ std::vector<fs::path> MultiAttack::getFilesInPath(fs::path const & root, std::st
 {
   std::vector<fs::path> paths;
 
-  if (fs::exists(root) && fs::is_directory(root))
-  {
-    for (auto const & entry : fs::recursive_directory_iterator(root))
-    {
-      if (fs::is_regular_file(entry) && entry.path().extension() == ext) {
-        paths.emplace_back(entry.path());
+  if (fs::exists(root)) {
+    // Recurse into directories
+    if (fs::is_directory(root)) {
+      for (auto const & entry : fs::recursive_directory_iterator(root)) {
+        if (fs::is_regular_file(entry) && entry.path().extension() == ext) {
+          paths.emplace_back(entry.path());
+        }
+      }
+    // Single file
+    } else {
+      if (root.extension() == ext) {
+          paths.emplace_back(root);
       }
     }
   }
-
   return paths;
 }

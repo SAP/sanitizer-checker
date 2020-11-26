@@ -149,13 +149,19 @@ void BackwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
 
   fs::path output_image_file(dir / fs::path("post_image_attack_" + this->getName() + ".dot"));
   m_attack->toDotFileAscii(output_image_file.string(), 0);
+  fs::path output_image_file_bdd(dir / fs::path("post_image_attack_" + this->getName() + ".bdd"));
+  m_attack->exportToFile(output_image_file_bdd.string());
 
   fs::path output_file(dir / fs::path("post_image_intersection_" + this->getName() + ".dot"));
   m_intersection->toDotFileAscii(output_file.string(), 0);
+  fs::path output_file_bdd(dir / fs::path("post_image_intersection_" + this->getName() + ".bdd"));
+  m_intersection->exportToFile(output_file_bdd.string());
 
   if (this->isVulnerable()) {
     fs::path output_file_pre(dir / fs::path("pre_image_" + this->getName() + ".dot"));
     getPreImage()->toDotFileAscii(output_file_pre.string(), 0);
+    fs::path output_file_pre_bdd(dir / fs::path("pre_image_" + this->getName() + ".bdd"));
+    getPreImage()->exportToFile(output_file_pre_bdd.string());
   }
 }
 
@@ -195,8 +201,10 @@ void ForwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
   fs::create_directories(dir);
 
   fs::path output_file(dir / fs::path("post_image_ascii.dot"));
-
   this->getPostImage()->toDotFileAscii(output_file.string(), 0);  
+
+  fs::path output_file_bdd(dir / fs::path("post_image.bdd"));
+  this->getPostImage()->exportToFile(output_file_bdd.string());
 }
 
 void ForwardAnalysisResult::finishAnalysis() {
