@@ -1418,7 +1418,7 @@ DFA *dfa_concat_extrabit(M1, M2, var, indices)
   // Given M, output a dfa accepting L(M) but initial state is not an accepting state
   DFA *dfa_shift_empty_M(DFA *M, int var, int *indices)
   {
-    DFA *result;
+    DFA *result, *tmp;
     paths state_paths, pp;
     trace_descr tp;
     int i, j, k;
@@ -1533,7 +1533,12 @@ DFA *dfa_concat_extrabit(M1, M2, var, indices)
     free(to_states);
     free(added_to_states);
     free(statuces);
-    return dfaMinimize(result);
+
+    tmp = dfaMinimize(result);
+    dfaFree(result);
+    result = tmp;
+
+    return result;
   }
 
 
@@ -2253,12 +2258,10 @@ DFA *dfa_union_add_empty_M(DFA *M, int var, int *indices) {
   free(to_states);
   free(added_to_states);
   free(statuces);
-  //changed by Muath --
-//  return dfaMinimize(result); --> old
+
   result = dfaMinimize(tmpM);
-  dfaFree(tmpM);tmpM = NULL;
+  dfaFree(tmpM);
   return result;
-  //end change by Muath
 }
 
 
@@ -2764,7 +2767,11 @@ DFA *dfaRemoveSpace(DFA* M, int var, int* indices){
   free(symbol);
   free(to_states);
   free(statuces);
-  return dfaMinimize(result);
+
+  DFA* tmp = dfaMinimize(result);
+  dfaFree(result);
+  result = tmp;
+  return result;
 }
 
 
@@ -5490,7 +5497,10 @@ DFA* dfa_semiliner_to_binaryDFA(struct semilinear_type *S) {
   //free(Q);
   free(statuces);
   //return result;
-  return dfaMinimize(result);
+  DFA* tmp = dfaMinimize(result);
+  dfaFree(result);
+  result = tmp;
+  return result;
 
 }
 

@@ -1521,6 +1521,7 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices)
   tmpM = dfaProject(result, (unsigned) len-1);
   dfaFree(result);
   result = dfaMinimize(tmpM);
+  dfaFree(tmpM);
 
   free(exeps);
   free(to_states);
