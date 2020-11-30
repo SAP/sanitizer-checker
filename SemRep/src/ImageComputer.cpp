@@ -27,6 +27,15 @@ using namespace std;
 
 ImageComputer::ImageComputer()
     : uninit_node_default_initialization(StrangerAutomaton::makePhi())
+    , m_doConcats(true)
+    , m_doSubstr(true)
+{
+}
+
+ImageComputer::ImageComputer(bool doConcats, bool doSubstr)
+    : uninit_node_default_initialization(StrangerAutomaton::makePhi())
+    , m_doConcats(doConcats)
+    , m_doSubstr(doSubstr)
 {
 }
 
@@ -390,7 +399,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		perfInfo->pre_vlab_restrict_total_time += perfInfo->current_time() - start_time;
 		perfInfo->number_of_pre_vlab_restrict++;
 
-	} else if (opName == ".") {
+	} else if ((opName == ".") || (opName == "concat")) {
 		if (successors.size() < 2)
 			throw StrangerStringAnalysisException(stringbuilder() << "less than two successors for concat node " << opNode->getID());
 
@@ -409,9 +418,14 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 				// we can just clone the previous auto, in that case actual concat operation is not done during forward analysis
 				retMe = concatAuto->clone(childNode->getID());
 			} else {
-				if (isLiteralOrConstant(rightSibling, depGraph.getSuccessors(rightSibling))){
+				if (isLiteralOrConstant(rightSibling, depGraph.getSuccessors(rightSibling))) {
+                                    // Check if we need to do concats
+                                    if (m_doConcats) {
 					string value = getLiteralOrConstantValue(rightSibling);
 					retMe = concatAuto->leftPreConcatConst(value, childNode->getID());
+                                    } else {
+                                        retMe = concatAuto->clone(childNode->getID());   
+                                    }
 				} else {
 					StrangerAutomaton* rightSiblingAuto = fwAnalysisResult.find(rightSibling->getID())->second;
 					retMe = concatAuto->leftPreConcat(rightSiblingAuto, childNode->getID());
@@ -427,8 +441,13 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 				retMe = concatAuto->clone(childNode->getID());
 			} else {
 				if (isLiteralOrConstant(leftSibling, depGraph.getSuccessors(leftSibling))){
+                                    // Check if we need to do concats
+                                    if (m_doConcats) {
 					string value = getLiteralOrConstantValue(leftSibling);
 					retMe = concatAuto->rightPreConcatConst(value, childNode->getID());
+                                    } else {
+                                        retMe = concatAuto->clone(childNode->getID());
+                                    }
 				} else {
 					StrangerAutomaton* leftSiblingAuto = fwAnalysisResult.find(leftSibling->getID())->second;
 					retMe = concatAuto->rightPreConcat(leftSiblingAuto, childNode->getID());
@@ -558,26 +577,31 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		}
                 StrangerAutomaton* subjectAuto = opAuto;
 
-                // Compute the start parameter
-		DepGraphNode* startNode = successors[1];
-		StrangerAutomaton* startAuto = fwAnalysisResult.find(startNode->getID())->second;
-                // std::cout << "StartAuto:\n";
-                // startAuto->toDotAscii(2);
-		string startValue = startAuto->getStr();
-		int start = stoi(startValue);
-
-                // Check if there is a length argument
-                if (successors.size() >=3) {
-                    DepGraphNode* lengthNode = successors[2];
-                    StrangerAutomaton* lengthAuto = fwAnalysisResult.find(lengthNode->getID())->second;
-                    // std::cout << "LengthAuto:\n";
+                if (m_doSubstr) {
+                    // Compute the start parameter
+                    DepGraphNode* startNode = successors[1];
+                    StrangerAutomaton* startAuto = fwAnalysisResult.find(startNode->getID())->second;
+                    // std::cout << "StartAuto:\n";
                     // startAuto->toDotAscii(2);
-                    string lengthValue = lengthAuto->getStr();
-                    int length = stoi(lengthValue);
+                    string startValue = startAuto->getStr();
+                    int start = stoi(startValue);
 
-                    retMe = subjectAuto->pre_substr(start, length, opNode->getID());
+                    // Check if there is a length argument
+                    if (successors.size() >=3) {
+                        DepGraphNode* lengthNode = successors[2];
+                        StrangerAutomaton* lengthAuto = fwAnalysisResult.find(lengthNode->getID())->second;
+                        // std::cout << "LengthAuto:\n";
+                        // startAuto->toDotAscii(2);
+                        string lengthValue = lengthAuto->getStr();
+                        int length = stoi(lengthValue);
+
+                        retMe = subjectAuto->pre_substr(start, length, opNode->getID());
+                    } else {
+                        retMe = subjectAuto->pre_substr(start, opNode->getID());
+                    }
                 } else {
-                    retMe = subjectAuto->pre_substr(start, opNode->getID());
+                    std::cout << "Ignoring substr operation" << std::endl;
+                    retMe = subjectAuto->clone(opNode->getID());
                 }
 
 	} else if (opName == "md5") {
@@ -847,7 +871,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 	NodesList successors = depGraph.getSuccessors(opNode);
 	StrangerAutomaton* retMe = nullptr;
 	string opName = opNode->getName();
-        //cout << "Computing : " << opName << endl;
+        cout << "Computing : " << opName << endl;
 	// __vlab_restrict
 	if (opName.find("__vlab_restrict") != string::npos) {
 		boost::posix_time::ptime start_time = perfInfo->current_time();
@@ -889,23 +913,25 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		perfInfo->vlab_restrict_total_time += perfInfo->current_time() - start_time;
 		perfInfo->number_of_vlab_restrict++;
 
-	} else if (opName == ".") {
+	} else if ((opName == ".") || (opName == "concat")) {
 		// TODO add option to ignore concats (heuristic)
 		for (auto succ_node : successors){
 			if (analysisResult.find(succ_node->getID()) == analysisResult.end()) {
-				if (handle_concats) {
-					doForwardAnalysis_GeneralCase(depGraph, succ_node, analysisResult);
-				} else {
-					continue;
-				}
+                            doForwardAnalysis_GeneralCase(depGraph, succ_node, analysisResult);
 			}
 			StrangerAutomaton* succAuto = analysisResult[succ_node->getID()];
-			if (retMe == nullptr) {
-				retMe = succAuto->clone(opNode->getID());
-			} else {
-				StrangerAutomaton* temp = retMe;
-				retMe = retMe->concatenate(succAuto, opNode->getID());
-				delete temp;
+                        if (isLiteralOrConstant(succ_node, depGraph.getSuccessors(succ_node)) && !m_doConcats) {
+                            string value = getLiteralOrConstantValue(succ_node);
+                            std::cout << "Ignoring concat of string value: " << value << std::endl;
+                        } else {
+                            if (retMe == nullptr) {
+                                retMe = succAuto->clone(opNode->getID());
+                            } else {
+                                std::cout << "Doing concat with node " << succ_node->getID() << std::endl;
+                                StrangerAutomaton* temp = retMe;
+                                retMe = retMe->concatenate(succAuto, opNode->getID());
+                                delete temp;
+                            }
 			}
 		}
 		if (retMe == nullptr) {
@@ -1054,26 +1080,31 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		}
                 StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
 
+                if (m_doSubstr) {
                 // Compute the starting index
-		if (analysisResult.find(startNode->getID()) == analysisResult.end()) {
+                    if (analysisResult.find(startNode->getID()) == analysisResult.end()) {
 			doForwardAnalysis_GeneralCase(depGraph, startNode, analysisResult);
-		}
-		string startValue = analysisResult[startNode->getID()]->getStr();
-		int start = stoi(startValue);
-
-                // Check if there is also a length argument
-                if (successors.size() >=3) {
-                    DepGraphNode* lengthNode = successors[2];
-                    if (analysisResult.find(lengthNode->getID()) == analysisResult.end()) {
-			doForwardAnalysis_GeneralCase(depGraph, lengthNode, analysisResult);
                     }
-                    string lengthValue = analysisResult[lengthNode->getID()]->getStr();
-                    int length = stoi(lengthValue);
-                    StrangerAutomaton* substrAuto = subjectAuto->substr(start,length,opNode->getID());
-                    retMe = substrAuto;
+                    string startValue = analysisResult[startNode->getID()]->getStr();
+                    int start = stoi(startValue);
+
+                    // Check if there is also a length argument
+                    if (successors.size() >=3) {
+                        DepGraphNode* lengthNode = successors[2];
+                        if (analysisResult.find(lengthNode->getID()) == analysisResult.end()) {
+                            doForwardAnalysis_GeneralCase(depGraph, lengthNode, analysisResult);
+                        }
+                        string lengthValue = analysisResult[lengthNode->getID()]->getStr();
+                        int length = stoi(lengthValue);
+                        StrangerAutomaton* substrAuto = subjectAuto->substr(start,length,opNode->getID());
+                        retMe = substrAuto;
+                    } else {
+                        StrangerAutomaton* substrAuto = subjectAuto->substr(start,opNode->getID());
+                        retMe = substrAuto;
+                    }
                 } else {
-                    StrangerAutomaton* substrAuto = subjectAuto->substr(start,opNode->getID());
-                    retMe = substrAuto;
+                    std::cout << "Ignoring substr operation" << std::endl;
+                    retMe = subjectAuto->clone(opNode->getID());
                 }
 	} else if (opName == "strtoupper" || opName == "strtolower") {
 		if (successors.size() != 1) {

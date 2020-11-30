@@ -32,9 +32,8 @@
 class ImageComputer {
 public:
     ImageComputer();
+    ImageComputer(bool doConcats, bool doSubstr);
     virtual ~ImageComputer();
-
-
 
     /****************************************************************************************************/
     /*********** SINGLE INPUT POST-IMAGE COMPUTATION METHODS **********************************************/
@@ -61,11 +60,8 @@ public:
     StrangerAutomaton* makePostImageForOp_GeneralCase(DepGraph& depGraph, DepGraphOpNode* opNode, AnalysisResult& analysisResult);
     void doPostImageComputationForSCC_GeneralCase(DepGraph& depGraph, DepGraphNode* node, AnalysisResult& analysisResult);
 
-
-
     static PerfInfo* perfInfo;
 
-    bool handle_concats = true;
 protected:
     std::string getLiteralOrConstantValue(const DepGraphNode* node);
     bool isLiteralOrConstant(const DepGraphNode* node, NodesList successors);
@@ -80,7 +76,8 @@ private:
     StrangerAutomaton* uninit_node_default_initialization;
     NodesList f_unmodeled;
 
-
+    bool m_doConcats;
+    bool m_doSubstr;
 
 };
 
