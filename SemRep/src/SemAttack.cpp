@@ -163,6 +163,7 @@ void BackwardAnalysisResult::init()
     // Otherwise see what happens if attack pattern is used for a forward analysis
     AnalysisResult result = this->getAttack()->computeTargetFWAnalysis(m_attack);
     const StrangerAutomaton* post = this->getAttack()->getPostImage(result);
+    AnalysisResultHelper::DeleteResults(result);
     if (post) {
       m_post_attack = new StrangerAutomaton(post);
     } else {

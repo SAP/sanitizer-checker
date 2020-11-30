@@ -778,6 +778,9 @@ void ImageComputer::doPostImageComputation_GeneralCase(DepGraph& depGraph, DepGr
 	if (newAuto == nullptr) {
 		throw StrangerStringAnalysisException(stringbuilder() << "Forward automaton cannot be computed!, node id: " << node->getID());
 	}
+        if (analysisResult[node->getID()] != nullptr) {
+            delete analysisResult[node->getID()];
+        }
 	analysisResult[node->getID()] = newAuto;
 }
 
