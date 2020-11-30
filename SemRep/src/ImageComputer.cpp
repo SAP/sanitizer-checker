@@ -235,11 +235,11 @@ void ImageComputer::doPreImageComputation_GeneralCase(
 					// ignore simple self loop (check correctness)
 					continue;
 				} else if (dynamic_cast<const DepGraphNormalNode*>(pred_node)) {
-					predAuto = bwAnalysisResult[pred_node->getID()];
+                                        predAuto = bwAnalysisResult[pred_node->getID()]->clone(node->getID());
 				} else if (dynamic_cast<const DepGraphOpNode*>(pred_node)) {
 					predAuto = makePreImageForOpChild_GeneralCase(origDepGraph,dynamic_cast<const DepGraphOpNode*>(pred_node), node,
-													bwAnalysisResult, fwAnalysisResult);
-				}
+                                                                                      bwAnalysisResult, fwAnalysisResult);
+			}
 
 				if (predAuto == nullptr) {
 					continue;
@@ -247,6 +247,7 @@ void ImageComputer::doPreImageComputation_GeneralCase(
 
 				if (newAuto == nullptr) {
 					newAuto = predAuto->clone(node->getID());
+                                        delete predAuto;
 				} else {
 					tempAuto = newAuto;
 					newAuto = newAuto->union_(predAuto, node->getID());
@@ -424,7 +425,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 					string value = getLiteralOrConstantValue(rightSibling);
 					retMe = concatAuto->leftPreConcatConst(value, childNode->getID());
                                     } else {
-                                        retMe = concatAuto->clone(childNode->getID());   
+                                        retMe = concatAuto->clone(childNode->getID());
                                     }
 				} else {
 					StrangerAutomaton* rightSiblingAuto = fwAnalysisResult.find(rightSibling->getID())->second;
