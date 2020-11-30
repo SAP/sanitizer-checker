@@ -24,6 +24,7 @@
 
 // Set of RegExps used to describe various attack patten contexts
 // HTML Context
+std::string AttackPatterns::m_htmlEscapedAmpersand       =  "/([^&]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
 std::string AttackPatterns::m_htmlEscapedRegExp          =  "/([^<>'\"&\\/]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
 std::string AttackPatterns::m_htmlEscapedNoSlashRegExp   =  "/([^<>'\"&]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
 std::string AttackPatterns::m_htmlEscapedBacktickRegExp  =  "/([^<>'\"&`]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
@@ -223,10 +224,26 @@ StrangerAutomaton* AttackPatterns::getUndesiredMFETest()
 	throw new std::runtime_error("not implemented");   
 }
 
+StrangerAutomaton* AttackPatterns::getSingleCharPattern(const std::string& pattern)
+{
+    return StrangerAutomaton::regExToAuto("/" + pattern + "/");
+}
 
 StrangerAutomaton* AttackPatterns::getAttackPatternForContext(AttackContext context)
 {
     switch (context) {
+    case AttackContext::LessThan:
+        return getSingleCharPattern("<");
+    case AttackContext::GreaterThan:
+        return getSingleCharPattern(">");
+    case AttackContext::Ampersand:
+        return getAttackPatternFromAllowedRegEx(m_htmlEscapedAmpersand);
+    case AttackContext::Quote:
+        return getSingleCharPattern("\"");
+    case AttackContext::Slash:
+        return getSingleCharPattern("/");
+    case AttackContext::SingleQuote:
+        return getSingleCharPattern("'");
     case AttackContext::Html:
         return getHtmlPattern();
     case AttackContext::HtmlPayload:

@@ -748,17 +748,17 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
         return makeAnyChar();
     else if(check(EMPTY) && match('#'))
         return makeEmpty();
-    else if(check(ANYSTRING) && match('@'))
+    else if(check(ANYSTRING) && match('@')) {
         return makeAnyString();
-    else if(match('"')) {
-        int start = (int)pos;
-        while (more() && !peek("\""))
-                        next();
+    // else if(match('"')) {
+    //     int start = (int)pos;
+    //     while (more() && !peek("\""))
+    //                     next();
 
-        if(!match('"'))
-        	throw std::invalid_argument((stringbuilder() << "expected '\"' at position " << pos));
+    //     if(!match('"'))
+    //     	throw std::invalid_argument((stringbuilder() << "expected '\"' at position " << pos));
 
-        return makeString(b.substr(start, (pos - 1 - start)));
+    //     return makeString(b.substr(start, (pos - 1 - start)));
     } else if(match('(')) {
         if(match(')'))
             return makeString("");

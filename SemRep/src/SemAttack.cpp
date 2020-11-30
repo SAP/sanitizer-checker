@@ -69,8 +69,10 @@ void CombinedAnalysisResult::printResult() const
       std::cout << "("
                 << result->getIntersection()->generateSatisfyingExample()
                 << ")";
-      // std::cout << std::endl;
-      // result->getIntersection()->toDotAscii(0);
+    } else if (result->hasPostAttackImage()) {
+      std::cout << "("
+                << result->getAttackPostImage()->generateSatisfyingExample()
+                << ")";
     }
     std::cout << ", ";
   }
@@ -98,21 +100,27 @@ void CombinedAnalysisResult::printDetailedResults() const
 }
 
 BackwardAnalysisResult::BackwardAnalysisResult(
-  const ForwardAnalysisResult& fwResult, AttackContext context)
+  ForwardAnalysisResult& fwResult, AttackContext context)
   : m_fwResult(fwResult)
   , m_name(AttackContextHelper::getName(context))
   , m_attack(AttackPatterns::getAttackPatternForContext(context))
+  , m_context(context)
+  , m_intersection(nullptr)
   , m_preimage(nullptr)
+  , m_post_attack(nullptr)
 {
   this->init();
 }
 
 BackwardAnalysisResult::BackwardAnalysisResult(
-  const ForwardAnalysisResult& fwResult, const StrangerAutomaton* attack, const std::string& name)
+  ForwardAnalysisResult& fwResult, const StrangerAutomaton* attack, const std::string& name)
   : m_fwResult(fwResult)
   , m_name(name)
   , m_attack(new StrangerAutomaton(attack))
+  , m_context(AttackContext::None)
+  , m_intersection(nullptr)
   , m_preimage(nullptr)
+  , m_post_attack(nullptr)
 {
   this->init();
 }
@@ -123,15 +131,26 @@ BackwardAnalysisResult::~BackwardAnalysisResult()
     delete m_preimage;
     m_preimage = nullptr;
   }
-  delete m_attack;
+  if (m_attack) {
+    delete m_attack;
+    m_attack = nullptr;
+  }
+  if (m_intersection) {
+    delete m_intersection;
+    m_intersection = nullptr;
+  }
+  if (m_post_attack) {
+    delete m_post_attack;
+    m_post_attack = nullptr;
+  }
 }
 
 void BackwardAnalysisResult::init()
 {
   const StrangerAutomaton* postImage = m_fwResult.getPostImage();
   m_intersection = this->getAttack()->computeAttackPatternOverlap(postImage, m_attack);
-  // Only compute BW analysis if vulnerable
   if (this->isVulnerable()) {
+    // Only compute BW analysis if vulnerable
     try {
       AnalysisResult result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
       m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
@@ -139,6 +158,15 @@ void BackwardAnalysisResult::init()
       AnalysisResultHelper::DeleteResults(result);
     } catch (StrangerStringAnalysisException const &e) {
       throw;
+    }
+  } else {
+    // Otherwise see what happens if attack pattern is used for a forward analysis
+    AnalysisResult result = this->getAttack()->computeTargetFWAnalysis(m_attack);
+    const StrangerAutomaton* post = this->getAttack()->getPostImage(result);
+    if (post) {
+      m_post_attack = new StrangerAutomaton(post);
+    } else {
+      m_post_attack = nullptr;
     }
   }
 }
@@ -307,7 +335,8 @@ void SemAttack::printResults() const {
 /**
  * Computes sink post image for target, first time
  */
-AnalysisResult SemAttack::computeTargetFWAnalysis(StrangerAutomaton* inputAuto) {
+AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* inputAuto)
+{
     message("computing target sink post image...");
     AnalysisResult targetAnalysisResult;
     UninitNodesList targetUninitNodes = target_dep_graph.getUninitNodes();
@@ -324,7 +353,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(StrangerAutomaton* inputAuto) 
     // Copy the input
     targetAnalysisResult[target_uninit_field_node->getID()] = new StrangerAutomaton(inputAuto);
 
-    ImageComputer targetAnalyzer;
+    ImageComputer targetAnalyzer(false, false);
 
     try {
         message("starting forward analysis for target...");
@@ -395,7 +424,7 @@ AnalysisResult SemAttack::computePreImage(const StrangerAutomaton* intersection,
 {
   try {
     message("starting backward analysis...");
-    ImageComputer analyzer;
+    ImageComputer analyzer(false, false);
     AnalysisResult analysis_result = analyzer.doBackwardAnalysis_GeneralCase(
       this->target_dep_graph, this->target_field_relevant_graph, intersection, result);
     message("...finished backward analysis.");

@@ -108,9 +108,11 @@ public:
     static StrangerAutomaton* getUndesiredMFETest();
 
 private:
+    static StrangerAutomaton* getSingleCharPattern(const std::string& pattern);
     static StrangerAutomaton* getAllowedFromRegEx(const std::string& regex);
     static StrangerAutomaton* getAttackPatternFromAllowedRegEx(const std::string& regex);
 
+    static std::string m_htmlEscapedAmpersand;
     static std::string m_htmlEscapedRegExp;
     static std::string m_htmlEscapedNoSlashRegExp;
     static std::string m_htmlEscapedBacktickRegExp;

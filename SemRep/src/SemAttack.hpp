@@ -46,7 +46,7 @@ public:
     AnalysisResult computeTargetFWAnalysis();
 
     // Compute the post image with custom input
-    AnalysisResult computeTargetFWAnalysis(StrangerAutomaton* inputAuto);
+    AnalysisResult computeTargetFWAnalysis(const StrangerAutomaton* inputAuto);
 
     // Get the post-image from the analysis result
     const StrangerAutomaton* getPostImage(const AnalysisResult& result) const;
@@ -121,10 +121,10 @@ class BackwardAnalysisResult {
 
 public:
 
-    BackwardAnalysisResult(const ForwardAnalysisResult& result,
+    BackwardAnalysisResult(ForwardAnalysisResult& result,
                            AttackContext context);
 
-    BackwardAnalysisResult(const ForwardAnalysisResult& result,
+    BackwardAnalysisResult(ForwardAnalysisResult& result,
                            const StrangerAutomaton* attack, const std::string& name);
 
     virtual ~BackwardAnalysisResult();
@@ -132,22 +132,30 @@ public:
     const StrangerAutomaton* getPreImage() const { return m_preimage; }
     const StrangerAutomaton* getIntersection() const { return m_intersection; }
     const StrangerAutomaton* getAttackPattern() const { return m_attack; }
+    const StrangerAutomaton* getAttackPostImage() const { return m_post_attack; }
     bool isSafe() const { return (getIntersection()->isEmpty() || getIntersection()->checkEmptyString()); }
     bool isVulnerable() const { return !isSafe(); }
+    bool hasPostAttackImage() const { return m_post_attack != nullptr; }
     const std::string& getName() const { return m_name; }
     void writeResultsToFile(const fs::path& dir) const;
 
 private:
     void init();
     const SemAttack* getAttack() const { return m_fwResult.getAttack(); }
-    const ForwardAnalysisResult& m_fwResult;
+    SemAttack* getAttack() { return m_fwResult.getAttack(); }
+    ForwardAnalysisResult& m_fwResult;
     std::string m_name;
-    StrangerAutomaton* m_attack;
- 
-    AttackContext m_context;
-    StrangerAutomaton* m_intersection;
-    StrangerAutomaton* m_preimage;
 
+    // Automaton representing the attack pattern which was tested
+    StrangerAutomaton* m_attack;
+    // Context of the attack pattern
+    AttackContext m_context;
+    // Intersection between attack pattern and post image
+    StrangerAutomaton* m_intersection;
+    // Pre-image of intersection
+    StrangerAutomaton* m_preimage;
+    // Post-image if attack pattern is used as input
+    StrangerAutomaton* m_post_attack;
 };
 
 class CombinedAnalysisResult {

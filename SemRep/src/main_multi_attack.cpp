@@ -39,6 +39,12 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
 
         MultiAttack attack(target_name, output_dir, field_name);
 
+        attack.addAttackPattern(AttackContext::LessThan);
+        attack.addAttackPattern(AttackContext::GreaterThan);
+        attack.addAttackPattern(AttackContext::Ampersand);
+        attack.addAttackPattern(AttackContext::Quote);
+        attack.addAttackPattern(AttackContext::SingleQuote);
+        attack.addAttackPattern(AttackContext::Slash);
         attack.addAttackPattern(AttackContext::Html);
         attack.addAttackPattern(AttackContext::HtmlPayload);
         attack.addAttackPattern(AttackContext::HtmlAttr);

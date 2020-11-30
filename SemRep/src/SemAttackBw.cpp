@@ -211,6 +211,7 @@ StrangerAutomaton* SemAttackBw::generateAttack() {
     }
     if (intersection->isEmpty()) {
         message("Attack pattern can not be exploited, no vulnerability signature");
+        delete intersection;
         return nullptr;
     } else {
         std::cout << "Overlap between attack pattern and sanitizer, example:" << std::endl;

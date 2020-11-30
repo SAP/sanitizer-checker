@@ -26,11 +26,18 @@
 #define ATTACK_CONTEXT_HPP_
 
 #define SOME_ENUM(DO) \
-    DO(Html) \
-    DO(HtmlAttr) \
-    DO(JavaScript) \
-    DO(Url) \
-    DO(HtmlPayload)
+  DO(LessThan)        \
+  DO(GreaterThan)     \
+  DO(Ampersand)       \
+  DO(Quote)           \
+  DO(Slash)           \
+  DO(SingleQuote)     \
+  DO(Html)            \
+  DO(HtmlAttr)        \
+  DO(JavaScript)      \
+  DO(Url)             \
+  DO(HtmlPayload)     \
+  DO(None)
 
 #define MAKE_ENUM(VAR) VAR,
 enum class AttackContext {
