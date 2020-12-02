@@ -59,7 +59,6 @@ BackwardAnalysisResult* CombinedAnalysisResult::addBackwardAnalysis(AttackContex
 
 void CombinedAnalysisResult::printHeader(std::ostream& os) const
 {
-  os << "hi";
   for (auto bwResult : m_bwAnalysisMap) {
     AttackContext c = bwResult.first;
     os << AttackContextHelper::getName(c) << ", ";

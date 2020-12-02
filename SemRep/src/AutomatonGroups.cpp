@@ -70,7 +70,7 @@ void AutomatonGroup::addCombinedAnalysisResult(const CombinedAnalysisResult* gra
 }
 
 void AutomatonGroup::printHeaders(std::ostream& os) const {
-  os << "id, number, entries ";
+  os << "id, number, entries, ";
   // Get headers from first entry
   if (m_graphs.size() > 0) {
     m_graphs.at(0)->printHeader(os);
