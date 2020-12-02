@@ -50,52 +50,45 @@ CombinedAnalysisResult::~CombinedAnalysisResult()
   m_bwAnalysisMap.clear();
 }
 
-const BackwardAnalysisResult* CombinedAnalysisResult::addBackwardAnalysis(AttackContext context)
+BackwardAnalysisResult* CombinedAnalysisResult::addBackwardAnalysis(AttackContext context)
 {
   BackwardAnalysisResult* bw = new BackwardAnalysisResult(m_fwAnalysis, context);
   m_bwAnalysisMap.insert(std::make_pair(context, bw));
   return bw;
 }
 
-void CombinedAnalysisResult::printResult() const
+void CombinedAnalysisResult::printHeader(std::ostream& os) const
 {
+  os << "hi";
   for (auto bwResult : m_bwAnalysisMap) {
     AttackContext c = bwResult.first;
-    const BackwardAnalysisResult* result = bwResult.second;
-    bool good = !result->isVulnerable();
-    std::cout << AttackContextHelper::getName(c) << ": "
-              << (good ? "true" : "false");
-    if (!good) {
-      std::cout << "("
-                << result->getIntersection()->generateSatisfyingExample()
-                << ")";
-    } else if (result->hasPostAttackImage()) {
-      std::cout << "("
-                << result->getAttackPostImage()->generateSatisfyingExample()
-                << ")";
-    }
-    std::cout << ", ";
-  }
+    os << AttackContextHelper::getName(c) << ", ";
+    os << "example, ";
+  }  
 }
 
-void CombinedAnalysisResult::printDetailedResults() const
+void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader) const
 {
-  std::cout << "File: " << this->getFileName();
   for (auto bwResult : m_bwAnalysisMap) {
     AttackContext c = bwResult.first;
     const BackwardAnalysisResult* result = bwResult.second;
+    bool error = result->isErrored();
     bool good = !result->isVulnerable();
-    std::cout << AttackContextHelper::getName(c) << ": "
-              << (good ? "true" : "false");
-    if (!good) {
-      std::cout << ", postImage: "
-                << result->getIntersection()->generateSatisfyingExample();
-      std::cout << ", preImage: "
-                << result->getPreImage()->generateSatisfyingExample();
-      // std::cout << std::endl;
-      // result->getIntersection()->toDotAscii(0);
+    if (printHeader) {
+      os << AttackContextHelper::getName(c) << ", ";
     }
-    std::cout << ", ";
+    if (error) {
+      os << "error, ";
+    } else {
+      os << (good ? "true" : "false");
+      os << ", ";
+      if (!good) {
+        os << result->getIntersection()->generateSatisfyingExample();
+      } else if (result->hasPostAttackImage()) {
+        os << result->getAttackPostImage()->generateSatisfyingExample();
+      }
+    }
+    os << ", ";
   }
 }
 
@@ -109,7 +102,6 @@ BackwardAnalysisResult::BackwardAnalysisResult(
   , m_preimage(nullptr)
   , m_post_attack(nullptr)
 {
-  this->init();
 }
 
 BackwardAnalysisResult::BackwardAnalysisResult(
@@ -122,7 +114,6 @@ BackwardAnalysisResult::BackwardAnalysisResult(
   , m_preimage(nullptr)
   , m_post_attack(nullptr)
 {
-  this->init();
 }
 
 BackwardAnalysisResult::~BackwardAnalysisResult()
@@ -145,30 +136,32 @@ BackwardAnalysisResult::~BackwardAnalysisResult()
   }
 }
 
-void BackwardAnalysisResult::init()
+void BackwardAnalysisResult::doAnalysis()
 {
   const StrangerAutomaton* postImage = m_fwResult.getPostImage();
   m_intersection = this->getAttack()->computeAttackPatternOverlap(postImage, m_attack);
-  if (this->isVulnerable()) {
-    // Only compute BW analysis if vulnerable
-    try {
-      AnalysisResult result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
-      m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
-      //  clean up target analysis result
-      AnalysisResultHelper::DeleteResults(result);
-    } catch (StrangerStringAnalysisException const &e) {
-      throw;
-    }
-  } else {
-    // Otherwise see what happens if attack pattern is used for a forward analysis
-    AnalysisResult result = this->getAttack()->computeTargetFWAnalysis(m_attack);
-    const StrangerAutomaton* post = this->getAttack()->getPostImage(result);
-    if (post) {
-      m_post_attack = new StrangerAutomaton(post);
+  if ((m_intersection) && (!m_intersection->isNull())) {
+    if (this->isVulnerable()) {
+      // Only compute BW analysis if vulnerable
+      try {
+        AnalysisResult result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+        m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
+        //  clean up target analysis result
+        AnalysisResultHelper::DeleteResults(result);
+      } catch (StrangerStringAnalysisException const &e) {
+        throw;
+      }
     } else {
-      m_post_attack = nullptr;
+      // Otherwise see what happens if attack pattern is used for a forward analysis
+      AnalysisResult result = this->getAttack()->computeTargetFWAnalysis(m_attack);
+      const StrangerAutomaton* post = this->getAttack()->getPostImage(result);
+      if (post) {
+        m_post_attack = new StrangerAutomaton(post);
+      } else {
+        m_post_attack = nullptr;
+      }
+      AnalysisResultHelper::DeleteResults(result);
     }
-    AnalysisResultHelper::DeleteResults(result);
   }
 }
 
@@ -181,17 +174,29 @@ void BackwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
   fs::path output_image_file_bdd(dir / fs::path("post_image_attack_" + this->getName() + ".bdd"));
   m_attack->exportToFile(output_image_file_bdd.string());
 
-  fs::path output_file(dir / fs::path("post_image_intersection_" + this->getName() + ".dot"));
-  m_intersection->toDotFileAscii(output_file.string(), 0);
-  fs::path output_file_bdd(dir / fs::path("post_image_intersection_" + this->getName() + ".bdd"));
-  m_intersection->exportToFile(output_file_bdd.string());
+  if (!this->isErrored()) {
+      fs::path output_file(dir / fs::path("post_image_intersection_" + this->getName() + ".dot"));
+      m_intersection->toDotFileAscii(output_file.string(), 0);
 
-  if (this->isVulnerable()) {
-    fs::path output_file_pre(dir / fs::path("pre_image_" + this->getName() + ".dot"));
-    getPreImage()->toDotFileAscii(output_file_pre.string(), 0);
-    fs::path output_file_pre_bdd(dir / fs::path("pre_image_" + this->getName() + ".bdd"));
-    getPreImage()->exportToFile(output_file_pre_bdd.string());
+      fs::path output_file_bdd(dir / fs::path("post_image_intersection_" + this->getName() + ".bdd"));
+      m_intersection->exportToFile(output_file_bdd.string());
+
+      if (this->isVulnerable()) {
+        fs::path output_file_pre(dir / fs::path("pre_image_" + this->getName() + ".dot"));
+        getPreImage()->toDotFileAscii(output_file_pre.string(), 0);
+        fs::path output_file_pre_bdd(dir / fs::path("pre_image_" + this->getName() + ".bdd"));
+        getPreImage()->exportToFile(output_file_pre_bdd.string());
+      }
   }
+}
+
+bool BackwardAnalysisResult::isErrored() const {
+  return ((m_intersection == nullptr) || m_intersection->isNull());
+}
+
+bool BackwardAnalysisResult::isSafe() const
+{
+  return (this->isErrored() || getIntersection()->isEmpty() || getIntersection()->checkEmptyString());
 }
 
 ForwardAnalysisResult::ForwardAnalysisResult(const fs::path& target_dep_graph_file_name,
@@ -248,6 +253,7 @@ SemAttack::SemAttack(const fs::path& target_dep_graph_file_name, const string& i
   : target_dep_graph_file_name(target_dep_graph_file_name)
   , input_field_name(input_field_name)
   , m_print_dots(false)
+  , m_print(true)
 {
 }
 
@@ -255,6 +261,7 @@ SemAttack::SemAttack(const std::string& target_dep_graph_file_name, const string
   : target_dep_graph_file_name(target_dep_graph_file_name)
   , input_field_name(input_field_name)
   , m_print_dots(false)
+  , m_print(true)
 {
 }
 
@@ -293,7 +300,9 @@ void SemAttack::writeResultsToFile(const fs::path& dir) const
 
 
 void SemAttack::message(const std::string& msg) const {
+  if (m_print) {
     cout << endl << "~~~~~~~~~~~>>> SemAttack says: " << msg << endl;
+  }
 }
 
 void SemAttack::printAnalysisResults(AnalysisResult& result) const {
@@ -389,6 +398,9 @@ StrangerAutomaton* SemAttack::computeAttackPatternOverlap(const StrangerAutomato
   if (DEBUG_ENABLED_SC != 0) {
     DEBUG_MESSAGE("Target Sink Auto - First forward analysis");
     DEBUG_AUTO(postImage);
+  }
+  if (postImage == nullptr || attackPattern == nullptr) {
+    return nullptr;
   }
 
   if (m_print_dots) {

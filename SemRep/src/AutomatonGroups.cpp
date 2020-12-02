@@ -69,37 +69,36 @@ void AutomatonGroup::addCombinedAnalysisResult(const CombinedAnalysisResult* gra
   m_graphs.emplace_back(graph);
 }
 
-void AutomatonGroup::printHeaders() {
-  std::cout << "Name "
-            << "Entries ";
+void AutomatonGroup::printHeaders(std::ostream& os) const {
+  os << "id, number, entries ";
+  // Get headers from first entry
+  if (m_graphs.size() > 0) {
+    m_graphs.at(0)->printHeader(os);
+  }
+  os << std::endl;
 }
 
-void AutomatonGroup::printSummary() const {
-  std::cout << m_id << ": " <<getName()
-            << " entries: "
-            << getEntries();
+void AutomatonGroup::printSummary(std::ostream& os) const {
+  os << m_id << ", "
+     << getName() << ", "
+     << getEntries();
 }
 
-void AutomatonGroup::printMembers(bool printAll) const {
+void AutomatonGroup::printMembers(std::ostream& os, bool printAll) const {
 
-  printSummary();
-  std:: cout << ", ";
+  printSummary(os);
+  os << ", ";
   // Get vulnerablility overlaps from first entry
   if (m_graphs.size() > 0) {
-    m_graphs.at(0)->printResult();
-  }
-  if (printAll) {
-    std::cout << std::endl << "Examples: ";
-  } else {
-    std::cout << ", Example: ";
+    m_graphs.at(0)->printResult(os);
   }
   for (auto iter : m_graphs) {
-    std::cout << iter->getFileName() << ", ";
+    os << iter->getFileName() << ", ";
     if (!printAll) {
       break;
     }
   }
-  std::cout << std::endl;
+  os << std::endl;
   //m_automaton->toDotAscii(0);
 }
 
@@ -177,13 +176,16 @@ const AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutoma
   return nullptr;
 }
 
-void AutomatonGroups::printGroups(bool printAll) const {
+void AutomatonGroups::printGroups(std::ostream& os, bool printAll) const {
   // Switch to decimal
-  std::cout << std::dec;
+  os << std::dec;
   //  SemAttack::perfInfo.print_operations_info();
-  std::cout << "Total of " << m_groups.size() << " unique post-images with " << getEntries() << " entries." << std::endl;
+  os << "Total of " << m_groups.size() << " unique post-images with " << getEntries() << " entries." << std::endl;
+  if (m_groups.size() > 0) {
+    m_groups.at(0).printHeaders(os);
+  }
   for (auto iter : m_groups) {
-    iter.printMembers(printAll);
+    iter.printMembers(os, printAll);
   }
 }
 

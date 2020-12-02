@@ -66,6 +66,8 @@ public:
     void writeResultsToFile(const fs::path& dir) const;
     
     void setPrintDots(bool print) { m_print_dots = print; }
+    void setPrint(bool print) { m_print = print; }
+ 
     std::string getFileName() const { return target_dep_graph_file_name.string(); }
     const fs::path& getFile() const { return target_dep_graph_file_name; }
     static PerfInfo& perfInfo;
@@ -86,6 +88,7 @@ private:
     void printNodeList(NodesList nodes) const;
 
     bool m_print_dots;
+    bool m_print;
 };
 
 // Class containing all revelant forward analysis results
@@ -129,18 +132,20 @@ public:
 
     virtual ~BackwardAnalysisResult();
 
+    void doAnalysis();
+    
     const StrangerAutomaton* getPreImage() const { return m_preimage; }
     const StrangerAutomaton* getIntersection() const { return m_intersection; }
     const StrangerAutomaton* getAttackPattern() const { return m_attack; }
     const StrangerAutomaton* getAttackPostImage() const { return m_post_attack; }
-    bool isSafe() const { return (getIntersection()->isEmpty() || getIntersection()->checkEmptyString()); }
+    bool isErrored() const;
+    bool isSafe() const;
     bool isVulnerable() const { return !isSafe(); }
     bool hasPostAttackImage() const { return m_post_attack != nullptr; }
     const std::string& getName() const { return m_name; }
     void writeResultsToFile(const fs::path& dir) const;
 
 private:
-    void init();
     const SemAttack* getAttack() const { return m_fwResult.getAttack(); }
     SemAttack* getAttack() { return m_fwResult.getAttack(); }
     ForwardAnalysisResult& m_fwResult;
@@ -166,7 +171,7 @@ public:
                            StrangerAutomaton* automaton);
     ~CombinedAnalysisResult();
 
-    const BackwardAnalysisResult* addBackwardAnalysis(AttackContext context);
+    BackwardAnalysisResult* addBackwardAnalysis(AttackContext context);
 
     const SemAttack* getAttack() const { return m_fwAnalysis.getAttack(); }
     SemAttack* getAttack() { return m_fwAnalysis.getAttack(); }
@@ -176,8 +181,8 @@ public:
 
     std::string getFileName() const { return m_inputfile.string(); }
     
-    void printResult() const;
-    void printDetailedResults() const;
+    void printResult(std::ostream& os, bool printHeader = false) const;
+    void printHeader(std::ostream& os) const;
     void finishAnalysis() { getFwAnalysis().finishAnalysis(); }
 private:
     fs::path m_inputfile;

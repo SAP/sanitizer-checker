@@ -29,6 +29,7 @@
 #include "StrangerAutomaton.hpp"
 
 #include <iostream>
+#include <fstream>
 #include <thread>
 #include <algorithm>
 #include <functional>
@@ -65,25 +66,42 @@ MultiAttack::~MultiAttack() {
   m_automata.clear();
 }
 
-void MultiAttack::printResults(bool printFiles) const
-{
-  std::cout << "Found " << this->m_dot_paths.size() << " dot files" << std::endl;
-  std::cout << "Computed images with pool of " << m_nThreads << " threads." << std::endl;
-  std::cout << "Printing Groups:" << std::endl;
-  m_groups.printGroups(printFiles);
-  if (printFiles) {
-    std::cout << "Printing files:" << std::endl;
-    int i = 0;
-    for (auto result : m_results) {
-      std::cout << i << ": ";
-      result->printDetailedResults();
-      // const AutomatonGroup* group = this->m_groups.getGroupForAutomaton(result->getFwAnalysis().getPostImage());
-      // std::cout << " Group: ";
-      // group->printSummary();
-      std::cout << std::endl;
-      ++i;
-    }
+void MultiAttack::writeResultsToFile() const {
+  fs::path output(m_output_directory / fs::path("semattack_groups.csv"));
+  std::ofstream ofs;
+  ofs.open (output.string(), std::ofstream::out);
+  printResults(ofs, true);
+  ofs.close();
+
+  fs::path output_files(m_output_directory / fs::path("semattack_files.csv"));
+  std::ofstream ofs_files;
+  ofs_files.open (output_files.string(), std::ofstream::out);
+  printFiles(ofs_files);
+  ofs_files.close();
+
+}
+
+void MultiAttack::printFiles(std::ostream& os) const {
+  os << "Printing files:" << std::endl;
+  int i = 0;
+  for (auto result : m_results) {
+    os << i << ", ";
+    os << result->getFileName() << ", ";
+    result->printResult(os, true);
+    // const AutomatonGroup* group = this->m_groups.getGroupForAutomaton(result->getFwAnalysis().getPostImage());
+    // os << " Group: ";
+    // group->printSummary();
+    os << std::endl;
+    ++i;
   }
+}
+
+void MultiAttack::printResults(std::ostream& os, bool printFiles) const
+{
+  os << "Found " << this->m_dot_paths.size() << " dot files" << std::endl;
+  os << "Computed images with pool of " << m_nThreads << " threads." << std::endl;
+  os << "Printing Groups:" << std::endl;
+  m_groups.printGroups(os, printFiles);
 }
 
 void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context)
@@ -95,7 +113,8 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
             << std::endl;
   try {
     fs::path dir(m_output_directory / result->getAttack()->getFile());
-    const BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
+    BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
+    bw->doAnalysis();
     bw->writeResultsToFile(dir);
   } catch (StrangerStringAnalysisException const &e) {
     std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
@@ -111,37 +130,43 @@ void MultiAttack::computeImagesForFile(const fs::path& file) {
   std::cout << "Analysing file: " << file.string() << " in thread " << std::this_thread::get_id() << std::endl;
   CombinedAnalysisResult* result =
     new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());
+  const StrangerAutomaton* postImage = NULL;
+  // Reduce debug prints
+  result->getAttack()->setPrint(false);
   try {
     // Forward Analysis
     result->getAttack()->init();
     result->getFwAnalysis().doAnalysis();
-    const StrangerAutomaton* postImage = result->getFwAnalysis().getPostImage();
+    postImage = result->getFwAnalysis().getPostImage();
     result->getAttack()->writeResultsToFile(dir);
     result->getFwAnalysis().writeResultsToFile(dir);
-
-    // Backward analysis
-    for (auto c : m_analyzed_contexts) {
-      computeAttackPatternOverlap(result, c);
-    }
-
-    // Finish up (delete the semattack object)
-    result->finishAnalysis();
-
-    const std::lock_guard<std::mutex> lock(this->results_mutex);
-    std::cout << "Finished forward analysis of " << file << std::endl;
-    std::cout << "Inserting results into groups for " << file << std::endl;
-    this->m_groups.addAutomaton(postImage, result);
-    this->m_results.emplace_back(result);
-    std::cout << "Finished inserting results into groups for " << file << std::endl;
-    this->printResults();
   } catch (...) {
-    std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
-    // Still add the results to the null group
-    result->finishAnalysis();
-    const std::lock_guard<std::mutex> lock(this->results_mutex);
-    this->m_groups.addAutomaton(nullptr, result);
-    this->m_results.emplace_back(result);   
+    postImage = nullptr;
+    std::cout << "EXCEPTION! In FW analysis: " << file << " in thread " << std::this_thread::get_id() << std::endl;
   }
+  
+  // Backward analysis
+  for (auto c : m_analyzed_contexts) {
+    try {
+      computeAttackPatternOverlap(result, c);
+    } catch(...) {
+      std::cout << "EXCEPTION! In BW analysis: " << file << " in thread " << std::this_thread::get_id() << std::endl;
+    }
+  }
+
+  // Finish up (delete the semattack object)
+  result->finishAnalysis();
+
+  // Mutex Lock
+  const std::lock_guard<std::mutex> lock(this->results_mutex);
+  std::cout << "Finished forward analysis of " << file << std::endl;
+  std::cout << "Inserting results into groups for " << file << std::endl;
+  this->m_groups.addAutomaton(postImage, result);
+  this->m_results.emplace_back(result);
+  std::cout << "Finished inserting results into groups for " << file << std::endl;
+  //this->printResults();
+  this->writeResultsToFile();
+
 }
 
 void MultiAttack::compute() {
@@ -153,7 +178,6 @@ void MultiAttack::compute() {
   }
   pool.join();
   std::cout << "Forward analysis finished!" << std::endl;
-  this->printResults(true);
 }
 
 void MultiAttack::addAttackPattern(AttackContext context)

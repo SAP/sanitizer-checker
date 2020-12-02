@@ -31,6 +31,7 @@
 #define BOOST_FILESYSTEM_NO_DEPRECATED
 #include <boost/filesystem.hpp>
 
+#include <ostream>
 #include <thread>
 #include <vector>
 
@@ -45,10 +46,13 @@ public:
 
     void compute();
     void addAttackPattern(AttackContext context);
-    void printResults(bool printFiles = false) const;
-    void printDetailedResults() const;
+    void printResults(bool printFiles = false) const { printResults(std::cout, printFiles); }
+    void printFiles() const { printFiles(std::cout); }
+    void writeResultsToFile() const;
 
 private:
+    void printResults(std::ostream& os, bool printFiles = false) const;
+    void printFiles(std::ostream& os) const;
     void fillCommonPatterns();
     void findDotFiles();
     void computeImagesForFile(const fs::path& file);

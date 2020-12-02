@@ -25,6 +25,7 @@
 #ifndef AUTOMATON_GROUPS_HPP_
 #define AUTOMATON_GROUPS_HPP_
 
+#include <ostream>
 #include <string>
 #include <vector>
 
@@ -46,9 +47,9 @@ public:
 
     unsigned int getEntries() const { return m_graphs.size(); }
 
-    void printMembers(bool printAll) const;
-    void printSummary() const;
-    static void printHeaders();
+    void printMembers(std::ostream& os, bool printAll) const;
+    void printSummary(std::ostream& os) const;
+    void printHeaders(std::ostream& os) const;
 
 private:
     const StrangerAutomaton* m_automaton;
@@ -75,7 +76,7 @@ public:
     const AutomatonGroup* getGroupForAutomaton(const StrangerAutomaton* automaton) const;
 
     unsigned int getEntries() const;
-    void printGroups(bool printAll = false) const;
+    void printGroups(std::ostream& os, bool printAll = false) const;
 
 private:
 

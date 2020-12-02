@@ -601,7 +601,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
                         retMe = subjectAuto->pre_substr(start, opNode->getID());
                     }
                 } else {
-                    std::cout << "Ignoring substr operation" << std::endl;
+                    //std::cout << "Ignoring substr operation" << std::endl;
                     retMe = subjectAuto->clone(opNode->getID());
                 }
 
@@ -875,7 +875,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 	NodesList successors = depGraph.getSuccessors(opNode);
 	StrangerAutomaton* retMe = nullptr;
 	string opName = opNode->getName();
-        cout << "Computing : " << opName << endl;
+        //cout << "Computing : " << opName << endl;
 	// __vlab_restrict
 	if (opName.find("__vlab_restrict") != string::npos) {
 		boost::posix_time::ptime start_time = perfInfo->current_time();
@@ -926,12 +926,12 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			StrangerAutomaton* succAuto = analysisResult[succ_node->getID()];
                         if (isLiteralOrConstant(succ_node, depGraph.getSuccessors(succ_node)) && !m_doConcats) {
                             string value = getLiteralOrConstantValue(succ_node);
-                            std::cout << "Ignoring concat of string value: " << value << std::endl;
+                            //std::cout << "Ignoring concat of string value: " << value << std::endl;
                         } else {
                             if (retMe == nullptr) {
                                 retMe = succAuto->clone(opNode->getID());
                             } else {
-                                std::cout << "Doing concat with node " << succ_node->getID() << std::endl;
+                                //std::cout << "Doing concat with node " << succ_node->getID() << std::endl;
                                 StrangerAutomaton* temp = retMe;
                                 retMe = retMe->concatenate(succAuto, opNode->getID());
                                 delete temp;
@@ -1107,7 +1107,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
                         retMe = substrAuto;
                     }
                 } else {
-                    std::cout << "Ignoring substr operation" << std::endl;
+                    //std::cout << "Ignoring substr operation" << std::endl;
                     retMe = subjectAuto->clone(opNode->getID());
                 }
 	} else if (opName == "strtoupper" || opName == "strtolower") {
