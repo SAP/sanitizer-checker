@@ -46,6 +46,7 @@ public:
 
     void set(int node, const StrangerAutomaton* a);
     const StrangerAutomaton* get(int node) const;
+    void clear();
 
     AnalysisResultConstIterator find(int node) const;
     AnalysisResultConstIterator begin() const;

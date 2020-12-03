@@ -32,13 +32,7 @@ AnalysisResult::AnalysisResult()
 
 AnalysisResult::~AnalysisResult()
 {
-    for (auto a : m_map) {
-        if (a.second != nullptr) {
-            delete a.second;
-            a.second = nullptr;
-        }
-    }
-    m_map.clear();
+    clear();
 }
 
 const StrangerAutomaton* AnalysisResult::get(int node) const
@@ -55,6 +49,17 @@ void AnalysisResult::set(int node, const StrangerAutomaton* a)
         delete m_map[node];
     }
     m_map[node] = a;
+}
+
+void AnalysisResult::clear()
+{
+    for (auto a : m_map) {
+        if (a.second != nullptr) {
+            delete a.second;
+            a.second = nullptr;
+        }
+    }
+    m_map.clear();
 }
 
 AnalysisResultConstIterator AnalysisResult::find(int node) const

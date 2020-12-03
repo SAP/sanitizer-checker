@@ -243,6 +243,7 @@ void ForwardAnalysisResult::finishAnalysis() {
     delete m_attack;
     m_attack = nullptr;
   }
+  m_result.clear();
 }
 
 SemAttack::SemAttack(const fs::path& target_dep_graph_file_name, const string& input_field_name)
