@@ -36,6 +36,14 @@ public:
     AnalysisResult();
     virtual ~AnalysisResult();
 
+    // Move operations
+    AnalysisResult(AnalysisResult&& other) = default;
+    AnalysisResult& operator=(AnalysisResult&& other) = default;
+
+    // Prevent copying
+    AnalysisResult(const AnalysisResult&) = delete;
+    AnalysisResult& operator=(const AnalysisResult&) = delete;
+
     void set(int node, const StrangerAutomaton* a);
     const StrangerAutomaton* get(int node) const;
 

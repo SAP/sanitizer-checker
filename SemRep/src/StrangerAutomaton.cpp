@@ -96,7 +96,7 @@ StrangerAutomaton* StrangerAutomaton::clone(int id) const
 		return makeTop(id);
         else {
 		debugToFile(stringbuilder() << "M[" << traceID << "] = dfaCopy(M["  << this->autoTraceID << "]);//" << id << " = clone(" << this->ID << ")");
-		StrangerAutomaton* retMe = new StrangerAutomaton(this);
+		StrangerAutomaton* retMe = new StrangerAutomaton(dfaCopy(this->dfa));
 		{
 			retMe->setID(id);
 			retMe->debugAutomaton();
