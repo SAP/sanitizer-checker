@@ -141,7 +141,10 @@ void MultiAttack::computeImagesForFile(const fs::path& file) {
     result->getAttack()->writeResultsToFile(dir);
     result->getFwAnalysis().writeResultsToFile(dir);
   } catch (...) {
-    postImage = nullptr;
+    if (postImage != nullptr) {
+      delete postImage;
+      postImage = nullptr;
+    }
     std::cout << "EXCEPTION! In FW analysis: " << file << " in thread " << std::this_thread::get_id() << std::endl;
   }
   

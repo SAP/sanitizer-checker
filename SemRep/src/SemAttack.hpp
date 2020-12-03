@@ -81,7 +81,7 @@ private:
 
     DepGraphNode* target_uninit_field_node;
 
-    StrangerAutomaton* target_sink_auto;
+    const StrangerAutomaton* target_sink_auto;
 
     void message(const std::string& msg) const;
     void printAnalysisResults(AnalysisResult& result) const;

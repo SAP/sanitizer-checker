@@ -154,12 +154,11 @@ AnalysisResult SemAttackBw::analyzePostImages() {
     UninitNodesList uninit_nodes = this->target_dep_graph.getUninitNodes();
     message(stringbuilder() << "initializing inputs with bottom other than: " << this->input_field_name );
     for (auto *uninit_node : uninit_nodes) {
-        analysis_result[uninit_node->getID()] = StrangerAutomaton::makePhi(uninit_node->getID());
+      analysis_result.set(uninit_node->getID(), StrangerAutomaton::makePhi(uninit_node->getID()));
     }
 
     message(stringbuilder() << "initializing input node: "<< input_field_name << "(" << this->target_uninit_field_node->getID() << ") with sigma star");
-    delete analysis_result[this->target_uninit_field_node->getID()];
-    analysis_result[this->target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(this->target_uninit_field_node->getID());
+    analysis_result.set(this->target_uninit_field_node->getID(), StrangerAutomaton::makeAnyString(this->target_uninit_field_node->getID()));
 
     ImageComputer analyzer;
 
@@ -192,11 +191,11 @@ AnalysisResult SemAttackBw::analyzePreImages(StrangerAutomaton* intersection_aut
     }
 }
 
-StrangerAutomaton* SemAttackBw::generateAttack() {
+const StrangerAutomaton* SemAttackBw::generateAttack() {
 
     AnalysisResult fwAnalysisResult = analyzePostImages();
     printAnalysisResults(fwAnalysisResult);
-    this->sink_auto = fwAnalysisResult[this->target_dep_graph.getRoot()->getID()];
+    this->sink_auto = fwAnalysisResult.get(this->target_dep_graph.getRoot()->getID());
     if (this->enable_debug) {
         message("Post image of sink node:");
         debug_auto(this->sink_auto, 1);
@@ -220,7 +219,7 @@ StrangerAutomaton* SemAttackBw::generateAttack() {
     std::cout.flush();
 
     AnalysisResult bwAnalysisResult = analyzePreImages(intersection, fwAnalysisResult);
-    vs_auto = bwAnalysisResult[this->target_uninit_field_node->getID()];
+    vs_auto = bwAnalysisResult.get(this->target_uninit_field_node->getID());
     if (enable_debug) {
         message("Vulnerability Signature:");
         debug_auto(vs_auto, 0);
@@ -230,7 +229,7 @@ StrangerAutomaton* SemAttackBw::generateAttack() {
     return vs_auto;
 }
 
-void SemAttackBw::debug_auto(StrangerAutomaton* automaton, int type) {
+void SemAttackBw::debug_auto(const StrangerAutomaton* automaton, int type) {
     switch (type) {
         case 0:
             automaton->toDotAscii(0);

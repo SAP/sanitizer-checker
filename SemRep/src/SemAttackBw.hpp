@@ -37,9 +37,9 @@ public:
     SemAttackBw(const string& target_dep_graph_file_name, const string& input_field_name);
     virtual ~SemAttackBw();
 
-    StrangerAutomaton* generateAttack();
+    const StrangerAutomaton* generateAttack();
 
-    StrangerAutomaton* getTargetAuto() { return target_sink_auto; }
+    const StrangerAutomaton* getTargetAuto() { return target_sink_auto; }
 
     void testNewFunctions();
 
@@ -54,14 +54,14 @@ public:
     static PerfInfo& perfInfo;
 
 private:
-    StrangerAutomaton* sink_auto;
-    StrangerAutomaton* vs_auto;
+    const StrangerAutomaton* sink_auto;
+    const StrangerAutomaton* vs_auto;
     StrangerAutomaton* attack_pattern_auto;
 
     AnalysisResult analyzePostImages();
     AnalysisResult analyzePreImages(StrangerAutomaton* intersection_auto, const AnalysisResult& fwAnalysisResult);
     void message(const string& msg);
-    void debug_auto(StrangerAutomaton* automaton, int type);
+    void debug_auto(const StrangerAutomaton* automaton, int type);
     bool enable_debug;
 
     string reference_dep_graph_file_name;

@@ -33,7 +33,7 @@ StrangerAutomaton::StrangerAutomaton(DFA* dfa)
 
 StrangerAutomaton::StrangerAutomaton(const StrangerAutomaton* other)
 {
-	init();
+	init();        
 	this->dfa = dfaCopy(other->dfa);
 }
 
@@ -64,7 +64,7 @@ unsigned* StrangerAutomaton::u_indices_main = getUnsignedIndices(num_ascii_track
 
 
 
-int StrangerAutomaton::getID()
+int StrangerAutomaton::getID() const
 {
     return ID;
 }
@@ -94,9 +94,9 @@ StrangerAutomaton* StrangerAutomaton::clone(int id) const
 		return makeBottom(id);
 	else if (isTop())
 		return makeTop(id);
-	else {
+        else {
 		debugToFile(stringbuilder() << "M[" << traceID << "] = dfaCopy(M["  << this->autoTraceID << "]);//" << id << " = clone(" << this->ID << ")");
-		StrangerAutomaton* retMe = new StrangerAutomaton(dfaCopy(this->dfa));
+		StrangerAutomaton* retMe = new StrangerAutomaton(this);
 		{
 			retMe->setID(id);
 			retMe->debugAutomaton();
@@ -779,7 +779,7 @@ StrangerAutomaton* StrangerAutomaton::repeat1(unsigned min, unsigned max) {
  *            purposes only
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::complement(int id) {
+StrangerAutomaton* StrangerAutomaton::complement(int id) const {
     debug(stringbuilder() << id <<  " = complement("  << this->ID <<  ")");
     if (isTop())
         // top is an unknown type so can not be complemented
@@ -808,7 +808,7 @@ StrangerAutomaton* StrangerAutomaton::complement(int id) {
  * Returns a new automaton auto with L(auto)= the complement of the language of current automaton
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::complement() {
+StrangerAutomaton* StrangerAutomaton::complement() const {
     return this->complement(traceID);
 }
 
@@ -827,7 +827,7 @@ StrangerAutomaton* StrangerAutomaton::complement() {
  *            purposes only
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::union_(StrangerAutomaton* otherAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::union_(const StrangerAutomaton* otherAuto, int id) const {
     debug(stringbuilder() << id <<  " = union_("  << this->ID <<  ", " << otherAuto->ID << ")");
     
     // if top or bottom then do not use the c library as dfa == NULL
@@ -860,7 +860,7 @@ StrangerAutomaton* StrangerAutomaton::union_(StrangerAutomaton* otherAuto, int i
  * @param auto
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::union_(StrangerAutomaton* otherAuto) {
+StrangerAutomaton* StrangerAutomaton::union_(const StrangerAutomaton* otherAuto) const {
     return this->union_(otherAuto, traceID);
 }
 
@@ -974,7 +974,7 @@ StrangerAutomaton* StrangerAutomaton::intersect(const StrangerAutomaton* otherAu
  *            purposes only
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::preciseWiden(StrangerAutomaton* otherAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::preciseWiden(const StrangerAutomaton* otherAuto, int id) const {
     debug(stringbuilder() << id <<  " = precise_widen("  << this->ID <<  ", " << otherAuto->ID << ")");
     
     // if top or bottom then do not use the c library as dfa == NULL
@@ -1012,7 +1012,7 @@ StrangerAutomaton* StrangerAutomaton::preciseWiden(StrangerAutomaton* otherAuto,
  * @param auto
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::preciseWiden(StrangerAutomaton* otherAuto) {
+StrangerAutomaton* StrangerAutomaton::preciseWiden(const StrangerAutomaton* otherAuto) const {
     return preciseWiden(otherAuto, traceID);
 }
 
@@ -1026,7 +1026,7 @@ StrangerAutomaton* StrangerAutomaton::preciseWiden(StrangerAutomaton* otherAuto)
  *            purposes only
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::coarseWiden(StrangerAutomaton* otherAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::coarseWiden(const StrangerAutomaton* otherAuto, int id) const {
     debug(stringbuilder() << id <<  " = coarse_widen("  << this->ID <<  ", " << otherAuto->ID << ")");
     
     // if top or bottom then do not use the c library as dfa == NULL
@@ -1063,7 +1063,7 @@ StrangerAutomaton* StrangerAutomaton::coarseWiden(StrangerAutomaton* otherAuto, 
  * @param auto
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::coarseWiden(StrangerAutomaton* otherAuto) {
+StrangerAutomaton* StrangerAutomaton::coarseWiden(const StrangerAutomaton* otherAuto) const {
     return coarseWiden(otherAuto, traceID);
 }
 
@@ -1083,7 +1083,8 @@ StrangerAutomaton* StrangerAutomaton::coarseWiden(StrangerAutomaton* otherAuto) 
  *            purposes only
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::concatenate(StrangerAutomaton* otherAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::concatenate(const StrangerAutomaton* otherAuto, int id) const
+{
     debug(stringbuilder() << id <<  " = concatenate("  << this->ID <<  ", " << otherAuto->ID << ")");
     
     // TODO: this is different than javascrit semantics. check http://www.quirksmode.org/js/strings.html
@@ -1121,7 +1122,8 @@ StrangerAutomaton* StrangerAutomaton::concatenate(StrangerAutomaton* otherAuto, 
  *            purposes only
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::concatenate(StrangerAutomaton* otherAuto) {
+StrangerAutomaton* StrangerAutomaton::concatenate(const StrangerAutomaton* otherAuto) const
+{
     return concatenate(otherAuto, traceID);
 }
 
@@ -1140,8 +1142,8 @@ StrangerAutomaton* StrangerAutomaton::concatenate(StrangerAutomaton* otherAuto) 
  *            purposes only
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::leftPreConcat(StrangerAutomaton* rightSiblingAuto,
-                                                    int id) {
+StrangerAutomaton* StrangerAutomaton::leftPreConcat(const StrangerAutomaton* rightSiblingAuto, int id) const
+{
     debug(stringbuilder() << id <<  " = leftPreConcat("  << this->ID <<  ", " << rightSiblingAuto->ID << ")");
     // if top or bottom then do not use the c library as dfa == NULL
     if (this->isBottom() || rightSiblingAuto->isBottom())
@@ -1171,7 +1173,8 @@ StrangerAutomaton* StrangerAutomaton::leftPreConcat(StrangerAutomaton* rightSibl
  * @param concatAuto
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::leftPreConcat(StrangerAutomaton* rightSiblingAuto) {
+StrangerAutomaton* StrangerAutomaton::leftPreConcat(const StrangerAutomaton* rightSiblingAuto) const
+{
     return leftPreConcat(rightSiblingAuto, traceID);
 }
 
@@ -1188,8 +1191,8 @@ StrangerAutomaton* StrangerAutomaton::leftPreConcat(StrangerAutomaton* rightSibl
  *            purposes only
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::leftPreConcatConst(std::string rightSiblingString,
-                                                         int id) {
+StrangerAutomaton* StrangerAutomaton::leftPreConcatConst(std::string rightSiblingString, int id) const
+{
     debug(stringbuilder() << id <<  " = rightPreConcatConst("  << this->ID <<  ", " << rightSiblingString << ")");
     
     // if top or bottom then do not use the c library as dfa == NULL
@@ -1222,7 +1225,7 @@ StrangerAutomaton* StrangerAutomaton::leftPreConcatConst(std::string rightSiblin
  * @param concatAuto
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::leftPreConcatConst(std::string rightSiblingString) {
+StrangerAutomaton* StrangerAutomaton::leftPreConcatConst(std::string rightSiblingString) const {
     return leftPreConcatConst(rightSiblingString, traceID);
 }
 
@@ -1238,8 +1241,8 @@ StrangerAutomaton* StrangerAutomaton::leftPreConcatConst(std::string rightSiblin
  *            purposes only
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::rightPreConcat(StrangerAutomaton* leftSiblingAuto,
-                                                     int id) {
+StrangerAutomaton* StrangerAutomaton::rightPreConcat(const StrangerAutomaton* leftSiblingAuto, int id) const
+{
     debug(stringbuilder() << id <<  " = rightPreConcat("  << this->ID <<  ", " << leftSiblingAuto->ID<< ")");
     
     // if top or bottom then do not use the c library as dfa == NULL
@@ -1271,7 +1274,8 @@ StrangerAutomaton* StrangerAutomaton::rightPreConcat(StrangerAutomaton* leftSibl
  * @param concatAuto
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::rightPreConcat(StrangerAutomaton* leftSiblingAuto) {
+StrangerAutomaton* StrangerAutomaton::rightPreConcat(const StrangerAutomaton* leftSiblingAuto) const
+{
     return rightPreConcat(leftSiblingAuto, traceID);
 }
 
@@ -1287,8 +1291,8 @@ StrangerAutomaton* StrangerAutomaton::rightPreConcat(StrangerAutomaton* leftSibl
  *            purposes only
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::rightPreConcatConst(std::string leftSiblingString,
-                                                          int id) {
+StrangerAutomaton* StrangerAutomaton::rightPreConcatConst(std::string leftSiblingString, int id) const
+{
     debug(stringbuilder() << id <<  " = rightPreConcatConst("  << this->ID <<  ", " << leftSiblingString << ")");
     
     // if top or bottom then do not use the c library as dfa == NULL
@@ -1433,8 +1437,8 @@ StrangerAutomaton* StrangerAutomaton::regExToAuto(std::string phpRegexOrig) {
  *            purposes only
  */
 //TODO: merge this with str_replace as we no longer need preg
-StrangerAutomaton* StrangerAutomaton::reg_replace(StrangerAutomaton* patternAuto,
-                                                  const std::string& replaceStr, StrangerAutomaton* subjectAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::reg_replace(const StrangerAutomaton* patternAuto,
+                                                  const std::string& replaceStr, const StrangerAutomaton* subjectAuto, int id) {
     
     debug(stringbuilder() << id <<  " = reg_replace(" << patternAuto->ID << ", " << replaceStr << ", " << subjectAuto->ID << ")");
     // Note: the replaceAuto parameter should be of type
@@ -1473,7 +1477,7 @@ StrangerAutomaton* StrangerAutomaton::reg_replace(StrangerAutomaton* patternAuto
 }
 
 
-StrangerAutomaton* StrangerAutomaton::general_replace(StrangerAutomaton* patternAuto, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::general_replace(const StrangerAutomaton* patternAuto, const StrangerAutomaton* replaceAuto, const StrangerAutomaton* subjectAuto, int id) {
 
     debug(stringbuilder() << id <<  " = reg_replace(" << patternAuto->ID << ", " << replaceAuto->ID << ", " << subjectAuto->ID << ")");
     // Note: the replaceAuto parameter should be of type
@@ -1533,8 +1537,8 @@ StrangerAutomaton* StrangerAutomaton::general_replace(StrangerAutomaton* pattern
  *            in L(subjectAuto)
  */
 //TODO: merge this with str_replace as we no longer need preg
-StrangerAutomaton* StrangerAutomaton::reg_replace(StrangerAutomaton* patternAuto,
-                                                  const std::string& replaceStr, StrangerAutomaton* subjectAuto) {
+StrangerAutomaton* StrangerAutomaton::reg_replace(const StrangerAutomaton* patternAuto,
+                                                  const std::string& replaceStr, const StrangerAutomaton* subjectAuto) {
     return reg_replace(patternAuto, replaceStr, subjectAuto, traceID);
 }
 
@@ -1557,8 +1561,8 @@ StrangerAutomaton* StrangerAutomaton::reg_replace(StrangerAutomaton* patternAuto
  *            : id of node associated with this auto; used for debugging
  *            purposes only
  */
-StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
-                                                  const std::string& replaceStr, StrangerAutomaton* subjectAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::str_replace(const StrangerAutomaton* searchAuto,
+                                                  const std::string& replaceStr, const StrangerAutomaton* subjectAuto, int id) {
     
     debug(stringbuilder() << id <<  " = str_replace(" << searchAuto->ID << ", " << replaceStr << ", " << subjectAuto->ID << ")");
     // Note: the original replaceAuto parameter in FSAAutomaton is of type
@@ -1613,12 +1617,12 @@ StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
  *            : target auto (of type StrangerAutomaton) , replace substrings
  *            in L(subjectAuto)
  */
-StrangerAutomaton* StrangerAutomaton::str_replace(StrangerAutomaton* searchAuto,
-                                                  const std::string& replaceStr, StrangerAutomaton* subjectAuto) {
+StrangerAutomaton* StrangerAutomaton::str_replace(const StrangerAutomaton* searchAuto,
+                                                  const std::string& replaceStr, const StrangerAutomaton* subjectAuto) {
     return str_replace(searchAuto, replaceStr, subjectAuto, traceID);
 }
 
-StrangerAutomaton* StrangerAutomaton::str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::str_replace_once(const StrangerAutomaton* str, const StrangerAutomaton* replaceAuto, const StrangerAutomaton* subjectAuto, int id) {
     boost::posix_time::ptime start_time = perfInfo->current_time();
     std::string replaceStr = replaceAuto->getStr();
     StrangerAutomaton* retMe = new StrangerAutomaton(
@@ -1637,7 +1641,7 @@ StrangerAutomaton* StrangerAutomaton::str_replace_once(StrangerAutomaton* str, S
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto) {
+StrangerAutomaton* StrangerAutomaton::str_replace_once(const StrangerAutomaton* str, const StrangerAutomaton* replaceAuto, const StrangerAutomaton* subjectAuto) {
     return str_replace_once(str, replaceAuto, subjectAuto, traceID);
 }
 
@@ -1659,8 +1663,8 @@ StrangerAutomaton* StrangerAutomaton::str_replace_once(StrangerAutomaton* str, S
  *            purposes only
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::preReplace(StrangerAutomaton* searchAuto,
-                                                 std::string replaceString, int id) {
+StrangerAutomaton* StrangerAutomaton::preReplace(const StrangerAutomaton* searchAuto,
+                                                 std::string replaceString, int id) const {
     debug(stringbuilder() << id <<  " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
     if (searchAuto->isBottom() || this->isBottom())
         throw StrangerAutomatonException(
@@ -1696,13 +1700,13 @@ StrangerAutomaton* StrangerAutomaton::preReplace(StrangerAutomaton* searchAuto,
  *            string
  * @return
  */
-StrangerAutomaton* StrangerAutomaton::preReplace(StrangerAutomaton* searchAuto,
-                                                 std::string replaceString) {
+StrangerAutomaton* StrangerAutomaton::preReplace(const StrangerAutomaton* searchAuto,
+                                                 std::string replaceString) const {
     return this->preReplace(searchAuto, replaceString, traceID);
 }
 
-StrangerAutomaton* StrangerAutomaton::preReplaceOnce(StrangerAutomaton* searchAuto,
-                                                     std::string replaceString, int id) {
+StrangerAutomaton* StrangerAutomaton::preReplaceOnce(const StrangerAutomaton* searchAuto,
+                                                     std::string replaceString, int id) const {
     debug(stringbuilder() << id <<  " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
     if (searchAuto->isBottom() || this->isBottom())
         throw StrangerAutomatonException(
@@ -1728,8 +1732,8 @@ StrangerAutomaton* StrangerAutomaton::preReplaceOnce(StrangerAutomaton* searchAu
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::preReplaceOnce(StrangerAutomaton* searchAuto,
-                                                 std::string replaceString) {
+StrangerAutomaton* StrangerAutomaton::preReplaceOnce(const StrangerAutomaton* searchAuto,
+                                                 std::string replaceString) const {
     return this->preReplaceOnce(searchAuto, replaceString, traceID);
 }
 
@@ -1740,7 +1744,7 @@ StrangerAutomaton* StrangerAutomaton::preReplaceOnce(StrangerAutomaton* searchAu
 //* These operations retrieve or restrict length of current automaton language.			*
 //***************************************************************************************
 
-StrangerAutomaton* StrangerAutomaton::getUnaryAutomaton(int id){
+StrangerAutomaton* StrangerAutomaton::getUnaryAutomaton(int id) const {
     debug(stringbuilder() << id <<  " = dfa_string_to_unaryDFA("  << this->ID << ")");
     StrangerAutomaton* retMe = new StrangerAutomaton(dfa_string_to_unaryDFA(this->dfa, num_ascii_track, indices_main));
     retMe->ID = id;
@@ -1749,7 +1753,7 @@ StrangerAutomaton* StrangerAutomaton::getUnaryAutomaton(int id){
 }
 
 
-StrangerAutomaton* StrangerAutomaton::restrictLengthByOtherAutomaton(StrangerAutomaton* otherAuto, int id){
+StrangerAutomaton* StrangerAutomaton::restrictLengthByOtherAutomaton(const StrangerAutomaton* otherAuto, int id) const {
     StrangerAutomaton* uL = otherAuto->getUnaryAutomaton();
     StrangerAutomaton* retMe = this->restrictLengthByUnaryAutomaton(uL);
     delete uL;
@@ -1758,7 +1762,7 @@ StrangerAutomaton* StrangerAutomaton::restrictLengthByOtherAutomaton(StrangerAut
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::restrictLengthByOtherAutomatonFinite(StrangerAutomaton *otherAuto, int id){
+StrangerAutomaton* StrangerAutomaton::restrictLengthByOtherAutomatonFinite(const StrangerAutomaton *otherAuto, int id) const {
     P_DFAFiniteLengths pDFAFiniteLengths = dfaGetLengthsFiniteLang(otherAuto->dfa, num_ascii_track, indices_main);
     unsigned *lengths = pDFAFiniteLengths->lengths;
     const unsigned size = pDFAFiniteLengths->size;
@@ -1782,7 +1786,7 @@ StrangerAutomaton* StrangerAutomaton::restrictLengthByOtherAutomatonFinite(Stran
 }
 
 
-StrangerAutomaton* StrangerAutomaton::restrictLengthByUnaryAutomaton(StrangerAutomaton* uL, int id){
+StrangerAutomaton* StrangerAutomaton::restrictLengthByUnaryAutomaton(const StrangerAutomaton* uL, int id) const {
     debug(stringbuilder() << id <<  " = dfa_restrict_by_unaryDFA("  << this->ID << ", " << uL->ID << ")");
     StrangerAutomaton* retMe = new StrangerAutomaton(dfa_restrict_by_unaryDFA(this->dfa, uL->dfa, num_ascii_track, indices_main));
     retMe->ID = id;
@@ -1807,7 +1811,7 @@ StrangerAutomaton* StrangerAutomaton::restrictLengthByUnaryAutomaton(StrangerAut
  *            purposes only
  * @return
  */
-bool StrangerAutomaton::checkIntersection(StrangerAutomaton* otherAuto, int id1, int id2) {
+bool StrangerAutomaton::checkIntersection(const StrangerAutomaton* otherAuto, int id1, int id2) {
     std::string debugStr = stringbuilder() << "checkIntersection("  << this->ID <<  ", " << otherAuto->ID << ") = ";
     
     if (this->isTop() || otherAuto->isTop()){
@@ -1843,7 +1847,7 @@ bool StrangerAutomaton::checkIntersection(StrangerAutomaton* otherAuto, int id1,
  * @param auto
  * @return
  */
-bool StrangerAutomaton::checkIntersection(StrangerAutomaton* otherAuto) {
+bool StrangerAutomaton::checkIntersection(const StrangerAutomaton* otherAuto) {
     return this->checkIntersection(otherAuto, -1, -1);
 }
 
@@ -1859,7 +1863,7 @@ bool StrangerAutomaton::checkIntersection(StrangerAutomaton* otherAuto) {
  *            : id of node associated with this auto; used for debugging
  *            purposes only * @return
  */
-bool StrangerAutomaton::checkInclusion(StrangerAutomaton* otherAuto, int id1, int id2) {
+bool StrangerAutomaton::checkInclusion(const StrangerAutomaton* otherAuto, int id1, int id2) const {
     std::string debugStr = stringbuilder() << "checkInclusion("  << this->ID <<  ", " << otherAuto->ID << ") = ";
     // phi is always a subset of any other set, top is always superset of anything
     if (this->isBottom() || otherAuto->isTop()){
@@ -1898,7 +1902,7 @@ bool StrangerAutomaton::checkInclusion(StrangerAutomaton* otherAuto, int id1, in
  * @param auto
  * @return
  */
-bool StrangerAutomaton::checkInclusion(StrangerAutomaton* otherAuto) {
+bool StrangerAutomaton::checkInclusion(const StrangerAutomaton* otherAuto) const {
     return this->checkInclusion(otherAuto, -1, -1);
 }
 
@@ -1963,7 +1967,7 @@ bool StrangerAutomaton::checkEquivalence(const StrangerAutomaton* otherAuto) con
  * returns true (1) if {|w| < n: w elementOf L(M) && n elementOf Integers}
  * In other words length of all strings in the language is bounded by a value n
  */
-bool StrangerAutomaton::isLengthFinite(){
+bool StrangerAutomaton::isLengthFinite() const {
     std::string debugString = stringbuilder() << "isLengthFinite("  << this->ID << ") = ";
     int result = ::isLengthFiniteTarjan(this->dfa, num_ascii_track, indices_main);
     debug(stringbuilder() << debugString << ( result == 0 ? false : true ));
@@ -1976,7 +1980,7 @@ bool StrangerAutomaton::isLengthFinite(){
 /**
  * returns maximum length if length is finite, exception otherwise
  */
-unsigned StrangerAutomaton::getMaxLength() {
+unsigned StrangerAutomaton::getMaxLength() const {
 	if( !(this->isLengthFinite()) ) {
 		throw std::runtime_error("Length of this automaton is infinite! ID: " + this->ID);
 	}
@@ -1996,7 +2000,7 @@ unsigned StrangerAutomaton::getMaxLength() {
  * returns minimum length, if length is finite, otherwise handle it
  * TODO update this function to return min length even the length is infinite
  */
-unsigned StrangerAutomaton::getMinLength() {
+unsigned StrangerAutomaton::getMinLength() const {
 	if( !(this->isLengthFinite()) ) {
 		throw std::runtime_error("Length of this automaton is infinite! ID: " + this->ID);
 	}
@@ -2090,7 +2094,7 @@ bool StrangerAutomaton::isSingleton() const {
     return (::isSingleton(this->dfa, num_ascii_track, indices_main) != NULL);
 }
 
-string StrangerAutomaton::getStr(){
+string StrangerAutomaton::getStr() const {
     char* result = ::isSingleton(this->dfa, num_ascii_track, indices_main);
     if (result == NULL){
         throw runtime_error("Trying to get a string for an automaton with a nonSingleton language.");
@@ -2117,10 +2121,9 @@ bool StrangerAutomaton::isTop() const {
 }
 
 
-StrangerAutomaton* StrangerAutomaton::toUpperCase(int id){
-
+StrangerAutomaton* StrangerAutomaton::toUpperCase(int id) const
+{
     debug(stringbuilder() << id <<  " = dfaToUpperCase("  << this->ID << ")");
-
 	boost::posix_time::ptime start_time = perfInfo->current_time();
 	StrangerAutomaton* retMe = new StrangerAutomaton(dfaToUpperCase(this->dfa, num_ascii_track, indices_main));
 	perfInfo->to_uppercase_total_time += perfInfo->current_time() - start_time;
@@ -2130,8 +2133,8 @@ StrangerAutomaton* StrangerAutomaton::toUpperCase(int id){
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::toLowerCase(int id){
-
+StrangerAutomaton* StrangerAutomaton::toLowerCase(int id) const
+{
     debug(stringbuilder() << id <<  " = dfaToLowerCase("  << this->ID << ")");
 
 	boost::posix_time::ptime start_time = perfInfo->current_time();
@@ -2143,7 +2146,7 @@ StrangerAutomaton* StrangerAutomaton::toLowerCase(int id){
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::preToUpperCase(int id){
+StrangerAutomaton* StrangerAutomaton::preToUpperCase(int id) const {
 
     debug(stringbuilder() << id <<  " = dfaPreToUpperCase("  << this->ID << ")");
 
@@ -2156,7 +2159,7 @@ StrangerAutomaton* StrangerAutomaton::preToUpperCase(int id){
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::preToLowerCase(int id){
+StrangerAutomaton* StrangerAutomaton::preToLowerCase(int id) const {
 
     debug(stringbuilder() << id <<  " = dfaPreToLowerCase("  << this->ID << ")");
 
@@ -2169,7 +2172,8 @@ StrangerAutomaton* StrangerAutomaton::preToLowerCase(int id){
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::trimSpaces(int id){
+StrangerAutomaton* StrangerAutomaton::trimSpaces(int id) const
+{
 
     debug(stringbuilder() << id <<  " = dfaTrim(' ', "  << this->ID << ")");
 
@@ -2185,7 +2189,7 @@ StrangerAutomaton* StrangerAutomaton::trimSpaces(int id){
 //	return ret2;
 }
 
-StrangerAutomaton* StrangerAutomaton::trimSpacesLeft(int id){
+StrangerAutomaton* StrangerAutomaton::trimSpacesLeft(int id) const {
 
     debug(stringbuilder() << id <<  " = dfaLeftTrim(' ', "  << this->ID << ")");
 
@@ -2198,7 +2202,7 @@ StrangerAutomaton* StrangerAutomaton::trimSpacesLeft(int id){
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::trimSpacesRight(int id){
+StrangerAutomaton* StrangerAutomaton::trimSpacesRight(int id) const {
 
     debug(stringbuilder() << id <<  " = dfaRightTrim(' ', "  << this->ID << ")");
 
@@ -2211,7 +2215,7 @@ StrangerAutomaton* StrangerAutomaton::trimSpacesRight(int id){
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::trim(char c, int id){
+StrangerAutomaton* StrangerAutomaton::trim(char c, int id) const {
 
     debug(stringbuilder() << id <<  " = dfaTrim(" << this->ID << "," << c << ")");
 
@@ -2221,7 +2225,7 @@ StrangerAutomaton* StrangerAutomaton::trim(char c, int id){
     retMe->setID(id);
     return retMe;
 }
-StrangerAutomaton* StrangerAutomaton::trimLeft(char c, int id){
+StrangerAutomaton* StrangerAutomaton::trimLeft(char c, int id) const {
 
     debug(stringbuilder() << id <<  " = dfaLeftTrim(" << this->ID << "," << c << ")");
 
@@ -2232,7 +2236,7 @@ StrangerAutomaton* StrangerAutomaton::trimLeft(char c, int id){
     retMe->setID(id);
     return retMe;
 }
-StrangerAutomaton* StrangerAutomaton::trimRight(char c, int id){
+StrangerAutomaton* StrangerAutomaton::trimRight(char c, int id) const {
 
     debug(stringbuilder() << id <<  " = dfaRightTrim(" << this->ID << "," << c << ")");
 
@@ -2242,7 +2246,7 @@ StrangerAutomaton* StrangerAutomaton::trimRight(char c, int id){
     retMe->setID(id);
     return retMe;
 }
-StrangerAutomaton* StrangerAutomaton::trim(char chars[], int id){
+StrangerAutomaton* StrangerAutomaton::trim(char chars[], int id) const {
 
     debug(stringbuilder() << id <<  " = dfaTrimSet(" << this->ID << ",chars )\n");
 
@@ -2261,8 +2265,8 @@ StrangerAutomaton* StrangerAutomaton::trim(char chars[], int id){
 //	    	return new StrangerAutomaton(dfaTrimSet(this->dfa, chars, strlen(chars), num_ascii_track, indices_main));
 //	    }
 
-StrangerAutomaton* StrangerAutomaton::preTrimSpaces(int id){
-
+StrangerAutomaton* StrangerAutomaton::preTrimSpaces(int id) const
+{
     debug(stringbuilder() << id <<  " = dfaPreTrim(" << this->ID << ",' ')\n");
 
 	boost::posix_time::ptime start_time = perfInfo->current_time();
@@ -2279,7 +2283,8 @@ StrangerAutomaton* StrangerAutomaton::preTrimSpaces(int id){
 
 }
 
-StrangerAutomaton* StrangerAutomaton::preTrimSpacesLeft(int id){
+StrangerAutomaton* StrangerAutomaton::preTrimSpacesLeft(int id) const
+{
 
     debug(stringbuilder() << id <<  " = dfaPreTrimLeft(" << this->ID << ",' ')\n");
 
@@ -2292,8 +2297,8 @@ StrangerAutomaton* StrangerAutomaton::preTrimSpacesLeft(int id){
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::preTrimSpacesRigth(int id){
-
+StrangerAutomaton* StrangerAutomaton::preTrimSpacesRigth(int id) const
+{
     debug(stringbuilder() << id <<  " = dfaPreTrim(" << this->ID << ",' ')\n");
 
 	boost::posix_time::ptime start_time = perfInfo->current_time();
@@ -2304,7 +2309,7 @@ StrangerAutomaton* StrangerAutomaton::preTrimSpacesRigth(int id){
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::substr_first_part(int start, int id) {
+StrangerAutomaton* StrangerAutomaton::substr_first_part(int start, int id) const  {
 	if (start < 0)
 		throw std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
 
@@ -2319,7 +2324,7 @@ StrangerAutomaton* StrangerAutomaton::substr_first_part(int start, int id) {
 	return chopped;
 }
 
-StrangerAutomaton* StrangerAutomaton::substr(int start, int id) {
+StrangerAutomaton* StrangerAutomaton::substr(int start, int id) const  {
 	boost::posix_time::ptime start_time = perfInfo->current_time();
 
         StrangerAutomaton* retMe = this->substr_first_part(start, id);
@@ -2330,7 +2335,7 @@ StrangerAutomaton* StrangerAutomaton::substr(int start, int id) {
 }
 
 
-StrangerAutomaton* StrangerAutomaton::substr(int start, int length, int id) {
+StrangerAutomaton* StrangerAutomaton::substr(int start, int length, int id) const  {
 	if (length < 0)
 		throw std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
 	boost::posix_time::ptime start_time = perfInfo->current_time();
@@ -2356,7 +2361,7 @@ StrangerAutomaton* StrangerAutomaton::substr(int start, int length, int id) {
 	return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int length, int id) {
+StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int length, int id) const  {
 	if (start < 0 || length < 0)
 		throw std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
 	boost::posix_time::ptime start_time = perfInfo->current_time();
@@ -2388,7 +2393,7 @@ StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int length, int id) 
 	return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int id) {
+StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int id) const  {
 	if (start < 0)
 		throw std::runtime_error(stringbuilder() << "current substr model does not support negative parameters!!!");
 	boost::posix_time::ptime start_time = perfInfo->current_time();
@@ -2411,7 +2416,7 @@ StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int id) {
 	return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::addslashes(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::addslashes(const StrangerAutomaton* subjectAuto, int id)
 {
 
     debug(stringbuilder() << id << " = addSlashes(" << subjectAuto->ID << ");");
@@ -2428,7 +2433,7 @@ StrangerAutomaton* StrangerAutomaton::addslashes(StrangerAutomaton* subjectAuto,
 
 
 
-StrangerAutomaton* StrangerAutomaton::pre_addslashes(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::pre_addslashes(const StrangerAutomaton* subjectAuto, int id)
 {
 
 	debug(stringbuilder() << id << " = pre_addSlashes(" << subjectAuto->ID << ");");
@@ -2443,7 +2448,7 @@ StrangerAutomaton* StrangerAutomaton::pre_addslashes(StrangerAutomaton* subjectA
 	return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::encodeAttrString(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::encodeAttrString(const StrangerAutomaton* subjectAuto, int id)
 {
 
     debug(stringbuilder() << id << " = encodeAttrString(" << subjectAuto->ID << ");");
@@ -2458,7 +2463,7 @@ StrangerAutomaton* StrangerAutomaton::encodeAttrString(StrangerAutomaton* subjec
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::pre_encodeAttrString(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::pre_encodeAttrString(const StrangerAutomaton* subjectAuto, int id)
 {
 
     debug(stringbuilder() << id << " = pre_encodeAttrString(" << subjectAuto->ID << ");");
@@ -2473,7 +2478,7 @@ StrangerAutomaton* StrangerAutomaton::pre_encodeAttrString(StrangerAutomaton* su
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::encodeTextFragment(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::encodeTextFragment(const StrangerAutomaton* subjectAuto, int id)
 {
 
     debug(stringbuilder() << id << " = encodeTextFragment(" << subjectAuto->ID << ");");
@@ -2488,7 +2493,7 @@ StrangerAutomaton* StrangerAutomaton::encodeTextFragment(StrangerAutomaton* subj
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::pre_encodeTextFragment(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::pre_encodeTextFragment(const StrangerAutomaton* subjectAuto, int id)
 {
 
     debug(stringbuilder() << id << " = pre_encodeTextFragment(" << subjectAuto->ID << ");");
@@ -2503,7 +2508,7 @@ StrangerAutomaton* StrangerAutomaton::pre_encodeTextFragment(StrangerAutomaton* 
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::escapeHtmlTags(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::escapeHtmlTags(const StrangerAutomaton* subjectAuto, int id)
 {
 
     debug(stringbuilder() << id << " = escapeHtmlTags(" << subjectAuto->ID << ");");
@@ -2518,7 +2523,7 @@ StrangerAutomaton* StrangerAutomaton::escapeHtmlTags(StrangerAutomaton* subjectA
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::pre_escapeHtmlTags(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::pre_escapeHtmlTags(const StrangerAutomaton* subjectAuto, int id)
 {
 
     debug(stringbuilder() << id << " = pre_escapeHtmlTags(" << subjectAuto->ID << ");");
@@ -2533,7 +2538,7 @@ StrangerAutomaton* StrangerAutomaton::pre_escapeHtmlTags(StrangerAutomaton* subj
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::htmlSpecialChars(StrangerAutomaton* subjectAuto, string flag, int id)
+StrangerAutomaton* StrangerAutomaton::htmlSpecialChars(const StrangerAutomaton* subjectAuto, string flag, int id)
 {
     hscflags_t _flag;
     if (flag == "ENT_COMPAT")
@@ -2561,7 +2566,7 @@ StrangerAutomaton* StrangerAutomaton::htmlSpecialChars(StrangerAutomaton* subjec
 
 
 
-StrangerAutomaton* StrangerAutomaton::preHtmlSpecialChars(StrangerAutomaton* subjectAuto, string flag, int id)
+StrangerAutomaton* StrangerAutomaton::preHtmlSpecialChars(const StrangerAutomaton* subjectAuto, string flag, int id)
 {
 
     hscflags_t _flag;
@@ -2586,7 +2591,7 @@ StrangerAutomaton* StrangerAutomaton::preHtmlSpecialChars(StrangerAutomaton* sub
 }
 
 
-StrangerAutomaton* StrangerAutomaton::stripslashes(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::stripslashes(const StrangerAutomaton* subjectAuto, int id)
 {
 	boost::posix_time::ptime start_time = perfInfo->current_time();
     StrangerAutomaton *sigmaStar = StrangerAutomaton::regExToAuto("/(.*('|\\\"|\\\\).*)+/", true, id);
@@ -2618,7 +2623,7 @@ StrangerAutomaton* StrangerAutomaton::stripslashes(StrangerAutomaton* subjectAut
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::pre_stripslashes(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::pre_stripslashes(const StrangerAutomaton* subjectAuto, int id)
 {
 
     StrangerAutomaton *slashed = addslashes(subjectAuto, id);
@@ -2632,7 +2637,7 @@ StrangerAutomaton* StrangerAutomaton::pre_stripslashes(StrangerAutomaton* subjec
     return result;
 }
 
-StrangerAutomaton* StrangerAutomaton::mysql_escape_string(StrangerAutomaton* subjectAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::mysql_escape_string(const StrangerAutomaton* subjectAuto, int id) {
 
     debug(stringbuilder() << id << " = mysql_escape_string(" << subjectAuto->ID << ");");
 
@@ -2646,7 +2651,7 @@ StrangerAutomaton* StrangerAutomaton::mysql_escape_string(StrangerAutomaton* sub
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::pre_mysql_escape_string(StrangerAutomaton* subjectAuto, int id) {
+StrangerAutomaton* StrangerAutomaton::pre_mysql_escape_string(const StrangerAutomaton* subjectAuto, int id) {
 
 	debug(stringbuilder() << id << " = pre_mysql_escape_string(" << subjectAuto->ID << ");");
 
@@ -2661,7 +2666,7 @@ StrangerAutomaton* StrangerAutomaton::pre_mysql_escape_string(StrangerAutomaton*
 	return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::mysql_real_escape_string(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::mysql_real_escape_string(const StrangerAutomaton* subjectAuto, int id)
 {
     
     //    debug(::java::lang::StringBuilder().append(id)->append(" = mysql_real_escape_string(")
@@ -2689,7 +2694,7 @@ StrangerAutomaton* StrangerAutomaton::mysql_real_escape_string(StrangerAutomaton
     
 }
 
-StrangerAutomaton* StrangerAutomaton::pre_mysql_real_escape_string(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::pre_mysql_real_escape_string(const StrangerAutomaton* subjectAuto, int id)
 {
     
     //    debug(::java::lang::StringBuilder().append(id)->append(" = pre_mysql_real_escape_string(")
@@ -2717,7 +2722,7 @@ StrangerAutomaton* StrangerAutomaton::pre_mysql_real_escape_string(StrangerAutom
     
 }
 
-StrangerAutomaton* StrangerAutomaton::nl2br(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::nl2br(const StrangerAutomaton* subjectAuto, int id)
 {
     
     //    debug(::java::lang::StringBuilder().append(id)->append(" = nl2br(")
@@ -2739,7 +2744,7 @@ StrangerAutomaton* StrangerAutomaton::nl2br(StrangerAutomaton* subjectAuto, int 
     
 }
 
-StrangerAutomaton* StrangerAutomaton::pre_nl2br(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::pre_nl2br(const StrangerAutomaton* subjectAuto, int id)
 {
     
     //    debug(::java::lang::StringBuilder().append(id)->append(" = pre_nl2br(")
@@ -2761,7 +2766,7 @@ StrangerAutomaton* StrangerAutomaton::pre_nl2br(StrangerAutomaton* subjectAuto, 
     
 }
 
-StrangerAutomaton* StrangerAutomaton::encodeURIComponent(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::encodeURIComponent(const StrangerAutomaton* subjectAuto, int id)
 {
     debug(stringbuilder() << id << " = encodeURIComponent(" << subjectAuto->ID << ");");
 
@@ -2773,7 +2778,7 @@ StrangerAutomaton* StrangerAutomaton::encodeURIComponent(StrangerAutomaton* subj
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::decodeURIComponent(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::decodeURIComponent(const StrangerAutomaton* subjectAuto, int id)
 {
     debug(stringbuilder() << id << " = decodeURIComponent(" << subjectAuto->ID << ");");
 
@@ -2785,7 +2790,7 @@ StrangerAutomaton* StrangerAutomaton::decodeURIComponent(StrangerAutomaton* subj
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::encodeURI(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::encodeURI(const StrangerAutomaton* subjectAuto, int id)
 {
     debug(stringbuilder() << id << " = encodeURI(" << subjectAuto->ID << ");");
 
@@ -2797,7 +2802,7 @@ StrangerAutomaton* StrangerAutomaton::encodeURI(StrangerAutomaton* subjectAuto, 
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::decodeURI(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::decodeURI(const StrangerAutomaton* subjectAuto, int id)
 {
     debug(stringbuilder() << id << " = decodeURI(" << subjectAuto->ID << ");");
 
@@ -2809,7 +2814,7 @@ StrangerAutomaton* StrangerAutomaton::decodeURI(StrangerAutomaton* subjectAuto, 
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::jsonStringify(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::jsonStringify(const StrangerAutomaton* subjectAuto, int id)
 {
     debug(stringbuilder() << id << " = jsonStringify(" << subjectAuto->ID << ");");
 
@@ -2821,7 +2826,7 @@ StrangerAutomaton* StrangerAutomaton::jsonStringify(StrangerAutomaton* subjectAu
     return retMe;
 }
 
-StrangerAutomaton* StrangerAutomaton::jsonParse(StrangerAutomaton* subjectAuto, int id)
+StrangerAutomaton* StrangerAutomaton::jsonParse(const StrangerAutomaton* subjectAuto, int id)
 {
     debug(stringbuilder() << id << " = jsonParse(" << subjectAuto->ID << ");");
 
@@ -3322,7 +3327,7 @@ void StrangerAutomaton::debugToFile(std::string str)
     //    }
 }
 
-StrangerAutomaton* StrangerAutomaton::difference(StrangerAutomaton* auto_,	int id) {
+StrangerAutomaton* StrangerAutomaton::difference(const StrangerAutomaton* auto_, int id) const {
 	StrangerAutomaton* complementAuto = auto_->complement(id);
 	StrangerAutomaton* differenceAuto = this->intersect(complementAuto, id);
 	delete complementAuto;

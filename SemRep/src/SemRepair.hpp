@@ -28,7 +28,7 @@
 #include "StrangerAutomaton.hpp"
 #include "SemRepairDebugger.hpp"
 #include "depgraph/DepGraph.hpp"
-#include "StringAnalysisTypes.hpp"
+#include "AnalysisResult.hpp"
 
 using namespace std;
 
@@ -83,7 +83,7 @@ private:
 	string generateOutputFilePath(string folder_name, bool unique_name);
 	void printAnalysisResults(AnalysisResult& result);
 	void printNodeList(NodesList nodes);
-	int isLengthAnIssue(StrangerAutomaton* patcherAuto, StrangerAutomaton*patcheeAuto);
+	int isLengthAnIssue(const StrangerAutomaton* patcherAuto, const StrangerAutomaton *patcheeAuto);
 };
 
 

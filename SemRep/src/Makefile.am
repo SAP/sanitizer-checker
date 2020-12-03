@@ -15,7 +15,8 @@ libsemrep_a_SOURCES = ImageComputer.cpp \
                       AutomatonGroups.cpp \
                       MultiAttack.cpp \
                       AttackContext.cpp \
-                      ValidationImageComputer.cpp
+                      ValidationImageComputer.cpp \
+		      AnalysisResult.cpp
 
 bin_PROGRAMS = semrep semattack semattack_bw multiattack
 

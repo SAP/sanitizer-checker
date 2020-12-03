@@ -46,7 +46,7 @@ public:
     virtual ~StrangerAutomaton();
     StrangerAutomaton* clone(int id) const;
     StrangerAutomaton* clone() const;
-    int getID();
+    int getID() const;
     void setID(int id);
     DFA* getDfa();
     static StrangerAutomaton* makeBottom(int id);
@@ -84,159 +84,159 @@ public:
     StrangerAutomaton* repeat(unsigned min);
     StrangerAutomaton* repeat(unsigned min, unsigned max, int id);
     StrangerAutomaton* repeat1(unsigned min, unsigned max);
-    StrangerAutomaton* complement(int id);
-    StrangerAutomaton* complement();
-    StrangerAutomaton* difference(StrangerAutomaton* auto_, int id);
-    StrangerAutomaton* union_(StrangerAutomaton* auto_, int id);
-    StrangerAutomaton* union_(StrangerAutomaton* auto_);
+    StrangerAutomaton* complement(int id) const;
+    StrangerAutomaton* complement() const;
+    StrangerAutomaton* difference(const StrangerAutomaton* auto_, int id) const;
+    StrangerAutomaton* union_(const StrangerAutomaton* auto_, int id) const;
+    StrangerAutomaton* union_(const StrangerAutomaton* auto_) const;
     StrangerAutomaton* unionWithEmptyString(int id);
     StrangerAutomaton* unionWithEmptyString();
     StrangerAutomaton* intersect(const StrangerAutomaton* auto_, int id) const;
     StrangerAutomaton* intersect(const StrangerAutomaton* auto_) const;
     StrangerAutomaton* productImpl(StrangerAutomaton* otherAuto, int id);
-    StrangerAutomaton* preciseWiden(StrangerAutomaton* auto_, int id);
-    StrangerAutomaton* preciseWiden(StrangerAutomaton* auto_);
-    StrangerAutomaton* coarseWiden(StrangerAutomaton* auto_, int id);
-    StrangerAutomaton* coarseWiden(StrangerAutomaton* auto_);
-    StrangerAutomaton* concatenate(StrangerAutomaton* auto_, int id);
-    StrangerAutomaton* concatenate(StrangerAutomaton* auto_);
-    StrangerAutomaton* leftPreConcat(StrangerAutomaton* rightSiblingAuto, int id);
-    StrangerAutomaton* leftPreConcat(StrangerAutomaton* rightSiblingAuto);
-    StrangerAutomaton* leftPreConcatConst(std::string rightSiblingString, int id);
-    StrangerAutomaton* leftPreConcatConst(std::string rightSiblingString);
-    StrangerAutomaton* rightPreConcat(StrangerAutomaton* leftSiblingAuto, int id);
-    StrangerAutomaton* rightPreConcat(StrangerAutomaton* leftSiblingAuto);
-    StrangerAutomaton* rightPreConcatConst(std::string leftSiblingString, int id);
+    StrangerAutomaton* preciseWiden(const StrangerAutomaton* auto_, int id) const;
+    StrangerAutomaton* preciseWiden(const StrangerAutomaton* auto_) const;
+    StrangerAutomaton* coarseWiden(const StrangerAutomaton* auto_, int id) const;
+    StrangerAutomaton* coarseWiden(const StrangerAutomaton* auto_) const;
+    StrangerAutomaton* concatenate(const StrangerAutomaton* auto_, int id) const;
+    StrangerAutomaton* concatenate(const StrangerAutomaton* auto_) const;
+    StrangerAutomaton* leftPreConcat(const StrangerAutomaton* rightSiblingAuto, int id) const;
+    StrangerAutomaton* leftPreConcat(const StrangerAutomaton* rightSiblingAuto) const;
+    StrangerAutomaton* leftPreConcatConst(std::string rightSiblingString, int id) const;
+    StrangerAutomaton* leftPreConcatConst(std::string rightSiblingString) const;
+    StrangerAutomaton* rightPreConcat(const StrangerAutomaton* leftSiblingAuto, int id) const;
+    StrangerAutomaton* rightPreConcat(const StrangerAutomaton* leftSiblingAuto) const;
+    StrangerAutomaton* rightPreConcatConst(std::string leftSiblingString, int id) const;
     StrangerAutomaton* rightPreConcatConst(std::string leftSiblingString);
     static StrangerAutomaton* regExToAuto(std::string phpRegexOrig, bool preg, int id);
     static StrangerAutomaton* regExToAuto(std::string phpRegexOrig);
-    static StrangerAutomaton* reg_replace(StrangerAutomaton* patternAuto, const std::string& replaceStr, StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* reg_replace(StrangerAutomaton* patternAuto, const std::string& replaceStr, StrangerAutomaton* subjectAuto);
-    static StrangerAutomaton* general_replace(StrangerAutomaton* patternAuto, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, const std::string& replaceStr, StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* str_replace(StrangerAutomaton* searchAuto, const std::string& replaceStr, StrangerAutomaton* subjectAuto);
-    static StrangerAutomaton* str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* str_replace_once(StrangerAutomaton* str, StrangerAutomaton* replaceAuto, StrangerAutomaton* subjectAuto);
-    StrangerAutomaton* preReplace(StrangerAutomaton* searchAuto, std::string replaceString, int id);
-    StrangerAutomaton* preReplace(StrangerAutomaton* searchAuto, std::string replaceString);
-    StrangerAutomaton* preReplaceOnce(StrangerAutomaton* searchAuto, std::string replaceString, int id);
-    StrangerAutomaton* preReplaceOnce(StrangerAutomaton* searchAuto, std::string replaceString);
-    StrangerAutomaton* getUnaryAutomaton(int id);
-    StrangerAutomaton* getUnaryAutomaton() { return getUnaryAutomaton(traceID); };
-    StrangerAutomaton* restrictLengthByOtherAutomaton(StrangerAutomaton* otherAuto, int id);
-    StrangerAutomaton* restrictLengthByOtherAutomaton(StrangerAutomaton* otherAuto)
+    static StrangerAutomaton* reg_replace(const StrangerAutomaton* patternAuto, const std::string& replaceStr, const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* reg_replace(const StrangerAutomaton* patternAuto, const std::string& replaceStr, const StrangerAutomaton* subjectAuto);
+    static StrangerAutomaton* general_replace(const StrangerAutomaton* patternAuto, const StrangerAutomaton* replaceAuto, const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* str_replace(const StrangerAutomaton* searchAuto, const std::string& replaceStr, const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* str_replace(const StrangerAutomaton* searchAuto, const std::string& replaceStr, const StrangerAutomaton* subjectAuto);
+    static StrangerAutomaton* str_replace_once(const StrangerAutomaton* str, const StrangerAutomaton* replaceAuto, const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* str_replace_once(const StrangerAutomaton* str, const StrangerAutomaton* replaceAuto, const StrangerAutomaton* subjectAuto);
+    StrangerAutomaton* preReplace(const StrangerAutomaton* searchAuto, std::string replaceString, int id) const;
+    StrangerAutomaton* preReplace(const StrangerAutomaton* searchAuto, std::string replaceString) const;
+    StrangerAutomaton* preReplaceOnce(const StrangerAutomaton* searchAuto, std::string replaceString, int id) const;
+    StrangerAutomaton* preReplaceOnce(const StrangerAutomaton* searchAuto, std::string replaceString) const;
+    StrangerAutomaton* getUnaryAutomaton(int id) const;
+    StrangerAutomaton* getUnaryAutomaton() const { return getUnaryAutomaton(traceID); };
+    StrangerAutomaton* restrictLengthByOtherAutomaton(const StrangerAutomaton* otherAuto, int id) const;
+    StrangerAutomaton* restrictLengthByOtherAutomaton(const StrangerAutomaton* otherAuto) const
     {
         return restrictLengthByOtherAutomaton(otherAuto, traceID);
     };
-    StrangerAutomaton* restrictLengthByOtherAutomatonFinite(StrangerAutomaton *otherAuto, int id);
-    StrangerAutomaton* restrictLengthByOtherAutomatonFinite(StrangerAutomaton *otherAuto)
+    StrangerAutomaton* restrictLengthByOtherAutomatonFinite(const StrangerAutomaton *otherAuto, int id) const;
+    StrangerAutomaton* restrictLengthByOtherAutomatonFinite(const StrangerAutomaton *otherAuto) const
     {
         return restrictLengthByOtherAutomatonFinite(otherAuto, traceID);
     };
-    StrangerAutomaton* restrictLengthByUnaryAutomaton(StrangerAutomaton* uL, int id);
-    StrangerAutomaton* restrictLengthByUnaryAutomaton(StrangerAutomaton* uL){
+    StrangerAutomaton* restrictLengthByUnaryAutomaton(const StrangerAutomaton* uL, int id) const;
+    StrangerAutomaton* restrictLengthByUnaryAutomaton(const StrangerAutomaton* uL) const {
         return restrictLengthByUnaryAutomaton(uL, traceID);
     };
-    bool checkIntersection(StrangerAutomaton* auto_, int id1, int id2);
-    bool checkIntersection(StrangerAutomaton* auto_);
-    bool checkInclusion(StrangerAutomaton* auto_, int id1, int id2);
-    bool checkInclusion(StrangerAutomaton* auto_);
+    bool checkIntersection(const StrangerAutomaton* auto_, int id1, int id2);
+    bool checkIntersection(const StrangerAutomaton* auto_);
+    bool checkInclusion(const StrangerAutomaton* auto_, int id1, int id2) const;
+    bool checkInclusion(const StrangerAutomaton* auto_) const;
     bool checkEquivalence(const StrangerAutomaton* auto_, int id1, int id2) const;
     bool checkEquivalence(const StrangerAutomaton* auto_) const;
-    bool isLengthFinite();
-    unsigned getMaxLength();
-    unsigned getMinLength();
+    bool isLengthFinite() const;
+    unsigned getMaxLength() const;
+    unsigned getMinLength() const;
     bool equals(const StrangerAutomaton* other) const;
     bool checkEmptiness() const;
     bool isEmpty() const;
     bool isNull() const;
     bool checkEmptyString() const;
     bool isSingleton() const;
-    std::string getStr();
+    std::string getStr() const;
     bool isBottom() const;
     bool isTop() const;
-    StrangerAutomaton* toUpperCase(int id);
-    StrangerAutomaton* toUpperCase() { return toUpperCase(traceID);};
-    StrangerAutomaton* toLowerCase(int id);
-    StrangerAutomaton* toLowerCase() { return toLowerCase(traceID);};
-    StrangerAutomaton* preToUpperCase(int id);
-    StrangerAutomaton* preToUpperCase() { return preToUpperCase(traceID);};
-    StrangerAutomaton* preToLowerCase(int id);
-    StrangerAutomaton* preToLowerCase() { return preToLowerCase(traceID);};
-    StrangerAutomaton* trimSpaces(int id);
-    StrangerAutomaton* trimSpacesLeft(int id);
-    StrangerAutomaton* trimSpacesRight(int id);
-    StrangerAutomaton* trim(char c, int id);
-    StrangerAutomaton* trimLeft(char c, int id);
-    StrangerAutomaton* trimRight(char c, int id);
-    StrangerAutomaton* trim(char chars[], int id);
-    StrangerAutomaton* trimSpaces() { return trimSpaces(traceID); };
-    StrangerAutomaton* trimSpacesLeft() { return trimSpacesLeft(traceID); };
-    StrangerAutomaton* trimSpacesRight() { return trimSpacesRight(traceID); };
-    StrangerAutomaton* trim(char c) { return trim(c, traceID); };
-    StrangerAutomaton* trimLeft(char c) { return trimLeft(c, traceID); };
-    StrangerAutomaton* trimRight(char c) { return trimRight(c, traceID); };
-    StrangerAutomaton* trim(char chars[]) { return trim(chars, traceID); };
+    StrangerAutomaton* toUpperCase(int id) const;
+    StrangerAutomaton* toUpperCase() const { return toUpperCase(traceID);};
+    StrangerAutomaton* toLowerCase(int id) const;
+    StrangerAutomaton* toLowerCase() const { return toLowerCase(traceID);};
+    StrangerAutomaton* preToUpperCase(int id) const;
+    StrangerAutomaton* preToUpperCase() const { return preToUpperCase(traceID);};
+    StrangerAutomaton* preToLowerCase(int id) const;
+    StrangerAutomaton* preToLowerCase() const { return preToLowerCase(traceID);};
+    StrangerAutomaton* trimSpaces(int id) const;
+    StrangerAutomaton* trimSpacesLeft(int id) const;
+    StrangerAutomaton* trimSpacesRight(int id) const;
+    StrangerAutomaton* trim(char c, int id) const;
+    StrangerAutomaton* trimLeft(char c, int id) const;
+    StrangerAutomaton* trimRight(char c, int id) const;
+    StrangerAutomaton* trim(char chars[], int id) const;
+    StrangerAutomaton* trimSpaces() const { return trimSpaces(traceID); };
+    StrangerAutomaton* trimSpacesLeft() const { return trimSpacesLeft(traceID); };
+    StrangerAutomaton* trimSpacesRight() const { return trimSpacesRight(traceID); };
+    StrangerAutomaton* trim(char c) const { return trim(c, traceID); };
+    StrangerAutomaton* trimLeft(char c) const { return trimLeft(c, traceID); };
+    StrangerAutomaton* trimRight(char c) const { return trimRight(c, traceID); };
+    StrangerAutomaton* trim(char chars[]) const { return trim(chars, traceID); };
 //    StrangerAutomaton* trimLeft(char chars[]);
 //    StrangerAutomaton* trimRight(char chars[]);
-    StrangerAutomaton* preTrimSpaces(int id);
-    StrangerAutomaton* preTrimSpaces() { return preTrimSpaces(traceID);};
-    StrangerAutomaton* preTrimSpacesLeft(int id);
-    StrangerAutomaton* preTrimSpacesRigth(int id);
+    StrangerAutomaton* preTrimSpaces(int id) const;
+    StrangerAutomaton* preTrimSpaces() const { return preTrimSpaces(traceID);} ;
+    StrangerAutomaton* preTrimSpacesLeft(int id) const;
+    StrangerAutomaton* preTrimSpacesRigth(int id) const;
     // Modelling the JavaScript substr function
-    StrangerAutomaton* substr(int start, int length, int id);
-    StrangerAutomaton* substr(int start, int id);
-    StrangerAutomaton* pre_substr(int start, int length, int id);
-    StrangerAutomaton* pre_substr(int start, int id);
+    StrangerAutomaton* substr(int start, int length, int id) const;
+    StrangerAutomaton* substr(int start, int id) const;
+    StrangerAutomaton* pre_substr(int start, int length, int id) const;
+    StrangerAutomaton* pre_substr(int start, int id) const;
 
-    static StrangerAutomaton* addslashes(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* addslashes(StrangerAutomaton* subjectAuto){return addslashes(subjectAuto, traceID);};
-    static StrangerAutomaton* pre_addslashes(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* pre_addslashes(StrangerAutomaton* subjectAuto){return pre_addslashes(subjectAuto, traceID);};
-    static StrangerAutomaton* htmlSpecialChars(StrangerAutomaton* subjectAuto, std::string flag, int id);
-    static StrangerAutomaton* htmlSpecialChars(StrangerAutomaton* subjectAuto, std::string flag){return htmlSpecialChars(subjectAuto,flag, traceID);};
-    static StrangerAutomaton* preHtmlSpecialChars(StrangerAutomaton* subjectAuto, std::string flag, int id);
-    static StrangerAutomaton* preHtmlSpecialChars(StrangerAutomaton* subjectAuto, std::string flag){return preHtmlSpecialChars(subjectAuto, flag, traceID);};
-    static StrangerAutomaton* stripslashes(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* stripslashes(StrangerAutomaton* subjectAuto){return stripslashes(subjectAuto, traceID);};
-    static StrangerAutomaton* pre_stripslashes(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* pre_stripslashes(StrangerAutomaton* subjectAuto){return pre_stripslashes(subjectAuto, traceID);};
-    static StrangerAutomaton* mysql_escape_string(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* pre_mysql_escape_string(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* mysql_real_escape_string(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* pre_mysql_real_escape_string(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* nl2br(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* pre_nl2br(StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* addslashes(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* addslashes(const StrangerAutomaton* subjectAuto){return addslashes(subjectAuto, traceID);};
+    static StrangerAutomaton* pre_addslashes(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* pre_addslashes(const StrangerAutomaton* subjectAuto){return pre_addslashes(subjectAuto, traceID);};
+    static StrangerAutomaton* htmlSpecialChars(const StrangerAutomaton* subjectAuto, std::string flag, int id);
+    static StrangerAutomaton* htmlSpecialChars(const StrangerAutomaton* subjectAuto, std::string flag){return htmlSpecialChars(subjectAuto,flag, traceID);};
+    static StrangerAutomaton* preHtmlSpecialChars(const StrangerAutomaton* subjectAuto, std::string flag, int id);
+    static StrangerAutomaton* preHtmlSpecialChars(const StrangerAutomaton* subjectAuto, std::string flag){return preHtmlSpecialChars(subjectAuto, flag, traceID);};
+    static StrangerAutomaton* stripslashes(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* stripslashes(const StrangerAutomaton* subjectAuto){return stripslashes(subjectAuto, traceID);};
+    static StrangerAutomaton* pre_stripslashes(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* pre_stripslashes(const StrangerAutomaton* subjectAuto){return pre_stripslashes(subjectAuto, traceID);};
+    static StrangerAutomaton* mysql_escape_string(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* pre_mysql_escape_string(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* mysql_real_escape_string(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* pre_mysql_real_escape_string(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* nl2br(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* pre_nl2br(const StrangerAutomaton* subjectAuto, int id);
 //    std::set<char> mincut();
-    static StrangerAutomaton* encodeAttrString(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* encodeAttrString(StrangerAutomaton* subjectAuto){return encodeAttrString(subjectAuto, traceID);};
-    static StrangerAutomaton* pre_encodeAttrString(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* pre_encodeAttrString(StrangerAutomaton* subjectAuto){return pre_encodeAttrString(subjectAuto, traceID);};
+    static StrangerAutomaton* encodeAttrString(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* encodeAttrString(const StrangerAutomaton* subjectAuto){return encodeAttrString(subjectAuto, traceID);};
+    static StrangerAutomaton* pre_encodeAttrString(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* pre_encodeAttrString(const StrangerAutomaton* subjectAuto){return pre_encodeAttrString(subjectAuto, traceID);};
 
-    static StrangerAutomaton* encodeTextFragment(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* encodeTextFragment(StrangerAutomaton* subjectAuto){return encodeTextFragment(subjectAuto, traceID);};
-    static StrangerAutomaton* pre_encodeTextFragment(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* pre_encodeTextFragment(StrangerAutomaton* subjectAuto){return pre_encodeTextFragment(subjectAuto, traceID);};
+    static StrangerAutomaton* encodeTextFragment(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* encodeTextFragment(const StrangerAutomaton* subjectAuto){return encodeTextFragment(subjectAuto, traceID);};
+    static StrangerAutomaton* pre_encodeTextFragment(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* pre_encodeTextFragment(const StrangerAutomaton* subjectAuto){return pre_encodeTextFragment(subjectAuto, traceID);};
 
-    static StrangerAutomaton* escapeHtmlTags(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* escapeHtmlTags(StrangerAutomaton* subjectAuto){return escapeHtmlTags(subjectAuto, traceID);};
-    static StrangerAutomaton* pre_escapeHtmlTags(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* pre_escapeHtmlTags(StrangerAutomaton* subjectAuto){return pre_escapeHtmlTags(subjectAuto, traceID);};
+    static StrangerAutomaton* escapeHtmlTags(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* escapeHtmlTags(const StrangerAutomaton* subjectAuto){return escapeHtmlTags(subjectAuto, traceID);};
+    static StrangerAutomaton* pre_escapeHtmlTags(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* pre_escapeHtmlTags(const StrangerAutomaton* subjectAuto){return pre_escapeHtmlTags(subjectAuto, traceID);};
 
-    static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* encodeURIComponent(StrangerAutomaton* subjectAuto){return encodeURIComponent(subjectAuto, traceID);};
-    static StrangerAutomaton* decodeURIComponent(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* decodeURIComponent(StrangerAutomaton* subjectAuto){return decodeURIComponent(subjectAuto, traceID);};
+    static StrangerAutomaton* encodeURIComponent(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* encodeURIComponent(const StrangerAutomaton* subjectAuto){return encodeURIComponent(subjectAuto, traceID);};
+    static StrangerAutomaton* decodeURIComponent(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* decodeURIComponent(const StrangerAutomaton* subjectAuto){return decodeURIComponent(subjectAuto, traceID);};
 
-    static StrangerAutomaton* encodeURI(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* encodeURI(StrangerAutomaton* subjectAuto){return encodeURI(subjectAuto, traceID);};
-    static StrangerAutomaton* decodeURI(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* decodeURI(StrangerAutomaton* subjectAuto){return decodeURI(subjectAuto, traceID);};
+    static StrangerAutomaton* encodeURI(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* encodeURI(const StrangerAutomaton* subjectAuto){return encodeURI(subjectAuto, traceID);};
+    static StrangerAutomaton* decodeURI(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* decodeURI(const StrangerAutomaton* subjectAuto){return decodeURI(subjectAuto, traceID);};
 
-    static StrangerAutomaton* jsonStringify(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* jsonStringify(StrangerAutomaton* subjectAuto){return jsonStringify(subjectAuto, traceID);};
-    static StrangerAutomaton* jsonParse(StrangerAutomaton* subjectAuto, int id);
-    static StrangerAutomaton* jsonParse(StrangerAutomaton* subjectAuto){return jsonParse(subjectAuto, traceID);};
+    static StrangerAutomaton* jsonStringify(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* jsonStringify(const StrangerAutomaton* subjectAuto){return jsonStringify(subjectAuto, traceID);};
+    static StrangerAutomaton* jsonParse(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* jsonParse(const StrangerAutomaton* subjectAuto){return jsonParse(subjectAuto, traceID);};
 
     void printAutomaton();
     void printAutomatonVitals();
@@ -257,23 +257,23 @@ public:
     static int* getIndices(){ return indices_main;};
     static int* getIndices(int length) { return allocateAscIIIndexWithExtraBit(length);};
     static unsigned *getUnsignedIndices(int length);
-    int get_num_of_states(){
+    int get_num_of_states() const {
 		return this->dfa->ns;
     }
 
-    unsigned get_num_of_bdd_nodes(){
+    unsigned get_num_of_bdd_nodes() const{
         return bdd_size(this->dfa->bddm);
     }
 
     static PerfInfo* perfInfo;
 
-    StrangerAutomaton* restrict(StrangerAutomaton* otherAuto, int id){
+    StrangerAutomaton* restrict(const StrangerAutomaton* otherAuto, int id){
         StrangerAutomaton* retMe = this->intersect(otherAuto);
         retMe->ID = id;
         return retMe;
     };
 
-    StrangerAutomaton* restrict(StrangerAutomaton* otherAuto){
+    StrangerAutomaton* restrict(const StrangerAutomaton* otherAuto){
         return this->restrict(otherAuto, traceID);
     };
 
@@ -303,7 +303,7 @@ public:
         return this->preRestrict(regExp, traceID);
     };
 
-    StrangerAutomaton* preRestrict(StrangerAutomaton* otherAuto, int id){
+    StrangerAutomaton* preRestrict(const StrangerAutomaton* otherAuto, int id){
         StrangerAutomaton* otherAutoComplement = otherAuto->complement();
         StrangerAutomaton* retMe = this->union_(otherAutoComplement);
         delete otherAutoComplement;
@@ -311,7 +311,7 @@ public:
         return retMe;
     };
 
-    StrangerAutomaton* preRestrict(StrangerAutomaton* otherAuto){
+    StrangerAutomaton* preRestrict(const StrangerAutomaton* otherAuto){
         return this->preRestrict(otherAuto, traceID);
     };
     DFA* dfa;
@@ -336,7 +336,7 @@ private:
     static bool& initialized();
     static void resetTraceID();
     static std::string escapeSpecialChars(std::string s);
-    StrangerAutomaton* substr_first_part(int start, int id);
+    StrangerAutomaton* substr_first_part(int start, int id) const;
 };
 
 

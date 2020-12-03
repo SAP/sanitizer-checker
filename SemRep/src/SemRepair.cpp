@@ -233,7 +233,7 @@ void SemRepair::printResults() {
  * result 1 : there is a maximum length restriction (may also have minimum inside)
  * result 2 : there is a minimum length restriction (max length is infinite in that case)
  */
-int SemRepair::isLengthAnIssue(StrangerAutomaton* referenceAuto, StrangerAutomaton*targetAuto) {
+int SemRepair::isLengthAnIssue(const StrangerAutomaton* referenceAuto, const StrangerAutomaton*targetAuto) {
 	message("BEGIN LENGTH PATCH ANALYSIS PHASE........................................");
 	boost::posix_time::ptime start_time = perfInfo.current_time();
 	int result = 0;
@@ -269,8 +269,8 @@ StrangerAutomaton* SemRepair::computeValidationPatch() {
 		start_time = perfInfo.current_time();
 		AnalysisResult reference_validationExtractionResults =
 				analyzer.doBackwardAnalysis_ValidationCase(reference_dep_graph, reference_field_relevant_graph, StrangerAutomaton::makeBottom());
-		StrangerAutomaton* reference_negVPatch = reference_validationExtractionResults[reference_uninit_field_node->getID()];
-		StrangerAutomaton* reference_validation = reference_negVPatch;
+		const StrangerAutomaton* reference_negVPatch = reference_validationExtractionResults.get(reference_uninit_field_node->getID());
+		const StrangerAutomaton* reference_validation = reference_negVPatch;
 		if ( !calculate_rejected_set ) {
 			reference_validation = reference_negVPatch->complement(reference_uninit_field_node->getID());
 		}
@@ -285,8 +285,8 @@ StrangerAutomaton* SemRepair::computeValidationPatch() {
 		start_time = perfInfo.current_time();
 		AnalysisResult target_validationExtractionResults =
 				analyzer.doBackwardAnalysis_ValidationCase(target_dep_graph, target_field_relevant_graph, StrangerAutomaton::makeBottom());
-		StrangerAutomaton* target_negVPatch = target_validationExtractionResults[target_uninit_field_node->getID()];
-		StrangerAutomaton* target_validation = target_negVPatch;
+		const StrangerAutomaton* target_negVPatch = target_validationExtractionResults.get(target_uninit_field_node->getID());
+		const StrangerAutomaton* target_validation = target_negVPatch;
 		if ( !calculate_rejected_set ) {
 			target_validation = target_negVPatch->complement(target_uninit_field_node->getID());
 		}
@@ -382,12 +382,11 @@ StrangerAutomaton* SemRepair::computeReferenceFWAnalysis() {
 	// initialize reference input nodes to bottom
 	message("initializing reference inputs with bottom");
 	for (auto uninit_node : referenceUninitNodes) {
-		referenceAnalysisResult[uninit_node->getID()] = StrangerAutomaton::makePhi(uninit_node->getID());
+            referenceAnalysisResult.set(uninit_node->getID(), StrangerAutomaton::makePhi(uninit_node->getID()));
 	}
 	// initialize uninit node that we are interested in with sigma star
 	message(stringbuilder() << "initializing input node(" << reference_uninit_field_node->getID() << ") with sigma star");
-	delete referenceAnalysisResult[reference_uninit_field_node->getID()];
-	referenceAnalysisResult[reference_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(reference_uninit_field_node->getID());
+        referenceAnalysisResult.set(reference_uninit_field_node->getID(), StrangerAutomaton::makeAnyString(reference_uninit_field_node->getID()));
 
     ValidationImageComputer referenceAnalyzer;
 
@@ -401,7 +400,7 @@ StrangerAutomaton* SemRepair::computeReferenceFWAnalysis() {
         exit(EXIT_FAILURE);
     }
 
-	reference_sink_auto = referenceAnalysisResult[reference_field_relevant_graph.getRoot()->getID()];
+	reference_sink_auto = referenceAnalysisResult.get(reference_field_relevant_graph.getRoot()->getID())->clone();
 	message("...computed reference sink post image.");
 	return reference_sink_auto;
 }
@@ -415,16 +414,15 @@ AnalysisResult SemRepair::computeTargetFWAnalysis() {
 
 	message("initializing target inputs with bottom");
 	for (auto uninit_node : targetUninitNodes) {
-		targetAnalysisResult[uninit_node->getID()] = StrangerAutomaton::makePhi(uninit_node->getID());
+            targetAnalysisResult.set(uninit_node->getID(), StrangerAutomaton::makePhi(uninit_node->getID()));
 	}
 
 	// initialize uninit node that we are interested in with validation patch_auto
 	message(stringbuilder() << "initializing input node(" << target_uninit_field_node->getID() << ") with validation patch auto");
-	delete targetAnalysisResult[target_uninit_field_node->getID()];
 	if (calculate_rejected_set) {
-		targetAnalysisResult[target_uninit_field_node->getID()] = validation_patch_auto->complement(target_uninit_field_node->getID());
+            targetAnalysisResult.set(target_uninit_field_node->getID(), validation_patch_auto->complement(target_uninit_field_node->getID()));
 	} else {
-		targetAnalysisResult[target_uninit_field_node->getID()] = validation_patch_auto;
+            targetAnalysisResult.set(target_uninit_field_node->getID(), validation_patch_auto);
 	}
 
 
@@ -448,11 +446,11 @@ StrangerAutomaton* SemRepair::computeTargetLengthPatch(StrangerAutomaton* initia
 	message("starting a backward analysis to calculate length patch...");
     ValidationImageComputer targetAnalyzer;
 	try {
-		fwAnalysisResult[target_uninit_field_node->getID()] = StrangerAutomaton::makeAnyString(-5);
+                fwAnalysisResult.set(target_uninit_field_node->getID(), StrangerAutomaton::makeAnyString(-5));
 		boost::posix_time::ptime start_time = perfInfo.current_time();
 		AnalysisResult bwResult = targetAnalyzer.doBackwardAnalysis_GeneralCase(target_dep_graph, target_field_relevant_graph, initialAuto, fwAnalysisResult);
 		perfInfo.sanitization_length_backward_time = perfInfo.current_time() - start_time;
-		StrangerAutomaton* negPatchAuto = bwResult[target_uninit_field_node->getID()];
+		const StrangerAutomaton* negPatchAuto = bwResult.get(target_uninit_field_node->getID());
 		if ( calculate_rejected_set ) {
 			length_patch_auto = negPatchAuto->clone(-5);
 		} else {
@@ -471,7 +469,7 @@ StrangerAutomaton* SemRepair::computeTargetLengthPatch(StrangerAutomaton* initia
 StrangerAutomaton* SemRepair::computeTargetSanitizationPatch(StrangerAutomaton* initialAuto,	const AnalysisResult& fwAnalysisResult) {
     ValidationImageComputer targetAnalyzer;
 	AnalysisResult bwResult = targetAnalyzer.doBackwardAnalysis_GeneralCase(target_dep_graph, target_field_relevant_graph, initialAuto, fwAnalysisResult);
-	sanitization_patch_auto = bwResult[target_uninit_field_node->getID()];
+	sanitization_patch_auto = bwResult.get(target_uninit_field_node->getID())->clone();
 	return sanitization_patch_auto;
 }
 
@@ -490,7 +488,7 @@ StrangerAutomaton* SemRepair::computeSanitizationPatch() {
 	}
 	start_time = perfInfo.current_time();
 	AnalysisResult targetAnalysisResult = computeTargetFWAnalysis();
-	StrangerAutomaton* targetSinkAuto = targetAnalysisResult[target_field_relevant_graph.getRoot()->getID()];
+	const StrangerAutomaton* targetSinkAuto = targetAnalysisResult.get(target_field_relevant_graph.getRoot()->getID());
 	perfInfo.sanitization_target_first_forward_time = perfInfo.current_time() - start_time;
 	if (DEBUG_ENABLED_SC != 0) {
 		DEBUG_MESSAGE("Target Sink Auto - First forward analysis");

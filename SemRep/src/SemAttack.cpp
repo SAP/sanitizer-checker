@@ -146,7 +146,6 @@ void BackwardAnalysisResult::doAnalysis()
         AnalysisResult result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
         m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
         //  clean up target analysis result
-        AnalysisResultHelper::DeleteResults(result);
       } catch (StrangerStringAnalysisException const &e) {
         throw;
       }
@@ -159,7 +158,6 @@ void BackwardAnalysisResult::doAnalysis()
       } else {
         m_post_attack = nullptr;
       }
-      AnalysisResultHelper::DeleteResults(result);
     }
   }
 }
@@ -223,7 +221,7 @@ void ForwardAnalysisResult::doAnalysis()
   m_result = m_attack->computeTargetFWAnalysis(m_input);
   const StrangerAutomaton* post = this->getAttack()->getPostImage(m_result);
   if (post) {
-    m_postImage = new StrangerAutomaton(post);
+    m_postImage = post->clone();
   } else {
     m_postImage = nullptr;
   }
@@ -245,7 +243,6 @@ void ForwardAnalysisResult::finishAnalysis() {
     delete m_attack;
     m_attack = nullptr;
   }
-  AnalysisResultHelper::DeleteResults(m_result);
 }
 
 SemAttack::SemAttack(const fs::path& target_dep_graph_file_name, const string& input_field_name)
@@ -353,14 +350,13 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* input
     // initialize reference input nodes to bottom
     message("initializing reference inputs with bottom");
     for (auto uninit_node : targetUninitNodes) {
-        targetAnalysisResult[uninit_node->getID()] = StrangerAutomaton::makePhi(uninit_node->getID());
+      targetAnalysisResult.set(uninit_node->getID(), StrangerAutomaton::makePhi(uninit_node->getID()));
     }
     // initialize uninit node that we are interested in with sigma star
     message(stringbuilder() << "initializing input node(" << target_uninit_field_node->getID() << ") with sigma star");
-    delete targetAnalysisResult[target_uninit_field_node->getID()];
 
     // Copy the input
-    targetAnalysisResult[target_uninit_field_node->getID()] = new StrangerAutomaton(inputAuto);
+    targetAnalysisResult.set(target_uninit_field_node->getID(), inputAuto->clone());
 
     ImageComputer targetAnalyzer(false, false);
 
@@ -369,12 +365,10 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* input
         targetAnalyzer.doForwardAnalysis_SingleInput(target_dep_graph, target_field_relevant_graph, targetAnalysisResult);
         message("...finished forward analysis for target.");        
     } catch (StrangerStringAnalysisException const &e) {
-      //  clean up target analysis result
-      AnalysisResultHelper::DeleteResults(targetAnalysisResult);
       throw;
     }
 
-    target_sink_auto = targetAnalysisResult[target_field_relevant_graph.getRoot()->getID()];
+    target_sink_auto = targetAnalysisResult.get(target_field_relevant_graph.getRoot()->getID());
     message("...computed target sink post image.");
     return targetAnalysisResult;
 }
@@ -386,7 +380,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis()
 
 const StrangerAutomaton* SemAttack::getPostImage(const AnalysisResult& result) const
 {
-  return result.at(target_dep_graph.getRoot()->getID());
+  return result.get(target_dep_graph.getRoot()->getID());
 }
 
 StrangerAutomaton* SemAttack::computeAttackPatternOverlap(const StrangerAutomaton* postImage,
@@ -450,5 +444,5 @@ AnalysisResult SemAttack::computePreImage(const StrangerAutomaton* intersection,
 
 const StrangerAutomaton* SemAttack::getPreImage(const AnalysisResult& result) const
 {
-  return result.at(this->target_uninit_field_node->getID());
+  return result.get(this->target_uninit_field_node->getID());
 }

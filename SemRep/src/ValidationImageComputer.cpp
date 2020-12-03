@@ -28,7 +28,7 @@ AnalysisResult ValidationImageComputer::doBackwardAnalysis_ValidationCase(DepGra
     string message = "there is no validation function!!!";
 
     // initialize root node
-    bwValidationPatchResult[depGraph.getRoot()->getID()] = initialAuto;
+    bwValidationPatchResult.set(depGraph.getRoot()->getID(), initialAuto);
 
 
     process_queue.push(depGraph.getRoot());
@@ -68,7 +68,7 @@ AnalysisResult ValidationImageComputer::doBackwardAnalysis_ValidationCase(DepGra
             for (auto succ_node : successors) {
                 auto isNotVisited = visited.insert(succ_node);
                 if (isNotVisited.second) {
-                    bwValidationPatchResult[succ_node->getID()] = initialAuto;
+                    bwValidationPatchResult.set(succ_node->getID(), initialAuto);
                     process_queue.push(succ_node);
                 }
             }
@@ -94,7 +94,7 @@ void ValidationImageComputer::doPreImageComputation_ValidationCase(DepGraph& ori
     if (dynamic_cast< DepGraphNormalNode*>(node) || dynamic_cast< DepGraphUninitNode*>(node) || dynamic_cast< DepGraphOpNode*>(node)) {
         if (predecessors.empty()) {
             // root is already initialized
-            newAuto = bwAnalysisResult[node->getID()];
+            newAuto = bwAnalysisResult.get(node->getID())->clone();
         } else if (successors.empty() && (normalNode = dynamic_cast< DepGraphNormalNode*>(node))) {
             newAuto = ImageComputer::getLiteralorConstantNodeAuto(normalNode, false);
         } else {
@@ -105,7 +105,7 @@ void ValidationImageComputer::doPreImageComputation_ValidationCase(DepGraph& ori
                     // ignore simple self loop (check correctness)
                     continue;
                 } else if (dynamic_cast< DepGraphNormalNode*>(pred_node)) {
-                    predAuto = bwAnalysisResult[pred_node->getID()];
+                    predAuto = bwAnalysisResult.get(pred_node->getID())->clone();
                 } else if (dynamic_cast< DepGraphOpNode*>(pred_node)) {
                     predAuto = makePreImageForOpChild_ValidationCase(origDepGraph, dynamic_cast< DepGraphOpNode*>(pred_node), node, bwAnalysisResult);
                 }
@@ -133,7 +133,7 @@ void ValidationImageComputer::doPreImageComputation_ValidationCase(DepGraph& ori
     if (newAuto == nullptr) {
         throw StrangerStringAnalysisException("SNH: pre-image is NULL: doBackwardNodeComputation_ValidationPhase()");
     }
-    bwAnalysisResult[node->getID()] = newAuto;
+    bwAnalysisResult.set(node->getID(), newAuto);
 
 }
 
@@ -155,7 +155,7 @@ void ValidationImageComputer::doPreImageComputationForSCC_ValidationCase(DepGrap
 
     // initialize all scc_nodes to phi
     for (auto& scc_node : current_scc_nodes) {
-        bwAnalysisResult[scc_node->getID()] = StrangerAutomaton::makePhi(scc_node->getID());
+        bwAnalysisResult.set(scc_node->getID(), StrangerAutomaton::makePhi(scc_node->getID()));
         visit_count[scc_node->getID()] = 0;
     }
 
@@ -176,12 +176,12 @@ void ValidationImageComputer::doPreImageComputationForSCC_ValidationCase(DepGrap
             if (!origDepGraph.isSCCElement(succ_node) || origDepGraph.getSCCID(succ_node) != scc_id)
                 continue;
 
-            StrangerAutomaton* prev_auto = bwAnalysisResult[succ_node->getID()]; // may need clone
-            StrangerAutomaton* tmp_auto = nullptr;
+            const StrangerAutomaton* prev_auto = bwAnalysisResult.get(succ_node->getID()); // may need clone
+            const StrangerAutomaton* tmp_auto = nullptr;
             StrangerAutomaton* new_auto = nullptr;
 
             if (dynamic_cast<DepGraphNormalNode*>(curr_node) != nullptr) {
-                tmp_auto = bwAnalysisResult[curr_node->getID()]; // may need clone
+                tmp_auto = bwAnalysisResult.get(curr_node->getID()); // may need clone
             } else if (dynamic_cast<DepGraphOpNode*>(curr_node) != nullptr) {
                 tmp_auto = makePreImageForOpChild_ValidationCase(origDepGraph, dynamic_cast< DepGraphOpNode*>(curr_node), succ_node, bwAnalysisResult);
             } else {
@@ -211,7 +211,7 @@ void ValidationImageComputer::doPreImageComputationForSCC_ValidationCase(DepGrap
                     worklist.push(succ_node);
                 }
 
-                bwAnalysisResult[succ_node->getID()] = new_auto;
+                bwAnalysisResult.set(succ_node->getID(), new_auto);
                 visit_count[succ_node->getID()] = new_visit_count;
             }
         }
@@ -228,7 +228,7 @@ StrangerAutomaton* ValidationImageComputer::makePreImageForOpChild_ValidationCas
 
     StrangerAutomaton* retMe = nullptr;
     NodesList successors = depGraph.getSuccessors(opNode);
-    StrangerAutomaton* opAuto = bwAnalysisResult[opNode->getID()];
+    const StrangerAutomaton* opAuto = bwAnalysisResult.get(opNode->getID());
     string opName = opNode->getName();
 
     // __vlab_restrict
@@ -372,7 +372,7 @@ StrangerAutomaton* ValidationImageComputer::makePreImageForOpChild_ValidationCas
         DepGraphNode* patternNode = successors[0];
         DepGraphNode* replaceNode = successors[1];
 
-        StrangerAutomaton* subjectAuto = opAuto;
+        const StrangerAutomaton* subjectAuto = opAuto;
 
         if (childNode->equals(subjectNode)) {
 
@@ -380,8 +380,8 @@ StrangerAutomaton* ValidationImageComputer::makePreImageForOpChild_ValidationCas
             doForwardAnalysis_GeneralCase(depGraph, patternNode, analysisResult);
             doForwardAnalysis_GeneralCase(depGraph, replaceNode, analysisResult);
 
-            StrangerAutomaton* patternAuto = analysisResult[patternNode->getID()];
-            StrangerAutomaton* replaceAuto = analysisResult[replaceNode->getID()];
+            const StrangerAutomaton* patternAuto = analysisResult.get(patternNode->getID());
+            const StrangerAutomaton* replaceAuto = analysisResult.get(replaceNode->getID());
 
             StrangerAutomaton* sigmaStar = StrangerAutomaton::makeAnyString(subjectAuto->getID());
             StrangerAutomaton* forward = StrangerAutomaton::general_replace(patternAuto, replaceAuto, sigmaStar, subjectAuto->getID());
@@ -418,15 +418,15 @@ StrangerAutomaton* ValidationImageComputer::makePreImageForOpChild_ValidationCas
         DepGraphNode* startNode = successors[1];
         DepGraphNode* lengthNode = successors[2];
 
-        StrangerAutomaton* subjectAuto = opAuto;
+        const StrangerAutomaton* subjectAuto = opAuto;
 
         AnalysisResult analysisResult;
         doForwardAnalysis_GeneralCase(depGraph, startNode, analysisResult);
         doForwardAnalysis_GeneralCase(depGraph, lengthNode, analysisResult);
 
-        string startValue = analysisResult[startNode->getID()]->getStr();
+        string startValue = analysisResult.get(startNode->getID())->getStr();
         int start = stoi(startValue);
-        string lengthValue = analysisResult[lengthNode->getID()]->getStr();
+        string lengthValue = analysisResult.get(lengthNode->getID())->getStr();
         int length = stoi(lengthValue);
 
         StrangerAutomaton* sigmaStar = StrangerAutomaton::makeAnyString(subjectAuto->getID());

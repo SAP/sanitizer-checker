@@ -123,7 +123,7 @@ void ImageComputer::doPostImageComputation_SingleInput(
                     doForwardAnalysis_GeneralCase(origDepGraph, succ_node, analysisResult);
                 }
 
-                StrangerAutomaton *succAuto = analysisResult[succ_node->getID()];
+                const StrangerAutomaton *succAuto = analysisResult.get(succ_node->getID());
                 if (newAuto == nullptr) {
                     newAuto = succAuto->clone(node->getID());
                 } else {
@@ -141,7 +141,7 @@ void ImageComputer::doPostImageComputation_SingleInput(
     	if (analysisResult.find(node->getID()) == analysisResult.end()){
             throw StrangerStringAnalysisException(stringbuilder() << "input node id(" << uninitNode->getID() << ") automaton must be initizalized before analysis begins!");
     	}
-    	newAuto = analysisResult[node->getID()];
+    	newAuto = analysisResult.get(node->getID())->clone();
     } else {
     	throw StrangerStringAnalysisException(stringbuilder() << "Cannot figure out node type!, node id: " << node->getID());
     }
@@ -149,7 +149,8 @@ void ImageComputer::doPostImageComputation_SingleInput(
     if (newAuto == nullptr) {
     	throw StrangerStringAnalysisException(stringbuilder() << "Forward automaton cannot be computed!, node id: " << node->getID());
     }
-    analysisResult[node->getID()] = newAuto;
+
+    analysisResult.set(node->getID(), newAuto);
 }
 
 /*******************************************************************************************************************************/
@@ -172,7 +173,7 @@ AnalysisResult ImageComputer::doBackwardAnalysis_GeneralCase(
 
     try {
         // initialize root node
-        bwAnalysisResult[depGraph.getRoot()->getID()] = initialAuto->clone();
+        bwAnalysisResult.set(depGraph.getRoot()->getID(), initialAuto->clone());
 
         process_queue.push(depGraph.getRoot());
         while (!process_queue.empty()) {
@@ -201,7 +202,6 @@ AnalysisResult ImageComputer::doBackwardAnalysis_GeneralCase(
             }
         }
     } catch (...) {
-        AnalysisResultHelper::DeleteResults(bwAnalysisResult);
         throw;
     }
     
@@ -223,22 +223,22 @@ void ImageComputer::doPreImageComputation_GeneralCase(
 	if (dynamic_cast<const DepGraphNormalNode*>(node) || dynamic_cast<const DepGraphUninitNode*>(node) || dynamic_cast<const DepGraphOpNode*>(node)) {
 		if (predecessors.empty()) {
 			// root is already initialized
-			newAuto = bwAnalysisResult[node->getID()];
+                    newAuto = bwAnalysisResult.get(node->getID())->clone();
 		} else if (successors.empty() && (normalNode = dynamic_cast<const DepGraphNormalNode*>(node))) {
                         newAuto = getLiteralorConstantNodeAuto(normalNode, false);
 		} else {
 			// the automa is union of all prodecessors and interstect with forward analysis result
-			StrangerAutomaton* forwardAuto = fwAnalysisResult.find(node->getID())->second;
+                        const StrangerAutomaton* forwardAuto = fwAnalysisResult.find(node->getID())->second;
 			for (auto pred_node : predecessors) {
 				StrangerAutomaton* predAuto = nullptr;
 				if (pred_node == node) {
 					// ignore simple self loop (check correctness)
 					continue;
 				} else if (dynamic_cast<const DepGraphNormalNode*>(pred_node)) {
-                                        predAuto = bwAnalysisResult[pred_node->getID()]->clone(node->getID());
+                                    predAuto = bwAnalysisResult.get(pred_node->getID())->clone(node->getID());
 				} else if (dynamic_cast<const DepGraphOpNode*>(pred_node)) {
-					predAuto = makePreImageForOpChild_GeneralCase(origDepGraph,dynamic_cast<const DepGraphOpNode*>(pred_node), node,
-                                                                                      bwAnalysisResult, fwAnalysisResult);
+                                    predAuto = makePreImageForOpChild_GeneralCase(origDepGraph,dynamic_cast<const DepGraphOpNode*>(pred_node), node,
+                                                                                  bwAnalysisResult, fwAnalysisResult);
 			}
 
 				if (predAuto == nullptr) {
@@ -274,7 +274,7 @@ void ImageComputer::doPreImageComputation_GeneralCase(
 		throw StrangerStringAnalysisException("SNH: pre-image is NULL:\ndoBackwardNodeComputation_RegularPhase()");
 	}
 
-	bwAnalysisResult[node->getID()] = newAuto;
+	bwAnalysisResult.set(node->getID(), newAuto);
 }
 
 /**
@@ -295,7 +295,7 @@ void ImageComputer::doPreImageComputationForSCC_GeneralCase(const DepGraph& orig
 
 	// initialize all scc_nodes to phi
 	for (auto& scc_node : current_scc_nodes) {
-		bwAnalysisResult[scc_node->getID()] = StrangerAutomaton::makePhi(scc_node->getID());
+            bwAnalysisResult.set(scc_node->getID(), StrangerAutomaton::makePhi(scc_node->getID()));
 		visit_count[scc_node->getID()] = 0;
 	}
 
@@ -316,13 +316,13 @@ void ImageComputer::doPreImageComputationForSCC_GeneralCase(const DepGraph& orig
 			if (!origDepGraph.isSCCElement(succ_node) || origDepGraph.getSCCID(succ_node) != scc_id)
 				continue;
 
-			StrangerAutomaton* forward_auto = fwAnalysisResult.find(succ_node->getID())->second;
-			StrangerAutomaton* prev_auto = bwAnalysisResult[succ_node->getID()]; // may need clone
+			const StrangerAutomaton* forward_auto = fwAnalysisResult.find(succ_node->getID())->second;
+			const StrangerAutomaton* prev_auto = bwAnalysisResult.get(succ_node->getID());
 			StrangerAutomaton* tmp_auto = nullptr;
 			StrangerAutomaton* new_auto = nullptr;
 
 			if (dynamic_cast<const DepGraphNormalNode*>(curr_node) != nullptr) {
-				tmp_auto = bwAnalysisResult[curr_node->getID()]; // may need clone
+                            tmp_auto = bwAnalysisResult.get(curr_node->getID())->clone(); // may need clone
 			} else if (dynamic_cast<const DepGraphOpNode*>(curr_node) != nullptr) {
 				tmp_auto = makePreImageForOpChild_GeneralCase(origDepGraph, dynamic_cast<const DepGraphOpNode*>(curr_node), succ_node,
 						bwAnalysisResult, fwAnalysisResult);
@@ -357,7 +357,7 @@ void ImageComputer::doPreImageComputationForSCC_GeneralCase(const DepGraph& orig
 				new_auto = forward_auto->intersect(new_auto, node->getID());
 				delete tmp_auto;
 
-				bwAnalysisResult[succ_node->getID()] = new_auto;
+				bwAnalysisResult.set(succ_node->getID(), new_auto);
 				visit_count[succ_node->getID()] = new_visit_count;
 			}
 		}
@@ -374,7 +374,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 
 	StrangerAutomaton* retMe = nullptr;
 	NodesList successors = depGraph.getSuccessors(opNode);
-	StrangerAutomaton* opAuto = bwAnalysisResult[opNode->getID()];
+	const StrangerAutomaton* opAuto = bwAnalysisResult.get(opNode->getID());
 	string opName = opNode->getName();
 
 
@@ -404,7 +404,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		if (successors.size() < 2)
 			throw StrangerStringAnalysisException(stringbuilder() << "less than two successors for concat node " << opNode->getID());
 
-		StrangerAutomaton* concatAuto = opAuto;
+		const StrangerAutomaton* concatAuto = opAuto;
 
 		DepGraphNode* leftSibling = successors[0];
 		DepGraphNode* rightSibling = successors[1];
@@ -428,7 +428,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
                                         retMe = concatAuto->clone(childNode->getID());
                                     }
 				} else {
-					StrangerAutomaton* rightSiblingAuto = fwAnalysisResult.find(rightSibling->getID())->second;
+                                        const StrangerAutomaton* rightSiblingAuto = fwAnalysisResult.find(rightSibling->getID())->second;
 					retMe = concatAuto->leftPreConcat(rightSiblingAuto, childNode->getID());
 				}
 			}
@@ -450,7 +450,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
                                         retMe = concatAuto->clone(childNode->getID());
                                     }
 				} else {
-					StrangerAutomaton* leftSiblingAuto = fwAnalysisResult.find(leftSibling->getID())->second;
+                                        const StrangerAutomaton* leftSiblingAuto = fwAnalysisResult.find(leftSibling->getID())->second;
 					retMe = concatAuto->rightPreConcat(leftSiblingAuto, childNode->getID());
 				}
 			}
@@ -492,7 +492,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 			string flagString = "ENT_COMPAT";
 			if (successors.size() > 1) {
 				DepGraphNode* flagNode = successors[1];
-				StrangerAutomaton* flagAuto = fwAnalysisResult.find(flagNode->getID())->second;
+				const StrangerAutomaton* flagAuto = fwAnalysisResult.find(flagNode->getID())->second;
 				flagString = flagAuto->getStr();
 			}
 			retMe = StrangerAutomaton::preHtmlSpecialChars(opAuto, flagString, childNode->getID());
@@ -516,11 +516,11 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		DepGraphNode* patternNode = successors[0];
 		DepGraphNode* replaceNode = successors[1];
 
-		StrangerAutomaton* subjectAuto = opAuto;
+		const StrangerAutomaton* subjectAuto = opAuto;
                 // std::cout << "opAuto to dot:\n";
                 // subjectAuto->toDotAscii(1);
-		StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
-		StrangerAutomaton* replaceAuto = fwAnalysisResult.find(replaceNode->getID())->second;
+		const StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
+		const StrangerAutomaton* replaceAuto = fwAnalysisResult.find(replaceNode->getID())->second;
                 // std::cout << "PatternAuto to dot:" << patternNode->getID() << std::endl;
                 // patternAuto->toDotAscii(1);
 		// std::cout << "ReplaceAuto to dot:" << replaceNode->getID() << std::endl;
@@ -547,11 +547,11 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		DepGraphNode* patternNode = successors[0];
 		DepGraphNode* replaceNode = successors[1];
 
-		StrangerAutomaton* subjectAuto = opAuto;
+		const StrangerAutomaton* subjectAuto = opAuto;
                 // std::cout << "opAuto to dot:\n";
                 // subjectAuto->toDotAscii(1);
-		StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
-		StrangerAutomaton* replaceAuto = fwAnalysisResult.find(replaceNode->getID())->second;
+		const StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
+		const StrangerAutomaton* replaceAuto = fwAnalysisResult.find(replaceNode->getID())->second;
                 // std::cout << "PatternAuto to dot:" << patternNode->getID() << std::endl;
                 // patternAuto->toDotAscii(1);
 		// std::cout << "ReplaceAuto to dot:" << replaceNode->getID() << std::endl;
@@ -566,8 +566,8 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 
 		DepGraphNode* subjectNode = successors[1];
 		DepGraphNode* patternNode = successors[0];
-		StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
-		StrangerAutomaton* subjectAuto = opAuto;
+		const StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
+		const StrangerAutomaton* subjectAuto = opAuto;
 
 		retMe = subjectAuto->preReplace(patternAuto,"", childNode->getID());
 
@@ -576,12 +576,12 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		if (successors.size() < 2) {
 			throw StrangerStringAnalysisException(stringbuilder() << "substr invalid number of arguments");
 		}
-                StrangerAutomaton* subjectAuto = opAuto;
+                const StrangerAutomaton* subjectAuto = opAuto;
 
                 if (m_doSubstr) {
                     // Compute the start parameter
                     DepGraphNode* startNode = successors[1];
-                    StrangerAutomaton* startAuto = fwAnalysisResult.find(startNode->getID())->second;
+                    const StrangerAutomaton* startAuto = fwAnalysisResult.find(startNode->getID())->second;
                     // std::cout << "StartAuto:\n";
                     // startAuto->toDotAscii(2);
                     string startValue = startAuto->getStr();
@@ -590,7 +590,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
                     // Check if there is a length argument
                     if (successors.size() >=3) {
                         DepGraphNode* lengthNode = successors[2];
-                        StrangerAutomaton* lengthAuto = fwAnalysisResult.find(lengthNode->getID())->second;
+                        const StrangerAutomaton* lengthAuto = fwAnalysisResult.find(lengthNode->getID())->second;
                         // std::cout << "LengthAuto:\n";
                         // startAuto->toDotAscii(2);
                         string lengthValue = lengthAuto->getStr();
@@ -758,7 +758,7 @@ void ImageComputer::doPostImageComputation_GeneralCase(DepGraph& depGraph, DepGr
 					continue;
 				}
 
-				StrangerAutomaton *succAuto = analysisResult[succ_node->getID()];
+				const StrangerAutomaton *succAuto = analysisResult.get(succ_node->getID());
 				if (newAuto == nullptr) {
 					newAuto = succAuto->clone(node->getID());
 				} else {
@@ -779,10 +779,7 @@ void ImageComputer::doPostImageComputation_GeneralCase(DepGraph& depGraph, DepGr
 	if (newAuto == nullptr) {
 		throw StrangerStringAnalysisException(stringbuilder() << "Forward automaton cannot be computed!, node id: " << node->getID());
 	}
-        if (analysisResult[node->getID()] != nullptr) {
-            delete analysisResult[node->getID()];
-        }
-	analysisResult[node->getID()] = newAuto;
+	analysisResult.set(node->getID(), newAuto);
 }
 
 /**
@@ -804,8 +801,8 @@ void ImageComputer::doPostImageComputationForSCC_GeneralCase(DepGraph& depGraph,
 
 	// initialize all scc_nodes to phi
 	for (auto& scc_node : current_scc_nodes) {
-		analysisResult[scc_node->getID()] = StrangerAutomaton::makePhi(scc_node->getID());
-		visit_count[scc_node->getID()] = 0;
+            analysisResult.set(scc_node->getID(), StrangerAutomaton::makePhi(scc_node->getID()));
+            visit_count[scc_node->getID()] = 0;
 	}
 
 	// add the successors to the worklist (in a depgraph successors are parents during forward analysis)
@@ -825,20 +822,20 @@ void ImageComputer::doPostImageComputationForSCC_GeneralCase(DepGraph& depGraph,
 			if (!depGraph.isSCCElement(pred_node) || depGraph.getSCCID(pred_node) != scc_id)
 				continue;
 
-			StrangerAutomaton* prev_auto = analysisResult[pred_node->getID()]; // may need clone
+			const StrangerAutomaton* prev_auto = analysisResult.get(pred_node->getID()); // may need clone
 			StrangerAutomaton* tmp_auto = nullptr;
 			StrangerAutomaton* new_auto = nullptr;
 
 			if (dynamic_cast<DepGraphNormalNode*>(pred_node) != nullptr) {
-				tmp_auto = analysisResult[curr_node->getID()]; // may need clone
+                            tmp_auto = analysisResult.get(curr_node->getID())->clone(); // may need clone
 			} else if (dynamic_cast<DepGraphOpNode*>(pred_node) != nullptr) {
-				tmp_auto = makePostImageForOp_GeneralCase(depGraph, dynamic_cast<DepGraphOpNode*>(pred_node), analysisResult);
+                            tmp_auto = makePostImageForOp_GeneralCase(depGraph, dynamic_cast<DepGraphOpNode*>(pred_node), analysisResult);
 			} else {
-				throw StrangerStringAnalysisException(stringbuilder() << "Node cannot be an element of SCC component!, node id: " << node->getID());
+                            throw StrangerStringAnalysisException(stringbuilder() << "Node cannot be an element of SCC component!, node id: " << node->getID());
 			}
 
 			if (tmp_auto == nullptr) {
-				throw StrangerStringAnalysisException(stringbuilder() << "Could not calculate the corresponding automaton!, node id: " << node->getID());
+                            throw StrangerStringAnalysisException(stringbuilder() << "Could not calculate the corresponding automaton!, node id: " << node->getID());
 			}
 
 			new_auto = tmp_auto->union_(prev_auto, pred_node->getID());
@@ -859,7 +856,7 @@ void ImageComputer::doPostImageComputationForSCC_GeneralCase(DepGraph& depGraph,
 				if (isVisited.second) {
 					worklist.push(pred_node);
 				}
-				analysisResult[pred_node->getID()] = new_auto;
+				analysisResult.set(pred_node->getID(), new_auto);
 				visit_count[pred_node->getID()] = new_visit_count;
 			}
 		}
@@ -895,7 +892,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		// TODO handle general case
 		if (analysisResult.find(patternNode->getID()) == analysisResult.end()) {
 //				doForwardAnalysis_GeneralCase(depGraph, patternNode, analysisResult);
-			analysisResult[patternNode->getID()] = getLiteralorConstantNodeAuto(patternNode, true);
+                    analysisResult.set(patternNode->getID(), getLiteralorConstantNodeAuto(patternNode, true));
 		}
 		// TODO handle general case
 		if (analysisResult.find(complementNode->getID()) == analysisResult.end()) {
@@ -903,9 +900,8 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 		}
 
-		StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
-		StrangerAutomaton* patternAuto = analysisResult[patternNode->getID()];
-//			string complementString = analysisResult[complementNode->getID()]->getStr();
+		const StrangerAutomaton* subjectAuto = analysisResult.get(subjectNode->getID());
+		const StrangerAutomaton* patternAuto = analysisResult.get(patternNode->getID());
 		string complementString = getLiteralOrConstantValue(complementNode);
 		if (complementString.find("false") != string::npos || complementString.find("FALSE") != string::npos) {
 			retMe = subjectAuto->intersect(patternAuto, opNode->getID());
@@ -923,7 +919,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			if (analysisResult.find(succ_node->getID()) == analysisResult.end()) {
                             doForwardAnalysis_GeneralCase(depGraph, succ_node, analysisResult);
 			}
-			StrangerAutomaton* succAuto = analysisResult[succ_node->getID()];
+			const StrangerAutomaton* succAuto = analysisResult.get(succ_node->getID());
                         if (isLiteralOrConstant(succ_node, depGraph.getSuccessors(succ_node)) && !m_doConcats) {
                             string value = getLiteralOrConstantValue(succ_node);
                             //std::cout << "Ignoring concat of string value: " << value << std::endl;
@@ -962,9 +958,9 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			doForwardAnalysis_GeneralCase(depGraph, replaceNode, analysisResult);
 		}
 
-		StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
-		StrangerAutomaton* patternAuto = analysisResult[patternNode->getID()];
-		StrangerAutomaton* replaceAuto = analysisResult[replaceNode->getID()];
+		const StrangerAutomaton* subjectAuto = analysisResult.get(subjectNode->getID());
+		const StrangerAutomaton* patternAuto = analysisResult.get(patternNode->getID());
+		const StrangerAutomaton* replaceAuto = analysisResult.get(replaceNode->getID());
 
 		retMe = StrangerAutomaton::general_replace(patternAuto,replaceAuto,subjectAuto, opNode->getID());
 
@@ -988,9 +984,9 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			doForwardAnalysis_GeneralCase(depGraph, replaceNode, analysisResult);
 		}
 
-		StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
-		StrangerAutomaton* patternAuto = analysisResult[patternNode->getID()];
-		StrangerAutomaton* replaceAuto = analysisResult[replaceNode->getID()];
+		const StrangerAutomaton* subjectAuto = analysisResult.get(subjectNode->getID());
+		const StrangerAutomaton* patternAuto = analysisResult.get(patternNode->getID());
+		const StrangerAutomaton* replaceAuto = analysisResult.get(replaceNode->getID());
 
 		retMe = StrangerAutomaton::str_replace_once(patternAuto,replaceAuto,subjectAuto, opNode->getID());
 
@@ -1010,9 +1006,9 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			doForwardAnalysis_GeneralCase(depGraph, patternNode, analysisResult);
 		}
 
-		StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
-		StrangerAutomaton* patternAuto = analysisResult[patternNode->getID()];
-		StrangerAutomaton* replaceAuto = StrangerAutomaton::makeEmptyString();
+		const StrangerAutomaton* subjectAuto = analysisResult.get(subjectNode->getID());
+		const StrangerAutomaton* patternAuto = analysisResult.get(patternNode->getID());
+		const StrangerAutomaton* replaceAuto = StrangerAutomaton::makeEmptyString();
 
 		retMe = StrangerAutomaton::general_replace(patternAuto,replaceAuto,subjectAuto, opNode->getID());
 
@@ -1023,7 +1019,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			throw StrangerStringAnalysisException(stringbuilder() << "addslashes should have one child: " << opNode->getID());
 		}
 
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		StrangerAutomaton* slashesAuto = StrangerAutomaton::addslashes(paramAuto, opNode->getID());
 		retMe = slashesAuto;
 
@@ -1035,7 +1031,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			throw StrangerStringAnalysisException(stringbuilder() << "mysql_escape_string wrong number of arguments: " << opNode->getID());
 		}
 		//we only care about the first parameter
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		StrangerAutomaton* mysqlEscapeAuto = StrangerAutomaton::mysql_escape_string(paramAuto, opNode->getID());
 		retMe = mysqlEscapeAuto;
 
@@ -1044,18 +1040,18 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			throw StrangerStringAnalysisException(stringbuilder() << "mysql_real_escape_string wrong number of arguments: " << opNode->getID());
 		}
 		//we only care about the first parameter
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		StrangerAutomaton* mysqlEscapeAuto = StrangerAutomaton::mysql_real_escape_string(paramAuto, opNode->getID());
 		retMe = mysqlEscapeAuto;
 
 	} else if (opName == "htmlspecialchars") {
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+                const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		string flagString = "ENT_COMPAT";
 		if (successors.size() > 1) {
 			if (analysisResult.find(successors[1]->getID()) == analysisResult.end()) {
 				doForwardAnalysis_GeneralCase(depGraph, successors[1], analysisResult);
 			}
-			flagString = analysisResult[successors[1]->getID()]->getStr();
+			flagString = analysisResult.get(successors[1]->getID())->getStr();
 		}
 
 		StrangerAutomaton* htmlSpecAuto = StrangerAutomaton::htmlSpecialChars(paramAuto, flagString, opNode->getID());
@@ -1066,7 +1062,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			throw StrangerStringAnalysisException(stringbuilder() << "nl2br wrong number of arguments: " << opNode->getID());
 		}
 
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		StrangerAutomaton* nl2brAuto = StrangerAutomaton::nl2br(paramAuto, opNode->getID());
 		retMe = nl2brAuto;
 
@@ -1082,14 +1078,14 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		if (analysisResult.find(subjectNode->getID()) == analysisResult.end()) {
 			doForwardAnalysis_GeneralCase(depGraph, subjectNode, analysisResult);
 		}
-                StrangerAutomaton* subjectAuto = analysisResult[subjectNode->getID()];
+                const StrangerAutomaton* subjectAuto = analysisResult.get(subjectNode->getID());
 
                 if (m_doSubstr) {
                 // Compute the starting index
                     if (analysisResult.find(startNode->getID()) == analysisResult.end()) {
 			doForwardAnalysis_GeneralCase(depGraph, startNode, analysisResult);
                     }
-                    string startValue = analysisResult[startNode->getID()]->getStr();
+                    string startValue = analysisResult.get(startNode->getID())->getStr();
                     int start = stoi(startValue);
 
                     // Check if there is also a length argument
@@ -1098,7 +1094,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
                         if (analysisResult.find(lengthNode->getID()) == analysisResult.end()) {
                             doForwardAnalysis_GeneralCase(depGraph, lengthNode, analysisResult);
                         }
-                        string lengthValue = analysisResult[lengthNode->getID()]->getStr();
+                        string lengthValue = analysisResult.get(lengthNode->getID())->getStr();
                         int length = stoi(lengthValue);
                         StrangerAutomaton* substrAuto = subjectAuto->substr(start,length,opNode->getID());
                         retMe = substrAuto;
@@ -1115,7 +1111,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			throw StrangerStringAnalysisException(stringbuilder() << opName << " has more than one successor in depgraph" );
 		}
 
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		if (opName == "strtoupper") {
 			retMe = paramAuto->toUpperCase(opNode->getID());
 		}
@@ -1134,7 +1130,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			// get trim char from automaton
 		}
 
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+		const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		if (opName == "trim")
 			retMe = paramAuto->trimSpaces(opNode->getID());
 		else if (opName == "rtrim") {
@@ -1148,46 +1144,46 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		//conservative desicion
 		retMe = StrangerAutomaton::regExToAuto("/[aAbBcCdDeEfF0-9]{32,32}/",true, opNode->getID());
 	} else if (opName == "encodeURIComponent") {
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+                const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		StrangerAutomaton* uriAuto = StrangerAutomaton::encodeURIComponent(paramAuto, opNode->getID());
 		retMe = uriAuto;
 
 	} else if (opName == "decodeURIComponent") {
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+                const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		StrangerAutomaton* uriAuto = StrangerAutomaton::decodeURIComponent(paramAuto, opNode->getID());
 		retMe = uriAuto;
 
 	} else if (opName == "encodeURI") {
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+                const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		StrangerAutomaton* uriAuto = StrangerAutomaton::encodeURI(paramAuto, opNode->getID());
 		retMe = uriAuto;
 
 	} else if (opName == "decodeURI") {
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+                const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		StrangerAutomaton* uriAuto = StrangerAutomaton::decodeURI(paramAuto, opNode->getID());
 		retMe = uriAuto;
 
 	} else if (opName == "JSON.stringify") {
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+                const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		StrangerAutomaton* json = StrangerAutomaton::jsonStringify(paramAuto, opNode->getID());
 		retMe = json;
 	} else if (opName == "JSON.parse") {
-		StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+                const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		StrangerAutomaton* json = StrangerAutomaton::jsonParse(paramAuto, opNode->getID());
 		retMe = json;
 	} else if (opName == "encodeTextFragment") {
-        if (successors.size() < 1 || successors.size() > 2) {
-            throw StrangerStringAnalysisException(stringbuilder() << "encodeTextFragment wrong number of arguments: " << opNode->getID());
-        }
-        StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+                if (successors.size() < 1 || successors.size() > 2) {
+                    throw StrangerStringAnalysisException(stringbuilder() << "encodeTextFragment wrong number of arguments: " << opNode->getID());
+                }
+                const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 
-        StrangerAutomaton* encodedAuto = StrangerAutomaton::encodeTextFragment(paramAuto, opNode->getID());
-        retMe = encodedAuto;
-    } else if (opName == "encodeAttrString") {
-        if (successors.size() < 1 || successors.size() > 2) {
-            throw StrangerStringAnalysisException(stringbuilder() << "encodeAttrString wrong number of arguments: " << opNode->getID());
-        }
-        StrangerAutomaton* paramAuto = analysisResult[successors[0]->getID()];
+                StrangerAutomaton* encodedAuto = StrangerAutomaton::encodeTextFragment(paramAuto, opNode->getID());
+                retMe = encodedAuto;
+        } else if (opName == "encodeAttrString") {
+            if (successors.size() < 1 || successors.size() > 2) {
+                throw StrangerStringAnalysisException(stringbuilder() << "encodeAttrString wrong number of arguments: " << opNode->getID());
+            }
+            const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 
         StrangerAutomaton* encodedAuto = StrangerAutomaton::encodeAttrString(paramAuto, opNode->getID());
         retMe = encodedAuto;

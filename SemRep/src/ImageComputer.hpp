@@ -24,7 +24,7 @@
 #ifndef IMAGECOMPUTER_HPP_
 #define IMAGECOMPUTER_HPP_
 
-#include "StringAnalysisTypes.hpp"
+#include "AnalysisResult.hpp"
 #include "exceptions/StrangerStringAnalysisException.hpp"
 #include "StrangerAutomaton.hpp"
 #include "depgraph/DepGraph.hpp"

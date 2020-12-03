@@ -1,5 +1,5 @@
 /*
- * StringAnalysisTypes.hpp
+ * AnalysisResult.hpp
  *
  * Copyright (C) 2013-2014 University of California Santa Barbara.
  *
@@ -21,27 +21,30 @@
  * Authors: Abdulbaki Aydin, Muath Alkhalaf
  */
 
-#ifndef STRINGANALYSISTYPES_HPP_
-#define STRINGANALYSISTYPES_HPP_
+#ifndef ANALYSISRESULT_HPP_
+#define ANALYSISRESULT_HPP_
 
 #include "StrangerAutomaton.hpp"
 
-typedef std::map<const int, StrangerAutomaton*> AnalysisResult;
-typedef std::map<const int, StrangerAutomaton*>::iterator AnalysisResultIterator;
-typedef std::map<const int, StrangerAutomaton*>::const_iterator AnalysisResultConstIterator;
+typedef std::map<int, const StrangerAutomaton*>::iterator AnalysisResultIterator;
+typedef std::map<int, const StrangerAutomaton*>::const_iterator AnalysisResultConstIterator;
 
-class AnalysisResultHelper {
+class AnalysisResult {
 
 public:
-    static void DeleteResults(AnalysisResult& result) {
-        for (auto a : result) {
-            if (a.second != nullptr) {
-                delete a.second;
-                a.second = nullptr;
-            }
-        }
-        result.clear();
-    }
+
+    AnalysisResult();
+    virtual ~AnalysisResult();
+
+    void set(int node, const StrangerAutomaton* a);
+    const StrangerAutomaton* get(int node) const;
+
+    AnalysisResultConstIterator find(int node) const;
+    AnalysisResultConstIterator begin() const;
+    AnalysisResultConstIterator end() const;
+
+private:
+    std::map<int, const StrangerAutomaton*> m_map;
 };
 
-#endif /* STRINGANALYSISTYPES_HPP_ */
+#endif /* ANALYSISRESULT_HPP_ */
