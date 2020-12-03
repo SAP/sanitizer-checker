@@ -3400,6 +3400,7 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
     free(symbol);
     free(indices);
     free(charachters);
+    free(shiftArray);
     freeStatePairArrayList(replaceTransitions);
     //    dfaPrintVerbose(result);
     DFA *tmp;
