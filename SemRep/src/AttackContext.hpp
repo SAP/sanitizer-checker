@@ -32,6 +32,9 @@
   DO(Quote)                 \
   DO(Slash)                 \
   DO(SingleQuote)           \
+  DO(Equals)                \
+  DO(Script)                \
+  DO(Alert)                 \
   DO(Html)                  \
   DO(HtmlAttr)              \
   DO(JavaScript)            \

@@ -238,7 +238,7 @@ StrangerAutomaton* AttackPatterns::getUndesiredMFETest()
 
 StrangerAutomaton* AttackPatterns::getSingleCharPattern(const std::string& pattern)
 {
-    return StrangerAutomaton::regExToAuto("/" + pattern + "/");
+    return StrangerAutomaton::regExToAuto("/.*" + pattern + ".*/");
 }
 
 StrangerAutomaton* AttackPatterns::getAttackPatternForContext(AttackContext context)
@@ -253,9 +253,15 @@ StrangerAutomaton* AttackPatterns::getAttackPatternForContext(AttackContext cont
     case AttackContext::Quote:
         return getSingleCharPattern("\"");
     case AttackContext::Slash:
-        return getSingleCharPattern("/");
+        return getSingleCharPattern("\\/");
     case AttackContext::SingleQuote:
         return getSingleCharPattern("'");
+    case AttackContext::Equals:
+        return getSingleCharPattern("=");
+    case AttackContext::Script:
+        return getSingleCharPattern("script");
+    case AttackContext::Alert:
+        return getSingleCharPattern("alert");
     case AttackContext::Html:
         return getHtmlPattern();
     case AttackContext::HtmlPayload:
