@@ -34,8 +34,10 @@ std::string AttackPatterns::m_htmlAttrEscapedRegExp      =  "/([a-zA-Z0-9]+|((&[
 std::string AttackPatterns::m_javascriptEscapedRegExp    =  "/([a-zA-Z0-9,._\\s]+|((\\\\u[a-fA-F0-9]{4})|(\\\\x[a-fA-F0-9]{2})))+/";
 std::string AttackPatterns::m_urlEscapedRegExp           =  "/([a-zA-Z0-9-_.!~*'()]+|((%[a-fA-F0-9]{2})))+/";
 
-// Sample Payload
+// Sample Payloads
 std::string AttackPatterns::m_htmlPayload                = "<script>alert(\"XSS\");</script>";
+std::string AttackPatterns::m_htmlAttributePayload       = "\" onload=\"alert('xss')";
+std::string AttackPatterns::m_htmlPolygotPayload         = "javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/\"/+/onmouseover=1/+/[*/[]/+alert(1)//'>";
 
 // Removing characters
 std::string AttackPatterns::m_htmlRemovedRegExp          =  "/[^<>'\"&\\/]*/";
@@ -124,6 +126,16 @@ StrangerAutomaton* AttackPatterns::getUrlPattern()
 StrangerAutomaton* AttackPatterns::getHtmlPayload()
 {
     return StrangerAutomaton::makeString(AttackPatterns::m_htmlPayload);
+}
+
+StrangerAutomaton* AttackPatterns::getHtmlAttributePayload()
+{
+    return StrangerAutomaton::makeString(AttackPatterns::m_htmlAttributePayload);
+}
+
+StrangerAutomaton* AttackPatterns::getHtmlPolygotPayload()
+{
+    return StrangerAutomaton::makeString(AttackPatterns::m_htmlPolygotPayload);
 }
 
 StrangerAutomaton* AttackPatterns::getHtmlEscaped()
@@ -248,6 +260,10 @@ StrangerAutomaton* AttackPatterns::getAttackPatternForContext(AttackContext cont
         return getHtmlPattern();
     case AttackContext::HtmlPayload:
         return getHtmlPayload();
+    case AttackContext::HtmlAttributePayload:
+        return getHtmlAttributePayload();
+    case AttackContext::HtmlPolygotPayload:
+        return getHtmlPolygotPayload();
     case AttackContext::HtmlAttr:
         return getHtmlAttributePattern();
     case AttackContext::JavaScript:

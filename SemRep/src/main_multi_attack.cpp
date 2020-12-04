@@ -46,11 +46,12 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
         attack.addAttackPattern(AttackContext::SingleQuote);
         attack.addAttackPattern(AttackContext::Slash);
         attack.addAttackPattern(AttackContext::Html);
-        attack.addAttackPattern(AttackContext::HtmlPayload);
         attack.addAttackPattern(AttackContext::HtmlAttr);
         attack.addAttackPattern(AttackContext::JavaScript);
         attack.addAttackPattern(AttackContext::Url);
-
+        attack.addAttackPattern(AttackContext::HtmlPayload);
+        attack.addAttackPattern(AttackContext::HtmlAttributePayload);
+        attack.addAttackPattern(AttackContext::HtmlPolygotPayload);
         attack.compute();
 
         cout << endl << "\t------ OVERALL RESULT for: " << field_name << " ------" << endl;

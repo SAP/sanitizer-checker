@@ -88,9 +88,6 @@ void MultiAttack::printFiles(std::ostream& os) const {
     os << i << ", ";
     os << result->getFileName() << ", ";
     result->printResult(os, true);
-    // const AutomatonGroup* group = this->m_groups.getGroupForAutomaton(result->getFwAnalysis().getPostImage());
-    // os << " Group: ";
-    // group->printSummary();
     os << std::endl;
     ++i;
   }

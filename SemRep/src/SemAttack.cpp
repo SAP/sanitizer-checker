@@ -62,7 +62,7 @@ void CombinedAnalysisResult::printHeader(std::ostream& os) const
   for (auto bwResult : m_bwAnalysisMap) {
     AttackContext c = bwResult.first;
     os << AttackContextHelper::getName(c) << ", ";
-    os << "example, ";
+    os << "post, pre";
   }  
 }
 
@@ -77,14 +77,18 @@ void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader) con
       os << AttackContextHelper::getName(c) << ", ";
     }
     if (error) {
-      os << "error, ";
+      os << "error, , ";
     } else {
       os << (good ? "true" : "false");
       os << ", ";
       if (!good) {
         os << result->getIntersection()->generateSatisfyingExample();
+        os << ", ";
+        os << result->getPreImage()->generateSatisfyingExample();
       } else if (result->hasPostAttackImage()) {
         os << result->getAttackPostImage()->generateSatisfyingExample();
+        // No pre-image if no intersection
+        os << ", N/A";
       }
     }
     os << ", ";

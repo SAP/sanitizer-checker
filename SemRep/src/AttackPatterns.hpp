@@ -64,6 +64,12 @@ public:
     // A sample html payload
     static StrangerAutomaton* getHtmlPayload();
 
+    // A sample html payload for attributes
+    static StrangerAutomaton* getHtmlAttributePayload();
+
+    // A sample html payload for attributes
+    static StrangerAutomaton* getHtmlPolygotPayload();
+
     /******************************************************************************************
      * Common Sanitizer Patterns for comparison
      *****************************************************************************************/
@@ -120,6 +126,8 @@ private:
     static std::string m_javascriptEscapedRegExp;
     static std::string m_urlEscapedRegExp;
     static std::string m_htmlPayload;
+    static std::string m_htmlAttributePayload;
+    static std::string m_htmlPolygotPayload;
     static std::string m_htmlRemovedRegExp;
     static std::string m_htmlRemovedNoSlashRegExp;
 };

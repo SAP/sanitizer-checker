@@ -25,18 +25,20 @@
 #ifndef ATTACK_CONTEXT_HPP_
 #define ATTACK_CONTEXT_HPP_
 
-#define SOME_ENUM(DO) \
-  DO(LessThan)        \
-  DO(GreaterThan)     \
-  DO(Ampersand)       \
-  DO(Quote)           \
-  DO(Slash)           \
-  DO(SingleQuote)     \
-  DO(Html)            \
-  DO(HtmlAttr)        \
-  DO(JavaScript)      \
-  DO(Url)             \
-  DO(HtmlPayload)     \
+#define SOME_ENUM(DO)       \
+  DO(LessThan)              \
+  DO(GreaterThan)           \
+  DO(Ampersand)             \
+  DO(Quote)                 \
+  DO(Slash)                 \
+  DO(SingleQuote)           \
+  DO(Html)                  \
+  DO(HtmlAttr)              \
+  DO(JavaScript)            \
+  DO(Url)                   \
+  DO(HtmlPayload)           \
+  DO(HtmlAttributePayload)  \
+  DO(HtmlPolygotPayload)    \
   DO(None)
 
 #define MAKE_ENUM(VAR) VAR,
