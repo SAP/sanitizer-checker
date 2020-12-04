@@ -44,6 +44,12 @@ public:
     // & is allowed only if escaped
     static StrangerAutomaton* getHtmlPattern();
 
+    // Allowed characters in innerHTML, excludes ">", "<" only
+    static StrangerAutomaton* getHtmlMinimalPattern();
+
+    // Allowed characters in innerHTML, excludes ">", "<", "'", """
+    static StrangerAutomaton* getHtmlMediumPattern();
+
     // Allowed characters in innerHTML, excludes ">", "<", "'", """,
     // "&" is only considered harmful if it is not escaped
     static StrangerAutomaton* getHtmlNoSlashesPattern();
@@ -130,6 +136,8 @@ private:
     static std::string m_htmlPolygotPayload;
     static std::string m_htmlRemovedRegExp;
     static std::string m_htmlRemovedNoSlashRegExp;
+    static std::string m_htmlMinimal;
+    static std::string m_htmlMedium;
 };
 
 

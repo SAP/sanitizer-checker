@@ -36,6 +36,8 @@
   DO(Script)                \
   DO(Alert)                 \
   DO(Html)                  \
+  DO(HtmlMedium)            \
+  DO(HtmlMinimal)           \
   DO(HtmlAttr)              \
   DO(JavaScript)            \
   DO(Url)                   \

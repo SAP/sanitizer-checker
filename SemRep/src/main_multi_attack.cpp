@@ -48,6 +48,8 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
         attack.addAttackPattern(AttackContext::Equals);
         attack.addAttackPattern(AttackContext::Script);
         attack.addAttackPattern(AttackContext::Alert);
+        attack.addAttackPattern(AttackContext::HtmlMinimal);
+        attack.addAttackPattern(AttackContext::HtmlMedium);
         attack.addAttackPattern(AttackContext::Html);
         attack.addAttackPattern(AttackContext::HtmlAttr);
         attack.addAttackPattern(AttackContext::JavaScript);

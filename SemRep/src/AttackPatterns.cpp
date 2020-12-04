@@ -24,9 +24,18 @@
 
 // Set of RegExps used to describe various attack patten contexts
 // HTML Context
+
+// Just match escaped ampersands
 std::string AttackPatterns::m_htmlEscapedAmpersand       =  "/([^&]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
+// Allowed characters according to OWASP
 std::string AttackPatterns::m_htmlEscapedRegExp          =  "/([^<>'\"&\\/]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
+// Just escape tags
+std::string AttackPatterns::m_htmlMinimal                =  "/[^<>]+/";
+// Escape Tags and quotes
+std::string AttackPatterns::m_htmlMedium                 =  "/[^<>'\"]+/";
+// Do not escape slash
 std::string AttackPatterns::m_htmlEscapedNoSlashRegExp   =  "/([^<>'\"&]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
+// Also escape backtick
 std::string AttackPatterns::m_htmlEscapedBacktickRegExp  =  "/([^<>'\"&`]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
 
 // HTML Attributes
@@ -89,6 +98,20 @@ StrangerAutomaton* AttackPatterns::getHtmlPattern()
     // Allowed characters in innerHTML, excludes ">", "<", "'", """, "\"
     // "&" is only considered harmful if it is not escaped
     return getAttackPatternFromAllowedRegEx(AttackPatterns::m_htmlEscapedRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getHtmlMinimalPattern()
+{
+    // Allowed characters in innerHTML, excludes ">", "<"
+    // "&" is only considered harmful if it is not escaped
+    return getAttackPatternFromAllowedRegEx(AttackPatterns::m_htmlMinimal);
+}
+
+StrangerAutomaton* AttackPatterns::getHtmlMediumPattern()
+{
+    // Allowed characters in innerHTML, excludes ">", "<", "'", """
+    // "&" is only considered harmful if it is not escaped
+    return getAttackPatternFromAllowedRegEx(AttackPatterns::m_htmlMedium);
 }
 
 StrangerAutomaton* AttackPatterns::getHtmlNoSlashesPattern()
@@ -264,6 +287,10 @@ StrangerAutomaton* AttackPatterns::getAttackPatternForContext(AttackContext cont
         return getSingleCharPattern("alert");
     case AttackContext::Html:
         return getHtmlPattern();
+    case AttackContext::HtmlMedium:
+        return getHtmlMediumPattern();
+    case AttackContext::HtmlMinimal:
+        return getHtmlMinimalPattern();
     case AttackContext::HtmlPayload:
         return getHtmlPayload();
     case AttackContext::HtmlAttributePayload:
