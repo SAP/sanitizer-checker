@@ -102,6 +102,17 @@ void AutomatonGroup::printMembers(std::ostream& os, bool printAll) const {
   //m_automaton->toDotAscii(0);
 }
 
+unsigned int AutomatonGroup::getSuccessfulEntriesForContext(const AttackContext& context) const {
+  unsigned int entries = this->getEntries();
+  unsigned int total = 0;
+  if (m_graphs.size() > 0) {
+    // Get the first result in the group
+    const CombinedAnalysisResult* result = m_graphs.at(0);
+    total = (result->isFilterSuccessful(context) ? 1 : 0) * entries;
+  }
+  return total;
+}
+
 AutomatonGroups::AutomatonGroups()
   : m_groups()
   , m_id(0)
@@ -176,7 +187,7 @@ const AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutoma
   return nullptr;
 }
 
-void AutomatonGroups::printGroups(std::ostream& os, bool printAll) const {
+void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const {
   // Switch to decimal
   os << std::dec;
   //  SemAttack::perfInfo.print_operations_info();
@@ -184,9 +195,38 @@ void AutomatonGroups::printGroups(std::ostream& os, bool printAll) const {
   if (m_groups.size() > 0) {
     m_groups.at(0).printHeaders(os);
   }
+  this->printTotals(os, contexts);
   for (auto iter : m_groups) {
     iter.printMembers(os, printAll);
   }
+}
+
+void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const {
+  os << "-1, ";
+  os << "total, ";
+  os << getEntries() << ", ";
+  for (auto context : contexts) {
+    os << getSuccessfulEntriesForContext(context) << ", ";
+    os << getSuccessfulGroupsForContext(context) << ", ";
+    os << ", ";
+  }
+  os << ", ";
+}
+
+unsigned int AutomatonGroups::getSuccessfulEntriesForContext(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getSuccessfulEntriesForContext(context);
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getSuccessfulGroupsForContext(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += (iter->getSuccessfulEntriesForContext(context) > 0) ? 1 : 0;
+  }
+  return total;
 }
 
 unsigned int AutomatonGroups::getEntries() const {

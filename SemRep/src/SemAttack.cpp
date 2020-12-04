@@ -97,6 +97,18 @@ void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader) con
   }
 }
 
+bool CombinedAnalysisResult::isFilterSuccessful(const AttackContext& context) const
+{
+  bool success = false;
+  if (m_bwAnalysisMap.count(context) > 0) {
+    const BackwardAnalysisResult* result = m_bwAnalysisMap.at(context);
+    if (!result->isErrored()) { // Otherwise errors count as success
+      success = result->isSafe();
+    }
+  }
+  return success;
+}
+
 BackwardAnalysisResult::BackwardAnalysisResult(
   ForwardAnalysisResult& fwResult, AttackContext context)
   : m_fwResult(fwResult)

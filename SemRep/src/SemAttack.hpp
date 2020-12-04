@@ -180,7 +180,9 @@ public:
     ForwardAnalysisResult& getFwAnalysis() { return m_fwAnalysis; }
 
     std::string getFileName() const { return m_inputfile.string(); }
-    
+
+    bool isFilterSuccessful(const AttackContext& context) const;
+
     void printResult(std::ostream& os, bool printHeader = false) const;
     void printHeader(std::ostream& os) const;
     void finishAnalysis() { getFwAnalysis().finishAnalysis(); }

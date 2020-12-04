@@ -44,8 +44,8 @@ public:
     std::string getName() const;
     const StrangerAutomaton* getAutomaton() const;
     void addCombinedAnalysisResult(const CombinedAnalysisResult* graph);
-
     unsigned int getEntries() const { return m_graphs.size(); }
+    unsigned int getSuccessfulEntriesForContext(const AttackContext& context) const;
 
     void printMembers(std::ostream& os, bool printAll) const;
     void printSummary(std::ostream& os) const;
@@ -76,13 +76,16 @@ public:
     const AutomatonGroup* getGroupForAutomaton(const StrangerAutomaton* automaton) const;
 
     unsigned int getEntries() const;
-    void printGroups(std::ostream& os, bool printAll = false) const;
+    unsigned int getSuccessfulEntriesForContext(const AttackContext& context) const;
+    unsigned int getSuccessfulGroupsForContext(const AttackContext& context) const;
+    void printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
 
 private:
 
     std::vector<AutomatonGroup> m_groups;
     int m_id;
     AutomatonGroup* addNewEntry(const StrangerAutomaton* automaton, const CombinedAnalysisResult* graph);
+    void printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const;
 };
 
 #endif /* AUTOMATON_GROUPS_HPP_ */

@@ -98,7 +98,7 @@ void MultiAttack::printResults(std::ostream& os, bool printFiles) const
   os << "Found " << this->m_dot_paths.size() << " dot files" << std::endl;
   os << "Computed images with pool of " << m_nThreads << " threads." << std::endl;
   os << "Printing Groups:" << std::endl;
-  m_groups.printGroups(os, printFiles);
+  m_groups.printGroups(os, printFiles, m_analyzed_contexts);
 }
 
 void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context)
