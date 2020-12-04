@@ -202,15 +202,17 @@ void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::ve
 }
 
 void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const {
+  unsigned int entries = getEntries();
   os << "-1, ";
   os << "total, ";
-  os << getEntries() << ", ";
+  os << entries << ", ";
   for (auto context : contexts) {
-    os << getSuccessfulEntriesForContext(context) << ", ";
+    unsigned int success = getSuccessfulEntriesForContext(context);
+    os << success << ", ";
+    os << entries - success << ", ";
     os << getSuccessfulGroupsForContext(context) << ", ";
-    os << ", ";
   }
-  os << ", ";
+  os << ", " << std::endl;
 }
 
 unsigned int AutomatonGroups::getSuccessfulEntriesForContext(const AttackContext& context) const {
