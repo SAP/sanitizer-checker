@@ -4051,6 +4051,7 @@ DFA *dfaDecodeUriComponent(DFA *inputAuto, int var, int *indices){
     char* percent = "%";
     DFA* percent_auto = dfa_construct_string(percent, var, indices);
     a = dfa_general_replace_extrabit(b, percent_auto, phi, var, indices);
+    dfaFree(percent_auto);
     dfaFree(phi);
     dfaFree(b);
     return a;
