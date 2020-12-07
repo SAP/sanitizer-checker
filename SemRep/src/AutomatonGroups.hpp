@@ -46,10 +46,11 @@ public:
     void addCombinedAnalysisResult(const CombinedAnalysisResult* graph);
     unsigned int getEntries() const { return m_graphs.size(); }
     unsigned int getSuccessfulEntriesForContext(const AttackContext& context) const;
+    unsigned int getContainedEntriesForContext(const AttackContext& context) const;
 
-    void printMembers(std::ostream& os, bool printAll) const;
+    void printMembers(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
     void printSummary(std::ostream& os) const;
-    void printHeaders(std::ostream& os) const;
+    void printHeaders(std::ostream& os, const std::vector<AttackContext>& contexts) const;
 
 private:
     const StrangerAutomaton* m_automaton;
@@ -77,6 +78,7 @@ public:
 
     unsigned int getEntries() const;
     unsigned int getSuccessfulEntriesForContext(const AttackContext& context) const;
+    unsigned int getContainedEntriesForContext(const AttackContext& context) const;
     unsigned int getSuccessfulGroupsForContext(const AttackContext& context) const;
     void printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
 

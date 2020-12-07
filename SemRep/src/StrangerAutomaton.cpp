@@ -1865,8 +1865,10 @@ bool StrangerAutomaton::checkIntersection(const StrangerAutomaton* otherAuto) {
  */
 bool StrangerAutomaton::checkInclusion(const StrangerAutomaton* otherAuto, int id1, int id2) const {
     std::string debugStr = stringbuilder() << "checkInclusion("  << this->ID <<  ", " << otherAuto->ID << ") = ";
-    // phi is always a subset of any other set, top is always superset of anything
-    if (this->isBottom() || otherAuto->isTop()){
+    if ((otherAuto == nullptr) || this->isNull() || otherAuto->isNull()) {
+        return false;
+    } else if (this->isBottom() || otherAuto->isTop()){
+        // phi is always a subset of any other set, top is always superset of anything
         debug(stringbuilder() << debugStr << "true");
         return true;
     } else if (otherAuto->isBottom() || this->isTop()){

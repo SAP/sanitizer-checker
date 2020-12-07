@@ -69,11 +69,11 @@ void AutomatonGroup::addCombinedAnalysisResult(const CombinedAnalysisResult* gra
   m_graphs.emplace_back(graph);
 }
 
-void AutomatonGroup::printHeaders(std::ostream& os) const {
+void AutomatonGroup::printHeaders(std::ostream& os, const std::vector<AttackContext>& contexts) const {
   os << "id, number, entries, ";
   // Get headers from first entry
   if (m_graphs.size() > 0) {
-    m_graphs.at(0)->printHeader(os);
+    m_graphs.at(0)->printHeader(os, contexts);
   }
   os << std::endl;
 }
@@ -84,13 +84,13 @@ void AutomatonGroup::printSummary(std::ostream& os) const {
      << getEntries();
 }
 
-void AutomatonGroup::printMembers(std::ostream& os, bool printAll) const {
+void AutomatonGroup::printMembers(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const {
 
   printSummary(os);
   os << ", ";
   // Get vulnerablility overlaps from first entry
   if (m_graphs.size() > 0) {
-    m_graphs.at(0)->printResult(os);
+    m_graphs.at(0)->printResult(os, false, contexts);
   }
   for (auto iter : m_graphs) {
     os << iter->getFileName() << ", ";
@@ -109,6 +109,18 @@ unsigned int AutomatonGroup::getSuccessfulEntriesForContext(const AttackContext&
     // Get the first result in the group
     const CombinedAnalysisResult* result = m_graphs.at(0);
     total = (result->isFilterSuccessful(context) ? 1 : 0) * entries;
+  }
+  //std::cout << "Getting successful entries for: " << AttackContextHelper::getName(context) << " " << this->getName() << ": " << total << std::endl;
+  return total;
+}
+
+unsigned int AutomatonGroup::getContainedEntriesForContext(const AttackContext& context) const {
+  unsigned int entries = this->getEntries();
+  unsigned int total = 0;
+  if (m_graphs.size() > 0) {
+    // Get the first result in the group
+    const CombinedAnalysisResult* result = m_graphs.at(0);
+    total = (result->isFilterContained(context) ? 1 : 0) * entries;
   }
   return total;
 }
@@ -193,11 +205,11 @@ void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::ve
   //  SemAttack::perfInfo.print_operations_info();
   os << "Total of " << m_groups.size() << " unique post-images with " << getEntries() << " entries." << std::endl;
   if (m_groups.size() > 0) {
-    m_groups.at(0).printHeaders(os);
+    m_groups.at(0).printHeaders(os, contexts);
   }
   this->printTotals(os, contexts);
   for (auto iter : m_groups) {
-    iter.printMembers(os, printAll);
+    iter.printMembers(os, printAll, contexts);
   }
 }
 
@@ -209,6 +221,7 @@ void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackCont
   for (auto context : contexts) {
     unsigned int success = getSuccessfulEntriesForContext(context);
     os << success << ", ";
+    os << getContainedEntriesForContext(context) << ", ";
     os << entries - success << ", ";
     os << getSuccessfulGroupsForContext(context) << ", ";
   }
@@ -219,6 +232,14 @@ unsigned int AutomatonGroups::getSuccessfulEntriesForContext(const AttackContext
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getSuccessfulEntriesForContext(context);
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getContainedEntriesForContext(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getContainedEntriesForContext(context);
   }
   return total;
 }

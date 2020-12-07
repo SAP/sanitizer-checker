@@ -57,30 +57,31 @@ BackwardAnalysisResult* CombinedAnalysisResult::addBackwardAnalysis(AttackContex
   return bw;
 }
 
-void CombinedAnalysisResult::printHeader(std::ostream& os) const
+void CombinedAnalysisResult::printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const
 {
-  for (auto bwResult : m_bwAnalysisMap) {
-    AttackContext c = bwResult.first;
+  for (auto c : contexts) {
     os << AttackContextHelper::getName(c);
-    os << ", post, pre, ";
-  }  
+    os << ", inclusion, post, pre, ";
+  }
 }
 
-void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader) const
+void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader, const std::vector<AttackContext>& contexts) const
 {
-  for (auto bwResult : m_bwAnalysisMap) {
-    AttackContext c = bwResult.first;
-    const BackwardAnalysisResult* result = bwResult.second;
+  for (auto c : contexts) {
+    const BackwardAnalysisResult* result = m_bwAnalysisMap.at(c);
     bool error = result->isErrored();
-    bool good = !result->isVulnerable();
+    bool good =  result->isSafe();
+    bool contained =  result->isContained();
     if (printHeader) {
       os << AttackContextHelper::getName(c) << ", ";
     }
     if (error) {
-      os << "error, error, error, ";
+      os << "error, error, error, error, ";
     } else {
       os << (good ? "true" : "false");
       os << ", ";
+      os << (contained ? "true" : "false");
+      os << ", ";     
       if (!good) {
         os << result->getIntersection()->generateSatisfyingExample();
         os << ", ";
@@ -104,6 +105,18 @@ bool CombinedAnalysisResult::isFilterSuccessful(const AttackContext& context) co
     const BackwardAnalysisResult* result = m_bwAnalysisMap.at(context);
     if (!result->isErrored()) { // Otherwise errors count as success
       success = result->isSafe();
+    }
+  }
+  return success;
+}
+
+bool CombinedAnalysisResult::isFilterContained(const AttackContext& context) const
+{
+  bool success = false;
+  if (m_bwAnalysisMap.count(context) > 0) {
+    const BackwardAnalysisResult* result = m_bwAnalysisMap.at(context);
+    if (!result->isErrored()) { // Otherwise errors count as success
+      success = result->isContained();
     }
   }
   return success;
@@ -212,6 +225,16 @@ bool BackwardAnalysisResult::isErrored() const {
 bool BackwardAnalysisResult::isSafe() const
 {
   return (this->isErrored() || getIntersection()->isEmpty() || getIntersection()->checkEmptyString());
+}
+
+bool BackwardAnalysisResult::isContained() const
+{
+  const StrangerAutomaton* postImage = m_fwResult.getPostImage();
+  if (this->isErrored() || (postImage == nullptr)) {
+    return false;
+  }
+
+  return postImage->checkInclusion(this->m_attack);
 }
 
 ForwardAnalysisResult::ForwardAnalysisResult(const fs::path& target_dep_graph_file_name,

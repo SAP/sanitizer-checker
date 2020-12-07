@@ -24,6 +24,7 @@
 #ifndef SEMATTACK_HPP_
 #define SEMATTACK_HPP_
 
+#include <unordered_map>
 #include <boost/filesystem.hpp>
 #include "StrangerAutomaton.hpp"
 #include "AttackContext.hpp"
@@ -138,9 +139,12 @@ public:
     const StrangerAutomaton* getIntersection() const { return m_intersection; }
     const StrangerAutomaton* getAttackPattern() const { return m_attack; }
     const StrangerAutomaton* getAttackPostImage() const { return m_post_attack; }
+
     bool isErrored() const;
     bool isSafe() const;
+    bool isContained() const;
     bool isVulnerable() const { return !isSafe(); }
+
     bool hasPostAttackImage() const { return m_post_attack != nullptr; }
     const std::string& getName() const { return m_name; }
     void writeResultsToFile(const fs::path& dir) const;
@@ -182,16 +186,17 @@ public:
     std::string getFileName() const { return m_inputfile.string(); }
 
     bool isFilterSuccessful(const AttackContext& context) const;
+    bool isFilterContained(const AttackContext& context) const;
 
-    void printResult(std::ostream& os, bool printHeader = false) const;
-    void printHeader(std::ostream& os) const;
+    void printResult(std::ostream& os, bool printHeader, const std::vector<AttackContext>& contexts) const;
+    void printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const;
     void finishAnalysis() { getFwAnalysis().finishAnalysis(); }
 private:
     fs::path m_inputfile;
     std::string m_input_name;
 
     ForwardAnalysisResult m_fwAnalysis;
-    std::map<AttackContext, BackwardAnalysisResult*> m_bwAnalysisMap;
+    std::unordered_map<AttackContext, BackwardAnalysisResult*> m_bwAnalysisMap;
 };
 
 #endif /* SEMATTACK_HPP_ */

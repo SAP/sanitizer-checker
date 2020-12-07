@@ -87,7 +87,7 @@ void MultiAttack::printFiles(std::ostream& os) const {
   for (auto result : m_results) {
     os << i << ", ";
     os << result->getFileName() << ", ";
-    result->printResult(os, true);
+    result->printResult(os, true, m_analyzed_contexts);
     os << std::endl;
     ++i;
   }
@@ -164,7 +164,6 @@ void MultiAttack::computeImagesForFile(const fs::path& file) {
   this->m_groups.addAutomaton(postImage, result);
   this->m_results.emplace_back(result);
   std::cout << "Finished inserting results into groups for " << file << std::endl;
-  //this->printResults();
   this->writeResultsToFile();
 
 }
