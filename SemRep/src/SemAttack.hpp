@@ -89,7 +89,7 @@ private:
     void printNodeList(NodesList nodes) const;
 
     bool m_print_dots;
-    bool m_print;
+    bool m_print;    
 };
 
 // Class containing all revelant forward analysis results
@@ -134,7 +134,8 @@ public:
     virtual ~BackwardAnalysisResult();
 
     void doAnalysis();
-    
+    void finishAnalysis();
+
     const StrangerAutomaton* getPreImage() const { return m_preimage; }
     const StrangerAutomaton* getIntersection() const { return m_intersection; }
     const StrangerAutomaton* getAttackPattern() const { return m_attack; }
@@ -147,6 +148,8 @@ public:
 
     bool hasPostAttackImage() const { return m_post_attack != nullptr; }
     const std::string& getName() const { return m_name; }
+
+    void printResult(std::ostream& os, bool printHeader) const;
     void writeResultsToFile(const fs::path& dir) const;
 
 private:
@@ -165,6 +168,15 @@ private:
     StrangerAutomaton* m_preimage;
     // Post-image if attack pattern is used as input
     StrangerAutomaton* m_post_attack;
+
+    // Cached result information for fast printing
+    bool m_isErrored;
+    bool m_isSafe;
+    bool m_isContained;
+
+    std::string m_intersection_example;
+    std::string m_preimage_example;
+    std::string m_post_attack_example;
 };
 
 class CombinedAnalysisResult {

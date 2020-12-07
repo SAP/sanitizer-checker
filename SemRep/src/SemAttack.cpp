@@ -69,31 +69,8 @@ void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader, con
 {
   for (auto c : contexts) {
     const BackwardAnalysisResult* result = m_bwAnalysisMap.at(c);
-    bool error = result->isErrored();
-    bool good =  result->isSafe();
-    bool contained =  result->isContained();
-    if (printHeader) {
-      os << AttackContextHelper::getName(c) << ", ";
-    }
-    if (error) {
-      os << "error, error, error, error, ";
-    } else {
-      os << (good ? "true" : "false");
-      os << ", ";
-      os << (contained ? "true" : "false");
-      os << ", ";     
-      if (!good) {
-        os << result->getIntersection()->generateSatisfyingExample();
-        os << ", ";
-        os << result->getPreImage()->generateSatisfyingExample();
-        os << ", ";
-      } else if (result->hasPostAttackImage()) {
-        os << result->getAttackPostImage()->generateSatisfyingExample();
-        // No pre-image if no intersection
-        os << ", N/A, ";
-      } else {
-        os << "N/A, N/A, ";
-      }
+    if (result) {
+      result->printResult(os, printHeader);
     }
   }
 }
@@ -131,6 +108,9 @@ BackwardAnalysisResult::BackwardAnalysisResult(
   , m_intersection(nullptr)
   , m_preimage(nullptr)
   , m_post_attack(nullptr)
+  , m_isErrored(true)
+  , m_isSafe(false)
+  , m_isContained(false)
 {
 }
 
@@ -143,10 +123,57 @@ BackwardAnalysisResult::BackwardAnalysisResult(
   , m_intersection(nullptr)
   , m_preimage(nullptr)
   , m_post_attack(nullptr)
+  , m_isErrored(true)
+  , m_isSafe(false)
+  , m_isContained(false)
 {
 }
 
 BackwardAnalysisResult::~BackwardAnalysisResult()
+{
+  finishAnalysis();
+}
+
+void BackwardAnalysisResult::doAnalysis()
+{
+  const StrangerAutomaton* postImage = m_fwResult.getPostImage();
+  m_intersection = this->getAttack()->computeAttackPatternOverlap(postImage, m_attack);
+  m_isErrored = true;
+  m_isSafe = false;
+  m_isContained = false;
+  if ((m_intersection) && (!m_intersection->isNull())) {
+    m_isErrored = false;
+    if (this->isVulnerable()) {
+      // Only compute BW analysis if vulnerable
+      m_isSafe = false;
+      m_isContained = postImage->checkInclusion(m_attack);
+      // Cache examples for printing
+      m_intersection_example = m_intersection->generateSatisfyingExample();
+      try {
+        AnalysisResult result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+        m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
+        m_preimage_example = m_preimage->generateSatisfyingExample();
+        //  clean up target analysis result
+      } catch (StrangerStringAnalysisException const &e) {
+        m_isErrored = true;
+        throw;
+      }
+    } else {
+      m_isSafe = true;
+      // Otherwise see what happens if attack pattern is used for a forward analysis
+      AnalysisResult result = this->getAttack()->computeTargetFWAnalysis(m_attack);
+      const StrangerAutomaton* post = this->getAttack()->getPostImage(result);
+      if (post) {
+        m_post_attack = new StrangerAutomaton(post);
+        m_post_attack_example = m_post_attack->generateSatisfyingExample();
+      } else {
+        m_post_attack = nullptr;
+      }
+    }
+  }
+}
+
+void BackwardAnalysisResult::finishAnalysis()
 {
   if (m_preimage) {
     delete m_preimage;
@@ -166,29 +193,30 @@ BackwardAnalysisResult::~BackwardAnalysisResult()
   }
 }
 
-void BackwardAnalysisResult::doAnalysis()
+void BackwardAnalysisResult::printResult(std::ostream& os, bool printHeader) const
 {
-  const StrangerAutomaton* postImage = m_fwResult.getPostImage();
-  m_intersection = this->getAttack()->computeAttackPatternOverlap(postImage, m_attack);
-  if ((m_intersection) && (!m_intersection->isNull())) {
-    if (this->isVulnerable()) {
-      // Only compute BW analysis if vulnerable
-      try {
-        AnalysisResult result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
-        m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
-        //  clean up target analysis result
-      } catch (StrangerStringAnalysisException const &e) {
-        throw;
-      }
+  bool error = this->isErrored();
+  bool good =  this->isSafe();
+  bool contained =  this->isContained();
+  if (printHeader) {
+    os << AttackContextHelper::getName(m_context) << ", ";
+    }
+  if (error) {
+    os << "error, error, error, error, ";
+  } else {
+    os << (good ? "true" : "false");
+    os << ", ";
+    os << (contained ? "true" : "false");
+    os << ", ";     
+    if (!good) {
+      os << m_intersection_example;
+      os << ", ";
+      os << m_preimage_example;
+        os << ", ";
     } else {
-      // Otherwise see what happens if attack pattern is used for a forward analysis
-      AnalysisResult result = this->getAttack()->computeTargetFWAnalysis(m_attack);
-      const StrangerAutomaton* post = this->getAttack()->getPostImage(result);
-      if (post) {
-        m_post_attack = new StrangerAutomaton(post);
-      } else {
-        m_post_attack = nullptr;
-      }
+      os << m_post_attack_example;
+      // No pre-image if no intersection
+      os << ", N/A, ";
     }
   }
 }
@@ -219,21 +247,26 @@ void BackwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
 }
 
 bool BackwardAnalysisResult::isErrored() const {
-  return ((m_intersection == nullptr) || m_intersection->isNull());
+  if (m_intersection == nullptr) {
+    return m_isErrored;
+  }
+  return m_intersection->isNull();
 }
 
 bool BackwardAnalysisResult::isSafe() const
 {
-  return (this->isErrored() || getIntersection()->isEmpty() || getIntersection()->checkEmptyString());
+  if (m_intersection == nullptr) {
+    return m_isSafe;
+  }
+  return (getIntersection()->isEmpty() || getIntersection()->checkEmptyString());
 }
 
 bool BackwardAnalysisResult::isContained() const
 {
   const StrangerAutomaton* postImage = m_fwResult.getPostImage();
-  if (this->isErrored() || (postImage == nullptr)) {
-    return false;
+  if ((postImage == nullptr || this->m_attack == nullptr)) { 
+    return m_isContained;
   }
-
   return postImage->checkInclusion(this->m_attack);
 }
 
@@ -256,7 +289,6 @@ ForwardAnalysisResult::~ForwardAnalysisResult()
     m_postImage = nullptr;
   }
 }
-
 void ForwardAnalysisResult::doAnalysis()
 {
   m_result = m_attack->computeTargetFWAnalysis(m_input);

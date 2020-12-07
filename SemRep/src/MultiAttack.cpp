@@ -113,6 +113,7 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
     BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
     bw->doAnalysis();
     bw->writeResultsToFile(dir);
+    bw->finishAnalysis();
   } catch (StrangerStringAnalysisException const &e) {
     std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
     std::cerr << e.what() << std::endl;
