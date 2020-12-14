@@ -33,6 +33,7 @@
 #include <thread>
 #include <algorithm>
 #include <functional>
+#include <unordered_set>
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
 
@@ -123,11 +124,11 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
   }
 }
 
-void MultiAttack::computeImagesForFile(const fs::path& file) {
+void MultiAttack::computeImagesForFile(const fs::path& file, DepGraph target_dep_graph) {
   fs::path dir(m_output_directory / file);
   std::cout << "Analysing file: " << file.string() << " in thread " << std::this_thread::get_id() << std::endl;
   CombinedAnalysisResult* result =
-    new CombinedAnalysisResult(file, m_input_name, StrangerAutomaton::makeAnyString());
+    new CombinedAnalysisResult(file, target_dep_graph, m_input_name, StrangerAutomaton::makeAnyString());
   const StrangerAutomaton* postImage = NULL;
   // Reduce debug prints
   result->getAttack()->setPrint(false);
@@ -173,8 +174,22 @@ void MultiAttack::compute() {
   findDotFiles();
   boost::asio::thread_pool pool(this->m_nThreads);
   std::cout << "Computing post images with pool of " << m_nThreads << " threads." << std::endl;
-  for (auto file : this->m_dot_paths) {
-      asio::post(pool, std::bind(&MultiAttack::computeImagesForFile, this, file));
+  std::unordered_set<int> hashes;
+  std::mutex hashes_mutex;
+
+    for (const auto& file : this->m_dot_paths) {
+      asio::post(pool, [this, &pool, &hashes, &hashes_mutex, file]() {
+          DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());
+          {
+              int hash = target_dep_graph.get_metadata().get_hash();
+              const std::lock_guard<std::mutex> lock(hashes_mutex);
+              if(!target_dep_graph.get_metadata().is_initialized() || // Legacy failsafe to support depgraphs without the hash field
+                 hashes.find(hash) == hashes.end()) {
+                  hashes.insert(hash);
+                  asio::post(pool, std::bind(&MultiAttack::computeImagesForFile, this, file, target_dep_graph));
+              }
+          }
+      });
   }
   pool.join();
   std::cout << "Forward analysis finished!" << std::endl;

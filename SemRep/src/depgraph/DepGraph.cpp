@@ -646,9 +646,9 @@ void DepGraph::printSCCInfo() {
     cout << endl << "------------------" << endl;
 }
 
-
-
-
+Metadata DepGraph::get_metadata() const {
+    return this->metadata;
+}
 
 
 NodeOwningDepGraph::NodeOwningDepGraph(const DepGraph& other) :
