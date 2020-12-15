@@ -25,7 +25,7 @@
 
 using namespace std;
 
-DepGraph::DepGraph() {
+DepGraph::DepGraph() : metadata() {
     root = nullptr;
     topLeaf = nullptr;
     label = "";
@@ -33,7 +33,7 @@ DepGraph::DepGraph() {
 
 }
 
-DepGraph::DepGraph(const DepGraph& other){
+DepGraph::DepGraph(const DepGraph& other)  : metadata(other.metadata) {
     this->root = other.root;
     this->nodes = other.nodes;
     this->topLeaf = other.topLeaf;
@@ -47,7 +47,7 @@ DepGraph::DepGraph(const DepGraph& other){
     this->scc_map = other.scc_map;
 }
 
-DepGraph& DepGraph::operator=(const DepGraph &other){
+DepGraph& DepGraph::operator=(const DepGraph &other) {
     this->root = other.root;
     this->nodes = other.nodes;
     this->topLeaf = other.topLeaf;
@@ -59,6 +59,7 @@ DepGraph& DepGraph::operator=(const DepGraph &other){
     this->labelloc = other.labelloc;
     this->scc_components = other.scc_components;
     this->scc_map = other.scc_map;
+    this->metadata = other.metadata;
     return *this;
 }
 
@@ -251,6 +252,8 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
         boost::regex regxNodeLit("Lit: (.*)");
         boost::regex regxNodeOp("(.+)");
         boost::regex regxStrangerRegEx("/(.+)/");
+        boost::regex regxComment("^//[^$]*$");
+        boost::regex regxMetadata("^// ([\\.\\w]+): ([-<>\\.,\\[\\}\\w]+)");
         string nodeName;
         string nodeDescription;
         string edge;
@@ -339,6 +342,13 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
                 DepGraphNode* toNode = depGraph.getNode(toNodeID);
                 depGraph.addEdge(fromNode, toNode);
                 cout_local << "Found edge: " << fromNodeID << "(" << fromNode << ") --> " << toNodeID << "(" << toNode << ")" << endl;
+            } else if (boost::regex_match(inputLine, sm, regxComment)) {
+                //process metadata
+                if(boost::regex_match(inputLine, sm, regxMetadata)) {
+                    std::string key = sm[1];
+                    std::string value = sm[2];
+                    depGraph.metadata.set_field(key, value);
+                }
             }
         }
         ifs.close();
@@ -501,7 +511,9 @@ std::string DepGraph::toDot() const{
     ss << "digraph cfg {\n"
        << "  label=\"" << DepGraphNode::escapeDot(this->label, 0) << "\";\n"
        << "  labelloc=" << DepGraphNode::escapeDot(this->labelloc, 0) << ";\n";
-    
+    if(this->metadata.is_initialized()) {
+        this->metadata.to_dot(ss);
+    }
     for (auto citNodes : nodes){
         ss << "  n" << citNodes.first
            << " "
@@ -634,9 +646,9 @@ void DepGraph::printSCCInfo() {
     cout << endl << "------------------" << endl;
 }
 
-
-
-
+Metadata DepGraph::get_metadata() const {
+    return this->metadata;
+}
 
 
 NodeOwningDepGraph::NodeOwningDepGraph(const DepGraph& other) :

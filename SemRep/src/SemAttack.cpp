@@ -33,9 +33,10 @@ PerfInfo& SemAttack::perfInfo = PerfInfo::getInstance();
 namespace fs = boost::filesystem;
 
 CombinedAnalysisResult::CombinedAnalysisResult(const fs::path& target_dep_graph_file_name,
+                                               DepGraph target_dep_graph_,
                                                const std::string& input_field_name,
                                                StrangerAutomaton* automaton)
-  : m_fwAnalysis(target_dep_graph_file_name, input_field_name, automaton)
+  : m_fwAnalysis(target_dep_graph_file_name, input_field_name, target_dep_graph_, automaton)
   , m_bwAnalysisMap()
   , m_inputfile(target_dep_graph_file_name)
   , m_input_name(input_field_name)
@@ -272,8 +273,9 @@ bool BackwardAnalysisResult::isContained() const
 
 ForwardAnalysisResult::ForwardAnalysisResult(const fs::path& target_dep_graph_file_name,
                                              const std::string& input_field_name,
+                                             DepGraph target_dep_graph_,
                                              StrangerAutomaton* automaton)
-  : m_attack(new SemAttack(target_dep_graph_file_name, input_field_name))
+  : m_attack(new SemAttack(target_dep_graph_file_name, target_dep_graph_, input_field_name))
   , m_result()
   , m_input(automaton)
   , m_postImage(nullptr)
@@ -319,27 +321,26 @@ void ForwardAnalysisResult::finishAnalysis() {
   m_result.clear();
 }
 
-SemAttack::SemAttack(const fs::path& target_dep_graph_file_name, const string& input_field_name)
+SemAttack::SemAttack(const fs::path& target_dep_graph_file_name, DepGraph target_dep_graph_, const string& input_field_name)
   : target_dep_graph_file_name(target_dep_graph_file_name)
   , input_field_name(input_field_name)
   , m_print_dots(false)
   , m_print(true)
+  , target_dep_graph(target_dep_graph_)
 {
 }
 
-SemAttack::SemAttack(const std::string& target_dep_graph_file_name, const string& input_field_name)
+SemAttack::SemAttack(const std::string& target_dep_graph_file_name, DepGraph target_dep_graph_, const string& input_field_name)
   : target_dep_graph_file_name(target_dep_graph_file_name)
   , input_field_name(input_field_name)
   , m_print_dots(false)
   , m_print(true)
+  , target_dep_graph(target_dep_graph_)
 {
 }
 
 void SemAttack::init()
 {
-    // read dep graphs
-    this->target_dep_graph = DepGraph::parseDotFile(target_dep_graph_file_name.string());
-
     // initialize input nodes
     this->target_uninit_field_node = target_dep_graph.findInputNode(input_field_name);
     if (target_uninit_field_node == NULL) {

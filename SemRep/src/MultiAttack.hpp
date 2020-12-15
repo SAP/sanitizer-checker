@@ -55,7 +55,7 @@ private:
     void printFiles(std::ostream& os) const;
     void fillCommonPatterns();
     void findDotFiles();
-    void computeImagesForFile(const fs::path& file);
+    void computeImagesForFile(const fs::path& file, DepGraph target_dep_graph);
     void computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context);
     static std::vector<fs::path> getDotFilesInDir(fs::path const &dir);
     static std::vector<fs::path> getFilesInPath(fs::path const & root, std::string const & ext);

@@ -29,6 +29,7 @@
 #include "DepGraphUninitNode.hpp"
 #include "DepGraphOpNode.hpp"
 #include "DepGraphNormalNode.hpp"
+#include "Metadata.hpp"
 
 #include <map>
 #include <vector>
@@ -82,7 +83,7 @@ typedef std::map<int, NodesList>::const_iterator SccNodesConstIterator;
 class DepGraph {
 public:
     DepGraph();
-    DepGraph(DepGraphNormalNode* root) { this->root = root; this->addNode(root); this->topLeaf = nullptr;};
+    DepGraph(DepGraphNormalNode* root) : metadata() { this->root = root; this->addNode(root); this->topLeaf = nullptr;};
     DepGraph(const DepGraph& other);
     DepGraph& operator=(const DepGraph &other);
     virtual ~DepGraph() {};
@@ -123,7 +124,7 @@ public:
     };
 
     NodesList getNodes();
-
+    Metadata get_metadata() const;
     UninitNodesList getUninitNodes() ;
 
     OpNodesList getFuncsNodes(const std::vector<std::string> funcsNames) ;
@@ -179,6 +180,8 @@ protected:
 	SccNodes scc_components;
 	// contains an entry for a node if it is involved in a cycle that has more than one node
 	map<int, int> scc_map;
+
+	Metadata metadata;
 
 	void dfsSCC(DepGraphNode* node, int& time_count, map<int, int>& lowlink, map<int, bool>& used, stack<int>& process_stack);
 

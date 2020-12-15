@@ -36,8 +36,8 @@ namespace fs = boost::filesystem;
 
 class SemAttack {
 public:
-    SemAttack(const std::string& target_dep_graph_file_name, const std::string& input_field_name);
-    SemAttack(const fs::path& target_dep_graph_file_name, const std::string& input_field_name);
+    SemAttack(const std::string& target_dep_graph_file_name, DepGraph target_dep_graph_, const std::string& input_field_name);
+    SemAttack(const fs::path& target_dep_graph_file_name, DepGraph target_dep_graph_, const std::string& input_field_name);
     virtual ~SemAttack();
 
     // Load the depgraph from file
@@ -99,6 +99,7 @@ public:
     // Do forward analysis and get result
     ForwardAnalysisResult(const fs::path& target_dep_graph_file_name,
                           const std::string& input_field_name,
+                          DepGraph target_dep_graph_,
                           StrangerAutomaton* automaton);
         
     virtual ~ForwardAnalysisResult();
@@ -183,6 +184,7 @@ class CombinedAnalysisResult {
 
 public:
     CombinedAnalysisResult(const fs::path& target_dep_graph_file_name,
+                           DepGraph target_dep_graph_,
                            const std::string& input_field_name,
                            StrangerAutomaton* automaton);
     ~CombinedAnalysisResult();

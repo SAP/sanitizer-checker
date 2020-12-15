@@ -35,8 +35,8 @@ void call_sem_attack(string target_name, string field_name){
     try {
         cout << endl << "\t------ Starting Analysis for: " << field_name << " ------" << endl;
         cout << endl << "\t       Target: " << target_name  << endl;
-
-        SemAttack semAttack(target_name, field_name);
+        DepGraph target_dep_graph = DepGraph::parseDotFile(target_name);
+        SemAttack semAttack(target_name, target_dep_graph, field_name);
         semAttack.setPrintDots(true);
         semAttack.init();
         AnalysisResult result = semAttack.computeTargetFWAnalysis();
