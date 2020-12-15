@@ -18,7 +18,7 @@ libsemrep_a_SOURCES = ImageComputer.cpp \
                       ValidationImageComputer.cpp \
 		      AnalysisResult.cpp
 
-bin_PROGRAMS = semrep semattack semattack_bw multiattack
+bin_PROGRAMS = semrep semattack semattack_bw multiattack automatonify
 
 semrep_SOURCES = main.cpp
 semrep_LDADD = libsemrep.a \
@@ -75,3 +75,17 @@ multiattack_LDADD = libsemrep.a \
                  $(BOOST_REGEX_LIB) \
                  $(BOOST_THREAD_LIB) \
                  @PTHREAD_CFLAGS@
+
+automatonify_SOURCES = automatonify.cpp
+automatonify_LDADD = libsemrep.a \
+               exceptions/libexceptions.a \
+               $(MONADFALIB) \
+               $(MONABDDLIB) \
+               $(STRANGERLIB) \
+               $(BOOST_IO_STREAMS_LIB) \
+               $(BOOST_PROGRAM_OPTIONS_LIB) \
+               $(BOOST_FILESYSTEM_LIB) \
+               $(BOOST_SYSTEM_LIB) \
+               $(BOOST_REGEX_LIB) \
+               $(BOOST_THREAD_LIB) \
+               @PTHREAD_CFLAGS@
