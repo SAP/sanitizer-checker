@@ -178,7 +178,7 @@ void MultiAttack::compute() {
   std::mutex hashes_mutex;
 
     for (const auto& file : this->m_dot_paths) {
-      asio::post(pool, [this, &pool, &hashes, &hashes_mutex, file]() {
+      asio::dispatch(pool, [this, &pool, &hashes, &hashes_mutex, file]() {
           try {
               DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());
               {
@@ -187,7 +187,7 @@ void MultiAttack::compute() {
                   if(!target_dep_graph.get_metadata().is_initialized() || // Legacy failsafe to support depgraphs without the hash field
                      hashes.find(hash) == hashes.end()) {
                       hashes.insert(hash);
-                      asio::post(pool, std::bind(&MultiAttack::computeImagesForFile, this, file, target_dep_graph));
+                      asio::dispatch(pool, std::bind(&MultiAttack::computeImagesForFile, this, file, target_dep_graph));
                   }
               }
           } catch(std::exception& e) {
