@@ -19,6 +19,7 @@ missing
 src/semattack_bw
 src/semattack
 src/semrep
+src/automatonify
 
 # Clang tooling
 .clang-tidy
