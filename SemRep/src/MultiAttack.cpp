@@ -179,15 +179,19 @@ void MultiAttack::compute() {
 
     for (const auto& file : this->m_dot_paths) {
       asio::post(pool, [this, &pool, &hashes, &hashes_mutex, file]() {
-          DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());
-          {
-              int hash = target_dep_graph.get_metadata().get_hash();
-              const std::lock_guard<std::mutex> lock(hashes_mutex);
-              if(!target_dep_graph.get_metadata().is_initialized() || // Legacy failsafe to support depgraphs without the hash field
-                 hashes.find(hash) == hashes.end()) {
-                  hashes.insert(hash);
-                  asio::post(pool, std::bind(&MultiAttack::computeImagesForFile, this, file, target_dep_graph));
+          try {
+              DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());
+              {
+                  int hash = target_dep_graph.get_metadata().get_hash();
+                  const std::lock_guard<std::mutex> lock(hashes_mutex);
+                  if(!target_dep_graph.get_metadata().is_initialized() || // Legacy failsafe to support depgraphs without the hash field
+                     hashes.find(hash) == hashes.end()) {
+                      hashes.insert(hash);
+                      asio::post(pool, std::bind(&MultiAttack::computeImagesForFile, this, file, target_dep_graph));
+                  }
               }
+          } catch(std::exception& e) {
+              cerr << "Error parsing " << file.string() << ": " << e.what() << "\n";
           }
       });
   }
