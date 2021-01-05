@@ -204,6 +204,8 @@ public:
     bool isFilterContained(const AttackContext& context) const;
 
     const Metadata& getMetadata() const { return m_metadata; }
+    AttackContext getSinkContext() const { return AttackContextHelper::getContextFromMetadata(m_metadata); }
+    bool isSinkContext(const AttackContext& context) const { return (context == getSinkContext()); }
 
     void printResult(std::ostream& os, bool printHeader, const std::vector<AttackContext>& contexts) const;
     void printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const;

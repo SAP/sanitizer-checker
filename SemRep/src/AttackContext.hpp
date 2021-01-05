@@ -25,6 +25,8 @@
 #ifndef ATTACK_CONTEXT_HPP_
 #define ATTACK_CONTEXT_HPP_
 
+#include "depgraph/Metadata.hpp"
+
 #define SOME_ENUM(DO)       \
   DO(LessThan)              \
   DO(GreaterThan)           \
@@ -55,6 +57,7 @@ class AttackContextHelper {
 
 public:
   static const char* getName(AttackContext c);
+  static AttackContext getContextFromMetadata(const Metadata& metadata);
 
 private:
   static const char* AttackContextName[];

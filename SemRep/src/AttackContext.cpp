@@ -34,3 +34,19 @@ const char* AttackContextHelper::getName(AttackContext c)
   return AttackContextName[static_cast<int>(c)];
 }
 
+AttackContext AttackContextHelper::getContextFromMetadata(const Metadata& metadata)
+{
+  if (metadata.get_exploit_type() == Exploit_Type::Html) {
+    if (metadata.get_exploit_token() == "attribute") {
+      return AttackContext::HtmlAttr;
+    } else {
+      return AttackContext::Html;
+    }
+  } else if (metadata.get_exploit_type() == Exploit_Type::Attribute) {
+      return AttackContext::HtmlAttr;
+  } else if (metadata.get_exploit_type() == Exploit_Type::JavaScript) {
+    return AttackContext::JavaScript;
+  } else {
+    return AttackContext::None;
+  }
+}

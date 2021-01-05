@@ -27,6 +27,8 @@
 
 #include <iostream>
 
+std::vector<AttackContext> AutomatonGroup::m_sink_contexts = { AttackContext::Html, AttackContext::HtmlAttr, AttackContext::JavaScript };
+
 AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name, int id)
   : m_automaton(automaton)
   , m_graphs()
@@ -70,7 +72,12 @@ void AutomatonGroup::addCombinedAnalysisResult(const CombinedAnalysisResult* gra
 }
 
 void AutomatonGroup::printHeaders(std::ostream& os, const std::vector<AttackContext>& contexts) const {
-  os << "id, number, entries, validated, ";
+  os << "id, number, entries, validated";
+  for (auto c : m_sink_contexts) {
+    os << ", " << AttackContextHelper::getName(c) << " sink entries";
+    os << ", " << AttackContextHelper::getName(c) << " sink validated";
+  }
+  os << ", ";
   // Get headers from first entry
   if (m_graphs.size() > 0) {
     m_graphs.at(0)->printHeader(os, contexts);
@@ -83,6 +90,10 @@ void AutomatonGroup::printSummary(std::ostream& os) const {
      << getName() << ", "
      << getEntries() << ", "
      << getSuccessfulValidated();
+  for (auto c : m_sink_contexts) {
+    os << ", " << getEntriesForSinkContext(c);
+    os << ", " << getValidatedEntriesForSinkContext(c);
+  }
 }
 
 void AutomatonGroup::printMembers(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const {
@@ -107,6 +118,24 @@ unsigned int AutomatonGroup::getSuccessfulValidated() const {
   unsigned int total = 0;
   for (auto iter : m_graphs) {
     total += iter->getMetadata().is_exploit_successful() ? 1 : 0;
+  }
+  return total;
+}
+
+unsigned int AutomatonGroup::getEntriesForSinkContext(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    total += iter->isSinkContext(context) ? 1 : 0;
+  }
+  return total;
+}
+
+unsigned int AutomatonGroup::getValidatedEntriesForSinkContext(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    if (iter->isSinkContext(context) && iter->getMetadata().is_exploit_successful()) {
+      total += 1;
+    }
   }
   return total;
 }
@@ -228,6 +257,10 @@ void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackCont
   os << "-1, ";
   os << "total, ";
   os << entries << ", " << exploited << ", ";
+  for (auto c : AutomatonGroup::m_sink_contexts) {
+    os << getEntriesForSinkContext(c) << ", ";
+    os << getValidatedEntriesForSinkContext(c) << ", ";   
+  }
   for (auto context : contexts) {
     unsigned int success = getSuccessfulEntriesForContext(context);
     os << success << ", ";
@@ -274,6 +307,22 @@ unsigned int AutomatonGroups::getSuccessfulValidated() const {
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getSuccessfulValidated();
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getEntriesForSinkContext(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getEntriesForSinkContext(context);
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getValidatedEntriesForSinkContext(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getValidatedEntriesForSinkContext(context);
   }
   return total;
 }

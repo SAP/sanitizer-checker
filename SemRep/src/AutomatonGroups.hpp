@@ -35,6 +35,8 @@
 // Create a class to group equal Automata
 class AutomatonGroup {
 
+   friend class AutomatonGroups;
+
 public:
     AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name, int id);
     AutomatonGroup(const StrangerAutomaton* automaton, int id);
@@ -48,6 +50,8 @@ public:
     unsigned int getSuccessfulEntriesForContext(const AttackContext& context) const;
     unsigned int getContainedEntriesForContext(const AttackContext& context) const;
     unsigned int getSuccessfulValidated() const;
+    unsigned int getEntriesForSinkContext(const AttackContext& context) const;
+    unsigned int getValidatedEntriesForSinkContext(const AttackContext& context) const;
 
     void printMembers(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
     void printSummary(std::ostream& os) const;
@@ -58,6 +62,8 @@ private:
     std::vector<const CombinedAnalysisResult*> m_graphs;
     std::string m_name;
     int m_id;
+
+    static std::vector<AttackContext> m_sink_contexts;
 };
 
 class AutomatonGroups {
@@ -82,6 +88,9 @@ public:
     unsigned int getContainedEntriesForContext(const AttackContext& context) const;
     unsigned int getSuccessfulGroupsForContext(const AttackContext& context) const;
     unsigned int getSuccessfulValidated() const;
+    unsigned int getEntriesForSinkContext(const AttackContext& context) const;
+    unsigned int getValidatedEntriesForSinkContext(const AttackContext& context) const;
+
     void printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
 
 private:
@@ -90,6 +99,7 @@ private:
     int m_id;
     AutomatonGroup* addNewEntry(const StrangerAutomaton* automaton, const CombinedAnalysisResult* graph);
     void printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const;
+
 };
 
 #endif /* AUTOMATON_GROUPS_HPP_ */
