@@ -31,6 +31,7 @@
 #include "ImageComputer.hpp"
 #include "SemRepairDebugger.hpp"
 #include "depgraph/DepGraph.hpp"
+#include "depgraph/Metadata.hpp"
 
 namespace fs = boost::filesystem;
 
@@ -202,6 +203,8 @@ public:
     bool isFilterSuccessful(const AttackContext& context) const;
     bool isFilterContained(const AttackContext& context) const;
 
+    const Metadata& getMetadata() const { return m_metadata; }
+
     void printResult(std::ostream& os, bool printHeader, const std::vector<AttackContext>& contexts) const;
     void printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const;
     void finishAnalysis() { getFwAnalysis().finishAnalysis(); }
@@ -211,6 +214,9 @@ private:
 
     ForwardAnalysisResult m_fwAnalysis;
     std::unordered_map<AttackContext, BackwardAnalysisResult*> m_bwAnalysisMap;
+
+    // Copy of the metadata
+    Metadata m_metadata;
 };
 
 #endif /* SEMATTACK_HPP_ */

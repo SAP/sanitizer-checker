@@ -68,7 +68,7 @@ private:
     int end_index;
     bool initialized;
     std::string exploit_uuid;
-    bool exploit_success{};
+    bool exploit_success;
     Exploit_Method exploit_method;
     Exploit_Status exploit_status;
     Exploit_Type exploit_type;

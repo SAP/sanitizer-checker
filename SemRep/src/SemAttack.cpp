@@ -40,6 +40,7 @@ CombinedAnalysisResult::CombinedAnalysisResult(const fs::path& target_dep_graph_
   , m_bwAnalysisMap()
   , m_inputfile(target_dep_graph_file_name)
   , m_input_name(input_field_name)
+  , m_metadata(target_dep_graph_.get_metadata())
 {
 }
 

@@ -79,7 +79,6 @@ void MultiAttack::writeResultsToFile() const {
   ofs_files.open (output_files.string(), std::ofstream::out);
   printFiles(ofs_files);
   ofs_files.close();
-
 }
 
 void MultiAttack::printFiles(std::ostream& os) const {

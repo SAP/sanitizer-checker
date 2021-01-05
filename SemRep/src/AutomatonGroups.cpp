@@ -70,7 +70,7 @@ void AutomatonGroup::addCombinedAnalysisResult(const CombinedAnalysisResult* gra
 }
 
 void AutomatonGroup::printHeaders(std::ostream& os, const std::vector<AttackContext>& contexts) const {
-  os << "id, number, entries, ";
+  os << "id, number, entries, validated, ";
   // Get headers from first entry
   if (m_graphs.size() > 0) {
     m_graphs.at(0)->printHeader(os, contexts);
@@ -81,7 +81,8 @@ void AutomatonGroup::printHeaders(std::ostream& os, const std::vector<AttackCont
 void AutomatonGroup::printSummary(std::ostream& os) const {
   os << m_id << ", "
      << getName() << ", "
-     << getEntries();
+     << getEntries() << ", "
+     << getSuccessfulValidated();
 }
 
 void AutomatonGroup::printMembers(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const {
@@ -100,6 +101,14 @@ void AutomatonGroup::printMembers(std::ostream& os, bool printAll, const std::ve
   }
   os << std::endl;
   //m_automaton->toDotAscii(0);
+}
+
+unsigned int AutomatonGroup::getSuccessfulValidated() const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    total += iter->getMetadata().is_exploit_successful() ? 1 : 0;
+  }
+  return total;
 }
 
 unsigned int AutomatonGroup::getSuccessfulEntriesForContext(const AttackContext& context) const {
@@ -215,9 +224,10 @@ void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::ve
 
 void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const {
   unsigned int entries = getEntries();
+  unsigned int exploited = getSuccessfulValidated();
   os << "-1, ";
   os << "total, ";
-  os << entries << ", ";
+  os << entries << ", " << exploited << ", ";
   for (auto context : contexts) {
     unsigned int success = getSuccessfulEntriesForContext(context);
     os << success << ", ";
@@ -256,6 +266,14 @@ unsigned int AutomatonGroups::getEntries() const {
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getEntries();
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getSuccessfulValidated() const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getSuccessfulValidated();
   }
   return total;
 }
