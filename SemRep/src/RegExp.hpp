@@ -154,13 +154,21 @@ private:
     static std::string iToStr(int i);
     static std::string::size_type indexOf(std::string s, char c);
 //    static int parseInt(std::string s);
-    bool peek(std::string s);
-	bool match(char c);
-	bool more();
-	char next() /* throws(IllegalArgumentException) */;
-	bool check(int flag);
-	static int id;
 
+    // Return true if the next character is present in string s
+    bool peek(std::string s) { return peek(s, 0); };
+    // Return true if the character at offset is present in string s
+    bool peek(std::string s, int offset);
+
+    bool match(char c);
+    bool more();
+    char next() /* throws(IllegalArgumentException) */;
+    bool check(int flag);
+    static int id;
+
+    bool isShortHand();
+    RegExp* parseShortHand();
+    RegExp* parseCharOrShortHand();
 };
 
 int to_int(std::string input);

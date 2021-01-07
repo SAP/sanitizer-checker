@@ -579,9 +579,13 @@ RegExp* RegExp::makeInterval(int min, int max, int digits)
     return r;
 }
 
-bool RegExp::peek(std::string s)
+bool RegExp::peek(std::string s, int offset)
 {
-    return more() && (s.find(b[pos]) != string::npos);
+    if ((pos + offset < b.length()) && (pos + offset >= 0)) {
+        return s.find(b[pos + offset]) != string::npos;
+    } else {
+        return false;
+    }
 }
 
 bool RegExp::match(char c)
@@ -721,11 +725,19 @@ RegExp* RegExp::parseCharClasses() /* throws(IllegalArgumentException) */
 
 RegExp* RegExp::parseCharClass() /* throws(IllegalArgumentException) */
 {
+    if (isShortHand()) {
+        return parseShortHand();
+    }
     char c = parseCharExp();
-    if(match('-'))
+    if(match('-')) {
+        if (isShortHand()) {
+            // Need to match the - as a normal char
+            return makeChar('-');
+        }
         return makeCharRange(c, parseCharExp());
-    else
+    } else {
         return makeChar(c);
+    }
 }
 
 RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
@@ -810,8 +822,52 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
             }
         }
     } else {
-        return makeChar(parseCharExp());
+        return parseCharOrShortHand();
     }
+}
+
+
+// Shorthand Character Classes: https://www.regular-expressions.info/shorthand.html
+bool RegExp::isShortHand() {
+    if (peek("\\")) {
+        if (peek("dDsSwWp", 1)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+RegExp* RegExp::parseShortHand() {
+    if (match('\\')) {
+        char c = next();
+        switch (c) {
+        case 'd':
+            return new RegExp("[0-9]");
+        case 'D':
+            return new RegExp("[^0-9]");
+        case 's':
+            return new RegExp("[\\x20\\t\\r\\n\\f\\v]");
+        case 'S':
+            return new RegExp("[^\\s]");
+        case 'w':
+            return new RegExp("[0-9a-zA-Z]");
+        case 'W':
+            return new RegExp("[^\\w]");
+        case 'p':
+            return new RegExp("[\\r\\n]");
+        default:
+            // Maybe an error would be better?
+            return makeChar(c);
+        }
+    }
+    return makeChar(parseCharExp());
+}
+
+RegExp* RegExp::parseCharOrShortHand() {
+    if (isShortHand()) {
+        return parseShortHand();
+    }
+    return makeChar(parseCharExp());
 }
 
 char RegExp::parseCharExp() /* //throws(IllegalArgumentException) */
@@ -835,14 +891,25 @@ char RegExp::parseCharExp() /* //throws(IllegalArgumentException) */
                 // Match \x alone (= 0)
                 return 0;
             }
+        } else if(match('f')) { // Form Feed
+            return '\f';
+        } else if(match('n')) { // Newline
+            return '\n';
+        } else if(match('r')) { // Carriage Return
+            return '\r';
+        } else if(match('t')) { // Tab
+            return '\t';
+        } else if(match('v')) { // Vertical Tab
+            return '\v';
         } else {
-            // TODO: No 'x', but might be followed by numbers for a decimal
+            // Assume anything else is just esacped, return next character
             return next();
         }
     } else {
         return next();
     }
 }
+
 
 
 std::string RegExp::iToStr(int i){
