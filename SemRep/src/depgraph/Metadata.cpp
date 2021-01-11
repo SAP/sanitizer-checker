@@ -97,6 +97,21 @@ bool Metadata::set_field(std::string key, std::string value) {
         this->initialized = true;
         return true;
     }
+    if(key == "Finding.script") {
+        this->initialized = true;
+        this->script = value;
+        return true;
+    }
+    if(key == "Finding.line") {
+        this->line = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Finding.original_uuid") {
+        this->original_uuid = value;
+        this->initialized = true;
+        return true;
+    }
     if(key == "Exploit.uuid") {
         this->exploit_uuid = value;
         this->initialized = true;
@@ -158,6 +173,10 @@ void Metadata::to_dot(std::stringstream &ss) const {
     ss << "// Finding.source: " << this->source << "\n";
     ss << "// Finding.begin: " << this->start_index << "\n";
     ss << "// Finding.end: " << this->end_index << "\n";
+    ss << "// Finding.original_uuid: " << this->original_uuid << "\n";
+    ss << "// Finding.script: " << this->script << "\n";
+    ss << "// Finding.line: " << this->line << "\n";
+
 }
 
 const std::string &Metadata::get_exploit_uuid() const {
@@ -198,4 +217,16 @@ const std::string &Metadata::get_exploit_quote_type() const {
 
 int Metadata::get_hash() const {
     return this->hash;
+}
+
+const std::string &Metadata::get_script() const {
+    return this->script;
+}
+
+int Metadata::get_line() const {
+    return this->line;
+}
+
+const std::string Metadata::get_original_uuid() const {
+    return this->original_uuid;
 }

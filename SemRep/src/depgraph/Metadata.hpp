@@ -54,6 +54,11 @@ public:
 
     const std::string &get_exploit_quote_type() const;
 
+    const std::string& get_script() const;
+    int get_line() const;
+
+    const std::string get_original_uuid() const;
+
     int get_hash() const;
     bool is_initialized() const;
 
@@ -68,7 +73,10 @@ private:
     int end_index;
     bool initialized;
     std::string exploit_uuid;
-    bool exploit_success;
+    std::string original_uuid;
+    std::string script;
+    int line{};
+    bool exploit_success{};
     Exploit_Method exploit_method;
     Exploit_Status exploit_status;
     Exploit_Type exploit_type;
