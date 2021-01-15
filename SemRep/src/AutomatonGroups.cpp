@@ -104,8 +104,8 @@ void AutomatonGroup::printMembers(std::ostream& os, bool printAll, const std::ve
   if (m_graphs.size() > 0) {
     m_graphs.at(0)->printResult(os, false, contexts);
   }
-  for (auto iter : m_graphs) {
-    os << iter->getFileName() << ", ";
+  for (const auto *iter : m_graphs) {
+    os << iter->getFileName() << "; ";
     if (!printAll) {
       break;
     }
