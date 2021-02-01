@@ -64,6 +64,7 @@ char *getSharp1(int k);
 char *getSharp0(int k);
 char *getSharp0WithExtraBit(int k);
 char *getSharp1WithExtraBit(int k);
+char *getArbitraryStringWithExtraBit(int k);
 char *bintostr(unsigned long n, int k);
 char *bintostrWithExtraBit(unsigned long n, int k);
 unsigned char strtobin(char* binChar, int var);
@@ -92,7 +93,7 @@ DFA *dfa_general_replace_extrabit(DFA* M1, DFA* M2, DFA* M3, int var, int* indic
 DFA* dfa_pre_replace(DFA* M1, DFA* M2, DFA* M3, int var, int* indices);
 DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, const char *str, int var, int* indices);
 DFA *dfa_replace(DFA *M1, DFA *M2, DFA *M3, int var, int *indices);
-DFA *dfa_insert_everywhere(DFA *M, DFA* Mr, int var, int *indices);
+DFA *dfa_insert_everywhere(DFA *M, DFA* Mr, int var, int *indices, int replace_once);
     
 int* allocateMultipleAscIIIndex(int m, int length);
 

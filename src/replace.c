@@ -68,13 +68,18 @@ void print_value(paths pp, int var, int *indices, int len) {
 
 void print_exep_value(char *exep, int len) {
     int j;
-    trace_descr tp;
-    for (j = 0; j < len; j++, exep++) {
-        printf("%c", *exep);
+    for (j = 0; j < len; j++) {
+        printf("%c", exep[j]);
     }
     printf("\n");
 }
 
+void print_transitions(int i, int* to_states, int k, char* exp, int len) {
+    for (int j = 0; j < k; j++) {
+        printf("state: %d -> %d value: ", i, to_states[j]);
+        print_exep_value(exp + j*(len+1), len);
+    }
+}
 
 int is_sharp1(paths pp, int var, int *indices) {
     char *sharp1;
@@ -224,17 +229,16 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
           state_paths = pp = make_paths(M->bddm, M->q[i]);
           while (pp) {
               if ((pp->to != sink) && (pp->to != 0)) {
-              for (tp = pp->trace; tp && (tp->index != indices[var]); tp = tp->next);
-              if (!tp || !(tp->value)) { // pp->value indicates a bar value
-//                  printf("Stating state has closure to state %d -> %d\n", i, pp->to);
+                  for (tp = pp->trace; tp && (tp->index != indices[var]); tp = tp->next);
+                  if (!tp || !(tp->value)) { // pp->value indicates a bar value
+
                   // Check if the transition is a loop to the same state
                   if (pp->to == i) {
                       to_states[k] = 0;
-//                      printf("LOOP! to_states[%d] = %d\n", k, to_states[k]);                       
                   } else {
                       to_states[k]=pp->to;
                   }
-                for (j = 0; j < var; j++) {
+                  for (j = 0; j < var; j++) {
                   //the following for loop can be avoided if the indices are in order
                   for (tp = pp->trace; tp && (tp->index != indices[j]); tp = tp->next);
                   if (tp) {
@@ -1290,18 +1294,18 @@ DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indic
   DFA *M_rep;
   DFA *M_sharp = dfaSharpStringWithExtraBit(var, indices);
 
-//  printf("Insert sharp1 and sharp2 for duplicate M1\n");
+  //printf("Insert sharp1 and sharp2 for duplicate M1\n");
   M1_bar = dfa_replace_step1_duplicate(M1, var, indices);
 //  dfaPrintVitals(M1_bar);  //having extra bit
   if(_FANG_DFA_DEBUG) printf("M1_bar: var %d\n", var);
 //  dfaPrintVitals(M1_bar);
-  //	dfaPrintGraphviz(M1_bar, var+1, allocateAscIIIndex(var+1));
-//  printf("Generate M2 bar sharp1 M2 and sharp2\n");
+  //dfaPrintGraphvizAsciiRange(M1_bar, var, indices, 1);
+  //printf("Generate M2 bar sharp1 M2 and sharp2\n");
   M2_bar = dfa_replace_step2_match_compliment(M2, var, indices);
 //  dfaPrintVitals(M2_bar);  //having extra bit
   if(_FANG_DFA_DEBUG) printf("M2_bar: var %d\n", var);
 //  dfaPrintVitals(M2_bar);
-  //	dfaPrintGraphviz(M2_bar, var+1, allocateAscIIIndex(var+1));
+  //dfaPrintGraphvizAsciiRange(M2_bar, var, indices, 1);
 
 //  printf("Generate Intersection\n");
   M_inter = dfa_intersect(M1_bar, M2_bar);
@@ -1312,6 +1316,7 @@ DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indic
     dfaPrintVerbose(M_inter);
   }
 //  dfaPrintVitals(M_inter);
+  //dfaPrintGraphvizAsciiRange(M_inter, var, indices, 1);
 
 //  printf("Check Intersection\n");
   if(check_intersection(M_sharp, M_inter, var, indices)>0){
@@ -1450,7 +1455,93 @@ DFA *dfa_replace(M1, M2, M3, var, indices)
   return dfa_general_replace_extrabit(M1, M2, M3, var, indices);
 }
 
+/**********
+ *
+ * Automaton which ensures that at least one replaced state is passed through
+ * ie, at least one "dash" transition occurs
+ *
+ * This prevents the original string being an accept state
+ */
+DFA* dfa_with_bar_transition(int var, int *indices)
+{
+  DFA* dfa = NULL;
+  int len = var + 1;
+  DFABuilder *b = dfaSetup(2, len, indices);
+  char *arbitrary = getArbitraryStringWithExtraBit(var);
 
+  // State 0
+  dfaAllocExceptions(b, 1);
+  dfaStoreException(b, 0, arbitrary);
+  dfaStoreState(b, 1);
+
+  // State 1
+  dfaAllocExceptions(b, 0);
+  dfaStoreState(b, 1);
+
+  free(arbitrary);
+
+  dfa = dfaBuild(b, "-+");
+  return dfa;
+}
+
+/**********
+ *
+ * Automaton which ensures that at ONLY one replaced state is passed through
+ * ie, exactly one "dash" transition occurs
+ *
+ * This prevents the original string being an accept state
+ */
+DFA* dfa_with_one_bar_transition(int var, int *indices)
+{
+  DFA* dfa = NULL;
+  int len = var + 1;
+  DFABuilder *b = dfaSetup(4, len, indices);
+
+  char *nondash = getArbitraryStringWithExtraBit(var);
+
+  // State 0
+  dfaAllocExceptions(b, 1);
+  dfaStoreException(b, 0, nondash);
+  dfaStoreState(b, 1);
+
+  // State 1
+  dfaAllocExceptions(b, 1);
+  dfaStoreException(b, 1, nondash);
+  dfaStoreState(b, 2);
+
+  // State 2
+  dfaAllocExceptions(b, 1);
+  dfaStoreException(b, 2, nondash);
+  dfaStoreState(b, 3);
+
+  // State 3 (sink state)
+  dfaAllocExceptions(b, 0);
+  dfaStoreState(b, 3);
+
+  free(nondash);
+
+  dfa = dfaBuild(b, "--+-");
+  return dfa;
+}
+
+
+// Only allow transitions with at least one bar state
+DFA* dfa_ensure_bar_transition(DFA *M, int var, int *indices)
+{
+  DFA *bar = dfa_with_bar_transition(var, indices);
+  DFA *tmp = dfa_intersect(M, bar);
+  dfaFree(bar);
+  return tmp;
+}
+
+// Only allow transitions with exactly one bar state
+DFA* dfa_ensure_one_bar_transition(DFA *M, int var, int *indices)
+{
+  DFA *bar = dfa_with_one_bar_transition(var, indices);
+  DFA *tmp = dfa_intersect(M, bar);
+  dfaFree(bar);
+  return tmp;
+}
 
 /******************************************************************
 
@@ -1460,8 +1551,7 @@ I.e., Output M' so that L(M')={ w0c0w1c1w2c2w3 | c0c1c2 \in L(M), wi \in L(Mr) }
 
 ******************************************************************/
 
-
-DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices)
+DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices, int replace_once)
 {
   DFA *result = NULL;
   DFA *tmpM = NULL;
@@ -1542,10 +1632,26 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices)
 
   statuces[M->ns]='\0';
   result = dfaBuild(b, statuces);
+
+  tmpM = dfaMinimize(result);
+  dfaFree(result);
+  result = tmpM;
+
+  if (replace_once) {
+    tmpM = dfa_ensure_one_bar_transition(result, var, indices);
+  } else {
+    tmpM = dfa_ensure_bar_transition(result, var, indices);
+  }
+  dfaFree(result);
+  result = tmpM;
+
   tmpM = dfaProject(result, (unsigned) len-1);
   dfaFree(result);
-  result = dfaMinimize(tmpM);
-  dfaFree(tmpM);
+  result = tmpM;
+
+  tmpM = dfaMinimize(result);
+  dfaFree(result);
+  result = tmpM;
 
   free(exeps);
   free(to_states);
@@ -1558,10 +1664,7 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices)
 
 }// End dfa_insert_M_dot
 
-
-
-
-DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
+DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_once)
 {
   DFA *result = NULL;
   DFA *tmpM = NULL;
@@ -1580,7 +1683,7 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   int extrastates = Mr->ns; //duplicate states for each sharp pair
 
   //for out going information in Mr
-  char ***binOfOut = (char ***) malloc((Mr->ns)*sizeof(char **)); //the string of the nonsink outgoing edge of each state
+  char ***binOfOut = (char ***) malloc((Mr->ns)*sizeof(char **)); // the string of the nonsink outgoing edge of each state
   int **toOfOut = (int **) malloc((Mr->ns)*sizeof(int *)); // the destination of the nonsink outgoing edge of each state
   int *numOfOut = (int *) malloc((Mr->ns)*sizeof(int)); // how many nonsink outgoing edges of each state
   int *numOfOutFinal = (int *) malloc((Mr->ns)*sizeof(int)); //how many final outgoing edges of each state
@@ -1598,9 +1701,8 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   statuces=(char *)malloc((ns+1)*sizeof(char));
   auxexeps=(char *)malloc((len+1)*sizeof(char));
 
-
+  // Loop over original states
   for (i = 0; i < M->ns; i++) {
-
     state_paths = pp = make_paths(M->bddm, M->q[i]);
     k=0;
     // add original paths
@@ -1612,36 +1714,44 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
 	    for (tp = pp->trace; tp && (tp->index != indices[j]); tp =tp->next);
 
 	    if (tp) {
-	      if (tp->value) exeps[k*(len+1)+j]='1';
-	      else exeps[k*(len+1)+j]='0';
-	    }
-	    else
+              if (tp->value) {
+                exeps[k*(len+1)+j]='1';
+              } else {
+                exeps[k*(len+1)+j]='0';
+              }
+	    } else {
 	      exeps[k*(len+1)+j]='X';
+            }
 	  }
 	  for (j = var; j < len; j++) {
 	    exeps[k*(len+1)+j]='0'; //all original paths are set to zero
 	  }
 	  exeps[k*(len+1)+len]='\0';
 	  k++;
-
       }
       pp = pp->next;
-    }//end while
+    } // end while
 
-    //inser Mr
-
-    for(o=0; o<numOfOut[Mr->s]; o++){
-      to_states[k]=M->ns+i*(extrastates)+toOfOut[Mr->s][o]; // go to the next state of intial state of  Mr
-      for(j = 0; j < var; j++) exeps[k*(len+1)+j]=binOfOut[Mr->s][o][j];
-      exeps[k*(len+1)+j]='1'; //to distinguish the original path
+    // insert transitions to Mr initial states
+    for (o=0; o<numOfOut[Mr->s]; o++){
+      to_states[k] = M->ns + i * (extrastates) + toOfOut[Mr->s][o]; // go to the next state of intial state of  Mr
+      //printf("i: %d, k: %d to_states[k] = %d, M->ns = %d, extrastates = %d, o = %d, toOfOut = %d\n",
+      //       i, k, to_states[k], M->ns, extrastates, o, toOfOut[Mr->s][o]);
+      for (j = 0; j < var; j++) {
+        exeps[k*(len+1)+j] = binOfOut[Mr->s][o][j];
+        //printf("%c",  binOfOut[Mr->s][o][j]);
+      }
+      //printf("\n");
+      exeps[k*(len+1)+j]='1'; // to distinguish the original path
       exeps[k*(len+1)+len]='\0';
       k++;
     }
 
-
+  //print_transitions(i, to_states, k, exeps, len);
     dfaAllocExceptions(b, k);
-    for(k--;k>=0;k--)
+    for(k--; k>=0; k--) {
       dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    }
     dfaStoreState(b, sink);
 
     if(M->f[i]==1)
@@ -1652,31 +1762,41 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
       statuces[i]='-';
 
     kill_paths(state_paths);
-  }//end for i
+
+  } // end of loop for original states
 
   assert(i==M->ns);
 
-  //Add replace states
+  // Add replace states
+  k = M->ns;
   for(n=0; n< M->ns; n++){
-    for(i=0; i<Mr->ns; i++){ //internal M (exclude the first and the last char)
-      if(numOfOutFinal[i]==0){
+    for(i=0; i<Mr->ns; i++){ // internal M (exclude the first and the last char)
+      if(numOfOutFinal[i] == 0){
 	dfaAllocExceptions(b, numOfOut[i]);
-	for(o =0; o<numOfOut[i]; o++){
+	for(o = 0; o<numOfOut[i]; o++){
 	  dfaStoreException(b, M->ns+n*(extrastates)+toOfOut[i][o], binOfOut[i][o]);
+          //printf("Replace State: %d -> %d value: ", k, M->ns+n*(extrastates)+toOfOut[i][o]);
+          //print_exep_value(binOfOut[i][o], len);
 	}
 	dfaStoreState(b, sink);
-      }else{//need to add aux edges back to sharp destination, for each edge leads to accepting state
-	dfaAllocExceptions(b, numOfOut[i]+numOfOutFinal[i]);
-	for(o =0; o<numOfOut[i]; o++){
-	  dfaStoreException(b, M->ns+n*(extrastates)+toOfOut[i][o], binOfOut[i][o]);
-	  if(Mr->f[toOfOut[i][o]]==1){ //add auxiliary back edge to n
+        k++;
+      } else { //need to add aux edges back to sharp destination, for each edge leads to accepting state
+	dfaAllocExceptions(b, numOfOut[i] + numOfOutFinal[i]);
+	for(o = 0; o < numOfOut[i]; o++) {
+	  if (Mr->f[toOfOut[i][o]]==1) { // except state: add auxiliary back edge to n
 	    for (j = 0; j < var; j++) auxexeps[j]=binOfOut[i][o][j];
 	    auxexeps[j]='1';
 	    auxexeps[len]='\0';
-	    dfaStoreException(b, n,auxexeps);
+            //printf("Back to original State: %d -> %d value: ", k, n);
+            //print_exep_value(auxexeps, len);
+	    dfaStoreException(b, n, auxexeps);
 	  }
+          dfaStoreException(b, M->ns+n*(extrastates)+toOfOut[i][o], binOfOut[i][o]);
+          //printf("Internal State: %d -> %d value: ", k, M->ns+n*(extrastates)+toOfOut[i][o]);
+          //print_exep_value(binOfOut[i][o], len);
 	}
 	dfaStoreState(b, sink);
+        k++;
       }
     }//end for Mr internal
   }//end for n
@@ -1690,7 +1810,7 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
     printf("Project the %d bit\n", i);
     printf("Original:%d", i);
     dfaPrintVitals(result);
-    dfaPrintGraphvizAsciiRange(result, var, indices, 1);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
   }
 
   tmpM = dfaMinimize(result);
@@ -1700,7 +1820,21 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   if(_FANG_DFA_DEBUG){
     printf("Minimized:%d\n", i);
     dfaPrintVitals(result);
-    dfaPrintGraphvizAsciiRange(result, var, indices, 1);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
+  }
+
+  if (replace_once) {
+    tmpM = dfa_ensure_one_bar_transition(result, var, indices);
+  } else {
+    tmpM = dfa_ensure_bar_transition(result, var, indices);
+  }
+  dfaFree(result);
+  result = tmpM;
+
+  if(_FANG_DFA_DEBUG){
+    printf("Ensure bar transition: %d\n", i);
+    dfaPrintVitals(result);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
   }
 
   tmpM = dfaProject(result, (unsigned) len-1);
@@ -1710,6 +1844,7 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   if(_FANG_DFA_DEBUG){
     printf("Projected:%d bit", len-1);
     dfaPrintVitals(result);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
   }
 
   tmpM = dfaMinimize(result);
@@ -1719,6 +1854,7 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
   if(_FANG_DFA_DEBUG){
     printf("Minimized:after %d bit", len-1);
     dfaPrintVitals(result);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
   }
 
   free(exeps);
@@ -1741,44 +1877,53 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices)
 
 }//End dfa_insert_M_arbitrary
 
-
-
-DFA *dfa_insert_everywhere(DFA *M, DFA* Mr, int var, int *indices)
+DFA *dfa_insert_everywhere(DFA *M, DFA* Mr, int var, int *indices, int replace_once)
 {
   DFA *result1 = NULL;
   DFA *result2 = NULL;
   DFA *result = NULL;
   DFA *tmp = NULL;
   DFA *tmp2 = NULL;
-  
+
+  // This is handled in two steps:
+  //   1) Subset of all strings in M which are single chars
+  //   2) Subset of strings in M which are 2 or more chars long
+
+  // Single chars
+
+  // dfaDot accepts one arbitrary character
   tmp = dfaDot(var, indices);
   tmp2 = dfa_intersect(Mr, tmp);
   dfaFree(tmp);
   tmp = tmp2;
-  
-  if(!check_emptiness(tmp, var, indices)){
-    result = dfa_insert_M_dot(M, tmp, var, indices);
-  }
+  // tmp is now the subset of all single characters in the replacement
 
+  if (!check_emptiness(tmp, var, indices)) {
+      result = dfa_insert_M_dot(M, tmp, var, indices, replace_once);
+  }
   dfaFree(tmp);
 
+  // 2 or more char strings
+  // Now create set of strings with length 2 or longer
   tmp = dfaSigmaC1toC2(2, -1, var, indices);
   tmp2 = dfa_intersect(Mr, tmp);
   dfaFree(tmp);
   tmp = tmp2;
 
-  if(!check_emptiness(tmp, var, indices)){
-    //replace rest rather than single character
-    result2 = dfa_insert_M_arbitrary(M, tmp, var, indices);
-   if(result){
-     result1 = result;
-     result = dfa_union(result1, result2);
-     dfaFree(result1);
-     dfaFree(result2);
-   }
-   else result = result2;
+  if (!check_emptiness(tmp, var, indices)) {
+    result2 = dfa_insert_M_arbitrary(M, tmp, var, indices, replace_once);
+    // Combine if there was a result from single chars
+    if (result) {
+      result1 = result;
+      result = dfa_union(result1, result2);
+      dfaFree(result1);
+      dfaFree(result2);
+    } else {
+      result = result2;
+    }
   }
   dfaFree(tmp);
+
   return result;
 } //END dfa_insert_everywhere
 
