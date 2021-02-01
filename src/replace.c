@@ -112,25 +112,38 @@ int is_sharp1(paths pp, int var, int *indices) {
 int state_already_included(char* exeps, int k, int len, int var) {
     int l, j;
     // Check whether this transition is already included
-    int match = -1;
-    int matchFound = 0;
-    for (l = 0; l < k; l++) {
-        matchFound = 1;
-//        printf("\n");
+    int match = 0;
+    // k has already been incremented, so use k-1 as the index
+    int m = k - 1;
+    // Loop over all the transitions
+    //printf("Comparing: \n");
+    //print_exep_value(&exeps[m*(len+1)], len);
+    for (l = 0; l < m; l++) {
+        int matchFound = 1;
+        //printf("Transition %d\n", l);
+        //print_exep_value(&exeps[l*(len+1)], len);
         for (j = 0; j < len; j++) {
-//            printf("Checking transition value %d of %d compare with %d values: %c, %c\n",
-//                   l, k, j, exeps[k*(len+1)+j], exeps[l*(len+1)+j]);
-            if (exeps[k*(len+1)+j] != exeps[l*(len+1)+j]) {
+            //printf("Checking transition value %d of %d compare with %d values: %c, %c\n",
+            //      l, m, j, exeps[m*(len+1)+j], exeps[l*(len+1)+j]);
+            if ((exeps[m*(len+1)+j] == 'X') ||
+                (exeps[l*(len+1)+j] == 'X') ||
+                (exeps[m*(len+1)+j] == exeps[l*(len+1)+j])) {
+                // State bit matches
+                //  printf("Matched bit\n");
+            } else {
+                //printf("UNMatched bit\n");
                 matchFound = 0;
                 break;
             }
         }
+        // Was this state transition a match?
         if (matchFound == 1) {
-//            printf("Found a match states\n");
-            match = l;
+            //printf("Found a match states\n");
+            match = 1;
             break;
         }
     }
+    //printf("match: %u\n", match);
     return match;
 }
 
@@ -199,7 +212,8 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
   to_states=(int *)calloc(max_exeps, sizeof(int));
   statuces=(char *)calloc((M->ns+1), sizeof(char));
 
-  // For the starting state we need to do something special
+  // For the starting state we need to do something special as there is no
+  // "from" transition to look for.
   // Check whether there are any closure paths from state 0
   k = 0;
   if(pairs[0]!=NULL && pairs[0]->count>0) {
@@ -235,9 +249,14 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
                     exeps[k*(len+1)+j]=auxbit[len-j-1];
                 }
                 exeps[k*(len+1)+len]='\0';
-                //print_exep_value( &exeps[k*(len+1)], len);
                 k++;
-                if ((pp->to == i) && remove_loops) k--;
+                if ((pp->to == i) && remove_loops) {
+                    k--;
+                    //printf("Loop removed\n");
+                } else {
+                    //printf("Stating state has closure to state %d -> %d\n", i, pp->to);
+                    //print_exep_value( &exeps[(k-1)*(len+1)], len);
+                }
               }
             }
             pp = pp->next;
@@ -246,6 +265,7 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
       }
   }
 
+  // Now loop over each state and look for closure paths
   for (i = 0; i < M->ns; i++) {
     state_paths = pp = make_paths(M->bddm, M->q[i]);
     // Do not reset k here, as we want to add states from the special case above
@@ -275,7 +295,10 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
               // Add an extra edge to the reachable closure state directly
               // bypassing the other states and in effect deleting the characters
               to_states[k]=tmp->value;
-//              printf("to_states[%d] = %d\n", k, to_states[k]); 
+              //printf("state %d: z: %d o: %d  to_states[%d] = %d\n", i, z, o, k, to_states[k]);
+              //print_exep_value( &exeps[o*(len+1)], len);
+
+              // Create the new transition value
               for (j = 0; j < var; j++) exeps[k*(len+1)+j]=exeps[o*(len+1)+j];
                 set_bitvalue(auxbit, aux, z+1); // aux = 3, z=4, auxbit 001
               for (j = var; j < len; j++) { //set to xxxxxxxx100 (= not bar?)
@@ -284,6 +307,7 @@ DFA *dfa_replace_delete(DFA *M, int var, int *oldindices, int remove_loops)
               exeps[k*(len+1)+len]='\0';
               k++;
               if (state_already_included(exeps, k, len, var)) {
+                  //printf("State already included!\n");
                   k--;
               }
             }
