@@ -1524,7 +1524,6 @@ DFA* dfa_with_one_bar_transition(int var, int *indices)
   return dfa;
 }
 
-
 // Only allow transitions with at least one bar state
 DFA* dfa_ensure_bar_transition(DFA *M, int var, int *indices)
 {
@@ -1637,10 +1636,15 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices, int replace_once)
   dfaFree(result);
   result = tmpM;
 
-  if (replace_once) {
-    tmpM = dfa_ensure_one_bar_transition(result, var, indices);
-  } else {
-    tmpM = dfa_ensure_bar_transition(result, var, indices);
+  switch (replace_once) {
+  case 0:
+      tmpM = dfa_ensure_bar_transition(result, var, indices);
+      break;
+  case 1:
+      tmpM = dfa_ensure_one_bar_transition(result, var, indices);
+      break;
+  default:
+      tmpM = dfaCopy(result);
   }
   dfaFree(result);
   result = tmpM;
@@ -1664,7 +1668,7 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices, int replace_once)
 
 }// End dfa_insert_M_dot
 
-DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_once)
+DFA *dfa_insert_M_arbitrary_extrabit(DFA *M, DFA *Mr, int var, int *indices, int initial_accept_only)
 {
   DFA *result = NULL;
   DFA *tmpM = NULL;
@@ -1823,40 +1827,6 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_
     dfaPrintGraphvizAsciiRange(result, var, indices, 0);
   }
 
-  if (replace_once) {
-    tmpM = dfa_ensure_one_bar_transition(result, var, indices);
-  } else {
-    tmpM = dfa_ensure_bar_transition(result, var, indices);
-  }
-  dfaFree(result);
-  result = tmpM;
-
-  if(_FANG_DFA_DEBUG){
-    printf("Ensure bar transition: %d\n", i);
-    dfaPrintVitals(result);
-    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
-  }
-
-  tmpM = dfaProject(result, (unsigned) len-1);
-  dfaFree(result);
-  result = tmpM;
-
-  if(_FANG_DFA_DEBUG){
-    printf("Projected:%d bit", len-1);
-    dfaPrintVitals(result);
-    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
-  }
-
-  tmpM = dfaMinimize(result);
-  dfaFree(result);
-  result = tmpM;
-
-  if(_FANG_DFA_DEBUG){
-    printf("Minimized:after %d bit", len-1);
-    dfaPrintVitals(result);
-    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
-  }
-
   free(exeps);
   free(auxexeps);
   free(to_states);
@@ -1872,6 +1842,55 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_
 
   free(numOfOut);
   free(numOfOutFinal);
+
+  return result;
+}
+
+DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_once)
+{
+  DFA *result = NULL;
+  DFA *tmpM = NULL;
+
+  result = dfa_insert_M_arbitrary_extrabit(M, Mr, var, indices, 0);
+
+  switch (replace_once) {
+  case 0:
+      tmpM = dfa_ensure_bar_transition(result, var, indices);
+      break;
+  case 1:
+      tmpM = dfa_ensure_one_bar_transition(result, var, indices);
+      break;
+  default:
+      tmpM = dfaCopy(result);
+  }
+  dfaFree(result);
+  result = tmpM;
+
+  if(_FANG_DFA_DEBUG){
+    printf("Ensure bar transition: %d\n", M->ns);
+    dfaPrintVitals(result);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
+  }
+
+  tmpM = dfaProject(result, (unsigned) var);
+  dfaFree(result);
+  result = tmpM;
+
+  if(_FANG_DFA_DEBUG){
+    printf("Projected:%d bit", var);
+    dfaPrintVitals(result);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
+  }
+
+  tmpM = dfaMinimize(result);
+  dfaFree(result);
+  result = tmpM;
+
+  if(_FANG_DFA_DEBUG){
+    printf("Minimized:after %d bit", var);
+    dfaPrintVitals(result);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
+  }
 
   return result;
 
