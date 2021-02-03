@@ -165,7 +165,8 @@ extern "C" {
     //*====================================================================
     /* Construct functions
      */
-    
+    int* allocateAscIIIndexWithExtraBits(int length, unsigned int extrabits);
+
     int* allocateAscIIIndexWithExtraBit(int length);
     
     // A DFA that accepts nothing (empty language or phi)

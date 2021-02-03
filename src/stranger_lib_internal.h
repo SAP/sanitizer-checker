@@ -64,6 +64,7 @@ char *getSharp1(int k);
 char *getSharp0(int k);
 char *getSharp0WithExtraBit(int k);
 char *getSharp1WithExtraBit(int k);
+    char *getArbitraryStringWithSecondLastExtraBit(int k, char secondLastBit);
 char *getArbitraryStringWithExtraBit(int k);
 char *bintostr(unsigned long n, int k);
 char *bintostrWithExtraBit(unsigned long n, int k);
@@ -97,7 +98,8 @@ DFA *dfa_insert_everywhere(DFA *M, DFA* Mr, int var, int *indices, int replace_o
     
 int* allocateMultipleAscIIIndex(int m, int length);
 
-
+DFA *dfa_star_M_star_secondLastBit(DFA *M, int var, int *indices, char secondLastBit);
+    
 typedef struct CharPair_ {
 	unsigned char first;
 	unsigned char last;

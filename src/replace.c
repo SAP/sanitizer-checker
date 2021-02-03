@@ -1668,7 +1668,7 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices, int replace_once)
 
 }// End dfa_insert_M_dot
 
-DFA *dfa_insert_M_arbitrary_extrabit(DFA *M, DFA *Mr, int var, int *indices, int initial_accept_only)
+DFA *dfa_insert_M_arbitrary_extrabit(DFA *M, DFA *Mr, int var, int *indices, int insert_everywhere)
 {
   DFA *result = NULL;
   DFA *tmpM = NULL;
@@ -1737,20 +1737,22 @@ DFA *dfa_insert_M_arbitrary_extrabit(DFA *M, DFA *Mr, int var, int *indices, int
     } // end while
 
     // insert transitions to Mr initial states
-    for (o=0; o<numOfOut[Mr->s]; o++){
-      to_states[k] = M->ns + i * (extrastates) + toOfOut[Mr->s][o]; // go to the next state of intial state of  Mr
-      //printf("i: %d, k: %d to_states[k] = %d, M->ns = %d, extrastates = %d, o = %d, toOfOut = %d\n",
-      //       i, k, to_states[k], M->ns, extrastates, o, toOfOut[Mr->s][o]);
-      for (j = 0; j < var; j++) {
-        exeps[k*(len+1)+j] = binOfOut[Mr->s][o][j];
-        //printf("%c",  binOfOut[Mr->s][o][j]);
+    // Either everywhere OR at inital and accept states
+    if ((insert_everywhere) || ((M->f[i]==1) || (i == 0))) {
+      for (o=0; o<numOfOut[Mr->s]; o++) {
+        to_states[k] = M->ns + i * (extrastates) + toOfOut[Mr->s][o]; // go to the next state of intial state of  Mr
+        //printf("i: %d, k: %d to_states[k] = %d, M->ns = %d, extrastates = %d, o = %d, toOfOut = %d\n",
+        //       i, k, to_states[k], M->ns, extrastates, o, toOfOut[Mr->s][o]);
+        for (j = 0; j < var; j++) {
+          exeps[k*(len+1)+j] = binOfOut[Mr->s][o][j];
+          //printf("%c",  binOfOut[Mr->s][o][j]);
+        }
+        //printf("\n");
+        exeps[k*(len+1)+j]='1'; // to distinguish the original path
+        exeps[k*(len+1)+len]='\0';
+        k++;
       }
-      //printf("\n");
-      exeps[k*(len+1)+j]='1'; // to distinguish the original path
-      exeps[k*(len+1)+len]='\0';
-      k++;
     }
-
   //print_transitions(i, to_states, k, exeps, len);
     dfaAllocExceptions(b, k);
     for(k--; k>=0; k--) {
@@ -1849,12 +1851,33 @@ DFA *dfa_insert_M_arbitrary_extrabit(DFA *M, DFA *Mr, int var, int *indices, int
 DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_once)
 {
   DFA *result = NULL;
+  DFA *subtract = NULL;
   DFA *tmpM = NULL;
+  DFA *tmpM2 = NULL;
 
-  result = dfa_insert_M_arbitrary_extrabit(M, Mr, var, indices, 0);
 
+  result = dfa_insert_M_arbitrary_extrabit(M, Mr, var, indices, 1);
+  //dfaPrintGraphvizAsciiRange(result, var, indices, 0);
+
+  tmpM = dfa_insert_M_arbitrary_extrabit(Mr, Mr, var, indices, 0);
+  //dfaPrintGraphvizAsciiRange(tmpM, var, indices, 1);
+
+  tmpM2 = dfa_star_M_star_secondLastBit(tmpM, var + 1, indices, '0');
+  dfaFree(tmpM);
+  //dfaPrintGraphvizAsciiRange(tmpM2, var, indices, 1);
+  
+  subtract = dfa_negate(tmpM2, var + 1, indices);
+  dfaFree(tmpM2);
+
+  //dfaPrintGraphvizAsciiRange(subtract, var, indices, 0);
+  tmpM = dfa_intersect(result, subtract);
+  //dfaPrintGraphvizAsciiRange(tmpM, var, indices, 0);
+  dfaFree(result);
+  result = tmpM;
+  
   switch (replace_once) {
   case 0:
+      // This might be redundant now...
       tmpM = dfa_ensure_bar_transition(result, var, indices);
       break;
   case 1:

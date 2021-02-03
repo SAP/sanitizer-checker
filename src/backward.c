@@ -148,7 +148,7 @@ DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, const char *str, int var, int* indice
           // inserting the empty string everywhere will change nothing
           result = dfaCopy(M1);
       } else {
-          result = dfa_insert_everywhere(M1, M2, var, indices, -1);
+          result = dfa_insert_everywhere(M1, M2, var, indices, 0);
       }
   } else {
     DFA* U = dfa_union(M2, M3);
@@ -175,7 +175,7 @@ DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* i
           result = dfaCopy(M1);
       } else {
           // In the replace_once case, just add the replace string to the start
-          result = dfa_insert_everywhere(M1, U, var, indices, -1);
+          result = dfa_insert_everywhere(M1, U, var, indices, 1);
       }
   } else {
     result = dfa_general_replace_extrabit(M1, M3, U, var, indices);

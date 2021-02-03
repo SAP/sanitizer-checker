@@ -389,20 +389,33 @@ char *getSharp0WithExtraBit(int k) {
   return str;
 }
 
-//Sharp0 is 111111110 which will be used as a reserved symbol
-char *getArbitraryStringWithExtraBit(int k) {
+// Creates an exception transition string
+// With (k * "X") + "0"
+// ie any value with the extra bit set to 0
+// e.g. "XXXXXXXX0"
+char *getArbitraryStringWithSecondLastExtraBit(int k, char secondLastBit) {
   char *str;
 
   // add one extra bit for later used
   str = (char *) malloc(k + 2);
   str[k + 1] = '\0';
-  str[k] = '0'; //the last bit dont care
-
+  str[k] = '0'; //the last bit is zero
+  k--;
+  str[k] = secondLastBit; // Set this by hand
+  
   for (k--; k >= 0; k--) {
-    str[k] = 'X';
+    str[k] = 'X'; 
   }
   //printf("Arbitrary String :%s\n", str);
   return str;
+}
+
+// Creates an exception transition string
+// With (k * "X") + "0"
+// ie any value with the extra bit set to 0
+// e.g. "XXXXXXXX0"
+char *getArbitraryStringWithExtraBit(int k) {
+   return getArbitraryStringWithSecondLastExtraBit(k, 'X');
 }
 
 //set less significant bit less priority
@@ -425,15 +438,19 @@ unsigned* allocateAscIIIndexUnsigned(int length) {
   return indices;
 }
 
+int* allocateAscIIIndexWithExtraBits(int length, unsigned int extrabits) {
+  int i;
+  int* indices;
+  indices = (int *) malloc((length + extrabits) * sizeof(int));
+  for (i = 0; i < (length + extrabits); i++)
+    indices[i] = i;
+  return indices;
+}
+
 //set less significant bit less priority
 //the extra bit has the less priority
 int* allocateAscIIIndexWithExtraBit(int length) {
-  int i;
-  int* indices;
-  indices = (int *) malloc((length + 1) * sizeof(int));
-  for (i = 0; i <= length; i++)
-    indices[i] = i;
-  return indices;
+    return allocateAscIIIndexWithExtraBits(length, 1);
 }
 
 int* allocateArbitraryIndex(int length) {
@@ -1981,8 +1998,12 @@ DFA *dfa_replace_step1_duplicate(DFA *M, int var, int *indices) {
 } //END dfa_replace_step1_duplicate
 
 
-//Given M, output a DFA accepting S*.w.S* where w \in M
 DFA *dfa_star_M_star(DFA *M, int var, int *indices) {
+  return dfa_star_M_star_secondLastBit(M, var, indices, 'X');
+}
+
+//Given M, output a DFA accepting S*.w.S* where w \in M
+DFA *dfa_star_M_star_secondLastBit(DFA *M, int var, int *indices, char secondLastBit) {
   DFA *result;
   DFA *tmpM;
   paths state_paths, pp;
@@ -1998,7 +2019,7 @@ DFA *dfa_star_M_star(DFA *M, int var, int *indices) {
   int len;
   int ns = M->ns + 1;
   int shift = 1;
-  char *arbitrary = getArbitraryStringWithExtraBit(var);
+  char *arbitrary = getArbitraryStringWithSecondLastExtraBit(var, secondLastBit);
   len = var + 1; //one extra bit
 
   max_exeps = 1 << len; //maybe exponential
@@ -2044,10 +2065,15 @@ DFA *dfa_star_M_star(DFA *M, int var, int *indices) {
 
   //initial state
   dfaAllocExceptions(b, k + 1);
-  for (k--; k >= 0; k--)
+  for (k--; k >= 0; k--) {
     dfaStoreException(b, added_to_states[k], addedexeps + k * (len + 1));
+    //printf("%d %s\n", added_to_states[k], addedexeps + k * (len + 1));
+  }
   dfaStoreException(b, 0, arbitrary);
+  //printf("%d %s\n", 0, arbitrary);
+  //printf("sink: %d\n", sink + shift);
   dfaStoreState(b, sink + shift);
+  //printf("--------------\n");
   statuces[0] = '0';
 
   //M
@@ -2079,11 +2105,14 @@ DFA *dfa_star_M_star(DFA *M, int var, int *indices) {
       }
       pp = pp->next;
     }
-    if (M->f[i] == 1) { //add added paths
+    if (M->f[i] == 1) { //add added paths: accept state
       dfaAllocExceptions(b, k + 1);
-      for (k--; k >= 0; k--)
+      for (k--; k >= 0; k--) {
         dfaStoreException(b, to_states[k], exeps + k * (len + 1));
+        //printf("%d %s\n", to_states[k], exeps + k * (len + 1));
+      }
       dfaStoreException(b, i + shift, arbitrary); //for appending S* for the final state
+      //printf("%d %s\n", i + shift, arbitrary);
       dfaStoreState(b, sink + shift);
       statuces[i + shift] = '+';
     } else {
@@ -2116,10 +2145,10 @@ DFA *dfa_star_M_star(DFA *M, int var, int *indices) {
   free(to_states);
   free(added_to_states);
   free(statuces);
-    free(arbitrary);
+  free(arbitrary);
   dfaFree(tmpM);
-    tmpM = dfaMinimize(result);
-    dfaFree(result);
+  tmpM = dfaMinimize(result);
+  dfaFree(result);
   return tmpM;
 
 }
