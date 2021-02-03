@@ -59,7 +59,7 @@ StrangerAutomaton::~StrangerAutomaton()
 
 // some static members
 int StrangerAutomaton::num_ascii_track = NUM_ASCII_TRACKS;
-int* StrangerAutomaton::indices_main = allocateAscIIIndexWithExtraBit(num_ascii_track);
+int* StrangerAutomaton::indices_main = allocateAscIIIndexWithExtraBits(num_ascii_track, 2);
 unsigned* StrangerAutomaton::u_indices_main = getUnsignedIndices(num_ascii_track);
 
 

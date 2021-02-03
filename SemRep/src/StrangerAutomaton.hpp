@@ -254,8 +254,6 @@ public:
     static void debugToFile(std::string str);
     static void debug(std::string s);
     static int getVar(){ return num_ascii_track;};
-    static int* getIndices(){ return indices_main;};
-    static int* getIndices(int length) { return allocateAscIIIndexWithExtraBit(length);};
     static unsigned *getUnsignedIndices(int length);
     int get_num_of_states() const {
 		return this->dfa->ns;
