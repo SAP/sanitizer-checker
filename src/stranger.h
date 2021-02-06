@@ -175,7 +175,11 @@ extern "C" {
     // A DFA that accepts all strings except 11111111 and 111111110
     // used when needed language is Sigma*
     DFA *dfaAllStringASCIIExceptReserveWords(int var, int *indices);
-    
+
+    // A DFA that accepts all strings except 11111111 and 111111110
+    // used when needed language is Sigma*
+    DFA *dfaAllString(int var, int *indices);
+
     // A DFA that accepts only empty string (epsilon)
     DFA *dfaASCIIOnlyNullString(int var, int *indices);
     
@@ -288,7 +292,10 @@ extern "C" {
     
     //Given M, output a DFA accepting S*.w.S* where w \in M
     DFA *dfa_star_M_star(DFA *M, int var, int *indices);
-    
+
+    //Given M, output a DFA accepting S*.w where w \in M
+    DFA *dfa_star_M(DFA *M, int var, int *indices);
+
     // A DFA that accepts only one arbitrary character
     DFA *dfaDot(int var, int *indices);
     

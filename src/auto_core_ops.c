@@ -393,15 +393,13 @@ char *getSharp0WithExtraBit(int k) {
 // With (k * "X") + "0"
 // ie any value with the extra bit set to 0
 // e.g. "XXXXXXXX0"
-char *getArbitraryStringWithSecondLastExtraBit(int k, char secondLastBit) {
+char *getArbitraryStringWithLastExtraBit(int k, char lastBit) {
   char *str;
 
   // add one extra bit for later used
   str = (char *) malloc(k + 2);
   str[k + 1] = '\0';
-  str[k] = '0'; //the last bit is zero
-  k--;
-  str[k] = secondLastBit; // Set this by hand
+  str[k] = lastBit;
   
   for (k--; k >= 0; k--) {
     str[k] = 'X'; 
@@ -415,7 +413,7 @@ char *getArbitraryStringWithSecondLastExtraBit(int k, char secondLastBit) {
 // ie any value with the extra bit set to 0
 // e.g. "XXXXXXXX0"
 char *getArbitraryStringWithExtraBit(int k) {
-   return getArbitraryStringWithSecondLastExtraBit(k, 'X');
+   return getArbitraryStringWithLastExtraBit(k, '0');
 }
 
 //set less significant bit less priority
@@ -707,7 +705,6 @@ DFA *dfaASCIIOnlyNullString(int var, int *indices) {
 DFA *dfaAllString(int var, int *indices) {
 
   DFABuilder *b = dfaSetup(1, var, indices);
-
   dfaAllocExceptions(b, 0);
   dfaStoreState(b, 0);
   return dfaBuild(b, "+");
@@ -1999,11 +1996,15 @@ DFA *dfa_replace_step1_duplicate(DFA *M, int var, int *indices) {
 
 
 DFA *dfa_star_M_star(DFA *M, int var, int *indices) {
-  return dfa_star_M_star_secondLastBit(M, var, indices, 'X');
+    return dfa_star_M_star_option(M, var, indices, 1);
+}
+
+DFA *dfa_star_M(DFA *M, int var, int *indices) {
+    return dfa_star_M_star_option(M, var, indices, 0);
 }
 
 //Given M, output a DFA accepting S*.w.S* where w \in M
-DFA *dfa_star_M_star_secondLastBit(DFA *M, int var, int *indices, char secondLastBit) {
+DFA *dfa_star_M_star_option(DFA *M, int var, int *indices, int do_second_star) {
   DFA *result;
   DFA *tmpM;
   paths state_paths, pp;
@@ -2019,7 +2020,7 @@ DFA *dfa_star_M_star_secondLastBit(DFA *M, int var, int *indices, char secondLas
   int len;
   int ns = M->ns + 1;
   int shift = 1;
-  char *arbitrary = getArbitraryStringWithSecondLastExtraBit(var, secondLastBit);
+  char *arbitrary = getArbitraryStringWithExtraBit(var);
   len = var + 1; //one extra bit
 
   max_exeps = 1 << len; //maybe exponential
@@ -2074,7 +2075,7 @@ DFA *dfa_star_M_star_secondLastBit(DFA *M, int var, int *indices, char secondLas
   //printf("sink: %d\n", sink + shift);
   dfaStoreState(b, sink + shift);
   //printf("--------------\n");
-  statuces[0] = '0';
+  statuces[0] = '-';
 
   //M
   for (i = 0; i < M->ns; i++) {
@@ -2099,19 +2100,25 @@ DFA *dfa_star_M_star_secondLastBit(DFA *M, int var, int *indices, char secondLas
           } else
             exeps[k * (len + 1) + j] = 'X';
         }
-        exeps[k * (len + 1) + var] = '1'; //old value
+        exeps[k * (len + 1) + var] = '1'; // old value
         exeps[k * (len + 1) + len] = '\0';
         k++;
       }
       pp = pp->next;
     }
     if (M->f[i] == 1) { //add added paths: accept state
-      dfaAllocExceptions(b, k + 1);
+      if (do_second_star) {
+        dfaAllocExceptions(b, k + 1);
+      } else {
+        dfaAllocExceptions(b, k);
+      }
       for (k--; k >= 0; k--) {
         dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         //printf("%d %s\n", to_states[k], exeps + k * (len + 1));
       }
-      dfaStoreException(b, i + shift, arbitrary); //for appending S* for the final state
+      if (do_second_star) {
+        dfaStoreException(b, i + shift, arbitrary); //for appending S* for the final state
+      }
       //printf("%d %s\n", i + shift, arbitrary);
       dfaStoreState(b, sink + shift);
       statuces[i + shift] = '+';
@@ -2133,9 +2140,10 @@ DFA *dfa_star_M_star_secondLastBit(DFA *M, int var, int *indices, char secondLas
   //dfaPrintVitals(tmpM);
   //printf("Original M\n");
   //dfaPrintVerbose(M);
-  //printf("Star M Star\n");
+  //printf("Star M Star before projection\n");
   //dfaPrintVerbose(tmpM);
-
+  //dfaPrintGraphvizAsciiRange(tmpM, 8, indices, 1);
+  
   result = dfaProject(tmpM, (unsigned) var); //var is the index of the extra bit
   //printf("Projection of Star M Star\n");
   //dfaPrintVerbose(result);
