@@ -1498,6 +1498,8 @@ DFA* dfa_with_one_bar_transition(int var, int *indices)
   DFABuilder *b = dfaSetup(5, len, indices);
 
   // non-dash has extra bit '0'
+  // non-dash is original alphabet
+  // dash are the inserted loop state
   char *nondash = getArbitraryStringWithExtraBit(var);
 
   // State 0 - Initial state
@@ -1505,17 +1507,17 @@ DFA* dfa_with_one_bar_transition(int var, int *indices)
   dfaStoreException(b, 1, nondash);
   dfaStoreState(b, 2);
 
-  // State 1 - First accepting
+  // State 1 - No dash transitions
   dfaAllocExceptions(b, 1);
-  dfaStoreException(b, 2, nondash);
-  dfaStoreState(b, 1);
-
-  // State 2 - Dash Transition
-  dfaAllocExceptions(b, 1);
-  dfaStoreException(b, 3, nondash);
+  dfaStoreException(b, 1, nondash);
   dfaStoreState(b, 2);
 
-  // State 3 - Second Accepting
+  // State 2 - Single dash into loop
+  dfaAllocExceptions(b, 1);
+  dfaStoreException(b, 2, nondash);
+  dfaStoreState(b, 3);
+
+  // State 3 - Accept after one loop
   dfaAllocExceptions(b, 1);
   dfaStoreException(b, 3, nondash);
   dfaStoreState(b, 4);
@@ -1801,7 +1803,7 @@ DFA *dfa_insert_M_arbitrary_extrabit(DFA *M, DFA *Mr, int var, int *indices, int
         for(o = 0; o < numOfOut[i]; o++) {
           if (Mr->f[toOfOut[i][o]] == 1) { // except state: add auxiliary back edge to n
             for (j = 0; j < var; j++) auxexeps[j]=binOfOut[i][o][j];
-            auxexeps[j]='1';
+            auxexeps[j]='1'; // Transition back is also dashed
             auxexeps[len]='\0';
             //printf("Back to original State: %d -> %d value: ", k, n);
             //print_exep_value(auxexeps, len);
