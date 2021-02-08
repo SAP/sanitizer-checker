@@ -1531,7 +1531,7 @@ DFA* dfa_with_one_bar_transition(int var, int *indices)
   // states:         01234
   dfa = dfaBuild(b, "-+-+-");
 
-  dfaPrintGraphvizAsciiRange(dfa, var, indices, 1);
+  //dfaPrintGraphvizAsciiRange(dfa, var, indices, 1);
   return dfa;
 }
 
@@ -1867,25 +1867,176 @@ DFA *dfa_insert_M_arbitrary_extrabit(DFA *M, DFA *Mr, int var, int *indices, int
   return result;
 }
 
+DFA *dfa_create_M_with_extrabit(DFA *M, int var, int *indices)
+{
+  DFA *result = NULL;
+  DFA *tmpM = NULL;
+
+  paths state_paths, pp;
+  trace_descr tp;
+  int i, j, n, o, k;
+  char *exeps;
+  char *auxexeps;
+  int *to_states;
+  long max_exeps;
+  char *statuces;
+  int len = var + 1;
+  int ns, sink;
+  int need_new_sink = 0;
+  char *arbitrary = getArbitraryStringWithLastExtraBit(var, '1');
+
+  max_exeps=1<<len; //maybe exponential
+  sink = find_sink(M);
+  ns = M->ns;
+  if (sink < 0) {
+    // Need to create a new sink state
+    sink = ns;
+    ns += 1;
+    need_new_sink = 1;
+  }
+  assert(sink >-1);
+
+  DFABuilder *b = dfaSetup(ns, len, indices);
+  exeps=(char *)calloc(max_exeps*(len+1), sizeof(char)); //plus 1 for \0 end of the string
+  to_states=(int *)calloc(max_exeps, sizeof(int));
+  statuces=(char *)malloc((ns+1)*sizeof(char));
+
+  // Loop over original states
+  for (i = 0; i < M->ns; i++) {
+    state_paths = pp = make_paths(M->bddm, M->q[i]);
+    k=0;
+    // add original paths
+    while (pp) {
+      if(pp->to!=sink){
+	  to_states[k]=pp->to;
+	  for (j = 0; j < var; j++) {
+	    //the following for loop can be avoided if the indices are in order
+	    for (tp = pp->trace; tp && (tp->index != indices[j]); tp =tp->next);
+
+	    if (tp) {
+              if (tp->value) {
+                exeps[k*(len+1)+j]='1';
+              } else {
+                exeps[k*(len+1)+j]='0';
+              }
+	    } else {
+	      exeps[k*(len+1)+j]='X';
+            }
+	  }
+	  for (j = var; j < len; j++) {
+            exeps[k*(len+1)+j]='0';
+	  }
+	  exeps[k*(len+1)+len]='\0';
+	  k++;
+      }
+      pp = pp->next;
+    } // end while
+
+    // If it is an accept state, also accept bar transitions
+    if(M->f[i]==1) {
+      dfaAllocExceptions(b, k + 1);
+    } else {   
+      dfaAllocExceptions(b, k);
+    }
+
+    for(k--; k>=0; k--) {
+      dfaStoreException(b, to_states[k],exeps+k*(len+1));
+    }
+    if(M->f[i]==1) {
+      dfaStoreException(b, i, arbitrary);
+    }
+
+    dfaStoreState(b, sink);
+
+    if(M->f[i]==1)
+      statuces[i]='+';
+    else if(M->f[i]==-1)
+      statuces[i]='-';
+    else
+      statuces[i]='-';
+
+    kill_paths(state_paths);
+
+  } // end of loop for original states
+
+  // Add sink if needed
+  if (need_new_sink) {
+    // Call the plumber!
+    dfaAllocExceptions(b, 0);
+    dfaStoreState(b, sink);
+    statuces[i]='-';
+  }
+
+  statuces[ns]='\0';
+
+  // Create automaton
+  result = dfaBuild(b, statuces);
+
+  if(_FANG_DFA_DEBUG){
+    printf("Project the %d bit\n", i);
+    printf("Original:%d", i);
+    dfaPrintVitals(result);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
+  }
+
+  tmpM = dfaMinimize(result);
+  dfaFree(result);
+  result = tmpM;
+
+  if(_FANG_DFA_DEBUG){
+    printf("Minimized:%d\n", i);
+    dfaPrintVitals(result);
+    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
+  }
+
+  free(exeps);
+  free(to_states);
+  free(statuces);
+  free(arbitrary);
+  return result;
+}
+
 DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_once)
 {
   DFA *result = NULL;
   DFA *tmpM = NULL;
   DFA *tmpM2 = NULL;
+  DFA *tmpM3 = Mr; //dfa_construct_string("123", var, indices);
+  
+  result = dfa_insert_M_arbitrary_extrabit(M, tmpM3, var, indices, 1);
+  if (_FANG_DFA_DEBUG) {
+    printf("M: insert loops\n");
+    dfaPrintGraphvizAsciiRange(result, var, indices, 0);
+  }
 
+  // First prepend all strings
+  tmpM2 = dfa_star_M_star(Mr, var, indices);
+  dfaFree(tmpM);
+  tmpM = tmpM2;
   
-  result = dfa_insert_M_arbitrary_extrabit(M, Mr, var, indices, 1);
-  
+  if (_FANG_DFA_DEBUG) {
+    printf("*M*\n");
+    dfaPrintGraphvizAsciiRange(tmpM, var, indices, 1);
+  }
+
   if (replace_once) {
-
     // For single replace cases, only solutions where zero or one
     // replace transitions occur are valid. More than one occurance
     // of Mr will not be replaced.
     tmpM2 = dfa_ensure_one_bar_transition(result, var, indices);
     dfaFree(result);
+    result = tmpM2;
+    if (_FANG_DFA_DEBUG) {
+      printf("Ensure single transitions\n");
+      dfaPrintGraphvizAsciiRange(result, var, indices, 0);
+    }
+
+    tmpM2 = dfa_create_M_with_extrabit(tmpM, var, indices);
+    dfaFree(tmpM);
     tmpM = tmpM2;
 
   } else {
+
     // If the replace acts multiple times, we need to remove certain cases
     // For example:
     // Operation: replace(/script/, "")
@@ -1893,45 +2044,35 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_
     // will give "scriptscript" as a possible solution here.
     // Therefore remove any replacement loop insertions which appear
     // outside of the Mr states.
- 
-    // First prepend all strings
-    tmpM2 = dfa_star_M_star(Mr, var, indices);
-    dfaFree(tmpM);
-    tmpM = tmpM2;
-
-    if (_FANG_DFA_DEBUG) {
-      printf("*M*\n");
-      dfaPrintGraphvizAsciiRange(tmpM2, var, indices, 1);
-    }
-
+    
     // Create loops outside of the replacement string
     // e.g. scriptscript
-    tmpM2 = dfa_insert_M_arbitrary_extrabit(tmpM, Mr, var, indices, 0);
+    tmpM2 = dfa_insert_M_arbitrary_extrabit(tmpM, tmpM3, var, indices, 0);
     dfaFree(tmpM);
     tmpM = tmpM2;
-
-    if (_FANG_DFA_DEBUG) {
-      printf("With loops\n");
-      dfaPrintGraphvizAsciiRange(tmpM2, var, indices, 1);
-    }
-
-    // Negate
-    tmpM2 = dfa_negate(tmpM, var + 1, indices);
-    dfaFree(tmpM);
-    tmpM = tmpM2;
-
-    if (_FANG_DFA_DEBUG) {
-      printf("Negated:\n");
-      dfaPrintGraphvizAsciiRange(tmpM2, var, indices, 0);
-    }
-
-    // Remove the additional loops
-    tmpM2 = dfa_intersect(result, tmpM);
-    dfaFree(result);
-    dfaFree(tmpM);
-    tmpM = tmpM2;
-
+  
   }
+
+  if (_FANG_DFA_DEBUG) {
+    printf("With loops\n");
+    dfaPrintGraphvizAsciiRange(tmpM, var, indices, 1);
+  }
+
+  // Negate
+  tmpM2 = dfa_negate(tmpM, var + 1, indices);
+  dfaFree(tmpM);
+  tmpM = tmpM2;
+
+  if (_FANG_DFA_DEBUG) {
+    printf("Negated:\n");
+    dfaPrintGraphvizAsciiRange(tmpM, var, indices, 0);
+  }
+
+  // Remove the additional loops
+  tmpM2 = dfa_intersect(result, tmpM);
+  dfaFree(result);
+  dfaFree(tmpM);
+  tmpM = tmpM2;
       
   if (_FANG_DFA_DEBUG) {
     printf("Ensure bar transition: %d\n", M->ns);
@@ -1945,7 +2086,7 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_
 
   if(_FANG_DFA_DEBUG){
     printf("Projected:%d bit", var);
-    dfaPrintVitals(result);
+    dfaPrintVitals(tmpM);
     dfaPrintGraphvizAsciiRange(tmpM, var, indices, 0);
   }
 
