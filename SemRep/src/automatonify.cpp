@@ -31,12 +31,13 @@ using namespace boost;
 namespace po = boost::program_options;
 
 
-void make_automaton(const string& str, const string& output_file){
+void make_automaton(const string& str, const string& output_file, bool do_sink){
 
   StrangerAutomaton* a = StrangerAutomaton::regExToAuto(str);
   if (a) {
-    a->toDotFileAscii(output_file, 1);
+    a->toDotFileAscii(output_file, do_sink ? 1 : 0);
   }
+  delete a;
 }
 
 
@@ -57,9 +58,10 @@ int main(int argc, char *argv[]) {
 
         po::options_description desc("Allowed options");
         desc.add_options()
-            ("help", "produce help message")
-            ("output,o", po::value<string>()->required(), "path to output file.")
-            ("string,s", po::value<string>()->required(), "string to create an automaton from");
+          ("help", "produce help message")
+          ("output,o", po::value<string>()->required(), "path to output file.")
+          ("string,s", po::value<string>()->required(), "string to create an automaton from")
+          ("sink,k",   po::value<bool>()->default_value(false), "include the sink in the dot output");
 
         po::variables_map vm;
         po::store(po::command_line_parser(argc, argv).
@@ -73,7 +75,7 @@ int main(int argc, char *argv[]) {
 
         po::notify(vm);
 
-        make_automaton(vm["string"].as<string>(), vm["output"].as<string>());
+        make_automaton(vm["string"].as<string>(), vm["output"].as<string>(), vm["sink"].as<bool>());
 
     } catch(std::exception& e) {
            cerr << "Error: " << e.what() << "\n";

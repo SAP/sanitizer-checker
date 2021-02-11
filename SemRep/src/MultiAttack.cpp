@@ -160,7 +160,7 @@ void MultiAttack::computeImagesForFile(const fs::path& file, DepGraph target_dep
 
   // Mutex Lock
   const std::lock_guard<std::mutex> lock(this->results_mutex);
-  std::cout << "Finished forward analysis of " << file << std::endl;
+  std::cout << "Finished analysis of " << file << std::endl;
   std::cout << "Inserting results into groups for " << file << std::endl;
   this->m_groups.addAutomaton(postImage, result);
   this->m_results.emplace_back(result);
