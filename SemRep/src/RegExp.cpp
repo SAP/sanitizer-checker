@@ -24,6 +24,18 @@
 
 using namespace std;
 
+//#define DEBUG_REGEX
+
+#if defined(DEBUG_REGEX)
+#define DEBUG_PRINT_FUNC(e)                                     \
+    {                                                           \
+        std::cout << __PRETTY_FUNCTION__ << std::endl;          \
+        (e)->dump();                                            \
+    }
+#else
+#define DEBUG_PRINT_FUNC(e) {}
+#endif
+
 int RegExp::id;
 
 void RegExp::restID()
@@ -151,6 +163,22 @@ void RegExp::init(string s, int syntax_flags){
 
 }
 
+void RegExp::dump()
+{
+    std::cout << "RegExp: " << hex << this << std::endl;
+    std::cout << "        exp1: " << exp1 << ": " << (exp1 ? exp1->toString() : "") << std::endl;
+    std::cout << "        exp2: " << exp2 << ": " << (exp2 ? exp2->toString() : "") << std::endl;
+    std::cout << "        kind: " << kind << std::endl;
+    std::cout << "        s: " << s << std::endl;
+    std::cout << "        c: " << c << std::endl;
+    std::cout << "        b: " << b << std::endl;
+    std::cout << "        min: " << min << std::endl;
+    std::cout << "        max: " << max << std::endl;
+    std::cout << "        from: " << from << std::endl;
+    std::cout << "        to: " << to << std::endl;
+    std::cout << "        string: " << toString() << std::endl;
+}
+
 StrangerAutomaton* RegExp::toAutomaton() /* throws(IllegalArgumentException) */
 {
     StrangerAutomaton* a = NULL;
@@ -250,11 +278,11 @@ end_switch1:;
 
 std::string RegExp::toString()
 {
-	std::string s;
+    std::string s;
     return toStringBuilder(s);
 }
 
-std::string RegExp::toStringBuilder(std::string b)
+std::string RegExp::toStringBuilder(std::string &b)
 {
     {
         std::string s1;
@@ -396,11 +424,11 @@ end_switch2:;
 
 RegExp* RegExp::makeUnion(RegExp* exp1, RegExp* exp2)
 {
-
     RegExp* r = (new RegExp());
     r->kind = REGEXP_UNION;
     r->exp1 = exp1;
     r->exp2 = exp2;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -422,6 +450,7 @@ RegExp* RegExp::makeConcatenation(RegExp* exp1, RegExp* exp2)
         r->exp1 = exp1;
         r->exp2 = exp2;
     }
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -437,7 +466,9 @@ RegExp* RegExp::makeString(RegExp* exp1, RegExp* exp2)
         b.append(exp2->s);
     else
         b.append(1, exp2->c);
-    return makeString(b);
+    RegExp* r = makeString(b);
+    DEBUG_PRINT_FUNC(r);
+    return r;
 }
 
 RegExp* RegExp::makeIntersection(RegExp* exp1, RegExp* exp2)
@@ -447,6 +478,7 @@ RegExp* RegExp::makeIntersection(RegExp* exp1, RegExp* exp2)
     r->kind = REGEXP_INTERSECTION;
     r->exp1 = exp1;
     r->exp2 = exp2;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -456,6 +488,7 @@ RegExp* RegExp::makeOptional(RegExp* exp)
     RegExp* r = (new RegExp());
     r->kind = REGEXP_OPTIONAL;
     r->exp1 = exp;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -465,6 +498,7 @@ RegExp* RegExp::makeRepeatStar(RegExp* exp)
     RegExp* r = (new RegExp());
     r->kind = REGEXP_REPEAT_STAR;
     r->exp1 = exp;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -474,6 +508,7 @@ RegExp* RegExp::makeRepeatPlus(RegExp* exp)
     RegExp* r = (new RegExp());
     r->kind = REGEXP_REPEAT_PLUS;
     r->exp1 = exp;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -484,6 +519,7 @@ RegExp* RegExp::makeRepeat(RegExp* exp, int min)
     r->kind = REGEXP_REPEAT_MIN;
     r->exp1 = exp;
     r->min = min;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -495,6 +531,7 @@ RegExp* RegExp::makeRepeat(RegExp* exp, int min, int max)
     r->exp1 = exp;
     r->min = min;
     r->max = max;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -504,6 +541,7 @@ RegExp* RegExp::makeComplement(RegExp* exp)
     RegExp* r = (new RegExp());
     r->kind = REGEXP_COMPLEMENT;
     r->exp1 = exp;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -513,6 +551,7 @@ RegExp* RegExp::makeChar(char c)
     RegExp* r = (new RegExp());
     r->kind = REGEXP_CHAR;
     r->c = c;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -523,6 +562,7 @@ RegExp* RegExp::makeCharRange(char from, char to)
     r->kind = REGEXP_CHAR_RANGE;
     r->from = from;
     r->to = to;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -531,6 +571,7 @@ RegExp* RegExp::makeAnyChar()
 
     RegExp* r = (new RegExp());
     r->kind = REGEXP_ANYCHAR;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -539,6 +580,7 @@ RegExp* RegExp::makeEmpty()
 
     RegExp* r = (new RegExp());
     r->kind = REGEXP_EMPTY;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -548,6 +590,7 @@ RegExp* RegExp::makeString(std::string s)
     RegExp* r = (new RegExp());
     r->kind = REGEXP_STRING;
     r->s = s;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -556,6 +599,7 @@ RegExp* RegExp::makeAnyString()
 
     RegExp* r = (new RegExp());
     r->kind = REGEXP_ANYSTRING;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -565,6 +609,7 @@ RegExp* RegExp::makeAutomaton(std::string s)
     RegExp* r = (new RegExp());
     r->kind = REGEXP_AUTOMATON;
     r->s = s;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -576,6 +621,7 @@ RegExp* RegExp::makeInterval(int min, int max, int digits)
     r->min = min;
     r->max = max;
     r->digits = digits;
+    DEBUG_PRINT_FUNC(r);
     return r;
 }
 
@@ -623,7 +669,6 @@ RegExp* RegExp::parseUnionExp() /* throws(IllegalArgumentException) */
     RegExp* e = parseInterExp();
     if(match('|'))
         e = makeUnion(e, parseUnionExp());
-
     return e;
 }
 
@@ -632,7 +677,6 @@ RegExp* RegExp::parseInterExp() /* throws(IllegalArgumentException) */
     RegExp* e = parseConcatExp();
     if(check(INTERSECTION) && match('&'))
         e = makeIntersection(e, parseInterExp());
-
     return e;
 }
 
@@ -641,7 +685,6 @@ RegExp* RegExp::parseConcatExp() /* throws(IllegalArgumentException) */
     RegExp* e = parseRepeatExp();
     if(more() && !peek(")&|"))
         e = makeConcatenation(e, parseConcatExp());
-
     return e;
 }
 
@@ -703,15 +746,15 @@ RegExp* RegExp::parseCharClassExp() /* throws(IllegalArgumentException) */
             negate = true;
 
         RegExp* e = parseCharClasses();
-        if(negate)
+        if (negate)
             e = makeIntersection(makeAnyChar(), makeComplement(e));
 
         if(!match(']'))
         	throw std::invalid_argument((stringbuilder() << "expected ']' at position " << pos));
-
         return e;
-    } else
+    } else {
         return parseSimpleExp();
+    }
 }
 
 RegExp* RegExp::parseCharClasses() /* throws(IllegalArgumentException) */
@@ -719,7 +762,6 @@ RegExp* RegExp::parseCharClasses() /* throws(IllegalArgumentException) */
     RegExp* e = parseCharClass();
     while (more() && !peek("]"))
                 e = makeUnion(e, parseCharClass());
-
     return e;
 }
 
@@ -772,13 +814,13 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
 
     //     return makeString(b.substr(start, (pos - 1 - start)));
     } else if(match('(')) {
-        if(match(')'))
+        if (match(')')) {
             return makeString("");
-
+        }
         RegExp* e = parseUnionExp();
-        if(!match(')'))
+        if(!match(')')) {
         	throw std::invalid_argument((stringbuilder() << "expected ')' at position " << pos));
-
+        }
         return e;
     } else if((check(AUTOMATON) || check(INTERVAL)) && match('<')) {
         int start = (int)pos;

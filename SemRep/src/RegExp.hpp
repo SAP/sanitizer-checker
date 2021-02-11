@@ -116,7 +116,8 @@ public:
     void copy(RegExp* e);
     StrangerAutomaton* toAutomaton();
     std::string toString();
-    std::string toStringBuilder(std::string b);
+    std::string toStringBuilder(std::string &b);
+    void dump();
 //    virtual void getIdentifiers(::java::util::Set* set);
     static RegExp* makeUnion(RegExp* exp1, RegExp* exp2);
     static RegExp* makeConcatenation(RegExp* exp1, RegExp* exp2);
