@@ -747,7 +747,7 @@ RegExp* RegExp::parseCharClassExp() /* throws(IllegalArgumentException) */
 
         RegExp* e = parseCharClasses();
         if (negate)
-            e = makeIntersection(makeAnyChar(), makeComplement(e));
+            e = makeComplement(e);
 
         if(!match(']'))
         	throw std::invalid_argument((stringbuilder() << "expected ']' at position " << pos));
