@@ -478,6 +478,11 @@ int* getIndices() {
 //Note: the sink state is not the last state after dfaProject
 int find_sink(DFA *M) {
   int i;
+
+  if (M == NULL) {
+      return -1;
+  }
+
   for (i = 0; i < M->ns; i++) {
     //printf("Enter find_sink\n");
     //leaf, nowhere, reject
@@ -486,7 +491,7 @@ int find_sink(DFA *M) {
       return i;
   }
   //printf("Exit(find sink)\n");
-  return -1;
+  return -2;
 }
 
 //return the position of the highest significant bit
@@ -3830,6 +3835,11 @@ void dfaPrintGraphvizAsciiRange(DFA *a, int no_free_vars, int *offsets, int prin
   pCharPair **toTrans;//array for all states, each entry is an array of charpair references
   int *toTransIndecies;
   char** ranges;
+
+  if (a == NULL) {
+      printf("Error in %s: NULL dfa input!\n", __func__);
+      return;
+  }
 
   sink = find_sink(a);
 //  assert( sink > -1);//with reserved chars, sink is always reject even when negated

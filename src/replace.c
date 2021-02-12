@@ -904,7 +904,7 @@ DFA *dfa_replace_M_arbitrary(DFA *M, DFA *Mr, int var, int *oldindices)
     else if(M->f[i]==-1)
       statuces[i]='-';
     else
-      statuces[i]='-';
+      statuces[i]='0';
 
     kill_paths(state_paths);
 
@@ -1122,7 +1122,7 @@ DFA *dfa_replace_string(DFA *M, const char *str, int var, int *oldindices)
     else if(M->f[i]==-1)
       statuces[i]='-';
     else
-      statuces[i]='-';
+      statuces[i]='0';
 
     kill_paths(state_paths);
   }//end for
@@ -1687,7 +1687,7 @@ DFA *dfa_create_M_with_extrabit(DFA *M, int var, int *indices)
     else if(M->f[i]==-1)
       statuces[i]='-';
     else
-      statuces[i]='-';
+      statuces[i]='0';
 
     kill_paths(state_paths);
 
@@ -1810,8 +1810,10 @@ DFA *dfa_insert_M_dot(DFA *M, DFA* Mr, int var, int *indices, int replace_once)
 
     if(M->f[i]==1)
       statuces[i]='+';
-    else
+    else if(M->f[i]==-1)
       statuces[i]='-';
+    else
+      statuces[i]='0';
 
     kill_paths(state_paths);
   }
@@ -2007,7 +2009,7 @@ DFA *dfa_insert_M_arbitrary_extrabit(DFA *M, DFA *Mr, int var, int *indices, int
     else if(M->f[i]==-1)
       statuces[i]='-';
     else
-      statuces[i]='-';
+      statuces[i]='0';
 
     kill_paths(state_paths);
 
@@ -2098,14 +2100,23 @@ DFA *dfa_insert_M_arbitrary_extrabit(DFA *M, DFA *Mr, int var, int *indices, int
 
   return result;
 }
-
+//#define _FANG_DFA_DEBUG 1
 DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_once)
 {
   DFA *result = NULL;
   DFA *tmpM = NULL;
   DFA *tmpM2 = NULL;
   DFA *tmpM3 = Mr; //dfa_construct_string("123", var, indices);
-  
+
+  if (_FANG_DFA_DEBUG) {
+    printf("M:\n");
+    dfaPrintGraphvizAsciiRange(M, var, indices, 0);
+  }
+  if (_FANG_DFA_DEBUG) {
+    printf("Mr:\n");
+    dfaPrintGraphvizAsciiRange(Mr, var, indices, 0);
+  }
+
   result = dfa_insert_M_arbitrary_extrabit(M, tmpM3, var, indices, 1);
   if (_FANG_DFA_DEBUG) {
     printf("M: insert loops\n");
@@ -2188,7 +2199,7 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_
   tmpM = tmpM2;
 
   if(_FANG_DFA_DEBUG){
-    printf("Projected:%d bit", var);
+    printf("Projected: %d bit", var);
     dfaPrintVitals(tmpM);
     dfaPrintGraphvizAsciiRange(tmpM, var, indices, 0);
   }
