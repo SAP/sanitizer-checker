@@ -48,7 +48,7 @@ public:
     AnalysisResult computeTargetFWAnalysis();
 
     // Compute the post image with custom input
-    AnalysisResult computeTargetFWAnalysis(const StrangerAutomaton* inputAuto);
+    AnalysisResult computeTargetFWAnalysis(const StrangerAutomaton* inputAuto, bool doConcat = false);
 
     // Get the post-image from the analysis result
     const StrangerAutomaton* getPostImage(const AnalysisResult& result) const;
@@ -69,7 +69,7 @@ public:
     
     void setPrintDots(bool print) { m_print_dots = print; }
     void setPrint(bool print) { m_print = print; }
- 
+    
     std::string getFileName() const { return target_dep_graph_file_name.string(); }
     const fs::path& getFile() const { return target_dep_graph_file_name; }
     static PerfInfo& perfInfo;
@@ -105,7 +105,7 @@ public:
         
     virtual ~ForwardAnalysisResult();
 
-    void doAnalysis();
+    void doAnalysis(bool doConcat = false);
 
     const SemAttack* getAttack() const { return m_attack; }
     SemAttack* getAttack() { return m_attack; }

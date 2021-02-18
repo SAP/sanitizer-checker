@@ -292,9 +292,9 @@ ForwardAnalysisResult::~ForwardAnalysisResult()
     m_postImage = nullptr;
   }
 }
-void ForwardAnalysisResult::doAnalysis()
+void ForwardAnalysisResult::doAnalysis(bool doConcat)
 {
-  m_result = m_attack->computeTargetFWAnalysis(m_input);
+  m_result = m_attack->computeTargetFWAnalysis(m_input, doConcat);
   const StrangerAutomaton* post = this->getAttack()->getPostImage(m_result);
   if (post) {
     m_postImage = post->clone();
@@ -417,7 +417,7 @@ void SemAttack::printResults() const {
 /**
  * Computes sink post image for target, first time
  */
-AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* inputAuto)
+AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* inputAuto, bool doConcat)
 {
     message("computing target sink post image...");
     AnalysisResult targetAnalysisResult;
@@ -434,7 +434,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* input
     // Copy the input
     targetAnalysisResult.set(target_uninit_field_node->getID(), inputAuto->clone());
 
-    ImageComputer targetAnalyzer(false, false);
+    ImageComputer targetAnalyzer(doConcat, false);
 
     try {
         message("starting forward analysis for target...");

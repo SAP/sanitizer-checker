@@ -50,6 +50,7 @@ public:
     void printFiles() const { printFiles(std::cout); }
     void writeResultsToFile() const;
 
+    void setConcats(bool c) { m_concats = c; }
 private:
     void printResults(std::ostream& os, bool printFiles = false) const;
     void printFiles(std::ostream& os) const;
@@ -71,6 +72,8 @@ private:
     std::vector<AttackContext> m_analyzed_contexts;
     std::mutex results_mutex;
     unsigned int m_nThreads;
+
+    bool m_concats;
 };
 
 

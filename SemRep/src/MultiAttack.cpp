@@ -50,6 +50,7 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_analyzed_contexts()
   , results_mutex()
   , m_nThreads(boost::thread::hardware_concurrency())
+  , m_concats(0)
 {
   fillCommonPatterns();
 }
@@ -134,7 +135,7 @@ void MultiAttack::computeImagesForFile(const fs::path& file, DepGraph target_dep
   try {
     // Forward Analysis
     result->getAttack()->init();
-    result->getFwAnalysis().doAnalysis();
+    result->getFwAnalysis().doAnalysis(m_concats);
     postImage = result->getFwAnalysis().getPostImage();
     result->getAttack()->writeResultsToFile(dir);
     result->getFwAnalysis().writeResultsToFile(dir);
