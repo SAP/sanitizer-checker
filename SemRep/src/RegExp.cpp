@@ -458,11 +458,11 @@ RegExp* RegExp::makeString(RegExp* exp1, RegExp* exp2)
 {
 
     std::string b;
-    if(exp1->kind == REGEXP_STRING)
+    if (exp1->kind == REGEXP_STRING)
         b.append(exp1->s);
     else
         b.append(1, exp1->c);
-    if(exp2->kind == REGEXP_STRING)
+    if (exp2->kind == REGEXP_STRING)
         b.append(exp2->s);
     else
         b.append(1, exp2->c);
@@ -694,8 +694,9 @@ RegExp* RegExp::parseRepeatExp() /* throws(IllegalArgumentException) */
     while (peek("?*+{")) {
         if(match('?'))
             e = makeOptional(e);
-        else if(match('*'))
+        else if(match('*')) {
             e = makeRepeatStar(e);
+        }
         else if(match('+'))
             e = makeRepeatPlus(e);
         else if(match('{')) {
@@ -747,7 +748,7 @@ RegExp* RegExp::parseCharClassExp() /* throws(IllegalArgumentException) */
 
         RegExp* e = parseCharClasses();
         if (negate)
-            e = makeComplement(e);
+            e = makeIntersection(makeAnyChar(), makeComplement(e));
 
         if(!match(']'))
         	throw std::invalid_argument((stringbuilder() << "expected ']' at position " << pos));
