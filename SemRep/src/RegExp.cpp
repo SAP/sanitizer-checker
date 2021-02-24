@@ -27,12 +27,16 @@ using namespace std;
 //#define DEBUG_REGEX
 
 #if defined(DEBUG_REGEX)
+#define DEBUG_PRINT_FUNC_DEPTH(e, d)                            \
+    {                                                           \
+        (e)->dump((d));                                         \
+    }
 #define DEBUG_PRINT_FUNC(e)                                     \
     {                                                           \
-        std::cout << __PRETTY_FUNCTION__ << std::endl;          \
         (e)->dump();                                            \
     }
 #else
+#define DEBUG_PRINT_FUNC_DEPTH(e, d) {}
 #define DEBUG_PRINT_FUNC(e) {}
 #endif
 
@@ -163,85 +167,146 @@ void RegExp::init(string s, int syntax_flags){
 
 }
 
-void RegExp::dump()
+void RegExp::dump(unsigned int depth)
 {
-    std::cout << "RegExp: " << hex << this << std::endl;
-    std::cout << "        exp1: " << exp1 << ": " << (exp1 ? exp1->toString() : "") << std::endl;
-    std::cout << "        exp2: " << exp2 << ": " << (exp2 ? exp2->toString() : "") << std::endl;
-    std::cout << "        kind: " << kind << std::endl;
-    std::cout << "        s: " << s << std::endl;
-    std::cout << "        c: " << c << std::endl;
-    std::cout << "        b: " << b << std::endl;
-    std::cout << "        min: " << min << std::endl;
-    std::cout << "        max: " << max << std::endl;
-    std::cout << "        from: " << from << std::endl;
-    std::cout << "        to: " << to << std::endl;
-    std::cout << "        string: " << toString() << std::endl;
+    std::cout << depth;
+    for (unsigned int i = 0; i <= depth; i++) {
+        std::cout << " ";
+    }
+    switch (this->kind) {
+    case REGEXP_UNION:
+        std::cout << "REGEXP_UNION" << std::endl;
+        break;
+    case REGEXP_CONCATENATION:
+        std::cout << "REGEXP_CONCATENATION" << std::endl;
+        break;
+    case REGEXP_INTERSECTION:
+        std::cout << "REGEXP_INTERSECTION" << std::endl;
+        break;
+    case REGEXP_OPTIONAL:
+        std::cout << "REGEXP_OPTIONAL" << std::endl;
+        break;
+    case REGEXP_REPEAT_STAR:
+        std::cout << "REGEXP_REPEAT_STAR" << std::endl;
+        break;
+    case REGEXP_REPEAT_PLUS:
+        std::cout << "REGEXP_REPEAT_PLUS" << std::endl;
+        break;
+    case REGEXP_REPEAT_MIN:
+        std::cout << "REGEXP_REPEAT_MIN" << std::endl;
+        break;
+    case REGEXP_REPEAT_MINMAX:
+        std::cout << "REGEXP_REPEAT_MINMAX" << std::endl;
+        break;
+    case REGEXP_COMPLEMENT:
+        std::cout << "REGEXP_COMPLEMENT" << std::endl;
+        break;
+    case REGEXP_CHAR:
+        std::cout << "REGEXP_CHAR: " << this->c << std::endl;
+        break;
+    case REGEXP_CHAR_RANGE:
+        std::cout << "REGEXP_CHAR_RANGE: " << this->from << " -> " << this->to << std::endl;
+        break;
+    case REGEXP_ANYCHAR:
+        std::cout << "REGEXP_ANYCHAR" << std::endl;
+        break;
+    case REGEXP_EMPTY:
+        std::cout << "REGEXP_EMPTY" << std::endl;
+        break;
+    case REGEXP_STRING:
+        std::cout << "REGEXP_STRING: " << this->s << std::endl;
+        break;
+    case REGEXP_ANYSTRING:
+        std::cout << "REGEXP_ANYSTRING" << std::endl;
+        break;
+    case REGEXP_AUTOMATON:
+        std::cout << "REGEXP_AUTOMATON" << std::endl;
+        break;
+    case REGEXP_INTERVAL:
+        std::cout << "REGEXP_INTERVAL" << std::endl;
+        break;
+    default:
+        std::cout << "UNKNOWN" << std::endl;
+        break;
+    }
+    // std::cout << "        exp1: " << exp1 << ": " << (exp1 ? exp1->toString() : "") << std::endl;
+    // std::cout << "        exp2: " << exp2 << ": " << (exp2 ? exp2->toString() : "") << std::endl;
+    // std::cout << "        kind: " << kind << std::endl;
+    // std::cout << "        s: " << s << std::endl;
+    // std::cout << "        c: " << c << std::endl;
+    // std::cout << "        b: " << b << std::endl;
+    // std::cout << "        min: " << min << std::endl;
+    // std::cout << "        max: " << max << std::endl;
+    // std::cout << "        from: " << from << std::endl;
+    // std::cout << "        to: " << to << std::endl;
+    // std::cout << "        string: " << toString() << std::endl;
 }
 
-StrangerAutomaton* RegExp::toAutomaton() /* throws(IllegalArgumentException) */
+StrangerAutomaton* RegExp::toAutomaton(unsigned int depth) /* throws(IllegalArgumentException) */
 {
-    StrangerAutomaton* a = NULL;
-    StrangerAutomaton* auto1;
-    StrangerAutomaton* auto2;
+    StrangerAutomaton* a = nullptr;
+    StrangerAutomaton* auto1 = nullptr;
+    StrangerAutomaton* auto2 = nullptr;
+    DEBUG_PRINT_FUNC_DEPTH(this, depth);
+    depth++;
     {
         Kind v = kind;
         if(v == REGEXP_UNION) {
-            auto1 = exp1->toAutomaton();
-            auto2 = exp2->toAutomaton();
+            auto1 = exp1->toAutomaton(depth);
+            auto2 = exp2->toAutomaton(depth);
             a = auto1->union_(auto2, ++id);
             delete auto1;
             delete auto2;
             goto end_switch1;;
         }
         if(v == REGEXP_CONCATENATION) {
-            auto1 = exp1->toAutomaton();
-            auto2 = exp2->toAutomaton();
+            auto1 = exp1->toAutomaton(depth);
+            auto2 = exp2->toAutomaton(depth);
             a = auto1->concatenate(auto2, ++id);
             delete auto1;
             delete auto2;
             goto end_switch1;;
         }
         if(v == REGEXP_INTERSECTION) {
-            auto1 = exp1->toAutomaton();
-            auto2 = exp2->toAutomaton();
+            auto1 = exp1->toAutomaton(depth);
+            auto2 = exp2->toAutomaton(depth);
             a = auto1->intersect(auto2, ++id);
             delete auto1;
             delete auto2;
             goto end_switch1;;
         }
         if(v == REGEXP_OPTIONAL) {
-            auto1 = exp1->toAutomaton();
+            auto1 = exp1->toAutomaton(depth);
             a = auto1->optional(++id);
             delete auto1;
             goto end_switch1;;
         }
         if(v == REGEXP_REPEAT_STAR) {
-            auto1 = exp1->toAutomaton();
+            auto1 = exp1->toAutomaton(depth);
             a = auto1->kleensStar(++id);
             delete auto1;
             goto end_switch1;;
         }
         if(v == REGEXP_REPEAT_PLUS) {
-            auto1 = exp1->toAutomaton();
+            auto1 = exp1->toAutomaton(depth);
             a = auto1->closure(++id);
             delete auto1;
             goto end_switch1;;
         }
         if(v == REGEXP_REPEAT_MIN) {
-            auto1 = exp1->toAutomaton();
+            auto1 = exp1->toAutomaton(depth);
             a = auto1->repeat(min, ++id);
             delete auto1;
             goto end_switch1;;
         }
         if(v == REGEXP_REPEAT_MINMAX) {
-            auto1 = exp1->toAutomaton();
+            auto1 = exp1->toAutomaton(depth);
             a = auto1->repeat(min, max, ++id);
             delete auto1;
             goto end_switch1;;
         }
         if(v == REGEXP_COMPLEMENT) {
-            auto1 = exp1->toAutomaton();
+            auto1 = exp1->toAutomaton(depth);
             a = auto1->complement(++id);
             delete auto1;
             goto end_switch1;;
@@ -272,7 +337,7 @@ StrangerAutomaton* RegExp::toAutomaton() /* throws(IllegalArgumentException) */
         }
 end_switch1:;
     }
-
+//    a->toDotAscii(0);
     return a;
 }
 

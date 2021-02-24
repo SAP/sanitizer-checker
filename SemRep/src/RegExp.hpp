@@ -114,10 +114,10 @@ public:
     std::string::size_type pos;
     void simplify();
     void copy(RegExp* e);
-    StrangerAutomaton* toAutomaton();
+    StrangerAutomaton* toAutomaton(unsigned int depth = 0);
     std::string toString();
     std::string toStringBuilder(std::string &b);
-    void dump();
+    void dump(unsigned int depth = 0);
 //    virtual void getIdentifiers(::java::util::Set* set);
     static RegExp* makeUnion(RegExp* exp1, RegExp* exp2);
     static RegExp* makeConcatenation(RegExp* exp1, RegExp* exp2);
