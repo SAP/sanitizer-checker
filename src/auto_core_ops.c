@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /*
  * Stranger
  * Copyright (C) 2013-2014 University of California Santa Barbara.
@@ -1195,181 +1196,121 @@ DFA *dfa_closure_extrabit(M1, var, indices)
 //    The extra bit is set 0 for old paths, while the extra bit is set 1 for new paths
 // 3. Project extra bit away
 
+// Check if there is an accept state transition to the initial state
 int check_init_reachable(M, var, indices)
-  DFA *M;int var;int *indices; {
+  DFA *M; int var; int *indices;
+{
   paths state_paths, pp;
   int i;
-
   for (i = 0; i < M->ns; i++) {
-    if (M->f[i] == 1) {
-      state_paths = pp = make_paths(M->bddm, M->q[i]);
-      while (pp) {
-        if (pp->to == M->s)
-          return 1;
-        pp = pp->next;
-      }
-      kill_paths(state_paths);
+    state_paths = pp = make_paths(M->bddm, M->q[i]);
+    while (pp) {
+      //printf("m->s: %d i: %d pp->to: %d\n", M->s, i, pp->to);
+      if (pp->to == M->s)
+        return 1;
+      pp = pp->next;
     }
+    kill_paths(state_paths);
   }
   return 0;
 }
 
 DFA *dfa_concat_extrabit(M1, M2, var, indices)
-       DFA *M1;
-       DFA *M2;
-       int var;
-       int *indices;
-  {
-    DFA *result;
-    DFA *tmpM;
-    paths state_paths, pp;
-    trace_descr tp;
-    int i, j, k, ka, numOfAddedPaths;
-    char *exeps;
-    char *addedexeps;
-    int *to_states;
-    int *added_to_states;
-    long max_exeps;
-    char *statuces;
-    int len, shift, newns, sink1, sink2;
-    int initflag = check_init_reachable(M2, var, indices);
-    int loc;
-    len = var+1; //one extra bit
-    shift = M1->ns; // map M2 transitions to new M
+  DFA *M1;
+  DFA *M2;
+  int var;
+  int *indices;
+{
+  DFA *result;
+  DFA *tmpM;
+  paths state_paths, pp;
+  trace_descr tp;
+  int i, j, k, ka, numOfAddedPaths;
+  char *exeps;
+  char *addedexeps;
+  int *to_states;
+  int *added_to_states;
+  long max_exeps;
+  char *statuces;
+  int len, shift, newns, sink1, sink2;
+  int initflag = check_init_reachable(M2, var, indices);
+  int loc;
+  len = var+1; //one extra bit
+  shift = M1->ns; // map M2 transitions to new M
 
+  /* printf("M1\n"); */
+  /* dfaPrintGraphvizAsciiRange(M1, var, indices, 1); */
+  /* printf("M2\n"); */
+  /* dfaPrintGraphvizAsciiRange(M2, var, indices, 1); */
+  /* printf("Initflag: %d\n", initflag); */
 
-    if(len <= 10) max_exeps=1<<len; //maybe exponential
-    else max_exeps = 1<< 10; //saving for multi-track bounded for 25 bits
-    sink1=find_sink(M1);
-    sink2=find_sink(M2);
-    assert(sink1 >-1);
-    assert(sink2 >-1);
+  if(len <= 10) max_exeps=1<<len; //maybe exponential
+  else max_exeps = 1<< 10; //saving for multi-track bounded for 25 bits
+  sink1=find_sink(M1);
+  sink2=find_sink(M2);
+  assert(sink1 >-1);
+  assert(sink2 >-1);
 
-    newns= (M1->ns)+(M2->ns)-1-(1-initflag); //number of states after concatenation. The sink state of M2 is merged.
+  newns= (M1->ns)+(M2->ns)-1-(1-initflag); //number of states after concatenation. The sink state of M2 is merged.
 
-    DFABuilder *b = dfaSetup(newns, len, indices); //the sink state of M2 is merged to M1
-    exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
-    addedexeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
-    to_states=(int *)malloc(max_exeps*sizeof(int));
-    added_to_states=(int *)malloc(max_exeps*sizeof(int));
-    statuces=(char *)malloc((newns+1)*sizeof(char));
+  DFABuilder *b = dfaSetup(newns, len, indices); //the sink state of M2 is merged to M1
+  exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
+  addedexeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
+  to_states=(int *)malloc(max_exeps*sizeof(int));
+  added_to_states=(int *)malloc(max_exeps*sizeof(int));
+  statuces=(char *)malloc((newns+1)*sizeof(char));
 
-    //construct the added paths
-    state_paths = pp = make_paths(M2->bddm, M2->q[M2->s]);
-    //printf("\n\n INIT2 %d \n\n", M2->s);
+  //construct the added paths
+  state_paths = pp = make_paths(M2->bddm, M2->q[M2->s]);
+  //printf("\n\n INIT2 %d \n\n", M2->s);
 
-    k=0;
-    while (pp) {
-      if(pp->to!=sink2){
+  k=0;
+  while (pp) {
+    if(pp->to!=sink2){
+      added_to_states[k]=pp->to+shift;
 
-        added_to_states[k]=pp->to+shift;
-        if ( M2->s == pp->to) {
-          // BAKI: avoid self loop bug
-          // example (concat "a" /b*c/)
-          added_to_states[k] -= 2;
-        } else {
-          if(sink2>=0 && ((pp->to) > sink2)) added_to_states[k]--; //to new state, sink state will be eliminated and hence need -1
-          if(initflag == 0 && ((pp->to)> M2->s)) added_to_states[k]--; // to new state, init state will be eliminated if init is not reachable
+      if(sink2>=0 && ((pp->to) > sink2)) added_to_states[k]--; //to new state, sink state will be eliminated and hence need -1
+      if(initflag == 0 && ((pp->to)> M2->s)) added_to_states[k]--; // to new state, init state will be eliminated if init is not reachable
+
+      //printf("M2->s = %d, pp->to = %d added_to_states[k] = %d\n", M2->s, pp->to, added_to_states[k]);
+      for (j = 0; j < var; j++) {
+        //the following for loop can be avoided if the indices are in order
+        for (tp = pp->trace; tp && (tp->index != indices[j]); tp =tp->next);
+        if (tp) {
+          if (tp->value) addedexeps[k*(len+1)+j]='1';
+          else addedexeps[k*(len+1)+j]='0';
         }
-
-
-        for (j = 0; j < var; j++) {
-          //the following for loop can be avoided if the indices are in order
-          for (tp = pp->trace; tp && (tp->index != indices[j]); tp =tp->next);
-          if (tp) {
-            if (tp->value) addedexeps[k*(len+1)+j]='1';
-            else addedexeps[k*(len+1)+j]='0';
-          }
-          else
-            addedexeps[k*(len+1)+j]='X';
-        }
-        addedexeps[k*(len+1)+var]='1'; //new path
-        addedexeps[k*(len+1)+len]='\0';
-        k++;
+        else
+          addedexeps[k*(len+1)+j]='X';
       }
-      pp = pp->next;
+      addedexeps[k*(len+1)+var]='1'; //new path
+      addedexeps[k*(len+1)+len]='\0';
+      k++;
     }
-    kill_paths(state_paths);
-    numOfAddedPaths=k; //numOfAddedPaths is the number of new paths
-    //printf("\n\n NUMBER OF ADDED PATHS %ld \n\n", numOfAddedPaths);
+    pp = pp->next;
+  }
+  kill_paths(state_paths);
+  numOfAddedPaths=k; //numOfAddedPaths is the number of new paths
+  //printf("\n\n NUMBER OF ADDED PATHS %ld \n\n", numOfAddedPaths);
 
-    for (i = 0; i < M1->ns; i++) {
+  for (i = 0; i < M1->ns; i++) {
 
-      state_paths = pp = make_paths(M1->bddm, M1->q[i]);
-      k=0;
-
-      while (pp) {
-        if(pp->to!=sink1){
-    to_states[k]=pp->to;
-    for (j = 0; j < var; j++) {
-      //the following for loop can be avoided if the indices are in order
-      for (tp = pp->trace; tp && (tp->index != indices[j]); tp =tp->next);
-
-      if (tp) {
-        if (tp->value) exeps[k*(len+1)+j]='1';
-        else exeps[k*(len+1)+j]='0';
-      }
-      else
-        exeps[k*(len+1)+j]='X';
-    }
-    exeps[k*(len+1)+var]='0'; //old value
-    exeps[k*(len+1)+len]='\0';
-    k++;
-        }
-        pp = pp->next;
-      }
-      if(M1->f[i]==1){ //add added paths
-        ka = numOfAddedPaths;
-        dfaAllocExceptions(b, k+ka);
-        for(k--;k>=0;k--)
-    dfaStoreException(b, to_states[k],exeps+k*(len+1));
-        for(ka--;ka>=0;ka--)
-    dfaStoreException(b, added_to_states[ka],addedexeps+ka*(len+1));
-        dfaStoreState(b, sink1);
-        // BAKI: empty string acceptance on the right hand side
-        if ( M2->f[0] == 1 ) {
-          statuces[i] = '+';
-        } else {
-          statuces[i] = '-';
-        }
-      } else{
-        dfaAllocExceptions(b, k);
-        for(k--;k>=0;k--)
-    dfaStoreException(b, to_states[k],exeps+k*(len+1));
-        dfaStoreState(b, sink1);
-        statuces[i]='-';
-      }
-      kill_paths(state_paths);
-    }
-    //REUSE exeps and to_states shall be fine
-      free(exeps);
-      free(to_states);
-      exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
-      to_states=(int *)malloc(max_exeps*sizeof(int));
-    //  initflag is 1 iff init is reached by some state. In this case,
-
-    for (i = 0; i < M2->ns; i++) {
-      if(i!=sink2){
-        if(i!=M2->s || initflag>0){
-    state_paths = pp = make_paths(M2->bddm, M2->q[i]);
+    state_paths = pp = make_paths(M1->bddm, M1->q[i]);
     k=0;
 
     while (pp) {
-      if((pp->to)!=sink2){
-        to_states[k]=pp->to+shift;
-        if(sink2>=0 && ((pp->to) > sink2)) to_states[k]--; //to new state, sink state will be eliminated and hence need -1
-        if(initflag == 0 && ((pp->to)> M2->s)) to_states[k]--; // to new state, init state will be eliminated if init is not reachable
-
+      if(pp->to!=sink1){
+        to_states[k]=pp->to;
         for (j = 0; j < var; j++) {
           //the following for loop can be avoided if the indices are in order
           for (tp = pp->trace; tp && (tp->index != indices[j]); tp =tp->next);
 
           if (tp) {
-      if (tp->value) exeps[k*(len+1)+j]='1';
-      else exeps[k*(len+1)+j]='0';
+            if (tp->value) exeps[k*(len+1)+j]='1';
+            else exeps[k*(len+1)+j]='0';
           }
           else
-      exeps[k*(len+1)+j]='X';
+            exeps[k*(len+1)+j]='X';
         }
         exeps[k*(len+1)+var]='0'; //old value
         exeps[k*(len+1)+len]='\0';
@@ -1377,59 +1318,123 @@ DFA *dfa_concat_extrabit(M1, M2, var, indices)
       }
       pp = pp->next;
     }
-
-    dfaAllocExceptions(b, k);
-    for(k--;k>=0;k--)
-      dfaStoreException(b, to_states[k],exeps+k*(len+1));
-    dfaStoreState(b, sink1);
-
-    loc = shift+i;
-    if(initflag == 0 && i > M2->s) loc--;
-    if(sink2>=0 && i>sink2) loc--;
-
-    if(M2->f[i]==1)
-      statuces[loc]='+';
-    else if(M2->f[i]==-1)
-      statuces[loc]='-';
-    else
-      statuces[loc]='-';
-
+    if(M1->f[i]==1){ //add added paths to accept states
+      ka = numOfAddedPaths;
+      dfaAllocExceptions(b, k+ka);
+      for(k--;k>=0;k--)
+        dfaStoreException(b, to_states[k],exeps+k*(len+1));
+      for(ka--;ka>=0;ka--)
+        dfaStoreException(b, added_to_states[ka],addedexeps+ka*(len+1));
+      dfaStoreState(b, sink1);
+      // BAKI: empty string acceptance on the right hand side
+      if ( M2->f[0] == 1 ) {
+        statuces[i] = '+';
+      } else {
+        statuces[i] = '-';
+      }
+    } else{
+      dfaAllocExceptions(b, k);
+      for(k--;k>=0;k--)
+        dfaStoreException(b, to_states[k],exeps+k*(len+1));
+      dfaStoreState(b, sink1);
+      statuces[i]='-';
+    }
     kill_paths(state_paths);
+  }
+  //REUSE exeps and to_states shall be fine
+  free(exeps);
+  free(to_states);
+  exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char));
+  to_states=(int *)malloc(max_exeps*sizeof(int));
+
+  //  initflag is 1 iff init is reached by some state. In this case,
+  for (i = 0; i < M2->ns; i++) {
+    if(i!=sink2){
+      if(i!=M2->s || initflag>0){
+        state_paths = pp = make_paths(M2->bddm, M2->q[i]);
+        k=0;
+
+        while (pp) {
+          if((pp->to)!=sink2){
+            to_states[k]=pp->to+shift;
+
+            if(sink2>=0 && ((pp->to) > sink2)) to_states[k]--; //to new state, sink state will be eliminated and hence need -1
+            if(initflag == 0 && ((pp->to)> M2->s)) to_states[k]--; // to new state, init state will be eliminated if init is not reachable
+
+            for (j = 0; j < var; j++) {
+              //the following for loop can be avoided if the indices are in order
+              for (tp = pp->trace; tp && (tp->index != indices[j]); tp =tp->next);
+
+              if (tp) {
+                if (tp->value) exeps[k*(len+1)+j]='1';
+                else exeps[k*(len+1)+j]='0';
+              }
+              else
+                exeps[k*(len+1)+j]='X';
+            }
+            exeps[k*(len+1)+var]='0'; //old value
+            exeps[k*(len+1)+len]='\0';
+            k++;
+          }
+          pp = pp->next;
         }
+
+        dfaAllocExceptions(b, k);
+        for(k--;k>=0;k--)
+          dfaStoreException(b, to_states[k],exeps+k*(len+1));
+        dfaStoreState(b, sink1);
+
+        loc = shift+i;
+        if(initflag == 0 && i > M2->s) loc--;
+        if(sink2>=0 && i>sink2) loc--;
+
+        if(M2->f[i]==1)
+          statuces[loc]='+';
+        else if(M2->f[i]==-1)
+          statuces[loc]='-';
+        else
+          statuces[loc]='-';
+
+        kill_paths(state_paths);
       }
     }
-    statuces[newns]='\0';
-    //assert(i+shift==newns);
+  }
+  statuces[newns]='\0';
+  //assert(i+shift==newns);
 
-    //result = dfaBuild(b, statuces);
-    //printf("START TO CONCAT BUILD\n");
-    tmpM=dfaBuild(b, statuces);
-    //dfaMinimize(tmpM);
-    //dfaPrintVitals(tmpM);
+  //result = dfaBuild(b, statuces);
+  //printf("START TO CONCAT BUILD\n");
+  tmpM=dfaBuild(b, statuces);
 
-    //printf("START TO PROJECT\n");
+  result = dfaMinimize(tmpM);
+  dfaFree(tmpM);
+  tmpM = result;
+
+  //dfaPrintVitals(tmpM);
+  //dfaPrintGraphvizAsciiRange(tmpM, var, indices, 1);
+  //printf("START TO PROJECT\n");
   if( DEBUG_SIZE_INFO )
     printf("\t peak : concat : states %d : bddnodes %u : before projection \n", tmpM->ns, bdd_size(tmpM->bddm) );
-    result=dfaProject(tmpM, (unsigned) var);
-    //dfaPrintVerbose(result);
+  result=dfaProject(tmpM, (unsigned) var);
+  //dfaPrintVerbose(result);
 
-    //printf("FREE EXEPS\n");
-    free(exeps);
-    //printf("FREE ADDEDEXEPS\n");
-    free(addedexeps);
-    //printf("FREE ToState\n");
-    free(to_states);
-    //printf("FREE AddedToState\n");
-    free(added_to_states);
-    //printf("FREE STATUCES\n");
-    free(statuces);
-    dfaFree(tmpM);
+  //printf("FREE EXEPS\n");
+  free(exeps);
+  //printf("FREE ADDEDEXEPS\n");
+  free(addedexeps);
+  //printf("FREE ToState\n");
+  free(to_states);
+  //printf("FREE AddedToState\n");
+  free(added_to_states);
+  //printf("FREE STATUCES\n");
+  free(statuces);
+  dfaFree(tmpM);
   if( DEBUG_SIZE_INFO )
     printf("\t peak : concat : states %d : bddnodes %u : after projection \n", result->ns, bdd_size(result->bddm) );
-      tmpM = dfaMinimize(result);
-        dfaFree(result);
-        return tmpM;
-  }//End of dfa_concat_extrabit
+  tmpM = dfaMinimize(result);
+  dfaFree(result);
+  return tmpM;
+}//End of dfa_concat_extrabit
 
 
 
