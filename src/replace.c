@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /*
  * Stranger
  * Copyright (C) 2013-2014 University of California Santa Barbara.
@@ -2127,7 +2128,7 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_
   tmpM2 = dfa_star_M_star(Mr, var, indices);
   dfaFree(tmpM);
   tmpM = tmpM2;
-  
+
   if (_FANG_DFA_DEBUG) {
     printf("*M*\n");
     dfaPrintGraphvizAsciiRange(tmpM, var, indices, 1);
@@ -2187,14 +2188,21 @@ DFA *dfa_insert_M_arbitrary(DFA *M, DFA *Mr, int var, int *indices, int replace_
   dfaFree(result);
   dfaFree(tmpM);
   tmpM = tmpM2;
-      
+
+  // Minimize
+  tmpM2 = dfaMinimize(tmpM);
+  dfaFree(tmpM);
+  tmpM = tmpM2;
+
   if (_FANG_DFA_DEBUG) {
     printf("Ensure bar transition: %d\n", M->ns);
     dfaPrintVitals(tmpM);
     dfaPrintGraphvizAsciiRange(tmpM, var, indices, 0);
   }
 
-  tmpM2 = dfaProject(tmpM, (unsigned) var);
+   // Additional checks here
+  //tmpM2 = dfaProject(tmpM, (unsigned) var);
+  tmpM2 = dfaProjectWithSingletonFallback(tmpM, var + 1, indices, var);
   dfaFree(tmpM);
   tmpM = tmpM2;
 
@@ -2251,7 +2259,10 @@ DFA *dfa_insert_everywhere(DFA *M, DFA* Mr, int var, int *indices, int replace_o
   tmp = tmp2;
 
   if (!check_emptiness(tmp, var, indices)) {
+
+    // Try inserting the 2-char replace string everywhere
     result2 = dfa_insert_M_arbitrary(M, tmp, var, indices, replace_once);
+
     // Combine if there was a result from single chars
     if (result) {
       result1 = result;

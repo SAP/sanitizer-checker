@@ -5748,15 +5748,15 @@ unsigned int mystrlen(char * input){
   i--;
   return i;
 }
-// returns a char * which contains an element of L(M)
-// Could be null in case returned value is empty string or there
-// is no solution
-char *dfaGenerateExample(DFA* M, int var, unsigned indices[]){
-  char *result = dfaMakeExample(M, 1, var, indices);
-  if (result == NULL)
-    return NULL;
+
+static char** extractTransitions(char* result, int var, int* len) {
 //  printf("%s  %d\n", result, mystrlen(result));
-  int jump = mystrlen(result) / 8;
+  if ((result == NULL) || (var <= 0) || (len == NULL)) {
+    return NULL;
+  }
+
+  int jump = mystrlen(result) / var;
+  *len = jump; // The number of transistions
   int i1, j1;
   // array of strings of 0's and 1's where each string represent an ASCII
   // value for a character on the automaton accepting path
@@ -5774,18 +5774,114 @@ char *dfaGenerateExample(DFA* M, int var, unsigned indices[]){
     *(decoded_result + i1) = temp_r;
     //    printf("\n");
   }
-//  char * final_result = malloc(sizeof(char) * (jump + 1));
-  char * final_result = calloc(jump + 1, sizeof(char));
-  for (i1 = 0; i1 < jump; i1++){
+
+  return decoded_result;
+}
+
+// returns a char * which contains an element of L(M)
+// Could be null in case returned value is empty string or there
+// is no solution
+char *dfaGenerateExample(DFA* M, int var, unsigned indices[]){
+  char *result = dfaMakeExample(M, 1, var, indices);
+  if (result == NULL)
+    return NULL;
+
+  int jump = 0;
+  char **decoded_result = extractTransitions(result, var, &jump);
+  free(result);
+  if (decoded_result == NULL) {
+    return NULL;
+  }
+
+  char *final_result = calloc(jump + 1, sizeof(char));
+  for (int i1 = 0; i1 < jump; i1++) {
     final_result[i1] = arr_to_ascii(decoded_result[i1]);
   }
   final_result[jump] = '\0';
   // Cleanup
-  for (i1 = 0; i1 < jump; i1++) {
+  for (int i1 = 0; i1 < jump; i1++) {
       free(decoded_result[i1]);
   }
   free(decoded_result);
   return final_result;
+}
+
+// Returns a singleton DFA which satisfies the input DFA M
+DFA *dfaGenerateSingleton(DFA* M, int var, unsigned indices[]) {
+
+  if ((M == NULL) || (var <= 0) || (indices == NULL)) {
+    return NULL;
+  }
+
+  // This returns a string of state transitions in chunks of
+  // var characters
+  char *result = dfaMakeExample(M, 1, var, indices);
+  if (result == NULL) {
+    return NULL;
+  }
+
+  int jump = 0; // Number of transitions
+  char **decoded_result = extractTransitions(result, var, &jump);
+  free(result);
+
+  if (decoded_result == NULL) {
+    return NULL;
+  }
+
+  // Now construct a new singleton DFA:
+  int nstates = jump + 2; // +1 for number of transitions, +1 for sink
+  int sink = nstates - 1;
+  DFABuilder *b = dfaSetup(nstates, var, indices);
+  // Need to construct the accept/reject array
+  char* statuses = (char*)malloc((nstates + 1) * sizeof(char));
+  for (int i = 0; i < nstates - 2; i++) {
+    // Singleton has one transition
+    dfaAllocExceptions(b, 1);
+    // To the next state (i + 1)
+    dfaStoreException(b, i + 1, decoded_result[i]);
+    // Everything else goes to the sink
+    dfaStoreState(b, sink);
+    // All states are reject
+    statuses[i] = '-';
+  }
+  // Final accept state
+  dfaAllocExceptions(b, 0);
+  dfaStoreState(b, sink);
+  statuses[nstates - 2] = '+';
+
+  // Sink state
+  dfaAllocExceptions(b, 0);
+  dfaStoreState(b, sink);
+  statuses[sink] = '-';
+  // Terminate the string
+  statuses[nstates] = '\0';
+
+  DFA* singleton = dfaBuild(b, statuses);
+  return singleton;
+}
+
+DFA *dfaProjectWithSingletonFallback(DFA* M, int var, unsigned indices[], int project_var) {
+  DFA* M_proj = dfaProject(M, (unsigned) project_var);
+
+  // The projection did not succeed
+  // If so, generate a simplified replace automaton
+  // This will still produce a valid pre-image, but will
+  // not be complete (ie a subset of the complete pre-image
+  // This is an approximation, but will still generate a valid
+  // exploit payload
+  if (M_proj == NULL) {
+    DFA* M_singleton = dfaGenerateSingleton(M, var, indices);
+    char* sample = dfaGenerateExample(M, project_var, indices);
+    printf("dfaProject failed! Falling back to singleton: %s\n", sample);
+    free(sample);
+    M_proj = dfaProject(M_singleton, (unsigned) project_var);
+    /* dfaPrintGraphvizAsciiRange(M, project_var, indices, 0); */
+    /* dfaPrintGraphvizAsciiRange(M_singleton, project_var, indices, 0); */
+    /* dfaPrintGraphvizAsciiRange(M_proj, project_var, indices, 0); */
+    dfaFree(M_singleton);
+  }
+
+  return M_proj;
 }
 
 /*******************************************

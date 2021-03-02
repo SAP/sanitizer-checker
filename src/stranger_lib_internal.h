@@ -111,7 +111,11 @@ char** mergeCharRanges(pCharPair charRanges[], int* p_size);
 int check_value(struct int_list_type *list, int value);
 DFA *dfa_union_empty_M(DFA *M, int var, int *indices);
 
-
+// generating an example i.e. an element of L(M)
+// Could return null in case solution is empty string or there
+// is no solution
+DFA *dfaGenerateSingleton(DFA* M, int var, unsigned indices[]);
+DFA *dfaProjectWithSingletonFallback(DFA* M, int var, unsigned indices[], int project_var);
 
 
 #endif /* STRANGER_LIB_INTERNAL_H_ */

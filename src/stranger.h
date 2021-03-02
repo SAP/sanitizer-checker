@@ -381,6 +381,11 @@ extern "C" {
     // Could return null in case solution is empty string or there
     // is no solution
     char *dfaGenerateExample(DFA* M, int var, unsigned indices[]);
+
+    // generating an example i.e. an element of L(M)
+    // Could return null in case solution is empty string or there
+    // is no solution
+    DFA *dfaGenerateSingleton(DFA* M, int var, unsigned indices[]);
     
     DFA *dfaRemoveSpace(DFA* M, int var, int* indices);
     
