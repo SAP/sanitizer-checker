@@ -96,7 +96,9 @@ public:
     		REGEXP_STRING,
     		REGEXP_ANYSTRING,
     		REGEXP_AUTOMATON,
-    		REGEXP_INTERVAL
+    		REGEXP_INTERVAL,
+                REGEXP_START_ANCHOR,
+                REGEXP_END_ANCHOR
     };
 
     static void restID();
@@ -136,9 +138,12 @@ public:
     static RegExp* makeAnyString();
     static RegExp* makeAutomaton(std::string s);
     static RegExp* makeInterval(int min, int max, int digits);
+    static RegExp* makeStartAnchor(RegExp* exp);
+    static RegExp* makeEndAnchor(RegExp* exp);
     RegExp* parseUnionExp() /* throws(IllegalArgumentException) */;
     RegExp* parseInterExp() /* throws(IllegalArgumentException) */;
     RegExp* parseConcatExp() /* throws(IllegalArgumentException) */;
+    RegExp* parseEndAnchor() /* throws(IllegalArgumentException) */;
     RegExp* parseRepeatExp() /* throws(IllegalArgumentException) */;
     RegExp* parseComplExp() /* throws(IllegalArgumentException) */;
     RegExp* parseCharClassExp() /* throws(IllegalArgumentException) */;
