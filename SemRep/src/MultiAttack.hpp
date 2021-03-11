@@ -51,6 +51,7 @@ public:
     void writeResultsToFile() const;
 
     void setConcats(bool c) { m_concats = c; }
+    void setSingletonIntersection(bool s) { m_singleton_intersection = s; }
 private:
     void printResults(std::ostream& os, bool printFiles = false) const;
     void printFiles(std::ostream& os) const;
@@ -74,6 +75,7 @@ private:
     unsigned int m_nThreads;
 
     bool m_concats;
+    bool m_singleton_intersection;
 };
 
 

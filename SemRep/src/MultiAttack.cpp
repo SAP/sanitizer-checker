@@ -112,7 +112,7 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
   try {
     fs::path dir(m_output_directory / result->getAttack()->getFile());
     BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
-    bw->doAnalysis();
+    bw->doAnalysis(m_singleton_intersection);
     bw->writeResultsToFile(dir);
     bw->finishAnalysis();
   } catch (StrangerStringAnalysisException const &e) {

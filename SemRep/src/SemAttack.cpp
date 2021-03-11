@@ -136,7 +136,7 @@ BackwardAnalysisResult::~BackwardAnalysisResult()
   finishAnalysis();
 }
 
-void BackwardAnalysisResult::doAnalysis()
+void BackwardAnalysisResult::doAnalysis(bool singletonIntersection)
 {
   const StrangerAutomaton* postImage = m_fwResult.getPostImage();
   m_intersection = this->getAttack()->computeAttackPatternOverlap(postImage, m_attack);
@@ -152,7 +152,14 @@ void BackwardAnalysisResult::doAnalysis()
       // Cache examples for printing
       m_intersection_example = m_intersection->generateSatisfyingExample();
       try {
-        AnalysisResult result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+        AnalysisResult result;
+        if (singletonIntersection) {
+          StrangerAutomaton* singleton = m_intersection->generateSatisfyingSingleton();
+          result = this->getAttack()->computePreImage(singleton, m_fwResult.getFwAnalysisResult());
+          delete singleton;
+        } else {
+          result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+        }
         m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
         m_preimage_example = m_preimage->generateSatisfyingExample();
         //  clean up target analysis result

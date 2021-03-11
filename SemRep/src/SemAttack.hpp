@@ -135,7 +135,7 @@ public:
 
     virtual ~BackwardAnalysisResult();
 
-    void doAnalysis();
+    void doAnalysis(bool singletonIntersection = false);
     void finishAnalysis();
 
     const StrangerAutomaton* getPreImage() const { return m_preimage; }

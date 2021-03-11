@@ -484,6 +484,15 @@ std::string StrangerAutomaton::generateSatisfyingExample() const
     return std::string();
 }
 
+StrangerAutomaton* StrangerAutomaton::generateSatisfyingSingleton() const
+{
+    DFA* dfa = dfaGenerateSingleton(this->dfa, num_ascii_track, u_indices_main);
+    if (dfa) {
+        return new StrangerAutomaton(dfa);
+    }
+    return nullptr;
+}
+
 //***************************************************************************************
 //*                                  Unary Operations                                   *
 //*									-------------------									*

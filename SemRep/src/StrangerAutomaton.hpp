@@ -70,6 +70,7 @@ public:
     static StrangerAutomaton* makePhi(int id);
     static StrangerAutomaton* makePhi();
     std::string generateSatisfyingExample() const;
+    StrangerAutomaton* generateSatisfyingSingleton() const;
     StrangerAutomaton* optional(int id);
     StrangerAutomaton* optional();
     StrangerAutomaton* kleensStar(int id);
@@ -151,7 +152,7 @@ public:
     bool isEmpty() const;
     bool isNull() const;
     bool checkEmptyString() const;
-    bool isSingleton() const;
+    bool isSingleton() const;    
     std::string getStr() const;
     bool isBottom() const;
     bool isTop() const;
