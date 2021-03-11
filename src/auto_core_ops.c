@@ -5782,6 +5782,11 @@ static char** extractTransitions(char* result, int var, int* len) {
 // Could be null in case returned value is empty string or there
 // is no solution
 char *dfaGenerateExample(DFA* M, int var, unsigned indices[]){
+
+  if (M == NULL) {
+    return NULL;
+  }
+
   char *result = dfaMakeExample(M, 1, var, indices);
   if (result == NULL)
     return NULL;
@@ -5861,6 +5866,11 @@ DFA *dfaGenerateSingleton(DFA* M, int var, unsigned indices[]) {
 }
 
 DFA *dfaProjectWithSingletonFallback(DFA* M, int var, unsigned indices[], int project_var) {
+
+  if (M == NULL) {
+    return NULL;
+  }
+
   DFA* M_proj = dfaProject(M, (unsigned) project_var);
 
   // The projection did not succeed
