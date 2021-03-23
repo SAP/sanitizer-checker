@@ -255,12 +255,16 @@ const AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutoma
   return nullptr;
 }
 
+void AutomatonGroups::printStatus(std::ostream& os) const
+{
+  os << "#  DepGraph files --> Duplicates removed --> Unique Hash --> Unique Post-images" << std::endl;
+  os << "# " << getEntriesWithDuplicates() << " --> " << getNonUniqueEntries() << " --> " << getEntries() << " --> " << getNonZeroGroups() << std::endl;
+}
+
 void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const {
   // Switch to decimal
   os << std::dec;
-  //  SemAttack::perfInfo.print_operations_info();
-  os << "#  DepGraph files --> Duplicates removed --> Unique Hash --> Unique Post-images" << std::endl;
-  os << "# " << getEntriesWithDuplicates() << " --> " << getNonUniqueEntries() << " --> " << getEntries() << " --> " << getNonZeroGroups() << std::endl;
+  printStatus(os);
   if (getNonZeroGroups() > 0) {
     m_groups.at(0).printHeaders(os, contexts);
   }

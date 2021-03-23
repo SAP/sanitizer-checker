@@ -174,7 +174,7 @@ BackwardAnalysisResult::~BackwardAnalysisResult()
   finishAnalysis();
 }
 
-void BackwardAnalysisResult::doAnalysis(bool singletonIntersection)
+void BackwardAnalysisResult::doAnalysis(bool computePreImage, bool singletonIntersection)
 {
   const StrangerAutomaton* postImage = m_fwResult.getPostImage();
   m_intersection = this->getAttack()->computeAttackPatternOverlap(postImage, m_attack);
@@ -189,21 +189,25 @@ void BackwardAnalysisResult::doAnalysis(bool singletonIntersection)
       m_isContained = postImage->checkInclusion(m_attack);
       // Cache examples for printing
       m_intersection_example = m_intersection->generateSatisfyingExample();
-      try {
-        AnalysisResult result;
-        if (singletonIntersection) {
-          StrangerAutomaton* singleton = m_intersection->generateSatisfyingSingleton();
-          result = this->getAttack()->computePreImage(singleton, m_fwResult.getFwAnalysisResult());
-          delete singleton;
-        } else {
-          result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+      if (computePreImage) {
+        try {
+          AnalysisResult result;
+          if (singletonIntersection) {
+            StrangerAutomaton* singleton = m_intersection->generateSatisfyingSingleton();
+            result = this->getAttack()->computePreImage(singleton, m_fwResult.getFwAnalysisResult());
+            delete singleton;
+          } else {
+            result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
+          }
+          m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
+          m_preimage_example = m_preimage->generateSatisfyingExample();
+          //  clean up target analysis result
+        } catch (StrangerStringAnalysisException const &e) {
+          m_isErrored = true;
+          throw;
         }
-        m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
-        m_preimage_example = m_preimage->generateSatisfyingExample();
-        //  clean up target analysis result
-      } catch (StrangerStringAnalysisException const &e) {
-        m_isErrored = true;
-        throw;
+      } else {
+        m_preimage_example = "N/A";
       }
     } else {
       m_isSafe = true;
@@ -272,24 +276,29 @@ void BackwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
 {
   fs::create_directories(dir);
 
-  fs::path output_image_file(dir / fs::path("post_image_attack_" + this->getName() + ".dot"));
-  m_attack->toDotFileAscii(output_image_file.string(), 0);
-  fs::path output_image_file_bdd(dir / fs::path("post_image_attack_" + this->getName() + ".bdd"));
-  m_attack->exportToFile(output_image_file_bdd.string());
+  if (m_attack) {
+    fs::path output_image_file(dir / fs::path("post_image_attack_" + this->getName() + ".dot"));
+    m_attack->toDotFileAscii(output_image_file.string(), 0);
+    fs::path output_image_file_bdd(dir / fs::path("post_image_attack_" + this->getName() + ".bdd"));
+    m_attack->exportToFile(output_image_file_bdd.string());
+  }
 
   if (!this->isErrored()) {
+    if (m_intersection) {
       fs::path output_file(dir / fs::path("post_image_intersection_" + this->getName() + ".dot"));
       m_intersection->toDotFileAscii(output_file.string(), 0);
-
       fs::path output_file_bdd(dir / fs::path("post_image_intersection_" + this->getName() + ".bdd"));
       m_intersection->exportToFile(output_file_bdd.string());
-
-      if (this->isVulnerable()) {
+    }
+    if (this->isVulnerable()) {
+      const StrangerAutomaton* preimage = getPreImage();
+      if (preimage) {
         fs::path output_file_pre(dir / fs::path("pre_image_" + this->getName() + ".dot"));
-        getPreImage()->toDotFileAscii(output_file_pre.string(), 0);
+        preimage->toDotFileAscii(output_file_pre.string(), 0);
         fs::path output_file_pre_bdd(dir / fs::path("pre_image_" + this->getName() + ".bdd"));
-        getPreImage()->exportToFile(output_file_pre_bdd.string());
+        preimage->exportToFile(output_file_pre_bdd.string());
       }
+    }
   }
 }
 

@@ -52,6 +52,7 @@ public:
     void printStatus() const;
     void setConcats(bool c) { m_concats = c; }
     void setSingletonIntersection(bool s) { m_singleton_intersection = s; }
+    void setComputePreimage(bool c) { m_compute_preimage = c; }
 private:
     void printResults(std::ostream& os, bool printFiles = false) const;
     void printFiles(std::ostream& os) const;
@@ -86,6 +87,7 @@ private:
     unsigned int m_nThreads;
     bool m_concats;
     bool m_singleton_intersection;
+    bool m_compute_preimage;
 };
 
 

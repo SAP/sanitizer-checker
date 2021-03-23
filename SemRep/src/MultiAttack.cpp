@@ -52,6 +52,7 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , results_mutex()
   , m_nThreads(boost::thread::hardware_concurrency())
   , m_concats(0)
+  , m_compute_preimage(true)
 {
   fillCommonPatterns();
 }
@@ -87,13 +88,15 @@ void MultiAttack::printFiles(std::ostream& os) const {
   os << "Printing files:" << std::endl;
   int i = 0;
   for (auto result : m_results) {
-    os << i << ", ";
-    os << result->getFileName() << ", ";
-    os << result->getCountWithDuplicates() << ", ";
-    os << result->getCount() << ", ";
-    result->printResult(os, true, m_analyzed_contexts);
-    os << std::endl;
-    ++i;
+    if (result->isDone()) {
+      os << i << ", ";
+      os << result->getFileName() << ", ";
+      os << result->getCountWithDuplicates() << ", ";
+      os << result->getCount() << ", ";
+      result->printResult(os, true, m_analyzed_contexts);
+      os << std::endl;
+      ++i;
+    }
   }
 }
 
@@ -121,7 +124,8 @@ void MultiAttack::printStatus() const
   int done = countDone();
   int total = m_results.size();
   double percent = total > 0 ? ((double) done / (double) total) * 100.0 : 0.0;
-  std::cout << "Status: completed " << done << "/" << total << "(" << percent << "%)" << std::endl;  
+  std::cout << "Status: completed " << done << "/" << total << "(" << percent << "%)" << std::endl;
+  m_groups.printStatus(std::cout);
 }
 
 void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context)
@@ -134,7 +138,7 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
   try {
     fs::path dir(m_output_directory / result->getAttack()->getFile());
     BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
-    bw->doAnalysis(m_singleton_intersection);
+    bw->doAnalysis(m_compute_preimage, m_singleton_intersection);
     bw->writeResultsToFile(dir);
     bw->finishAnalysis();
   } catch (StrangerStringAnalysisException const &e) {

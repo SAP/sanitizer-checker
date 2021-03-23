@@ -97,6 +97,7 @@ public:
     unsigned int getValidatedEntriesForSinkContext(const AttackContext& context) const;
 
     void printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
+    void printStatus(std::ostream& os) const;
 
 private:
 

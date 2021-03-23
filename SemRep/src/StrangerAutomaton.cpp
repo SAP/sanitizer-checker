@@ -2048,10 +2048,11 @@ bool StrangerAutomaton::checkEmptiness() const {
     if (this->isBottom()){
         debug(stringbuilder() << debugStr << "true");
         return true;
-    }
-    else if (this->isTop()){
+    } else if (this->isTop()){
         debug(stringbuilder() << debugStr << "false");
         return false;
+    } else if (this->dfa == nullptr){
+        return true;
     }
 
     debugToFile(stringbuilder() << "check_emptiness(M[" << this->autoTraceID << "], NUM_ASCII_TRACKS, indices_main);//check_emptiness("  << this->ID <<  ")");

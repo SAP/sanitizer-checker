@@ -32,7 +32,7 @@ using namespace boost;
 namespace po = boost::program_options;
 
 
-void call_sem_attack(const string& target_name, const string& output_dir, const string& field_name, bool concats, bool singleton_intersection){
+void call_sem_attack(const string& target_name, const string& output_dir, const string& field_name, bool concats, bool singleton_intersection, bool preImage){
     try {
         cout << endl << "\t------ Starting Analysis for: " << field_name << " ------" << endl;
         cout << endl << "\t       Target: " << target_name  << endl;
@@ -41,6 +41,7 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
 
         attack.setSingletonIntersection(singleton_intersection);
         attack.setConcats(concats);
+        attack.setComputePreimage(preImage);
 
         attack.addAttackPattern(AttackContext::LessThan);
         attack.addAttackPattern(AttackContext::GreaterThan);
@@ -101,7 +102,8 @@ int main(int argc, char *argv[]) {
             ("output,o",     po::value<string>()->required(), "Path to output directory.")
             ("fieldname,f",  po::value<string>()->required(), "Name of the input field for which sanitization code needs to be repaired.")
             ("concat,c",     po::value<bool>()->default_value(false), "Compute concat operations")
-            ("singleton,s",  po::value<bool>()->default_value(false), "Use singletons for post-image computation");
+            ("singleton,s",  po::value<bool>()->default_value(false), "Use singletons for post-image computation")
+            ("preimage,p",   po::value<bool>()->default_value(true), "Compute preimages for attack patterns");
 
         po::positional_options_description p;
         p.add("target", 1);
@@ -126,7 +128,8 @@ int main(int argc, char *argv[]) {
                             vm["output"].as<string>(),
                             vm["fieldname"].as<string>(),
                             vm["concat"].as<bool>(),
-                            vm["singleton"].as<bool>()
+                            vm["singleton"].as<bool>(),
+                            vm["preimage"].as<bool>()
               );
         }
         else {
