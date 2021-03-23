@@ -205,28 +205,30 @@ public:
     bool isFilterSuccessful(const AttackContext& context) const;
     bool isFilterContained(const AttackContext& context) const;
 
-    const Metadata& getMetadata() const { return m_metadata; }
-    AttackContext getSinkContext() const { return AttackContextHelper::getContextFromMetadata(m_metadata); }
+    const Metadata& getMetadata() const { return m_metadata.at(0); }
+    AttackContext getSinkContext() const { return AttackContextHelper::getContextFromMetadata(getMetadata()); }
     bool isSinkContext(const AttackContext& context) const { return (context == getSinkContext()); }
 
-    int getCount() const { return m_count; }
-    void incrementCount() { ++m_count; }
+    int getCountWithDuplicates() const { return m_duplicate_count; }
+    int getCount() const { return m_metadata.size(); }
+    bool addMetadata(const Metadata& metadata);
 
     void printResult(std::ostream& os, bool printHeader, const std::vector<AttackContext>& contexts) const;
     void printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const;
-    void finishAnalysis() { getFwAnalysis().finishAnalysis(); }
+    void finishAnalysis();
+
+    bool isDone() const { return m_done; }
+
 private:
     fs::path m_inputfile;
     std::string m_input_name;
-
+    bool m_done;
     ForwardAnalysisResult m_fwAnalysis;
     std::unordered_map<AttackContext, BackwardAnalysisResult*> m_bwAnalysisMap;
 
-    // Copy of the metadata
-    Metadata m_metadata;
-
-    // Count number of dependency graphs this hash
-    int m_count;
+    // Keep track of metadata for this result
+    std::vector<Metadata> m_metadata;
+    int m_duplicate_count;
 };
 
 #endif /* SEMATTACK_HPP_ */

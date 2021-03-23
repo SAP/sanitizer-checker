@@ -38,13 +38,18 @@ namespace {
         return value == "true";
     }
 }
-Metadata::Metadata() : uuid(), sink(), source(), taint_range_index(0), start_index(0), end_index(0), initialized(false), exploit_method(Unknown), exploit_status(Error), exploit_type(Undefined), hash(0) {
+Metadata::Metadata() : uuid(), url(), sink(), source(), taint_range_index(0), start_index(0), end_index(0), initialized(false), exploit_method(Unknown), exploit_status(Error), exploit_type(Undefined), hash(0) {
 
 }
 
 std::string Metadata::get_uuid() const {
     return this->uuid;
 }
+
+std::string Metadata::get_url() const {
+    return this->url;
+}
+
 std::string Metadata::get_sink() const {
     return this->sink;
 }
@@ -75,6 +80,11 @@ bool Metadata::set_field(std::string key, std::string value) {
     if(key == "Finding") {
         this->initialized = true;
         this->uuid = value;
+        return true;
+    }
+    if(key == "Finding.url") {
+        this->initialized = true;
+        this->url = value;
         return true;
     }
     if(key == "Finding.sink") {
@@ -169,6 +179,7 @@ bool Metadata::set_field(std::string key, std::string value) {
 
 void Metadata::to_dot(std::stringstream &ss) const {
     ss << "// Finding: " << this->uuid << "\n";
+    ss << "// Finding.url: " << this->url << "\n";
     ss << "// Finding.sink: " << this->sink << "\n";
     ss << "// Finding.source: " << this->source << "\n";
     ss << "// Finding.begin: " << this->start_index << "\n";

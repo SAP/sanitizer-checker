@@ -31,6 +31,7 @@ public:
     bool set_field(std::string key, std::string value);
 
     std::string get_uuid() const;
+    std::string get_url() const;
     std::string get_sink() const;
     std::string get_source() const;
     int get_taint_range_index() const;
@@ -65,6 +66,7 @@ public:
     void to_dot(std::stringstream &ss) const;
 private:
     std::string uuid;
+    std::string url;
     std::string sink;
     std::string source;
     int taint_range_index;

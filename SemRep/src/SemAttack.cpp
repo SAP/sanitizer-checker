@@ -40,9 +40,11 @@ CombinedAnalysisResult::CombinedAnalysisResult(const fs::path& target_dep_graph_
   , m_bwAnalysisMap()
   , m_inputfile(target_dep_graph_file_name)
   , m_input_name(input_field_name)
-  , m_metadata(target_dep_graph_.get_metadata())
-  , m_count(1) // If we create the result, there will always be at least one entry!
+  , m_metadata()
+  , m_duplicate_count(1)
+  , m_done(false)
 {
+  m_metadata.push_back(target_dep_graph_.get_metadata());
 }
 
 CombinedAnalysisResult::~CombinedAnalysisResult()
@@ -89,6 +91,24 @@ void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader, con
   }
 }
 
+bool CombinedAnalysisResult::addMetadata(const Metadata& metadata)
+{
+  // Loop over the existing metadata for this entry
+  bool isNew = true;
+  for (auto m : m_metadata) {
+    if (m.get_url() == metadata.get_url()) {
+      isNew = false;;
+      break;
+    }
+  }
+  if (isNew) {
+    m_metadata.push_back(metadata);
+  }
+  // Increment the total
+  m_duplicate_count++;
+  return isNew;
+}
+
 bool CombinedAnalysisResult::isFilterSuccessful(const AttackContext& context) const
 {
   bool success = false;
@@ -111,6 +131,12 @@ bool CombinedAnalysisResult::isFilterContained(const AttackContext& context) con
     }
   }
   return success;
+}
+
+void CombinedAnalysisResult::finishAnalysis()
+{
+  getFwAnalysis().finishAnalysis();
+  m_done = true;
 }
 
 BackwardAnalysisResult::BackwardAnalysisResult(

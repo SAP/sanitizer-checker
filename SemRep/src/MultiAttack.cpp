@@ -89,6 +89,7 @@ void MultiAttack::printFiles(std::ostream& os) const {
   for (auto result : m_results) {
     os << i << ", ";
     os << result->getFileName() << ", ";
+    os << result->getCountWithDuplicates() << ", ";
     os << result->getCount() << ", ";
     result->printResult(os, true, m_analyzed_contexts);
     os << std::endl;
@@ -98,10 +99,29 @@ void MultiAttack::printFiles(std::ostream& os) const {
 
 void MultiAttack::printResults(std::ostream& os, bool printFiles) const
 {
-  os << "Found " << this->m_dot_paths.size() << " dot files" << std::endl;
-  os << "Computed images with pool of " << m_nThreads << " threads." << std::endl;
-  os << "Printing Groups:" << std::endl;
+  os << "# Found " << this->m_dot_paths.size() << " dot files" << std::endl;
+  os << "# Computed images with pool of " << m_nThreads << " threads." << std::endl;
+  os << "# Printing Groups:" << std::endl;
   m_groups.printGroups(os, printFiles, m_analyzed_contexts);
+}
+
+int MultiAttack::countDone() const
+{
+  int done = 0;
+  for (auto result : m_results) {
+    if (result->isDone()) {
+      done++;
+    }
+  }
+  return done;
+}
+  
+void MultiAttack::printStatus() const
+{
+  int done = countDone();
+  int total = m_results.size();
+  double percent = total > 0 ? ((double) done / (double) total) * 100.0 : 0.0;
+  std::cout << "Status: completed " << done << "/" << total << "(" << percent << "%)" << std::endl;  
 }
 
 void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context)
@@ -134,8 +154,11 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
   auto search = this->m_result_hash_map.find(hash);
   if(target_dep_graph.get_metadata().is_initialized() && // Legacy failsafe to support depgraphs without the hash field
      search != this->m_result_hash_map.end()) {
-    search->second->incrementCount();
-    std::cout << "Incremeted count to " << search->second->getCount() << " for " << search->second->getFileName() << std::endl;
+    if (search->second->addMetadata(target_dep_graph.get_metadata())) {
+      std::cout << "Incremeted count to " << search->second->getCount() << " for " << search->second->getFileName() << std::endl;
+    } else {
+      std::cout << "Discarding duplicate depgraph: " << file.string() << std::endl;
+    }
   } else {
     std::cout << "Ading file: " << file.string() << " to worker queue." << std::endl;
     result = new CombinedAnalysisResult(file, target_dep_graph, m_input_name, StrangerAutomaton::makeAnyString());
@@ -193,6 +216,7 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
   this->m_groups.addAutomaton(postImage, result);
   std::cout << "Finished inserting results into groups for " << file << std::endl;
   this->writeResultsToFile();
+  printStatus();
 }
 
 void MultiAttack::compute() {
@@ -215,6 +239,7 @@ void MultiAttack::compute() {
   }
   pool.join();
   std::cout << "Forward analysis finished!" << std::endl;
+  printStatus();
 }
 
 void MultiAttack::addAttackPattern(AttackContext context)

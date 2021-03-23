@@ -88,6 +88,7 @@ void AutomatonGroup::printHeaders(std::ostream& os, const std::vector<AttackCont
 void AutomatonGroup::printSummary(std::ostream& os) const {
   os << m_id << ", "
      << getName() << ", "
+     << getEntriesWithDuplicates() << ", "
      << getNonUniqueEntries() << ", "
      << getEntries() << ", "
      << getSuccessfulValidated();
@@ -145,6 +146,14 @@ unsigned int AutomatonGroup::getNonUniqueEntries() const {
   unsigned int total = 0;
   for (auto iter : m_graphs) {
     total += iter->getCount();
+  }
+  return total;
+}
+
+unsigned int AutomatonGroup::getEntriesWithDuplicates() const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    total += iter->getCountWithDuplicates();
   }
   return total;
 }
@@ -250,8 +259,8 @@ void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::ve
   // Switch to decimal
   os << std::dec;
   //  SemAttack::perfInfo.print_operations_info();
-  os << "#  DepGraph files --> Unique DepGraphs --> Unique Post-images" << std::endl;
-  os << "# " << getNonUniqueEntries() << " --> " << getEntries() << " --> " << getNonZeroGroups() << std::endl;
+  os << "#  DepGraph files --> Duplicates removed --> Unique Hash --> Unique Post-images" << std::endl;
+  os << "# " << getEntriesWithDuplicates() << " --> " << getNonUniqueEntries() << " --> " << getEntries() << " --> " << getNonZeroGroups() << std::endl;
   if (getNonZeroGroups() > 0) {
     m_groups.at(0).printHeaders(os, contexts);
   }
@@ -264,10 +273,11 @@ void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::ve
 void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const {
   unsigned int entries = getEntries();
   unsigned int exploited = getSuccessfulValidated();
+  unsigned int duplicates = getEntriesWithDuplicates();
   unsigned int nonunique = getNonUniqueEntries();
   os << "-1, ";
   os << "total, ";
-  os << nonunique << ", " << entries << ", " << exploited << ", ";
+  os << duplicates << ", " << nonunique << ", " << entries << ", " << exploited << ", ";
   for (auto c : AutomatonGroup::m_sink_contexts) {
     os << getEntriesForSinkContext(c) << ", ";
     os << getValidatedEntriesForSinkContext(c) << ", ";   
@@ -318,6 +328,14 @@ unsigned int AutomatonGroups::getNonUniqueEntries() const {
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getNonUniqueEntries();
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getEntriesWithDuplicates() const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getEntriesWithDuplicates();
   }
   return total;
 }

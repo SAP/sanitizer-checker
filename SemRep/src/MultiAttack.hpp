@@ -49,7 +49,7 @@ public:
     void printResults(bool printFiles = false) const { printResults(std::cout, printFiles); }
     void printFiles() const { printFiles(std::cout); }
     void writeResultsToFile() const;
-
+    void printStatus() const;
     void setConcats(bool c) { m_concats = c; }
     void setSingletonIntersection(bool s) { m_singleton_intersection = s; }
 private:
@@ -62,6 +62,8 @@ private:
     void computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context);
     static std::vector<fs::path> getDotFilesInDir(fs::path const &dir);
     static std::vector<fs::path> getFilesInPath(fs::path const & root, std::string const & ext);
+
+    int countDone() const;
 
     fs::path m_graph_directory;
     fs::path m_output_directory;

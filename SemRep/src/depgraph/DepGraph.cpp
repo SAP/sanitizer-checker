@@ -253,7 +253,7 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
         boost::regex regxNodeOp("(.+)");
         boost::regex regxStrangerRegEx("/(.+)/");
         boost::regex regxComment("^//[^$]*$");
-        boost::regex regxMetadata("^// ([\\.\\w]+): ([-<>\\.,\\[\\}\\w]+)");
+        boost::regex regxMetadata("^// ([\\.\\w]+): (.+)");
         string nodeName;
         string nodeDescription;
         string edge;
