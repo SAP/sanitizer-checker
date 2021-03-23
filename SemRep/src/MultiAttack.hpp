@@ -57,7 +57,8 @@ private:
     void printFiles(std::ostream& os) const;
     void fillCommonPatterns();
     void findDotFiles();
-    void computeImagesForFile(const fs::path& file, DepGraph target_dep_graph);
+    CombinedAnalysisResult* findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph);
+    void computeImages(CombinedAnalysisResult* result);
     void computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context);
     static std::vector<fs::path> getDotFilesInDir(fs::path const &dir);
     static std::vector<fs::path> getFilesInPath(fs::path const & root, std::string const & ext);
@@ -67,13 +68,20 @@ private:
 
     std::string m_input_name;
     std::vector<fs::path> m_dot_paths;
+    // A list of all the results
     std::vector<CombinedAnalysisResult*> m_results;
+    // A map of depgraph hashes to their results
+    std::map<int, CombinedAnalysisResult*> m_result_hash_map;
+    // A list of all post images
     std::vector<StrangerAutomaton*> m_automata;
+    // Results grouped by post image
     AutomatonGroups m_groups;
     std::vector<AttackContext> m_analyzed_contexts;
-    std::mutex results_mutex;
-    unsigned int m_nThreads;
 
+    std::mutex results_mutex;
+
+    // Configuration
+    unsigned int m_nThreads;
     bool m_concats;
     bool m_singleton_intersection;
 };

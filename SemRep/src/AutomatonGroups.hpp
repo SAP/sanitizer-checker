@@ -47,6 +47,7 @@ public:
     const StrangerAutomaton* getAutomaton() const;
     void addCombinedAnalysisResult(const CombinedAnalysisResult* graph);
     unsigned int getEntries() const { return m_graphs.size(); }
+    unsigned int getNonUniqueEntries() const;
     unsigned int getSuccessfulEntriesForContext(const AttackContext& context) const;
     unsigned int getContainedEntriesForContext(const AttackContext& context) const;
     unsigned int getSuccessfulValidated() const;
@@ -83,7 +84,9 @@ public:
     AutomatonGroup* getGroupForAutomaton(const StrangerAutomaton* automaton);
     const AutomatonGroup* getGroupForAutomaton(const StrangerAutomaton* automaton) const;
 
+    unsigned int getNonZeroGroups() const;
     unsigned int getEntries() const;
+    unsigned int getNonUniqueEntries() const;
     unsigned int getSuccessfulEntriesForContext(const AttackContext& context) const;
     unsigned int getContainedEntriesForContext(const AttackContext& context) const;
     unsigned int getSuccessfulGroupsForContext(const AttackContext& context) const;

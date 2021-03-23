@@ -191,7 +191,8 @@ public:
     ~CombinedAnalysisResult();
 
     BackwardAnalysisResult* addBackwardAnalysis(AttackContext context);
-
+    bool hasBackwardanalysisResult(AttackContext context) const;
+    
     const SemAttack* getAttack() const { return m_fwAnalysis.getAttack(); }
     SemAttack* getAttack() { return m_fwAnalysis.getAttack(); }
 
@@ -199,13 +200,17 @@ public:
     ForwardAnalysisResult& getFwAnalysis() { return m_fwAnalysis; }
 
     std::string getFileName() const { return m_inputfile.string(); }
-
+    const fs::path& getInputPath() const { return m_inputfile; }
+    
     bool isFilterSuccessful(const AttackContext& context) const;
     bool isFilterContained(const AttackContext& context) const;
 
     const Metadata& getMetadata() const { return m_metadata; }
     AttackContext getSinkContext() const { return AttackContextHelper::getContextFromMetadata(m_metadata); }
     bool isSinkContext(const AttackContext& context) const { return (context == getSinkContext()); }
+
+    int getCount() const { return m_count; }
+    void incrementCount() { ++m_count; }
 
     void printResult(std::ostream& os, bool printHeader, const std::vector<AttackContext>& contexts) const;
     void printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const;
@@ -219,6 +224,9 @@ private:
 
     // Copy of the metadata
     Metadata m_metadata;
+
+    // Count number of dependency graphs this hash
+    int m_count;
 };
 
 #endif /* SEMATTACK_HPP_ */

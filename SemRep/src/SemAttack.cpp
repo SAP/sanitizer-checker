@@ -41,6 +41,7 @@ CombinedAnalysisResult::CombinedAnalysisResult(const fs::path& target_dep_graph_
   , m_inputfile(target_dep_graph_file_name)
   , m_input_name(input_field_name)
   , m_metadata(target_dep_graph_.get_metadata())
+  , m_count(1) // If we create the result, there will always be at least one entry!
 {
 }
 
@@ -59,6 +60,15 @@ BackwardAnalysisResult* CombinedAnalysisResult::addBackwardAnalysis(AttackContex
   return bw;
 }
 
+bool CombinedAnalysisResult::hasBackwardanalysisResult(AttackContext context) const
+{
+  auto search = m_bwAnalysisMap.find(context);
+  if (search != m_bwAnalysisMap.end()) {
+    return true;
+  }
+  return false;
+}
+
 void CombinedAnalysisResult::printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const
 {
   for (auto c : contexts) {
@@ -70,9 +80,11 @@ void CombinedAnalysisResult::printHeader(std::ostream& os, const std::vector<Att
 void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader, const std::vector<AttackContext>& contexts) const
 {
   for (auto c : contexts) {
-    const BackwardAnalysisResult* result = m_bwAnalysisMap.at(c);
-    if (result) {
-      result->printResult(os, printHeader);
+    if (this->hasBackwardanalysisResult(c)) {
+      const BackwardAnalysisResult* result = m_bwAnalysisMap.at(c);
+      if (result) {
+        result->printResult(os, printHeader);
+      }
     }
   }
 }
@@ -80,7 +92,7 @@ void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader, con
 bool CombinedAnalysisResult::isFilterSuccessful(const AttackContext& context) const
 {
   bool success = false;
-  if (m_bwAnalysisMap.count(context) > 0) {
+  if (this->hasBackwardanalysisResult(context)) {
     const BackwardAnalysisResult* result = m_bwAnalysisMap.at(context);
     if (!result->isErrored()) { // Otherwise errors count as success
       success = result->isSafe();
@@ -92,7 +104,7 @@ bool CombinedAnalysisResult::isFilterSuccessful(const AttackContext& context) co
 bool CombinedAnalysisResult::isFilterContained(const AttackContext& context) const
 {
   bool success = false;
-  if (m_bwAnalysisMap.count(context) > 0) {
+  if (this->hasBackwardanalysisResult(context)) {
     const BackwardAnalysisResult* result = m_bwAnalysisMap.at(context);
     if (!result->isErrored()) { // Otherwise errors count as success
       success = result->isContained();

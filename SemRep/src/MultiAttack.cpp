@@ -45,6 +45,7 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_input_name(input_field_name)
   , m_dot_paths()
   , m_results()
+  , m_result_hash_map()
   , m_automata()
   , m_groups()
   , m_analyzed_contexts()
@@ -61,7 +62,7 @@ MultiAttack::~MultiAttack() {
     delete iter;
   }
   m_results.clear();
-
+  m_result_hash_map.clear();
   for (auto iter : m_automata) {
     delete iter;
   }
@@ -88,6 +89,7 @@ void MultiAttack::printFiles(std::ostream& os) const {
   for (auto result : m_results) {
     os << i << ", ";
     os << result->getFileName() << ", ";
+    os << result->getCount() << ", ";
     result->printResult(os, true, m_analyzed_contexts);
     os << std::endl;
     ++i;
@@ -124,12 +126,37 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
   }
 }
 
-void MultiAttack::computeImagesForFile(const fs::path& file, DepGraph target_dep_graph) {
-  fs::path dir(m_output_directory / file);
-  std::cout << "Analysing file: " << file.string() << " in thread " << std::this_thread::get_id() << std::endl;
-  CombinedAnalysisResult* result =
-    new CombinedAnalysisResult(file, target_dep_graph, m_input_name, StrangerAutomaton::makeAnyString());
+CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph) {
+  // Find the result for the given hash
+  const std::lock_guard<std::mutex> lock(this->results_mutex);
+  CombinedAnalysisResult* result = nullptr;
+  int hash = target_dep_graph.get_metadata().get_hash();
+  auto search = this->m_result_hash_map.find(hash);
+  if(target_dep_graph.get_metadata().is_initialized() && // Legacy failsafe to support depgraphs without the hash field
+     search != this->m_result_hash_map.end()) {
+    search->second->incrementCount();
+    std::cout << "Incremeted count to " << search->second->getCount() << " for " << search->second->getFileName() << std::endl;
+  } else {
+    std::cout << "Ading file: " << file.string() << " to worker queue." << std::endl;
+    result = new CombinedAnalysisResult(file, target_dep_graph, m_input_name, StrangerAutomaton::makeAnyString());
+    // Add to results
+    this->m_results.push_back(result);
+    // Only insert into hash map if metadata is initialized
+    if (target_dep_graph.get_metadata().is_initialized()) {
+      this->m_result_hash_map.insert(std::make_pair(hash, result));
+    }
+  }
+  return result;
+}
+
+void MultiAttack::computeImages(CombinedAnalysisResult* result) {
+  if (result == nullptr) {
+    return;
+  }
   const StrangerAutomaton* postImage = NULL;
+  const std::string file = result->getFileName();
+  fs::path dir(m_output_directory / result->getInputPath());
+  std::cout << "Analysing file: " << file << std::endl;
   // Reduce debug prints
   result->getAttack()->setPrint(false);
   try {
@@ -164,35 +191,26 @@ void MultiAttack::computeImagesForFile(const fs::path& file, DepGraph target_dep
   std::cout << "Finished analysis of " << file << std::endl;
   std::cout << "Inserting results into groups for " << file << std::endl;
   this->m_groups.addAutomaton(postImage, result);
-  this->m_results.emplace_back(result);
   std::cout << "Finished inserting results into groups for " << file << std::endl;
   this->writeResultsToFile();
-
 }
 
 void MultiAttack::compute() {
   findDotFiles();
   boost::asio::thread_pool pool(this->m_nThreads);
   std::cout << "Computing post images with pool of " << m_nThreads << " threads." << std::endl;
-  std::unordered_set<int> hashes;
-  std::mutex hashes_mutex;
 
-    for (const auto& file : this->m_dot_paths) {
-      asio::post(pool, [this, &pool, &hashes, &hashes_mutex, file]() {
-          try {
-              DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());
-              {
-                  int hash = target_dep_graph.get_metadata().get_hash();
-                  const std::lock_guard<std::mutex> lock(hashes_mutex);
-                  if(!target_dep_graph.get_metadata().is_initialized() || // Legacy failsafe to support depgraphs without the hash field
-                     hashes.find(hash) == hashes.end()) {
-                      hashes.insert(hash);
-                      asio::post(pool, std::bind(&MultiAttack::computeImagesForFile, this, file, target_dep_graph));
-                  }
-              }
-          } catch(std::exception& e) {
-              cerr << "Error parsing " << file.string() << ": " << e.what() << "\n";
+  for (const auto& file : this->m_dot_paths) {
+    asio::post(pool, [this, &pool, file]() {
+        try {
+          DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());
+          {
+            CombinedAnalysisResult* result = findOrCreateResult(file, target_dep_graph);
+            asio::post(pool, std::bind(&MultiAttack::computeImages, this, result));
           }
+        } catch(std::exception& e) {
+          cerr << "Error parsing " << file.string() << ": " << e.what() << "\n";
+        }
       });
   }
   pool.join();
