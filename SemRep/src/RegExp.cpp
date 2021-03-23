@@ -225,6 +225,12 @@ void RegExp::dump(unsigned int depth)
     case REGEXP_INTERVAL:
         std::cout << "REGEXP_INTERVAL" << std::endl;
         break;
+    case REGEXP_START_ANCHOR:
+        std::cout << "REGEXP_START_ANCHOR" << std::endl;
+        break;
+    case REGEXP_END_ANCHOR:
+        std::cout << "REGEXP_END_ANCHOR" << std::endl;
+        break;
     default:
         std::cout << "UNKNOWN" << std::endl;
         break;
@@ -249,93 +255,86 @@ StrangerAutomaton* RegExp::toAutomaton(unsigned int depth) /* throws(IllegalArgu
     StrangerAutomaton* auto2 = nullptr;
     DEBUG_PRINT_FUNC_DEPTH(this, depth);
     depth++;
-    {
-        Kind v = kind;
-        if(v == REGEXP_UNION) {
-            auto1 = exp1->toAutomaton(depth);
-            auto2 = exp2->toAutomaton(depth);
-            a = auto1->union_(auto2, ++id);
-            delete auto1;
-            delete auto2;
-            goto end_switch1;;
-        }
-        if(v == REGEXP_CONCATENATION) {
-            auto1 = exp1->toAutomaton(depth);
-            auto2 = exp2->toAutomaton(depth);
-            a = auto1->concatenate(auto2, ++id);
-            delete auto1;
-            delete auto2;
-            goto end_switch1;;
-        }
-        if(v == REGEXP_INTERSECTION) {
-            auto1 = exp1->toAutomaton(depth);
-            auto2 = exp2->toAutomaton(depth);
-            a = auto1->intersect(auto2, ++id);
-            delete auto1;
-            delete auto2;
-            goto end_switch1;;
-        }
-        if(v == REGEXP_OPTIONAL) {
-            auto1 = exp1->toAutomaton(depth);
-            a = auto1->optional(++id);
-            delete auto1;
-            goto end_switch1;;
-        }
-        if(v == REGEXP_REPEAT_STAR) {
-            auto1 = exp1->toAutomaton(depth);
-            a = auto1->kleensStar(++id);
-            delete auto1;
-            goto end_switch1;;
-        }
-        if(v == REGEXP_REPEAT_PLUS) {
-            auto1 = exp1->toAutomaton(depth);
-            a = auto1->closure(++id);
-            delete auto1;
-            goto end_switch1;;
-        }
-        if(v == REGEXP_REPEAT_MIN) {
-            auto1 = exp1->toAutomaton(depth);
-            a = auto1->repeat(min, ++id);
-            delete auto1;
-            goto end_switch1;;
-        }
-        if(v == REGEXP_REPEAT_MINMAX) {
-            auto1 = exp1->toAutomaton(depth);
-            a = auto1->repeat(min, max, ++id);
-            delete auto1;
-            goto end_switch1;;
-        }
-        if(v == REGEXP_COMPLEMENT) {
-            auto1 = exp1->toAutomaton(depth);
-            a = auto1->complement(++id);
-            delete auto1;
-            goto end_switch1;;
-        }
-        if(v == REGEXP_CHAR) {
-            a = StrangerAutomaton::makeChar(c, ++id);
-            goto end_switch1;;
-        }
-        if(v == REGEXP_CHAR_RANGE) {
-            a = StrangerAutomaton::makeCharRange(from, to, ++id);
-            goto end_switch1;;
-        }
-        if(v == REGEXP_ANYCHAR) {
-            a = StrangerAutomaton::makeDot(++id);
-            goto end_switch1;;
-        }
-        if(v == REGEXP_EMPTY) {
-            a = StrangerAutomaton::makeEmptyString(++id);
-            goto end_switch1;;
-        }
-        if(v == REGEXP_STRING) {
-            a = StrangerAutomaton::makeString(s, ++id);
-            goto end_switch1;;
-        }
-        if(v == REGEXP_ANYSTRING) {
-            a = StrangerAutomaton::makeAnyString(++id);
-            goto end_switch1;;
-        }
-end_switch1:;
+    switch (this->kind) {
+    case REGEXP_UNION:
+        auto1 = exp1->toAutomaton(depth);
+        auto2 = exp2->toAutomaton(depth);
+        a = auto1->union_(auto2, ++id);
+        delete auto1;
+        delete auto2;
+        break;
+    case REGEXP_CONCATENATION:
+        auto1 = exp1->toAutomaton(depth);
+        auto2 = exp2->toAutomaton(depth);
+        a = auto1->concatenate(auto2, ++id);
+        delete auto1;
+        delete auto2;
+        break;
+    case REGEXP_INTERSECTION:
+        auto1 = exp1->toAutomaton(depth);
+        auto2 = exp2->toAutomaton(depth);
+        a = auto1->intersect(auto2, ++id);
+        delete auto1;
+        delete auto2;
+        break;
+    case REGEXP_OPTIONAL:
+        auto1 = exp1->toAutomaton(depth);
+        a = auto1->optional(++id);
+        delete auto1;
+        break;
+    case REGEXP_REPEAT_STAR:
+        auto1 = exp1->toAutomaton(depth);
+        a = auto1->kleensStar(++id);
+        delete auto1;
+        break;
+    case REGEXP_REPEAT_PLUS:
+        auto1 = exp1->toAutomaton(depth);
+        a = auto1->closure(++id);
+        delete auto1;
+        break;
+    case REGEXP_REPEAT_MIN:
+        auto1 = exp1->toAutomaton(depth);
+        a = auto1->repeat(min, ++id);
+        delete auto1;
+        break;
+    case REGEXP_REPEAT_MINMAX:
+        auto1 = exp1->toAutomaton(depth);
+        a = auto1->repeat(min, max, ++id);
+        delete auto1;
+        break;
+    case REGEXP_COMPLEMENT:
+        auto1 = exp1->toAutomaton(depth);
+        a = auto1->complement(++id);
+        delete auto1;
+        break;
+    case REGEXP_CHAR:
+        a = StrangerAutomaton::makeChar(c, ++id);
+        break;
+    case REGEXP_CHAR_RANGE:
+        a = StrangerAutomaton::makeCharRange(from, to, ++id);
+        break;
+    case REGEXP_ANYCHAR:
+        a = StrangerAutomaton::makeDot(++id);
+        break;
+    case REGEXP_EMPTY:
+        a = StrangerAutomaton::makeEmptyString(++id);
+        break;
+    case REGEXP_STRING:
+        a = StrangerAutomaton::makeString(s, ++id);
+        break;
+    case REGEXP_ANYSTRING:
+        a = StrangerAutomaton::makeAnyString(++id);
+        break;
+    case REGEXP_START_ANCHOR:
+        // TO DO - implement anchor functionality
+        a = exp1->toAutomaton(depth);
+        break;
+    case REGEXP_END_ANCHOR:
+        // TO DO - implement anchor functionality
+        a = exp1->toAutomaton(depth);
+        break;
+    default:
+        break;
     }
 //    a->toDotAscii(0);
     return a;
@@ -602,7 +601,6 @@ RegExp* RegExp::makeRepeat(RegExp* exp, int min, int max)
 
 RegExp* RegExp::makeComplement(RegExp* exp)
 {
-
     RegExp* r = (new RegExp());
     r->kind = REGEXP_COMPLEMENT;
     r->exp1 = exp;
@@ -690,6 +688,24 @@ RegExp* RegExp::makeInterval(int min, int max, int digits)
     return r;
 }
 
+RegExp* RegExp::makeStartAnchor(RegExp* exp)
+{
+    RegExp* r = (new RegExp());
+    r->kind = REGEXP_START_ANCHOR;
+    r->exp1 = exp;
+    DEBUG_PRINT_FUNC(r);
+    return r;
+}
+
+RegExp* RegExp::makeEndAnchor(RegExp* exp)
+{
+    RegExp* r = (new RegExp());
+    r->kind = REGEXP_END_ANCHOR;
+    r->exp1 = exp;
+    DEBUG_PRINT_FUNC(r);
+    return r;
+}
+
 bool RegExp::peek(std::string s, int offset)
 {
     if ((pos + offset < b.length()) && (pos + offset >= 0)) {
@@ -732,24 +748,40 @@ bool RegExp::check(int flag)
 RegExp* RegExp::parseUnionExp() /* throws(IllegalArgumentException) */
 {
     RegExp* e = parseInterExp();
-    if(match('|'))
+    if (match('|')) {
         e = makeUnion(e, parseUnionExp());
+    }
     return e;
 }
 
 RegExp* RegExp::parseInterExp() /* throws(IllegalArgumentException) */
 {
-    RegExp* e = parseConcatExp();
-    if(check(INTERSECTION) && match('&'))
+    RegExp* e = parseEndAnchor();
+    if(check(INTERSECTION) && match('&')) {
         e = makeIntersection(e, parseInterExp());
+    }
+    return e;
+}
+
+RegExp* RegExp::parseEndAnchor()
+{
+    RegExp *e = parseConcatExp();
+    if (match('$')) {
+        if (more()) {
+            e = makeConcatenation(makeEndAnchor(e), parseEndAnchor());
+        } else {
+            return makeEndAnchor(e);
+        }
+    }
     return e;
 }
 
 RegExp* RegExp::parseConcatExp() /* throws(IllegalArgumentException) */
 {
     RegExp* e = parseRepeatExp();
-    if(more() && !peek(")&|"))
+    if(more() && !peek(")&|$")) {
         e = makeConcatenation(e, parseConcatExp());
+    }
     return e;
 }
 
@@ -852,18 +884,7 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
 {
     if (match('^')) {
         // Anchor to the start of the string
-        // TODO: this needs to be implemented...
-        // Currently ignored
-        return parseUnionExp();
-    } else if (match('$')) {
-        // Anchor to the end of the string
-        // TODO: this needs to be implemented...
-        // Currently ignored
-        if (more()) {
-            return parseUnionExp();
-        } else {
-            return makeString("");
-        }
+        return makeStartAnchor(parseUnionExp());
     } else if(match('.'))
         return makeAnyChar();
     else if(check(EMPTY) && match('#'))
