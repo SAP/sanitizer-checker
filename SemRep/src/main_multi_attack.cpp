@@ -124,6 +124,14 @@ int main(int argc, char *argv[]) {
 
         if (vm.count("target") && vm.count("fieldname"))
         {
+            cout << boolalpha
+                    << "Calling multiattack with target: " << vm["target"].as<string>()
+                    << ", output dir: " << vm["output"].as<string>()
+                    << ", fieldname: " << vm["fieldname"].as<string>()
+                    << ", concat enabled: " << vm["concat"].as<bool>()
+                    << ", singleton computation: " << vm["singleton"].as<bool>()
+                    << ", preimage computation: " << vm["preimage"].as<bool>()
+                    << "\n";
             call_sem_attack(vm["target"].as<string>(),
                             vm["output"].as<string>(),
                             vm["fieldname"].as<string>(),
