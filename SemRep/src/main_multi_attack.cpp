@@ -85,12 +85,6 @@ ostream& operator<<(ostream& os, const vector<T>& v)
     return os;
 }
 
-void usage() {
-    cout << "Usage: multiattack [options] <target> <fieldname>\n";
-    cout << "<target> is directory containing dependency graph files.\n";
-    cout << "<fieldname> is Name of the input field for which sanitization code needs to be repaired.\n";
-}
-
 int main(int argc, char *argv[]) {
     try {
 
@@ -116,7 +110,7 @@ int main(int argc, char *argv[]) {
 
         if (vm.count("help"))
         {
-            usage();
+            cout << desc << "\n";
             return 0;
         }
 
@@ -142,7 +136,7 @@ int main(int argc, char *argv[]) {
         }
         else {
             cerr << "Unknown error while parsing cmdline options!" << "\n";
-            usage();
+            cout << desc << "\n";
             return false;
         }
 
