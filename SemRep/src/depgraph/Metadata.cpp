@@ -38,7 +38,7 @@ namespace {
         return value == "true";
     }
 }
-Metadata::Metadata() : uuid(), url(), sink(), source(), taint_range_index(0), start_index(0), end_index(0), initialized(false), exploit_method(Unknown), exploit_status(Error), exploit_type(Undefined), hash(0) {
+Metadata::Metadata() : uuid(), url(), sink(), source(), taint_range_index(0), start_index(0), end_index(0), initialized(false), exploit_method(Unknown), exploit_status(Error), exploit_type(Undefined), hash(0), sanitizer_hash(0), twenty_five_million_flows_id(0), domain() {
 
 }
 
@@ -76,7 +76,7 @@ bool Metadata::is_initialized() const {
     return this->initialized;
 }
 
-bool Metadata::set_field(std::string key, std::string value) {
+bool Metadata::set_field(const std::string& key, const std::string& value) {
     if(key == "Finding") {
         this->initialized = true;
         this->uuid = value;
@@ -149,6 +149,21 @@ bool Metadata::set_field(std::string key, std::string value) {
     }
     if(key == "DepGraph.hash") {
         this->hash = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "DepGraph.sanitizer_hash") {
+        this->sanitizer_hash = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Finding.TwentyFiveMillionFlowsId") {
+        this->twenty_five_million_flows_id = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Finding.domain") {
+        this->domain = value;
         this->initialized = true;
         return true;
     }
@@ -238,6 +253,18 @@ int Metadata::get_line() const {
     return this->line;
 }
 
-const std::string Metadata::get_original_uuid() const {
+std::string Metadata::get_original_uuid() const {
     return this->original_uuid;
+}
+
+std::string Metadata::get_domain() const {
+    return this->domain;
+}
+
+int Metadata::get_twenty_five_million_flows_id() const {
+    return this->twenty_five_million_flows_id;
+}
+
+int Metadata::get_sanitizer_hash() const {
+    return this->sanitizer_hash;
 }

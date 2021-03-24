@@ -28,7 +28,7 @@ class Metadata {
 public:
     Metadata();
 
-    bool set_field(std::string key, std::string value);
+    bool set_field(const std::string& key, const std::string& value);
 
     std::string get_uuid() const;
     std::string get_url() const;
@@ -58,8 +58,10 @@ public:
     const std::string& get_script() const;
     int get_line() const;
 
-    const std::string get_original_uuid() const;
-
+    std::string get_original_uuid() const;
+    std::string get_domain() const;
+    int get_twenty_five_million_flows_id() const;
+    int get_sanitizer_hash() const;
     int get_hash() const;
     bool is_initialized() const;
 
@@ -72,11 +74,14 @@ private:
     int taint_range_index;
     int start_index;
     int hash;
+    int sanitizer_hash;
+    int twenty_five_million_flows_id;
     int end_index;
     bool initialized;
     std::string exploit_uuid;
     std::string original_uuid;
     std::string script;
+    std::string domain;
     int line{};
     bool exploit_success{};
     Exploit_Method exploit_method;
