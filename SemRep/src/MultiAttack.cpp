@@ -154,7 +154,7 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
   // Find the result for the given hash
   const std::lock_guard<std::mutex> lock(this->results_mutex);
   CombinedAnalysisResult* result = nullptr;
-  int hash = target_dep_graph.get_metadata().get_hash();
+  int hash = target_dep_graph.get_metadata().get_sanitizer_hash();
   auto search = this->m_result_hash_map.find(hash);
   if(target_dep_graph.get_metadata().is_initialized() && // Legacy failsafe to support depgraphs without the hash field
      search != this->m_result_hash_map.end()) {

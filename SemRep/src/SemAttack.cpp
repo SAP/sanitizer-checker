@@ -96,7 +96,7 @@ bool CombinedAnalysisResult::addMetadata(const Metadata& metadata)
   // Loop over the existing metadata for this entry
   bool isNew = true;
   for (auto m : m_metadata) {
-    if (m.get_url() == metadata.get_url()) {
+    if (m.get_domain() == metadata.get_domain()) {
       isNew = false;;
       break;
     }
