@@ -4029,31 +4029,17 @@ DFA *dfaDecodeUriComponent(DFA *inputAuto, int var, int *indices){
     DFA *b = NULL;
 
     // Replace all valid sequences
-    for (unsigned int c = 0; c < URI_ENCODE_CHARS; ++c) {
+    // The - 1 is here to prevent crashes in insertIntoStatePairSortedArrayList which asserts if escapeChar = 255
+    for (unsigned int c = 0; c < URI_ENCODE_CHARS - 1; ++c) {
         char str[2];
         char encoded[4];
         sprintf(str, "%c", c);
         sprintf(encoded, "%%%02X", c);
-
-        DFA *p = dfa_construct_string(encoded, var, indices);
-        b = dfa_replace_extrabit(a, p, str, var, indices);
-
-        dfaFree(p);
+        b = dfa_pre_replace_char_with_string(a, var, indices, (char)c, encoded);
         dfaFree(a);
         a = b;
     }
 
-    // Anything else containing a % is invalid and will throw an error
-    // Contains just the empty string
-    // TODO: this will also kill the % you have just decoded! :-(
-    DFA* phi = dfaASCIIOnlyNullString(var, indices);
-    // Construct % string
-    char* percent = "%";
-    DFA* percent_auto = dfa_construct_string(percent, var, indices);
-    a = dfa_general_replace_extrabit(b, percent_auto, phi, var, indices);
-    dfaFree(percent_auto);
-    dfaFree(phi);
-    dfaFree(b);
     return a;
 }
 
@@ -4073,11 +4059,7 @@ DFA *dfaDecodeUri(DFA *inputAuto, int var, int *indices){
             char encoded[4];
             sprintf(str, "%c", c);
             sprintf(encoded, "%%%02X", c);
-
-            DFA *p = dfa_construct_string(encoded, var, indices);
-            b = dfa_replace_extrabit(a, p, str, var, indices);
-
-            dfaFree(p);
+            b = dfa_pre_replace_char_with_string(a, var, indices, (char)c, encoded);
             dfaFree(a);
             a = b;
         }
