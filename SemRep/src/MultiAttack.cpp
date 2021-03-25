@@ -39,7 +39,7 @@
 
 namespace asio = boost::asio;
 
-MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& output_dir, const std::string& input_field_name)
+MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& output_dir, const std::string& input_field_name, StrangerAutomaton* input_auto)
   : m_graph_directory(graph_directory)
   , m_output_directory(output_dir)
   , m_input_name(input_field_name)
@@ -53,7 +53,13 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_nThreads(boost::thread::hardware_concurrency())
   , m_concats(0)
   , m_compute_preimage(true)
+  , m_input_automaton(nullptr)
 {
+  if (input_auto == nullptr) {
+    m_input_automaton = StrangerAutomaton::makeAnyString();
+  } else {
+    m_input_automaton = input_auto->clone();
+  }
   fillCommonPatterns();
 }
 
@@ -165,7 +171,7 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
     }
   } else {
     std::cout << "Ading file: " << file.string() << " to worker queue." << std::endl;
-    result = new CombinedAnalysisResult(file, target_dep_graph, m_input_name, StrangerAutomaton::makeAnyString());
+    result = new CombinedAnalysisResult(file, target_dep_graph, m_input_name, m_input_automaton);
     // Add to results
     this->m_results.push_back(result);
     // Only insert into hash map if metadata is initialized

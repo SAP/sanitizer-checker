@@ -41,7 +41,7 @@ namespace fs = boost::filesystem;
 class MultiAttack {
 
 public:
-    MultiAttack(const std::string& graph_directory, const std::string& output_dir, const std::string& input_field_name);
+    MultiAttack(const std::string& graph_directory, const std::string& output_dir, const std::string& input_field_name, StrangerAutomaton* input_auto = nullptr);
     virtual ~MultiAttack();
 
     void compute();
@@ -88,6 +88,7 @@ private:
     bool m_concats;
     bool m_singleton_intersection;
     bool m_compute_preimage;
+    StrangerAutomaton* m_input_automaton;
 };
 
 

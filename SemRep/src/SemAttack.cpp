@@ -332,7 +332,7 @@ ForwardAnalysisResult::ForwardAnalysisResult(const fs::path& target_dep_graph_fi
                                              StrangerAutomaton* automaton)
   : m_attack(new SemAttack(target_dep_graph_file_name, target_dep_graph_, input_field_name))
   , m_result()
-  , m_input(automaton)
+  , m_input(automaton->clone())
   , m_postImage(nullptr)
 {
 }
