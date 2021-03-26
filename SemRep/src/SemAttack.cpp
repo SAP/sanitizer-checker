@@ -275,10 +275,11 @@ void BackwardAnalysisResult::printResult(std::ostream& os, bool printHeader) con
 void BackwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
 {
   fs::create_directories(dir);
-
+  int with_sink = 1;
+  
   if (m_attack) {
     fs::path output_image_file(dir / fs::path("post_image_attack_" + this->getName() + ".dot"));
-    m_attack->toDotFileAscii(output_image_file.string(), 0);
+    m_attack->toDotFileAscii(output_image_file.string(), with_sink);
     fs::path output_image_file_bdd(dir / fs::path("post_image_attack_" + this->getName() + ".bdd"));
     m_attack->exportToFile(output_image_file_bdd.string());
   }
@@ -286,7 +287,7 @@ void BackwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
   if (!this->isErrored()) {
     if (m_intersection) {
       fs::path output_file(dir / fs::path("post_image_intersection_" + this->getName() + ".dot"));
-      m_intersection->toDotFileAscii(output_file.string(), 0);
+      m_intersection->toDotFileAscii(output_file.string(), with_sink);
       fs::path output_file_bdd(dir / fs::path("post_image_intersection_" + this->getName() + ".bdd"));
       m_intersection->exportToFile(output_file_bdd.string());
     }
@@ -294,7 +295,7 @@ void BackwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
       const StrangerAutomaton* preimage = getPreImage();
       if (preimage) {
         fs::path output_file_pre(dir / fs::path("pre_image_" + this->getName() + ".dot"));
-        preimage->toDotFileAscii(output_file_pre.string(), 0);
+        preimage->toDotFileAscii(output_file_pre.string(), with_sink);
         fs::path output_file_pre_bdd(dir / fs::path("pre_image_" + this->getName() + ".bdd"));
         preimage->exportToFile(output_file_pre_bdd.string());
       }
@@ -360,9 +361,10 @@ void ForwardAnalysisResult::doAnalysis(bool doConcat)
 void ForwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
 {
   fs::create_directories(dir);
+  int with_sink = 1;
 
   fs::path output_file(dir / fs::path("post_image_ascii.dot"));
-  this->getPostImage()->toDotFileAscii(output_file.string(), 0);  
+  this->getPostImage()->toDotFileAscii(output_file.string(), with_sink);  
 
   fs::path output_file_bdd(dir / fs::path("post_image.bdd"));
   this->getPostImage()->exportToFile(output_file_bdd.string());
