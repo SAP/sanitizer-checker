@@ -345,6 +345,11 @@ void MultiAttack::fillCommonPatterns() {
   a = AttackPatterns::getUrlComponentEncoded();
   m_automata.push_back(a);
   m_groups.createGroup(a, "UriComponentEncoded");
+
+  // Double UriComponentEncode
+  a = StrangerAutomaton::encodeURIComponent(a);
+  m_automata.push_back(a);
+  m_groups.createGroup(a, "DoubleUriComponentEncoded");
 }
 
 void MultiAttack::findDotFiles() {
