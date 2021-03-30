@@ -73,7 +73,10 @@ public:
     // A sample html payload for attributes
     static StrangerAutomaton* getHtmlAttributePayload();
 
-    // A sample html payload for attributes
+    // A sample payload for URLS
+    static StrangerAutomaton* getUrlPayload();
+
+    // A polygot payload
     static StrangerAutomaton* getHtmlPolygotPayload();
 
     /******************************************************************************************
@@ -132,6 +135,7 @@ private:
     static std::string m_javascriptEscapedRegExp;
     static std::string m_urlEscapedRegExp;
     static std::string m_htmlPayload;
+    static std::string m_urlPayload;
     static std::string m_htmlAttributePayload;
     static std::string m_htmlPolygotPayload;
     static std::string m_htmlRemovedRegExp;

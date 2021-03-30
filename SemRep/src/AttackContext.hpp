@@ -45,6 +45,7 @@
   DO(Url)                   \
   DO(HtmlPayload)           \
   DO(HtmlAttributePayload)  \
+  DO(UrlPayload)            \
   DO(HtmlPolygotPayload)    \
   DO(None)
 
