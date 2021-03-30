@@ -40,7 +40,7 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
 
         StrangerAutomaton* input = StrangerAutomaton::makeAnyString();
         if (encode) {
-          StrangerAutomaton* encoded = input->encodeURIComponent(input);
+          StrangerAutomaton* encoded = input->encodeURI(input);
           delete input;
           input = encoded;
         }
