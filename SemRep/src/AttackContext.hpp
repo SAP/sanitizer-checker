@@ -41,6 +41,7 @@
   DO(HtmlMedium)            \
   DO(HtmlMinimal)           \
   DO(HtmlAttr)              \
+  DO(HtmlUrlAttr)           \
   DO(JavaScript)            \
   DO(Url)                   \
   DO(HtmlPayload)           \
@@ -61,6 +62,8 @@ public:
   static AttackContext getContextFromMetadata(const Metadata& metadata);
 
 private:
+  static bool isUrlAttribute(const std::string& attribute);
+  static bool isUrlRelevantSink(const std::string& sink);
   static const char* AttackContextName[];
 
 };

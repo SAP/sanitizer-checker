@@ -27,7 +27,14 @@
 
 #include <iostream>
 
-std::vector<AttackContext> AutomatonGroup::m_sink_contexts = { AttackContext::Html, AttackContext::HtmlAttr, AttackContext::JavaScript };
+std::vector<AttackContext> AutomatonGroup::m_sink_contexts = {
+  AttackContext::Html,
+  AttackContext::HtmlAttr,
+  AttackContext::JavaScript,
+  AttackContext::Url,
+  AttackContext::HtmlUrlAttr,
+  AttackContext::None
+};
 
 AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name, int id)
   : m_automaton(automaton)

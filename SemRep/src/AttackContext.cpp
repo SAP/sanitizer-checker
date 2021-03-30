@@ -34,19 +34,43 @@ const char* AttackContextHelper::getName(AttackContext c)
   return AttackContextName[static_cast<int>(c)];
 }
 
+bool AttackContextHelper::isUrlAttribute(const std::string& attribute)
+{
+  return ((attribute == "href")  ||
+          (attribute == "src")   ||
+          (attribute == "data"));
+}
+
+bool AttackContextHelper::isUrlRelevantSink(const std::string& sink)
+{
+  return ((sink == "track.src")  ||
+          (sink == "script.src") ||
+          (sink == "object.data")||
+          (sink == "media.src")  ||
+          (sink == "a.href")     ||
+          (sink == "area.href")  ||
+          (sink == "embed.src")  ||
+          (sink == "iframe.src"));
+}
+
 AttackContext AttackContextHelper::getContextFromMetadata(const Metadata& metadata)
 {
-  if (metadata.get_exploit_type() == Exploit_Type::Html) {
-    if (metadata.get_exploit_token() == "attribute") {
-      return AttackContext::HtmlAttr;
-    } else {
-      return AttackContext::Html;
-    }
-  } else if (metadata.get_exploit_type() == Exploit_Type::Attribute) {
-      return AttackContext::HtmlAttr;
-  } else if (metadata.get_exploit_type() == Exploit_Type::JavaScript) {
-    return AttackContext::JavaScript;
+  if (isUrlRelevantSink(metadata.get_sink())) {
+    return AttackContext::Url;
   } else {
-    return AttackContext::None;
+    if (metadata.get_exploit_type() == Exploit_Type::Html) {
+      if (metadata.get_exploit_token() == "attribute") {
+        // This can be an URL context (if in a src or href attribute)
+        return isUrlAttribute(metadata.get_exploit_content()) ?
+          AttackContext::HtmlUrlAttr : AttackContext::HtmlAttr;
+      } else {
+        return AttackContext::Html;
+      }
+    } else if (metadata.get_exploit_type() == Exploit_Type::Attribute) {
+      return AttackContext::HtmlAttr;
+    } else if (metadata.get_exploit_type() == Exploit_Type::JavaScript) {
+      return AttackContext::JavaScript;
+    }
   }
+  return AttackContext::None;
 }
