@@ -50,6 +50,8 @@ bool AttackContextHelper::isUrlRelevantSink(const std::string& sink)
           (sink == "a.href")     ||
           (sink == "area.href")  ||
           (sink == "embed.src")  ||
+          (sink == "img.src")    ||
+          (sink == "imgset.src") ||
           (sink == "iframe.src"));
 }
 
