@@ -79,7 +79,7 @@ void AutomatonGroup::addCombinedAnalysisResult(const CombinedAnalysisResult* gra
 }
 
 void AutomatonGroup::printHeaders(std::ostream& os, const std::vector<AttackContext>& contexts) const {
-  os << "id, number, entries, unique, validated";
+  os << "id, name, entries, deduplicated, unique hash, validated";
   for (auto c : m_sink_contexts) {
     os << ", " << AttackContextHelper::getName(c) << " sink entries";
     os << ", " << AttackContextHelper::getName(c) << " sink validated";
