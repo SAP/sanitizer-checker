@@ -55,24 +55,36 @@ bool AttackContextHelper::isUrlRelevantSink(const std::string& sink)
           (sink == "iframe.src"));
 }
 
+bool AttackContextHelper::isHtmlRelevantSink(const std::string& sink)
+{
+  return ((sink == "innerHTML")  ||
+          (sink == "outerHTML") ||
+          (sink == "document.write") ||
+          (sink == "document.writeln") ||
+          (sink == "insertAdjacentHTML"));
+}
+
+bool AttackContextHelper::isJsRelevantSink(const std::string& sink)
+{
+  return ((sink == "eval")  ||
+          (sink == "script.text"));
+}
+
 AttackContext AttackContextHelper::getContextFromMetadata(const Metadata& metadata)
 {
   if (isUrlRelevantSink(metadata.get_sink())) {
     return AttackContext::Url;
-  } else {
-    if (metadata.get_exploit_type() == Exploit_Type::Html) {
-      if (metadata.get_exploit_token() == "attribute") {
-        // This can be an URL context (if in a src or href attribute)
-        return isUrlAttribute(metadata.get_exploit_content()) ?
-          AttackContext::HtmlUrlAttr : AttackContext::HtmlAttr;
-      } else {
-        return AttackContext::Html;
-      }
-    } else if (metadata.get_exploit_type() == Exploit_Type::Attribute) {
-      return AttackContext::HtmlAttr;
-    } else if (metadata.get_exploit_type() == Exploit_Type::JavaScript) {
-      return AttackContext::JavaScript;
+  } else if (isHtmlRelevantSink(metadata.get_sink())) {
+    if (metadata.get_exploit_token() == "attribute") {
+      // This can be an URL context (if in a src or href attribute)
+      return isUrlAttribute(metadata.get_exploit_content()) ?
+        AttackContext::HtmlUrlAttr : AttackContext::HtmlAttr;
+    } else {
+      return AttackContext::Html;
     }
+  } else if (isJsRelevantSink(metadata.get_sink())) {
+    return AttackContext::JavaScript;
   }
   return AttackContext::None;
 }
+

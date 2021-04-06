@@ -64,6 +64,8 @@ public:
 private:
   static bool isUrlAttribute(const std::string& attribute);
   static bool isUrlRelevantSink(const std::string& sink);
+  static bool isHtmlRelevantSink(const std::string& sink);
+  static bool isJsRelevantSink(const std::string& sink);
   static const char* AttackContextName[];
 
 };
