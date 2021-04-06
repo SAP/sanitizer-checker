@@ -2826,6 +2826,30 @@ StrangerAutomaton* StrangerAutomaton::decodeURI(const StrangerAutomaton* subject
     return retMe;
 }
 
+StrangerAutomaton* StrangerAutomaton::escape(const StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = escape(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaEscape(subjectAuto->dfa, num_ascii_track, indices_main));
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
+StrangerAutomaton* StrangerAutomaton::unescape(const StrangerAutomaton* subjectAuto, int id)
+{
+    debug(stringbuilder() << id << " = unescape(" << subjectAuto->ID << ");");
+
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaUnescape(subjectAuto->dfa, num_ascii_track, indices_main));
+
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
+}
+
 StrangerAutomaton* StrangerAutomaton::jsonStringify(const StrangerAutomaton* subjectAuto, int id)
 {
     debug(stringbuilder() << id << " = jsonStringify(" << subjectAuto->ID << ");");

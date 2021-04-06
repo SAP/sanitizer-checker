@@ -234,6 +234,11 @@ public:
     static StrangerAutomaton* decodeURI(const StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* decodeURI(const StrangerAutomaton* subjectAuto){return decodeURI(subjectAuto, traceID);};
 
+    static StrangerAutomaton* escape(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* escape(const StrangerAutomaton* subjectAuto){return escape(subjectAuto, traceID);};
+    static StrangerAutomaton* unescape(const StrangerAutomaton* subjectAuto, int id);
+    static StrangerAutomaton* unescape(const StrangerAutomaton* subjectAuto){return unescape(subjectAuto, traceID);};
+
     static StrangerAutomaton* jsonStringify(const StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* jsonStringify(const StrangerAutomaton* subjectAuto){return jsonStringify(subjectAuto, traceID);};
     static StrangerAutomaton* jsonParse(const StrangerAutomaton* subjectAuto, int id);

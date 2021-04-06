@@ -619,6 +619,12 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 	} else if (opName == "decodeURI") {
                 // Backwards analysis, so perform the inversion function
                retMe = StrangerAutomaton::encodeURI(opAuto, opNode->getID());
+	} else if (opName == "escape") {
+                // Backwards analysis, so perform the inversion function
+                retMe = StrangerAutomaton::unescape(opAuto, opNode->getID());
+	} else if (opName == "unescape") {
+                // Backwards analysis, so perform the inversion function
+               retMe = StrangerAutomaton::escape(opAuto, opNode->getID());
 	} else if (opName == "JSON.stringify") {
                 // Backwards analysis, so perform the inversion function
                 retMe = StrangerAutomaton::jsonParse(opAuto, opNode->getID());
@@ -1161,6 +1167,16 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 	} else if (opName == "decodeURI") {
                 const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 		StrangerAutomaton* uriAuto = StrangerAutomaton::decodeURI(paramAuto, opNode->getID());
+		retMe = uriAuto;
+
+	} else if (opName == "escape") {
+                const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
+		StrangerAutomaton* uriAuto = StrangerAutomaton::escape(paramAuto, opNode->getID());
+		retMe = uriAuto;
+
+	} else if (opName == "unescape") {
+                const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
+		StrangerAutomaton* uriAuto = StrangerAutomaton::unescape(paramAuto, opNode->getID());
 		retMe = uriAuto;
 
 	} else if (opName == "JSON.stringify") {
