@@ -37,6 +37,7 @@ public:
     int get_taint_range_index() const;
     int get_start_index() const;
     int get_end_index() const;
+    const bool has_valid_exploit() const;
     const std::string &get_exploit_uuid() const;
 
     bool is_exploit_successful() const;
@@ -91,6 +92,7 @@ private:
     std::string exploit_token;
     std::string exploit_tag;
     std::string exploit_quote_type;
+    bool valid_exploit{};
 };
 
 
