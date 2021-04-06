@@ -3993,6 +3993,27 @@ static const char encodeUriChars[URI_ENCODE_CHARS] =
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   0,  // fx   // insertIntoStatePairSortedArrayList asserts if escapeChar = 255
 };
 
+static const char escapeChars[URI_ENCODE_CHARS] =
+//   0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F
+{
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 0x
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 1x
+    1,   1,   1,   1,   1,   0,   1,   1,   1,   1,   0,   0,   1,   0,   0,   0,  // 2x   !"#$%&'()*+,-./
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   0,   1,   0,  // 3x  0123456789:;<=>?
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 4x  @ABCDEFGHIJKLMNO
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   0,  // 5x  PQRSTUVWXYZ[\]^_
+    1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 6x  `abcdefghijklmno
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   1,  // 7x  pqrstuvwxyz{|}~ DEL
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 8x
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 9x
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // ax
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // bx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // cx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // dx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // ex
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   0,  // fx   // insertIntoStatePairSortedArrayList asserts if escapeChar = 255
+};
+
 static DFA *dfaEncodeUriGeneric(DFA *inputAuto, int var, int *indices, const char* encoding){
 
     DFA *a = dfaCopy(inputAuto);
@@ -4019,6 +4040,10 @@ DFA* dfaEncodeUriComponent(DFA *inputAuto, int var, int *indices) {
 
 DFA* dfaEncodeUri(DFA *inputAuto, int var, int *indices) {
     return dfaEncodeUriGeneric(inputAuto, var, indices, encodeUriChars);
+}
+
+DFA* dfaEscape(DFA *inputAuto, int var, int *indices) {
+    return dfaEncodeUriGeneric(inputAuto, var, indices, escapeChars);
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent
@@ -4065,6 +4090,11 @@ DFA *dfaDecodeUri(DFA *inputAuto, int var, int *indices){
         }
     }
     return a;
+}
+
+// Unescape will escape all percents, even those not covered by escape
+DFA *dfaUnescape(DFA *inputAuto, int var, int *indices) {
+    return dfaDecodeUriComponent(inputAuto, var, indices);
 }
 
 static const char jsonEncodeChars[URI_ENCODE_CHARS] = {
