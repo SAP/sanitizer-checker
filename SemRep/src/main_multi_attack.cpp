@@ -33,7 +33,9 @@ using namespace boost;
 namespace po = boost::program_options;
 
 
-void call_sem_attack(const string& target_name, const string& output_dir, const string& field_name, bool concats, bool singleton_intersection, bool preImage, bool encode){
+void call_sem_attack(const string& target_name, const string& output_dir, const string& field_name,
+                     bool concats, bool singleton_intersection, bool preImage, bool encode, bool payloadOnly)
+{
     try {
         cout << endl << "\t------ Starting Analysis for: " << field_name << " ------" << endl;
         cout << endl << "\t       Target: " << target_name  << endl;
@@ -52,21 +54,24 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
         attack.setConcats(concats);
         attack.setComputePreimage(preImage);
 
-        attack.addAttackPattern(AttackContext::LessThan);
-        attack.addAttackPattern(AttackContext::GreaterThan);
-        attack.addAttackPattern(AttackContext::Ampersand);
-        attack.addAttackPattern(AttackContext::Quote);
-        attack.addAttackPattern(AttackContext::SingleQuote);
-        attack.addAttackPattern(AttackContext::Slash);
-        attack.addAttackPattern(AttackContext::Equals);
-        attack.addAttackPattern(AttackContext::Script);
-        attack.addAttackPattern(AttackContext::Alert);
-        attack.addAttackPattern(AttackContext::HtmlMinimal);
-        attack.addAttackPattern(AttackContext::HtmlMedium);
-        attack.addAttackPattern(AttackContext::Html);
-        attack.addAttackPattern(AttackContext::HtmlAttr);
-        attack.addAttackPattern(AttackContext::JavaScript);
-        attack.addAttackPattern(AttackContext::Url);
+        if (!payloadOnly) {
+          attack.addAttackPattern(AttackContext::LessThan);
+          attack.addAttackPattern(AttackContext::GreaterThan);
+          attack.addAttackPattern(AttackContext::Ampersand);
+          attack.addAttackPattern(AttackContext::Quote);
+          attack.addAttackPattern(AttackContext::SingleQuote);
+          attack.addAttackPattern(AttackContext::Slash);
+          attack.addAttackPattern(AttackContext::Equals);
+          attack.addAttackPattern(AttackContext::Script);
+          attack.addAttackPattern(AttackContext::Alert);
+          attack.addAttackPattern(AttackContext::HtmlMinimal);
+          attack.addAttackPattern(AttackContext::HtmlMedium);
+          attack.addAttackPattern(AttackContext::Html);
+          attack.addAttackPattern(AttackContext::HtmlAttr);
+          attack.addAttackPattern(AttackContext::JavaScript);
+          attack.addAttackPattern(AttackContext::Url);
+        }
+        // Always add the payloads
         attack.addAttackPattern(AttackContext::HtmlPayload);
         attack.addAttackPattern(AttackContext::HtmlAttributePayload);
         attack.addAttackPattern(AttackContext::UrlPayload);
@@ -100,15 +105,16 @@ int main(int argc, char *argv[]) {
 
         po::options_description desc("Allowed options");
         desc.add_options()
-            ("help",         "produce help message")
-            ("verbose,v",    po::value<string>()->implicit_value("0"), "verbosity level")
-            ("target,t",     po::value<string>()->required(), "Path to dependency graph file for target function.")
-            ("output,o",     po::value<string>()->required(), "Path to output directory.")
-            ("fieldname,f",  po::value<string>()->required(), "Name of the input field for which sanitization code needs to be repaired.")
-            ("concat,c",     po::value<bool>()->default_value(false), "Compute concat operations")
-            ("encode,e",     po::value<bool>()->default_value(false), "Use URL encoded automaton as analysis input (default is any string)")
-            ("singleton,s",  po::value<bool>()->default_value(false), "Use singletons for post-image computation")
-            ("preimage,p",   po::value<bool>()->default_value(true), "Compute preimages for attack patterns");
+          ("help",         "produce help message")
+          ("verbose,v",    po::value<string>()->implicit_value("0"), "verbosity level")
+          ("target,t",     po::value<string>()->required(), "Path to dependency graph file for target function.")
+          ("output,o",     po::value<string>()->required(), "Path to output directory.")
+          ("fieldname,f",  po::value<string>()->required(), "Name of the input field for which sanitization code needs to be repaired.")
+          ("concat,c",     po::value<bool>()->default_value(false), "Compute concat operations")
+          ("encode,e",     po::value<bool>()->default_value(false), "Use URL encoded automaton as analysis input (default is any string)")
+          ("singleton,s",  po::value<bool>()->default_value(false), "Use singletons for post-image computation")
+          ("preimage,p",   po::value<bool>()->default_value(true), "Compute preimages for attack patterns")
+          ("payload,y",    po::value<bool>()->default_value(false), "Use only payload string attack patterns");
 
         po::positional_options_description p;
         p.add("target", 1);
@@ -127,24 +133,26 @@ int main(int argc, char *argv[]) {
 
         po::notify(vm);
 
-        if (vm.count("target") && vm.count("fieldname"))
-        {
-            cout << boolalpha
-                    << "Calling multiattack with target: " << vm["target"].as<string>()
-                    << ", output dir: " << vm["output"].as<string>()
-                    << ", fieldname: " << vm["fieldname"].as<string>()
-                    << ", concat enabled: " << vm["concat"].as<bool>()
-                    << ", singleton computation: " << vm["singleton"].as<bool>()
-                    << ", preimage computation: " << vm["preimage"].as<bool>()
-                    << ", URL encode input: " << vm["encode"].as<bool>()
-                    << "\n";
+        if (vm.count("target") && vm.count("fieldname")) {
+          cout << boolalpha
+               << "Calling multiattack with target: " << vm["target"].as<string>()
+               << ", output dir: " << vm["output"].as<string>()
+               << ", fieldname: " << vm["fieldname"].as<string>()
+               << ", concat enabled: " << vm["concat"].as<bool>()
+               << ", singleton computation: " << vm["singleton"].as<bool>()
+               << ", preimage computation: " << vm["preimage"].as<bool>()
+               << ", URL encode input: " << vm["encode"].as<bool>()
+               << ", Only payload attack patterns: " << vm["payload"].as<bool>()
+               << "\n";
+
             call_sem_attack(vm["target"].as<string>(),
                             vm["output"].as<string>(),
                             vm["fieldname"].as<string>(),
                             vm["concat"].as<bool>(),
                             vm["singleton"].as<bool>(),
                             vm["preimage"].as<bool>(),
-                            vm["encode"].as<bool>()
+                            vm["encode"].as<bool>(),
+                            vm["payload"].as<bool>()
               );
         }
         else {
