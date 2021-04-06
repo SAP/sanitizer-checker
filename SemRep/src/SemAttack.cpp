@@ -95,12 +95,22 @@ bool CombinedAnalysisResult::addMetadata(const Metadata& metadata)
 {
   // Loop over the existing metadata for this entry
   bool isNew = true;
-  for (auto m : m_metadata) {
-    if (m.get_domain() == metadata.get_domain()) {
-      isNew = false;;
+  for (auto m = m_metadata.begin(); m != m_metadata.end(); m++) {
+    if (m->get_domain() == metadata.get_domain()) {
+      if (metadata.has_valid_exploit() && (metadata.get_original_uuid() != "undefined")) {
+        // Check if we already tried to add the original exploit
+        if (m->get_uuid() == metadata.get_original_uuid()) {
+          // Remove the original entry
+          m_metadata.erase(m);
+          // The updated entry will be added later on
+        }
+      } else {
+        isNew = false;
+      }
       break;
     }
   }
+
   if (isNew) {
     m_metadata.push_back(metadata);
   }
@@ -238,7 +248,7 @@ void BackwardAnalysisResult::finishAnalysis()
     delete m_intersection;
     m_intersection = nullptr;
   }
-  if (m_post_attack) {
+ if (m_post_attack) {
     delete m_post_attack;
     m_post_attack = nullptr;
   }

@@ -75,7 +75,7 @@ AttackContext AttackContextHelper::getContextFromMetadata(const Metadata& metada
   if (isUrlRelevantSink(metadata.get_sink())) {
     return AttackContext::Url;
   } else if (isHtmlRelevantSink(metadata.get_sink())) {
-    if (metadata.get_exploit_token() == "attribute") {
+    if ((metadata.has_valid_exploit()) && (metadata.get_exploit_token() == "attribute")) {
       // This can be an URL context (if in a src or href attribute)
       return isUrlAttribute(metadata.get_exploit_content()) ?
         AttackContext::HtmlUrlAttr : AttackContext::HtmlAttr;
