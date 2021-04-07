@@ -119,6 +119,18 @@ bool CombinedAnalysisResult::addMetadata(const Metadata& metadata)
   return isNew;
 }
 
+std::set<std::string> CombinedAnalysisResult::getUniqueDomains() const
+{
+  std::set<std::string> s;
+
+  // Depending on how the metadata is added in addMetadata, the
+  // domains might be already unique, but loop anyway in case this changes
+  for (auto m : m_metadata) {
+    s.insert(m.get_domain());
+  }
+  return s;
+}
+
 bool CombinedAnalysisResult::isFilterSuccessful(const AttackContext& context) const
 {
   bool success = false;

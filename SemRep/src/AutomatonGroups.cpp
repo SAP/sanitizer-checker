@@ -79,7 +79,7 @@ void AutomatonGroup::addCombinedAnalysisResult(const CombinedAnalysisResult* gra
 }
 
 void AutomatonGroup::printHeaders(std::ostream& os, const std::vector<AttackContext>& contexts) const {
-  os << "id, name, entries, deduplicated, unique hash, validated";
+  os << "id, name, entries, deduplicated, unique hash, domains, validated";
   for (auto c : m_sink_contexts) {
     os << ", " << AttackContextHelper::getName(c) << " sink entries";
     os << ", " << AttackContextHelper::getName(c) << " sink validated";
@@ -98,6 +98,7 @@ void AutomatonGroup::printSummary(std::ostream& os) const {
      << getEntriesWithDuplicates() << ", "
      << getNonUniqueEntries() << ", "
      << getEntries() << ", "
+     << getUniqueDomains().size() << ", "
      << getSuccessfulValidated();
   for (auto c : m_sink_contexts) {
     os << ", " << getEntriesForSinkContext(c);
@@ -147,6 +148,15 @@ unsigned int AutomatonGroup::getValidatedEntriesForSinkContext(const AttackConte
     }
   }
   return total;
+}
+
+std::set<std::string> AutomatonGroup::getUniqueDomains() const {
+  std::set<std::string> domains;
+  for (auto g : m_graphs) {
+    std::set<std::string> s = g->getUniqueDomains();
+    domains.insert(s.begin(), s.end());
+  }
+  return domains;
 }
 
 unsigned int AutomatonGroup::getNonUniqueEntries() const {
@@ -264,8 +274,12 @@ const AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutoma
 
 void AutomatonGroups::printStatus(std::ostream& os) const
 {
-  os << "#  DepGraph files --> Duplicates removed --> Unique Hash --> Unique Post-images" << std::endl;
-  os << "# " << getEntriesWithDuplicates() << " --> " << getNonUniqueEntries() << " --> " << getEntries() << " --> " << getNonZeroGroups() << std::endl;
+  os << "#  DepGraph files --> Duplicates removed --> Unique Hash --> Domains --> Unique Post-images" << std::endl;
+  os << "# " << getEntriesWithDuplicates()
+     << " --> " << getNonUniqueEntries()
+     << " --> " << getEntries()
+     << " --> " << getUniqueDomains().size()
+     << " --> " << getNonZeroGroups() << std::endl;
 }
 
 void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const {
@@ -286,9 +300,10 @@ void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackCont
   unsigned int exploited = getSuccessfulValidated();
   unsigned int duplicates = getEntriesWithDuplicates();
   unsigned int nonunique = getNonUniqueEntries();
+  unsigned int domains = getUniqueDomains().size();
   os << "-1, ";
   os << "total, ";
-  os << duplicates << ", " << nonunique << ", " << entries << ", " << exploited << ", ";
+  os << duplicates << ", " << nonunique << ", " << entries << ", " << domains << ", " << exploited << ", ";
   for (auto c : AutomatonGroup::m_sink_contexts) {
     os << getEntriesForSinkContext(c) << ", ";
     os << getValidatedEntriesForSinkContext(c) << ", ";   
@@ -383,4 +398,13 @@ unsigned int AutomatonGroups::getValidatedEntriesForSinkContext(const AttackCont
     total += iter->getValidatedEntriesForSinkContext(context);
   }
   return total;
+}
+
+std::set<std::string> AutomatonGroups::getUniqueDomains() const {
+  std::set<std::string> domains;
+  for (auto g : m_groups) {
+    std::set<std::string> s = g.getUniqueDomains();
+    domains.insert(s.begin(), s.end());
+  }
+  return domains;
 }

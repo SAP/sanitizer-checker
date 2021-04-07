@@ -54,7 +54,8 @@ public:
     unsigned int getSuccessfulValidated() const;
     unsigned int getEntriesForSinkContext(const AttackContext& context) const;
     unsigned int getValidatedEntriesForSinkContext(const AttackContext& context) const;
-
+    std::set<std::string> getUniqueDomains() const;
+  
     void printMembers(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
     void printSummary(std::ostream& os) const;
     void printHeaders(std::ostream& os, const std::vector<AttackContext>& contexts) const;
@@ -95,7 +96,8 @@ public:
     unsigned int getSuccessfulValidated() const;
     unsigned int getEntriesForSinkContext(const AttackContext& context) const;
     unsigned int getValidatedEntriesForSinkContext(const AttackContext& context) const;
-
+    std::set<std::string> getUniqueDomains() const;
+  
     void printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
     void printStatus(std::ostream& os) const;
 

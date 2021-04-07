@@ -184,6 +184,7 @@ private:
 class CombinedAnalysisResult {
 
 public:
+
     CombinedAnalysisResult(const fs::path& target_dep_graph_file_name,
                            DepGraph target_dep_graph_,
                            const std::string& input_field_name,
@@ -212,7 +213,8 @@ public:
     int getCountWithDuplicates() const { return m_duplicate_count; }
     int getCount() const { return m_metadata.size(); }
     bool addMetadata(const Metadata& metadata);
-
+    std::set<std::string> getUniqueDomains() const;
+    
     void printResult(std::ostream& os, bool printHeader, const std::vector<AttackContext>& contexts) const;
     void printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const;
     void finishAnalysis();
