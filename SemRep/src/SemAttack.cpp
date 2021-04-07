@@ -114,6 +114,7 @@ bool CombinedAnalysisResult::addMetadata(const Metadata& metadata)
   if (isNew) {
     m_metadata.push_back(metadata);
   }
+
   // Increment the total
   m_duplicate_count++;
   return isNew;

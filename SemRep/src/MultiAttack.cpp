@@ -88,6 +88,18 @@ void MultiAttack::writeResultsToFile() const {
   ofs_files.open (output_files.string(), std::ofstream::out);
   printFiles(ofs_files);
   ofs_files.close();
+
+  fs::path output_sum(m_output_directory / fs::path("semattack_summary.csv"));
+  std::ofstream ofs_sum;
+  ofs_sum.open (output_sum.string(), std::ofstream::out);
+  m_groups.printOverlapSummary(ofs_sum, m_analyzed_contexts);
+  ofs_sum.close();
+
+  fs::path output_sum_pc(m_output_directory / fs::path("semattack_summary_percent.csv"));
+  std::ofstream ofs_sum_pc;
+  ofs_sum_pc.open (output_sum_pc.string(), std::ofstream::out);
+  m_groups.printOverlapSummary(ofs_sum_pc, m_analyzed_contexts, true);
+  ofs_sum_pc.close();
 }
 
 void MultiAttack::printFiles(std::ostream& os) const {

@@ -236,7 +236,7 @@ AutomatonGroup* AutomatonGroups::addAutomaton(const StrangerAutomaton* automaton
 }
 
 AutomatonGroup* AutomatonGroups::addGroup(const StrangerAutomaton* automaton) {
-  AutomatonGroup group(automaton, m_id);
+ AutomatonGroup group(automaton, m_id);
   m_id++;
   m_groups.push_back(group);
   return &m_groups.back(); 
@@ -292,6 +292,48 @@ void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::ve
   for (auto iter : m_groups) {
     iter.printMembers(os, printAll, contexts);
   }
+}
+
+void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent) const
+{
+  // Print a table of columns containting attack patterns
+  //                  rows containing injection contexts
+  os << "Context, total, ";
+  for (auto a : contexts) {
+    os << AttackContextHelper::getName(a) << ",";
+  }
+  os << std::endl;
+
+  // Loop over sink contexts
+  for (auto s : AutomatonGroup::m_sink_contexts) {
+    os << AttackContextHelper::getName(s) << ",";
+
+    // Total
+    unsigned int total = 0;
+    // Loop over each group
+    for (auto g : m_groups) {
+      total += g.getEntriesForSinkContext(s);
+    }
+    os << total << ", ";
+
+    for (auto a : contexts) {
+      unsigned int i = 0;
+      // Loop over each group
+      for (auto g : m_groups) {
+        if (g.getSuccessfulEntriesForContext(a) > 0) {
+          i += g.getEntriesForSinkContext(s);
+        }
+      }
+      if (percent) {
+        double pc = (total > 0) ? ((double) i * 100.0) / (double) total : 0.0;
+        os << pc << ",";
+      } else {
+        os << i << ", ";
+      }
+    }
+    os << std::endl;
+  }
+
 }
 
 void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const {
