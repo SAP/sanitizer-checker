@@ -97,13 +97,13 @@ bool CombinedAnalysisResult::addMetadata(const Metadata& metadata)
   bool isNew = true;
   for (auto m = m_metadata.begin(); m != m_metadata.end(); m++) {
     if (m->get_domain() == metadata.get_domain()) {
-      if (metadata.has_valid_exploit() && (metadata.get_original_uuid() != "undefined")) {
-        // Check if we already tried to add the original exploit
-        if (m->get_uuid() == metadata.get_original_uuid()) {
-          // Remove the original entry
-          m_metadata.erase(m);
-          // The updated entry will be added later on
-        }
+      // Check if we already tried to add the original exploit
+      if (metadata.has_valid_exploit() &&
+          (metadata.get_original_uuid() != "undefined") &&
+          (m->get_uuid() == metadata.get_original_uuid())) {
+        // Remove the original entry
+        m_metadata.erase(m);
+        // The updated entry will be added later on
       } else {
         isNew = false;
       }
