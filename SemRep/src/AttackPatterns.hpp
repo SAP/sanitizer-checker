@@ -73,6 +73,9 @@ public:
     // A sample html payload for attributes
     static StrangerAutomaton* getHtmlAttributePayload();
 
+    // A sample html payload for single quoted attributes
+    static StrangerAutomaton* getHtmlSingleQuoteAttributePayload();
+
     // A sample payload for URLS
     static StrangerAutomaton* getUrlPayload();
 
@@ -137,6 +140,7 @@ private:
     static std::string m_htmlPayload;
     static std::string m_urlPayload;
     static std::string m_htmlAttributePayload;
+    static std::string m_htmlSingleQuoteAttributePayload;
     static std::string m_htmlPolygotPayload;
     static std::string m_htmlRemovedRegExp;
     static std::string m_htmlRemovedNoSlashRegExp;

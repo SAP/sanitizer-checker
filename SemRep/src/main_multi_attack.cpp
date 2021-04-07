@@ -74,6 +74,7 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
         // Always add the payloads
         attack.addAttackPattern(AttackContext::HtmlPayload);
         attack.addAttackPattern(AttackContext::HtmlAttributePayload);
+        attack.addAttackPattern(AttackContext::HtmlSingleQuoteAttributePayload);
         attack.addAttackPattern(AttackContext::UrlPayload);
         attack.addAttackPattern(AttackContext::HtmlPolygotPayload);
         attack.compute();

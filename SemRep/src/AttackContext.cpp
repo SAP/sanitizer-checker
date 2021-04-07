@@ -76,9 +76,15 @@ AttackContext AttackContextHelper::getContextFromMetadata(const Metadata& metada
     return AttackContext::Url;
   } else if (isHtmlRelevantSink(metadata.get_sink())) {
     if ((metadata.has_valid_exploit()) && (metadata.get_exploit_token() == "attribute")) {
-      // This can be an URL context (if in a src or href attribute)
-      return isUrlAttribute(metadata.get_exploit_content()) ?
-        AttackContext::HtmlUrlAttr : AttackContext::HtmlAttr;
+      // Attribute contexts are divided into four:
+      // URL / non-URL attributes
+      // Single / double quoted attributes
+      bool singleQuote = metadata.get_exploit_quote_type() == "'" ? true : false;
+      if (isUrlAttribute(metadata.get_exploit_content())) {
+        return singleQuote ? AttackContext::HtmlSingleQuoteUrlAttr : AttackContext::HtmlUrlAttr;
+      } else {
+        return singleQuote ? AttackContext::HtmlSingleQuoteAttr : AttackContext::HtmlAttr;
+      }
     } else {
       return AttackContext::Html;
     }

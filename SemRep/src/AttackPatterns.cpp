@@ -46,7 +46,8 @@ std::string AttackPatterns::m_urlEscapedRegExp           =  "/([a-zA-Z0-9-_.!~*'
 // Sample Payloads
 std::string AttackPatterns::m_htmlPayload                = "<script>alert(1)</script>";
 std::string AttackPatterns::m_htmlAttributePayload       = "\" onload=\"alert(1)";
-std::string AttackPatterns::m_urlPayload                = "javascript:alert(1)";
+std::string AttackPatterns::m_htmlSingleQuoteAttributePayload = "' onload='alert(1)";
+std::string AttackPatterns::m_urlPayload                 = "javascript:alert(1)";
 std::string AttackPatterns::m_htmlPolygotPayload         = "javascript:/*--></title></style></textarea></script></xmp><svg/onload='+/\"/+/onmouseover=1/+/[*/[]/+alert(1)//'>";
 
 // Removing characters
@@ -155,6 +156,11 @@ StrangerAutomaton* AttackPatterns::getHtmlPayload()
 StrangerAutomaton* AttackPatterns::getHtmlAttributePayload()
 {
     return StrangerAutomaton::makeString(AttackPatterns::m_htmlAttributePayload);
+}
+
+StrangerAutomaton* AttackPatterns::getHtmlSingleQuoteAttributePayload()
+{
+    return StrangerAutomaton::makeString(AttackPatterns::m_htmlSingleQuoteAttributePayload);
 }
 
 StrangerAutomaton* AttackPatterns::getUrlPayload()
@@ -301,6 +307,8 @@ StrangerAutomaton* AttackPatterns::getAttackPatternForContext(AttackContext cont
         return getHtmlPayload();
     case AttackContext::HtmlAttributePayload:
         return getHtmlAttributePayload();
+    case AttackContext::HtmlSingleQuoteAttributePayload:
+        return getHtmlSingleQuoteAttributePayload();
     case AttackContext::UrlPayload:
         return getUrlPayload();
     case AttackContext::HtmlPolygotPayload:
