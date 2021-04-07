@@ -274,11 +274,10 @@ const AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutoma
 
 void AutomatonGroups::printStatus(std::ostream& os) const
 {
-  os << "#  DepGraph files --> Duplicates removed --> Unique Hash --> Domains --> Unique Post-images" << std::endl;
+  os << "#  DepGraph files --> Duplicates removed --> Unique Hash --> Unique Post-images" << std::endl;
   os << "# " << getEntriesWithDuplicates()
      << " --> " << getNonUniqueEntries()
      << " --> " << getEntries()
-     << " --> " << getUniqueDomains().size()
      << " --> " << getNonZeroGroups() << std::endl;
 }
 

@@ -225,7 +225,6 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
   std::cout << "Inserting results into groups for " << file << std::endl;
   this->m_groups.addAutomaton(postImage, result);
   std::cout << "Finished inserting results into groups for " << file << std::endl;
-  this->writeResultsToFile();
   printStatus();
 }
 
@@ -250,6 +249,7 @@ void MultiAttack::compute() {
   pool.join();
   std::cout << "Forward analysis finished!" << std::endl;
   printStatus();
+  this->writeResultsToFile();
 }
 
 void MultiAttack::addAttackPattern(AttackContext context)
