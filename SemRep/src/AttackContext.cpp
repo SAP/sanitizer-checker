@@ -75,18 +75,22 @@ AttackContext AttackContextHelper::getContextFromMetadata(const Metadata& metada
   if (isUrlRelevantSink(metadata.get_sink())) {
     return AttackContext::Url;
   } else if (isHtmlRelevantSink(metadata.get_sink())) {
-    if ((metadata.has_valid_exploit()) && (metadata.get_exploit_token() == "attribute")) {
-      // Attribute contexts are divided into four:
-      // URL / non-URL attributes
-      // Single / double quoted attributes
-      bool singleQuote = metadata.get_exploit_quote_type() == "'" ? true : false;
-      if (isUrlAttribute(metadata.get_exploit_content())) {
-        return singleQuote ? AttackContext::HtmlSingleQuoteUrlAttr : AttackContext::HtmlUrlAttr;
+    if (metadata.has_valid_exploit()) {
+      if (metadata.get_exploit_token() == "attribute") {
+        // Attribute contexts are divided into four:
+        // URL / non-URL attributes
+        // Single / double quoted attributes
+        bool singleQuote = metadata.get_exploit_quote_type() == "'" ? true : false;
+        if (isUrlAttribute(metadata.get_exploit_content())) {
+          return singleQuote ? AttackContext::HtmlSingleQuoteUrlAttr : AttackContext::HtmlUrlAttr;
+        } else {
+          return singleQuote ? AttackContext::HtmlSingleQuoteAttr : AttackContext::HtmlAttr;
+        }
       } else {
-        return singleQuote ? AttackContext::HtmlSingleQuoteAttr : AttackContext::HtmlAttr;
+        return AttackContext::Html;
       }
     } else {
-      return AttackContext::Html;
+      return AttackContext::HtmlUnknown;
     }
   } else if (isJsRelevantSink(metadata.get_sink())) {
     return AttackContext::JavaScript;

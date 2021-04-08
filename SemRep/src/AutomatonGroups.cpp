@@ -33,6 +33,7 @@ std::vector<AttackContext> AutomatonGroup::m_sink_contexts = {
   AttackContext::HtmlSingleQuoteAttr,
   AttackContext::HtmlUrlAttr,
   AttackContext::HtmlSingleQuoteUrlAttr,
+  AttackContext::HtmlUnknown,
   AttackContext::Url,
   AttackContext::JavaScript,
   AttackContext::None
