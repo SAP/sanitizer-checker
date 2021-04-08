@@ -96,13 +96,14 @@ bool CombinedAnalysisResult::addMetadata(const Metadata& metadata)
   // Loop over the existing metadata for this entry
   bool isNew = true;
   for (auto m = m_metadata.begin(); m != m_metadata.end(); m++) {
-    if (m->get_domain() == metadata.get_domain()) {
+    if (m->get_twenty_five_million_flows_id() == metadata.get_twenty_five_million_flows_id()) {
       // Check if we already tried to add the original exploit
       if (metadata.has_valid_exploit() &&
           (metadata.get_original_uuid() != "undefined") &&
           (m->get_uuid() == metadata.get_original_uuid())) {
         // Remove the original entry
         m_metadata.erase(m);
+        m_duplicate_count--;
         // The updated entry will be added later on
       } else {
         isNew = false;
