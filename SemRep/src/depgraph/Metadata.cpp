@@ -38,7 +38,26 @@ namespace {
         return value == "true";
     }
 }
-Metadata::Metadata() : uuid(), url(), sink(), source(), taint_range_index(0), start_index(0), end_index(0), initialized(false), exploit_method(Unknown), exploit_status(Error), exploit_type(Undefined), hash(0), sanitizer_hash(0), twenty_five_million_flows_id(0), domain(), valid_exploit(false) {
+Metadata::Metadata()
+    : uuid(),
+    url(),
+    sink(),
+    source(),
+    taint_range_index(0),
+    start_index(0),
+    end_index(0),
+    initialized(false),
+    exploit_method(Unknown),
+    exploit_status(Error),
+    exploit_type(Undefined),
+    hash(0),
+    sanitizer_hash(0),
+    twenty_five_million_flows_id(0),
+    domain(),
+    valid_exploit(false),
+    break_in(),
+    break_out(),
+    payload() {
 
 }
 
@@ -196,6 +215,24 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->valid_exploit = true;
         return true;
     }
+    if(key == "Exploit.break_in") {
+        this->break_in = value;
+        this->initialized = true;
+        this->valid_exploit = true;
+        return true;
+    }
+    if(key == "Exploit.break_out") {
+        this->break_out = value;
+        this->initialized = true;
+        this->valid_exploit = true;
+        return true;
+    }
+    if(key == "Exploit.payload") {
+        this->payload = value;
+        this->initialized = true;
+        this->valid_exploit = true;
+        return true;
+    }
     std::cout << "key value pair: (" << key << ", " << value << ") unknown!\n";
     return false;
 
@@ -278,6 +315,18 @@ int Metadata::get_sanitizer_hash() const {
     return this->sanitizer_hash;
 }
 
-const bool Metadata::has_valid_exploit() const {
+bool Metadata::has_valid_exploit() const {
     return this->valid_exploit;
+}
+
+std::string Metadata::get_break_out() const {
+    return this->break_out;
+}
+
+std::string Metadata::get_break_in() const {
+    return this->break_in;
+}
+
+std::string Metadata::get_payload() const {
+    return this->payload;
 }
