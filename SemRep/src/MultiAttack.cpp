@@ -179,7 +179,8 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
     if (search->second->addMetadata(target_dep_graph.get_metadata())) {
       std::cout << "Incremeted count to " << search->second->getCount() << " for " << search->second->getFileName() << std::endl;
     } else {
-      std::cout << "Discarding duplicate depgraph: " << file.string() << std::endl;
+      // This is a bit too verbose
+      //std::cout << "Discarding duplicate depgraph: " << file.string() << " (total: " << search->second->getCountWithDuplicates() << ")" << std::endl;
     }
   } else {
     std::cout << "Ading file: " << file.string() << " to worker queue." << std::endl;
@@ -228,6 +229,8 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
     }
   }
 
+  // Additional backward analysis for generated payloads
+
   // Finish up (delete the semattack object)
   result->finishAnalysis();
 
@@ -240,18 +243,18 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
   printStatus();
 }
 
-void MultiAttack::compute() {
+void MultiAttack::loadDepGraphs() {
   findDotFiles();
   boost::asio::thread_pool pool(this->m_nThreads);
   std::cout << "Computing post images with pool of " << m_nThreads << " threads." << std::endl;
 
+  // Add all files first
   for (const auto& file : this->m_dot_paths) {
     asio::post(pool, [this, &pool, file]() {
         try {
           DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());
           {
-            CombinedAnalysisResult* result = findOrCreateResult(file, target_dep_graph);
-            asio::post(pool, std::bind(&MultiAttack::computeImages, this, result));
+            findOrCreateResult(file, target_dep_graph);
           }
         } catch(std::exception& e) {
           cerr << "Error parsing " << file.string() << ": " << e.what() << "\n";
@@ -259,9 +262,26 @@ void MultiAttack::compute() {
       });
   }
   pool.join();
+  printStatus();
+}
+
+void MultiAttack::doAnalysis() {
+  boost::asio::thread_pool pool(this->m_nThreads);
+  std::cout << "Starting analysis " << m_nThreads << " threads." << std::endl;
+
+  // Start the analysis
+  for (auto result : m_results) {
+    asio::post(pool, std::bind(&MultiAttack::computeImages, this, result));
+  }
+  pool.join();
   std::cout << "Forward analysis finished!" << std::endl;
   printStatus();
-  this->writeResultsToFile();
+  this->writeResultsToFile();  
+}
+  
+void MultiAttack::compute() {
+  loadDepGraphs();
+  doAnalysis();
 }
 
 void MultiAttack::addAttackPattern(AttackContext context)

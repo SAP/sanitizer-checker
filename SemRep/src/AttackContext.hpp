@@ -52,6 +52,7 @@
   DO(HtmlSingleQuoteAttributePayload)  \
   DO(UrlPayload)                       \
   DO(HtmlPolygotPayload)               \
+  DO(GeneratedPayload)                 \
   DO(None)
 
 #define MAKE_ENUM(VAR) VAR,

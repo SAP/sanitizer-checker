@@ -64,6 +64,9 @@ private:
     static std::vector<fs::path> getDotFilesInDir(fs::path const &dir);
     static std::vector<fs::path> getFilesInPath(fs::path const & root, std::string const & ext);
 
+    void loadDepGraphs();
+    void doAnalysis();
+    
     int countDone() const;
 
     fs::path m_graph_directory;
