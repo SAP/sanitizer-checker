@@ -143,6 +143,22 @@ unsigned int AutomatonGroup::getEntriesForSinkContext(const AttackContext& conte
   return total;
 }
 
+unsigned int AutomatonGroup::getEntriesForSinkContextWeighted(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    total += iter->isSinkContext(context) ? iter->getCountWithDuplicates() : 0;
+  }
+  return total;
+}
+
+unsigned int AutomatonGroup::getEntriesForSinkContextDeduplicated(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    total += iter->isSinkContext(context) ? iter->getCount() : 0;
+  }
+  return total;
+}
+
 unsigned int AutomatonGroup::getValidatedEntriesForSinkContext(const AttackContext& context) const {
   unsigned int total = 0;
   for (auto iter : m_graphs) {
@@ -340,13 +356,51 @@ void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<At
 }
 
 void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const {
+  // All totals computed by number of unique sanitizers across multiple domains
   unsigned int entries = getEntries();
   unsigned int exploited = getSuccessfulValidated();
   unsigned int duplicates = getEntriesWithDuplicates();
   unsigned int nonunique = getNonUniqueEntries();
   unsigned int domains = getUniqueDomains().size();
+
+  os << "-3, ";
+  os << "total entries, ";
+  os << duplicates << ", " << nonunique << ", " << entries << ", " << domains << ", " << exploited << ", ";
+
+  for (auto c : AutomatonGroup::m_sink_contexts) {
+    os << getEntriesForSinkContextWeighted(c) << ", ";
+    os << getValidatedEntriesForSinkContext(c) << ", ";   
+  }
+
+  for (auto context : contexts) {
+    unsigned int success = getSuccessfulEntriesForContext(context);
+    os << success << ", ";
+    os << getContainedEntriesForContext(context) << ", ";
+    os << entries - success << ", ";
+    os << getSuccessfulGroupsForContext(context) << ", ";
+  }
+  os << ", " << std::endl;
+
+  os << "-2, ";
+  os << "deduplicated entries, ";
+  os << duplicates << ", " << nonunique << ", " << entries << ", " << domains << ", " << exploited << ", ";
+
+  for (auto c : AutomatonGroup::m_sink_contexts) {
+    os << getEntriesForSinkContextDeduplicated(c) << ", ";
+    os << getValidatedEntriesForSinkContext(c) << ", ";   
+  }
+
+  for (auto context : contexts) {
+    unsigned int success = getSuccessfulEntriesForContext(context);
+    os << success << ", ";
+    os << getContainedEntriesForContext(context) << ", ";
+    os << entries - success << ", ";
+    os << getSuccessfulGroupsForContext(context) << ", ";
+  }
+  os << ", " << std::endl;
+
   os << "-1, ";
-  os << "total, ";
+  os << "unique total, ";
   os << duplicates << ", " << nonunique << ", " << entries << ", " << domains << ", " << exploited << ", ";
   for (auto c : AutomatonGroup::m_sink_contexts) {
     os << getEntriesForSinkContext(c) << ", ";
@@ -432,6 +486,22 @@ unsigned int AutomatonGroups::getEntriesForSinkContext(const AttackContext& cont
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getEntriesForSinkContext(context);
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getEntriesForSinkContextWeighted(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getEntriesForSinkContextWeighted(context);
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getEntriesForSinkContextDeduplicated(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getEntriesForSinkContextDeduplicated(context);
   }
   return total;
 }
