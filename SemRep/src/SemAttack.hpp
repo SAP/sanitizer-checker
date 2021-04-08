@@ -193,7 +193,9 @@ public:
 
     BackwardAnalysisResult* addBackwardAnalysis(AttackContext context);
     bool hasBackwardanalysisResult(AttackContext context) const;
-    
+
+    void doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage = true, bool singletonIntersection = false);
+
     const SemAttack* getAttack() const { return m_fwAnalysis.getAttack(); }
     SemAttack* getAttack() { return m_fwAnalysis.getAttack(); }
 
@@ -230,6 +232,8 @@ private:
 
     // Keep track of metadata for this result
     std::vector<Metadata> m_metadata;
+    // For context specific payloads, keep a map of metadata to backwardanalysis
+    std::map<const Metadata*, BackwardAnalysisResult*> m_metadataAnalysisMap;
     int m_duplicate_count;
 };
 

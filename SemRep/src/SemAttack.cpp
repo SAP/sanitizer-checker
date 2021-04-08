@@ -53,6 +53,13 @@ CombinedAnalysisResult::~CombinedAnalysisResult()
     delete bwResult.second;
   }
   m_bwAnalysisMap.clear();
+
+  for (auto mdResult : m_bwAnalysisMap) {
+    if (mdResult.second != nullptr) {
+      delete mdResult.second;
+    }
+  }
+  m_metadataAnalysisMap.clear();
 }
 
 BackwardAnalysisResult* CombinedAnalysisResult::addBackwardAnalysis(AttackContext context)
@@ -69,6 +76,33 @@ bool CombinedAnalysisResult::hasBackwardanalysisResult(AttackContext context) co
     return true;
   }
   return false;
+}
+
+void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage, bool singletonIntersection)
+{
+  // Create a specific payload for each metadata entry
+  for (const Metadata &c : m_metadata) {
+    try {
+      if (c.is_initialized() && c.has_valid_exploit()) {
+        std::string payload = c.get_url();
+        std::string name = "generated_payload" + c.get_uuid();
+        StrangerAutomaton* a = StrangerAutomaton::makeString(payload);
+        std::cout << "Doing backward analysis with payload: " << payload << std::endl;
+        BackwardAnalysisResult* bw = new BackwardAnalysisResult(m_fwAnalysis, a, name);
+        bw->doAnalysis(computePreImage, singletonIntersection);
+        bw->writeResultsToFile(output_dir);
+        bw->finishAnalysis();
+        // Add the bw analysis to map
+        m_metadataAnalysisMap.insert(std::make_pair(&c, bw));
+      }
+    } catch (StrangerStringAnalysisException const &e) {
+      std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
+      std::cerr << e.what() << std::endl;
+    } catch (const std::exception& e) {
+      std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
+      std::cerr << e.what() << std::endl;
+    }
+  }
 }
 
 void CombinedAnalysisResult::printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const

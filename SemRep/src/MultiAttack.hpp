@@ -61,6 +61,7 @@ private:
     CombinedAnalysisResult* findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph);
     void computeImages(CombinedAnalysisResult* result);
     void computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context);
+    void computeAttackPatternOverlapForMetadata(CombinedAnalysisResult* result);
     static std::vector<fs::path> getDotFilesInDir(fs::path const &dir);
     static std::vector<fs::path> getFilesInPath(fs::path const & root, std::string const & ext);
 

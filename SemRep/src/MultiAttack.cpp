@@ -168,6 +168,16 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
   }
 }
 
+void MultiAttack::computeAttackPatternOverlapForMetadata(CombinedAnalysisResult* result)
+{
+  const std::string& file = result->getAttack()->getFileName();
+  std::cout << "Doing context specific backward analysis for file: "
+            << file
+            << std::endl;
+  fs::path dir(m_output_directory / result->getAttack()->getFile());
+  result->doMetadataSpecificAnalysis(dir, m_compute_preimage, m_singleton_intersection);
+}
+
 CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph) {
   // Find the result for the given hash
   const std::lock_guard<std::mutex> lock(this->results_mutex);
@@ -230,7 +240,8 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
   }
 
   // Additional backward analysis for generated payloads
-
+  computeAttackPatternOverlapForMetadata(result);   
+  
   // Finish up (delete the semattack object)
   result->finishAnalysis();
 
