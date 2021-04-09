@@ -81,13 +81,17 @@ bool CombinedAnalysisResult::hasBackwardanalysisResult(AttackContext context) co
 void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage, bool singletonIntersection)
 {
   // Create a specific payload for each metadata entry
+  unsigned int i = 0;
   for (const Metadata &m : m_metadata) {
     try {
       std::string payload = m.generate_exploit();
+      i++;
       if (payload != "") {
         std::string name = "generated_payload_" + m.get_uuid();
         StrangerAutomaton* a = StrangerAutomaton::makeString(payload);
-        std::cout << "Doing backward analysis with payload: " << payload << std::endl;
+        std::cout << "(" << i << "/" << m_metadata.size()
+                  << ") Doing backward analysis for url: "
+                  << m.get_url() << " with payload: " << payload << std::endl;
         BackwardAnalysisResult* bw = new BackwardAnalysisResult(m_fwAnalysis, a, name);
         bw->doAnalysis(computePreImage, singletonIntersection);
         bw->writeResultsToFile(output_dir);
