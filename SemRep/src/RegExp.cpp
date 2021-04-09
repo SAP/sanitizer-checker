@@ -901,6 +901,13 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
 
     //     return makeString(b.substr(start, (pos - 1 - start)));
     } else if(match('(')) {
+        // Check for non-capturing group
+        if (peek("?") && peek(":", 1)) {
+            // Non-capturing groups will not effect the match, so do nothing
+            //std::cout << "Non capturing group!!" << std::endl;
+            next();
+            next();
+        }
         if (match(')')) {
             return makeString("");
         }
