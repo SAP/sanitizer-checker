@@ -157,10 +157,10 @@ void MultiAttack::printStatus() const
 void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context)
 {
   const std::string& file = result->getAttack()->getFileName();
-  std::cout << "Doing backward analysis for file: "
-            << file
-            << ", context: " << AttackContextHelper::getName(context)
-            << std::endl;
+  // std::cout << "Doing backward analysis for file: "
+  //           << file
+  //           << ", context: " << AttackContextHelper::getName(context)
+  //           << std::endl;
   try {
     fs::path dir(m_output_directory / result->getAttack()->getFile());
     BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
@@ -195,7 +195,7 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
   if(target_dep_graph.get_metadata().is_initialized() && // Legacy failsafe to support depgraphs without the hash field
      search != this->m_result_hash_map.end()) {
     if (search->second->addMetadata(target_dep_graph.get_metadata())) {
-      std::cout << "Incremeted count to " << search->second->getCount() << " for " << search->second->getFileName() << std::endl;
+      // std::cout << "Incremeted count to " << search->second->getCount() << " for " << search->second->getFileName() << std::endl;
     } else {
       // This is a bit too verbose
       //std::cout << "Discarding duplicate depgraph: " << file.string() << " (total: " << search->second->getCountWithDuplicates() << ")" << std::endl;
