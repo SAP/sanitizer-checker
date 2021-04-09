@@ -130,18 +130,21 @@ bool CombinedAnalysisResult::addMetadata(const Metadata& metadata)
   // Loop over the existing metadata for this entry
   bool isNew = true;
   for (auto m = m_metadata.begin(); m != m_metadata.end(); m++) {
-    if (m->get_twenty_five_million_flows_id() == metadata.get_twenty_five_million_flows_id()) {
-      // Check if we already tried to add the original exploit
-      if (metadata.has_valid_exploit() &&
-          (metadata.get_original_uuid() != "undefined") &&
-          (m->get_uuid() == metadata.get_original_uuid())) {
-        // Remove the original entry
-        m_metadata.erase(m);
-        m_duplicate_count--;
-        // The updated entry will be added later on
-      } else {
+    if (metadata.has_valid_exploit() && m->has_valid_exploit()) {
+      // If both entries have valid exploit data, the 25 million flows id will be valid
+      if (m->get_twenty_five_million_flows_id() == metadata.get_twenty_five_million_flows_id()) {
         isNew = false;
+        break;
       }
+    } else if (metadata.has_valid_exploit() && !m->has_valid_exploit() && (m->get_uuid() == (metadata.get_original_uuid()))) {
+      // In this case the entry being added has metadata, but the exisiting one does not
+      // Check if the entry being added linked to the old one, if so, replace the metadata
+      m_metadata.erase(m);
+      isNew = true;
+      break;
+    } else if ((metadata.get_domain() == m->get_domain()) && (metadata.get_script() == m->get_script()) && (metadata.get_line() == m->get_line())) {
+      // One of the entries does not have valid exploit data, so check domain and script location match by hand
+      isNew = false;
       break;
     }
   }
