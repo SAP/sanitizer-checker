@@ -352,7 +352,6 @@ void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<At
     }
     os << std::endl;
   }
-
 }
 
 void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const {

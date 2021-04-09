@@ -100,6 +100,14 @@ void MultiAttack::writeResultsToFile() const {
   ofs_sum_pc.open (output_sum_pc.string(), std::ofstream::out);
   m_groups.printOverlapSummary(ofs_sum_pc, m_analyzed_contexts, true);
   ofs_sum_pc.close();
+
+  fs::path output_gen_payloads(m_output_directory / fs::path("semattack_generated_payloads.csv"));
+  std::ofstream ofs_gen;
+  ofs_gen.open (output_gen_payloads.string(), std::ofstream::out);
+  for (auto r : m_results) {
+    r->printGeneratedPayloads(ofs_gen);
+  }
+  ofs_gen.close();
 }
 
 void MultiAttack::printFiles(std::ostream& os) const {

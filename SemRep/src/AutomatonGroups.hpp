@@ -104,7 +104,7 @@ public:
 
     void printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
     void printStatus(std::ostream& os) const;
-  void printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent = false) const;
+    void printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent = false) const;
 
 private:
 

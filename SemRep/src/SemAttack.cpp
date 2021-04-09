@@ -81,11 +81,11 @@ bool CombinedAnalysisResult::hasBackwardanalysisResult(AttackContext context) co
 void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage, bool singletonIntersection)
 {
   // Create a specific payload for each metadata entry
-  for (const Metadata &c : m_metadata) {
+  for (const Metadata &m : m_metadata) {
     try {
-      if (c.is_initialized() && c.has_valid_exploit()) {
-        std::string payload = c.get_url();
-        std::string name = "generated_payload" + c.get_uuid();
+      std::string payload = m.generate_exploit();
+      if (payload != "") {
+        std::string name = "generated_payload_" + m.get_uuid();
         StrangerAutomaton* a = StrangerAutomaton::makeString(payload);
         std::cout << "Doing backward analysis with payload: " << payload << std::endl;
         BackwardAnalysisResult* bw = new BackwardAnalysisResult(m_fwAnalysis, a, name);
@@ -93,7 +93,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
         bw->writeResultsToFile(output_dir);
         bw->finishAnalysis();
         // Add the bw analysis to map
-        m_metadataAnalysisMap.insert(std::make_pair(&c, bw));
+        m_metadataAnalysisMap.insert(std::make_pair(&m, bw));
       }
     } catch (StrangerStringAnalysisException const &e) {
       std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
@@ -122,6 +122,19 @@ void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader, con
         result->printResult(os, printHeader);
       }
     }
+  }
+}
+
+void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
+{
+  for (auto map : m_metadataAnalysisMap) {
+    const Metadata* m = map.first;
+    BackwardAnalysisResult* bw = map.second;
+    os << m->get_uuid() << ", ";
+    os << getFileName() << ", ";
+    os << m->get_url() << ", ";
+    bw->printResult(os, true);
+    os << std::endl;
   }
 }
 
@@ -311,7 +324,7 @@ void BackwardAnalysisResult::printResult(std::ostream& os, bool printHeader) con
   bool good =  this->isSafe();
   bool contained =  this->isContained();
   if (printHeader) {
-    os << AttackContextHelper::getName(m_context) << ", ";
+    os << m_name << ", ";
     }
   if (error) {
     os << "error, error, error, error, ";

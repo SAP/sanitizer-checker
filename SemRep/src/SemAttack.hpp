@@ -219,6 +219,7 @@ public:
     
     void printResult(std::ostream& os, bool printHeader, const std::vector<AttackContext>& contexts) const;
     void printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const;
+    void printGeneratedPayloads(std::ostream& os) const;
     void finishAnalysis();
 
     bool isDone() const { return m_done; }

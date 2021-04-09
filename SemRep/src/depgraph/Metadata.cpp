@@ -1,6 +1,7 @@
 #include "Metadata.hpp"
 #include <iostream>
 #include <sstream>
+#include <regex>
 
 namespace {
     Exploit_Method method_of_string(const std::string &method) {
@@ -329,4 +330,41 @@ std::string Metadata::get_break_in() const {
 
 std::string Metadata::get_payload() const {
     return this->payload;
+}
+
+std::string Metadata::generate_exploit() const {
+    std::string payload = "";
+    if (is_initialized() && has_valid_exploit()) {
+        // Try to generate an attribute payload on the fly:
+        // Exploit.success: false
+        // Exploit.status: failure
+        // Exploit.method: C
+        // Exploit.type: html
+        // Exploit.token: attribute
+        // Exploit.content: src
+        // Exploit.quote_type: '
+        // Exploit.tag: script
+        bool payload_done = false;
+        if (get_exploit_type() == Exploit_Type::Html) {
+            if (get_exploit_token() == "attribute") {
+                payload += get_exploit_quote_type();
+                payload += " ";
+                if (get_exploit_tag() == "script") {
+                    payload += "onload=alert(1)";
+                    payload_done = true;
+                }
+                payload += " ";
+                payload += get_exploit_quote_type();
+            }
+        }
+        // Fallback to previously generated payload
+        if (!payload_done) {
+            payload = get_payload();
+            // Remove the closing tags if they are there...
+            payload = std::regex_replace(payload, std::regex("</iframe></style></script></object></embed></textarea>"), "");
+            payload = std::regex_replace(payload, std::regex("<!--/\\*"), "");
+            payload = std::regex_replace(payload, std::regex("taintfoxLog"), "alert");
+        }
+    }
+    return payload;
 }

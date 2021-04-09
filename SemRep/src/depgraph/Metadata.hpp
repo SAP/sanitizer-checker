@@ -71,6 +71,9 @@ public:
     bool is_initialized() const;
 
     void to_dot(std::stringstream &ss) const;
+
+    std::string generate_exploit() const;
+
 private:
     std::string uuid;
     std::string url;
