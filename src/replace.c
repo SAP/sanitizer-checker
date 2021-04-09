@@ -1352,55 +1352,75 @@ DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indic
 DFA *dfa_replace_once_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indices)
 {
   DFA *temp1;
-  DFA *result;
+  DFA *result = NULL;
   DFA *M1_bar;
   DFA *M2_bar;
   DFA *M_inter;
   DFA *M_rep;
   DFA *M_sharp = dfaSharpStringWithExtraBit(var, indices);
 
+   /* printf("M1: var %d\n", var); */
+   /* dfaPrintGraphvizAsciiRange(M1, var, indices, 1); */
+
+   /* printf("M2: var %d\n", var); */
+   /* dfaPrintGraphvizAsciiRange(M2, var, indices, 1); */
+
+   /* printf("str: %s\n", str); */
+
+   // Check is the search string is empty
+   if (checkOnlyEmptyString(M2, var, indices)) {
+     // If the replace string is also empty:
+     if (strlen(str) == 0) {
+       // Then there is nothing to do, return the input string
+       result = dfaCopy(M1);
+     } else {
+       // Just concatenate the search and input strings
+       DFA* temp1 = dfa_construct_string(str, var, indices);
+       DFA* result = dfa_concat(temp1, M1, var, indices);
+       dfaFree(temp1);
+     }
+   } else {
 //  printf("Insert sharp1 and sharp2 for duplicate M1\n");
-  M1_bar = dfa_replace_step1_duplicate(M1, var, indices);
+     M1_bar = dfa_replace_step1_duplicate(M1, var, indices);
 //  printf("M1_bar: var %d\n", var);
 //  dfaPrintGraphvizAsciiRange(M1_bar, var, indices, 1);
 //  printf("Generate M2 bar sharp1 M2 and sharp2\n");
-  M2_bar = dfa_replace_once_step2_match_compliment(M2, var, indices);
+     M2_bar = dfa_replace_once_step2_match_compliment(M2, var, indices);
 //  printf("M2_bar: var %d\n", var);
 //  dfaPrintGraphvizAsciiRange(M2_bar, var, indices, 1);
 
 //  printf("Generate Intersection\n");
-  M_inter = dfa_intersect(M1_bar, M2_bar);
+     M_inter = dfa_intersect(M1_bar, M2_bar);
 //  printf("M_inter\n");
 //  dfaPrintGraphvizAsciiRange(M_inter, var, indices, 1);
  
   //printf("Check Intersection\n");
-  if(check_intersection(M_sharp, M_inter, var, indices)>0) {
+     if(check_intersection(M_sharp, M_inter, var, indices)>0) {
+       //printf("Start Replacement!\n");
+       //replace match patterns
+       M_rep = dfa_replace_once_step3_replace(M_inter, str, var, indices);
+       temp1=dfaProject(M_rep, (unsigned) var);
+       dfaFree(M_rep);
+     } else { //no match
+       //printf("No match found");
+       temp1 = dfaCopy(M1);
+     }
 
-      //printf("Start Replacement!\n");
-    //replace match patterns
-    M_rep = dfa_replace_once_step3_replace(M_inter, str, var, indices);
-    temp1=dfaProject(M_rep, (unsigned) var);
-    dfaFree(M_rep);
+     //printf("free M1_bar\n");
+     dfaFree(M1_bar);
+     //printf("free M2_bar\n");
+     dfaFree(M2_bar);
+     //printf("free M_inter\n");
+     dfaFree(M_inter);
+     //printf("free M_sharp\n");
+     dfaFree(M_sharp);
 
-  } else { //no match
-      //printf("No match found");
-    temp1 = dfaCopy(M1);
-  }
-
-  //printf("free M1_bar\n");
-  dfaFree(M1_bar);
-  //printf("free M2_bar\n");
-  dfaFree(M2_bar);
-  //printf("free M_inter\n");
-  dfaFree(M_inter);
-  //printf("free M_sharp\n");
-  dfaFree(M_sharp);
-
-	if( DEBUG_SIZE_INFO )
-		printf("\t peak : replace_extrabit : states %d : bddnodes %u \n", temp1->ns, bdd_size(temp1->bddm) );
-  result = dfaMinimize(temp1);
-  dfaFree(temp1);
-  return result;
+     if( DEBUG_SIZE_INFO )
+       printf("\t peak : replace_extrabit : states %d : bddnodes %u \n", temp1->ns, bdd_size(temp1->bddm) );
+     result = dfaMinimize(temp1);
+     dfaFree(temp1);
+   }
+   return result;
 }
 
 DFA *dfa_general_replace_extrabit(DFA* M1, DFA* M2, DFA* M3, int var, int* indices){
