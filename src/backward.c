@@ -168,18 +168,22 @@ DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* i
   // Union here as the replaced string could have been replaced or not
   // Check if this assumption is OK for replace_once
   DFA* U = dfa_union(M2, M3);
+  // Check empty replace string
   if((str ==NULL)||strlen(str)==0){
+      // Check empty intersection
       if (checkOnlyEmptyString(U, var, indices)) {
           // If we are replacing an empty string with empty string
           // inserting the empty string everywhere will change nothing
           result = dfaCopy(M1);
       } else {
           // In the replace_once case, just add the replace string to the start
-          result = dfa_insert_everywhere(M1, U, var, indices, 1);
+          //result = dfa_insert_everywhere(M1, M2, var, indices, 1);
+          // Approximate, just add the string to the start
+          // This is much faster
+          result = dfa_concat(M2, M1, var, indices);
       }
   } else {
-    result = dfa_general_replace_extrabit(M1, M3, U, var, indices);
-
+      result = dfa_general_replace_extrabit(M1, M3, U, var, indices);
   }
   dfaFree(U);
   dfaFree(M3);
