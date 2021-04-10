@@ -44,6 +44,7 @@ Metadata::Metadata()
     url(),
     sink(),
     source(),
+    sanitizer_score(0),
     taint_range_index(0),
     start_index(0),
     end_index(0),
@@ -76,6 +77,10 @@ std::string Metadata::get_sink() const {
 
 std::string Metadata::get_source() const {
     return this->source;
+}
+
+int Metadata::get_sanitizer_score() const {
+    return this->sanitizer_score;
 }
 
 int Metadata::get_taint_range_index() const {
@@ -130,6 +135,11 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
     if(key == "Finding.script") {
         this->initialized = true;
         this->script = value;
+        return true;
+    }
+    if(key == "Sanitizer.score") {
+        this->sanitizer_score = std::stoi(value);
+        this->initialized = true;
         return true;
     }
     if(key == "Finding.line") {

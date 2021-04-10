@@ -34,6 +34,7 @@ public:
     std::string get_url() const;
     std::string get_sink() const;
     std::string get_source() const;
+    int get_sanitizer_score() const;
     int get_taint_range_index() const;
     int get_start_index() const;
     int get_end_index() const;
@@ -81,6 +82,7 @@ private:
     std::string url;
     std::string sink;
     std::string source;
+    int sanitizer_score;
     int taint_range_index;
     int start_index;
     int hash;
