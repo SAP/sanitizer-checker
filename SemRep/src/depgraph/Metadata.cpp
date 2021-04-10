@@ -367,3 +367,20 @@ std::string Metadata::generate_exploit() const {
     }
     return payload;
 }
+
+void Metadata::print(std::ostream& os) const {
+    os << get_uuid() << ", ";
+    os << get_domain() << ", ";
+    os << get_source() << ", ";
+    os << get_sink() << ", ";
+    os << get_hash() << ", ";
+    os << get_sanitizer_hash() << ", ";
+    os << get_twenty_five_million_flows_id() << ", ";
+    os << get_script() << ", ";
+    os << get_line() << ", ";
+    os << get_exploit_tag() << ", ";
+    os << get_exploit_token() << ", ";
+    os << get_exploit_quote_type() << ", ";
+    os << is_exploit_successful() << ", ";
+    os << get_url() << ", ";
+}

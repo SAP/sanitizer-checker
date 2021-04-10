@@ -74,6 +74,8 @@ public:
 
     std::string generate_exploit() const;
 
+    void print(std::ostream& os) const;
+
 private:
     std::string uuid;
     std::string url;

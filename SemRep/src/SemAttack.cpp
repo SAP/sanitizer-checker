@@ -134,10 +134,9 @@ void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
   for (auto map : m_metadataAnalysisMap) {
     const Metadata* m = map.first;
     BackwardAnalysisResult* bw = map.second;
-    os << m->get_uuid() << ", ";
     os << getFileName() << ", ";
-    os << m->get_url() << ", ";
     bw->printResult(os, true);
+    m->print(os);
     os << std::endl;
   }
 }
