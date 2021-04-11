@@ -204,7 +204,7 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
       //std::cout << "Discarding duplicate depgraph: " << file.string() << " (total: " << search->second->getCountWithDuplicates() << ")" << std::endl;
     }
   } else {
-    std::cout << "Ading file: " << file.string() << " to worker queue." << std::endl;
+    //  std::cout << "Ading file: " << file.string() << " to worker queue." << std::endl;
     result = new CombinedAnalysisResult(file, target_dep_graph, m_input_name, m_input_automaton);
     // Add to results
     this->m_results.push_back(result);
