@@ -394,7 +394,7 @@ std::string Metadata::generate_exploit_url(const std::string& payload) const
         return "";
     }
 
-    if (!std::regex_match(url, std::regex("#"))) {
+    if (url.find('#') == std::string::npos) {
         exploit += "#";
     }
     exploit += payload;

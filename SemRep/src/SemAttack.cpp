@@ -134,8 +134,9 @@ void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader, con
 void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
 {
   // Headers
-  os << "filename, ";
-  os << "payload, inclusion, post, pre, ";
+  os << "filename, name";
+  os << "sanitized, inclusion, post, pre, ";
+  os << "exploits equal, ";
   os << "preimage exploit, ";
   os << "original exploit, ";
   Metadata::printHeader(os);
@@ -146,8 +147,11 @@ void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
     os << getFileName() << ", ";
     bw->printResult(os, true);
 
-    os << m->generate_exploit_url(bw->get_preimage_example()) << ",";
-    os << m->generate_exploit_url(bw->get_intersection_example()) << ",";
+    std::string preimage_exploit = bw->get_preimage_example();
+    std::string postimage_exploit = bw->get_intersection_example();
+    os << (preimage_exploit == postimage_exploit) << ",";
+    os << m->generate_exploit_url(preimage_exploit) << ",";
+    os << m->generate_exploit_url(postimage_exploit) << ",";
 
     m->print(os);
     os << std::endl;
