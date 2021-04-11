@@ -53,6 +53,7 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_nThreads(boost::thread::hardware_concurrency())
   , m_concats(0)
   , m_compute_preimage(true)
+  , m_output_dotfiles(true)
   , m_input_automaton(nullptr)
 {
   if (input_auto == nullptr) {
@@ -165,7 +166,9 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
     fs::path dir(m_output_directory / result->getAttack()->getFile());
     BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
     bw->doAnalysis(m_compute_preimage, m_singleton_intersection);
-    bw->writeResultsToFile(dir);
+    if (m_output_dotfiles) {
+      bw->writeResultsToFile(dir);
+    }
     bw->finishAnalysis();
   } catch (StrangerStringAnalysisException const &e) {
     std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
@@ -183,7 +186,7 @@ void MultiAttack::computeAttackPatternOverlapForMetadata(CombinedAnalysisResult*
             << file
             << std::endl;
   fs::path dir(m_output_directory / result->getAttack()->getFile());
-  result->doMetadataSpecificAnalysis(dir, m_compute_preimage, m_singleton_intersection);
+  result->doMetadataSpecificAnalysis(dir, m_compute_preimage, m_singleton_intersection, m_output_dotfiles);
 }
 
 CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph) {
@@ -228,8 +231,10 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
     result->getAttack()->init();
     result->getFwAnalysis().doAnalysis(m_concats);
     postImage = result->getFwAnalysis().getPostImage();
-    result->getAttack()->writeResultsToFile(dir);
-    result->getFwAnalysis().writeResultsToFile(dir);
+    if (m_output_dotfiles) {
+      result->getAttack()->writeResultsToFile(dir);
+      result->getFwAnalysis().writeResultsToFile(dir);
+    }
   } catch (...) {
     if (postImage != nullptr) {
       delete postImage;
@@ -248,7 +253,7 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
   }
 
   // Additional backward analysis for generated payloads
-  computeAttackPatternOverlapForMetadata(result);   
+  computeAttackPatternOverlapForMetadata(result);
   
   // Finish up (delete the semattack object)
   result->finishAnalysis();

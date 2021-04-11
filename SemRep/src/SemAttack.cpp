@@ -78,7 +78,7 @@ bool CombinedAnalysisResult::hasBackwardanalysisResult(AttackContext context) co
   return false;
 }
 
-void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage, bool singletonIntersection)
+void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage, bool singletonIntersection, bool outputDotfiles)
 {
   // Create a specific payload for each metadata entry
   unsigned int i = 0;
@@ -94,7 +94,9 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
                   << m.get_url() << " with payload: " << payload << std::endl;
         BackwardAnalysisResult* bw = new BackwardAnalysisResult(m_fwAnalysis, a, name);
         bw->doAnalysis(computePreImage, singletonIntersection);
-        bw->writeResultsToFile(output_dir);
+        if (outputDotfiles) {
+          bw->writeResultsToFile(output_dir);
+        }
         bw->finishAnalysis();
         // Add the bw analysis to map
         m_metadataAnalysisMap.insert(std::make_pair(&m, bw));

@@ -34,7 +34,7 @@ namespace po = boost::program_options;
 
 
 void call_sem_attack(const string& target_name, const string& output_dir, const string& field_name,
-                     bool concats, bool singleton_intersection, bool preImage, bool encode, bool payloadOnly)
+                     bool concats, bool singleton_intersection, bool preImage, bool encode, bool payloadOnly, bool dotfiles)
 {
     try {
         cout << endl << "\t------ Starting Analysis for: " << field_name << " ------" << endl;
@@ -53,6 +53,7 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
         attack.setSingletonIntersection(singleton_intersection);
         attack.setConcats(concats);
         attack.setComputePreimage(preImage);
+        attack.setDotFiles(dotfiles);
 
         if (!payloadOnly) {
           attack.addAttackPattern(AttackContext::LessThan);
@@ -114,7 +115,8 @@ int main(int argc, char *argv[]) {
           ("encode,e",     po::value<bool>()->default_value(false), "Use URL encoded automaton as analysis input (default is any string)")
           ("singleton,s",  po::value<bool>()->default_value(false), "Use singletons for post-image computation")
           ("preimage,p",   po::value<bool>()->default_value(true), "Compute preimages for attack patterns")
-          ("payload,y",    po::value<bool>()->default_value(false), "Use only payload string attack patterns");
+          ("payload,y",    po::value<bool>()->default_value(false), "Use only payload string attack patterns")
+          ("dotfiles,d",    po::value<bool>()->default_value(true), "Output all dot output files to disk");
 
         po::positional_options_description p;
         p.add("target", 1);
@@ -143,6 +145,7 @@ int main(int argc, char *argv[]) {
                << ", preimage computation: " << vm["preimage"].as<bool>()
                << ", URL encode input: " << vm["encode"].as<bool>()
                << ", Only payload attack patterns: " << vm["payload"].as<bool>()
+               << ", Output dot files: " << vm["dotfiles"].as<bool>()
                << "\n";
 
             call_sem_attack(vm["target"].as<string>(),
@@ -152,7 +155,8 @@ int main(int argc, char *argv[]) {
                             vm["singleton"].as<bool>(),
                             vm["preimage"].as<bool>(),
                             vm["encode"].as<bool>(),
-                            vm["payload"].as<bool>()
+                            vm["payload"].as<bool>(),
+                            vm["dotfiles"].as<bool>()
               );
         }
         else {

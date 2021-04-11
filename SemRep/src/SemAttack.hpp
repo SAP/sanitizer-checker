@@ -194,7 +194,7 @@ public:
     BackwardAnalysisResult* addBackwardAnalysis(AttackContext context);
     bool hasBackwardanalysisResult(AttackContext context) const;
 
-    void doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage = true, bool singletonIntersection = false);
+    void doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage = true, bool singletonIntersection = false, bool outputDotfiles = true);
 
     const SemAttack* getAttack() const { return m_fwAnalysis.getAttack(); }
     SemAttack* getAttack() { return m_fwAnalysis.getAttack(); }
