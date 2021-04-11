@@ -176,11 +176,27 @@ DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* i
           // inserting the empty string everywhere will change nothing
           result = dfaCopy(M1);
       } else {
-          // In the replace_once case, just add the replace string to the start
-          //result = dfa_insert_everywhere(M1, M2, var, indices, 1);
-          // Approximate, just add the string to the start
-          // This is much faster
-          result = dfa_concat(M2, M1, var, indices);
+          // Check the complexity of the target string
+          // This is an arbitrary limit
+          if (M1->ns < 10000) {
+              // In the replace_once case, just add the replace string to the start
+              result = dfa_insert_everywhere(M1, M2, var, indices, 1);
+              // Approximate, just add the string to the start
+              // This is much faster
+          } else {
+              printf("%s: Input automaton too complex (ns = %d), using single insert approximation\n",
+                     __func__, M1->ns);
+              DFA* sMs = dfa_star_M_star(M2, var, indices);
+              DFA* I = dfa_intersect(M1, sMs);
+              if (!check_emptiness(I, var, indices)) {
+                  result = dfa_concat(M2, M1, var, indices);
+              } else {
+                  // No intersection between target and search strings
+                  result = dfaCopy(M1);
+              }
+              dfaFree(I);
+              dfaFree(sMs);
+          }
       }
   } else {
       result = dfa_general_replace_extrabit(M1, M3, U, var, indices);
