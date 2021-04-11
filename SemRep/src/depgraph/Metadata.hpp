@@ -73,9 +73,12 @@ public:
 
     void to_dot(std::stringstream &ss) const;
 
-    std::string generate_exploit() const;
+    std::string generate_exploit_from_scratch() const;
+    std::string get_generated_exploit() const;
+    std::string generate_exploit_url(const std::string& payload) const;
 
     void print(std::ostream& os) const;
+    static void printHeader(std::ostream& os);
 
 private:
     std::string uuid;

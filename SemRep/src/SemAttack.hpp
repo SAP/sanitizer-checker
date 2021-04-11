@@ -154,6 +154,9 @@ public:
     void printResult(std::ostream& os, bool printHeader) const;
     void writeResultsToFile(const fs::path& dir) const;
 
+    const std::string& get_intersection_example() const { return m_intersection_example; }
+    const std::string& get_preimage_example() const { return m_preimage_example; }
+
 private:
     const SemAttack* getAttack() const { return m_fwResult.getAttack(); }
     SemAttack* getAttack() { return m_fwResult.getAttack(); }

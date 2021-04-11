@@ -84,7 +84,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
   unsigned int i = 0;
   for (const Metadata &m : m_metadata) {
     try {
-      std::string payload = m.generate_exploit();
+      std::string payload = m.generate_exploit_from_scratch();
       i++;
       if (payload != "") {
         std::string name = "generated_payload_" + m.get_uuid();
@@ -133,11 +133,22 @@ void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader, con
 
 void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
 {
+  // Headers
+  os << "filename, ";
+  os << "payload, inclusion, post, pre, ";
+  os << "preimage exploit, ";
+  os << "original exploit, ";
+  Metadata::printHeader(os);
+  os << std::endl;
   for (auto map : m_metadataAnalysisMap) {
     const Metadata* m = map.first;
     BackwardAnalysisResult* bw = map.second;
     os << getFileName() << ", ";
     bw->printResult(os, true);
+
+    os << m->generate_exploit_url(bw->get_preimage_example()) << ",";
+    os << m->generate_exploit_url(bw->get_intersection_example()) << ",";
+
     m->print(os);
     os << std::endl;
   }
