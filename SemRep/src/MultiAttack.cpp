@@ -207,7 +207,7 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
     // Add to results
     this->m_results.push_back(result);
     if (((m_results.size() % 1000) == 0)) {
-      std::cout << "Added " << m_results.size() << "files to worker queue." << std::endl;
+      std::cout << "Added " << m_results.size() << " files to worker queue." << std::endl;
     }
     // Only insert into hash map if metadata is initialized
     if (target_dep_graph.get_metadata().is_initialized()) {
