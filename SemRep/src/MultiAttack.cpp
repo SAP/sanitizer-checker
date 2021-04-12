@@ -105,6 +105,15 @@ void MultiAttack::writeResultsToFile() const {
   fs::path output_gen_payloads(m_output_directory / fs::path("semattack_generated_payloads.csv"));
   std::ofstream ofs_gen;
   ofs_gen.open (output_gen_payloads.string(), std::ofstream::out);
+  // Headers
+  ofs_gen << "filename, name,";
+  ofs_gen << "sanitized, inclusion, post, pre, ";
+  ofs_gen << "exploits equal, ";
+  ofs_gen << "preimage exploit, ";
+  ofs_gen << "original exploit, ";
+  Metadata::printHeader(ofs_gen);
+  ofs_gen << std::endl;
+
   for (auto r : m_results) {
     r->printGeneratedPayloads(ofs_gen);
   }

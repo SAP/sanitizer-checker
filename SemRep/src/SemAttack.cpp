@@ -132,14 +132,6 @@ void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader, con
 
 void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
 {
-  // Headers
-  os << "filename, name";
-  os << "sanitized, inclusion, post, pre, ";
-  os << "exploits equal, ";
-  os << "preimage exploit, ";
-  os << "original exploit, ";
-  Metadata::printHeader(os);
-  os << std::endl;
   for (auto map : m_metadataAnalysisMap) {
     const Metadata* m = map.first;
     BackwardAnalysisResult* bw = map.second;
