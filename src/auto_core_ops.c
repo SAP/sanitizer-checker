@@ -2214,7 +2214,6 @@ DFA *dfa_union_add_empty_M(DFA *M, int var, int *indices) {
     // Add new sink at the end
     new_sink = ns;
     ns += 1;
-    return NULL;
   }
   new_sink += shift;
   //assert(sink>-1);
