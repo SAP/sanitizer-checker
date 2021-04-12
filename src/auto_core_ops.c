@@ -2198,7 +2198,7 @@ DFA *dfa_union_add_empty_M(DFA *M, int var, int *indices) {
   char *addedexeps;
   int *to_states;
   int *added_to_states;
-  int sink;
+  int sink, new_sink;
   long max_exeps;
   char *statuces;
   int len;
@@ -2209,7 +2209,15 @@ DFA *dfa_union_add_empty_M(DFA *M, int var, int *indices) {
 
   max_exeps = 1 << len; //maybe exponential
   sink = find_sink(M);
-  assert(sink>-1);
+  new_sink = sink;
+  if (sink < 0) {
+    // Add new sink at the end
+    new_sink = ns;
+    ns += 1;
+    return NULL;
+  }
+  new_sink += shift;
+  //assert(sink>-1);
   //printf("\n\n SINK %d\n\n\n", sink);
 
   DFABuilder *b = dfaSetup(ns, len, indices);
@@ -2251,7 +2259,7 @@ DFA *dfa_union_add_empty_M(DFA *M, int var, int *indices) {
   dfaAllocExceptions(b, k);
   for (k--; k >= 0; k--)
     dfaStoreException(b, added_to_states[k], addedexeps + k * (len + 1));
-  dfaStoreState(b, sink + shift);
+  dfaStoreState(b, new_sink);
   statuces[0] = '+';
 
   //M
@@ -2285,7 +2293,7 @@ DFA *dfa_union_add_empty_M(DFA *M, int var, int *indices) {
     dfaAllocExceptions(b, k);
     for (k--; k >= 0; k--)
       dfaStoreException(b, to_states[k], exeps + k * (len + 1));
-    dfaStoreState(b, sink + shift);
+    dfaStoreState(b, new_sink);
     if (M->f[i] == -1)
       statuces[i + shift] = '-';
     else if (M->f[i] == 1)
@@ -2294,6 +2302,13 @@ DFA *dfa_union_add_empty_M(DFA *M, int var, int *indices) {
       statuces[i + shift] = '0';
 
     kill_paths(state_paths);
+  }
+
+  // Check if we need to add a new sink:
+  if (sink < 0) {
+    dfaAllocExceptions(b, 0);
+    dfaStoreState(b, new_sink);
+    statuces[new_sink - 1]='-';
   }
   statuces[ns] = '\0';
   //result = dfaBuild(b, statuces);
