@@ -78,3 +78,6 @@ WORKDIR /work/run
 ENV LD_LIBRARY_PATH /usr/local/lib
 
 ENTRYPOINT ["/work/SemRep/SemRep/src/semrep"]
+
+# docker run -it -v /mnt/workspace/stranger/SemRep:/work/SemRep -v /mnt/workspace/stranger/LibStranger:/work/LibStranger_dev -v /mnt/workspace/stranger/MONA:/work/MONA_dev --rm --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --entrypoint=/bin/bash semrep-dev
+# make -j -C ../../MONA_dev/ install && make -j -C ../../LibStranger_dev/ install && make -j
