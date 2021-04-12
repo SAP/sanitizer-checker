@@ -173,9 +173,8 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
   } catch (StrangerStringAnalysisException const &e) {
     std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
     std::cerr << e.what() << std::endl;
-  } catch (const std::exception& e) {
+  } catch (...) {
     std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
-    std::cerr << e.what() << std::endl;
   }
 }
 

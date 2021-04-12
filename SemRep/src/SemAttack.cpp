@@ -104,9 +104,8 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
     } catch (StrangerStringAnalysisException const &e) {
       std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
       std::cerr << e.what() << std::endl;
-    } catch (const std::exception& e) {
+    } catch (...) {
       std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
-      std::cerr << e.what() << std::endl;
     }
   }
 }
