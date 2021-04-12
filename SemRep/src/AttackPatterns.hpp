@@ -64,6 +64,9 @@ public:
     // Only allow alphanumeric, "," "." "_" and whitespace, all others must be JS escaped
     static StrangerAutomaton* getJavascriptPattern();
 
+    // Only disallow strings with unescaped " ' /
+    static StrangerAutomaton* getJavascriptMinimalPattern();
+
     // Only allow alphanumeric, "-", "_", "." "~" and URL escaped characters
     static StrangerAutomaton* getUrlPattern();
 

@@ -23,7 +23,7 @@
 #include "AttackPatterns.hpp"
 
 // Set of RegExps used to describe various attack patten contexts
-// HTML Context
+// WARNING: These cannot be copied directly as the quotes and slashes are escaped!
 
 // Just match escaped ampersands
 std::string AttackPatterns::m_htmlEscapedAmpersand       =  "/([^&]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
@@ -40,7 +40,10 @@ std::string AttackPatterns::m_htmlEscapedBacktickRegExp  =  "/([^<>'\"&`]+|(&[a-
 
 // HTML Attributes
 std::string AttackPatterns::m_htmlAttrEscapedRegExp      =  "/([a-zA-Z0-9]+|((&[a-zA-Z]+;|&#[xX][0-9]+;|&#[0-9]+;)))+/";
+// Javascript
 std::string AttackPatterns::m_javascriptEscapedRegExp    =  "/([a-zA-Z0-9,._\\s]+|((\\\\u[a-fA-F0-9]{4})|(\\\\x[a-fA-F0-9]{2})))+/";
+std::string AttackPatterns::m_slashEscapeQuotes          =  "/([^\\\\\"']|((\\\\\\\\)|(\\\\\")|(\\\\')))+/";
+// URL
 std::string AttackPatterns::m_urlEscapedRegExp           =  "/([a-zA-Z0-9-_.!~*'()]+|((%[a-fA-F0-9]{2})))+/";
 
 // Sample Payloads
@@ -140,6 +143,12 @@ StrangerAutomaton* AttackPatterns::getJavascriptPattern()
 {
     // Only allow alphanumeric, "," "." "_" and whitespace, all others must be JS escaped
     return getAttackPatternFromAllowedRegEx(AttackPatterns::m_javascriptEscapedRegExp);
+}
+
+StrangerAutomaton* AttackPatterns::getJavascriptMinimalPattern()
+{
+    // Only disallow strings with unescaped " ' / 
+    return getAttackPatternFromAllowedRegEx(AttackPatterns::m_slashEscapeQuotes);
 }
 
 StrangerAutomaton* AttackPatterns::getUrlPattern()
@@ -315,6 +324,8 @@ StrangerAutomaton* AttackPatterns::getAttackPatternForContext(AttackContext cont
         return getHtmlPolygotPayload();
     case AttackContext::HtmlAttr:
         return getHtmlAttributePattern();
+    case AttackContext::JavaScriptMinimal:
+        return getJavascriptMinimalPattern();
     case AttackContext::JavaScript:
         return getJavascriptPattern();
     case AttackContext::Url:

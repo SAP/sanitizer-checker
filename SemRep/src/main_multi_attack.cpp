@@ -70,6 +70,7 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
           attack.addAttackPattern(AttackContext::Html);
           attack.addAttackPattern(AttackContext::HtmlAttr);
           attack.addAttackPattern(AttackContext::JavaScript);
+          attack.addAttackPattern(AttackContext::JavaScriptMinimal);
           attack.addAttackPattern(AttackContext::Url);
           attack.addAttackPattern(AttackContext::HtmlPayload);
           attack.addAttackPattern(AttackContext::HtmlAttributePayload);

@@ -46,6 +46,7 @@
   DO(HtmlSingleQuoteUrlAttr)           \
   DO(HtmlUnknown)                      \
   DO(JavaScript)                       \
+  DO(JavaScriptMinimal)                \
   DO(Url)                              \
   DO(HtmlPayload)                      \
   DO(HtmlAttributePayload)             \
