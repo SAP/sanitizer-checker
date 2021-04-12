@@ -381,6 +381,20 @@ std::string Metadata::generate_exploit_from_scratch() const {
                 payload += "</script><!--/*";
             }
         }
+    } else if ((get_sink() == "track.src")  ||
+               (get_sink() == "script.src") ||
+               (get_sink() == "object.data")||
+               (get_sink() == "media.src")  ||
+               (get_sink() == "embed.src")  ||
+               (get_sink() == "img.src")    ||
+               (get_sink() == "imgset.src") ||
+               (get_sink() == "iframe.src")) {
+        // See if we can generate a URL payload
+        if (get_start_index() == 0) { // Can only exploit if we control the start of the string
+            payload += "javascript:";
+            payload += function;
+            payload += "//";
+        }
     }
     return payload;
 }
