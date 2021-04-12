@@ -203,10 +203,12 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
       //std::cout << "Discarding duplicate depgraph: " << file.string() << " (total: " << search->second->getCountWithDuplicates() << ")" << std::endl;
     }
   } else {
-    //  std::cout << "Ading file: " << file.string() << " to worker queue." << std::endl;
     result = new CombinedAnalysisResult(file, target_dep_graph, m_input_name, m_input_automaton);
     // Add to results
     this->m_results.push_back(result);
+    if (((m_results.size() % 1000) == 0)) {
+      std::cout << "Added " << m_results.size() << "files to worker queue." << std::endl;
+    }
     // Only insert into hash map if metadata is initialized
     if (target_dep_graph.get_metadata().is_initialized()) {
       this->m_result_hash_map.insert(std::make_pair(hash, result));
