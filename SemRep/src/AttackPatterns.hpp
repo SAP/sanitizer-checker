@@ -139,6 +139,7 @@ private:
     static std::string m_htmlEscapedBacktickRegExp;
     static std::string m_htmlAttrEscapedRegExp;
     static std::string m_javascriptEscapedRegExp;
+    static std::string m_slashEscapeQuotes;
     static std::string m_urlEscapedRegExp;
     static std::string m_htmlPayload;
     static std::string m_urlPayload;
