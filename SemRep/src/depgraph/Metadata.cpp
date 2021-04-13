@@ -396,10 +396,32 @@ std::string Metadata::generate_exploit_from_scratch() const {
                 payload += function;
                 payload += "//";
             }
+        } else {
+            // Fall back to existing payload for e.g. Javascript
+            payload = get_generated_exploit();
         }
     }
     return payload;
 }
+
+std::string Metadata::generate_attribute_exploit_from_scratch() const {
+    std::string payload = "";
+    std::string function = "alert(1)";
+    if (is_initialized() && has_valid_exploit() &&
+        (get_exploit_type() == Exploit_Type::Html) &&
+        (get_exploit_token() == "attribute")) {
+        // Need to break out of attribute
+        payload += get_exploit_quote_type();
+        // insert event handlers
+        payload += " onload=" + function;
+        payload += " onerror=" + function;
+        // Create new attribute
+        payload += " foo=";
+        payload += get_exploit_quote_type();
+    }
+    return payload;
+}
+
 
 std::string Metadata::generate_exploit_url(const std::string& payload) const
 {

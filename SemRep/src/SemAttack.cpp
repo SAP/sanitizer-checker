@@ -43,6 +43,8 @@ CombinedAnalysisResult::CombinedAnalysisResult(const fs::path& target_dep_graph_
   , m_metadata()
   , m_duplicate_count(1)
   , m_done(false)
+  , m_metadataAnalysisMap()
+  , m_stringAnalysisMap()
 {
   m_metadata.push_back(target_dep_graph_.get_metadata());
 }
@@ -54,7 +56,7 @@ CombinedAnalysisResult::~CombinedAnalysisResult()
   }
   m_bwAnalysisMap.clear();
 
-  for (auto mdResult : m_bwAnalysisMap) {
+  for (auto mdResult : m_stringAnalysisMap) {
     if (mdResult.second != nullptr) {
       delete mdResult.second;
     }
@@ -78,35 +80,63 @@ bool CombinedAnalysisResult::hasBackwardanalysisResult(AttackContext context) co
   return false;
 }
 
+BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(const std::string& payload, const fs::path& output_dir, bool computePreImage, bool singletonIntersection, bool outputDotfiles)
+{
+  if (payload == "") {
+    return nullptr;
+  }
+  BackwardAnalysisResult* bw = nullptr;
+
+  // Check if we already did the analysis for this string
+  if (m_stringAnalysisMap.find(payload) != m_stringAnalysisMap.end()) {
+    // Just return existing analysis
+    bw = m_stringAnalysisMap.at(payload);
+  } else {
+    try {
+      StrangerAutomaton* a = StrangerAutomaton::makeString(payload);
+      std::cout << "Doing backward analysis for payload: " << payload << std::endl;
+      bw = new BackwardAnalysisResult(m_fwAnalysis, a, payload);
+      bw->doAnalysis(computePreImage, singletonIntersection);
+      if (outputDotfiles) {
+      bw->writeResultsToFile(output_dir);
+      }
+      bw->finishAnalysis();
+      // Add to the map
+      m_stringAnalysisMap.insert(std::make_pair(payload, bw));
+    } catch (StrangerStringAnalysisException const &e) {
+      std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
+      std::cerr << e.what() << std::endl;
+      bw = nullptr;
+    } catch (...) {
+      std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
+      bw = nullptr;
+    }
+  }
+  return bw;
+}
+
 void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage, bool singletonIntersection, bool outputDotfiles)
 {
   // Create a specific payload for each metadata entry
   unsigned int i = 0;
   for (const Metadata &m : m_metadata) {
-    try {
-      std::string payload = m.generate_exploit_from_scratch();
-      i++;
-      if (payload != "") {
-        std::string name = "generated_payload_" + m.get_uuid();
-        StrangerAutomaton* a = StrangerAutomaton::makeString(payload);
-        std::cout << "(" << i << "/" << m_metadata.size()
-                  << ") Doing backward analysis for url: "
-                  << m.get_url() << " with payload: " << payload << std::endl;
-        BackwardAnalysisResult* bw = new BackwardAnalysisResult(m_fwAnalysis, a, name);
-        bw->doAnalysis(computePreImage, singletonIntersection);
-        if (outputDotfiles) {
-          bw->writeResultsToFile(output_dir);
-        }
-        bw->finishAnalysis();
-        // Add the bw analysis to map
-        m_metadataAnalysisMap.insert(std::make_pair(&m, bw));
-      }
-    } catch (StrangerStringAnalysisException const &e) {
-      std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
-      std::cerr << e.what() << std::endl;
-    } catch (...) {
-      std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
+    // Create result
+    std::vector<BackwardAnalysisResult*> bws;
+    BackwardAnalysisResult* bw = nullptr;
+    // Normal payload
+    std::string payload = m.generate_exploit_from_scratch();
+    bw = doBackwardAnalysisForPayload(payload, output_dir, computePreImage, singletonIntersection, outputDotfiles);
+    if (bw != nullptr) {
+      bws.push_back(bw);
     }
+    // Attribute payload
+    std::string attr_payload = m.generate_attribute_exploit_from_scratch();
+    bw = doBackwardAnalysisForPayload(attr_payload, output_dir, computePreImage, singletonIntersection, outputDotfiles);
+    if (bw != nullptr) {
+      bws.push_back(bw);
+    }
+    // Add to map
+    m_metadataAnalysisMap.insert(std::make_pair(&m, bws));
   }
 }
 
@@ -134,18 +164,19 @@ void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
 {
   for (auto map : m_metadataAnalysisMap) {
     const Metadata* m = map.first;
-    BackwardAnalysisResult* bw = map.second;
-    os << getFileName() << ", ";
-    bw->printResult(os, true);
+    for (auto bw : map.second) {
+      os << getFileName() << ", ";
+      bw->printResult(os, true);
 
-    std::string preimage_exploit = bw->get_preimage_example();
-    std::string postimage_exploit = bw->get_intersection_example();
-    os << (preimage_exploit == postimage_exploit) << ",";
-    os << m->generate_exploit_url(preimage_exploit) << ",";
-    os << m->generate_exploit_url(postimage_exploit) << ",";
+      std::string preimage_exploit = bw->get_preimage_example();
+      std::string postimage_exploit = bw->get_intersection_example();
+      os << (preimage_exploit == postimage_exploit) << ",";
+      os << m->generate_exploit_url(preimage_exploit) << ",";
+      os << m->generate_exploit_url(postimage_exploit) << ",";
 
-    m->print(os);
-    os << std::endl;
+      m->print(os);
+      os << std::endl;
+    }
   }
 }
 

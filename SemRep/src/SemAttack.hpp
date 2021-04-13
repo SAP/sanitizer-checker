@@ -228,6 +228,8 @@ public:
     bool isDone() const { return m_done; }
 
 private:
+    BackwardAnalysisResult* doBackwardAnalysisForPayload(const std::string& payload, const fs::path& output_dir,
+                                                         bool computePreImage, bool singletonIntersection, bool outputDotfiles);
     fs::path m_inputfile;
     std::string m_input_name;
     bool m_done;
@@ -237,7 +239,10 @@ private:
     // Keep track of metadata for this result
     std::vector<Metadata> m_metadata;
     // For context specific payloads, keep a map of metadata to backwardanalysis
-    std::map<const Metadata*, BackwardAnalysisResult*> m_metadataAnalysisMap;
+    std::map<const Metadata*, std::vector<BackwardAnalysisResult*> > m_metadataAnalysisMap;
+    // Also keep track of which strings have been analysed
+    std::map<std::string, BackwardAnalysisResult*> m_stringAnalysisMap;
+    
     int m_duplicate_count;
 };
 

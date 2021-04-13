@@ -74,6 +74,7 @@ public:
     void to_dot(std::stringstream &ss) const;
 
     std::string generate_exploit_from_scratch() const;
+    std::string generate_attribute_exploit_from_scratch() const;
     std::string get_generated_exploit() const;
     std::string generate_exploit_url(const std::string& payload) const;
 
