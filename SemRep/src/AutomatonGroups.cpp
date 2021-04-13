@@ -36,7 +36,6 @@ std::vector<AttackContext> AutomatonGroup::m_sink_contexts = {
   AttackContext::HtmlUnknown,
   AttackContext::Url,
   AttackContext::JavaScript,
-  AttackContext::JavaScriptMinimal,
   AttackContext::None
 };
 
