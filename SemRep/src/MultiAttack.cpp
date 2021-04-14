@@ -214,7 +214,7 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
     // Add to results
     this->m_results.push_back(result);
     if (((m_results.size() % 1000) == 0)) {
-      std::cout << "Added " << m_results.size() << " files to worker queue." << std::endl;
+      std::cout << "Added " << m_results.size() << " sanitizers to worker queue." << std::endl;
     }
     // Only insert into hash map if metadata is initialized
     if (target_dep_graph.get_metadata().is_initialized()) {
@@ -274,8 +274,8 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
 void MultiAttack::loadDepGraphs() {
   findDotFiles();
   boost::asio::thread_pool pool(this->m_nThreads);
-  std::cout << "Computing post images with pool of " << m_nThreads << " threads." << std::endl;
 
+  std::cout << "Parsing dependency graphs..." << std::endl;
   // Add all files first
   for (const auto& file : this->m_dot_paths) {
     asio::post(pool, [this, &pool, file]() {
@@ -295,7 +295,7 @@ void MultiAttack::loadDepGraphs() {
 
 void MultiAttack::doAnalysis() {
   boost::asio::thread_pool pool(this->m_nThreads);
-  std::cout << "Starting analysis " << m_nThreads << " threads." << std::endl;
+  std::cout << "Computing post images with pool of " << m_nThreads << " threads." << std::endl;
 
   // Start the analysis
   for (auto result : m_results) {
@@ -414,6 +414,7 @@ void MultiAttack::fillCommonPatterns() {
 
 void MultiAttack::findDotFiles() {
   this->m_dot_paths = getDotFilesInDir(this->m_graph_directory);
+  std::cout << "Found " << this->m_dot_paths.size() << " dependency graph files." << std::endl;
 }
 
 std::vector<fs::path> MultiAttack::getDotFilesInDir(fs::path const &dir)
