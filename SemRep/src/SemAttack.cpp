@@ -119,6 +119,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
 {
   // Create a specific payload for each metadata entry
   unsigned int i = 0;
+  m_atLeastOnePayloadVulnerable = false;
   for (const Metadata &m : m_metadata) {
     // Create result
     std::vector<BackwardAnalysisResult*> bws;
@@ -127,12 +128,14 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
     std::string payload = m.generate_exploit_from_scratch();
     bw = doBackwardAnalysisForPayload(payload, output_dir, computePreImage, singletonIntersection, outputDotfiles);
     if (bw != nullptr) {
+      m_atLeastOnePayloadVulnerable |= bw->isVulnerable();
       bws.push_back(bw);
     }
     // Attribute payload
     std::string attr_payload = m.generate_attribute_exploit_from_scratch();
     bw = doBackwardAnalysisForPayload(attr_payload, output_dir, computePreImage, singletonIntersection, outputDotfiles);
     if (bw != nullptr) {
+      m_atLeastOnePayloadVulnerable |= bw->isVulnerable();
       bws.push_back(bw);
     }
     // Add to map
@@ -167,7 +170,8 @@ void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
     for (auto bw : map.second) {
       os << getFileName() << ", ";
       bw->printResult(os, true);
-
+      os << m_atLeastOnePayloadVulnerable ? "true" : "false";
+      os << ", ";
       std::string preimage_exploit = bw->get_preimage_example();
       std::string postimage_exploit = bw->get_intersection_example();
       os << (preimage_exploit == postimage_exploit) << ",";

@@ -242,6 +242,8 @@ private:
     std::map<const Metadata*, std::vector<BackwardAnalysisResult*> > m_metadataAnalysisMap;
     // Also keep track of which strings have been analysed
     std::map<std::string, BackwardAnalysisResult*> m_stringAnalysisMap;
+    // Track if at least one BW analysis had an overlap 
+    bool m_atLeastOnePayloadVulnerable;
     
     int m_duplicate_count;
 };
