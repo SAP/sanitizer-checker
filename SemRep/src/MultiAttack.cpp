@@ -180,11 +180,8 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
       bw->writeResultsToFile(dir);
     }
     bw->finishAnalysis();
-  } catch (StrangerStringAnalysisException const &e) {
-    std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
-    std::cerr << e.what() << std::endl;
   } catch (...) {
-    std::cout << "EXCEPTION! Analysing file: " << file << " in thread " << std::this_thread::get_id() << std::endl;
+    std::cout << "EXCEPTION! In BW analysis file: " << file << " for context: " << AttackContextHelper::getName(context) << std::endl;
   }
 }
 
@@ -256,11 +253,7 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
   
   // Backward analysis
   for (auto c : m_analyzed_contexts) {
-    try {
       computeAttackPatternOverlap(result, c);
-    } catch(...) {
-      std::cout << "EXCEPTION! In BW analysis: " << file << " in thread " << std::this_thread::get_id() << std::endl;
-    }
   }
 
   // Additional backward analysis for generated payloads

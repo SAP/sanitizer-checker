@@ -103,10 +103,6 @@ BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(con
       bw->finishAnalysis();
       // Add to the map
       m_stringAnalysisMap.insert(std::make_pair(payload, bw));
-    } catch (StrangerStringAnalysisException const &e) {
-      std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
-      std::cerr << e.what() << std::endl;
-      bw = nullptr;
     } catch (...) {
       std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
       bw = nullptr;
@@ -177,13 +173,13 @@ void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
     for (auto bw : map.second) {
       os << getFileName() << ", ";
       bw->printResult(os, true);
-      os << m_atLeastOnePayloadVulnerable ? "true" : "false";
+      os << (m_atLeastOnePayloadVulnerable ? "true" : "false");
       os << ", ";
-      os << m_allPayloadsVulnerable ? "true" : "false";
+      os << (m_allPayloadsVulnerable ? "true" : "false");
       os << ", ";
       std::string preimage_exploit = bw->get_preimage_example();
       std::string postimage_exploit = bw->get_intersection_example();
-      os << (preimage_exploit == postimage_exploit) << ",";
+      os << ((preimage_exploit == postimage_exploit) ? "true" : "false") << ",";
       os << m->generate_exploit_url(preimage_exploit) << ",";
       os << m->generate_exploit_url(postimage_exploit) << ",";
 
