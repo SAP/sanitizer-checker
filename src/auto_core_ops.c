@@ -3331,8 +3331,11 @@ unsigned char strtobin(char* binChar, int var){
 char *isSingleton(DFA *M, int var, int* indices){
     if (check_emptiness(M, var, indices))
         return NULL;
-    if (checkOnlyEmptyString(M, var, indices))
-        return "";
+    if (checkOnlyEmptyString(M, var, indices)) {
+      char* result = (char*) calloc(2, sizeof(char));
+      strcpy(result, "");
+      return result;
+    }
   paths state_paths, pp;
   trace_descr tp;
   int j, i, current, next, singleTransOut;
