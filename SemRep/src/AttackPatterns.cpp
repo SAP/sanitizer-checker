@@ -300,8 +300,16 @@ StrangerAutomaton* AttackPatterns::getAttackPatternForContext(AttackContext cont
         return getSingleCharPattern("\\/");
     case AttackContext::SingleQuote:
         return getSingleCharPattern("'");
+    case AttackContext::Backtick:
+        return getSingleCharPattern("`");
     case AttackContext::Equals:
         return getSingleCharPattern("=");
+    case AttackContext::Open_Paren:
+        return getSingleCharPattern("(");
+    case AttackContext::Closing_paren:
+        return getSingleCharPattern(")");
+    case AttackContext::Space:
+        return getSingleCharPattern(" ");
     case AttackContext::Script:
         return getSingleCharPattern("script");
     case AttackContext::Alert:

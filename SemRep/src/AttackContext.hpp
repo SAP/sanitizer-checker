@@ -35,6 +35,10 @@
   DO(Slash)                            \
   DO(SingleQuote)                      \
   DO(Equals)                           \
+  DO(Open_Paren)                       \
+  DO(Closing_paren)                    \
+  DO(Space)                            \
+  DO(Backtick)                           \
   DO(Script)                           \
   DO(Alert)                            \
   DO(Html)                             \
