@@ -244,6 +244,8 @@ private:
     std::map<std::string, BackwardAnalysisResult*> m_stringAnalysisMap;
     // Track if at least one BW analysis had an overlap 
     bool m_atLeastOnePayloadVulnerable;
+    // Track if not all were successful
+    bool m_allPayloadsVulnerable;
     
     int m_duplicate_count;
 };

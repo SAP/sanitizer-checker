@@ -108,7 +108,7 @@ void MultiAttack::writeResultsToFile() const {
   // Headers
   ofs_gen << "filename, name, ";
   ofs_gen << "sanitized, inclusion, post, pre, ";
-  ofs_gen << "one vulnerable, ";
+  ofs_gen << "one vulnerable, all vulnerable, ";
   ofs_gen << "exploits equal, ";
   ofs_gen << "preimage exploit, ";
   ofs_gen << "original exploit, ";
