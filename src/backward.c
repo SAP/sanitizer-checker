@@ -142,6 +142,17 @@ DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, const char *str, int var, int* indice
   }
   DFA *result=NULL;
   DFA *M3 = dfa_construct_string(str, var, indices);
+
+ // Check if we are replacing the search auto with the replace string
+  char* M2_singleton = isSingleton(M2, var, indices);
+  if (M2_singleton != NULL) {
+    if (strcmp(str, M2_singleton) == 0) {
+      free(M2_singleton);
+      return dfaCopy(M1);
+    }
+    free(M2_singleton);
+  }
+
   if((str ==NULL)||strlen(str)==0){
       if (checkOnlyEmptyString(M2, var, indices)) {
           // If we are replacing an empty string with empty string
@@ -169,6 +180,17 @@ DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* i
   // Check if this assumption is OK for replace_once
   DFA* U = dfa_union(M2, M3);
   // Check empty replace string
+
+ // Check if we are replacing the search auto with the replace string
+  char* M2_singleton = isSingleton(M2, var, indices);
+  if (M2_singleton != NULL) {
+    if (strcmp(str, M2_singleton) == 0) {
+      free(M2_singleton);
+      return dfaCopy(M1);
+    }
+    free(M2_singleton);
+  }
+
   if((str ==NULL)||strlen(str)==0){
       // Check empty intersection
       if (checkOnlyEmptyString(U, var, indices)) {

@@ -1295,6 +1295,16 @@ DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indic
   DFA *M_rep;
   DFA *M_sharp = dfaSharpStringWithExtraBit(var, indices);
 
+  // Check if we are replacing the search auto with the replace string
+  char* M2_singleton = isSingleton(M2, var, indices);
+  if (M2_singleton != NULL) {
+    if (strcmp(str, M2_singleton) == 0) {
+      free(M2_singleton);
+      return dfaCopy(M1);
+    }
+    free(M2_singleton);
+  }
+
   //printf("Insert sharp1 and sharp2 for duplicate M1\n");
   M1_bar = dfa_replace_step1_duplicate(M1, var, indices);
 //  dfaPrintVitals(M1_bar);  //having extra bit
@@ -1358,6 +1368,16 @@ DFA *dfa_replace_once_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *
   DFA *M_inter;
   DFA *M_rep;
   DFA *M_sharp = dfaSharpStringWithExtraBit(var, indices);
+
+  // Check if we are replacing the search auto with the replace string
+  char* M2_singleton = isSingleton(M2, var, indices);
+  if (M2_singleton != NULL) {
+    if (strcmp(str, M2_singleton) == 0) {
+      free(M2_singleton);
+      return dfaCopy(M1);
+    }
+    free(M2_singleton);
+  }
 
    /* printf("M1: var %d\n", var); */
    /* dfaPrintGraphvizAsciiRange(M1, var, indices, 1); */
@@ -1432,6 +1452,11 @@ DFA *dfa_general_replace_extrabit(DFA* M1, DFA* M2, DFA* M3, int var, int* indic
   DFA *M_rep;
   DFA *M_sharp = dfaSharpStringWithExtraBit(var, indices);
 
+  // Check if the search and replace automata are equivlaent:
+  if (check_equivalence, M2, M3, var, indices) {
+    // The replace is a no op, just return the input
+    return dfaCopy(M1);
+  }
   M1_bar = dfa_replace_step1_duplicate(M1, var, indices);
   M2_bar = dfa_replace_step2_match_compliment(M2, var, indices);
 
