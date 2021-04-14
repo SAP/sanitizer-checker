@@ -200,14 +200,14 @@ DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* i
       } else {
           // Check the complexity of the target string
           // This is an arbitrary limit
-          if (M1->ns < 10000) {
+          if ((M1->ns < 10000) && (M2->ns < 10000)) {
               // In the replace_once case, just add the replace string to the start
               result = dfa_insert_everywhere(M1, M2, var, indices, 1);
               // Approximate, just add the string to the start
               // This is much faster
           } else {
-              printf("%s: Input automaton too complex (ns = %d), using single insert approximation\n",
-                     __func__, M1->ns);
+              printf("%s: Input automaton too complex (M1_ns = %d, M2_ns = %d), using single insert approximation\n",
+                     __func__, M1->ns, M2->ns);
               DFA* sMs = dfa_star_M_star(M2, var, indices);
               DFA* I = dfa_intersect(M1, sMs);
               if (!check_emptiness(I, var, indices)) {
