@@ -200,7 +200,7 @@ DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* i
       } else {
           // Check the complexity of the target string
           // This is an arbitrary limit
-          if ((M1->ns < 10000) && (M2->ns < 10000)) {
+          if ((M1->ns < 10000) && ((M1->ns * M2->ns) < 100000)) {
               // In the replace_once case, just add the replace string to the start
               result = dfa_insert_everywhere(M1, M2, var, indices, 1);
               // Approximate, just add the string to the start
