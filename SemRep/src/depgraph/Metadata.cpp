@@ -440,21 +440,109 @@ std::string Metadata::generate_attribute_exploit_from_scratch() const {
     return payload;
 }
 
+#define URI_ENCODE_CHARS 256
+
+static const char encodeUriComponentChars[URI_ENCODE_CHARS] =
+//   0    1    2    3    4    5    6    7    8    9    A    B    C    D    E    F
+{
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 0x
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 1x
+    1,   0,   1,   1,   1,   1,   1,   0,   0,   0,   0,   1,   1,   0,   0,   1,  // 2x   !"#$%&'()*+,-./
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   1,   1,  // 3x  0123456789:;<=>?
+    1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 4x  @ABCDEFGHIJKLMNO
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,   0,  // 5x  PQRSTUVWXYZ[\]^_
+    1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  // 6x  `abcdefghijklmno
+    0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   0,   1,  // 7x  pqrstuvwxyz{|}~ DEL
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 8x
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // 9x
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // ax
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // bx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // cx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // dx
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  // ex
+    1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   0,  // fx  // insertIntoStatePairSortedArrayList asserts if escapeChar = 255
+};
+
+std::string Metadata::UriEncode(const std::string & sSrc)
+{
+    const char DEC2HEX[16 + 1] = "0123456789ABCDEF";
+    const unsigned char * pSrc = (const unsigned char *)sSrc.c_str();
+    const int SRC_LEN = sSrc.length();
+    unsigned char * const pStart = new unsigned char[SRC_LEN * 3];
+    unsigned char * pEnd = pStart;
+    const unsigned char * const SRC_END = pSrc + SRC_LEN;
+
+    for (; pSrc < SRC_END; ++pSrc)
+    {
+        if (!encodeUriComponentChars[*pSrc])
+            *pEnd++ = *pSrc;
+        else
+        {
+            // escape this char
+            *pEnd++ = '%';
+            *pEnd++ = DEC2HEX[*pSrc >> 4];
+            *pEnd++ = DEC2HEX[*pSrc & 0x0F];
+        }
+    }
+
+    std::string sResult((char *)pStart, (char *)pEnd);
+    delete [] pStart;
+    return sResult;
+}
+
+bool Metadata::replaceAll( std::string &s, const std::string &search, const std::string &replace )
+{
+    bool replaced = false;
+    for( size_t pos = 0; ; pos += replace.length() ) {
+        // Locate the substring to replace
+        pos = s.find( search, pos );
+        if( pos == std::string::npos ) break;
+        // Replace by erasing and inserting
+        replaced = true;
+        s.erase( pos, search.length() );
+        s.insert( pos, replace );
+    }
+    return replaced;
+}
 
 std::string Metadata::generate_exploit_url(const std::string& payload) const
 {
-    std::string url = get_url();
-    std::string exploit = url;
-
     if (payload == "") {
         return "";
     }
 
-    if (url.find('#') == std::string::npos) {
-        exploit += "#";
+    std::string url = get_url();
+    std::string original_payload = get_payload();
+    std::string uuid_without_dashes = std::regex_replace(get_exploit_uuid(), std::regex("-"), "");
+    original_payload = std::regex_replace(original_payload, std::regex("taintfoxLog\\(1\\)"), "taintfoxLog('" + uuid_without_dashes + "')");
+    // Get URL encoded string
+    std::string encoded_payload = UriEncode(original_payload);
+    std::string double_encoded_payload = UriEncode(encoded_payload);
+
+    // Try replacing the original payload with our new one
+    size_t payload_pos = url.find(original_payload);
+    size_t encoded_payload_pos = url.find(encoded_payload);
+    size_t double_encoded_payload_pos = url.find(double_encoded_payload);
+
+    std::cout << "original: " << original_payload << " " << payload_pos << std::endl;
+    std::cout << "encoded:  " << encoded_payload << " " << encoded_payload_pos <<  std::endl;
+    std::cout << "dencoded: " << double_encoded_payload << " " << double_encoded_payload_pos << std::endl;
+    std::cout << "url:      " << url << std::endl;
+
+    replaceAll(url, original_payload, payload);
+    replaceAll(url, encoded_payload, payload);
+    replaceAll(url, double_encoded_payload, payload);
+
+    // Check if the url was changed
+    if (url == get_url()) {
+        if (url.find("#") == std::string::npos) {
+            url += hash;
+        }
+        url += payload;
     }
-    exploit += payload;
-    return exploit;
+
+    std::cout << url << std::endl;
+    return url;
 }
 
 std::string Metadata::get_generated_exploit() const {

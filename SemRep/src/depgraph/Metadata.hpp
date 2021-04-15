@@ -82,6 +82,9 @@ public:
     static void printHeader(std::ostream& os);
 
 private:
+    static std::string UriEncode(const std::string & sSrc);
+    static bool replaceAll( std::string &s, const std::string &search, const std::string &replace );
+    
     std::string uuid;
     std::string url;
     std::string sink;
