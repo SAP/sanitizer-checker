@@ -143,6 +143,16 @@ unsigned int AutomatonGroup::getEntriesForSinkContext(const AttackContext& conte
   return total;
 }
 
+unsigned int AutomatonGroup::getErrorsForSinkContext(const AttackContext& context) const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    if (iter->isSinkContext(context) && iter->getFwAnalysis().isErrored()) {
+      total++;
+    }
+  }
+  return total;
+}
+
 unsigned int AutomatonGroup::getEntriesForSinkContextWeighted(const AttackContext& context) const {
   unsigned int total = 0;
   for (auto iter : m_graphs) {
@@ -317,7 +327,7 @@ void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<At
 {
   // Print a table of columns containting attack patterns
   //                  rows containing injection contexts
-  os << "Context, total, ";
+  os << "Context, total, errors, ";
   for (auto a : contexts) {
     os << AttackContextHelper::getName(a) << ",";
   }
@@ -329,11 +339,13 @@ void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<At
 
     // Total
     unsigned int total = 0;
+    unsigned int errors = 0;
     // Loop over each group
     for (auto g : m_groups) {
       total += g.getEntriesForSinkContext(s);
+      errors += g.getErrorsForSinkContext(s);
     }
-    os << total << ", ";
+    os << total << ", " << errors << ", ";
 
     for (auto a : contexts) {
       unsigned int i = 0;

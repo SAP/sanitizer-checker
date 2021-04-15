@@ -56,6 +56,7 @@ public:
     unsigned int getValidatedEntriesForSinkContext(const AttackContext& context) const;
     unsigned int getEntriesForSinkContextDeduplicated(const AttackContext& context) const;
     unsigned int getEntriesForSinkContextWeighted(const AttackContext& context) const;
+    unsigned int getErrorsForSinkContext(const AttackContext& context) const;
     std::set<std::string> getUniqueDomains() const;
   
     void printMembers(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;

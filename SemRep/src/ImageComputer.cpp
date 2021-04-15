@@ -612,7 +612,12 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
                 retMe = StrangerAutomaton::decodeURIComponent(opAuto, opNode->getID());
 	} else if (opName == "decodeURIComponent") {
                 // Backwards analysis, so perform the inversion function
+            if (opAuto->get_num_of_states() > 1000) {
+                std::cout << "Approximating BW analysis for " << opName << " nStates: " << opAuto->get_num_of_states() << std::endl;
+                retMe = opAuto->clone();
+            } else {
 		retMe = StrangerAutomaton::encodeURIComponent(opAuto, opNode->getID());
+            }
 	} else if (opName == "encodeURI") {
                 // Backwards analysis, so perform the inversion function
                 retMe = StrangerAutomaton::decodeURI(opAuto, opNode->getID());

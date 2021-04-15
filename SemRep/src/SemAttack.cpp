@@ -503,6 +503,11 @@ void ForwardAnalysisResult::finishAnalysis() {
   m_result.clear();
 }
 
+bool ForwardAnalysisResult::isErrored() const {
+  return (m_postImage == nullptr);
+}
+
+
 SemAttack::SemAttack(const fs::path& target_dep_graph_file_name, DepGraph target_dep_graph_, const string& input_field_name)
   : target_dep_graph_file_name(target_dep_graph_file_name)
   , input_field_name(input_field_name)

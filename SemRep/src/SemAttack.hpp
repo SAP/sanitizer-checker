@@ -63,7 +63,7 @@ public:
                                    const AnalysisResult& result) const;
 
     const StrangerAutomaton* getPreImage(const AnalysisResult& result) const;
-    
+
     void printResults() const;
     void writeResultsToFile(const fs::path& dir) const;
     
@@ -111,6 +111,7 @@ public:
     SemAttack* getAttack() { return m_attack; }
     const StrangerAutomaton* getPostImage() const { return m_postImage; }
     const AnalysisResult& getFwAnalysisResult() const { return m_result; }
+    bool isErrored() const;
 
     void writeResultsToFile(const fs::path& dir) const;
 
