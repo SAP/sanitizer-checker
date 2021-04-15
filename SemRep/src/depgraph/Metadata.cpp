@@ -524,10 +524,10 @@ std::string Metadata::generate_exploit_url(const std::string& payload) const
     size_t encoded_payload_pos = url.find(encoded_payload);
     size_t double_encoded_payload_pos = url.find(double_encoded_payload);
 
-    std::cout << "original: " << original_payload << " " << payload_pos << std::endl;
-    std::cout << "encoded:  " << encoded_payload << " " << encoded_payload_pos <<  std::endl;
-    std::cout << "dencoded: " << double_encoded_payload << " " << double_encoded_payload_pos << std::endl;
-    std::cout << "url:      " << url << std::endl;
+    // std::cout << "original: " << original_payload << " " << payload_pos << std::endl;
+    // std::cout << "encoded:  " << encoded_payload << " " << encoded_payload_pos <<  std::endl;
+    // std::cout << "dencoded: " << double_encoded_payload << " " << double_encoded_payload_pos << std::endl;
+    // std::cout << "url:      " << url << std::endl;
 
     replaceAll(url, original_payload, payload);
     replaceAll(url, encoded_payload, payload);
