@@ -513,26 +513,27 @@ std::string Metadata::generate_exploit_url(const std::string& payload) const
 
     std::string url = get_url();
     std::string original_payload = get_payload();
-    std::string uuid_without_dashes = std::regex_replace(get_exploit_uuid(), std::regex("-"), "");
-    original_payload = std::regex_replace(original_payload, std::regex("taintfoxLog\\(1\\)"), "taintfoxLog('" + uuid_without_dashes + "')");
-    // Get URL encoded string
-    std::string encoded_payload = UriEncode(original_payload);
-    std::string double_encoded_payload = UriEncode(encoded_payload);
+    if (original_payload != "") {
+        std::string uuid_without_dashes = std::regex_replace(get_exploit_uuid(), std::regex("-"), "");
+        original_payload = std::regex_replace(original_payload, std::regex("taintfoxLog\\(1\\)"), "taintfoxLog('" + uuid_without_dashes + "')");
+        // Get URL encoded string
+        std::string encoded_payload = UriEncode(original_payload);
+        std::string double_encoded_payload = UriEncode(encoded_payload);
 
-    // Try replacing the original payload with our new one
-    size_t payload_pos = url.find(original_payload);
-    size_t encoded_payload_pos = url.find(encoded_payload);
-    size_t double_encoded_payload_pos = url.find(double_encoded_payload);
+        // Try replacing the original payload with our new one
+        size_t payload_pos = url.find(original_payload);
+        size_t encoded_payload_pos = url.find(encoded_payload);
+        size_t double_encoded_payload_pos = url.find(double_encoded_payload);
 
-    // std::cout << "original: " << original_payload << " " << payload_pos << std::endl;
-    // std::cout << "encoded:  " << encoded_payload << " " << encoded_payload_pos <<  std::endl;
-    // std::cout << "dencoded: " << double_encoded_payload << " " << double_encoded_payload_pos << std::endl;
-    // std::cout << "url:      " << url << std::endl;
+        // std::cout << "original: " << original_payload << " " << payload_pos << std::endl;
+        // std::cout << "encoded:  " << encoded_payload << " " << encoded_payload_pos <<  std::endl;
+        // std::cout << "dencoded: " << double_encoded_payload << " " << double_encoded_payload_pos << std::endl;
+        // std::cout << "url:      " << url << std::endl;
 
-    replaceAll(url, original_payload, payload);
-    replaceAll(url, encoded_payload, payload);
-    replaceAll(url, double_encoded_payload, payload);
-
+        replaceAll(url, original_payload, payload);
+        replaceAll(url, encoded_payload, payload);
+        replaceAll(url, double_encoded_payload, payload);
+    }
     // Check if the url was changed
     if (url == get_url()) {
         if (url.find("#") == std::string::npos) {
