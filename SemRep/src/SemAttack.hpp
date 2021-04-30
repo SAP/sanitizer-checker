@@ -28,12 +28,15 @@
 #include <boost/filesystem.hpp>
 #include "StrangerAutomaton.hpp"
 #include "AttackContext.hpp"
+#include "AnalysisError.hpp"
 #include "ImageComputer.hpp"
 #include "SemRepairDebugger.hpp"
 #include "depgraph/DepGraph.hpp"
 #include "depgraph/Metadata.hpp"
 
 namespace fs = boost::filesystem;
+
+
 
 class SemAttack {
 public:
@@ -112,6 +115,7 @@ public:
     const StrangerAutomaton* getPostImage() const { return m_postImage; }
     const AnalysisResult& getFwAnalysisResult() const { return m_result; }
     bool isErrored() const;
+    AnalysisError getError() const { return m_error; };
 
     void writeResultsToFile(const fs::path& dir) const;
 
@@ -119,6 +123,7 @@ public:
 private:
   SemAttack* m_attack;
   AnalysisResult m_result;
+  AnalysisError m_error;
   StrangerAutomaton* m_input;
   StrangerAutomaton* m_postImage;
 };

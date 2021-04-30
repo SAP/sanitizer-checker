@@ -175,6 +175,8 @@ private:
     bool isShortHand();
     RegExp* parseShortHand();
     RegExp* parseCharOrShortHand();
+
+    std::vector<RegExp*> m_groups;
 };
 
 int to_int(std::string input);

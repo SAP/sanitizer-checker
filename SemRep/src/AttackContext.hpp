@@ -64,6 +64,7 @@
 enum class AttackContext {
     SOME_ENUM(MAKE_ENUM)
 };
+#undef MAKE_ENUM
 
 class AttackContextHelper {
 

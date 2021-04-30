@@ -905,13 +905,14 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
         if (peek("?") && peek(":", 1)) {
             // Non-capturing groups will not effect the match, so do nothing
             //std::cout << "Non capturing group!!" << std::endl;
-            next();
-            next();
+            next(); // skip ?
+            next(); // skip :
         }
         if (match(')')) {
             return makeString("");
         }
         RegExp* e = parseUnionExp();
+        // TO DO: add groups here? Keep track of a list of pointers to subgroups
         if(!match(')')) {
         	throw std::invalid_argument((stringbuilder() << "expected ')' at position " << pos));
         }

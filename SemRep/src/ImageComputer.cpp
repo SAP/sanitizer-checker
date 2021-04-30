@@ -1218,6 +1218,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
             // Block anything that has not been modelled yet
             //retMe = StrangerAutomaton::makeEmptyString(opNode->getID());
             // Throw an exception
+            
             throw StrangerStringAnalysisException(stringbuilder() << "Unknown function " << opName);
     }
 

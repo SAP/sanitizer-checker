@@ -458,6 +458,7 @@ ForwardAnalysisResult::ForwardAnalysisResult(const fs::path& target_dep_graph_fi
                                              StrangerAutomaton* automaton)
   : m_attack(new SemAttack(target_dep_graph_file_name, target_dep_graph_, input_field_name))
   , m_result()
+  , m_error(AnalysisError::None)
   , m_input(automaton->clone())
   , m_postImage(nullptr)
 {
@@ -474,11 +475,19 @@ ForwardAnalysisResult::~ForwardAnalysisResult()
 }
 void ForwardAnalysisResult::doAnalysis(bool doConcat)
 {
-  m_result = m_attack->computeTargetFWAnalysis(m_input, doConcat);
+  try {
+    m_result = m_attack->computeTargetFWAnalysis(m_input, doConcat);
+  } catch (StrangerStringAnalysisException const &e) {
+    m_postImage = nullptr;
+    m_error = AnalysisError::UnsupportedFunction;
+    throw;
+  }
+
   const StrangerAutomaton* post = this->getAttack()->getPostImage(m_result);
   if (post) {
     m_postImage = post->clone();
   } else {
+    m_error = AnalysisError::MonaException;
     m_postImage = nullptr;
   }
 }
@@ -623,7 +632,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* input
     ImageComputer targetAnalyzer(doConcat, false);
 
     try {
-        message("starting forward analysis for target...");
+        message("starting forward aalysis for target...");
         targetAnalyzer.doForwardAnalysis_SingleInput(target_dep_graph, target_field_relevant_graph, targetAnalysisResult);
         message("...finished forward analysis for target.");        
     } catch (StrangerStringAnalysisException const &e) {

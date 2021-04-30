@@ -25,6 +25,7 @@
 
 #include "AutomatonGroups.hpp"
 
+
 #include <iostream>
 
 std::vector<AttackContext> AutomatonGroup::m_sink_contexts = {
@@ -37,6 +38,11 @@ std::vector<AttackContext> AutomatonGroup::m_sink_contexts = {
   AttackContext::Url,
   AttackContext::JavaScript,
   AttackContext::None
+};
+
+std::vector<AnalysisError> AutomatonGroups::m_error_types = {
+  AnalysisError::UnsupportedFunction,
+  AnalysisError::MonaException,
 };
 
 AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name, int id)
@@ -148,6 +154,18 @@ unsigned int AutomatonGroup::getErrorsForSinkContext(const AttackContext& contex
   for (auto iter : m_graphs) {
     if (iter->isSinkContext(context) && iter->getFwAnalysis().isErrored()) {
       total++;
+    }
+  }
+  return total;
+}
+
+unsigned int AutomatonGroup::getErrorsForSinkContextAndErrorType(const AttackContext& context, const AnalysisError& error) const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    if (iter->isSinkContext(context) && iter->getFwAnalysis().isErrored()) {
+      if (iter->getFwAnalysis().getError() == error) {
+        total++;
+      }
     }
   }
   return total;
@@ -328,12 +346,18 @@ void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<At
   // Print a table of columns containting attack patterns
   //                  rows containing injection contexts
   os << "Context, total, errors, ";
+
+  // Count errors in different categories
+  for (auto e : m_error_types) {
+    os << AnalysisErrorHelper::getName(e) << ",";
+  }
+  
   for (auto a : contexts) {
     os << AttackContextHelper::getName(a) << ",";
   }
   os << std::endl;
 
-  // Loop over sink contexts
+  // Loop over sink contexts, one per line
   for (auto s : AutomatonGroup::m_sink_contexts) {
     os << AttackContextHelper::getName(s) << ",";
 
@@ -347,6 +371,15 @@ void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<At
     }
     os << total << ", " << errors << ", ";
 
+    // Loop over each error
+    for (auto e : m_error_types) {
+      errors = 0;
+      for (auto g : m_groups) {
+        errors += g.getErrorsForSinkContextAndErrorType(s, e);
+      }
+      os << errors << ", ";     
+    }
+    
     for (auto a : contexts) {
       unsigned int i = 0;
       // Loop over each group

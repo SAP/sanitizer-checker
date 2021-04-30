@@ -31,6 +31,7 @@
 
 #include "StrangerAutomaton.hpp"
 #include "SemAttack.hpp"
+#include "AnalysisError.hpp"
 
 // Create a class to group equal Automata
 class AutomatonGroup {
@@ -57,6 +58,7 @@ public:
     unsigned int getEntriesForSinkContextDeduplicated(const AttackContext& context) const;
     unsigned int getEntriesForSinkContextWeighted(const AttackContext& context) const;
     unsigned int getErrorsForSinkContext(const AttackContext& context) const;
+    unsigned int getErrorsForSinkContextAndErrorType(const AttackContext& context, const AnalysisError& error) const;
     std::set<std::string> getUniqueDomains() const;
   
     void printMembers(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
@@ -113,7 +115,7 @@ private:
     int m_id;
     AutomatonGroup* addNewEntry(const StrangerAutomaton* automaton, const CombinedAnalysisResult* graph);
     void printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const;
-
+    static std::vector<AnalysisError> m_error_types;
 };
 
 #endif /* AUTOMATON_GROUPS_HPP_ */
