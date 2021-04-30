@@ -481,6 +481,13 @@ void ForwardAnalysisResult::doAnalysis(bool doConcat)
     m_postImage = nullptr;
     m_error = AnalysisError::UnsupportedFunction;
     throw;
+  } catch (StrangerAutomatonException const &e) {
+    m_error = AnalysisError::MonaException;
+    m_postImage = nullptr;
+    throw;
+  } catch (...) {
+    m_error = AnalysisError::Other;
+    throw;
   }
 
   const StrangerAutomaton* post = this->getAttack()->getPostImage(m_result);

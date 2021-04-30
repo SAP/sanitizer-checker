@@ -26,10 +26,11 @@
 #define ANALYSIS_ERROR_HPP_
 
 
-#define ERROR_ENUM(DO)                            \
+#define ERROR_ENUM(DO)                           \
   DO(None)                                       \
   DO(UnsupportedFunction)                        \
-  DO(MonaException)
+  DO(MonaException)                              \
+  DO(Other)
 
 #define MAKE_ENUM(VAR) VAR,
 enum class AnalysisError {

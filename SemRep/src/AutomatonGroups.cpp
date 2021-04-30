@@ -41,8 +41,10 @@ std::vector<AttackContext> AutomatonGroup::m_sink_contexts = {
 };
 
 std::vector<AnalysisError> AutomatonGroups::m_error_types = {
+  AnalysisError::None,
   AnalysisError::UnsupportedFunction,
   AnalysisError::MonaException,
+  AnalysisError::Other
 };
 
 AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name, int id)
