@@ -260,26 +260,6 @@ StrangerAutomaton* AttackPatterns::getUrlComponentEncoded()
     return encoded;
 }
 
-StrangerAutomaton* AttackPatterns::getUndesiredSQLTest()
-{
-    
-    //    debug("Building automaton for SQL vulnerabilities");
-    //    debug("----------------------------------------");
-    //    StrangerAutomaton* autoAttackPattern = regExToAuto("/.*'or 1=1'.*/", true, int32_t(0));
-    //    debug("----------------------------------------");
-    //    return autoAttackPattern;
-	throw new std::runtime_error("not implemented");
-    
-}
-
-StrangerAutomaton* AttackPatterns::getUndesiredMFETest()
-{
-    
-    //    StrangerAutomaton* retMe = regExToAuto("//evil/", true, int32_t(0));
-    //    return retMe;
-	throw new std::runtime_error("not implemented");   
-}
-
 StrangerAutomaton* AttackPatterns::getSingleCharPattern(const std::string& pattern)
 {
     return StrangerAutomaton::regExToAuto("/.*" + pattern + ".*/");
