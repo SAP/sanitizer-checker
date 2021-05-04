@@ -1,4 +1,5 @@
 #include "ValidationImageComputer.hpp"
+#include "exceptions/StrangerException.hpp"
 
 ValidationImageComputer::ValidationImageComputer() : ImageComputer() {
 
@@ -46,7 +47,7 @@ AnalysisResult ValidationImageComputer::doBackwardAnalysis_ValidationCase(DepGra
                     }
                 }
 
-            } else { throw StrangerStringAnalysisException("cannot handle node type"); }
+            } else { throw StrangerException("cannot handle node type"); }
 
         } else {
             if (depGraph.isSCCElement(curr)) { // handle cycles
@@ -127,11 +128,11 @@ void ValidationImageComputer::doPreImageComputation_ValidationCase(DepGraph& ori
         }
 
     } else {
-        throw StrangerStringAnalysisException("SNH: cannot handle node type: doBackwardNodeComputation_ValidationPhase()");
+        throw StrangerException("SNH: cannot handle node type: doBackwardNodeComputation_ValidationPhase()");
     }
 
     if (newAuto == nullptr) {
-        throw StrangerStringAnalysisException("SNH: pre-image is NULL: doBackwardNodeComputation_ValidationPhase()");
+        throw StrangerException("SNH: pre-image is NULL: doBackwardNodeComputation_ValidationPhase()");
     }
     bwAnalysisResult.set(node->getID(), newAuto);
 
@@ -185,11 +186,11 @@ void ValidationImageComputer::doPreImageComputationForSCC_ValidationCase(DepGrap
             } else if (dynamic_cast<DepGraphOpNode*>(curr_node) != nullptr) {
                 tmp_auto = makePreImageForOpChild_ValidationCase(origDepGraph, dynamic_cast< DepGraphOpNode*>(curr_node), succ_node, bwAnalysisResult);
             } else {
-                throw StrangerStringAnalysisException(stringbuilder() << "Node cannot be an element of SCC component!, node id: " << node->getID());
+                throw StrangerException(stringbuilder() << "Node cannot be an element of SCC component!, node id: " << node->getID());
             }
 
             if (tmp_auto == nullptr) {
-                throw StrangerStringAnalysisException(stringbuilder() << "Could not calculate the corresponding automaton!, node id: " << node->getID());
+                throw StrangerException(stringbuilder() << "Could not calculate the corresponding automaton!, node id: " << node->getID());
             }
 
             new_auto = tmp_auto->union_(prev_auto, succ_node->getID());
@@ -235,7 +236,7 @@ StrangerAutomaton* ValidationImageComputer::makePreImageForOpChild_ValidationCas
     if (opName.find("__vlab_restrict") != string::npos) {
         boost::posix_time::ptime start_time = perfInfo->current_time();
         if (successors.size() != 3) {
-            throw StrangerStringAnalysisException(stringbuilder() << "__vlab_restrict invalid number of arguments");
+            throw StrangerException(stringbuilder() << "__vlab_restrict invalid number of arguments");
         }
 
         DepGraphNode* subjectNode = successors[1];
@@ -259,11 +260,11 @@ StrangerAutomaton* ValidationImageComputer::makePreImageForOpChild_ValidationCas
             perfInfo->number_of_pre_vlab_restrict++;
 
         } else {
-            throw StrangerStringAnalysisException(stringbuilder() << "child node (" << childNode->getID() << ") of __vlab_restrict (" << opNode->getID() << ") is not in backward path");
+            throw StrangerException(stringbuilder() << "child node (" << childNode->getID() << ") of __vlab_restrict (" << opNode->getID() << ") is not in backward path");
         }
     }  else if (opName == ".") {
         // CONCAT
-        throw StrangerStringAnalysisException( "concats are not handled here until we really need");
+        throw StrangerException( "concats are not handled here until we really need");
     } else if (opName == "addslashes") {
         // only has one parameter ==>  string addslashes  ( string $str  )
         StrangerAutomaton* sigmaStar = StrangerAutomaton::makeAnyString(opNode->getID());
@@ -359,13 +360,13 @@ StrangerAutomaton* ValidationImageComputer::makePreImageForOpChild_ValidationCas
             delete forward;
             delete intersection;
         } else {
-            throw StrangerStringAnalysisException(stringbuilder() << "SNH: child node (" << childNode->getID() << ") of htmlspecialchars (" << opNode->getID() << ") is not in backward path,\ncheck implementation");
+            throw StrangerException(stringbuilder() << "SNH: child node (" << childNode->getID() << ") of htmlspecialchars (" << opNode->getID() << ") is not in backward path,\ncheck implementation");
         }
 
     } else if (opName == "preg_replace" || opName == "ereg_replace" || opName == "str_replace") {
 
         if (successors.size() != 3) {
-            throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments");
+            throw StrangerException(stringbuilder() << "replace invalid number of arguments");
         }
 
         DepGraphNode* subjectNode = successors[2];
@@ -405,13 +406,13 @@ StrangerAutomaton* ValidationImageComputer::makePreImageForOpChild_ValidationCas
             delete intersection;
 
         } else {
-            throw StrangerStringAnalysisException(stringbuilder() << "SNH: child node (" << childNode->getID() << ") of preg_replace (" << opNode->getID() << ") is not in backward path,\ncheck implementation: "
+            throw StrangerException(stringbuilder() << "SNH: child node (" << childNode->getID() << ") of preg_replace (" << opNode->getID() << ") is not in backward path,\ncheck implementation: "
                                                                                                                                                               "makeBackwardAutoForOpChild_ValidationPhase()");
         }
     }  else if (opName == "substr"){
 
         if (successors.size() != 3) {
-            throw StrangerStringAnalysisException(stringbuilder() << "SNH: substr invalid number of arguments: "
+            throw StrangerException(stringbuilder() << "SNH: substr invalid number of arguments: "
                                                                      "makeForwardAutoForOp_RegularPhase()");
         }
 
@@ -442,7 +443,7 @@ StrangerAutomaton* ValidationImageComputer::makePreImageForOpChild_ValidationCas
     } else if (opName == "md5") {
         retMe = StrangerAutomaton::makeAnyString(childNode->getID());
     } else {
-        throw StrangerStringAnalysisException( "Not implemented yet for validation phase: " + opName);
+        throw StrangerException( "Not implemented yet for validation phase: " + opName);
     }
 
 //	cout << endl << "auto after each operation : " << opName << endl << endl;

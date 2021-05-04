@@ -22,30 +22,19 @@
  *
  * Authors: Thomas Barber
  */
-#ifndef ANALYSIS_ERROR_HPP_
-#define ANALYSIS_ERROR_HPP_
+#include "AnalysisError.hpp"
 
-
-#define ERROR_ENUM(DO)                           \
-  DO(None)                                       \
-  DO(UnsupportedFunction)                        \
-  DO(MonaException)                              \
-  DO(Other)
-
-#define MAKE_ENUM(VAR) VAR,
-enum class AnalysisError {
-    ERROR_ENUM(MAKE_ENUM)
-};
-#undef MAKE_ENUM
-
-class AnalysisErrorHelper {
-
-public:
-  static const char* getName(AnalysisError e);
-
-private:
-  static const char* AnalysisErrorName[];
-
+#define MAKE_STRINGS(VAR) #VAR,
+const char* AnalysisErrorHelper::AnalysisErrorName[] = {
+    ERROR_ENUM(MAKE_STRINGS)
 };
 
-#endif
+#define MAKE_ENTRY(VAR) AnalysisError::VAR,
+std::vector<AnalysisError> AnalysisErrorHelper::m_allEnums = {
+  ERROR_ENUM(MAKE_ENTRY)
+};
+
+const char* AnalysisErrorHelper::getName(AnalysisError e)
+{
+  return AnalysisErrorName[static_cast<int>(e)];
+}

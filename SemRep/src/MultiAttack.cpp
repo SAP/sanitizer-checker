@@ -102,6 +102,12 @@ void MultiAttack::writeResultsToFile() const {
   m_groups.printOverlapSummary(ofs_sum_pc, m_analyzed_contexts, true);
   ofs_sum_pc.close();
 
+  fs::path output_err_sum(m_output_directory / fs::path("semattack_error_summary.csv"));
+  std::ofstream ofs_err_sum;
+  ofs_err_sum.open (output_err_sum.string(), std::ofstream::out);
+  m_groups.printErrorSummary(ofs_err_sum);
+  ofs_err_sum.close();
+
   fs::path output_gen_payloads(m_output_directory / fs::path("semattack_generated_payloads.csv"));
   std::ofstream ofs_gen;
   ofs_gen.open (output_gen_payloads.string(), std::ofstream::out);
@@ -228,12 +234,16 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
   if (result == nullptr) {
     return;
   }
+
+  bool errored = false;
   const StrangerAutomaton* postImage = NULL;
   const std::string file = result->getFileName();
   fs::path dir(m_output_directory / result->getInputPath());
   std::cout << "Analysing file: " << file << std::endl;
+
   // Reduce debug prints
   result->getAttack()->setPrint(false);
+
   try {
     // Forward Analysis
     result->getAttack()->init();
@@ -243,12 +253,21 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
       result->getAttack()->writeResultsToFile(dir);
       result->getFwAnalysis().writeResultsToFile(dir);
     }
+  } catch (std::exception const &e) {
+    errored = true;
+    std::cout << "EXCEPTION! In FW analysis: " << file << " in thread " << std::this_thread::get_id()
+              << " message: " << e.what() << std::endl;
   } catch (...) {
+    errored = true;
+    std::cout << "EXCEPTION! In FW analysis: " << file << " in thread " << std::this_thread::get_id() << std::endl;
+  }
+
+  // Tidy up on error
+  if (errored) {
     if (postImage != nullptr) {
       delete postImage;
       postImage = nullptr;
     }
-    std::cout << "EXCEPTION! In FW analysis: " << file << " in thread " << std::this_thread::get_id() << std::endl;
   }
   
   // Backward analysis

@@ -28,7 +28,7 @@
 #include <boost/filesystem.hpp>
 #include "StrangerAutomaton.hpp"
 #include "AttackContext.hpp"
-#include "AnalysisError.hpp"
+#include "exceptions/AnalysisError.hpp"
 #include "ImageComputer.hpp"
 #include "SemRepairDebugger.hpp"
 #include "depgraph/DepGraph.hpp"

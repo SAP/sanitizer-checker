@@ -1,5 +1,6 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /*
- * StrangerStringAnalysisException.hpp
+ * MonaException.hpp
  *
  * Copyright (C) 2013-2014 University of California Santa Barbara.
  *
@@ -21,20 +22,38 @@
  * Authors: Abdulbaki Aydin, Muath Alkhalaf
  */
 
-#ifndef STRANGERSTRINGANALYSISEXCEPTION_HPP_
-#define STRANGERSTRINGANALYSISEXCEPTION_HPP_
+#include "StrangerException.hpp"
 
-#include <string>
+StrangerException::StrangerException(AnalysisError e, const std::string& msg)
+    : m_msg()
+    , m_error(e)
+{
+    m_msg = make_msg(msg);
+}
 
-class StrangerStringAnalysisException {
-public:
-    StrangerStringAnalysisException ( const std::string err){ error = err;};
-    const std::string what() const { return error;};
+StrangerException::StrangerException(AnalysisError e)
+    : m_msg()
+    , m_error(e)
+{
+    m_msg = make_msg("");
+}
 
-private:
-    std::string error;
+StrangerException::StrangerException(const std::string& msg)
+    : m_msg()
+    , m_error(AnalysisError::Other)
+{
+    m_msg = make_msg(msg);
+}
 
-};
+std::string StrangerException::make_msg(const std::string &in) const
+{
+    std::stringstream ss;
+    ss << "StrangerException type: "
+       << static_cast<int>(m_error)
+       << ": " << AnalysisErrorHelper::getName(m_error)
+       << " msg: "
+       << in;
+    return ss.str();
+}
 
 
-#endif /* STRANGERSTRINGANALYSISEXCEPTION_HPP_ */

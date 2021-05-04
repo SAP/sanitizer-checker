@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /*
  * StrangerAutomaton.cpp
  *
@@ -21,7 +22,7 @@
  * Authors: Abdulbaki Aydin, Muath Alkhalaf
  */
 #include "StrangerAutomaton.hpp"
-
+#include "exceptions/StrangerException.hpp"
 
 using namespace std;
 
@@ -476,9 +477,9 @@ std::string StrangerAutomaton::generateSatisfyingExample() const
 {
     if (!this->isEmpty()) {
 	char* example = dfaGenerateExample(this->dfa, num_ascii_track, u_indices_main);
-	if (example == NULL)
-		throw StrangerAutomatonException("no satifying example");
-
+	if (example == NULL) {
+            throw StrangerException(AnalysisError::MonaException, "no satifying example");
+        }
         return std::string(example);
     }
     return std::string();
@@ -1354,61 +1355,50 @@ StrangerAutomaton* StrangerAutomaton::rightPreConcatConst(std::string leftSiblin
  */
 StrangerAutomaton* StrangerAutomaton::regExToAuto(std::string phpRegexOrig,
                                                   bool preg, int id) {
-    		debug(stringbuilder() << "============");
-    		debug(stringbuilder() << id <<  " = regExToAuto(" << phpRegexOrig << ") -- start");
+    debug(stringbuilder() << "============");
+    debug(stringbuilder() << id <<  " = regExToAuto(" << phpRegexOrig << ") -- start");
     
-    		StrangerAutomaton* retMe = NULL;
+    StrangerAutomaton* retMe = NULL;
     
-    		if (phpRegexOrig.empty()) {
-                throw invalid_argument(stringbuilder() << "regular expression is empty");
-//    			cerr << "regular expression is empty so using makeEmptyString";
-//    			retMe = StrangerAutomaton::makeEmptyString(id);
-    		} else {
-                std::string phpRegex = phpRegexOrig;
-    			if (preg) {
-    				// if the preg regex is not delimited...
-    				char first = phpRegex[0];
-    				if (!first == StrangerAutomaton::slash){
-    					throw invalid_argument(stringbuilder() << "Undelimited preg regexp: \"" << phpRegexOrig << "\"");
-    				}
-                    std::string::size_type last = phpRegex.substr(1).find_last_of(StrangerAutomaton::slash);
-                    if (last == std::string::npos)
-       					throw invalid_argument(stringbuilder() << "Undelimited preg regexp: \"" << phpRegexOrig << "\"");
-    				// peel off delimiter
-    				phpRegexOrig = phpRegex.substr(1, last);
-    				debug(stringbuilder() << id <<  ": regular expression after removing delimeters = \""
-    						<< phpRegexOrig << "\"");
-    			}
-                RegExp::restID();// for debugging purposes only
-    			// following loop is to convert a special character from its representation
-    			// to actual character.
-    			// Example: convert \x41 to A
-//    			while(phpRegexOrig.matches(".*(\\\\x\\w\\w).*")){
-//    				Pattern p = Pattern.compile(".*(\\\\x\\w\\w).*");
-//    				std::string tempRegExp = phpRegexOrig;
-//    				Matcher m = p.matcher(tempRegExp);
-//    				m.find();
-//    				std::string hexChar = m.group(1);
-//    				char c = (char)Integer.valueOf(hexChar.substring(2,4), 16).intValue();
-//    				phpRegexOrig = phpRegexOrig.replace(hexChar, "\\" << c);
-//    			}
-
-    			RegExp* regExp = new RegExp(phpRegexOrig, RegExp::NONE);
-                std::string regExpStringVal;
-    			debug(stringbuilder() << id <<  ": regExToString = "
-    					<< regExp->toStringBuilder(regExpStringVal));
-    			retMe = regExp->toAutomaton();
-                        delete regExp;
-    		}
-
+    if (phpRegexOrig.empty()) {
+        throw StrangerException(AnalysisError::InvalidArgument, stringbuilder() << "regular expression is empty");
+    } else {
+        std::string phpRegex = phpRegexOrig;
+        if (preg) {
+            // if the preg regex is not delimited...
+            char first = phpRegex[0];
+            if (!first == StrangerAutomaton::slash){
+                throw StrangerException(AnalysisError::InvalidArgument, stringbuilder() << "Undelimited preg regexp: \"" << phpRegexOrig << "\"");
+            }
+            std::string::size_type last = phpRegex.substr(1).find_last_of(StrangerAutomaton::slash);
+            if (last == std::string::npos)
+                throw StrangerException(AnalysisError::InvalidArgument, stringbuilder() << "Undelimited preg regexp: \"" << phpRegexOrig << "\"");
+            // peel off delimiter
+            phpRegexOrig = phpRegex.substr(1, last);
+            debug(stringbuilder() << id <<  ": regular expression after removing delimeters = \""
+                  << phpRegexOrig << "\"");
+        }
+        RegExp::restID();// for debugging purposes only
+        try {
+            RegExp* regExp = new RegExp(phpRegexOrig, RegExp::NONE);
+            std::string regExpStringVal;
+            debug(stringbuilder() << id <<  ": regExToString = "
+                  << regExp->toStringBuilder(regExpStringVal));
+            retMe = regExp->toAutomaton();
+            delete regExp;
+        } catch (...) {
+            std::cout << "Exception thrown parsing RegExp: " << phpRegexOrig << std::endl;
+            throw;
+        }
+    }
     
-    		debug(stringbuilder() << id <<  " = regExToAuto(" << phpRegexOrig << ") -- end");
-    		debug(stringbuilder() << "============");
-    		{
-    			retMe->setID(id);
-    			retMe->debugAutomaton();
-    		}
-    		return retMe;
+    debug(stringbuilder() << id <<  " = regExToAuto(" << phpRegexOrig << ") -- end");
+    debug(stringbuilder() << "============");
+    {
+        retMe->setID(id);
+        retMe->debugAutomaton();
+    }
+    return retMe;
 }
 
 /**
@@ -1457,14 +1447,14 @@ StrangerAutomaton* StrangerAutomaton::reg_replace(const StrangerAutomaton* patte
     // automaton in Stranger Library
     debug(stringbuilder() << "calling reg_replace with the following order (" << subjectAuto->ID << ", " << patternAuto->ID << ", " << replaceStr << ")");
     if (patternAuto->isBottom() || subjectAuto->isBottom())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.reg_replace: either patternAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
+        throw StrangerException(AnalysisError::InvalidArgument,
+                                "SNH: In StrangerAutoatmon.reg_replace: either patternAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
     else if (patternAuto->isTop())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.reg_replace: patternAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
+        throw StrangerException(AnalysisError::InvalidArgument,
+                                "SNH: In StrangerAutoatmon.reg_replace: patternAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     else if (subjectAuto->isTop())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.reg_replace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
+        throw StrangerException(AnalysisError::InvalidArgument,
+                                "SNH: In StrangerAutoatmon.reg_replace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     
     debugToFile(stringbuilder() << "M[" << (traceID) << "] = dfa_replace_extrabit(M["<< subjectAuto->autoTraceID  << "], M[" << patternAuto->autoTraceID << "], \"" << replaceStr << "\" , NUM_ASCII_TRACKS, indices_main);//"<<id << " = reg_replace(" << patternAuto->ID << ", " << replaceStr
 				<< ", " << subjectAuto->ID << ")");
@@ -1480,7 +1470,7 @@ StrangerAutomaton* StrangerAutomaton::reg_replace(const StrangerAutomaton* patte
 //        retMe->debugAutomaton();
     }
     if (retMe->isNull()) {
-        throw StrangerAutomatonException("Null DFA pointer returned from MONA");
+        throw StrangerException(AnalysisError::MonaException, "Null DFA pointer returned from MONA");
     }
     return retMe;
 }
@@ -1496,14 +1486,14 @@ StrangerAutomaton* StrangerAutomaton::general_replace(const StrangerAutomaton* p
     // automaton in Stranger Library
     debug(stringbuilder() << "calling reg_replace with the following order (" << subjectAuto->ID << ", " << patternAuto->ID << ", " << replaceAuto->ID << ")");
     if (patternAuto->isBottom() || subjectAuto->isBottom())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.reg_replace: either patternAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
+        throw StrangerException(AnalysisError::InvalidArgument,
+                                "SNH: In StrangerAutoatmon.reg_replace: either patternAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
     else if (patternAuto->isTop())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.reg_replace: patternAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
+        throw StrangerException(AnalysisError::InvalidArgument,
+                                "SNH: In StrangerAutoatmon.reg_replace: patternAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     else if (subjectAuto->isTop())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.reg_replace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
+        throw StrangerException(AnalysisError::InvalidArgument,
+                                "SNH: In StrangerAutoatmon.reg_replace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
 
     debugToFile(stringbuilder() << "M[" << (traceID) << "] = dfa_replace_extrabit(M["<< subjectAuto->autoTraceID  << "], M[" << patternAuto->autoTraceID << "], \"" << replaceAuto->ID << "\" , NUM_ASCII_TRACKS, indices_main);//"<<id << " = reg_replace(" << patternAuto->ID << ", " << replaceAuto->ID
 				<< ", " << subjectAuto->ID << ")");
@@ -1524,7 +1514,7 @@ StrangerAutomaton* StrangerAutomaton::general_replace(const StrangerAutomaton* p
 //        retMe->debugAutomaton();
     }
     if (retMe->isNull()) {
-        throw StrangerAutomatonException("Null DFA pointer returned from MONA");
+        throw StrangerException(AnalysisError::MonaException, "Null DFA pointer returned from MONA");
     }
     return retMe;
 }
@@ -1581,17 +1571,15 @@ StrangerAutomaton* StrangerAutomaton::str_replace(const StrangerAutomaton* searc
     debug(stringbuilder() << "calling str_replace with the following order (" << subjectAuto->ID << ", " << searchAuto->ID << ", " << replaceStr << ")");
     
     if (searchAuto->isBottom() || subjectAuto->isBottom())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.str_replace: either searchAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
+        throw StrangerException(AnalysisError::InvalidArgument,
+                                         "SNH: In StrangerAutoatmon.str_replace: either searchAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
     else if (searchAuto->isTop())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.str_replace: searchAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
+        throw StrangerException(AnalysisError::InvalidArgument,
+                                         "SNH: In StrangerAutoatmon.str_replace: searchAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     else if (subjectAuto->isTop())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.str_replace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
-    
-    
-    
+        throw StrangerException(AnalysisError::InvalidArgument,
+                                         "SNH: In StrangerAutoatmon.str_replace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
+       
     debugToFile(stringbuilder() << "M[" << (traceID) << "] = dfa_replace_extrabit(M["<< subjectAuto->autoTraceID  << "], M[" << searchAuto->autoTraceID << "], \"" << replaceStr << "\" , NUM_ASCII_TRACKS, indices_main);//"<<id << " = str_replace(" << searchAuto->ID << ", " << replaceStr << ", "
 				<< subjectAuto->ID << ")");
 
@@ -1602,10 +1590,9 @@ StrangerAutomaton* StrangerAutomaton::str_replace(const StrangerAutomaton* searc
     
     {
         retMe->ID = id;
-//        retMe->debugAutomaton();
     }
     if (retMe->isNull()) {
-        throw StrangerAutomatonException("Null DFA pointer returned from MONA");
+        throw StrangerException(AnalysisError::MonaException, "Null DFA pointer returned from MONA");
     }
     return retMe;
 }
@@ -1640,12 +1627,13 @@ StrangerAutomaton* StrangerAutomaton::str_replace_once(const StrangerAutomaton* 
     perfInfo->replace_total_time += perfInfo->current_time() - start_time;
     perfInfo->num_of_replace++;
 
+    if (retMe->isNull()) {
+        throw StrangerException(AnalysisError::MonaException, "Null DFA pointer returned from MONA");
+    }
+
     {
         retMe->ID = id;
         //        retMe->debugAutomaton();
-    }
-    if (retMe->isNull()) {
-        throw StrangerAutomatonException("Null DFA pointer returned from MONA");
     }
     return retMe;
 }
@@ -1676,21 +1664,24 @@ StrangerAutomaton* StrangerAutomaton::preReplace(const StrangerAutomaton* search
                                                  std::string replaceString, int id) const {
     debug(stringbuilder() << id <<  " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
     if (searchAuto->isBottom() || this->isBottom())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.preReplace: either searchAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
+        throw StrangerException(AnalysisError::MonaException,
+                                "SNH: In StrangerAutoatmon.preReplace: either searchAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
     else if (searchAuto->isTop())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.preReplace: searchAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
+        throw StrangerException(AnalysisError::MonaException,
+                                "SNH: In StrangerAutoatmon.preReplace: searchAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     else if (this->isTop())
-        throw StrangerAutomatonException(
-                                             "SNH: In StrangerAutoatmon.preReplace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
-    
+        throw StrangerException(AnalysisError::MonaException,
+                                "SNH: In StrangerAutoatmon.preReplace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     
     debugToFile(stringbuilder() << "M[" << (traceID) << "] = dfa_pre_replace_str(M[" << this->autoTraceID << "], M[" << searchAuto->autoTraceID << "], \"" << replaceString << "\" , NUM_ASCII_TRACKS, indices_main);//"<<id << " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
     boost::posix_time::ptime start_time = perfInfo->current_time();
     StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_replace_str(this->dfa, searchAuto->dfa, replaceString.c_str(), num_ascii_track, indices_main));
     perfInfo->pre_replace_total_time += perfInfo->current_time() - start_time;
     perfInfo->num_of_pre_replace++;
+
+    if (retMe->isNull()) {
+        throw StrangerException(AnalysisError::MonaException, "Null DFA pointer returned from MONA");
+    }
     
     {
         retMe->setID(id);
@@ -1718,13 +1709,13 @@ StrangerAutomaton* StrangerAutomaton::preReplaceOnce(const StrangerAutomaton* se
                                                      std::string replaceString, int id) const {
     debug(stringbuilder() << id <<  " = preReplace("  << this->ID <<  ", " << searchAuto->ID << ")");
     if (searchAuto->isBottom() || this->isBottom())
-        throw StrangerAutomatonException(
+        throw StrangerException(AnalysisError::MonaException,
             "SNH: In StrangerAutoatmon.preReplace: either searchAuto or subjectAuto is bottom element (phi) which can not be used in replace.");
     else if (searchAuto->isTop())
-        throw StrangerAutomatonException(
+        throw StrangerException(AnalysisError::MonaException,
             "SNH: In StrangerAutoatmon.preReplace: searchAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
     else if (this->isTop())
-        throw StrangerAutomatonException(
+        throw StrangerException(AnalysisError::MonaException,
             "SNH: In StrangerAutoatmon.preReplace: subjectAuto is top (indicating that the variable may no longer be of type string) and can not be used in replacement");
 
     
@@ -1733,7 +1724,11 @@ StrangerAutomaton* StrangerAutomaton::preReplaceOnce(const StrangerAutomaton* se
     StrangerAutomaton* retMe = new StrangerAutomaton(dfa_pre_replace_once_str(this->dfa, searchAuto->dfa, replaceString.c_str(), num_ascii_track, indices_main));
     perfInfo->pre_replace_total_time += perfInfo->current_time() - start_time;
     perfInfo->num_of_pre_replace++;
-    
+
+    if (retMe->isNull()) {
+        throw StrangerException(AnalysisError::MonaException, "Null DFA pointer returned from MONA");
+    }
+
     {
         retMe->setID(id);
         retMe->debugAutomaton();
@@ -1841,13 +1836,14 @@ bool StrangerAutomaton::checkIntersection(const StrangerAutomaton* otherAuto, in
         debug(stringbuilder() << debugStr <<  (result == 0 ? false : true));
     }
     
-    if (result == 0)
+    if (result == 0) {
         return false;
-    else if (result == 1)
+    } else if (result == 1) {
         return true;
-    else
-        throw StrangerAutomatonException(
-                                     "Error in checkIntersection result for StrangerAutomaton.");
+    } else {
+        throw StrangerException(AnalysisError::MonaException,
+                                "Error in checkIntersection result for StrangerAutomaton.");
+    }
 }
 
 /**
@@ -1893,16 +1889,14 @@ bool StrangerAutomaton::checkInclusion(const StrangerAutomaton* otherAuto, int i
         debug(stringbuilder() << debugStr <<  (result == 0 ? false : true));
     }
     
-    if (result == 0)
+    if (result == 0) {
         return false;
-    else if (result == 1){
+    } else if (result == 1) {
         return true;
+    } else {
+        throw StrangerException(AnalysisError::MonaException,
+                                "Error in checkInclusion result for StrangerAutomaton.");
     }
-    
-    else
-        // TODO: we should have our own exception for StrangerAutomaton
-        throw StrangerAutomatonException(
-                                     "Error in checkInclusion result for StrangerAutomaton.");
 }
 
 /**
@@ -1950,16 +1944,17 @@ bool StrangerAutomaton::checkEquivalence(const StrangerAutomaton* otherAuto, int
         debug(stringbuilder() << debugStr << (result == 0 ? false : true));
     }
     
-    if (result == 0)
+    if (result == 0) {
         return false;
-    else if (result == 1)
+    } else if (result == 1) {
         // They should both either include or exclude empty string
         //			return (this->empty == otherAuto->empty);
         return true;
-    else
+    } else {
         // TODO: we should have our own exception for StrangerAutomaton
-        throw StrangerAutomatonException(
-                                     "Error in checkInclusion result for StrangerAutomaton.");
+        throw StrangerException(AnalysisError::MonaException,
+                                "Error in checkInclusion result for StrangerAutomaton.");
+    }
 }
 
 /**
@@ -1992,7 +1987,7 @@ bool StrangerAutomaton::isLengthFinite() const {
  */
 unsigned StrangerAutomaton::getMaxLength() const {
 	if( !(this->isLengthFinite()) ) {
-		throw StrangerAutomatonException("Length of this automaton is infinite! ID: " + this->ID);
+            throw StrangerException(AnalysisError::InfiniteLength, "Length of this automaton is infinite! ID: " + this->ID);
 	}
 
 	P_DFAFiniteLengths finiteLengths = dfaGetLengthsFiniteLang(this->dfa, num_ascii_track, indices_main);
@@ -2012,7 +2007,7 @@ unsigned StrangerAutomaton::getMaxLength() const {
  */
 unsigned StrangerAutomaton::getMinLength() const {
 	if( !(this->isLengthFinite()) ) {
-		throw StrangerAutomatonException("Length of this automaton is infinite! ID: " + this->ID);
+            throw StrangerException(AnalysisError::InfiniteLength, "Length of this automaton is infinite! ID: " + this->ID);
 	}
 
 	P_DFAFiniteLengths finiteLengths = dfaGetLengthsFiniteLang(this->dfa, num_ascii_track, indices_main);
@@ -2061,15 +2056,16 @@ bool StrangerAutomaton::checkEmptiness() const {
         debug(stringbuilder() << debugStr << (result == 0 ? false : true));
     }
     
-    if (result == 0)
+    if (result == 0) {
         return false;
-    else if (result == 1)
+    } else if (result == 1) {
         // if it contains empty string then it is not Phi
         return true;
-    else
+    } else {
         // TODO: we should have our own exception for StrangerAutomaton
-        throw StrangerAutomatonException(
-                                     "Error in checkEmptiness result for StrangerAutomaton.");
+        throw StrangerException(AnalysisError::MonaException,
+                                "Error in checkEmptiness result for StrangerAutomaton.");
+    }
 }
 
 /**
@@ -2108,7 +2104,7 @@ bool StrangerAutomaton::isSingleton() const {
 string StrangerAutomaton::getStr() const {
     char* result = ::isSingleton(this->dfa, num_ascii_track, indices_main);
     if (result == NULL){
-        throw StrangerAutomatonException("Trying to get a string for an automaton with a nonSingleton language.");
+        throw StrangerException(AnalysisError::MonaException, "Trying to get a string for an automaton with a nonSingleton language.");
     }
     string retMe(result);
     return retMe;
@@ -2321,115 +2317,117 @@ StrangerAutomaton* StrangerAutomaton::preTrimSpacesRigth(int id) const
 }
 
 StrangerAutomaton* StrangerAutomaton::substr_first_part(int start, int id) const  {
-	if (start < 0)
-		throw StrangerAutomatonException(stringbuilder() << "current substr model does not support negative parameters!!!");
+    if (start < 0) {
+        throw StrangerException(AnalysisError::InvalidArgument, "current substr model does not support negative parameters!!!");
+    }
+    // Create a string with length up to start
+    StrangerAutomaton* len1Auto = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
+    StrangerAutomaton* empty = StrangerAutomaton::makeEmptyString(id);
+    // Replace the first start characters with the empty string (once)
+    StrangerAutomaton* chopped = StrangerAutomaton::str_replace_once(len1Auto, empty, this, id);
 
-        // Create a string with length up to start
-        StrangerAutomaton* len1Auto = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
-        StrangerAutomaton* empty = StrangerAutomaton::makeEmptyString(id);
-        // Replace the first start characters with the empty string (once)
-        StrangerAutomaton* chopped = StrangerAutomaton::str_replace_once(len1Auto, empty, this, id);
-
-        delete len1Auto;
-        delete empty;
-	return chopped;
+    delete len1Auto;
+    delete empty;
+    return chopped;
 }
 
 StrangerAutomaton* StrangerAutomaton::substr(int start, int id) const  {
-	boost::posix_time::ptime start_time = perfInfo->current_time();
+    boost::posix_time::ptime start_time = perfInfo->current_time();
 
-        StrangerAutomaton* retMe = this->substr_first_part(start, id);
+    StrangerAutomaton* retMe = this->substr_first_part(start, id);
 
-	perfInfo->substr_total_time += perfInfo->current_time() - start_time;
-	perfInfo->number_of_substr++;
-	return retMe;
+    perfInfo->substr_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_substr++;
+    return retMe;
 }
 
 
 StrangerAutomaton* StrangerAutomaton::substr(int start, int length, int id) const  {
-	if (length < 0)
-		throw StrangerAutomatonException(stringbuilder() << "current substr model does not support negative parameters!!!");
-	boost::posix_time::ptime start_time = perfInfo->current_time();
-	StrangerAutomaton* retMe = NULL;
-	if (length == 0) {
-            retMe = StrangerAutomaton::makeEmptyString(id);
-	} else {
-            // First remove the characters from start -> start + length
-            StrangerAutomaton* chopped =  this->substr_first_part(start, id);
-            // Now make an automaton which accepts all strings of a certain length
-            StrangerAutomaton* len2Auto = StrangerAutomaton::makeAnyStringL1ToL2(length, length);
-            // Copy the chopped automaton and accept ALL states
-            StrangerAutomaton* rejectAll = new StrangerAutomaton(dfaSetAllStatesTo(chopped->getDfa(), '+', num_ascii_track, indices_main));
-            // Intersect the length and chopped automata
-            StrangerAutomaton* substring = rejectAll->intersect(len2Auto, id);
-            delete rejectAll;
-            delete chopped;
-            delete len2Auto;
-            retMe = substring;
-	}
-	perfInfo->substr_total_time += perfInfo->current_time() - start_time;
-	perfInfo->number_of_substr++;
-	return retMe;
+    if (length < 0) {
+        throw StrangerException(AnalysisError::InvalidArgument, "current substr model does not support negative parameters!!!");
+    }
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = NULL;
+    if (length == 0) {
+        retMe = StrangerAutomaton::makeEmptyString(id);
+    } else {
+        // First remove the characters from start -> start + length
+        StrangerAutomaton* chopped =  this->substr_first_part(start, id);
+        // Now make an automaton which accepts all strings of a certain length
+        StrangerAutomaton* len2Auto = StrangerAutomaton::makeAnyStringL1ToL2(length, length);
+        // Copy the chopped automaton and accept ALL states
+        StrangerAutomaton* rejectAll = new StrangerAutomaton(dfaSetAllStatesTo(chopped->getDfa(), '+', num_ascii_track, indices_main));
+        // Intersect the length and chopped automata
+        StrangerAutomaton* substring = rejectAll->intersect(len2Auto, id);
+        delete rejectAll;
+        delete chopped;
+        delete len2Auto;
+        retMe = substring;
+    }
+    perfInfo->substr_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_substr++;
+    return retMe;
 }
 
 StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int length, int id) const  {
-	if (start < 0 || length < 0)
-		throw StrangerAutomatonException(stringbuilder() << "current substr model does not support negative parameters!!!");
-	boost::posix_time::ptime start_time = perfInfo->current_time();
-	StrangerAutomaton* retMe = NULL;
-	if (length == 0) {
-            // Here we can do a short cut - if length is zero,
-            // the output string will be empty, and the input
-            // could be anything!
-            retMe = StrangerAutomaton::makeAnyString(id);
-	} else {
-            // substr operation selects part of a string
-            // s = "abcdefghij", start = 3, length = 3
-            //         +++
-            // s.substr(start, length) = "def"
-            // The pre-image is constructed from three parts:
-            // 1) Any chars, length "start"
-            // 2) The output string
-            // 3) Any string (we do not know the original length)
-            StrangerAutomaton* left_side = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
-            StrangerAutomaton* left_middle = left_side->concatenate(this,id);
-            StrangerAutomaton* right_side = StrangerAutomaton::makeAnyString(id);
-            retMe = left_middle->concatenate(right_side, id);
-            delete right_side;
-            delete left_side;
-            delete left_middle;
-        }
-	perfInfo->pre_substr_total_time += perfInfo->current_time() - start_time;
-	perfInfo->number_of_pre_substr++;
-	return retMe;
-}
-
-StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int id) const  {
-	if (start < 0)
-		throw StrangerAutomatonException(stringbuilder() << "current substr model does not support negative parameters!!!");
-	boost::posix_time::ptime start_time = perfInfo->current_time();
-	StrangerAutomaton* retMe = NULL;
-
+    if (start < 0 || length < 0) {
+        throw StrangerException(AnalysisError::InvalidArgument, "current substr model does not support negative parameters!!!");
+    }
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = NULL;
+    if (length == 0) {
+        // Here we can do a short cut - if length is zero,
+        // the output string will be empty, and the input
+        // could be anything!
+        retMe = StrangerAutomaton::makeAnyString(id);
+    } else {
         // substr operation selects part of a string
-        // with one argument, it removes first s chars
-        // s = "abcdefghij", start = 3
-        //         +++++++
-        // s.substr(start) = "defghij"
+        // s = "abcdefghij", start = 3, length = 3
+        //         +++
+        // s.substr(start, length) = "def"
         // The pre-image is constructed from three parts:
         // 1) Any chars, length "start"
         // 2) The output string
+        // 3) Any string (we do not know the original length)
         StrangerAutomaton* left_side = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
-        retMe = left_side->concatenate(this,id);
+        StrangerAutomaton* left_middle = left_side->concatenate(this,id);
+        StrangerAutomaton* right_side = StrangerAutomaton::makeAnyString(id);
+        retMe = left_middle->concatenate(right_side, id);
+        delete right_side;
         delete left_side;
+        delete left_middle;
+    }
+    perfInfo->pre_substr_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_pre_substr++;
+    return retMe;
+}
 
-	perfInfo->pre_substr_total_time += perfInfo->current_time() - start_time;
-	perfInfo->number_of_pre_substr++;
-	return retMe;
+StrangerAutomaton* StrangerAutomaton::pre_substr(int start, int id) const  {
+    if (start < 0) {
+        throw StrangerException(AnalysisError::InvalidArgument, "current substr model does not support negative parameters!!!");
+    }
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = NULL;
+
+    // substr operation selects part of a string
+    // with one argument, it removes first s chars
+    // s = "abcdefghij", start = 3
+    //         +++++++
+    // s.substr(start) = "defghij"
+    // The pre-image is constructed from three parts:
+    // 1) Any chars, length "start"
+    // 2) The output string
+    StrangerAutomaton* left_side = StrangerAutomaton::makeAnyStringL1ToL2(start, start);
+    retMe = left_side->concatenate(this,id);
+    delete left_side;
+
+    perfInfo->pre_substr_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_pre_substr++;
+    return retMe;
 }
 
 StrangerAutomaton* StrangerAutomaton::addslashes(const StrangerAutomaton* subjectAuto, int id)
 {
-
     debug(stringbuilder() << id << " = addSlashes(" << subjectAuto->ID << ");");
 
     boost::posix_time::ptime start_time = perfInfo->current_time();
@@ -2561,7 +2559,7 @@ StrangerAutomaton* StrangerAutomaton::htmlSpecialChars(const StrangerAutomaton* 
     else if (flag == "ENT_SLASH")
 		_flag = ENT_SLASH;
     else
-		throw StrangerAutomatonException(stringbuilder() << "htmlspecialchar is not supporting the flag: " << flag);
+        throw StrangerException(AnalysisError::InvalidArgument, stringbuilder() << "htmlspecialchar is not supporting the flag: " << flag);
 
     debug(stringbuilder() << id << " = htmlSpecialChars(" << subjectAuto->ID << ");");
 
@@ -2588,17 +2586,17 @@ StrangerAutomaton* StrangerAutomaton::preHtmlSpecialChars(const StrangerAutomato
     else if (flag == "ENT_NOQUOTES")
 		_flag = ENT_NOQUOTES;
     else
-		throw StrangerAutomatonException(stringbuilder() << "htmlspecialchar is not supporting the flag: " << flag);
+        throw StrangerException(AnalysisError::InvalidArgument, stringbuilder() << "htmlspecialchar is not supporting the flag: " << flag);
 
-	debug(stringbuilder() << id << " = preHtmlSpecialChars(" << subjectAuto->ID << ");");
-	boost::posix_time::ptime start_time = perfInfo->current_time();
-	StrangerAutomaton* retMe = new StrangerAutomaton(dfaPreHtmlSpecialChars(subjectAuto->dfa, num_ascii_track, indices_main, _flag));
-	perfInfo->pre_htmlspecialchars_total_time += perfInfo->current_time() - start_time;
-	perfInfo->number_of_pre_htmlspecialchars++;
+    debug(stringbuilder() << id << " = preHtmlSpecialChars(" << subjectAuto->ID << ");");
+    boost::posix_time::ptime start_time = perfInfo->current_time();
+    StrangerAutomaton* retMe = new StrangerAutomaton(dfaPreHtmlSpecialChars(subjectAuto->dfa, num_ascii_track, indices_main, _flag));
+    perfInfo->pre_htmlspecialchars_total_time += perfInfo->current_time() - start_time;
+    perfInfo->number_of_pre_htmlspecialchars++;
 
-	retMe->ID = id;
-	retMe->debugAutomaton();
-	return retMe;
+    retMe->ID = id;
+    retMe->debugAutomaton();
+    return retMe;
 }
 
 
@@ -2701,7 +2699,7 @@ StrangerAutomaton* StrangerAutomaton::mysql_real_escape_string(const StrangerAut
     //    }
     //
     //    return retMe;
-	throw StrangerAutomatonException("not implemented");
+    throw StrangerException(AnalysisError::NotImplemented, "not implemented");
     
 }
 
@@ -2729,8 +2727,7 @@ StrangerAutomaton* StrangerAutomaton::pre_mysql_real_escape_string(const Strange
     //    }
     //
     //    return retMe;
-	throw StrangerAutomatonException("not implemented");
-    
+    throw StrangerException(AnalysisError::NotImplemented, "not implemented");
 }
 
 StrangerAutomaton* StrangerAutomaton::nl2br(const StrangerAutomaton* subjectAuto, int id)
@@ -2751,8 +2748,7 @@ StrangerAutomaton* StrangerAutomaton::nl2br(const StrangerAutomaton* subjectAuto
     //    }
     //
     //    return retMe;
-	throw StrangerAutomatonException("not implemented");
-    
+    throw StrangerException(AnalysisError::NotImplemented, "not implemented");
 }
 
 StrangerAutomaton* StrangerAutomaton::pre_nl2br(const StrangerAutomaton* subjectAuto, int id)
@@ -2773,8 +2769,7 @@ StrangerAutomaton* StrangerAutomaton::pre_nl2br(const StrangerAutomaton* subject
     //    }
     //
     //    return retMe;
-	throw StrangerAutomatonException("not implemented");
-    
+    throw StrangerException(AnalysisError::NotImplemented, "not implemented");
 }
 
 StrangerAutomaton* StrangerAutomaton::encodeURIComponent(const StrangerAutomaton* subjectAuto, int id)

@@ -40,13 +40,6 @@ std::vector<AttackContext> AutomatonGroup::m_sink_contexts = {
   AttackContext::None
 };
 
-std::vector<AnalysisError> AutomatonGroups::m_error_types = {
-  AnalysisError::None,
-  AnalysisError::UnsupportedFunction,
-  AnalysisError::MonaException,
-  AnalysisError::Other
-};
-
 AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name, int id)
   : m_automaton(automaton)
   , m_graphs()
@@ -343,17 +336,53 @@ void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::ve
   }
 }
 
-void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent) const
+void AutomatonGroups::printErrorSummary(std::ostream& os) const
 {
   // Print a table of columns containting attack patterns
   //                  rows containing injection contexts
   os << "Context, total, errors, ";
 
   // Count errors in different categories
-  for (auto e : m_error_types) {
+  for (auto e : AnalysisErrorHelper::getAllEnums()) {
     os << AnalysisErrorHelper::getName(e) << ",";
   }
+
+  os << std::endl;
+
+  // Loop over sink contexts, one per line
+  for (auto s : AutomatonGroup::m_sink_contexts) {
+    os << AttackContextHelper::getName(s) << ",";
+
+    // Total
+    unsigned int total = 0;
+    unsigned int errors = 0;
+    // Loop over each group
+    for (auto g : m_groups) {
+      total += g.getEntriesForSinkContext(s);
+      errors += g.getErrorsForSinkContext(s);
+    }
+    os << total << ", " << errors << ", ";
+
+    // Loop over each error
+    for (auto e : AnalysisErrorHelper::getAllEnums()) {
+      errors = 0;
+      for (auto g : m_groups) {
+        errors += g.getErrorsForSinkContextAndErrorType(s, e);
+      }
+      os << errors << ", ";     
+    }
+    
+    os << std::endl;
+  }
+}
   
+
+void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent) const
+{
+  // Print a table of columns containting attack patterns
+  //                  rows containing injection contexts
+  os << "Context, total, ";
+
   for (auto a : contexts) {
     os << AttackContextHelper::getName(a) << ",";
   }
@@ -373,15 +402,6 @@ void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<At
     }
     os << total << ", " << errors << ", ";
 
-    // Loop over each error
-    for (auto e : m_error_types) {
-      errors = 0;
-      for (auto g : m_groups) {
-        errors += g.getErrorsForSinkContextAndErrorType(s, e);
-      }
-      os << errors << ", ";     
-    }
-    
     for (auto a : contexts) {
       unsigned int i = 0;
       // Loop over each group

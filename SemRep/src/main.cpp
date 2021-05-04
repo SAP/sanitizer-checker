@@ -23,7 +23,7 @@
 #include <boost/program_options.hpp>
 #include "SemRepair.hpp"
 #include "AnalysisResult.hpp"
-#include "exceptions/StrangerStringAnalysisException.hpp"
+#include "exceptions/StrangerException.hpp"
 
 using namespace std;
 using namespace boost;
@@ -47,7 +47,7 @@ void call_sem_repair(string reference_name, string target_name, string field_nam
 		semRepair.printResults();
 
 		cout << endl << "\t------ END RESULT for: " << field_name << " ------" << endl;
-	} catch (StrangerStringAnalysisException const &e) {
+	} catch (StrangerException const &e) {
 		cerr << e.what();
 		exit(EXIT_FAILURE);
 	}

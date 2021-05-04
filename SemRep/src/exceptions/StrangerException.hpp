@@ -1,5 +1,6 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /*
- * StrangerAutomatonException.hpp
+ * MonaException.hpp
  *
  * Copyright (C) 2013-2014 University of California Santa Barbara.
  *
@@ -21,18 +22,37 @@
  * Authors: Abdulbaki Aydin, Muath Alkhalaf
  */
 
-#ifndef STRANGERAUTOMATONEXCEPTION_HPP_
-#define STRANGERAUTOMATONEXCEPTION_HPP_
+#ifndef STRANGEREXCEPTION_HPP_
+#define STRANGEREXCEPTION_HPP_
 
+#include <exception>
+#include <iostream>
 #include <string>
+#include <sstream>
 
-class StrangerAutomatonException
+#include "AnalysisError.hpp"
+
+class StrangerException : public std::exception
 {
 
 public:
-    StrangerAutomatonException(std::string msg) {};
-    StrangerAutomatonException(){};
-};
+  StrangerException(AnalysisError e, const std::string& msg);
+  StrangerException(AnalysisError e);
+  StrangerException(const std::string& msg);
 
+  virtual const char* what() const noexcept override {
+    return m_msg.c_str();
+  }
 
-#endif /* STRANGERAUTOMATONEXCEPTION_HPP_ */
+  AnalysisError getError() const { return m_error; }
+
+private:
+
+  std::string make_msg(const std::string &in) const;
+
+  std::string m_msg;
+  AnalysisError m_error;
+    
+}; 
+
+#endif /* STRANGEREXCEPTION_HPP_ */

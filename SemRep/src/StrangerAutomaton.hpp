@@ -26,7 +26,6 @@
 
 #include "PerfInfo.hpp"
 #include "StringBuilder.hpp"
-#include "exceptions/StrangerAutomatonException.hpp"
 #include "RegExp.hpp"
 #define export _export_
 #include "stranger/stranger_lib_internal.h"

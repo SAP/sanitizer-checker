@@ -26,7 +26,7 @@
 #include "MultiAttack.hpp"
 #include "AttackContext.hpp"
 #include "StrangerAutomaton.hpp"
-#include "exceptions/StrangerStringAnalysisException.hpp"
+#include "exceptions/StrangerException.hpp"
 
 using namespace std;
 using namespace boost;
@@ -90,7 +90,7 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
         attack.printResults();
 
         cout << endl << "\t------ END RESULT for: " << field_name << " ------" << endl;
-    } catch (StrangerStringAnalysisException const &e) {
+    } catch (StrangerException const &e) {
         cerr << e.what();
         exit(EXIT_FAILURE);
     }

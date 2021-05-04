@@ -23,6 +23,7 @@
 
 #include "SemRepair.hpp"
 #include "ValidationImageComputer.hpp"
+#include "exceptions/StrangerException.hpp"
 
 PerfInfo& SemRepair::perfInfo = PerfInfo::getInstance();
 
@@ -39,13 +40,13 @@ SemRepair::SemRepair(string reference_dep_graph_file_name,string target_dep_grap
 	// initialize input nodes
 	this->reference_uninit_field_node = reference_dep_graph.findInputNode(input_field_name);
 	if (reference_uninit_field_node == NULL) {
-		throw StrangerStringAnalysisException("Cannot find input node " + input_field_name + " in reference dep graph.");
+		throw StrangerException("Cannot find input node " + input_field_name + " in reference dep graph.");
 	}
 	message(stringbuilder() << "reference uninit node(" << reference_uninit_field_node->getID() << ") found for field " << input_field_name << ".");
 
 	this->target_uninit_field_node = target_dep_graph.findInputNode(input_field_name);
 	if (target_uninit_field_node == NULL) {
-		throw StrangerStringAnalysisException("Cannot find input node " + input_field_name + " in target dep graph.");
+		throw StrangerException("Cannot find input node " + input_field_name + " in target dep graph.");
 	}
 	message(stringbuilder() << "target uninit node(" << target_uninit_field_node->getID() << ") found for field " << input_field_name << ".");
 
@@ -360,7 +361,7 @@ StrangerAutomaton* SemRepair::computeValidationPatch() {
 		delete target_validation;
 		delete diffAuto;
 
-	} catch (StrangerStringAnalysisException const &e) {
+	} catch (StrangerException const &e) {
 		cerr << e.what();
 		exit(EXIT_FAILURE);
 	}
@@ -395,7 +396,7 @@ StrangerAutomaton* SemRepair::computeReferenceFWAnalysis() {
 		referenceAnalyzer.doForwardAnalysis_SingleInput(reference_dep_graph, reference_field_relevant_graph, referenceAnalysisResult);
 		message("...finished forward analysis for reference.");
 
-	} catch (StrangerStringAnalysisException const &e) {
+	} catch (StrangerException const &e) {
         cerr << e.what();
         exit(EXIT_FAILURE);
     }
@@ -434,7 +435,7 @@ AnalysisResult SemRepair::computeTargetFWAnalysis() {
 		targetAnalyzer.doForwardAnalysis_SingleInput(target_dep_graph, target_field_relevant_graph, targetAnalysisResult);
 		message("...finished forward analysis for target.");
 
-	} catch (StrangerStringAnalysisException const &e) {
+	} catch (StrangerException const &e) {
         cerr << e.what();
         exit(EXIT_FAILURE);
     }
@@ -458,7 +459,7 @@ StrangerAutomaton* SemRepair::computeTargetLengthPatch(StrangerAutomaton* initia
 		}
 //		fwAnalysisResult[target_uninit_field_node->getID()] = validation_patch_auto->intersect(length_patch_auto,-5);
 
-	} catch (StrangerStringAnalysisException const &e) {
+	} catch (StrangerException const &e) {
         cerr << e.what();
         exit(EXIT_FAILURE);
     }
@@ -580,7 +581,7 @@ StrangerAutomaton* SemRepair::computeSanitizationPatch() {
 				is_length_patch_required = true;
 			}
 
-		} catch (StrangerStringAnalysisException const &e) {
+		} catch (StrangerException const &e) {
 			cerr << e.what();
 			exit(EXIT_FAILURE);
 		}

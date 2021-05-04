@@ -31,7 +31,7 @@
 
 #include "StrangerAutomaton.hpp"
 #include "SemAttack.hpp"
-#include "AnalysisError.hpp"
+#include "exceptions/AnalysisError.hpp"
 
 // Create a class to group equal Automata
 class AutomatonGroup {
@@ -108,6 +108,7 @@ public:
     void printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
     void printStatus(std::ostream& os) const;
     void printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent = false) const;
+    void printErrorSummary(std::ostream& os) const;
 
 private:
 
@@ -115,7 +116,6 @@ private:
     int m_id;
     AutomatonGroup* addNewEntry(const StrangerAutomaton* automaton, const CombinedAnalysisResult* graph);
     void printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const;
-    static std::vector<AnalysisError> m_error_types;
 };
 
 #endif /* AUTOMATON_GROUPS_HPP_ */

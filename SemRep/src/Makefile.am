@@ -15,7 +15,6 @@ libsemrep_a_SOURCES = ImageComputer.cpp \
                       AutomatonGroups.cpp \
                       MultiAttack.cpp \
                       AttackContext.cpp \
-                      AnalysisError.cpp \
                       ValidationImageComputer.cpp \
 		      AnalysisResult.cpp
 

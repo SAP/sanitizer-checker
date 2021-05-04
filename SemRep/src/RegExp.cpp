@@ -21,6 +21,7 @@
  * Authors: Abdulbaki Aydin, Muath Alkhalaf
  */
 #include "RegExp.hpp"
+#include "exceptions/StrangerException.hpp"
 
 using namespace std;
 
@@ -150,7 +151,8 @@ void RegExp::init(string s, int syntax_flags){
     flags = syntax_flags;
     RegExp* e = parseUnionExp();
     if(pos < b.length()) {
-        throw std::invalid_argument((stringbuilder() << "end-of-string expected at position " << pos << " was " << b.length()));
+        throw StrangerException(AnalysisError::RegExpParseError,
+                                (stringbuilder() << "end-of-string expected at position " << pos << " was " << b.length()));
     }
 
     kind = e->kind;
@@ -732,11 +734,14 @@ bool RegExp::more()
     return pos < b.length();
 }
 
-char RegExp::next() /* throws(IllegalArgumentException) */
+char RegExp::next()
 {
-    if(!more())
-    	throw std::invalid_argument((stringbuilder() << "unexpected end-of-string"));
-
+    if(!more()) {
+    	throw StrangerException(
+            AnalysisError::RegExpParseError,
+            stringbuilder() << "unexpected end-of-string"
+            );
+    }
     return b[pos++];
 }
 
@@ -745,7 +750,7 @@ bool RegExp::check(int flag)
     return (flags & flag) != 0;
 }
 
-RegExp* RegExp::parseUnionExp() /* throws(IllegalArgumentException) */
+RegExp* RegExp::parseUnionExp()
 {
     RegExp* e = parseInterExp();
     if (match('|')) {
@@ -754,7 +759,7 @@ RegExp* RegExp::parseUnionExp() /* throws(IllegalArgumentException) */
     return e;
 }
 
-RegExp* RegExp::parseInterExp() /* throws(IllegalArgumentException) */
+RegExp* RegExp::parseInterExp()
 {
     RegExp* e = parseEndAnchor();
     if(check(INTERSECTION) && match('&')) {
@@ -776,7 +781,7 @@ RegExp* RegExp::parseEndAnchor()
     return e;
 }
 
-RegExp* RegExp::parseConcatExp() /* throws(IllegalArgumentException) */
+RegExp* RegExp::parseConcatExp()
 {
     RegExp* e = parseRepeatExp();
     if(more() && !peek(")&|$")) {
@@ -785,7 +790,7 @@ RegExp* RegExp::parseConcatExp() /* throws(IllegalArgumentException) */
     return e;
 }
 
-RegExp* RegExp::parseRepeatExp() /* throws(IllegalArgumentException) */
+RegExp* RegExp::parseRepeatExp()
 {
     RegExp* e = parseComplExp();
     while (peek("?*+{")) {
@@ -802,7 +807,8 @@ RegExp* RegExp::parseRepeatExp() /* throws(IllegalArgumentException) */
                                 next();
 
             if(start == pos)
-            	throw std::invalid_argument((stringbuilder() << "integer expected at position " << pos));
+            	throw StrangerException(AnalysisError::RegExpParseError,
+                                        (stringbuilder() << "integer expected at position " << pos));
 
             int n = to_int(b.substr(start, pos - start));
             int m = -1;
@@ -817,7 +823,7 @@ RegExp* RegExp::parseRepeatExp() /* throws(IllegalArgumentException) */
             } else
                 m = n;
             if(!match('}'))
-            	throw std::invalid_argument((stringbuilder() << "expected '}' at position " << pos));
+            	throw StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "expected '}' at position " << pos));
 
             if(m == -1)
                 return makeRepeat(e, n);
@@ -848,7 +854,7 @@ RegExp* RegExp::parseCharClassExp() /* throws(IllegalArgumentException) */
             e = makeIntersection(makeAnyChar(), makeComplement(e));
 
         if(!match(']'))
-        	throw std::invalid_argument((stringbuilder() << "expected ']' at position " << pos));
+        	throw StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "expected ']' at position " << pos));
         return e;
     } else {
         return parseSimpleExp();
@@ -897,7 +903,7 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
     //                     next();
 
     //     if(!match('"'))
-    //     	throw std::invalid_argument((stringbuilder() << "expected '\"' at position " << pos));
+    //     	throw StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "expected '\"' at position " << pos));
 
     //     return makeString(b.substr(start, (pos - 1 - start)));
     } else if(match('(')) {
@@ -914,7 +920,7 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
         RegExp* e = parseUnionExp();
         // TO DO: add groups here? Keep track of a list of pointers to subgroups
         if(!match(')')) {
-        	throw std::invalid_argument((stringbuilder() << "expected ')' at position " << pos));
+        	throw StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "expected ')' at position " << pos));
         }
         return e;
     } else if((check(AUTOMATON) || check(INTERVAL)) && match('<')) {
@@ -923,21 +929,21 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
                         next();
 
         if(!match('>'))
-        	throw std::invalid_argument((stringbuilder() << "expected '>' at position " << pos));
+        	throw StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "expected '>' at position " << pos));
 
         std::string s = b.substr(start, (pos - 1 - start));
         string::size_type i = s.find('-');
         if(i == string::npos) {
             if(!check(AUTOMATON))
-            	throw std::invalid_argument((stringbuilder() << "interval syntax error at position " << (pos - 1)));
+            	throw StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "interval syntax error at position " << (pos - 1)));
             return makeAutomaton(s);
         } else {
             if(!check(INTERVAL))
-            	throw std::invalid_argument((stringbuilder() << "illegal identifier at position " << (pos - 1)));
+            	throw StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "illegal identifier at position " << (pos - 1)));
 
             try {
                 if(i == 0 || i == s.length() - 1 || i != s.find_last_of('-'))
-                	throw std::invalid_argument((stringbuilder() << "Number Format Error"));
+                	throw StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "Number Format Error"));
 
                 std::string smin = s.substr(0, i);
                 std::string smax = s.substr(i + 1, (s.length()-(i + 1)));
@@ -955,7 +961,7 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
                 }
                 return makeInterval(imin, imax, digits);
             } catch (exception& e) {
-                throw (std::invalid_argument((stringbuilder() << "interval syntax error at position " << (pos - 1))));
+                throw (StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "interval syntax error at position " << (pos - 1))));
             }
         }
     } else {
@@ -1070,7 +1076,7 @@ int to_int(std::string input)
 	const char *s = input.c_str();
      if ( s == NULL || s[0] == '\0' )
      {
-        throw  std::invalid_argument("null or empty string argument");
+        throw  StrangerException(AnalysisError::RegExpParseError, "null or empty string argument");
      }
      bool negate = (s[0] == '-');
      if ( *s == '+' || *s == '-' )
@@ -1083,7 +1089,7 @@ int to_int(std::string input)
               result = result * 10  - (*s - '0');  //assume negative number
           }
           else
-              throw std::invalid_argument("invalid input string");
+              throw StrangerException(AnalysisError::RegExpParseError, "invalid input string");
           ++s;
      }
      return negate ? result : -result; //-result is positive!

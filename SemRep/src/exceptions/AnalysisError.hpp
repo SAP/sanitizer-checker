@@ -22,14 +22,40 @@
  *
  * Authors: Thomas Barber
  */
-#include "AnalysisError.hpp"
 
-#define MAKE_STRINGS(VAR) #VAR,
-const char* AnalysisErrorHelper::AnalysisErrorName[] = {
-    ERROR_ENUM(MAKE_STRINGS)
+#include <vector>
+
+#ifndef ANALYSIS_ERROR_HPP_
+#define ANALYSIS_ERROR_HPP_
+
+
+#define ERROR_ENUM(DO)                           \
+  DO(None)                                       \
+  DO(UnsupportedFunction)                        \
+  DO(MalformedDepgraph)                          \
+  DO(RegExpParseError)                           \
+  DO(MonaException)                              \
+  DO(InvalidArgument)                            \
+  DO(InfiniteLength)                             \
+  DO(NotImplemented)                             \
+  DO(Other)
+
+#define MAKE_ENUM(VAR) VAR,
+enum class AnalysisError {
+    ERROR_ENUM(MAKE_ENUM)
+};
+#undef MAKE_ENUM
+
+class AnalysisErrorHelper {
+
+public:
+  static const char* getName(AnalysisError e);
+  static const std::vector<AnalysisError> getAllEnums() { return m_allEnums; }
+
+private:
+  static const char* AnalysisErrorName[];
+  static std::vector<AnalysisError> m_allEnums;
+
 };
 
-const char* AnalysisErrorHelper::getName(AnalysisError e)
-{
-  return AnalysisErrorName[static_cast<int>(e)];
-}
+#endif

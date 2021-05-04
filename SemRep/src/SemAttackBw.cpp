@@ -25,6 +25,7 @@
 
 #include "SemAttackBw.hpp"
 #include "AttackPatterns.hpp"
+#include "exceptions/StrangerException.hpp"
 
 PerfInfo& SemAttackBw::perfInfo = PerfInfo::getInstance();
 
@@ -40,7 +41,7 @@ SemAttackBw::SemAttackBw(const string& target_dep_graph_file_name, const string&
     // initialize input nodes
     this->target_uninit_field_node = target_dep_graph.findInputNode(input_field_name);
     if (this->target_uninit_field_node == nullptr) {
-        throw StrangerStringAnalysisException("Cannot find input node " + input_field_name + " in target dep graph.");
+        throw StrangerException("Cannot find input node " + input_field_name + " in target dep graph.");
     }
     message(stringbuilder() << "target uninit node(" << this->target_uninit_field_node->getID() << ") found for field " << input_field_name << ".");
 
@@ -168,7 +169,7 @@ AnalysisResult SemAttackBw::analyzePostImages() {
         analyzer.doForwardAnalysis_SingleInput(this->target_dep_graph, this->target_field_relevant_graph, analysis_result);
         message("...finished forward analysis.");
 
-    } catch (StrangerStringAnalysisException const &e) {
+    } catch (StrangerException const &e) {
         cerr << e.what();
         exit(EXIT_FAILURE);
     }
@@ -185,7 +186,7 @@ AnalysisResult SemAttackBw::analyzePreImages(StrangerAutomaton* intersection_aut
         message("...finished backward analysis.");
         return analysis_result;
 
-    } catch (StrangerStringAnalysisException const &e) {
+    } catch (StrangerException const &e) {
         cerr << e.what();
         exit(EXIT_FAILURE);
     }

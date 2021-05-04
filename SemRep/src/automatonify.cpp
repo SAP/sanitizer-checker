@@ -24,7 +24,6 @@
 
 #include <boost/program_options.hpp>
 #include "StrangerAutomaton.hpp"
-#include "exceptions/StrangerStringAnalysisException.hpp"
 
 using namespace std;
 using namespace boost;

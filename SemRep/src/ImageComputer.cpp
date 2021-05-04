@@ -22,6 +22,7 @@
  */
 
 #include "ImageComputer.hpp"
+#include "exceptions/StrangerException.hpp"
 
 using namespace std;
 
@@ -139,15 +140,15 @@ void ImageComputer::doPostImageComputation_SingleInput(
     } else if ((uninitNode = dynamic_cast<DepGraphUninitNode*>(node)) != nullptr) {
     	// input node that we are interested in should have been initialized already
     	if (analysisResult.find(node->getID()) == analysisResult.end()){
-            throw StrangerStringAnalysisException(stringbuilder() << "input node id(" << uninitNode->getID() << ") automaton must be initizalized before analysis begins!");
+            throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "input node id(" << uninitNode->getID() << ") automaton must be initizalized before analysis begins!");
     	}
     	newAuto = analysisResult.get(node->getID())->clone();
     } else {
-    	throw StrangerStringAnalysisException(stringbuilder() << "Cannot figure out node type!, node id: " << node->getID());
+    	throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Cannot figure out node type!, node id: " << node->getID());
     }
 
     if (newAuto == nullptr) {
-    	throw StrangerStringAnalysisException(stringbuilder() << "Forward automaton cannot be computed!, node id: " << node->getID());
+    	throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Forward automaton cannot be computed!, node id: " << node->getID());
     }
 
     analysisResult.set(node->getID(), newAuto);
@@ -257,7 +258,7 @@ void ImageComputer::doPreImageComputation_GeneralCase(
 			}
 
 			if (newAuto == nullptr) {
-				throw StrangerStringAnalysisException("Cannot calculate backward auto, fix me\nndoBackwardNodeComputation_RegularPhase()");
+				throw StrangerException(AnalysisError::MalformedDepgraph, "Cannot calculate backward auto, fix me\nndoBackwardNodeComputation_RegularPhase()");
 			}
 
 			tempAuto = newAuto;
@@ -266,12 +267,12 @@ void ImageComputer::doPreImageComputation_GeneralCase(
 		}
 
 	} else {
-		throw StrangerStringAnalysisException("SNH: cannot handle node type:\ndoBackwardNodeComputation_RegularPhase()");
+		throw StrangerException(AnalysisError::MalformedDepgraph, "SNH: cannot handle node type:\ndoBackwardNodeComputation_RegularPhase()");
 	}
 
 
 	if (newAuto == nullptr) {
-		throw StrangerStringAnalysisException("SNH: pre-image is NULL:\ndoBackwardNodeComputation_RegularPhase()");
+		throw StrangerException(AnalysisError::MalformedDepgraph, "SNH: pre-image is NULL:\ndoBackwardNodeComputation_RegularPhase()");
 	}
 
 	bwAnalysisResult.set(node->getID(), newAuto);
@@ -327,11 +328,11 @@ void ImageComputer::doPreImageComputationForSCC_GeneralCase(const DepGraph& orig
 				tmp_auto = makePreImageForOpChild_GeneralCase(origDepGraph, dynamic_cast<const DepGraphOpNode*>(curr_node), succ_node,
 						bwAnalysisResult, fwAnalysisResult);
 			} else {
-				throw StrangerStringAnalysisException(stringbuilder() << "Node cannot be an element of SCC component!, node id: " << node->getID());
+				throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Node cannot be an element of SCC component!, node id: " << node->getID());
 			}
 
 			if (tmp_auto == nullptr) {
-				throw StrangerStringAnalysisException(stringbuilder() << "Could not calculate the corresponding automaton!, node id: " << node->getID());
+				throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Could not calculate the corresponding automaton!, node id: " << node->getID());
 			}
 
 			new_auto = tmp_auto->union_(prev_auto, succ_node->getID());
@@ -383,7 +384,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 	if (opName.find("__vlab_restrict") != string::npos) {
 		boost::posix_time::ptime start_time = perfInfo->current_time();
 		if (successors.size() != 3) {
-			throw StrangerStringAnalysisException(stringbuilder() << "__vlab_restrict invalid number of arguments");
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "__vlab_restrict invalid number of arguments");
 		}
 
 		DepGraphNode* subjectNode = successors[1];
@@ -393,16 +394,16 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		if (childNode->equals(subjectNode)){
 			retMe = opAuto->clone(childNode->getID());
 		} else if (childNode->equals(patternNode) || childNode->equals(complementNode)) {
-			throw StrangerStringAnalysisException(stringbuilder() << "child node (" << childNode->getID() << ") of __vlab_restrict (" << opNode->getID() << ") should not be on the backward path");
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "child node (" << childNode->getID() << ") of __vlab_restrict (" << opNode->getID() << ") should not be on the backward path");
 		} else {
-			throw StrangerStringAnalysisException(stringbuilder() << "child node (" << childNode->getID() << ") of __vlab_restrict (" << opNode->getID() << ") is not in backward path");
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "child node (" << childNode->getID() << ") of __vlab_restrict (" << opNode->getID() << ") is not in backward path");
 		}
 		perfInfo->pre_vlab_restrict_total_time += perfInfo->current_time() - start_time;
 		perfInfo->number_of_pre_vlab_restrict++;
 
 	} else if ((opName == ".") || (opName == "concat")) {
 		if (successors.size() < 2)
-			throw StrangerStringAnalysisException(stringbuilder() << "less than two successors for concat node " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "less than two successors for concat node " << opNode->getID());
 
 		const StrangerAutomaton* concatAuto = opAuto;
 
@@ -414,7 +415,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 
 		if (childNode->equals(leftSibling)){
 			if (leftIt == fwAnalysisResult.end()) {
-				throw StrangerStringAnalysisException(stringbuilder() << "Should not visit left node(" << leftSibling->getID() << ") in concat");
+				throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Should not visit left node(" << leftSibling->getID() << ") in concat");
 			} else if (rightIt == fwAnalysisResult.end()) {
 				// we can just clone the previous auto, in that case actual concat operation is not done during forward analysis
 				retMe = concatAuto->clone(childNode->getID());
@@ -436,7 +437,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		} else if (childNode->equals(rightSibling)){
 
 			if (rightIt == fwAnalysisResult.end()) {
-				throw StrangerStringAnalysisException(stringbuilder() << "Should not visit right node(" << leftSibling->getID() << ") in concat");
+				throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Should not visit right node(" << leftSibling->getID() << ") in concat");
 			} else if (leftIt == fwAnalysisResult.end()) {
 				// we can just clone the previous auto, in that case actual concat operation is not done during forward analysis
 				retMe = concatAuto->clone(childNode->getID());
@@ -456,7 +457,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 			}
 
 		}else {
-			throw StrangerStringAnalysisException(stringbuilder() << "child (" << childNode->getID() << ") of concat (" << opNode->getID() << ") is not equal to any of the two successors.");
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "child (" << childNode->getID() << ") of concat (" << opNode->getID() << ") is not equal to any of the two successors.");
 		}
 
 	} else if (opName == "addslashes") {
@@ -497,7 +498,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 			}
 			retMe = StrangerAutomaton::preHtmlSpecialChars(opAuto, flagString, childNode->getID());
 		} else {
-			throw StrangerStringAnalysisException(stringbuilder() << "SNH: child node (" << childNode->getID() << ") of htmlspecialchars (" << opNode->getID() << ") is not in backward path");
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "SNH: child node (" << childNode->getID() << ") of htmlspecialchars (" << opNode->getID() << ") is not in backward path");
 		}
 	} else if (opName == "mysql_escape_string") {
 		// has one parameter
@@ -510,7 +511,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 	} else if (opName == "preg_replace" || opName == "ereg_replace" || opName == "str_replace") {
 
 		if (successors.size() != 3) {
-			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments");
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "replace invalid number of arguments");
 		}
 
 		DepGraphNode* patternNode = successors[0];
@@ -541,7 +542,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 	} else if (opName == "str_replace_once") {
 
 		if (successors.size() != 3) {
-			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments");
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "replace invalid number of arguments");
 		}
 
 		DepGraphNode* patternNode = successors[0];
@@ -561,7 +562,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 	} else if (opName == "split") {
                 // Model split as simply replacing the split character with an empty string
 		if (successors.size() != 2) {
-			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
 		}
 
 		DepGraphNode* subjectNode = successors[1];
@@ -574,7 +575,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 	} else if (opName == "substr"){
 
 		if (successors.size() < 2) {
-			throw StrangerStringAnalysisException(stringbuilder() << "substr invalid number of arguments");
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "substr invalid number of arguments");
 		}
                 const StrangerAutomaton* subjectAuto = opAuto;
 
@@ -637,7 +638,7 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
                 // Backwards analysis, so perform the inversion function
                 retMe = StrangerAutomaton::jsonStringify(opAuto, opNode->getID());
 	} else {
-		throw StrangerStringAnalysisException( "Not implemented yet for regular validation phase: " + opName);
+		throw StrangerException(AnalysisError::NotImplemented,  "Not implemented yet for regular validation phase: " + opName);
 	}
 
 	return retMe;
@@ -655,7 +656,7 @@ string ImageComputer::getLiteralOrConstantValue( const DepGraphNode* node) {
         retMe = place->toString();
     }
     else
-        throw StrangerStringAnalysisException(stringbuilder() << "SNH: node should be literal.\n");
+        throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "SNH: node should be literal.\n");
     return retMe;
 }
 
@@ -706,7 +707,7 @@ StrangerAutomaton* ImageComputer::getLiteralorConstantNodeAuto(const DepGraphNod
                     }
 		}
 	} else {
-		throw StrangerStringAnalysisException(stringbuilder() << "Unhandled node type, node id: " << node->getID());
+		throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Unhandled node type, node id: " << node->getID());
 	}
 
 	return retMe;
@@ -784,11 +785,11 @@ void ImageComputer::doPostImageComputation_GeneralCase(DepGraph& depGraph, DepGr
 	} else if ((uninitNode = dynamic_cast<DepGraphUninitNode*>(node)) != nullptr) {
 		newAuto = ImageComputer::uninit_node_default_initialization->clone(node->getID());
 	} else {
-		throw StrangerStringAnalysisException(stringbuilder() << "Cannot figure out node type!, node id: " << node->getID());
+		throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Cannot figure out node type!, node id: " << node->getID());
 	}
 
 	if (newAuto == nullptr) {
-		throw StrangerStringAnalysisException(stringbuilder() << "Forward automaton cannot be computed!, node id: " << node->getID());
+		throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Forward automaton cannot be computed!, node id: " << node->getID());
 	}
 	analysisResult.set(node->getID(), newAuto);
 }
@@ -842,11 +843,11 @@ void ImageComputer::doPostImageComputationForSCC_GeneralCase(DepGraph& depGraph,
 			} else if (dynamic_cast<DepGraphOpNode*>(pred_node) != nullptr) {
                             tmp_auto = makePostImageForOp_GeneralCase(depGraph, dynamic_cast<DepGraphOpNode*>(pred_node), analysisResult);
 			} else {
-                            throw StrangerStringAnalysisException(stringbuilder() << "Node cannot be an element of SCC component!, node id: " << node->getID());
+                            throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Node cannot be an element of SCC component!, node id: " << node->getID());
 			}
 
 			if (tmp_auto == nullptr) {
-                            throw StrangerStringAnalysisException(stringbuilder() << "Could not calculate the corresponding automaton!, node id: " << node->getID());
+                            throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Could not calculate the corresponding automaton!, node id: " << node->getID());
 			}
 
 			new_auto = tmp_auto->union_(prev_auto, pred_node->getID());
@@ -888,7 +889,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 	if (opName.find("__vlab_restrict") != string::npos) {
 		boost::posix_time::ptime start_time = perfInfo->current_time();
 		if (successors.size() != 3) {
-			throw StrangerStringAnalysisException(stringbuilder() << "__vlab_restrict invalid number of arguments: " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "__vlab_restrict invalid number of arguments: " << opNode->getID());
 		}
 
 		DepGraphNode* subjectNode = successors[1];
@@ -946,12 +947,12 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 			}
 		}
 		if (retMe == nullptr) {
-			throw StrangerStringAnalysisException(stringbuilder() << "Check successors of concatenation: " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Check successors of concatenation: " << opNode->getID());
 		}
 
 	} else if (opName == "preg_replace" || opName == "ereg_replace" || opName == "str_replace") {
 		if (successors.size() != 3) {
-			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
 		}
 
 		DepGraphNode* subjectNode = successors[2];
@@ -977,7 +978,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 	} else if (opName == "str_replace_once") {
 		if (successors.size() != 3) {
-			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
 		}
 
 		DepGraphNode* subjectNode = successors[2];
@@ -1004,7 +1005,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 	} else if (opName == "split") {
                 // Model split as simply replacing the split character with an empty string
 		if (successors.size() != 2) {
-			throw StrangerStringAnalysisException(stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "replace invalid number of arguments: " << opNode->getID());
 		}
 
 		DepGraphNode* subjectNode = successors[1];
@@ -1027,7 +1028,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 	} else if (opName == "addslashes") {
 		if (successors.size() != 1) {
-			throw StrangerStringAnalysisException(stringbuilder() << "addslashes should have one child: " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "addslashes should have one child: " << opNode->getID());
 		}
 
 		const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
@@ -1035,11 +1036,11 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		retMe = slashesAuto;
 
 	} else if (opName == "stripslashes") {
-		throw StrangerStringAnalysisException(stringbuilder() << "stripslashes is not handled yet: " << opNode->getID());
+		throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "stripslashes is not handled yet: " << opNode->getID());
 
 	} else if (opName == "mysql_escape_string") {
 		if (successors.size() < 1 || successors.size() > 2) {
-			throw StrangerStringAnalysisException(stringbuilder() << "mysql_escape_string wrong number of arguments: " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "mysql_escape_string wrong number of arguments: " << opNode->getID());
 		}
 		//we only care about the first parameter
 		const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
@@ -1048,7 +1049,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 	} else if (opName == "mysql_real_escape_string") {
 		if (successors.size() < 1 || successors.size() > 2) {
-			throw StrangerStringAnalysisException(stringbuilder() << "mysql_real_escape_string wrong number of arguments: " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "mysql_real_escape_string wrong number of arguments: " << opNode->getID());
 		}
 		//we only care about the first parameter
 		const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
@@ -1070,7 +1071,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 	} else if (opName == "nl2br"){
 		if (successors.size() < 1 || successors.size() > 2) {
-			throw StrangerStringAnalysisException(stringbuilder() << "nl2br wrong number of arguments: " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "nl2br wrong number of arguments: " << opNode->getID());
 		}
 
 		const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
@@ -1079,7 +1080,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 	}  else if (opName == "substr"){
 		if (successors.size() < 2) {
-			throw StrangerStringAnalysisException(stringbuilder() << "SNH: substr invalid number of arguments: " << opNode->getID());
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "SNH: substr invalid number of arguments: " << opNode->getID());
 		}
 
 		DepGraphNode* subjectNode = successors[0];
@@ -1119,7 +1120,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
                 }
 	} else if (opName == "strtoupper" || opName == "strtolower") {
 		if (successors.size() != 1) {
-			throw StrangerStringAnalysisException(stringbuilder() << opName << " has more than one successor in depgraph" );
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << opName << " has more than one successor in depgraph" );
 		}
 
 		const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
@@ -1132,7 +1133,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
 	} else if (opName == "trim" || opName == "rtrim" || opName == "ltrim") {
 		if (successors.size() > 2) {
-			throw StrangerStringAnalysisException(stringbuilder() << opName << " has more than one successor in depgraph" );
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << opName << " has more than one successor in depgraph" );
 		} else if (successors.size() == 2) {
 			cout << "!!! Second parameter of " << opName << " ignored!!!. If it is not whitespace, modify implementation to handle that situation" << endl;
 //			if (analysisResult.find(successors[1]->getID()) == analysisResult.end()) {
@@ -1194,7 +1195,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		retMe = json;
 	} else if (opName == "encodeTextFragment") {
                 if (successors.size() < 1 || successors.size() > 2) {
-                    throw StrangerStringAnalysisException(stringbuilder() << "encodeTextFragment wrong number of arguments: " << opNode->getID());
+                    throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "encodeTextFragment wrong number of arguments: " << opNode->getID());
                 }
                 const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 
@@ -1202,7 +1203,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
                 retMe = encodedAuto;
         } else if (opName == "encodeAttrString") {
             if (successors.size() < 1 || successors.size() > 2) {
-                throw StrangerStringAnalysisException(stringbuilder() << "encodeAttrString wrong number of arguments: " << opNode->getID());
+                throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "encodeAttrString wrong number of arguments: " << opNode->getID());
             }
             const StrangerAutomaton* paramAuto = analysisResult.get(successors[0]->getID());
 
@@ -1219,7 +1220,7 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
             //retMe = StrangerAutomaton::makeEmptyString(opNode->getID());
             // Throw an exception
             
-            throw StrangerStringAnalysisException(stringbuilder() << "Unknown function " << opName);
+            throw StrangerException(AnalysisError::NotImplemented, stringbuilder() << "Unknown function " << opName);
     }
 
         //retMe->printAutomatonVitals();

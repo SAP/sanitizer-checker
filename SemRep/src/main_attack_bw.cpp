@@ -24,6 +24,7 @@
 
 #include <boost/program_options.hpp>
 #include "SemAttackBw.hpp"
+#include "exceptions/StrangerException.hpp"
 
 using namespace std;
 using namespace boost;
@@ -44,7 +45,7 @@ void call_sem_attack(string target_name, string field_name){
         semAttack.printResults();
 
         cout << endl << "\t------ END RESULT for: " << field_name << " ------" << endl;
-    } catch (StrangerStringAnalysisException const &e) {
+    } catch (StrangerException const &e) {
         cerr << e.what();
         exit(EXIT_FAILURE);
     }

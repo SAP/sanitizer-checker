@@ -22,11 +22,11 @@
  *
  * Authors: Abdulbaki Aydin, Muath Alkhalaf, Thomas Barber
  */
+#include <boost/filesystem.hpp>
 
 #include "SemAttack.hpp"
 #include "AttackPatterns.hpp"
-
-#include <boost/filesystem.hpp>
+#include "exceptions/StrangerException.hpp"
 
 PerfInfo& SemAttack::perfInfo = PerfInfo::getInstance();
 
@@ -327,7 +327,7 @@ void BackwardAnalysisResult::doAnalysis(bool computePreImage, bool singletonInte
           m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
           m_preimage_example = m_preimage->generateSatisfyingExample();
           //  clean up target analysis result
-        } catch (StrangerStringAnalysisException const &e) {
+        } catch (StrangerException const &e) {
           m_isErrored = true;
           throw;
         }
@@ -477,13 +477,9 @@ void ForwardAnalysisResult::doAnalysis(bool doConcat)
 {
   try {
     m_result = m_attack->computeTargetFWAnalysis(m_input, doConcat);
-  } catch (StrangerStringAnalysisException const &e) {
+  } catch (StrangerException const &e) {
     m_postImage = nullptr;
-    m_error = AnalysisError::UnsupportedFunction;
-    throw;
-  } catch (StrangerAutomatonException const &e) {
-    m_error = AnalysisError::MonaException;
-    m_postImage = nullptr;
+    m_error = e.getError();
     throw;
   } catch (...) {
     m_error = AnalysisError::Other;
@@ -547,7 +543,7 @@ void SemAttack::init()
     // initialize input nodes
     this->target_uninit_field_node = target_dep_graph.findInputNode(input_field_name);
     if (target_uninit_field_node == NULL) {
-        throw StrangerStringAnalysisException("Cannot find input node " + input_field_name + " in target dep graph.");
+      throw StrangerException(AnalysisError::MalformedDepgraph, "Cannot find input node " + input_field_name + " in target dep graph.");
     }
     message(stringbuilder() << "target uninit node(" << target_uninit_field_node->getID() << ") found for field " << input_field_name << ".");
 
@@ -642,7 +638,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* input
         message("starting forward aalysis for target...");
         targetAnalyzer.doForwardAnalysis_SingleInput(target_dep_graph, target_field_relevant_graph, targetAnalysisResult);
         message("...finished forward analysis for target.");        
-    } catch (StrangerStringAnalysisException const &e) {
+    } catch (StrangerException const &e) {
       throw;
     }
 
@@ -714,7 +710,7 @@ AnalysisResult SemAttack::computePreImage(const StrangerAutomaton* intersection,
     message("...finished backward analysis.");
     return analysis_result;
 
-  } catch (StrangerStringAnalysisException const &e) {
+  } catch (StrangerException const &e) {
     cerr << e.what();
   }
   return AnalysisResult();
