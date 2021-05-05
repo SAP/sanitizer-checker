@@ -75,6 +75,11 @@ public:
 	 */
 	static int const ALL = 0xffff;
 
+        /**
+	 * Syntax flag, enables all optional regexp syntax except intersections
+	 */
+	static int const ALL_NO_INTERSECTION = 0xfffe;
+
 	/**
 	 * Syntax flag, enables no optional regexp syntax.
 	 */

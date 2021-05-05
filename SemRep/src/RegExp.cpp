@@ -126,7 +126,7 @@ RegExp::RegExp()
 
 RegExp::RegExp(std::string s)
 {
-	init(s, ALL);
+	init(s, ALL_NO_INTERSECTION);
 }
 
 RegExp::RegExp(std::string s, int syntax_flags)
@@ -772,11 +772,7 @@ RegExp* RegExp::parseEndAnchor()
 {
     RegExp *e = parseConcatExp();
     if (match('$')) {
-        if (more()) {
-            e = makeConcatenation(makeEndAnchor(e), parseEndAnchor());
-        } else {
-            return makeEndAnchor(e);
-        }
+        return makeEndAnchor(e);
     }
     return e;
 }
@@ -784,7 +780,8 @@ RegExp* RegExp::parseEndAnchor()
 RegExp* RegExp::parseConcatExp()
 {
     RegExp* e = parseRepeatExp();
-    if(more() && !peek(")&|$")) {
+    // Check if there are more characters
+    if(more() && !peek(")|$")) {
         e = makeConcatenation(e, parseConcatExp());
     }
     return e;
@@ -865,7 +862,7 @@ RegExp* RegExp::parseCharClasses() /* throws(IllegalArgumentException) */
 {
     RegExp* e = parseCharClass();
     while (more() && !peek("]"))
-                e = makeUnion(e, parseCharClass());
+        e = makeUnion(e, parseCharClass());
     return e;
 }
 
@@ -875,11 +872,9 @@ RegExp* RegExp::parseCharClass() /* throws(IllegalArgumentException) */
         return parseShortHand();
     }
     char c = parseCharExp();
-    if(match('-')) {
-        if (isShortHand()) {
-            // Need to match the - as a normal char
-            return makeChar('-');
-        }
+    // Check if we might be making a range
+    if (peek("-") && !peek("]", 1)) {
+        match('-');
         return makeCharRange(c, parseCharExp());
     } else {
         return makeChar(c);
