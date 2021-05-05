@@ -117,10 +117,12 @@ public:
     static StrangerAutomaton* str_replace(const StrangerAutomaton* searchAuto, const std::string& replaceStr, const StrangerAutomaton* subjectAuto);
     static StrangerAutomaton* str_replace_once(const StrangerAutomaton* str, const StrangerAutomaton* replaceAuto, const StrangerAutomaton* subjectAuto, int id);
     static StrangerAutomaton* str_replace_once(const StrangerAutomaton* str, const StrangerAutomaton* replaceAuto, const StrangerAutomaton* subjectAuto);
+    static StrangerAutomaton* match(const StrangerAutomaton* str, int group, const StrangerAutomaton* subjectAuto, int id);
     StrangerAutomaton* preReplace(const StrangerAutomaton* searchAuto, std::string replaceString, int id) const;
     StrangerAutomaton* preReplace(const StrangerAutomaton* searchAuto, std::string replaceString) const;
     StrangerAutomaton* preReplaceOnce(const StrangerAutomaton* searchAuto, std::string replaceString, int id) const;
     StrangerAutomaton* preReplaceOnce(const StrangerAutomaton* searchAuto, std::string replaceString) const;
+    StrangerAutomaton* preMatch(const StrangerAutomaton* pattern, int group, int id) const;
     StrangerAutomaton* getUnaryAutomaton(int id) const;
     StrangerAutomaton* getUnaryAutomaton() const { return getUnaryAutomaton(traceID); };
     StrangerAutomaton* restrictLengthByOtherAutomaton(const StrangerAutomaton* otherAuto, int id) const;

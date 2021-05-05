@@ -538,27 +538,38 @@ StrangerAutomaton* ImageComputer::makePreImageForOpChild_GeneralCase(
 		} else {
 			retMe = subjectAuto->preReplace(patternAuto, replaceStr, childNode->getID());
 		}
+        } else if (opName == "str_replace_once") {
+            if (successors.size() != 3) {
+                throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "replace invalid number of arguments");
+            }
 
-	} else if (opName == "str_replace_once") {
+            DepGraphNode* patternNode = successors[0];
+            DepGraphNode* replaceNode = successors[1];
+
+            const StrangerAutomaton* subjectAuto = opAuto;
+            const StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
+            const StrangerAutomaton* replaceAuto = fwAnalysisResult.find(replaceNode->getID())->second;
+            string replaceStr = replaceAuto->getStr();
+            retMe = subjectAuto->preReplaceOnce(patternAuto, replaceStr, childNode->getID());
+
+	} else if ((opName == "regex_match") || (opName == "regex_exec")) {
 
 		if (successors.size() != 3) {
 			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "replace invalid number of arguments");
 		}
 
 		DepGraphNode* patternNode = successors[0];
-		DepGraphNode* replaceNode = successors[1];
+		DepGraphNode* groupNode = successors[1];
 
 		const StrangerAutomaton* subjectAuto = opAuto;
-                // std::cout << "opAuto to dot:\n";
-                // subjectAuto->toDotAscii(1);
+
 		const StrangerAutomaton* patternAuto = fwAnalysisResult.find(patternNode->getID())->second;
-		const StrangerAutomaton* replaceAuto = fwAnalysisResult.find(replaceNode->getID())->second;
-                // std::cout << "PatternAuto to dot:" << patternNode->getID() << std::endl;
-                // patternAuto->toDotAscii(1);
-		// std::cout << "ReplaceAuto to dot:" << replaceNode->getID() << std::endl;
-		// replaceAuto->toDotAscii(1);
-                string replaceStr = replaceAuto->getStr();
-                retMe = subjectAuto->preReplaceOnce(patternAuto, replaceStr, childNode->getID());
+		const StrangerAutomaton* groupAuto = fwAnalysisResult.find(groupNode->getID())->second;
+
+                string groupValue = groupAuto->getStr();
+                int group = stoi(groupValue);
+
+                retMe = subjectAuto->preMatch(patternAuto, group, childNode->getID());
 	} else if (opName == "split") {
                 // Model split as simply replacing the split character with an empty string
 		if (successors.size() != 2) {
@@ -1001,6 +1012,36 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		const StrangerAutomaton* replaceAuto = analysisResult.get(replaceNode->getID());
 
 		retMe = StrangerAutomaton::str_replace_once(patternAuto,replaceAuto,subjectAuto, opNode->getID());
+
+	} else if ((opName == "regex_match") || (opName == "regex_exec")) {
+		if (successors.size() != 3) {
+			throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "match invalid number of arguments: " << opNode->getID());
+		}
+
+		DepGraphNode* subjectNode = successors[2];
+		DepGraphNode* patternNode = successors[0];
+		DepGraphNode* groupNode = successors[1];
+
+		if (analysisResult.find(subjectNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, subjectNode, analysisResult);
+		}
+
+		if (analysisResult.find(patternNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, patternNode, analysisResult);
+		}
+
+		if (analysisResult.find(groupNode->getID()) == analysisResult.end()) {
+			doForwardAnalysis_GeneralCase(depGraph, groupNode, analysisResult);
+		}
+
+		const StrangerAutomaton* subjectAuto = analysisResult.get(subjectNode->getID());
+		const StrangerAutomaton* patternAuto = analysisResult.get(patternNode->getID());
+		const StrangerAutomaton* groupAuto = analysisResult.get(groupNode->getID());
+
+                string groupValue = groupAuto->getStr();
+                int group = stoi(groupValue);
+                
+		retMe = StrangerAutomaton::match(patternAuto, group, subjectAuto, opNode->getID());
 
 	} else if (opName == "split") {
                 // Model split as simply replacing the split character with an empty string

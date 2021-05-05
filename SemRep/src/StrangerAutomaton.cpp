@@ -1643,6 +1643,13 @@ StrangerAutomaton* StrangerAutomaton::str_replace_once(const StrangerAutomaton* 
 }
 
 
+StrangerAutomaton* StrangerAutomaton::match(const StrangerAutomaton* pattern, int group, const StrangerAutomaton* subjectAuto, int id)
+{
+    // Simple assumption
+    StrangerAutomaton* retMe = subjectAuto->intersect(pattern, id);
+    return retMe;
+}
+
 //***************************************************************************************
 //*                                  Backward Replacement                               *
 //***************************************************************************************
@@ -1739,6 +1746,12 @@ StrangerAutomaton* StrangerAutomaton::preReplaceOnce(const StrangerAutomaton* se
 StrangerAutomaton* StrangerAutomaton::preReplaceOnce(const StrangerAutomaton* searchAuto,
                                                  std::string replaceString) const {
     return this->preReplaceOnce(searchAuto, replaceString, traceID);
+}
+
+StrangerAutomaton* StrangerAutomaton::preMatch(const StrangerAutomaton* pattern, int group, int id) const
+{
+    // As the FW analysis already does the match, nothing neede here
+    return this->clone(id);
 }
 
 
