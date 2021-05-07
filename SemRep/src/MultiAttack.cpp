@@ -198,7 +198,7 @@ void MultiAttack::computeAttackPatternOverlapForMetadata(CombinedAnalysisResult*
             << file
             << std::endl;
   fs::path dir(m_output_directory / result->getAttack()->getFile());
-  result->doMetadataSpecificAnalysis(dir, true, m_singleton_intersection, m_output_dotfiles);
+  result->doMetadataSpecificAnalysis(dir, m_compute_preimage, m_singleton_intersection, m_output_dotfiles);
 }
 
 CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph) {

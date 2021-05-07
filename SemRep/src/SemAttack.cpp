@@ -83,6 +83,7 @@ bool CombinedAnalysisResult::hasBackwardanalysisResult(AttackContext context) co
 BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(const std::string& payload, const fs::path& output_dir, bool computePreImage, bool singletonIntersection, bool outputDotfiles)
 {
   if (payload == "") {
+    std::cout << "Skipping empty payload." << std::endl;
     return nullptr;
   }
   BackwardAnalysisResult* bw = nullptr;
@@ -118,7 +119,6 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
   m_atLeastOnePayloadVulnerable = false;
   m_allPayloadsVulnerable = true;
   for (const Metadata &m : m_metadata) {
-    // Create result
     std::vector<BackwardAnalysisResult*> bws;
     BackwardAnalysisResult* bw = nullptr;
     // Normal payload
