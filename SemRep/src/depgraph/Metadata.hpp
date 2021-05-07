@@ -69,7 +69,15 @@ public:
     int get_twenty_five_million_flows_id() const;
     int get_sanitizer_hash() const;
     int get_hash() const;
+    int get_begin_taint_url() const;
+    int get_end_taint_url() const;
+    int get_replace_begin_url() const;
+    int get_replace_end_url() const;
+    int get_replace_begin_param() const;
+    int get_replace_end_param() const;
+
     bool is_initialized() const;
+
 
     void to_dot(std::stringstream &ss) const;
 
@@ -114,6 +122,13 @@ private:
     std::string break_in;
     std::string payload;
     bool valid_exploit{};
+    int begin_taint_url;
+    int end_taint_url;
+    int replace_begin_url;
+    int replace_end_url;
+    int replace_begin_param;
+    int replace_end_param;
+
 };
 
 

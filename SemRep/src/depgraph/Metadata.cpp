@@ -197,6 +197,36 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->initialized = true;
         return true;
     }
+    if(key == "Exploit.begin_taint_url") {
+        this->begin_taint_url = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Exploit.end_taint_url") {
+        this->end_taint_url = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Exploit.replace_begin_url") {
+        this->replace_begin_url = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Exploit.replace_end_url") {
+        this->replace_end_url = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Exploit.replace_begin_param") {
+        this->replace_begin_param = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Exploit.replace_end_param") {
+        this->replace_end_param = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
     if(key == "Finding.domain") {
         this->domain = value;
         this->initialized = true;
@@ -593,4 +623,28 @@ void Metadata::printHeader(std::ostream& os)
     os << "exploit_quote_type, ";
     os << "exploit_successful, ";
     os << "url, ";
+}
+
+int Metadata::get_replace_end_param() const {
+    return this->replace_end_param;
+}
+
+int Metadata::get_replace_begin_param() const {
+    return this->replace_begin_param;
+}
+
+int Metadata::get_replace_end_url() const {
+    return this->replace_end_url;
+}
+
+int Metadata::get_replace_begin_url() const {
+    return this->replace_begin_url;
+}
+
+int Metadata::get_end_taint_url() const {
+    return this->end_taint_url;
+}
+
+int Metadata::get_begin_taint_url() const {
+    return this->begin_taint_url;
 }
