@@ -32,6 +32,8 @@ public:
 
     std::string get_uuid() const;
     std::string get_url() const;
+    // This is just needed to stop the csv output from breaking
+    std::string get_comma_escaped_url() const;
     std::string get_sink() const;
     std::string get_source() const;
     int get_sanitizer_score() const;
@@ -82,6 +84,7 @@ public:
     void to_dot(std::stringstream &ss) const;
 
     std::string generate_exploit_from_scratch() const;
+    std::string generate_exploit_from_scratch(const std::string& function) const;
     std::string generate_attribute_exploit_from_scratch() const;
     std::string get_generated_exploit() const;
     std::string generate_exploit_url(const std::string& payload) const;

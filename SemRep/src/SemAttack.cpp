@@ -171,18 +171,17 @@ void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
   for (auto map : m_metadataAnalysisMap) {
     const Metadata* m = map.first;
     for (auto bw : map.second) {
-      os << getFileName() << ", ";
+      os << getFileName() << ",";
       bw->printResult(os, true);
       os << (m_atLeastOnePayloadVulnerable ? "true" : "false");
-      os << ", ";
+      os << ",";
       os << (m_allPayloadsVulnerable ? "true" : "false");
-      os << ", ";
+      os << ",";
       std::string preimage_exploit = bw->get_preimage_example();
       std::string postimage_exploit = bw->get_intersection_example();
       os << ((preimage_exploit == postimage_exploit) ? "true" : "false") << ",";
       os << m->generate_exploit_url(preimage_exploit) << ",";
       os << m->generate_exploit_url(postimage_exploit) << ",";
-
       m->print(os);
       os << std::endl;
     }
@@ -375,24 +374,24 @@ void BackwardAnalysisResult::printResult(std::ostream& os, bool printHeader) con
   bool good =  this->isSafe();
   bool contained =  this->isContained();
   if (printHeader) {
-    os << m_name << ", ";
+    os << m_name << ",";
     }
   if (error) {
-    os << "error, error, error, error, ";
+    os << "error,error,error,error,";
   } else {
     os << (good ? "true" : "false");
-    os << ", ";
+    os << ",";
     os << (contained ? "true" : "false");
-    os << ", ";     
+    os << ",";     
     if (!good) {
       os << m_intersection_example;
-      os << ", ";
+      os << ",";
       os << m_preimage_example;
-        os << ", ";
+        os << ",";
     } else {
       os << m_post_attack_example;
       // No pre-image if no intersection
-      os << ", N/A, ";
+      os << ",N/A,";
     }
   }
 }

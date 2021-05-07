@@ -112,12 +112,12 @@ void MultiAttack::writeResultsToFile() const {
   std::ofstream ofs_gen;
   ofs_gen.open (output_gen_payloads.string(), std::ofstream::out);
   // Headers
-  ofs_gen << "filename, name, ";
-  ofs_gen << "sanitized, inclusion, post, pre, ";
-  ofs_gen << "one vulnerable, all vulnerable, ";
-  ofs_gen << "exploits equal, ";
-  ofs_gen << "preimage exploit, ";
-  ofs_gen << "original exploit, ";
+  ofs_gen << "filename,name,";
+  ofs_gen << "sanitized,inclusion,post,pre,";
+  ofs_gen << "one_vulnerable,all_vulnerable,";
+  ofs_gen << "exploits_equal,";
+  ofs_gen << "preimage_exploit,";
+  ofs_gen << "original_exploit,";
   Metadata::printHeader(ofs_gen);
   ofs_gen << std::endl;
 
@@ -198,7 +198,7 @@ void MultiAttack::computeAttackPatternOverlapForMetadata(CombinedAnalysisResult*
             << file
             << std::endl;
   fs::path dir(m_output_directory / result->getAttack()->getFile());
-  result->doMetadataSpecificAnalysis(dir, m_compute_preimage, m_singleton_intersection, m_output_dotfiles);
+  result->doMetadataSpecificAnalysis(dir, true, m_singleton_intersection, m_output_dotfiles);
 }
 
 CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph) {
