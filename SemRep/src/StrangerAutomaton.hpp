@@ -263,7 +263,11 @@ public:
     static int getVar(){ return num_ascii_track;};
     static unsigned *getUnsignedIndices(int length);
     int get_num_of_states() const {
-		return this->dfa->ns;
+        if (!this->isNull()) {
+            return this->dfa->ns;
+        } else {
+            return -1;
+        }
     }
 
     unsigned get_num_of_bdd_nodes() const{
