@@ -33,6 +33,7 @@
   DO(None)                                       \
   DO(UnsupportedFunction)                        \
   DO(MalformedDepgraph)                          \
+  DO(UrlInReplaceString)                         \
   DO(RegExpParseError)                           \
   DO(MonaException)                              \
   DO(InvalidArgument)                            \

@@ -1011,6 +1011,18 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		const StrangerAutomaton* patternAuto = analysisResult.get(patternNode->getID());
 		const StrangerAutomaton* replaceAuto = analysisResult.get(replaceNode->getID());
 
+                // Check here whether the depgraph contains the url
+                if (depGraph.get_metadata().is_initialized()) {
+                    std::string url = depGraph.get_metadata().get_url();
+                    std::string replaceStr = replaceAuto->getStr();
+                    //std::cout << "Checking for " << url << " in " << replaceStr << std::endl;
+                    if (replaceStr.find(url) != std::string::npos) {
+                        throw StrangerException(AnalysisError::UrlInReplaceString,
+                                                stringbuilder() << "URL: " << url
+                                                << " found in replace string: " << replaceStr);
+                    }
+                }
+
 		retMe = StrangerAutomaton::str_replace_once(patternAuto,replaceAuto,subjectAuto, opNode->getID());
 
 	} else if ((opName == "regex_match") || (opName == "regex_exec")) {

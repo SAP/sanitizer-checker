@@ -295,6 +295,9 @@ AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutomaton* a
 {
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     const StrangerAutomaton* existing = iter->getAutomaton();
+    // std::cout << "Comparing insertion automaton (nstates: "
+    //           << ((automaton != nullptr) ? automaton->get_num_of_states() : -2)
+    //           <<" to group: " << iter->getName() << std::endl;
     if ((automaton == existing) ||
         (automaton->equals(existing))) {
       return &(*iter);
