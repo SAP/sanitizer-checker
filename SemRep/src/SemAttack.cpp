@@ -93,21 +93,21 @@ BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(con
     // Just return existing analysis
     bw = m_stringAnalysisMap.at(payload);
   } else {
+    std::cout << "Doing backward analysis for payload: " << payload << std::endl;
     try {
       StrangerAutomaton* a = StrangerAutomaton::makeString(payload);
-      std::cout << "Doing backward analysis for payload: " << payload << std::endl;
       bw = new BackwardAnalysisResult(m_fwAnalysis, a, payload);
       bw->doAnalysis(computePreImage, singletonIntersection);
-      if (outputDotfiles) {
-      bw->writeResultsToFile(output_dir);
+      if (bw && outputDotfiles) {
+        bw->writeResultsToFile(output_dir);
       }
       bw->finishAnalysis();
-      // Add to the map
-      m_stringAnalysisMap.insert(std::make_pair(payload, bw));
     } catch (...) {
       std::cout << "EXCEPTION! Analysing in metadata specific analysis" << std::endl;
-      bw = nullptr;
     }
+
+    // Add to the map
+    m_stringAnalysisMap.insert(std::make_pair(payload, bw));
   }
   return bw;
 }
@@ -118,6 +118,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
   unsigned int i = 0;
   m_atLeastOnePayloadVulnerable = false;
   m_allPayloadsVulnerable = true;
+  m_allPayloadsErrored = true;
   for (const Metadata &m : m_metadata) {
     std::vector<BackwardAnalysisResult*> bws;
     BackwardAnalysisResult* bw = nullptr;
@@ -129,6 +130,11 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
       if (!bw->isVulnerable()) {
         m_allPayloadsVulnerable = false;
       }
+      if (!bw->isErrored()) {
+        m_allPayloadsErrored = false;
+      } else {
+        std::cout << "doMetadataSpecificAnalysis::ERROR" << std::endl;
+      }
       bws.push_back(bw);
     }
     // Attribute payload
@@ -138,6 +144,11 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
       m_atLeastOnePayloadVulnerable |= bw->isVulnerable();
       if (!bw->isVulnerable()) {
         m_allPayloadsVulnerable = false;
+      }
+      if (!bw->isErrored()) {
+        m_allPayloadsErrored = false;
+      } else {
+        std::cout << "doMetadataSpecificAnalysis::ERROR" << std::endl;
       }
       bws.push_back(bw);
     }
@@ -164,6 +175,33 @@ void CombinedAnalysisResult::printResult(std::ostream& os, bool printHeader, con
       }
     }
   }
+}
+
+bool CombinedAnalysisResult::hasAtLeastOneBypass() const {
+  bool bypass = false;
+  for (auto& map : m_metadataAnalysisMap) {
+    for (auto& bw : map.second) {
+      if (bw != nullptr) {
+        if (bw->getPreImage() != nullptr) {
+          bypass = true;
+          break;
+        }
+      }
+    }
+  }
+  return bypass;
+}
+
+void CombinedAnalysisResult::printGeneratedPayloadHeader(std::ostream& os) {
+  // Headers
+  os << "filename,name,";
+  os << "sanitized,inclusion,post,pre,";
+  os << "one_vulnerable,all_vulnerable,";
+  os << "exploits_equal,";
+  os << "preimage_exploit,";
+  os << "original_exploit,";
+  Metadata::printHeader(os);
+  os << std::endl;
 }
 
 void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
@@ -272,6 +310,7 @@ BackwardAnalysisResult::BackwardAnalysisResult(
   , m_intersection(nullptr)
   , m_preimage(nullptr)
   , m_post_attack(nullptr)
+  , m_error(AnalysisError::None)
   , m_isErrored(true)
   , m_isSafe(false)
   , m_isContained(false)
@@ -327,7 +366,9 @@ void BackwardAnalysisResult::doAnalysis(bool computePreImage, bool singletonInte
           m_preimage_example = m_preimage->generateSatisfyingExample();
           //  clean up target analysis result
         } catch (StrangerException const &e) {
+          std::cout << "EXCEPTION caught in bw analysis: " << e.what() << std::endl;
           m_isErrored = true;
+          m_error = e.getError();
           throw;
         }
       } else {
@@ -336,13 +377,20 @@ void BackwardAnalysisResult::doAnalysis(bool computePreImage, bool singletonInte
     } else {
       m_isSafe = true;
       // Otherwise see what happens if attack pattern is used for a forward analysis
-      AnalysisResult result = this->getAttack()->computeTargetFWAnalysis(m_attack);
-      const StrangerAutomaton* post = this->getAttack()->getPostImage(result);
-      if (post) {
-        m_post_attack = new StrangerAutomaton(post);
-        m_post_attack_example = m_post_attack->generateSatisfyingExample();
-      } else {
-        m_post_attack = nullptr;
+      try {
+        AnalysisResult result = this->getAttack()->computeTargetFWAnalysis(m_attack);
+        const StrangerAutomaton* post = this->getAttack()->getPostImage(result);
+        if (post) {
+          m_post_attack = new StrangerAutomaton(post);
+          m_post_attack_example = m_post_attack->generateSatisfyingExample();
+        } else {
+          m_post_attack = nullptr;
+        }
+      } catch (StrangerException const &e) {
+        std::cout << "EXCEPTION caught in bw analysis: " << e.what() << std::endl;
+        m_isErrored = true;
+        m_error = e.getError();
+        throw;
       }
     }
   }

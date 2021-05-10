@@ -181,6 +181,7 @@ private:
     StrangerAutomaton* m_post_attack;
 
     // Cached result information for fast printing
+    AnalysisError m_error;
     bool m_isErrored;
     bool m_isSafe;
     bool m_isContained;
@@ -225,10 +226,17 @@ public:
     int getCount() const { return m_metadata.size(); }
     bool addMetadata(const Metadata& metadata);
     std::set<std::string> getUniqueDomains() const;
-    
+
+    bool hasSuccessfulFwAnalysis() const { return !m_metadataAnalysisMap.empty(); }
+    bool hasAtLeastOnePayload() const { return !m_stringAnalysisMap.empty(); }
+    bool hasAtLeastOneVulnerablePayload() const { return m_atLeastOnePayloadVulnerable; }
+    bool hasAllErroredPayloads() const { return m_allPayloadsErrored; }
+    bool hasAtLeastOneBypass() const;
+
     void printResult(std::ostream& os, bool printHeader, const std::vector<AttackContext>& contexts) const;
     void printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const;
     void printGeneratedPayloads(std::ostream& os) const;
+    static void printGeneratedPayloadHeader(std::ostream& os);
     void finishAnalysis();
 
     bool isDone() const { return m_done; }
@@ -252,6 +260,8 @@ private:
     bool m_atLeastOnePayloadVulnerable;
     // Track if not all were successful
     bool m_allPayloadsVulnerable;
+    // Did all the payload analysis cause errors?
+    bool m_allPayloadsErrored;
     
     int m_duplicate_count;
 };

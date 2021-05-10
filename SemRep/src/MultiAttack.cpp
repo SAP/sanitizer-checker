@@ -111,19 +111,7 @@ void MultiAttack::writeResultsToFile() const {
   fs::path output_gen_payloads(m_output_directory / fs::path("semattack_generated_payloads.csv"));
   std::ofstream ofs_gen;
   ofs_gen.open (output_gen_payloads.string(), std::ofstream::out);
-  // Headers
-  ofs_gen << "filename,name,";
-  ofs_gen << "sanitized,inclusion,post,pre,";
-  ofs_gen << "one_vulnerable,all_vulnerable,";
-  ofs_gen << "exploits_equal,";
-  ofs_gen << "preimage_exploit,";
-  ofs_gen << "original_exploit,";
-  Metadata::printHeader(ofs_gen);
-  ofs_gen << std::endl;
-
-  for (auto r : m_results) {
-    r->printGeneratedPayloads(ofs_gen);
-  }
+  m_groups.printGeneratedPayloads(ofs_gen);
   ofs_gen.close();
 }
 
@@ -296,7 +284,10 @@ void MultiAttack::loadDepGraphs() {
 
   std::cout << "Parsing dependency graphs..." << std::endl;
   // Add all files first
+  int n = 0;
   for (const auto& file : this->m_dot_paths) {
+    n++;
+    //if (n > 1000) break;
     asio::post(pool, [this, &pool, file]() {
         try {
           DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());

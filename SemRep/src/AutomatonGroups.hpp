@@ -53,6 +53,12 @@ public:
     unsigned int getSuccessfulEntriesForContext(const AttackContext& context) const;
     unsigned int getContainedEntriesForContext(const AttackContext& context) const;
     unsigned int getSuccessfulValidated() const;
+    unsigned int getErrored() const;
+    unsigned int getSanitizersForPayload() const;
+    unsigned int getSanitizersWithPayload() const;
+    unsigned int getVulnerableSanitizersWithPayload() const;
+    unsigned int getVulnerableSanitizersWithBypass() const;
+    unsigned int getErroredSanitizersWithPayload() const;
     unsigned int getEntriesForSinkContext(const AttackContext& context) const;
     unsigned int getValidatedEntriesForSinkContext(const AttackContext& context) const;
     unsigned int getEntriesForSinkContextDeduplicated(const AttackContext& context) const;
@@ -64,7 +70,7 @@ public:
     void printMembers(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
     void printSummary(std::ostream& os) const;
     void printHeaders(std::ostream& os, const std::vector<AttackContext>& contexts) const;
-
+    void printGeneratedPayloads(std::ostream& os) const;
 private:
     const StrangerAutomaton* m_automaton;
     std::vector<const CombinedAnalysisResult*> m_graphs;
@@ -99,6 +105,12 @@ public:
     unsigned int getContainedEntriesForContext(const AttackContext& context) const;
     unsigned int getSuccessfulGroupsForContext(const AttackContext& context) const;
     unsigned int getSuccessfulValidated() const;
+    unsigned int getErrored() const;
+    unsigned int getSanitizersForPayload() const;
+    unsigned int getSanitizersWithPayload() const;
+    unsigned int getVulnerableSanitizersWithPayload() const;
+    unsigned int getVulnerableSanitizersWithBypass() const;
+    unsigned int getErroredSanitizersWithPayload() const;
     unsigned int getEntriesForSinkContext(const AttackContext& context) const;
     unsigned int getEntriesForSinkContextDeduplicated(const AttackContext& context) const;
     unsigned int getEntriesForSinkContextWeighted(const AttackContext& context) const;
@@ -109,7 +121,7 @@ public:
     void printStatus(std::ostream& os) const;
     void printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent = false) const;
     void printErrorSummary(std::ostream& os) const;
-
+    void printGeneratedPayloads(std::ostream& os) const;
 private:
 
     std::vector<AutomatonGroup> m_groups;

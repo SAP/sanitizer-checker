@@ -128,10 +128,68 @@ void AutomatonGroup::printMembers(std::ostream& os, bool printAll, const std::ve
   //m_automaton->toDotAscii(0);
 }
 
+void AutomatonGroup::printGeneratedPayloads(std::ostream& os) const {
+  for (const auto *iter : m_graphs) {
+    iter->printGeneratedPayloads(os);
+  }
+}
+
 unsigned int AutomatonGroup::getSuccessfulValidated() const {
   unsigned int total = 0;
   for (auto iter : m_graphs) {
     total += iter->getMetadata().is_exploit_successful() ? 1 : 0;
+  }
+  return total;
+}
+
+unsigned int AutomatonGroup::getErrored() const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    total += iter->getFwAnalysis().isErrored() ? 1 : 0;
+  }
+  return total;
+}
+
+unsigned int AutomatonGroup::getSanitizersForPayload() const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    total += (!iter->getFwAnalysis().isErrored()) ? 1 : 0;
+  }
+  return total;
+}
+
+unsigned int AutomatonGroup::getSanitizersWithPayload() const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    total += (iter->hasAtLeastOnePayload() && !iter->getFwAnalysis().isErrored()) ? 1 : 0;
+  }
+  return total;
+}
+
+unsigned int AutomatonGroup::getVulnerableSanitizersWithPayload() const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    if (iter->hasAtLeastOnePayload() && !iter->getFwAnalysis().isErrored()) {
+      total += iter->hasAtLeastOneVulnerablePayload() ? 1 : 0;
+    }
+  }
+  return total;
+}
+
+unsigned int AutomatonGroup::getVulnerableSanitizersWithBypass() const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    total += iter->hasAtLeastOneBypass() ? 1 : 0;
+  }
+  return total;
+}
+
+unsigned int AutomatonGroup::getErroredSanitizersWithPayload() const {
+  unsigned int total = 0;
+  for (auto iter : m_graphs) {
+    if (iter->hasAtLeastOnePayload() && !iter->getFwAnalysis().isErrored()) {
+      total += iter->hasAllErroredPayloads() ? 1 : 0;
+    }
   }
   return total;
 }
@@ -319,11 +377,20 @@ const AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutoma
 
 void AutomatonGroups::printStatus(std::ostream& os) const
 {
-  os << "#  DepGraph files --> Duplicates removed --> Unique Hash --> Unique Post-images" << std::endl;
+  os << "# DepGraph files --> Duplicates removed --> Unique Hash (errors) --> Unique Post-images" << std::endl;
   os << "# " << getEntriesWithDuplicates()
      << " --> " << getNonUniqueEntries()
      << " --> " << getEntries()
+     << " (" << getErrored() << ")"
      << " --> " << getNonZeroGroups() << std::endl;
+  // Summary of payload analysis
+  os << "# Sanitizers --> Sanitizers with payload -> Vulnerable sanitizers -> Sanitizers with bypass (errored)" << std::endl;
+  os << "# " << getSanitizersForPayload();
+  os << " --> " << getSanitizersWithPayload();
+  os << " --> " << getVulnerableSanitizersWithPayload();
+  os << " --> " << getVulnerableSanitizersWithBypass();
+  os << " (" << getErroredSanitizersWithPayload() << ")";
+  os << std::endl; 
 }
 
 void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const {
@@ -369,7 +436,7 @@ void AutomatonGroups::printErrorSummary(std::ostream& os) const
     // Loop over each error
     for (auto e : AnalysisErrorHelper::getAllEnums()) {
       errors = 0;
-      for (auto g : m_groups) {
+      for (auto& g : m_groups) {
         errors += g.getErrorsForSinkContextAndErrorType(s, e);
       }
       os << errors << ", ";     
@@ -485,6 +552,15 @@ void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackCont
   os << ", " << std::endl;
 }
 
+void AutomatonGroups::printGeneratedPayloads(std::ostream& os) const {
+  // Some summary numbers
+  printStatus(os);
+  CombinedAnalysisResult::printGeneratedPayloadHeader(os);
+  for (auto& g : m_groups) {
+    g.printGeneratedPayloads(os);
+  }
+}
+
 unsigned int AutomatonGroups::getSuccessfulEntriesForContext(const AttackContext& context) const {
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
@@ -547,6 +623,54 @@ unsigned int AutomatonGroups::getSuccessfulValidated() const {
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getSuccessfulValidated();
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getErrored() const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getErrored();
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getSanitizersForPayload() const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getSanitizersForPayload();
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getSanitizersWithPayload() const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getSanitizersWithPayload();
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getVulnerableSanitizersWithPayload() const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getVulnerableSanitizersWithPayload();
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getVulnerableSanitizersWithBypass() const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getVulnerableSanitizersWithBypass();
+  }
+  return total;
+}
+
+unsigned int AutomatonGroups::getErroredSanitizersWithPayload() const {
+  unsigned int total = 0;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    total += iter->getErroredSanitizersWithPayload();
   }
   return total;
 }
