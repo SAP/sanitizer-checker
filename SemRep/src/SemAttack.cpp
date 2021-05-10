@@ -83,7 +83,7 @@ bool CombinedAnalysisResult::hasBackwardanalysisResult(AttackContext context) co
 BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(const std::string& payload, const fs::path& output_dir, bool computePreImage, bool singletonIntersection, bool outputDotfiles)
 {
   if (payload == "") {
-    std::cout << "Skipping empty payload." << std::endl;
+    //std::cout << "Skipping empty payload." << std::endl;
     return nullptr;
   }
   BackwardAnalysisResult* bw = nullptr;
