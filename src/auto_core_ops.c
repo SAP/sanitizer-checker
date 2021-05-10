@@ -1580,6 +1580,10 @@ DFA *dfa_concat_extrabit(M1, M2, var, indices)
     DFA *tmp0 = NULL;
     DFA *tmp1 = NULL;
 
+    if ((M1 == NULL) || (M2 == NULL)) {
+      return NULL;
+    }
+ 
     if (checkOnlyEmptyString(M1, var, indices)) {
       return dfaCopy(M2);
     }
