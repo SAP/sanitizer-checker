@@ -41,6 +41,7 @@ class AutomatonGroup {
 public:
     AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name, int id);
     AutomatonGroup(const StrangerAutomaton* automaton, int id);
+    AutomatonGroup(const AutomatonGroup& other);
     virtual ~AutomatonGroup();
 
     void setName(const std::string& name);
@@ -66,6 +67,7 @@ public:
     void printHeaders(std::ostream& os, const std::vector<AttackContext>& contexts) const;
 
 private:
+    mutable std::mutex m_mutex;
     const StrangerAutomaton* m_automaton;
     std::vector<const CombinedAnalysisResult*> m_graphs;
     std::string m_name;
@@ -111,7 +113,7 @@ public:
     void printErrorSummary(std::ostream& os) const;
 
 private:
-
+    mutable std::mutex m_mutex;
     std::vector<AutomatonGroup> m_groups;
     int m_id;
     AutomatonGroup* addNewEntry(const StrangerAutomaton* automaton, const CombinedAnalysisResult* graph);

@@ -86,7 +86,7 @@ private:
     AutomatonGroups m_groups;
     std::vector<AttackContext> m_analyzed_contexts;
 
-    std::mutex results_mutex;
+    mutable std::mutex results_mutex;
 
     // Configuration
     unsigned int m_nThreads;
