@@ -1117,6 +1117,9 @@ StrangerAutomaton* StrangerAutomaton::concatenate(const StrangerAutomaton* other
         retMe->setID(id);
         retMe->debugAutomaton();
     }
+    if (retMe->isNull()) {
+        throw StrangerException(AnalysisError::MonaException, "Null DFA pointer returned from MONA");
+    }
     return retMe;
 }
 
@@ -1647,6 +1650,9 @@ StrangerAutomaton* StrangerAutomaton::match(const StrangerAutomaton* pattern, in
 {
     // Simple assumption
     StrangerAutomaton* retMe = subjectAuto->intersect(pattern, id);
+    if (retMe->isNull()) {
+        throw StrangerException(AnalysisError::MonaException, "Null DFA pointer returned from MONA");
+    }
     return retMe;
 }
 
