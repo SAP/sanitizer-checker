@@ -164,8 +164,6 @@ int MultiAttack::countDone() const
   
 void MultiAttack::printStatus() const
 {
-  // Mutex Lock
-  const std::lock_guard<std::mutex> lock(this->results_mutex);
   int done = countDone();
   int total = m_results.size();
   double percent = total > 0 ? ((double) done / (double) total) * 100.0 : 0.0;
@@ -283,11 +281,12 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
   // Finish up (delete the semattack object)
   result->finishAnalysis();
 
+  // Mutex Lock
+  const std::lock_guard<std::mutex> lock(this->results_mutex);
   std::cout << "Finished analysis of " << file << std::endl;
   std::cout << "Inserting results into groups for " << file << std::endl;
   this->m_groups.addAutomaton(postImage, result);
   std::cout << "Finished inserting results into groups for " << file << std::endl;
-
   printStatus();
 }
 
@@ -297,9 +296,7 @@ void MultiAttack::loadDepGraphs() {
 
   std::cout << "Parsing dependency graphs..." << std::endl;
   // Add all files first
-  int n = 0;
   for (const auto& file : this->m_dot_paths) {
-    n++;
     asio::post(pool, [this, &pool, file]() {
         try {
           DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());

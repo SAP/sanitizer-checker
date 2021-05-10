@@ -25,6 +25,7 @@
 
 #include "AutomatonGroups.hpp"
 
+
 #include <iostream>
 
 std::vector<AttackContext> AutomatonGroup::m_sink_contexts = {
@@ -40,30 +41,21 @@ std::vector<AttackContext> AutomatonGroup::m_sink_contexts = {
 };
 
 AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton, const std::string& name, int id)
-  : m_mutex()
-  , m_automaton(automaton)
+  : m_automaton(automaton)
   , m_graphs()
   , m_name(name)
   , m_id(id)
 {
+
 }
 
 AutomatonGroup::AutomatonGroup(const StrangerAutomaton* automaton, int id)
-  : m_mutex()
-  , m_automaton(automaton)
+  : m_automaton(automaton)
   , m_graphs()
   , m_name(std::to_string(id))
   , m_id(id)
 {
-}
 
-AutomatonGroup::AutomatonGroup(const AutomatonGroup& other)
-  : m_mutex()
-  , m_automaton(other.m_automaton)
-  , m_graphs(other.m_graphs)
-  , m_name(other.m_name)
-  , m_id(other.m_id)
-{
 }
 
 AutomatonGroup::~AutomatonGroup()
@@ -87,7 +79,6 @@ const StrangerAutomaton* AutomatonGroup::getAutomaton() const
 }
 
 void AutomatonGroup::addCombinedAnalysisResult(const CombinedAnalysisResult* graph) {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   m_graphs.emplace_back(graph);
 }
 
@@ -98,7 +89,6 @@ void AutomatonGroup::printHeaders(std::ostream& os, const std::vector<AttackCont
     os << ", " << AttackContextHelper::getName(c) << " sink validated";
   }
   os << ", ";
-  const std::lock_guard<std::mutex> lock(m_mutex);
   // Get headers from first entry
   if (m_graphs.size() > 0) {
     m_graphs.at(0)->printHeader(os, contexts);
@@ -124,12 +114,11 @@ void AutomatonGroup::printMembers(std::ostream& os, bool printAll, const std::ve
 
   printSummary(os);
   os << ", ";
-  const std::lock_guard<std::mutex> lock(m_mutex);
   // Get vulnerablility overlaps from first entry
   if (m_graphs.size() > 0) {
     m_graphs.at(0)->printResult(os, false, contexts);
   }
-  for (auto *iter : m_graphs) {
+  for (const auto *iter : m_graphs) {
     os << iter->getFileName() << "; ";
     if (!printAll) {
       break;
@@ -141,7 +130,6 @@ void AutomatonGroup::printMembers(std::ostream& os, bool printAll, const std::ve
 
 unsigned int AutomatonGroup::getSuccessfulValidated() const {
   unsigned int total = 0;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto iter : m_graphs) {
     total += iter->getMetadata().is_exploit_successful() ? 1 : 0;
   }
@@ -150,7 +138,6 @@ unsigned int AutomatonGroup::getSuccessfulValidated() const {
 
 unsigned int AutomatonGroup::getEntriesForSinkContext(const AttackContext& context) const {
   unsigned int total = 0;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto iter : m_graphs) {
     total += iter->isSinkContext(context) ? 1 : 0;
   }
@@ -159,7 +146,6 @@ unsigned int AutomatonGroup::getEntriesForSinkContext(const AttackContext& conte
 
 unsigned int AutomatonGroup::getErrorsForSinkContext(const AttackContext& context) const {
   unsigned int total = 0;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto iter : m_graphs) {
     if (iter->isSinkContext(context) && iter->getFwAnalysis().isErrored()) {
       total++;
@@ -170,7 +156,6 @@ unsigned int AutomatonGroup::getErrorsForSinkContext(const AttackContext& contex
 
 unsigned int AutomatonGroup::getErrorsForSinkContextAndErrorType(const AttackContext& context, const AnalysisError& error) const {
   unsigned int total = 0;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto iter : m_graphs) {
     if (iter->isSinkContext(context) && iter->getFwAnalysis().isErrored()) {
       if (iter->getFwAnalysis().getError() == error) {
@@ -183,7 +168,6 @@ unsigned int AutomatonGroup::getErrorsForSinkContextAndErrorType(const AttackCon
 
 unsigned int AutomatonGroup::getEntriesForSinkContextWeighted(const AttackContext& context) const {
   unsigned int total = 0;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto iter : m_graphs) {
     total += iter->isSinkContext(context) ? iter->getCountWithDuplicates() : 0;
   }
@@ -192,7 +176,6 @@ unsigned int AutomatonGroup::getEntriesForSinkContextWeighted(const AttackContex
 
 unsigned int AutomatonGroup::getEntriesForSinkContextDeduplicated(const AttackContext& context) const {
   unsigned int total = 0;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto iter : m_graphs) {
     total += iter->isSinkContext(context) ? iter->getCount() : 0;
   }
@@ -201,7 +184,6 @@ unsigned int AutomatonGroup::getEntriesForSinkContextDeduplicated(const AttackCo
 
 unsigned int AutomatonGroup::getValidatedEntriesForSinkContext(const AttackContext& context) const {
   unsigned int total = 0;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto iter : m_graphs) {
     if (iter->isSinkContext(context) && iter->getMetadata().is_exploit_successful()) {
       total += 1;
@@ -212,7 +194,6 @@ unsigned int AutomatonGroup::getValidatedEntriesForSinkContext(const AttackConte
 
 std::set<std::string> AutomatonGroup::getUniqueDomains() const {
   std::set<std::string> domains;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto g : m_graphs) {
     std::set<std::string> s = g->getUniqueDomains();
     domains.insert(s.begin(), s.end());
@@ -222,7 +203,6 @@ std::set<std::string> AutomatonGroup::getUniqueDomains() const {
 
 unsigned int AutomatonGroup::getNonUniqueEntries() const {
   unsigned int total = 0;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto iter : m_graphs) {
     total += iter->getCount();
   }
@@ -231,7 +211,6 @@ unsigned int AutomatonGroup::getNonUniqueEntries() const {
 
 unsigned int AutomatonGroup::getEntriesWithDuplicates() const {
   unsigned int total = 0;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto iter : m_graphs) {
     total += iter->getCountWithDuplicates();
   }
@@ -241,7 +220,6 @@ unsigned int AutomatonGroup::getEntriesWithDuplicates() const {
 unsigned int AutomatonGroup::getSuccessfulEntriesForContext(const AttackContext& context) const {
   unsigned int entries = this->getEntries();
   unsigned int total = 0;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   if (m_graphs.size() > 0) {
     // Get the first result in the group
     const CombinedAnalysisResult* result = m_graphs.at(0);
@@ -254,7 +232,6 @@ unsigned int AutomatonGroup::getSuccessfulEntriesForContext(const AttackContext&
 unsigned int AutomatonGroup::getContainedEntriesForContext(const AttackContext& context) const {
   unsigned int entries = this->getEntries();
   unsigned int total = 0;
-  const std::lock_guard<std::mutex> lock(m_mutex);
   if (m_graphs.size() > 0) {
     // Get the first result in the group
     const CombinedAnalysisResult* result = m_graphs.at(0);
@@ -264,8 +241,7 @@ unsigned int AutomatonGroup::getContainedEntriesForContext(const AttackContext& 
 }
 
 AutomatonGroups::AutomatonGroups()
-  : m_mutex()
-  , m_groups()
+  : m_groups()
   , m_id(0)
 {
 
@@ -302,11 +278,10 @@ AutomatonGroup* AutomatonGroups::addAutomaton(const StrangerAutomaton* automaton
 }
 
 AutomatonGroup* AutomatonGroups::addGroup(const StrangerAutomaton* automaton) {
-  const std::lock_guard<std::mutex> lock(m_mutex);
-  AutomatonGroup group(automaton, m_id);
+ AutomatonGroup group(automaton, m_id);
   m_id++;
-  m_groups.emplace_back(std::move(group));
-  return &m_groups.back();
+  m_groups.push_back(group);
+  return &m_groups.back(); 
 }
 
 AutomatonGroup* AutomatonGroups::addNewEntry(const StrangerAutomaton* automaton, const CombinedAnalysisResult* graph)
@@ -318,7 +293,6 @@ AutomatonGroup* AutomatonGroups::addNewEntry(const StrangerAutomaton* automaton,
 
 AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutomaton* automaton)
 {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     const StrangerAutomaton* existing = iter->getAutomaton();
     // std::cout << "Comparing insertion automaton (nstates: "
@@ -334,7 +308,6 @@ AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutomaton* a
 
 const AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutomaton* automaton) const
 {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     const StrangerAutomaton* existing = iter->getAutomaton();
     if (automaton->equals(existing)) {
@@ -355,21 +328,19 @@ void AutomatonGroups::printStatus(std::ostream& os) const
 
 void AutomatonGroups::printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const {
   // Switch to decimal
-  const std::lock_guard<std::mutex> lock(m_mutex);
   os << std::dec;
   printStatus(os);
   if (getNonZeroGroups() > 0) {
     m_groups.at(0).printHeaders(os, contexts);
   }
   this->printTotals(os, contexts);
-  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
-    iter->printMembers(os, printAll, contexts);
+  for (auto iter : m_groups) {
+    iter.printMembers(os, printAll, contexts);
   }
 }
 
 void AutomatonGroups::printErrorSummary(std::ostream& os) const
 {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   // Print a table of columns containting attack patterns
   //                  rows containing injection contexts
   os << "Context, total, errors, ";
@@ -389,17 +360,17 @@ void AutomatonGroups::printErrorSummary(std::ostream& os) const
     unsigned int total = 0;
     unsigned int errors = 0;
     // Loop over each group
-    for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
-      total += iter->getEntriesForSinkContext(s);
-      errors += iter->getErrorsForSinkContext(s);
+    for (auto g : m_groups) {
+      total += g.getEntriesForSinkContext(s);
+      errors += g.getErrorsForSinkContext(s);
     }
     os << total << ", " << errors << ", ";
 
     // Loop over each error
     for (auto e : AnalysisErrorHelper::getAllEnums()) {
       errors = 0;
-      for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
-        errors += iter->getErrorsForSinkContextAndErrorType(s, e);
+      for (auto g : m_groups) {
+        errors += g.getErrorsForSinkContextAndErrorType(s, e);
       }
       os << errors << ", ";     
     }
@@ -411,7 +382,6 @@ void AutomatonGroups::printErrorSummary(std::ostream& os) const
 
 void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent) const
 {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   // Print a table of columns containting attack patterns
   //                  rows containing injection contexts
   os << "Context, total, ";
@@ -429,18 +399,18 @@ void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<At
     unsigned int total = 0;
     unsigned int errors = 0;
     // Loop over each group
-    for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
-      total += iter->getEntriesForSinkContext(s);
-      errors += iter->getErrorsForSinkContext(s);
+    for (auto g : m_groups) {
+      total += g.getEntriesForSinkContext(s);
+      errors += g.getErrorsForSinkContext(s);
     }
     os << total << ", " << errors << ", ";
 
     for (auto a : contexts) {
       unsigned int i = 0;
       // Loop over each group
-      for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
-        if (iter->getSuccessfulEntriesForContext(a) > 0) {
-          i += iter->getEntriesForSinkContext(s);
+      for (auto g : m_groups) {
+        if (g.getSuccessfulEntriesForContext(a) > 0) {
+          i += g.getEntriesForSinkContext(s);
         }
       }
       if (percent) {
@@ -516,7 +486,6 @@ void AutomatonGroups::printTotals(std::ostream& os, const std::vector<AttackCont
 }
 
 unsigned int AutomatonGroups::getSuccessfulEntriesForContext(const AttackContext& context) const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getSuccessfulEntriesForContext(context);
@@ -525,7 +494,6 @@ unsigned int AutomatonGroups::getSuccessfulEntriesForContext(const AttackContext
 }
 
 unsigned int AutomatonGroups::getContainedEntriesForContext(const AttackContext& context) const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getContainedEntriesForContext(context);
@@ -534,7 +502,6 @@ unsigned int AutomatonGroups::getContainedEntriesForContext(const AttackContext&
 }
 
 unsigned int AutomatonGroups::getSuccessfulGroupsForContext(const AttackContext& context) const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += (iter->getSuccessfulEntriesForContext(context) > 0) ? 1 : 0;
@@ -543,7 +510,6 @@ unsigned int AutomatonGroups::getSuccessfulGroupsForContext(const AttackContext&
 }
 
 unsigned int AutomatonGroups::getEntries() const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getEntries();
@@ -552,7 +518,6 @@ unsigned int AutomatonGroups::getEntries() const {
 }
 
 unsigned int AutomatonGroups::getNonUniqueEntries() const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getNonUniqueEntries();
@@ -561,7 +526,6 @@ unsigned int AutomatonGroups::getNonUniqueEntries() const {
 }
 
 unsigned int AutomatonGroups::getEntriesWithDuplicates() const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getEntriesWithDuplicates();
@@ -570,7 +534,6 @@ unsigned int AutomatonGroups::getEntriesWithDuplicates() const {
 }
 
 unsigned int AutomatonGroups::getNonZeroGroups() const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     if (iter->getEntries() > 0) {
@@ -581,7 +544,6 @@ unsigned int AutomatonGroups::getNonZeroGroups() const {
 }
 
 unsigned int AutomatonGroups::getSuccessfulValidated() const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getSuccessfulValidated();
@@ -590,7 +552,6 @@ unsigned int AutomatonGroups::getSuccessfulValidated() const {
 }
 
 unsigned int AutomatonGroups::getEntriesForSinkContext(const AttackContext& context) const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getEntriesForSinkContext(context);
@@ -599,7 +560,6 @@ unsigned int AutomatonGroups::getEntriesForSinkContext(const AttackContext& cont
 }
 
 unsigned int AutomatonGroups::getEntriesForSinkContextWeighted(const AttackContext& context) const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getEntriesForSinkContextWeighted(context);
@@ -608,7 +568,6 @@ unsigned int AutomatonGroups::getEntriesForSinkContextWeighted(const AttackConte
 }
 
 unsigned int AutomatonGroups::getEntriesForSinkContextDeduplicated(const AttackContext& context) const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getEntriesForSinkContextDeduplicated(context);
@@ -617,7 +576,6 @@ unsigned int AutomatonGroups::getEntriesForSinkContextDeduplicated(const AttackC
 }
 
 unsigned int AutomatonGroups::getValidatedEntriesForSinkContext(const AttackContext& context) const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   unsigned int total = 0;
   for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
     total += iter->getValidatedEntriesForSinkContext(context);
@@ -626,10 +584,9 @@ unsigned int AutomatonGroups::getValidatedEntriesForSinkContext(const AttackCont
 }
 
 std::set<std::string> AutomatonGroups::getUniqueDomains() const {
-  const std::lock_guard<std::mutex> lock(m_mutex);
   std::set<std::string> domains;
-  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
-    std::set<std::string> s = iter->getUniqueDomains();
+  for (auto g : m_groups) {
+    std::set<std::string> s = g.getUniqueDomains();
     domains.insert(s.begin(), s.end());
   }
   return domains;
