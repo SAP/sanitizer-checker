@@ -118,7 +118,7 @@ void MultiAttack::writeResultsToFile() const {
   std::ofstream ofs_miss;
   ofs_miss.open (output_missing_payloads.string(), std::ofstream::out);
   for (auto& r : m_results) {
-    r->printUnmatchedUuids(std::cout);
+    r->printUnmatchedUuids(ofs_miss);
   }
   ofs_miss.close();
 }
