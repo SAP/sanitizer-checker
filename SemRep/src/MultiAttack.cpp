@@ -113,6 +113,14 @@ void MultiAttack::writeResultsToFile() const {
   ofs_gen.open (output_gen_payloads.string(), std::ofstream::out);
   m_groups.printGeneratedPayloads(ofs_gen);
   ofs_gen.close();
+
+  fs::path output_missing_payloads(m_output_directory / fs::path("semattack_missing_payloads.txt"));
+  std::ofstream ofs_miss;
+  ofs_miss.open (output_missing_payloads.string(), std::ofstream::out);
+  for (auto& r : m_results) {
+    r->printUnmatchedUuids(std::cout);
+  }
+  ofs_miss.close();
 }
 
 void MultiAttack::printFiles(std::ostream& os) const {
@@ -142,7 +150,7 @@ void MultiAttack::printResults(std::ostream& os, bool printFiles) const
 int MultiAttack::countDone() const
 {
   int done = 0;
-  for (auto result : m_results) {
+  for (auto& result : m_results) {
     if (result->isDone()) {
       done++;
     }
@@ -287,7 +295,7 @@ void MultiAttack::loadDepGraphs() {
   int n = 0;
   for (const auto& file : this->m_dot_paths) {
     n++;
-    //if (n > 1000) break;
+    //if (n > 100000) break;
     asio::post(pool, [this, &pool, file]() {
         try {
           DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());

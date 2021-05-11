@@ -206,9 +206,9 @@ void CombinedAnalysisResult::printGeneratedPayloadHeader(std::ostream& os) {
 
 void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
 {
-  for (auto map : m_metadataAnalysisMap) {
+  for (auto& map : m_metadataAnalysisMap) {
     const Metadata* m = map.first;
-    for (auto bw : map.second) {
+    for (auto& bw : map.second) {
       os << getFileName() << ",";
       bw->printResult(os, true);
       os << (m_atLeastOnePayloadVulnerable ? "true" : "false");
@@ -222,6 +222,17 @@ void CombinedAnalysisResult::printGeneratedPayloads(std::ostream& os) const
       os << m->generate_exploit_url(postimage_exploit) << ",";
       m->print(os);
       os << std::endl;
+    }
+  }
+}
+
+void CombinedAnalysisResult::printUnmatchedUuids(std::ostream& os) const
+{
+  if (!getFwAnalysis().isErrored()) {
+    if (!hasAtLeastOnePayload()) {
+      for (auto& m : m_metadata) {
+        os << m.get_uuid() << std::endl;
+      }
     }
   }
 }

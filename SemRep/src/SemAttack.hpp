@@ -237,6 +237,7 @@ public:
     void printHeader(std::ostream& os, const std::vector<AttackContext>& contexts) const;
     void printGeneratedPayloads(std::ostream& os) const;
     static void printGeneratedPayloadHeader(std::ostream& os);
+    void printUnmatchedUuids(std::ostream& os) const;
     void finishAnalysis();
 
     bool isDone() const { return m_done; }
