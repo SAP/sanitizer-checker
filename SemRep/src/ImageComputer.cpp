@@ -696,20 +696,23 @@ StrangerAutomaton* ImageComputer::getLiteralorConstantNodeAuto(const DepGraphNod
 	if (dynamic_cast<Literal*>(place) != nullptr || dynamic_cast<Constant*>(place)) {
 		string value = place->toString();
 		// check if it is a regular expression
-		if (value.find_first_of('/') == 0 &&
-				value.find_last_of('/') == (value.length() -1) ) {
-			string regString = value.substr( 1,value.length()-2);
-			if(regString.find_first_of('^') == 0 &&
-					regString.find_last_of('$') == (regString.length() -1)){
-				regString = "/" + regString.substr( 1,regString.length()-2) + "/";
-			}
-			else if (is_vlab_restrict) {
-				regString = "/.*(" + regString + ").*/";
-			}
-			else {
-				regString = "/" + regString + "/";
-			}
-			retMe = StrangerAutomaton::regExToAuto(regString, true, node->getID());
+                // Make sure we don't try to parse single chars
+                auto firstSlash = value.find_first_of('/');
+                auto lastSlash = value.find_last_of('/');
+		if ((firstSlash == 0) && (lastSlash != 0) &&
+                    (lastSlash  == (value.length() - 1))) {
+                    string regString = value.substr(1, value.length() - 2);
+                    if(regString.find_first_of('^') == 0 &&
+                       regString.find_last_of('$') == (regString.length() -1)) {
+                        regString = "/" + regString.substr( 1,regString.length()-2) + "/";
+                    }
+                    else if (is_vlab_restrict) {
+                        regString = "/.*(" + regString + ").*/";
+                    }
+                    else {
+                        regString = "/" + regString + "/";
+                    }
+                    retMe = StrangerAutomaton::regExToAuto(regString, true, node->getID());
 		} else {
                     if (value == "NUL") {
                         retMe = StrangerAutomaton::makeChar(0);
