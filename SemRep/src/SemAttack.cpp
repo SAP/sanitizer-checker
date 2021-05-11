@@ -182,7 +182,7 @@ bool CombinedAnalysisResult::hasAtLeastOneBypass() const {
   for (auto& map : m_metadataAnalysisMap) {
     for (auto& bw : map.second) {
       if (bw != nullptr) {
-        if (bw->getPreImage() != nullptr) {
+        if (!bw->isErrored() && bw->isVulnerable() && !bw->get_preimage_example().empty()) {
           bypass = true;
           break;
         }
