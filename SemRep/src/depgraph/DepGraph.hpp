@@ -86,6 +86,7 @@ public:
     DepGraph(DepGraphNormalNode* root) : metadata() { this->root = root; this->addNode(root); this->topLeaf = nullptr;};
     DepGraph(const DepGraph& other);
     DepGraph& operator=(const DepGraph &other);
+    bool operator<(const DepGraph &other);
     virtual ~DepGraph() {};
 
     NodesList getPredecessors(const DepGraphNode* node) const;

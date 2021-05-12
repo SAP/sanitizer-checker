@@ -177,7 +177,7 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
   try {
     fs::path dir(m_output_directory / result->getAttack()->getFile());
     BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
-    bw->doAnalysis(m_compute_preimage, m_singleton_intersection);
+    bw->doAnalysis(m_compute_preimage, m_singleton_intersection, true);
     if (m_output_dotfiles) {
       bw->writeResultsToFile(dir);
     }
@@ -278,8 +278,8 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
   result->finishAnalysis();
 
   // Mutex Lock
-  const std::lock_guard<std::mutex> lock(this->results_mutex);
   std::cout << "Finished analysis of " << file << std::endl;
+  const std::lock_guard<std::mutex> lock(this->results_mutex);
   std::cout << "Inserting results into groups for " << file << std::endl;
   this->m_groups.addAutomaton(postImage, result);
   std::cout << "Finished inserting results into groups for " << file << std::endl;
@@ -313,10 +313,13 @@ void MultiAttack::loadDepGraphs() {
 
 void MultiAttack::doAnalysis() {
   boost::asio::thread_pool pool(this->m_nThreads);
-  std::cout << "Computing post images with pool of " << m_nThreads << " threads." << std::endl;
 
+  // std::cout << "Sorting inputs:" << std::endl;
+  // std::sort(m_results.begin(), m_results.end());
+
+  std::cout << "Computing post images with pool of " << m_nThreads << " threads." << std::endl;
   // Start the analysis
-  for (auto result : m_results) {
+  for (auto& result : m_results) {
     asio::post(pool, std::bind(&MultiAttack::computeImages, this, result));
   }
   pool.join();

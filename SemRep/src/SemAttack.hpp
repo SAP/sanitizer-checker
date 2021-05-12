@@ -42,6 +42,7 @@ class SemAttack {
 public:
     SemAttack(const std::string& target_dep_graph_file_name, DepGraph target_dep_graph_, const std::string& input_field_name);
     SemAttack(const fs::path& target_dep_graph_file_name, DepGraph target_dep_graph_, const std::string& input_field_name);
+    bool operator<(const SemAttack &other);
     virtual ~SemAttack();
 
     // Load the depgraph from file
@@ -141,7 +142,7 @@ public:
 
     virtual ~BackwardAnalysisResult();
 
-    void doAnalysis(bool computePreImage = true, bool singletonIntersection = false);
+    void doAnalysis(bool computePreImage = true, bool singletonIntersection = false, bool doPostAttack = false);
     void finishAnalysis();
 
     const StrangerAutomaton* getPreImage() const { return m_preimage; }
@@ -201,6 +202,9 @@ public:
                            StrangerAutomaton* automaton);
     ~CombinedAnalysisResult();
 
+    // For sorting entries
+    bool operator< (const CombinedAnalysisResult &other) const;
+    
     BackwardAnalysisResult* addBackwardAnalysis(AttackContext context);
     bool hasBackwardanalysisResult(AttackContext context) const;
 

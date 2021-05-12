@@ -63,6 +63,10 @@ DepGraph& DepGraph::operator=(const DepGraph &other) {
     return *this;
 }
 
+bool DepGraph::operator<(const DepGraph &other) {
+    return this->getNumOfNodes() < other.getNumOfNodes();
+}
+
 int DepGraph::currentID = 0;
 int DepGraph::currentSccID = 0;
 int DepGraph::currentOrder = 0;

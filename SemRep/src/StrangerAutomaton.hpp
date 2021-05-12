@@ -52,8 +52,10 @@ public:
     static StrangerAutomaton* makeBottom();
     static StrangerAutomaton* makeTop(int id);
     static StrangerAutomaton* makeTop();
-    static StrangerAutomaton* makeString(std::string s, int id);
-    static StrangerAutomaton* makeString(std::string s);
+    static StrangerAutomaton* makeString(const std::string& s, int id);
+    static StrangerAutomaton* makeString(const std::string& s);
+    static StrangerAutomaton* makeContainsString(const std::string& s, int id);
+    static StrangerAutomaton* makeContainsString(const std::string& s);
     static StrangerAutomaton* makeChar(char c, int id);
     static StrangerAutomaton* makeChar(char c);
     static StrangerAutomaton* makeCharRange(char from, char to, int id);

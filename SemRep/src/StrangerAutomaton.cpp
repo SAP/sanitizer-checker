@@ -212,7 +212,7 @@ StrangerAutomaton* StrangerAutomaton::makeTop()
  *            : id of node associated with this auto; used for debugging
  *            purposes only
  */
-StrangerAutomaton* StrangerAutomaton::makeString(std::string s, int id)
+StrangerAutomaton* StrangerAutomaton::makeString(const std::string& s, int id)
 {
     
 	debug(stringbuilder() << id << " = makeString(" << s << ")");
@@ -248,10 +248,24 @@ StrangerAutomaton* StrangerAutomaton::makeString(std::string s, int id)
  * assigns this string to StrangerAutomaton.str. If parameter s is empty
  * string then it will call StrangerAutomaton.makeEmptyString
  */
-StrangerAutomaton* StrangerAutomaton::makeString(std::string s)
+StrangerAutomaton* StrangerAutomaton::makeString(const std::string& s)
 {
     
     return makeString(s, traceID);
+}
+
+StrangerAutomaton* StrangerAutomaton::makeContainsString(const std::string& s, int id)
+{
+    StrangerAutomaton* aut = makeString(s, id);
+    StrangerAutomaton* contained = new StrangerAutomaton(
+        dfa_star_M_star(aut->dfa, num_ascii_track, indices_main));
+    delete aut;
+    return contained;
+}
+
+StrangerAutomaton* StrangerAutomaton::makeContainsString(const std::string& s)
+{
+    return makeContainsString(s, traceID);
 }
 
 /**

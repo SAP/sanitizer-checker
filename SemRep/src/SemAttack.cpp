@@ -64,6 +64,11 @@ CombinedAnalysisResult::~CombinedAnalysisResult()
   m_metadataAnalysisMap.clear();
 }
 
+bool CombinedAnalysisResult::operator< (const CombinedAnalysisResult &other) const {
+  // Sort by the complexity of the input dependency graph
+  return this->getAttack() < other.getAttack();
+}
+
 BackwardAnalysisResult* CombinedAnalysisResult::addBackwardAnalysis(AttackContext context)
 {
   BackwardAnalysisResult* bw = new BackwardAnalysisResult(m_fwAnalysis, context);
@@ -95,7 +100,8 @@ BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(con
   } else {
     std::cout << "Doing backward analysis for payload: " << payload << std::endl;
     try {
-      StrangerAutomaton* a = StrangerAutomaton::makeString(payload);
+      StrangerAutomaton* a = StrangerAutomaton::makeContainsString(payload);
+      //a->toDotAscii(1);
       bw = new BackwardAnalysisResult(m_fwAnalysis, a, payload);
       bw->doAnalysis(computePreImage, singletonIntersection);
       if (bw && outputDotfiles) {
@@ -348,7 +354,7 @@ BackwardAnalysisResult::~BackwardAnalysisResult()
   finishAnalysis();
 }
 
-void BackwardAnalysisResult::doAnalysis(bool computePreImage, bool singletonIntersection)
+void BackwardAnalysisResult::doAnalysis(bool computePreImage, bool singletonIntersection, bool doPostAttack)
 {
   const StrangerAutomaton* postImage = m_fwResult.getPostImage();
   m_intersection = this->getAttack()->computeAttackPatternOverlap(postImage, m_attack);
@@ -387,21 +393,23 @@ void BackwardAnalysisResult::doAnalysis(bool computePreImage, bool singletonInte
       }
     } else {
       m_isSafe = true;
-      // Otherwise see what happens if attack pattern is used for a forward analysis
-      try {
-        AnalysisResult result = this->getAttack()->computeTargetFWAnalysis(m_attack);
-        const StrangerAutomaton* post = this->getAttack()->getPostImage(result);
-        if (post) {
-          m_post_attack = new StrangerAutomaton(post);
-          m_post_attack_example = m_post_attack->generateSatisfyingExample();
-        } else {
-          m_post_attack = nullptr;
+      if (doPostAttack) {
+        // Otherwise see what happens if attack pattern is used for a forward analysis
+        try {
+          AnalysisResult result = this->getAttack()->computeTargetFWAnalysis(m_attack);
+          const StrangerAutomaton* post = this->getAttack()->getPostImage(result);
+          if (post) {
+            m_post_attack = new StrangerAutomaton(post);
+            m_post_attack_example = m_post_attack->generateSatisfyingExample();
+          } else {
+            m_post_attack = nullptr;
+          }
+        } catch (StrangerException const &e) {
+          std::cout << "EXCEPTION caught in bw analysis: " << e.what() << std::endl;
+          m_isErrored = true;
+          m_error = e.getError();
+          throw;
         }
-      } catch (StrangerException const &e) {
-        std::cout << "EXCEPTION caught in bw analysis: " << e.what() << std::endl;
-        m_isErrored = true;
-        m_error = e.getError();
-        throw;
       }
     }
   }
@@ -594,6 +602,11 @@ SemAttack::SemAttack(const std::string& target_dep_graph_file_name, DepGraph tar
   , m_print(true)
   , target_dep_graph(target_dep_graph_)
 {
+}
+
+bool SemAttack::operator<(const SemAttack &other)
+{
+  return this->target_dep_graph < other.target_dep_graph;
 }
 
 void SemAttack::init()

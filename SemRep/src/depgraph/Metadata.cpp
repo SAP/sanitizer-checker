@@ -403,7 +403,7 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
                     payload += ">";
                 }
                 // Now break out of non-executing contexts
-                payload += "</iframe></style></script></object></embed></textarea>";
+                // payload += "</iframe></style></script></object></embed></textarea>";
                 //payload += "</iframe></script>";
                 // Add execution tags
                 if ((get_sink() == "innerHTML") ||
