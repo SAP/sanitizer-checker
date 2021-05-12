@@ -159,22 +159,22 @@ StrangerAutomaton* AttackPatterns::getUrlPattern()
 
 StrangerAutomaton* AttackPatterns::getHtmlPayload()
 {
-    return StrangerAutomaton::makeContainsString(AttackPatterns::m_htmlPayload);
+    return StrangerAutomaton::makeString(AttackPatterns::m_htmlPayload);
 }
 
 StrangerAutomaton* AttackPatterns::getHtmlAttributePayload()
 {
-    return StrangerAutomaton::makeContainsString(AttackPatterns::m_htmlAttributePayload);
+    return StrangerAutomaton::makeString(AttackPatterns::m_htmlAttributePayload);
 }
 
 StrangerAutomaton* AttackPatterns::getHtmlSingleQuoteAttributePayload()
 {
-    return StrangerAutomaton::makeContainsString(AttackPatterns::m_htmlSingleQuoteAttributePayload);
+    return StrangerAutomaton::makeString(AttackPatterns::m_htmlSingleQuoteAttributePayload);
 }
 
 StrangerAutomaton* AttackPatterns::getUrlPayload()
 {
-    return StrangerAutomaton::makeContainsString(AttackPatterns::m_urlPayload);
+    return StrangerAutomaton::makeString(AttackPatterns::m_urlPayload);
 }
 
 StrangerAutomaton* AttackPatterns::getHtmlPolygotPayload()

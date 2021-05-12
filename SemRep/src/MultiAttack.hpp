@@ -53,6 +53,7 @@ public:
     void setConcats(bool c) { m_concats = c; }
     void setSingletonIntersection(bool s) { m_singleton_intersection = s; }
     void setComputePreimage(bool c) { m_compute_preimage = c; }
+    void setPayloadAnalysis(bool a) { m_payload_analysis = a; }
     void setDotFiles(bool d) { m_output_dotfiles = d; }
 private:
     void printResults(std::ostream& os, bool printFiles = false) const;
@@ -93,6 +94,7 @@ private:
     bool m_concats;
     bool m_singleton_intersection;
     bool m_compute_preimage;
+    bool m_payload_analysis;
     bool m_output_dotfiles;
     StrangerAutomaton* m_input_automaton;
 };

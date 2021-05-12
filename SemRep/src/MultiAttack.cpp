@@ -272,8 +272,10 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
   }
 
   // Additional backward analysis for generated payloads
-  computeAttackPatternOverlapForMetadata(result);
-  
+  if (m_payload_analysis) {
+    computeAttackPatternOverlapForMetadata(result);
+  }
+
   // Finish up (delete the semattack object)
   result->finishAnalysis();
 
