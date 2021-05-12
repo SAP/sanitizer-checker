@@ -77,7 +77,13 @@ public:
     int get_replace_end_url() const;
     int get_replace_begin_param() const;
     int get_replace_end_param() const;
-
+    int get_max_encode_chain_length() const;
+    bool has_approximated_method() const;
+    bool has_unsupported_method() const;
+    bool has_infinite_regex() const;
+    bool has_url_on_rhs_of_replace() const;
+    bool has_removed_lr_concats() const;
+    bool has_removed_replace_artifacts() const;
     bool is_initialized() const;
 
 
@@ -131,6 +137,13 @@ private:
     int replace_end_url;
     int replace_begin_param;
     int replace_end_param;
+    int max_encode_chain_length;
+    bool approximated_method;
+    bool unsupported_method;
+    bool infinite_regex;
+    bool url_on_rhs_of_replace;
+    bool removed_lr_concats;
+    bool removed_replace_artifacts;
 
 };
 

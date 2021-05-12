@@ -280,6 +280,41 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->valid_exploit = true;
         return true;
     }
+    if(key == "Issues.TextEncodeFragmentChainLength") {
+        this->max_encode_chain_length = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.HasApproximation") {
+        this->approximated_method = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.HasMissingImplementation") {
+        this->unsupported_method = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.HasInfiniteRegexWithFunctionReplacer") {
+        this->infinite_regex = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.HasUrlInRhsOfReplace") {
+        this->url_on_rhs_of_replace = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.RemovedLRConcats") {
+        this->removed_lr_concats = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.RemovedReplaceArtifacts") {
+        this->removed_replace_artifacts = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
     std::cout << "key value pair: (" << key << ", " << value << ") unknown!\n";
     return false;
 
@@ -377,7 +412,27 @@ std::string Metadata::get_break_in() const {
 std::string Metadata::get_payload() const {
     return this->payload;
 }
-
+int Metadata::get_max_encode_chain_length() const {
+    return this->max_encode_chain_length;
+}
+bool Metadata::has_approximated_method() const {
+    return this->approximated_method;
+}
+bool Metadata::has_unsupported_method() const {
+    return this->unsupported_method;
+}
+bool Metadata::has_infinite_regex() const {
+    return this->infinite_regex;
+}
+bool Metadata::has_url_on_rhs_of_replace() const {
+    return this->url_on_rhs_of_replace;
+}
+bool Metadata::has_removed_lr_concats() const {
+    return this->removed_lr_concats;
+}
+bool Metadata::has_removed_replace_artifacts() const {
+    return this->removed_replace_artifacts;
+}
 std::string Metadata::generate_exploit_from_scratch() const {
     std::string alert = "alert(1)";
     return generate_exploit_from_scratch(alert);
