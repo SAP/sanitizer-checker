@@ -2064,7 +2064,7 @@ DFA* dfaPrePostToLowerUpperCaseHelper(DFA* M, int var, int* oldIndices, boolean 
     int i, j, n, k;
     char *exeps;
     int *to_states;
-    int sink;
+    int sink, new_sink;
     long max_exeps;
     char *statuces;
     int len;
@@ -2075,7 +2075,12 @@ DFA* dfaPrePostToLowerUpperCaseHelper(DFA* M, int var, int* oldIndices, boolean 
 
     max_exeps = 1 << len; //maybe exponential
     sink = find_sink(M);
-    assert(sink>-1);
+    if (sink < 0) {
+        ns += 1;
+        new_sink = ns - 1;
+    } else {
+        new_sink = sink;
+    }
 
     char* symbol = (char *) malloc((len + 1) * sizeof(char));//len+1 since we need extra bit
     exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char));
@@ -2128,7 +2133,7 @@ DFA* dfaPrePostToLowerUpperCaseHelper(DFA* M, int var, int* oldIndices, boolean 
         dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
             dfaStoreException(b, to_states[k], exeps + k * (len + 1));
-        dfaStoreState(b, sink);
+        dfaStoreState(b, new_sink);
 
         if (M->f[i] == -1)
             statuces[i] = '-';
@@ -2136,6 +2141,13 @@ DFA* dfaPrePostToLowerUpperCaseHelper(DFA* M, int var, int* oldIndices, boolean 
             statuces[i] = '+';
         else
             statuces[i] = '0';
+    }
+
+    // Check if a new sink is needed
+    if (sink < 0) {
+        dfaAllocExceptions(b, 0);
+        dfaStoreState(b, new_sink);
+        statuces[ns-1]='-';
     }
 
     statuces[ns] = '\0';
