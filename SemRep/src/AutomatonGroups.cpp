@@ -355,9 +355,21 @@ AutomatonGroup* AutomatonGroups::getGroupForAutomaton(const StrangerAutomaton* a
     const StrangerAutomaton* existing = iter->getAutomaton();
     // std::cout << "Comparing insertion automaton (nstates: "
     //           << ((automaton != nullptr) ? automaton->get_num_of_states() : -2)
-    //           <<" to group: " << iter->getName() << std::endl;
+    //           <<" to group: " << iter->getName() << " with states: "
+    //           << ((existing != nullptr) ? existing->get_num_of_states() : -2)
+    //           << std::endl;
+    // Both are null, found a match!
+    if ((automaton == nullptr) && (existing == nullptr)) {
+      return &(*iter);
+    }
+    // If one is null, but the other not don't match
+    if ((automaton == nullptr) || (existing == nullptr)) {
+      continue;
+    }
+    // Otherwise check
     if ((automaton == existing) ||
-        (automaton->equals(existing))) {
+        ((automaton->get_num_of_states()  == existing->get_num_of_states())
+         && automaton->equals(existing))) {
       return &(*iter);
     }
   }
