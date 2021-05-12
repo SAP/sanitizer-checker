@@ -1862,18 +1862,24 @@ DFA *dfa_replace_step1_duplicate(DFA *M, int var, int *indices) {
   int *to_states;
   long max_exeps;
   char *statuces;
-  int len, shift, newns, sink;
+  int len, shift, newns, sink, new_sink;
   char *sharp1;
   char *sharp0;
   sharp1 = getSharp1WithExtraBit(var);
   sharp0 = getSharp0WithExtraBit(var);
   len = var + 1; //one extra bit
   shift = M->ns; // map M2 transitions to new M
-  newns = 2 * (M->ns) - 1; //number of states after duplicate. The sink state is not duplicated.
-
-  max_exeps = 1 << len; //maybe exponential
   sink = find_sink(M);
-  assert(sink>-1);
+
+  if (sink < 0) {
+    newns = 2 * (M->ns) + 1; //number of states after duplicate. The sink state is not duplicated.
+    new_sink = newns - 1;
+  } else {
+    newns = 2 * (M->ns) - 1; //number of states after duplicate. The sink state is not duplicated.
+    new_sink = sink;
+  }
+  max_exeps = 1 << len; //maybe exponential
+
 
   DFABuilder *b = dfaSetup(newns, len, indices);
   exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char));
@@ -1917,7 +1923,7 @@ DFA *dfa_replace_step1_duplicate(DFA *M, int var, int *indices) {
       else
         dfaStoreException(b, i + shift, sharp1);
 
-      dfaStoreState(b, sink);
+      dfaStoreState(b, new_sink);
 
       if (M->f[i] == 1)
         statuces[i] = '+';
@@ -1928,7 +1934,7 @@ DFA *dfa_replace_step1_duplicate(DFA *M, int var, int *indices) {
       kill_paths(state_paths);
     } else {
       dfaAllocExceptions(b, 0);
-      dfaStoreState(b, sink);
+      dfaStoreState(b, new_sink);
       statuces[i] = '-';
     }
   }
@@ -1970,9 +1976,9 @@ DFA *dfa_replace_step1_duplicate(DFA *M, int var, int *indices) {
       for (k--; k >= 0; k--)
         dfaStoreException(b, to_states[k], exeps + k * (len + 1));
       dfaStoreException(b, i, sharp0);
-      dfaStoreState(b, sink);
+      dfaStoreState(b, new_sink);
       duplicate_id = i + shift;
-      if (i > sink) {
+      if ((i > sink) && (sink > 0)) {
         duplicate_id--;
       }
       if (M->f[i] == 1)
@@ -1989,6 +1995,13 @@ DFA *dfa_replace_step1_duplicate(DFA *M, int var, int *indices) {
         statuces[sink + shift] = '0';
       }
     }
+  }
+
+  // Check if a new sink is needed
+  if (sink < 0) {
+    dfaAllocExceptions(b, 0);
+    dfaStoreState(b, new_sink);
+    statuces[newns-1]='-';
   }
 
   statuces[newns] = '\0';

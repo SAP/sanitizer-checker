@@ -1295,6 +1295,9 @@ DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indic
   DFA *M_rep;
   DFA *M_sharp = dfaSharpStringWithExtraBit(var, indices);
 
+  if ((M1 == NULL) || (M2 == NULL)) {
+    return NULL;
+  }
   // Check if we are replacing the search auto with the replace string
   char* M2_singleton = isSingleton(M2, var, indices);
   if (M2_singleton != NULL) {
@@ -1361,6 +1364,9 @@ DFA *dfa_replace_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indic
 
 DFA *dfa_replace_once_extrabit(DFA *M1, DFA *M2, const char *str, int var, int *indices)
 {
+  if ((M1 == NULL) || (M2 == NULL)) {
+    return NULL;
+  }
   DFA *temp1;
   DFA *result = NULL;
   DFA *M1_bar;

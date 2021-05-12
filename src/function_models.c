@@ -2864,7 +2864,6 @@ bool checkExtraBitNeeded(DFA *M, int var, int *indices, int state, char *lambda)
     paths state_paths, pp;
     trace_descr tp;
     int sink = find_sink(M);
-    assert(sink > -1);
     int j;
     char *symbol = (char *) malloc((var + 1) * sizeof(char));
     bool retMe = false;
@@ -2922,12 +2921,11 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
     int *to_states;
     long max_exeps;
     char *statuces;
-    int sink;
+    int sink, new_sink;
     char *symbol = (char *) malloc((var + 1) * sizeof(char));
 
     max_exeps = 1 << var; //maybe exponential
     sink = find_sink(M);
-    assert(sink > -1);
 
     PStatePairArrayList replaceTransitions = createStatePairArrayList(32, 0);
 
@@ -2971,6 +2969,14 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
     // Need to make a complete copy of the automaton, so double the number of states
     // Currently just replace a single char, but number of states will need to increase if replacing with a string
     int num_of_states = M->ns * 2;
+
+    if (sink < 0) {
+        // Additional state for the new sink
+        num_of_states += 1;
+        new_sink = num_of_states - 1;
+    } else {
+        new_sink = sink;
+    }
 
     // Create new DFA
     DFABuilder *b = dfaSetup(num_of_states, len, indices); //add one new accept state
@@ -3071,7 +3077,7 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
             dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
         // Default state is the sink (rejection)
-        dfaStoreState(b, sink);
+        dfaStoreState(b, new_sink);
         if (M->f[i] == 1) {
             statuces[i] = '+';
         } else {
@@ -3123,7 +3129,7 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
         for (k--; k >= 0; k--) {
             dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
-        dfaStoreState(b, sink);
+        dfaStoreState(b, new_sink);
         if (M->f[i] == 1) {
             statuces[i + M->ns] = '+';
         } else {
@@ -3131,6 +3137,14 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
         }
         kill_paths(state_paths);
     } // end for each original state
+
+    // Check if a new sink is needed
+    if (sink < 0) {
+        dfaAllocExceptions(b, 0);
+        dfaStoreState(b, new_sink);
+        statuces[num_of_states-1]='-';
+    }
+
     statuces[num_of_states] = '\0';
     result = dfaBuild(b, statuces);
     free(exeps);
@@ -3195,13 +3209,12 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
     int *to_states;
     long max_exeps;
     char *statuces;
-    int sink;
+    int sink, new_sink;
     
     char *symbol = (char *) malloc((var + 1) * sizeof(char));
     
     max_exeps = 1 << var; //maybe exponential
     sink = find_sink(M);
-    assert(sink > -1);
     
     PStatePairArrayList replaceTransitions = createStatePairArrayList(32, 0);
     
@@ -3253,6 +3266,15 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
     //if lenString is 1 i.e. replace a char with another char then numOfAddedStates will be 0
     int num_of_states = M->ns + numOfAddedStates;
     int new_state_counter = 0;
+
+    if (sink < 0) {
+        // Additional state for the new sink
+        num_of_states += 1;
+        new_sink = num_of_states - 1;
+    } else {
+        new_sink = sink + shiftArray[sink];
+    }
+
 //    printf("number_of_states = %d\n",num_of_states);
 //    for (i = 0; i < M->ns; i++){
 //        printf("shift[%d] == %d\n", i, shiftArray[i]);
@@ -3360,7 +3382,7 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
         for (k--; k >= 0; k--){
             dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
-        dfaStoreState(b, sink + shiftArray[sink]);
+        dfaStoreState(b, new_sink);
         if (M->f[i] == 1)
             statuces[i + shiftArray[i]] = '+';
         else
@@ -3378,7 +3400,7 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
                     dfaStoreException(b, toState, binChar);
                 else
                     dfaStoreException(b, new_state_counter, binChar);
-                dfaStoreState(b, sink + shiftArray[sink]);
+                dfaStoreState(b, new_sink);
                 statuces[new_state_counter - 1] = '-';
                 free(binChar);
                 new_state_counter++;
@@ -3388,6 +3410,13 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
         
     } // end for each original state
     //    assert(new_state_counter == (num_new_states - 1));
+    // Check if a new sink is needed
+    if (sink < 0) {
+        dfaAllocExceptions(b, 0);
+        dfaStoreState(b, new_sink);
+        statuces[num_of_states-1]='-';
+    }
+
     statuces[num_of_states] = '\0';
     result = dfaBuild(b, statuces);
     
@@ -3459,7 +3488,6 @@ int stringAcceptedFromState(DFA* M, int state, char* string, int var, int* indic
     bool found = true;
 
     int sink = find_sink(M);
-    assert(sink > -1);
     
     length = (int) strlen(string);
     
@@ -3539,13 +3567,11 @@ DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char rep
     int *to_states;
     long max_exeps;
     char *statuces;
-    int sink;
-    
+    int sink, new_sink;
     char *symbol = (char *) malloc((var + 1) * sizeof(char));
     
     max_exeps = 1 << var; //maybe exponential
     sink = find_sink(M);
-    assert(sink > -1);
     
     PStatePairArrayList replaceTransitions = createStatePairArrayList(32, 0);
     
@@ -3563,11 +3589,20 @@ DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char rep
     
     int len = extraBitNeeded? (var + 1): var;
     int *indices = allocateArbitraryIndex(len);
-    
-    DFABuilder *b = dfaSetup(M->ns, len, indices); //add one new accept state
+    int new_ns = M->ns;
+
+    if (sink < 0) {
+        // Additional state for the new sink
+        new_ns += 1;
+        new_sink = new_ns - 1;
+    } else {
+        new_sink = sink;
+    }
+
+    DFABuilder *b = dfaSetup(new_ns, len, indices); //add one new accept state
     exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char)); //plus 1 for \0 end of the string
     to_states = (int *) malloc(max_exeps * sizeof(int));
-    statuces = (char *) malloc((M->ns + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
+    statuces = (char *) malloc((new_ns + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
     
 #if MORE_WORDS_LESS_NDTRANS == 1
     int numOfChars = 1 << var;
@@ -3664,7 +3699,7 @@ DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char rep
         for (k--; k >= 0; k--){
             dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
-        dfaStoreState(b, sink);
+        dfaStoreState(b, new_sink);
         if (M->f[i] == 1)
             statuces[i] = '+';
         else
@@ -3672,7 +3707,14 @@ DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char rep
         kill_paths(state_paths);
     } // end for each original state
 
-    statuces[M->ns] = '\0';
+    // Check if a new sink is needed
+    if (sink < 0) {
+        dfaAllocExceptions(b, 0);
+        dfaStoreState(b, new_sink);
+        statuces[new_ns-1]='-';
+    }
+
+    statuces[new_ns] = '\0';
     result = dfaBuild(b, statuces);
     
         
@@ -4153,8 +4195,11 @@ static const char jsonDecodeChars[URI_ENCODE_CHARS] = {
    10,   0,   0,   0,   0,   0,   9,   0,   0,   0, // 110
 };
 
-DFA *dfaJsonParse(DFA *inputAuto, int var, int *indices){
-
+DFA *dfaJsonParse(DFA *inputAuto, int var, int *indices)
+{
+    if (inputAuto == NULL) {
+        return NULL;
+    }
     DFA *a = dfaCopy(inputAuto);
     DFA *b = NULL;
     DFA *p = NULL;
