@@ -285,7 +285,7 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->initialized = true;
         return true;
     }
-    if(key == "Issues.TextFragmentEncodeChainLength") {
+    if(key == "Issues.LargestTextFragmentEncodeChainLength") {
         this->max_encode_text_fragment_chain_length = std::stoi(value);
         this->initialized = true;
         return true;
