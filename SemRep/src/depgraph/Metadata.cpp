@@ -280,8 +280,13 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->valid_exploit = true;
         return true;
     }
-    if(key == "Issues.TextEncodeFragmentChainLength") {
-        this->max_encode_chain_length = std::stoi(value);
+    if(key == "Issues.LargestEncodeAttrStringChain") {
+        this->max_encode_attr_chain_length = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.TextFragmentEncodeChainLength") {
+        this->max_encode_text_fragment_chain_length = std::stoi(value);
         this->initialized = true;
         return true;
     }
@@ -412,9 +417,15 @@ std::string Metadata::get_break_in() const {
 std::string Metadata::get_payload() const {
     return this->payload;
 }
-int Metadata::get_max_encode_chain_length() const {
-    return this->max_encode_chain_length;
+
+int Metadata::get_max_encode_attr_chain_length() const {
+    return this->max_encode_attr_chain_length;
 }
+
+int Metadata::get_max_encode_text_fragment_chain_length() const {
+    return this->max_encode_text_fragment_chain_length;
+}
+
 bool Metadata::has_approximated_method() const {
     return this->approximated_method;
 }

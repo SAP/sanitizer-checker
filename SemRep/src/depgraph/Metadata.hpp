@@ -77,7 +77,8 @@ public:
     int get_replace_end_url() const;
     int get_replace_begin_param() const;
     int get_replace_end_param() const;
-    int get_max_encode_chain_length() const;
+    int get_max_encode_attr_chain_length() const;
+    int get_max_encode_text_fragment_chain_length() const;
     bool has_approximated_method() const;
     bool has_unsupported_method() const;
     bool has_infinite_regex() const;
@@ -137,7 +138,8 @@ private:
     int replace_end_url;
     int replace_begin_param;
     int replace_end_param;
-    int max_encode_chain_length;
+    int max_encode_attr_chain_length;
+    int max_encode_text_fragment_chain_length;
     bool approximated_method;
     bool unsupported_method;
     bool infinite_regex;
