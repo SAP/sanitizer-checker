@@ -445,7 +445,7 @@ bool Metadata::has_removed_replace_artifacts() const {
     return this->removed_replace_artifacts;
 }
 std::string Metadata::generate_exploit_from_scratch() const {
-    std::string alert = "alert(1)";
+    std::string alert = "alert(`xss`)";
     return generate_exploit_from_scratch(alert);
 }
 
@@ -470,7 +470,7 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
                 }
                 // Now break out of non-executing contexts
                 // payload += "</iframe></style></script></object></embed></textarea>";
-                //payload += "</iframe></script>";
+                payload += "</iframe></script>";
                 // Add execution tags
                 if ((get_sink() == "innerHTML") ||
                     (get_sink() == "outerHTML") ||
