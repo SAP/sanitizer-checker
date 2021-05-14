@@ -132,6 +132,8 @@ void MultiAttack::printFiles(std::ostream& os) const {
       os << result->getFileName() << ", ";
       os << result->getCountWithDuplicates() << ", ";
       os << result->getCount() << ", ";
+      os << (result->getFwAnalysis().isErrored() ? "ERROR!" : "OK") << ", ";
+      os << AnalysisErrorHelper::getName(result->getFwAnalysis().getError()) << ", ";
       result->printResult(os, true, m_analyzed_contexts);
       os << std::endl;
       ++i;

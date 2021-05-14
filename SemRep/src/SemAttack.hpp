@@ -151,6 +151,7 @@ public:
     const StrangerAutomaton* getAttackPostImage() const { return m_post_attack; }
 
     bool isErrored() const;
+    AnalysisError getError() const { return m_error; }
     bool isSafe() const;
     bool isContained() const;
     bool isVulnerable() const { return !isSafe(); }
