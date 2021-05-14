@@ -512,7 +512,7 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
 
 std::string Metadata::generate_attribute_exploit_from_scratch() const {
     std::string payload = "";
-    std::string function = "alert(1)";
+    std::string function = "alert(`xss`)";
     if (is_initialized() && has_valid_exploit() &&
         (get_exploit_type() == Exploit_Type::Html) &&
         (get_exploit_token() == "attribute")) {
