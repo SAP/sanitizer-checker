@@ -34,6 +34,8 @@
   DO(UnsupportedFunction)                        \
   DO(MalformedDepgraph)                          \
   DO(UrlInReplaceString)                         \
+  DO(LargeEncodeAttrChain)                       \
+  DO(LargeEncodeTextChain)                       \
   DO(RegExpParseError)                           \
   DO(MonaException)                              \
   DO(InvalidArgument)                            \

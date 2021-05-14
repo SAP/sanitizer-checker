@@ -125,7 +125,7 @@ public:
     };
 
     NodesList getNodes();
-    Metadata get_metadata() const;
+    const Metadata& get_metadata() const;
     UninitNodesList getUninitNodes() ;
 
     OpNodesList getFuncsNodes(const std::vector<std::string> funcsNames) ;
