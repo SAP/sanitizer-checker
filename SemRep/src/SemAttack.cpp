@@ -98,7 +98,7 @@ BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(con
     // Just return existing analysis
     bw = m_stringAnalysisMap.at(payload);
   } else {
-    std::cout << "Doing backward analysis for payload: " << payload << std::endl;
+    std::cout << "Ouput: " << output_dir.string() <<": Doing backward analysis for payload: " << payload << std::endl;
     try {
       StrangerAutomaton* a = StrangerAutomaton::makeContainsString(payload);
       //a->toDotAscii(1);
@@ -139,7 +139,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
       if (!bw->isErrored()) {
         m_allPayloadsErrored = false;
       } else {
-        std::cout << "doMetadataSpecificAnalysis::ERROR" << std::endl;
+        std::cout << "doMetadataSpecificAnalysis::ERROR computing pre-image for payload:" << payload << "output: " << output_dir.string() << std::endl;
       }
       bws.push_back(bw);
     }
@@ -154,7 +154,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
       if (!bw->isErrored()) {
         m_allPayloadsErrored = false;
       } else {
-        std::cout << "doMetadataSpecificAnalysis::ERROR" << std::endl;
+        std::cout << "doMetadataSpecificAnalysis::ERROR computing pre-image for payload:" << payload << "output: " << output_dir.string() << std::endl;
       }
       bws.push_back(bw);
     }
