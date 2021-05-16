@@ -317,6 +317,9 @@ StrangerAutomaton* StrangerAutomaton::makeCharRange(char from, char to, int id) 
         retMe->setID(id);
         retMe->debugAutomaton();
     }
+    if (retMe->isNull()) {
+        throw StrangerException(AnalysisError::MonaException, "Null DFA pointer returned from MONA");
+    }
     return retMe;
 }
 

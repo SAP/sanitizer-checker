@@ -622,8 +622,11 @@ RegExp* RegExp::makeChar(char c)
 
 RegExp* RegExp::makeCharRange(char from, char to)
 {
-
     RegExp* r = (new RegExp());
+    if (from > to) {
+        throw StrangerException(AnalysisError::RegExpParseError,
+                                (stringbuilder() << "makeCharRange from > to: " << from << " > " << to ));
+    }
     r->kind = REGEXP_CHAR_RANGE;
     r->from = from;
     r->to = to;
@@ -803,10 +806,10 @@ RegExp* RegExp::parseRepeatExp()
             while (peek("0123456789"))
                                 next();
 
-            if(start == pos)
+            if(start == pos) {
             	throw StrangerException(AnalysisError::RegExpParseError,
                                         (stringbuilder() << "integer expected at position " << pos));
-
+            }
             int n = to_int(b.substr(start, pos - start));
             int m = -1;
             if(match(',')) {
@@ -819,9 +822,9 @@ RegExp* RegExp::parseRepeatExp()
 
             } else
                 m = n;
-            if(!match('}'))
+            if(!match('}')) {
             	throw StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "expected '}' at position " << pos));
-
+            }
             if(m == -1)
                 return makeRepeat(e, n);
             else
@@ -850,8 +853,9 @@ RegExp* RegExp::parseCharClassExp() /* throws(IllegalArgumentException) */
         if (negate)
             e = makeIntersection(makeAnyChar(), makeComplement(e));
 
-        if(!match(']'))
-        	throw StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "expected ']' at position " << pos));
+        if(!match(']')) {
+            throw StrangerException(AnalysisError::RegExpParseError, (stringbuilder() << "expected ']' at position " << pos));
+        }
         return e;
     } else {
         return parseSimpleExp();
