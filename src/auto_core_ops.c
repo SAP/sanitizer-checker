@@ -107,7 +107,9 @@ DFA *dfa_construct_range(char a, char b, int var, int *indices){
   n1 = (int) a;
   n2 = (int) b;
   int i = n2-n1;
-  assert(i>=0); //range a-b,
+  if (i < 0) { //range a-b,
+    return NULL;
+  }
   DFABuilder *builder = dfaSetup(3,var,indices);
 
   //state 0
