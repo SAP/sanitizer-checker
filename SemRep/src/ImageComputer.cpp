@@ -988,6 +988,19 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		const StrangerAutomaton* patternAuto = analysisResult.get(patternNode->getID());
 		const StrangerAutomaton* replaceAuto = analysisResult.get(replaceNode->getID());
 
+                // Check here whether the depgraph contains the url
+                const Metadata& m = depGraph.get_metadata();
+                if (m.is_initialized() && (m.has_url_on_rhs_of_replace())) {
+                    // Extra check for length to avoid filtering out encoded strings like &quot;
+                    std::string replaceStr = replaceAuto->getStr();
+                    std::string url = m.get_url();
+                    if (replaceStr.length() > 10) {
+                        throw StrangerException(AnalysisError::UrlInReplaceString,
+                                                stringbuilder() << "URL: " << url
+                                                << " found in replace string: " << replaceStr);
+                    }
+                }
+
 		retMe = StrangerAutomaton::general_replace(patternAuto,replaceAuto,subjectAuto, opNode->getID());
 
 	} else if (opName == "str_replace_once") {
@@ -1013,6 +1026,19 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 		const StrangerAutomaton* subjectAuto = analysisResult.get(subjectNode->getID());
 		const StrangerAutomaton* patternAuto = analysisResult.get(patternNode->getID());
 		const StrangerAutomaton* replaceAuto = analysisResult.get(replaceNode->getID());
+
+                // Check here whether the depgraph contains the url
+                const Metadata& m = depGraph.get_metadata();
+                if (m.is_initialized() && (m.has_url_on_rhs_of_replace())) {
+                    // Extra check for length to avoid filtering out encoded strings like &quot;
+                    std::string replaceStr = replaceAuto->getStr();
+                    std::string url = m.get_url();
+                    if (replaceStr.length() > 10) {
+                        throw StrangerException(AnalysisError::UrlInReplaceString,
+                                                stringbuilder() << "URL: " << url
+                                                << " found in replace string: " << replaceStr);
+                    }
+                }
 
 		retMe = StrangerAutomaton::str_replace_once(patternAuto,replaceAuto,subjectAuto, opNode->getID());
 

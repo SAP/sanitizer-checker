@@ -695,11 +695,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* input
     // Do some checks on the metadata information
     const Metadata& m = target_dep_graph.get_metadata();
     if (m.is_initialized()) {
-      if (m.has_url_on_rhs_of_replace()) {
-        throw StrangerException(AnalysisError::UrlInReplaceString,
-                                stringbuilder() << "URL: " << m.get_url()
-                                << " found in replace string");
-      } else if (m.get_max_encode_attr_chain_length() > 3) {
+      if (m.get_max_encode_attr_chain_length() > 3) {
         throw StrangerException(AnalysisError::LargeEncodeAttrChain,
                                 stringbuilder() << "Large EncodeAttr chain:"
                                 << m.get_max_encode_attr_chain_length());
