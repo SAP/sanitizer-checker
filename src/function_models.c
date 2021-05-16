@@ -1255,7 +1255,7 @@ DFA *dfaLeftTrim(DFA *M, char c, int var, int *oldindices)
     long max_exeps;
     char *statuces;
     int len=var;
-    int sink;
+    int sink, new_sink, ns;
 
     char *auxbit=NULL;
 
@@ -1284,11 +1284,15 @@ DFA *dfaLeftTrim(DFA *M, char c, int var, int *oldindices)
         indices = allocateArbitraryIndex(len);
     }
 
-
-
     max_exeps=1<<len; //maybe exponential
-    sink=find_sink(M);
-    assert(sink >-1);
+    sink = find_sink(M);
+    ns = M->ns + 1;
+    if (sink < 0) {
+        ns += 1;
+        new_sink = ns - 1;
+    } else {
+        new_sink = sink + 1;
+    }
 
     numOfChars = 1<<var;
     charachters = (char**) malloc(numOfChars * (sizeof (char*)));
@@ -1296,10 +1300,10 @@ DFA *dfaLeftTrim(DFA *M, char c, int var, int *oldindices)
     //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
 
 
-    DFABuilder *b = dfaSetup(M->ns+1, len, indices); //add one new initial state
+    DFABuilder *b = dfaSetup(ns, len, indices); //add one new initial state
     exeps=(char *)malloc(max_exeps*(len+1)*sizeof(char)); //plus 1 for \0 end of the string
     to_states=(int *)malloc(max_exeps*sizeof(int));
-    statuces=(char *)malloc((M->ns+2)*sizeof(char));
+    statuces=(char *)malloc((ns + 1)*sizeof(char));
 
     //printf("Before Replace Char\n");
     //dfaPrintVerbose(M);
@@ -1366,7 +1370,7 @@ DFA *dfaLeftTrim(DFA *M, char c, int var, int *oldindices)
     dfaAllocExceptions(b, k);
     for(k--;k>=0;k--)
         dfaStoreException(b, to_states[k],exeps+k*(len+1));
-    dfaStoreState(b, sink+1);
+    dfaStoreState(b, new_sink);
 
     // if we can reach an accept state on lambda* then
     // accept epsilon (start state becomes an accepting state)
@@ -1414,13 +1418,20 @@ DFA *dfaLeftTrim(DFA *M, char c, int var, int *oldindices)
         dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
             dfaStoreException(b, to_states[k], exeps + k * (len + 1));
-        dfaStoreState(b, sink + 1);
+        dfaStoreState(b, new_sink);
 
         if (M->f[i] == 1)
             statuces[i + 1] = '+';
         else
             statuces[i + 1] = '-';
         kill_paths(state_paths);
+    }
+
+    // Check if a new sink is needed
+    if (sink < 0) {
+        dfaAllocExceptions(b, 0);
+        dfaStoreState(b, new_sink);
+        statuces[ns-1]='-';
     }
 
     statuces[M->ns + 1] = '\0';
@@ -1479,7 +1490,7 @@ DFA *dfaPreLeftTrim(DFA *M, char c, int var, int *oldIndices)
     int *to_states;
     long max_exeps;
     char *statuces;
-    int sink;
+    int sink, new_sink, ns;
     int size = 0;
     
     
@@ -1488,8 +1499,14 @@ DFA *dfaPreLeftTrim(DFA *M, char c, int var, int *oldIndices)
     
     char *symbol;
     
-    sink=find_sink(M);
-    assert(sink >-1);
+    sink = find_sink(M);
+    ns = M->ns + 1;
+    if (sink < 0) {
+        ns += 1;
+        new_sink = ns - 1;
+    } else {
+        new_sink = sink + 1;
+    }
     
     symbol=(char *)malloc((var+1)*sizeof(char));
     
@@ -1549,10 +1566,10 @@ DFA *dfaPreLeftTrim(DFA *M, char c, int var, int *oldIndices)
     //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
     
     
-    DFABuilder *b = dfaSetup(M->ns+1, var, indices); //add one new initial state as start state
+    DFABuilder *b = dfaSetup(ns, var, indices); //add one new initial state as start state
     exeps=(char *)malloc(max_exeps*(var+1)*sizeof(char)); //plus 1 for \0 end of the string
     to_states=(int *)malloc(max_exeps*sizeof(int));
-    statuces=(char *)malloc((M->ns+2)*sizeof(char));
+    statuces=(char *)malloc((ns + 1)*sizeof(char));
     
     //printf("Before Replace Char\n");
     //dfaPrintVerbose(M);
@@ -1615,7 +1632,7 @@ DFA *dfaPreLeftTrim(DFA *M, char c, int var, int *oldIndices)
     //copy out edges from original start state
     for(k--;k>=0;k--)
         dfaStoreException(b, to_states[k],exeps+k*(var+1));
-    dfaStoreState(b, sink+1);
+    dfaStoreState(b, new_sink);
     
     // if original start state is accepting then
     // new one should be 
@@ -1664,7 +1681,7 @@ DFA *dfaPreLeftTrim(DFA *M, char c, int var, int *oldIndices)
         dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
             dfaStoreException(b, to_states[k], exeps + k * (var + 1));
-        dfaStoreState(b, sink + 1);
+        dfaStoreState(b, new_sink);
         
         if (M->f[i] == 1)
             statuces[i + 1] = '+';
@@ -1672,7 +1689,14 @@ DFA *dfaPreLeftTrim(DFA *M, char c, int var, int *oldIndices)
             statuces[i + 1] = '-';
         kill_paths(state_paths);
     }
-    
+
+        // Check if a new sink is needed
+    if (sink < 0) {
+        dfaAllocExceptions(b, 0);
+        dfaStoreState(b, new_sink);
+        statuces[ns-1]='-';
+    }
+
     statuces[M->ns + 1] = '\0';
     result = dfaBuild(b, statuces);
     
