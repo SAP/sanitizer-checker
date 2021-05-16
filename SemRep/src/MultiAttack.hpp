@@ -41,7 +41,7 @@ namespace fs = boost::filesystem;
 class MultiAttack {
 
 public:
-    MultiAttack(const std::string& graph_directory, const std::string& output_dir, const std::string& input_field_name, StrangerAutomaton* input_auto = nullptr);
+    MultiAttack(const std::string& graph_directory, const std::string& output_dir, const std::string& input_field_name, int max, StrangerAutomaton* input_auto = nullptr);
     virtual ~MultiAttack();
 
     void compute();
@@ -90,6 +90,7 @@ private:
     std::mutex results_mutex;
 
     // Configuration
+    int m_max;
     unsigned int m_nThreads;
     bool m_concats;
     bool m_singleton_intersection;

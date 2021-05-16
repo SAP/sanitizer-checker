@@ -39,7 +39,7 @@
 
 namespace asio = boost::asio;
 
-MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& output_dir, const std::string& input_field_name, StrangerAutomaton* input_auto)
+MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& output_dir, const std::string& input_field_name, int max, StrangerAutomaton* input_auto)
   : m_graph_directory(graph_directory)
   , m_output_directory(output_dir)
   , m_input_name(input_field_name)
@@ -51,6 +51,7 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_analyzed_contexts()
   , results_mutex()
   , m_nThreads(boost::thread::hardware_concurrency())
+  , m_max(max)
   , m_concats(0)
   , m_compute_preimage(true)
   , m_output_dotfiles(true)
@@ -299,7 +300,9 @@ void MultiAttack::loadDepGraphs() {
   int n = 0;
   for (const auto& file : this->m_dot_paths) {
     n++;
-    //if (n > 100000) break;
+    if ((m_max > 0) && (n > m_max)) {
+      break;
+    }
     asio::post(pool, [this, &pool, file]() {
         try {
           DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());

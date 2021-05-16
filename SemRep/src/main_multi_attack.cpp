@@ -33,7 +33,7 @@ using namespace boost;
 namespace po = boost::program_options;
 
 
-void call_sem_attack(const string& target_name, const string& output_dir, const string& field_name,
+void call_sem_attack(const string& target_name, const string& output_dir, const string& field_name, int max,
                      bool concats, bool singleton_intersection, bool preImage, bool encode, bool payload, bool attackPatterns, bool dotfiles)
 {
     try {
@@ -46,7 +46,7 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
           delete input;
           input = encoded;
         }
-        MultiAttack attack(target_name, output_dir, field_name, input);
+        MultiAttack attack(target_name, output_dir, field_name, max, input);
         // MultiAttack clones the input
         delete input;
 
@@ -118,6 +118,7 @@ int main(int argc, char *argv[]) {
           ("output,o",     po::value<string>()->required(), "Path to output directory.")
           ("fieldname,f",  po::value<string>()->required(), "Name of the input field for which sanitization code needs to be repaired.")
           ("concat,c",     po::value<bool>()->default_value(false), "Compute concat operations")
+          ("number,n",     po::value<int>()->default_value(-1), "Maximum number of depgraphs to compute")
           ("encode,e",     po::value<bool>()->default_value(false), "Use URL encoded automaton as analysis input (default is any string)")
           ("singleton,s",  po::value<bool>()->default_value(false), "Use singletons for post-image computation")
           ("preimage,p",   po::value<bool>()->default_value(true), "Compute preimages for attack patterns")
@@ -159,6 +160,7 @@ int main(int argc, char *argv[]) {
             call_sem_attack(vm["target"].as<string>(),
                             vm["output"].as<string>(),
                             vm["fieldname"].as<string>(),
+                            vm["number"].as<int>(),
                             vm["concat"].as<bool>(),
                             vm["singleton"].as<bool>(),
                             vm["preimage"].as<bool>(),
