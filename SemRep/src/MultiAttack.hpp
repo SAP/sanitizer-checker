@@ -55,6 +55,7 @@ public:
     void setComputePreimage(bool c) { m_compute_preimage = c; }
     void setPayloadAnalysis(bool a) { m_payload_analysis = a; }
     void setDotFiles(bool d) { m_output_dotfiles = d; }
+    void setDoForwardAnalysisWithAttackPattern(bool f) { m_attack_forward = f; }
 private:
     void printResults(std::ostream& os, bool printFiles = false) const;
     void printFiles(std::ostream& os) const;
@@ -97,6 +98,7 @@ private:
     bool m_compute_preimage;
     bool m_payload_analysis;
     bool m_output_dotfiles;
+    bool m_attack_forward;
     StrangerAutomaton* m_input_automaton;
 };
 

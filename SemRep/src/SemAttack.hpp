@@ -209,7 +209,7 @@ public:
     BackwardAnalysisResult* addBackwardAnalysis(AttackContext context);
     bool hasBackwardanalysisResult(AttackContext context) const;
 
-    void doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage = true, bool singletonIntersection = false, bool outputDotfiles = true);
+    void doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage = true, bool singletonIntersection = false, bool outputDotfiles = true, bool attack_forward = false);
 
     const SemAttack* getAttack() const { return m_fwAnalysis.getAttack(); }
     SemAttack* getAttack() { return m_fwAnalysis.getAttack(); }
@@ -249,7 +249,7 @@ public:
 
 private:
     BackwardAnalysisResult* doBackwardAnalysisForPayload(const std::string& payload, const fs::path& output_dir,
-                                                         bool computePreImage, bool singletonIntersection, bool outputDotfiles);
+                                                         bool computePreImage, bool singletonIntersection, bool outputDotfiles, bool attack_forward);
     fs::path m_inputfile;
     std::string m_input_name;
     bool m_done;

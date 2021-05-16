@@ -85,7 +85,7 @@ bool CombinedAnalysisResult::hasBackwardanalysisResult(AttackContext context) co
   return false;
 }
 
-BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(const std::string& payload, const fs::path& output_dir, bool computePreImage, bool singletonIntersection, bool outputDotfiles)
+BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(const std::string& payload, const fs::path& output_dir, bool computePreImage, bool singletonIntersection, bool outputDotfiles, bool attack_forward)
 {
   if (payload == "") {
     //std::cout << "Skipping empty payload." << std::endl;
@@ -103,7 +103,7 @@ BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(con
       StrangerAutomaton* a = StrangerAutomaton::makeContainsString(payload);
       //a->toDotAscii(1);
       bw = new BackwardAnalysisResult(m_fwAnalysis, a, payload);
-      bw->doAnalysis(computePreImage, singletonIntersection);
+      bw->doAnalysis(computePreImage, singletonIntersection, attack_forward);
       if (bw && outputDotfiles) {
         bw->writeResultsToFile(output_dir);
       }
@@ -118,7 +118,7 @@ BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(con
   return bw;
 }
 
-void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage, bool singletonIntersection, bool outputDotfiles)
+void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_dir, bool computePreImage, bool singletonIntersection, bool outputDotfiles, bool attack_forward)
 {
   // Create a specific payload for each metadata entry
   unsigned int i = 0;
@@ -130,7 +130,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
     BackwardAnalysisResult* bw = nullptr;
     // Normal payload
     std::string payload = m.generate_exploit_from_scratch();
-    bw = doBackwardAnalysisForPayload(payload, output_dir, computePreImage, singletonIntersection, outputDotfiles);
+    bw = doBackwardAnalysisForPayload(payload, output_dir, computePreImage, singletonIntersection, outputDotfiles, attack_forward);
     if (bw != nullptr) {
       m_atLeastOnePayloadVulnerable |= bw->isVulnerable();
       if (!bw->isVulnerable()) {
@@ -145,7 +145,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
     }
     // Attribute payload
     std::string attr_payload = m.generate_attribute_exploit_from_scratch();
-    bw = doBackwardAnalysisForPayload(attr_payload, output_dir, computePreImage, singletonIntersection, outputDotfiles);
+    bw = doBackwardAnalysisForPayload(attr_payload, output_dir, computePreImage, singletonIntersection, outputDotfiles, attack_forward);
     if (bw != nullptr) {
       m_atLeastOnePayloadVulnerable |= bw->isVulnerable();
       if (!bw->isVulnerable()) {

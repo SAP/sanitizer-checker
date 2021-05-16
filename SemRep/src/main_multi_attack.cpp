@@ -34,7 +34,8 @@ namespace po = boost::program_options;
 
 
 void call_sem_attack(const string& target_name, const string& output_dir, const string& field_name, int max,
-                     bool concats, bool singleton_intersection, bool preImage, bool encode, bool payload, bool attackPatterns, bool dotfiles)
+                     bool concats, bool singleton_intersection, bool preImage, bool encode, bool payload,
+                     bool attackPatterns, bool attack_forward, bool dotfiles)
 {
     try {
         cout << endl << "\t------ Starting Analysis for: " << field_name << " ------" << endl;
@@ -54,6 +55,7 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
         attack.setConcats(concats);
         attack.setComputePreimage(preImage);
         attack.setPayloadAnalysis(payload);
+        attack.setDoForwardAnalysisWithAttackPattern(attack_forward);
         attack.setDotFiles(dotfiles);
 
         if (attackPatterns) {
@@ -124,6 +126,7 @@ int main(int argc, char *argv[]) {
           ("preimage,p",   po::value<bool>()->default_value(true), "Compute preimages for attack patterns")
           ("payload,y",    po::value<bool>()->default_value(true), "Use payload string attack patterns")
           ("attack,a",     po::value<bool>()->default_value(true), "Use fixed attack patterns")
+          ("attackfw,k",   po::value<bool>()->default_value(false), "Do forward analysis with attack pattern if there is no intersection with post image")
           ("dotfiles,d",   po::value<bool>()->default_value(true), "Output all dot output files to disk");
 
         po::positional_options_description p;
@@ -154,6 +157,7 @@ int main(int argc, char *argv[]) {
                << ", URL encode input: " << vm["encode"].as<bool>()
                << ", Payload attack patterns: " << vm["payload"].as<bool>()
                << ", Fixed attack patterns: " << vm["payload"].as<bool>()
+               << ", Do forward analysis with attack pattern if there is no intersection with post image: " << vm["attackfw"].as<bool>()
                << ", Output dot files: " << vm["dotfiles"].as<bool>()
                << "\n";
 
@@ -167,6 +171,7 @@ int main(int argc, char *argv[]) {
                             vm["encode"].as<bool>(),
                             vm["payload"].as<bool>(),
                             vm["attack"].as<bool>(),
+                            vm["attackfw"].as<bool>(),
                             vm["dotfiles"].as<bool>()
               );
         }

@@ -55,6 +55,7 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_concats(0)
   , m_compute_preimage(true)
   , m_output_dotfiles(true)
+  , m_attack_forward(false)
   , m_input_automaton(nullptr)
 {
   if (input_auto == nullptr) {
@@ -180,7 +181,7 @@ void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, At
   try {
     fs::path dir(m_output_directory / result->getAttack()->getFile());
     BackwardAnalysisResult* bw = result->addBackwardAnalysis(context);
-    bw->doAnalysis(m_compute_preimage, m_singleton_intersection, true);
+    bw->doAnalysis(m_compute_preimage, m_singleton_intersection, m_attack_forward);
     if (m_output_dotfiles) {
       bw->writeResultsToFile(dir);
     }
@@ -197,7 +198,7 @@ void MultiAttack::computeAttackPatternOverlapForMetadata(CombinedAnalysisResult*
             << file
             << std::endl;
   fs::path dir(m_output_directory / result->getAttack()->getFile());
-  result->doMetadataSpecificAnalysis(dir, m_compute_preimage, m_singleton_intersection, m_output_dotfiles);
+  result->doMetadataSpecificAnalysis(dir, m_compute_preimage, m_singleton_intersection, m_output_dotfiles, m_attack_forward);
 }
 
 CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph) {
