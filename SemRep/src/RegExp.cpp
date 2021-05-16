@@ -1043,6 +1043,8 @@ char RegExp::parseCharExp() /* //throws(IllegalArgumentException) */
             return '\t';
         } else if(match('v')) { // Vertical Tab
             return '\v';
+        } else if(match('0')) { // NULL char
+            return '\0';
         } else {
             // Assume anything else is just esacped, return next character
             return next();
