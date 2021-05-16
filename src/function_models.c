@@ -547,7 +547,7 @@ DFA *dfaRightTrim(DFA *M, char c, int var, int *oldindices) {
     long max_exeps;
     char *statuces;
     int len = var;
-    int sink, new_accept_state;
+    int sink, new_sink, ns, new_accept_state;
     boolean split_char;
 
     int numOfChars;
@@ -573,19 +573,26 @@ DFA *dfaRightTrim(DFA *M, char c, int var, int *oldindices) {
     }
 
     max_exeps = 1 << len; //maybe exponential
+
     sink = find_sink(M);
-    assert(sink > -1);
+    ns = M->ns + 1;
     new_accept_state = M->ns;
+    if (sink < 0) {
+        ns += 1;
+        new_sink = ns - 1;
+    } else {
+        new_sink = sink;
+    }
 
     numOfChars = 1 << var;
     charachters = (char**) malloc(numOfChars * (sizeof(char*)));
 
     //pairs[i] is the list of all reachable states by \sharp1 \bar \sharp0 from i
 
-    DFABuilder *b = dfaSetup(M->ns + 1, len, indices); //add one new accept state
+    DFABuilder *b = dfaSetup(ns, len, indices); //add one new accept state
     exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char)); //plus 1 for \0 end of the string
     to_states = (int *) malloc(max_exeps * sizeof(int));
-    statuces = (char *) malloc((M->ns + 2) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
+    statuces = (char *) malloc((ns + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
 
     // for each original state
     for (i = 0; i < M->ns; i++) {
@@ -653,7 +660,7 @@ DFA *dfaRightTrim(DFA *M, char c, int var, int *oldindices) {
         dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
             dfaStoreException(b, to_states[k], exeps + k * (len + 1));
-        dfaStoreState(b, sink);
+        dfaStoreState(b, new_sink);
         statuces[i] = '-';
 
         kill_paths(state_paths);
@@ -661,8 +668,15 @@ DFA *dfaRightTrim(DFA *M, char c, int var, int *oldindices) {
 
     // add new accept state
     dfaAllocExceptions(b, 0);
-    dfaStoreState(b, sink);
+    dfaStoreState(b, new_sink);
     statuces[new_accept_state] = '+';
+
+    // Check if a new sink is needed
+    if (sink < 0) {
+        dfaAllocExceptions(b, 0);
+        dfaStoreState(b, new_sink);
+        statuces[ns-1]='-';
+    }
 
     statuces[M->ns + 1] = '\0';
     result = dfaBuild(b, statuces);
@@ -720,7 +734,7 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
     long max_exeps;
     char *statuces;
     int len;
-    int sink;
+    int sink, new_sink, ns;
     
     int size = 0;
     int numOfChars;
@@ -730,9 +744,7 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
 
     DFABuilder *b = NULL;
 
-    sink=find_sink(M);
-    assert(sink >-1);
-    
+   
     symbol=(char *)malloc((var+1)*sizeof(char));
     
     /**************************************************
@@ -752,17 +764,27 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
     
     
     unsigned shift = 0;
+    sink=find_sink(M);
+
     if (M->f[M->s] == 1){
-        //if start state is accepting then
-        //one new start state and one new accept state
-        b = dfaSetup(M->ns+2, len, indices); //add one new initial state as start state
+        ns = M->ns + 2;
         shift = 1;
-        statuces=(char *)malloc((M->ns+3)*sizeof(char));//two states + null
     } else {
-        b = dfaSetup(M->ns+1, len, indices); //add one new initial state as start state
+        ns = M->ns + 1;
         shift = 0;
-        statuces=(char *)malloc((M->ns+2)*sizeof(char));//1 state + null
     }
+
+    if (sink < 0) {
+        ns += 1;
+        new_sink = ns - 1;
+    } else {
+        new_sink = sink + shift;
+    }
+
+
+    b = dfaSetup(M->ns+1, len, indices); //add one new initial state as start state
+    statuces=(char *)malloc((ns+1)*sizeof(char));//1 state + null
+ 
     unsigned newStart = 0;
     unsigned newAcceptState = M->ns + shift;
 
@@ -903,7 +925,7 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
         //copy out edges from original start state
         for(k--;k>=0;k--)
             dfaStoreException(b, to_states[k],exeps+k*(len+1));
-        dfaStoreState(b, sink+shift);
+        dfaStoreState(b, new_sink);
         
         // new one should be accepting
         statuces[0]='+';
@@ -997,7 +1019,7 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
         dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
             dfaStoreException(b, to_states[k], exeps + k * (len + 1));
-        dfaStoreState(b, sink + shift);
+        dfaStoreState(b, new_sink);
         statuces[i + shift] = '-';
 		
     }
@@ -1024,12 +1046,19 @@ DFA *dfaPreRightTrim(DFA *M, char c, int var, int *oldIndices)
     //copy out edges from original start state
     for(k--;k>=0;k--)
         dfaStoreException(b, to_states[k],exeps+k*(len+1));
-    dfaStoreState(b, sink+shift);
+    dfaStoreState(b, new_sink);
     
     // new one should be accepting
     statuces[newAcceptState]='+';
 
-    
+
+    // Check if a new sink is needed
+    if (sink < 0) {
+        dfaAllocExceptions(b, 0);
+        dfaStoreState(b, new_sink);
+        statuces[ns-1]='-';
+    }
+
     /*************************************************
      *       build automaton and project             *
      *************************************************/
