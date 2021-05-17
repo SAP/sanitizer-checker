@@ -271,11 +271,6 @@ void MultiAttack::doFwAnalysis(CombinedAnalysisResult* result) {
     }
   }
 
-  // Backward analysis
-  for (auto c : m_analyzed_contexts) {
-      computeAttackPatternOverlap(result, c);
-  }
-
   // Mutex Lock
   std::cout << "Finished analysis of " << file << std::endl;
   const std::lock_guard<std::mutex> lock(this->groups_mutex);
@@ -291,6 +286,11 @@ void MultiAttack::doBwAnalysis(CombinedAnalysisResult* result) {
   }
   const std::string file = result->getFileName();
 
+  // Backward analysis
+  for (auto c : m_analyzed_contexts) {
+      computeAttackPatternOverlap(result, c);
+  }
+
   // Additional backward analysis for generated payloads
   if (m_payload_analysis) {
     computeAttackPatternOverlapForMetadata(result);
@@ -301,7 +301,7 @@ void MultiAttack::doBwAnalysis(CombinedAnalysisResult* result) {
 
   // Mutex Lock
   const std::lock_guard<std::mutex> lock(this->groups_mutex);
-  std::cout << "Finised payload analysis for " << file << std::endl;
+  std::cout << "Finised backward analysis for " << file << std::endl;
   printStatus();
 }
 
