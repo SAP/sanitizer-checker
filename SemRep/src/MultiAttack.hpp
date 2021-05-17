@@ -30,6 +30,7 @@
 #define BOOST_FILESYSTEM_VERSION 3
 #define BOOST_FILESYSTEM_NO_DEPRECATED
 #include <boost/filesystem.hpp>
+#include <boost/asio.hpp>
 
 #include <ostream>
 #include <thread>
@@ -61,8 +62,9 @@ private:
     void printFiles(std::ostream& os) const;
     void fillCommonPatterns();
     void findDotFiles();
-    CombinedAnalysisResult* findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph);
-    void computeImages(CombinedAnalysisResult* result);
+    CombinedAnalysisResult* findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph, boost::asio::thread_pool &pool);
+    void doFwAnalysis(CombinedAnalysisResult* result);
+    void doBwAnalysis(CombinedAnalysisResult* result);
     void computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context);
     void computeAttackPatternOverlapForMetadata(CombinedAnalysisResult* result);
     static std::vector<fs::path> getDotFilesInDir(fs::path const &dir);

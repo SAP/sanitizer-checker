@@ -34,7 +34,6 @@
 #include <algorithm>
 #include <functional>
 #include <unordered_set>
-#include <boost/asio.hpp>
 #include <boost/thread.hpp>
 
 namespace asio = boost::asio;
@@ -201,7 +200,7 @@ void MultiAttack::computeAttackPatternOverlapForMetadata(CombinedAnalysisResult*
   result->doMetadataSpecificAnalysis(dir, true, m_singleton_intersection, m_output_dotfiles, m_attack_forward);
 }
 
-CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph) {
+CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, DepGraph& target_dep_graph, boost::asio::thread_pool &pool) {
   // Find the result for the given hash
   const std::lock_guard<std::mutex> lock(this->results_mutex);
   CombinedAnalysisResult* result = nullptr;
@@ -217,7 +216,8 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
     }
   } else {
     result = new CombinedAnalysisResult(file, target_dep_graph, m_input_name, m_input_automaton);
-    // Add to results
+    // Start the forward analysis
+    asio::post(pool, std::bind(&MultiAttack::doFwAnalysis, this, result));
     this->m_results.push_back(result);
     if (((m_results.size() % 1000) == 0)) {
       std::cout << "Added " << m_results.size() << " sanitizers to worker queue." << std::endl;
@@ -230,7 +230,7 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
   return result;
 }
 
-void MultiAttack::computeImages(CombinedAnalysisResult* result) {
+void MultiAttack::doFwAnalysis(CombinedAnalysisResult* result) {
   if (result == nullptr) {
     return;
   }
@@ -256,7 +256,7 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
   } catch (std::exception const &e) {
     errored = true;
     std::cout << "EXCEPTION! In FW analysis: " << file << " in thread " << std::this_thread::get_id()
-              << " message: " << e.what() << std::endl;
+             << " message: " << e.what() << std::endl;
   } catch (...) {
     errored = true;
     std::cout << "EXCEPTION! In FW analysis: " << file << " in thread " << std::this_thread::get_id() << std::endl;
@@ -269,7 +269,14 @@ void MultiAttack::computeImages(CombinedAnalysisResult* result) {
       postImage = nullptr;
     }
   }
-  
+}
+
+void MultiAttack::doBwAnalysis(CombinedAnalysisResult* result) {
+  if (result == nullptr) {
+    return;
+  }
+  const std::string file = result->getFileName();
+
   // Backward analysis
   for (auto c : m_analyzed_contexts) {
       computeAttackPatternOverlap(result, c);
@@ -308,7 +315,7 @@ void MultiAttack::loadDepGraphs() {
         try {
           DepGraph target_dep_graph = DepGraph::parseDotFile(file.string());
           {
-            findOrCreateResult(file, target_dep_graph);
+            this->findOrCreateResult(file, target_dep_graph, pool);
           }
         } catch(std::exception& e) {
           cerr << "Error parsing " << file.string() << ": " << e.what() << "\n";
@@ -328,7 +335,7 @@ void MultiAttack::doAnalysis() {
   std::cout << "Computing post images with pool of " << m_nThreads << " threads." << std::endl;
   // Start the analysis
   for (auto& result : m_results) {
-    asio::post(pool, std::bind(&MultiAttack::computeImages, this, result));
+    asio::post(pool, std::bind(&MultiAttack::doBwAnalysis, this, result));
   }
   pool.join();
   std::cout << "Forward analysis finished!" << std::endl;

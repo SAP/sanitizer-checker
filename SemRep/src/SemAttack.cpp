@@ -87,7 +87,7 @@ bool CombinedAnalysisResult::hasBackwardanalysisResult(AttackContext context) co
 
 BackwardAnalysisResult* CombinedAnalysisResult::doBackwardAnalysisForPayload(const std::string& payload, const fs::path& output_dir, bool computePreImage, bool singletonIntersection, bool outputDotfiles, bool attack_forward)
 {
-  if (payload == "") {
+  if (payload.empty()) {
     //std::cout << "Skipping empty payload." << std::endl;
     return nullptr;
   }
@@ -122,6 +122,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
 {
   // Create a specific payload for each metadata entry
   unsigned int i = 0;
+  const std::string file = getFileName();
   m_atLeastOnePayloadVulnerable = false;
   m_allPayloadsVulnerable = true;
   m_allPayloadsErrored = true;
@@ -139,7 +140,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
       if (!bw->isErrored()) {
         m_allPayloadsErrored = false;
       } else {
-        std::cout << "doMetadataSpecificAnalysis::ERROR computing pre-image for payload:" << payload << "output: " << output_dir.string() << std::endl;
+        std::cout << "doMetadataSpecificAnalysis::ERROR computing pre-image for payload:" << payload << " file: " << file << std::endl;
       }
       bws.push_back(bw);
     }
@@ -154,7 +155,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
       if (!bw->isErrored()) {
         m_allPayloadsErrored = false;
       } else {
-        std::cout << "doMetadataSpecificAnalysis::ERROR computing pre-image for payload:" << payload << "output: " << output_dir.string() << std::endl;
+        std::cout << "doMetadataSpecificAnalysis::ERROR computing pre-image for payload:" << payload << " file: " << file << std::endl;
       }
       bws.push_back(bw);
     }
