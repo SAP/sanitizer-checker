@@ -1801,7 +1801,9 @@ DFA* dfaTrim(DFA* inputAuto, char c, int var, int* indices){
 DFA* dfaTrimSet(DFA* inputAuto, char chars[], int num, int var, int* indices){
     DFA *leftTrimmed, *leftThenRightTrimmed, *tmp;
     int i;
-    assert(chars != NULL);
+    if (!chars || !inputAuto) {
+        return NULL;
+    }
 
     tmp = dfaCopy(inputAuto);
 
@@ -1837,7 +1839,9 @@ DFA* dfaPreTrim(DFA* inputAuto, char c, int var, int* indices){
 DFA* dfaPreTrimSet(DFA* inputAuto, char chars[], int num, int var, int* indices){
     DFA *leftPreTrimmed, *leftThenRightPreTrimmed, *tmp;
     int i;
-    assert(chars != NULL);
+    if (!chars || !inputAuto) {
+        return NULL;
+    }
 
     tmp = dfaCopy(inputAuto);
 
@@ -2011,8 +2015,6 @@ void getUpperCaseCharsHelper(char** result, char* transitions, int* indexInResul
         if (currentBit < (var-1)){
             getUpperCaseCharsHelper(result, transitions, indexInResult, currentBit + 1, var, prev);
         }
-        else
-            assert(FALSE);
     }
 
 }
@@ -2082,8 +2084,6 @@ void getLowerUpperCaseCharsPrePostHelper(char** result, char* transitions, int* 
         if (currentBit < (var-1)){
             getLowerUpperCaseCharsPrePostHelper(result, transitions, indexInResult, currentBit + 1, var, prev, lowerCase, preImage);
         }
-        else
-            assert(FALSE);
     }
 
 }
@@ -2306,7 +2306,7 @@ DFA *dfa_escape(DFA *M, int var, int *oldindices, char escapeChar, char *escaped
     long max_exeps;
     char *statuces;
     int len = var;
-    int sink;
+    int sink, new_sink, ns;
     
     int numOfChars;
     char** charachters;
@@ -2324,8 +2324,6 @@ DFA *dfa_escape(DFA *M, int var, int *oldindices, char escapeChar, char *escaped
     
     int *indices = allocateArbitraryIndex(len);
     max_exeps = 1 << len; //maybe exponential
-    sink = find_sink(M);
-    assert(sink > -1);
     
     numOfChars = 1 << var;
     charachters = (char**) malloc(numOfChars * (sizeof(char*)));
@@ -2334,11 +2332,19 @@ DFA *dfa_escape(DFA *M, int var, int *oldindices, char escapeChar, char *escaped
 //    assert(statePairs->index < INT_MAX && statePairs->sorted);
 //    printStatePairArrayList(statePairs);
     int num_new_states = (int) statePairs->index;
+    ns = num_new_states + M->ns;
+    sink = find_sink(M);
+    if (sink < 0) {
+        ns += 1;
+        new_sink = ns - 1;
+    } else {
+        new_sink = sink;
+    }
     
-    DFABuilder *b = dfaSetup(M->ns + num_new_states, len, indices); //add one new accept state
+    DFABuilder *b = dfaSetup(ns, len, indices); //add one new accept state
     exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char)); //plus 1 for \0 end of the string
     to_states = (int *) malloc(max_exeps * sizeof(int));
-    statuces = (char *) malloc((M->ns + num_new_states + 1) * sizeof(char)); //plus 1 for \0 end of the string
+    statuces = (char *) malloc((ns + 1) * sizeof(char)); //plus 1 for \0 end of the string
     
     int numOfEscapeStates = 0;
     bool escapeState;
@@ -2408,7 +2414,7 @@ DFA *dfa_escape(DFA *M, int var, int *oldindices, char escapeChar, char *escaped
         for (k--; k >= 0; k--){
             dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
-        dfaStoreState(b, sink);
+        dfaStoreState(b, new_sink);
         if (M->f[i] == 1)
             statuces[i] = '+';
         else
@@ -2448,9 +2454,17 @@ DFA *dfa_escape(DFA *M, int var, int *oldindices, char escapeChar, char *escaped
         for (k--; k >= 0; k--){
             dfaStoreException(b, to_states[k], exeps + k * (len + 1));
         }
-        dfaStoreState(b, sink);
+        dfaStoreState(b, new_sink);
         statuces[i + M->ns] = '-';
     }
+
+    // Check if a new sink is needed
+    if (sink < 0) {
+        dfaAllocExceptions(b, 0);
+        dfaStoreState(b, new_sink);
+        statuces[ns-1]='-';
+    }
+
     statuces[M->ns + num_new_states] = '\0';
     result = dfaBuild(b, statuces);
     
@@ -2483,7 +2497,6 @@ DFA *dfa_escape(DFA *M, int var, int *oldindices, char escapeChar, char *escaped
 bool getNextStateOnLambda(DFA *M, int var, int *indices, char *lambda, unsigned srcState, unsigned *pNextState){
 
     int sink = find_sink(M);
-    assert(sink >= 0);
     unsigned j;
     if (pNextState)
         *pNextState = UINT_MAX;
@@ -2649,7 +2662,6 @@ void getEscapeTransitions(DFA *M, int var, int *indices, char *escapeLambda, cha
     bool *visited = (bool *) mem_alloc((size_t) M->ns * sizeof(bool));
     memset(visited, false, (size_t) M->ns * sizeof(bool));
     int sink = find_sink(M);
-    assert(sink >= 0);
 
     pTransitionRelation pTransRel = dfaGetTransitionRelation(M);
     dfaShiftTransitionRelation(pTransRel, sink);
@@ -2735,7 +2747,7 @@ DFA *dfa_pre_escape(DFA *M, int var, int *indices, char escapeChar, char *escape
     int *to_states;
     long max_exeps;
     char *statuces;
-    int sink;
+    int sink, new_sink, ns;
     
     char **escapedCharsBin = (char **) mem_alloc((size_t) numOfEscapedChars * sizeof(char *));
     for (i = 0; i < numOfEscapedChars; i++){
@@ -2745,8 +2757,7 @@ DFA *dfa_pre_escape(DFA *M, int var, int *indices, char escapeChar, char *escape
     char *symbol = (char *) malloc((var + 1) * sizeof(char));
     
     max_exeps = 1 << var; //maybe exponential
-    sink = find_sink(M);
-    assert(sink > -1);
+    
     
     PStatePairArrayList escapeTransitions = createStatePairArrayList(32, numOfEscapedChars);
     PUIntArrayList escapedStates = createUIntArrayList(32);
@@ -2754,16 +2765,24 @@ DFA *dfa_pre_escape(DFA *M, int var, int *indices, char escapeChar, char *escape
     
     unsigned *shiftArray = getShiftArray(escapedStates, M->ns);
     
-    int num_of_states = M->ns - ((int)escapedStates->index);
-//    printf("number_of_states = %d\n",num_of_states);
+    ns = M->ns - ((int)escapedStates->index);
+    sink = find_sink(M);
+    if (sink < 0) {
+        ns += 1;
+        new_sink = ns - 1;
+    } else {
+        new_sink = sink;
+    }
+
+//    printf("number_of_states = %d\n",ns);
 //    for (i = 0; i < M->ns; i++){
 //        printf("shift[%d] == %d\n", i, shiftArray[i]);
 //    }
     
-    DFABuilder *b = dfaSetup(num_of_states, var, indices); //add one new accept state
+    DFABuilder *b = dfaSetup(ns, var, indices); //add one new accept state
     exeps = (char *) malloc(max_exeps * (var + 1) * sizeof(char)); //plus 1 for \0 end of the string
     to_states = (int *) malloc(max_exeps * sizeof(int));
-    statuces = (char *) malloc((num_of_states + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
+    statuces = (char *) malloc((ns + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
     
     // for each original state
     for (i = 0; i < M->ns; i++) {
@@ -2852,7 +2871,7 @@ DFA *dfa_pre_escape(DFA *M, int var, int *indices, char escapeChar, char *escape
         dfaAllocExceptions(b, k);
         for (k--; k >= 0; k--)
             dfaStoreException(b, to_states[k], exeps + k * (var + 1));
-        dfaStoreState(b, sink);
+        dfaStoreState(b, new_sink);
         if (M->f[i] == 1)
             statuces[i - shiftArray[i]] = '+';
         else
@@ -2861,7 +2880,14 @@ DFA *dfa_pre_escape(DFA *M, int var, int *indices, char escapeChar, char *escape
         kill_paths(state_paths);
     } // end for each original state
     //    assert(new_state_counter == (num_new_states - 1));
-    statuces[num_of_states] = '\0';
+    // Check if a new sink is needed
+    if (sink < 0) {
+        dfaAllocExceptions(b, 0);
+        dfaStoreState(b, new_sink);
+        statuces[ns-1]='-';
+    }
+
+    statuces[ns] = '\0';
     result = dfaBuild(b, statuces);
 
     free(exeps);
@@ -2904,8 +2930,12 @@ DFA *dfa_pre_escape(DFA *M, int var, int *indices, char escapeChar, char *escape
   Notice: if shifLen is 0 then the shift array will be 0
 */
 unsigned *getShiftArray2(PStatePairArrayList addedStates, int size, int shiftLen){
-    assert(size >= 0);
-    assert(addedStates->index == 0 || addedStates->sorted);
+    if (size < 0) {
+        return NULL;
+    }
+    if (!(addedStates->index == 0 || addedStates->sorted)) {
+        return NULL;
+    }
     
     unsigned *shiftArray = mem_alloc(size * sizeof(unsigned));
     mem_zero(shiftArray, size * sizeof(unsigned));
@@ -2966,9 +2996,10 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
     if (check_emptiness_minimized(M)){
         return dfaCopy(M);
     }
-    assert(string != NULL);
-    //assert we do not do delete
-    assert(strlen(string) == 1);
+    if ((!string) || (strlen(string) != 1)) {
+        return NULL;
+    }
+
     //if replacing a char with itself just copy
     if (strlen(string) == 1 && string[0] == replacedChar){
         return dfaCopy(M);
@@ -3033,18 +3064,18 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
     //Invariant: each pair in replacedTransitions is unique i.e. no two pairs share the same first state
     // Need to make a complete copy of the automaton, so double the number of states
     // Currently just replace a single char, but number of states will need to increase if replacing with a string
-    int num_of_states = M->ns * 2;
+    int ns = M->ns * 2;
 
     if (sink < 0) {
         // Additional state for the new sink
-        num_of_states += 1;
-        new_sink = num_of_states - 1;
+        ns += 1;
+        new_sink = ns - 1;
     } else {
         new_sink = sink;
     }
 
     // Create new DFA
-    DFABuilder *b = dfaSetup(num_of_states, len, indices); //add one new accept state
+    DFABuilder *b = dfaSetup(ns, len, indices); //add one new accept state
 
     // Allocate array to hold the exceptions for each state
     exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char)); //plus 1 for \0 end of the string
@@ -3053,7 +3084,7 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
     to_states = (int *) malloc(max_exeps * sizeof(int));
 
     // Arary to hold the statuses as input for dfaBuild
-    statuces = (char *) malloc((num_of_states + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
+    statuces = (char *) malloc((ns + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
     int toState = -1;
     int numOfChars = 1 << var;
     char **charachters = (char**) malloc(numOfChars * (sizeof(char*)));
@@ -3207,10 +3238,10 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
     if (sink < 0) {
         dfaAllocExceptions(b, 0);
         dfaStoreState(b, new_sink);
-        statuces[num_of_states-1]='-';
+        statuces[ns-1]='-';
     }
 
-    statuces[num_of_states] = '\0';
+    statuces[ns] = '\0';
     result = dfaBuild(b, statuces);
     free(exeps);
     //	//printf("FREE ToState\n");
@@ -3250,9 +3281,9 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
     if (check_emptiness_minimized(M)){
         return dfaCopy(M);
     }
-    assert(string != NULL);
-    //assert we do not do delete
-    assert(strlen(string) > 0);
+    if (!string || (strlen(string) <= 0)) {
+        return NULL;
+    }
     //if replacing a char with itself just copy
     if (strlen(string) == 1 && string[0] == replacedChar){
         return dfaCopy(M);
@@ -3329,26 +3360,26 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
     //if lenString is 1 i.e. replace a char with another char then shift array will be 0's
     unsigned *shiftArray = getShiftArray2(replaceTransitions, M->ns, (int)strLength-1);
     //if lenString is 1 i.e. replace a char with another char then numOfAddedStates will be 0
-    int num_of_states = M->ns + numOfAddedStates;
+    int ns = M->ns + numOfAddedStates;
     int new_state_counter = 0;
 
     if (sink < 0) {
         // Additional state for the new sink
-        num_of_states += 1;
-        new_sink = num_of_states - 1;
+        ns += 1;
+        new_sink = ns - 1;
     } else {
         new_sink = sink + shiftArray[sink];
     }
 
-//    printf("number_of_states = %d\n",num_of_states);
+//    printf("number_of_states = %d\n",ns);
 //    for (i = 0; i < M->ns; i++){
 //        printf("shift[%d] == %d\n", i, shiftArray[i]);
 //    }
     
-    DFABuilder *b = dfaSetup(num_of_states, len, indices); //add one new accept state
+    DFABuilder *b = dfaSetup(ns, len, indices); //add one new accept state
     exeps = (char *) malloc(max_exeps * (len + 1) * sizeof(char)); //plus 1 for \0 end of the string
     to_states = (int *) malloc(max_exeps * sizeof(int));
-    statuces = (char *) malloc((num_of_states + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
+    statuces = (char *) malloc((ns + 1) * sizeof(char)); //plus 2, one for the new accept state and one for \0 end of the string
     int toState = -1;
     
     int numOfChars = 1 << var;
@@ -3479,10 +3510,10 @@ DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replace
     if (sink < 0) {
         dfaAllocExceptions(b, 0);
         dfaStoreState(b, new_sink);
-        statuces[num_of_states-1]='-';
+        statuces[ns-1]='-';
     }
 
-    statuces[num_of_states] = '\0';
+    statuces[ns] = '\0';
     result = dfaBuild(b, statuces);
     
     free(exeps);
@@ -3544,7 +3575,10 @@ int transitionIncludesChar(const char *str, char target, int var){
  * to sink then return state at end of path otherwise return -1
  */
 int stringAcceptedFromState(DFA* M, int state, char* string, int var, int* indices){
-    assert(string != NULL);
+
+    if (!string) {
+        return -2;
+    }
     
     int length, i, j, currentState = state;
     paths state_paths, pp;
@@ -3612,9 +3646,9 @@ DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char rep
     if (check_emptiness_minimized(M)){
         return dfaCopy(M);
     }
-    assert(string != NULL);
-    //assert we do not do delete
-    assert(strlen(string) > 0);
+    if (!string || (strlen(string) <= 0)) {
+        return NULL;
+    }
     //if replacing a char with itself just copy
     if (strlen(string) == 1 && string[0] == replacedChar){
         return dfaCopy(M);
