@@ -623,9 +623,16 @@ RegExp* RegExp::makeChar(char c)
 RegExp* RegExp::makeCharRange(char from, char to)
 {
     RegExp* r = (new RegExp());
-    if (from > to) {
+    unsigned char u_from = (unsigned char)from;
+    unsigned char u_to = (unsigned char)to;
+    //std::cout << (int)u_from << " --> " << (int)u_to << std::endl;
+    if (u_from > u_to) {
         throw StrangerException(AnalysisError::RegExpParseError,
-                                (stringbuilder() << "makeCharRange from > to: " << from << " > " << to ));
+                                (stringbuilder()
+                                 << "makeCharRange: "
+                                 << from << " (" << (int)u_from << ")"
+                                 << " > "
+                                 << to << " (" << (int)u_to << ")"));
     }
     r->kind = REGEXP_CHAR_RANGE;
     r->from = from;
@@ -1014,11 +1021,10 @@ RegExp* RegExp::parseCharOrShortHand() {
 
 char RegExp::parseCharExp() /* //throws(IllegalArgumentException) */
 {
+    static std::string allowedHexChars = "01234567890ABCDEFabcdef";
     // Loop for escaped chars...
     if (match('\\')) {
-        // ... of the form \x26
-        if (match('x')) {
-            std::string allowedHexChars = "01234567890ABCDEFabcdef";
+        if (match('x')) { // ... of the form \x26
             if (peek(allowedHexChars)) {
                 char first = next();
                 if (peek(allowedHexChars)) {
@@ -1030,8 +1036,32 @@ char RegExp::parseCharExp() /* //throws(IllegalArgumentException) */
                     return from_hex_char(first);
                 }
             } else {
-                // Match \x alone (= 0)
-                return 0;
+                // Match \x alone (= x)
+                return 'x';
+            }
+        } else if (match('u')) { // Unicode
+            // Need 4 consecutive characters for unicode
+            bool foundUnicode = true;
+            for (unsigned int i = 0; i < 4; ++i) {
+                if (!peek(allowedHexChars, i)) {
+                    foundUnicode = false;
+                    break;
+                }
+            }
+            if (foundUnicode) {
+                // We only support ascii
+                char unicode[4];
+                for (unsigned int i = 0; i < 4; ++i) {
+                    unicode[i] = next();
+                }
+                int firstPair = from_hex_chars(unicode[0], unicode[1]);
+                if (firstPair > 0) {
+                    return 255;
+                }
+                return from_hex_chars(unicode[2], unicode[3]);
+            } else {
+                // Match u
+                return 'u';
             }
         } else if(match('f')) { // Form Feed
             return '\f';
