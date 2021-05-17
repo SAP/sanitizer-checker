@@ -40,6 +40,7 @@
   DO(MonaException)                              \
   DO(InvalidArgument)                            \
   DO(InfiniteLength)                             \
+  DO(InfiniteRegex)                             \
   DO(NotImplemented)                             \
   DO(Other)
 
