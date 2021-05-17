@@ -50,7 +50,7 @@ public:
     void printResults(bool printFiles = false) const { printResults(std::cout, printFiles); }
     void printFiles() const { printFiles(std::cout); }
     void writeResultsToFile() const;
-    void printStatus() const;
+    void printStatus(bool printGroups = true) const;
     void setConcats(bool c) { m_concats = c; }
     void setSingletonIntersection(bool s) { m_singleton_intersection = s; }
     void setComputePreimage(bool c) { m_compute_preimage = c; }
@@ -91,7 +91,6 @@ private:
     std::vector<AttackContext> m_analyzed_contexts;
 
     std::mutex results_mutex;
-    std::mutex groups_mutex;
 
     // Configuration
     int m_max;

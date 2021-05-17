@@ -49,7 +49,6 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_groups()
   , m_analyzed_contexts()
   , results_mutex()
-  , groups_mutex()
   , m_nThreads(boost::thread::hardware_concurrency())
   , m_max(max)
   , m_concats(0)
@@ -162,13 +161,15 @@ int MultiAttack::countDone() const
   return done;
 }
   
-void MultiAttack::printStatus() const
+void MultiAttack::printStatus(bool printGroups) const
 {
   int done = countDone();
   int total = m_results.size();
   double percent = total > 0 ? ((double) done / (double) total) * 100.0 : 0.0;
   std::cout << "Status: completed " << done << "/" << total << "(" << percent << "%)" << std::endl;
-  m_groups.printStatus(std::cout);
+  if (printGroups) {
+    m_groups.printStatus(std::cout);
+  }
 }
 
 void MultiAttack::computeAttackPatternOverlap(CombinedAnalysisResult* result, AttackContext context)
@@ -273,7 +274,7 @@ void MultiAttack::doFwAnalysis(CombinedAnalysisResult* result) {
 
   // Mutex Lock
   std::cout << "Finished analysis of " << file << std::endl;
-  const std::lock_guard<std::mutex> lock(this->groups_mutex);
+  const std::lock_guard<std::mutex> lock(this->results_mutex);
   std::cout << "Inserting results into groups for " << file << std::endl;
   this->m_groups.addAutomaton(postImage, result);
   std::cout << "Finished inserting results into groups for " << file << std::endl;
@@ -299,10 +300,8 @@ void MultiAttack::doBwAnalysis(CombinedAnalysisResult* result) {
   // Finish up (delete the semattack object)
   result->finishAnalysis();
 
-  // Mutex Lock
-  const std::lock_guard<std::mutex> lock(this->groups_mutex);
   std::cout << "Finised backward analysis for " << file << std::endl;
-  printStatus();
+  printStatus(false);
 }
 
 void MultiAttack::loadDepGraphs() {
