@@ -248,28 +248,20 @@ bool CombinedAnalysisResult::addMetadata(const Metadata& metadata)
 {
   // Loop over the existing metadata for this entry
   bool isNew = true;
-  for (auto m = m_metadata.begin(); m != m_metadata.end(); m++) {
-    if (metadata.has_valid_exploit() && m->has_valid_exploit()) {
-      // If both entries have valid exploit data, the 25 million flows id will be valid
-      if (m->get_twenty_five_million_flows_id() == metadata.get_twenty_five_million_flows_id()) {
-        isNew = false;
-        break;
-      }
-    } else if (metadata.has_valid_exploit() && !m->has_valid_exploit() && (m->get_uuid() == (metadata.get_original_uuid()))) {
-      // In this case the entry being added has metadata, but the exisiting one does not
-      // Check if the entry being added linked to the old one, if so, replace the metadata
-      m_metadata.erase(m);
-      isNew = true;
-      break;
-    } else if ((metadata.get_domain() == m->get_domain()) && (metadata.get_script() == m->get_script()) && (metadata.get_line() == m->get_line())) {
-      // One of the entries does not have valid exploit data, so check domain and script location match by hand
+  int id = metadata.get_twenty_five_million_flows_id();
+  if (metadata.is_initialized()) {
+    // Check the hash map
+    auto search = this->m_finding_metadata_map.find(id);
+    if (search != this->m_finding_metadata_map.end()) {
       isNew = false;
-      break;
     }
   }
 
   if (isNew) {
     m_metadata.push_back(metadata);
+    if (metadata.has_valid_exploit()) {
+      m_finding_metadata_map.insert(std::make_pair(id, &m_metadata.back()));
+    }
   }
 
   // Increment the total

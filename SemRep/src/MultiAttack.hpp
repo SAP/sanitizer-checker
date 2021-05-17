@@ -91,6 +91,7 @@ private:
     std::vector<AttackContext> m_analyzed_contexts;
 
     std::mutex results_mutex;
+    std::mutex groups_mutex;
 
     // Configuration
     int m_max;

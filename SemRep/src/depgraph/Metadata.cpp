@@ -395,7 +395,18 @@ std::string Metadata::get_domain() const {
 }
 
 int Metadata::get_twenty_five_million_flows_id() const {
-    return this->twenty_five_million_flows_id;
+    // Make this valid even if there is no exploit data
+    if (has_valid_exploit()) {
+        return this->twenty_five_million_flows_id;
+    } else {
+        // Make hash by hand
+        std::size_t h1 = std::hash<std::string>{}(this->get_domain());
+        std::size_t h2 = std::hash<std::string>{}(this->get_script());
+        std::size_t h3 = std::hash<int>{}(this->get_line());
+        std::size_t h4 = h2 + 0x9e3779b9 + (h1<<6) + (h1>>2);
+        std::size_t h5 = h3 + 0x9e3779b9 + (h4<<6) + (h4>>2);
+        return static_cast<int>(h5);
+    }
 }
 
 int Metadata::get_sanitizer_hash() const {

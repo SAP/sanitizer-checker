@@ -258,6 +258,7 @@ private:
 
     // Keep track of metadata for this result
     std::vector<Metadata> m_metadata;
+    std::map<int, const Metadata*> m_finding_metadata_map;
     // For context specific payloads, keep a map of metadata to backwardanalysis
     std::map<const Metadata*, std::vector<BackwardAnalysisResult*> > m_metadataAnalysisMap;
     // Also keep track of which strings have been analysed

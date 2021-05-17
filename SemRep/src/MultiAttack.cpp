@@ -49,6 +49,7 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_groups()
   , m_analyzed_contexts()
   , results_mutex()
+  , groups_mutex()
   , m_nThreads(boost::thread::hardware_concurrency())
   , m_max(max)
   , m_concats(0)
@@ -277,7 +278,7 @@ void MultiAttack::doFwAnalysis(CombinedAnalysisResult* result) {
 
   // Mutex Lock
   std::cout << "Finished analysis of " << file << std::endl;
-  const std::lock_guard<std::mutex> lock(this->results_mutex);
+  const std::lock_guard<std::mutex> lock(this->groups_mutex);
   std::cout << "Inserting results into groups for " << file << std::endl;
   this->m_groups.addAutomaton(postImage, result);
   std::cout << "Finished inserting results into groups for " << file << std::endl;
@@ -298,9 +299,8 @@ void MultiAttack::doBwAnalysis(CombinedAnalysisResult* result) {
   // Finish up (delete the semattack object)
   result->finishAnalysis();
 
-
   // Mutex Lock
-  const std::lock_guard<std::mutex> lock(this->results_mutex);
+  const std::lock_guard<std::mutex> lock(this->groups_mutex);
   std::cout << "Finised payload analysis for " << file << std::endl;
   printStatus();
 }
