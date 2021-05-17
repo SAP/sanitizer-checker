@@ -380,8 +380,15 @@ void BackwardAnalysisResult::doAnalysis(bool computePreImage, bool singletonInte
           } else {
             result = this->getAttack()->computePreImage(m_intersection, m_fwResult.getFwAnalysisResult());
           }
-          m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
-          m_preimage_example = m_preimage->generateSatisfyingExample();
+          const StrangerAutomaton* preimage = this->getAttack()->getPreImage(result);
+          if (preimage != nullptr) {
+            m_preimage = new StrangerAutomaton(this->getAttack()->getPreImage(result));
+            m_preimage_example = m_preimage->generateSatisfyingExample();
+          } else {
+            m_preimage = nullptr;
+            m_preimage_example = "ERROR";
+            throw StrangerException(AnalysisError::MonaException, "Null DFA pointer returned from MONA");
+          }
           //  clean up target analysis result
         } catch (StrangerException const &e) {
           std::cout << "EXCEPTION caught in bw analysis: " << e.what() << std::endl;

@@ -269,6 +269,13 @@ void MultiAttack::doFwAnalysis(CombinedAnalysisResult* result) {
       postImage = nullptr;
     }
   }
+
+  // Mutex Lock
+  std::cout << "Finished analysis of " << file << std::endl;
+  const std::lock_guard<std::mutex> lock(this->results_mutex);
+  std::cout << "Inserting results into groups for " << file << std::endl;
+  this->m_groups.addAutomaton(postImage, result);
+  std::cout << "Finished inserting results into groups for " << file << std::endl;
 }
 
 void MultiAttack::doBwAnalysis(CombinedAnalysisResult* result) {
@@ -290,13 +297,9 @@ void MultiAttack::doBwAnalysis(CombinedAnalysisResult* result) {
   // Finish up (delete the semattack object)
   result->finishAnalysis();
 
-  // Mutex Lock
-  std::cout << "Finished analysis of " << file << std::endl;
-  const std::lock_guard<std::mutex> lock(this->results_mutex);
-  std::cout << "Inserting results into groups for " << file << std::endl;
-  this->m_groups.addAutomaton(postImage, result);
-  std::cout << "Finished inserting results into groups for " << file << std::endl;
   printStatus();
+
+  std::cout << "Finised Backwards analysis for " << file << std::endl;
 }
 
 void MultiAttack::loadDepGraphs() {
