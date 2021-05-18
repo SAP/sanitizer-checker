@@ -811,7 +811,7 @@ RegExp* RegExp::parseRepeatExp()
         else if(match('{')) {
             string::size_type start = pos;
             while (peek("0123456789"))
-                                next();
+                next();
 
             if(start == pos) {
             	throw StrangerException(AnalysisError::RegExpParseError,
@@ -971,10 +971,29 @@ RegExp* RegExp::parseSimpleExp() /* throws(IllegalArgumentException) */
             }
         }
     } else {
+        if (isBackreference()) {
+            // TODO: backreference support
+            return makeEmpty();
+        }
         return parseCharOrShortHand();
     }
 }
 
+
+bool RegExp::isBackreference() {
+    // Check if we have expressions like \1 for backreference
+    if (peek("\\") && peek("0123456789", 1)) {
+        next();
+        string::size_type start = pos;
+        while (peek("0123456789")) {
+            next();
+        }
+        if (start != pos) {
+            return true;
+        }
+    }
+    return false;
+}
 
 // Shorthand Character Classes: https://www.regular-expressions.info/shorthand.html
 bool RegExp::isShortHand() {

@@ -178,6 +178,7 @@ private:
     static int id;
 
     bool isShortHand();
+    bool isBackreference();
     RegExp* parseShortHand();
     RegExp* parseCharOrShortHand();
 
