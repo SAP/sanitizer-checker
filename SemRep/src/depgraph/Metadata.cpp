@@ -320,6 +320,10 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->initialized = true;
         return true;
     }
+    if(key == "Issues.Known_sanitizer") {
+        // TODO: add
+        return true;
+    }
     std::cout << "key value pair: (" << key << ", " << value << ") unknown!\n";
     return false;
 
