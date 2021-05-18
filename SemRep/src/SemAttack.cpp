@@ -703,11 +703,11 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* input
         throw StrangerException(AnalysisError::LargeEncodeTextChain,
                                 stringbuilder() << "Large EncodeTextFragment chain:"
                                 << m.get_max_encode_text_fragment_chain_length());
-      } else if (m.has_infinite_regex()) {
+      } /*else if (m.has_infinite_regex()) {
         throw StrangerException(AnalysisError::InfiniteRegex,
                                 stringbuilder() << "Large EncodeTextFragment chain:"
                                 << m.get_max_encode_text_fragment_chain_length());
-      }
+      }*/
     }
 
     // initialize reference input nodes to bottom
