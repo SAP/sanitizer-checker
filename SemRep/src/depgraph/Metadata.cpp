@@ -59,7 +59,16 @@ Metadata::Metadata()
     valid_exploit(false),
     break_in(),
     break_out(),
-    payload() {
+    payload(),
+    begin_taint_url(-1),
+    end_taint_url(-1),
+    replace_begin_param(-1),
+    replace_end_param(-1),
+    replace_begin_url(-1),
+    replace_end_url(-1),
+    max_encode_text_fragment_chain_length(0),
+    max_encode_attr_chain_length(0)
+    {
 
 }
 
@@ -310,6 +319,11 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->initialized = true;
         return true;
     }
+    if(key == "Issues.HasUrlInLhsOfReplace") {
+        this->url_on_lhs_of_replace = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
     if(key == "Issues.RemovedLRConcats") {
         this->removed_lr_concats = ::bool_of_string(value);
         this->initialized = true;
@@ -452,6 +466,9 @@ bool Metadata::has_infinite_regex() const {
 }
 bool Metadata::has_url_on_rhs_of_replace() const {
     return this->url_on_rhs_of_replace;
+}
+bool Metadata::has_url_on_lhs_of_replace() const {
+    return this->url_on_lhs_of_replace;
 }
 bool Metadata::has_removed_lr_concats() const {
     return this->removed_lr_concats;
