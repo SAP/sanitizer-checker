@@ -476,8 +476,11 @@ bool Metadata::has_removed_lr_concats() const {
 bool Metadata::has_removed_replace_artifacts() const {
     return this->removed_replace_artifacts;
 }
+
+
+std::string Metadata::alert = "taintfoxLog(`xss`)";
+
 std::string Metadata::generate_exploit_from_scratch() const {
-    std::string alert = "alert(`xss`)";
     return generate_exploit_from_scratch(alert);
 }
 
@@ -541,15 +544,18 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
             }
         } else {
             // Fall back to existing payload for e.g. Javascript
-            payload = get_generated_exploit();
+            payload = get_generated_exploit(function);
         }
     }
     return payload;
 }
 
 std::string Metadata::generate_attribute_exploit_from_scratch() const {
+    return generate_attribute_exploit_from_scratch(payload);
+}
+    
+std::string Metadata::generate_attribute_exploit_from_scratch(const std::string& function) const {
     std::string payload = "";
-    std::string function = "alert(`xss`)";
     if (is_initialized() && has_valid_exploit() &&
         (get_exploit_type() == Exploit_Type::Html) &&
         (get_exploit_token() == "attribute")) {
@@ -693,14 +699,14 @@ std::string Metadata::generate_exploit_url(const std::string& payload) const
     return url;
 }
 
-std::string Metadata::get_generated_exploit() const {
+std::string Metadata::get_generated_exploit(const std::string& function ) const {
     std::string payload = "";
     if (is_initialized() && has_valid_exploit()) {
         payload = get_payload();
         // Remove the closing tags if they are there...
         // payload = std::regex_replace(payload, std::regex("</iframe></style></script></object></embed></textarea>"), "");
         // payload = std::regex_replace(payload, std::regex("<!--/\\*"), "");
-        payload = std::regex_replace(payload, std::regex("taintfoxLog"), "alert");
+        payload = std::regex_replace(payload, std::regex("taintfoxLog\\(1\\)"), function);
     }
     return payload;
 }

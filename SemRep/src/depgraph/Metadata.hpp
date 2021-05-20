@@ -96,7 +96,8 @@ public:
     std::string generate_exploit_from_scratch() const;
     std::string generate_exploit_from_scratch(const std::string& function) const;
     std::string generate_attribute_exploit_from_scratch() const;
-    std::string get_generated_exploit() const;
+    std::string generate_attribute_exploit_from_scratch(const std::string& function) const;
+    std::string get_generated_exploit(const std::string& function) const;
     std::string generate_exploit_url(const std::string& payload) const;
 
     void print(std::ostream& os) const;
@@ -105,7 +106,8 @@ public:
 private:
     static std::string UriEncode(const std::string & sSrc);
     static bool replaceAll( std::string &s, const std::string &search, const std::string &replace );
-    
+    static std::string alert;
+
     std::string uuid;
     std::string url;
     std::string sink;
