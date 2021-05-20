@@ -301,7 +301,7 @@ void MultiAttack::doBwAnalysis(CombinedAnalysisResult* result) {
   result->finishAnalysis();
 
   std::cout << "Finised backward analysis for " << file << std::endl;
-  printStatus(false);
+  printStatus();
 }
 
 void MultiAttack::loadDepGraphs() {

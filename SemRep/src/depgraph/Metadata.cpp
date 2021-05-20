@@ -478,10 +478,10 @@ bool Metadata::has_removed_replace_artifacts() const {
 }
 
 
-std::string Metadata::alert = "taintfoxLog(`xss`)";
+std::string Metadata::default_payload = "taintfoxLog(`xss`)";
 
 std::string Metadata::generate_exploit_from_scratch() const {
-    return generate_exploit_from_scratch(alert);
+    return generate_exploit_from_scratch(default_payload);
 }
 
 std::string Metadata::generate_exploit_from_scratch(const std::string &function) const {
@@ -498,11 +498,6 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
     if (is_initialized()) {
         if (has_valid_exploit()) {
             if (get_exploit_type() == Exploit_Type::Html) {
-                if ((get_source() == "location.hash") ||
-                    (get_source() == "location.href") ||
-                    (get_source() == "document.documentURI")) {
-                    payload += "#";
-                }
                 if (get_exploit_token() == "attribute") {
                     // Need to break out of attribute
                     payload += get_exploit_quote_type();
@@ -526,6 +521,11 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
                     payload += "><!--/*";
                 } else {
                     payload += "</script><!--/*";
+                }
+                if ((get_source() == "location.hash") ||
+                    (get_source() == "location.href") ||
+                    (get_source() == "document.documentURI")) {
+                    payload = "#" + payload;
                 }
             }
         } else if ((get_sink() == "track.src")  ||
@@ -551,7 +551,7 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
 }
 
 std::string Metadata::generate_attribute_exploit_from_scratch() const {
-    return generate_attribute_exploit_from_scratch(payload);
+    return generate_attribute_exploit_from_scratch(default_payload);
 }
     
 std::string Metadata::generate_attribute_exploit_from_scratch(const std::string& function) const {
@@ -757,7 +757,7 @@ void Metadata::printHeader(std::ostream& os)
 }
 
 int Metadata::get_replace_end_param() const {
-    return this->replace_end_param;
+   return this->replace_end_param;
 }
 
 int Metadata::get_replace_begin_param() const {

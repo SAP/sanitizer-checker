@@ -106,7 +106,7 @@ public:
 private:
     static std::string UriEncode(const std::string & sSrc);
     static bool replaceAll( std::string &s, const std::string &search, const std::string &replace );
-    static std::string alert;
+    static std::string default_payload;
 
     std::string uuid;
     std::string url;
