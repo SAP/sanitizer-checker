@@ -493,13 +493,13 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
         // // Exploit.tag: script
     std::string payload = "";
     if (is_initialized()) {
-        if ((get_source() == "location.hash") ||
-            (get_source() == "location.href") ||
-            (get_source() == "document.documentURI")) {
-            payload += "#";
-        }
         if (has_valid_exploit()) {
             if (get_exploit_type() == Exploit_Type::Html) {
+                if ((get_source() == "location.hash") ||
+                    (get_source() == "location.href") ||
+                    (get_source() == "document.documentURI")) {
+                    payload += "#";
+                }
                 if (get_exploit_token() == "attribute") {
                     // Need to break out of attribute
                     payload += get_exploit_quote_type();
@@ -689,7 +689,6 @@ std::string Metadata::generate_exploit_url(const std::string& payload) const
     //     }
     //     url += payload;
     // }
-
     //std::cout << url << ": " << original_payload << " --> " << payload << std::endl;
     return url;
 }
