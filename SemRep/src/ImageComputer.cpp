@@ -990,6 +990,16 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
                 // Check here whether the depgraph contains the url
                 const Metadata& m = depGraph.get_metadata();
+                if (m.is_initialized() && (m.has_url_on_lhs_of_replace())) {
+                    // Extra check for length to avoid filtering out encoded strings like &quot;
+                    std::string replaceStr = subjectAuto->getStr();
+                    std::string url = m.get_url();
+                    if (replaceStr.length() > 10) {
+                        throw StrangerException(AnalysisError::UrlInReplaceString,
+                                                stringbuilder() << "URL: " << url
+                                                                << " found in pattern string: " << replaceStr);
+                    }
+                }
                 if (m.is_initialized() && (m.has_url_on_rhs_of_replace())) {
                     // Extra check for length to avoid filtering out encoded strings like &quot;
                     std::string replaceStr = replaceAuto->getStr();
@@ -1029,6 +1039,16 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
 
                 // Check here whether the depgraph contains the url
                 const Metadata& m = depGraph.get_metadata();
+                if (m.is_initialized() && (m.has_url_on_lhs_of_replace())) {
+                    // Extra check for length to avoid filtering out encoded strings like &quot;
+                    std::string replaceStr = subjectAuto->getStr();
+                    std::string url = m.get_url();
+                    if (replaceStr.length() > 10) {
+                        throw StrangerException(AnalysisError::UrlInReplaceString,
+                                                stringbuilder() << "URL: " << url
+                                                                << " found in pattern string: " << replaceStr);
+                    }
+                }
                 if (m.is_initialized() && (m.has_url_on_rhs_of_replace())) {
                     // Extra check for length to avoid filtering out encoded strings like &quot;
                     std::string replaceStr = replaceAuto->getStr();
