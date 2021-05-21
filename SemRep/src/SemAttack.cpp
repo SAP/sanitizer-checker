@@ -128,8 +128,8 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
   m_allPayloadsVulnerable = true;
   m_allPayloadsErrored = true;
   for (const Metadata &m : m_metadata) {
+    std::vector<BackwardAnalysisResult*> bws;
     for (auto& f : functions) {
-      std::vector<BackwardAnalysisResult*> bws;
       BackwardAnalysisResult* bw = nullptr;
       // Normal payload
       std::string payload = m.generate_exploit_from_scratch(f);
@@ -165,9 +165,9 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
         }
         bws.push_back(bw);
       }
-      // Add to map
-      m_metadataAnalysisMap.insert(std::make_pair(&m, bws));
     }
+    // Add to map
+    m_metadataAnalysisMap.insert(std::make_pair(&m, bws));
   }
 }
 
