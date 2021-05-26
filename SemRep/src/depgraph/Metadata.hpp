@@ -68,6 +68,9 @@ public:
 
     std::string get_original_uuid() const;
     std::string get_domain() const;
+    std::string get_parent_loc() const;
+    std::string get_sanitizer_name() const;
+    std::string get_sanitizer_location() const;
     int get_twenty_five_million_flows_id() const;
     int get_sanitizer_hash() const;
     int get_hash() const;
@@ -84,7 +87,8 @@ public:
     bool has_infinite_regex() const;
     bool has_url_on_rhs_of_replace() const;
     bool has_url_on_lhs_of_replace() const;
-
+    bool has_url_in_match_pattern() const;
+    bool has_url_in_exec_pattern() const;
     bool has_removed_lr_concats() const;
     bool has_removed_replace_artifacts() const;
     bool has_matching_error() const;
@@ -110,6 +114,7 @@ private:
 
     std::string uuid;
     std::string url;
+    std::string parentloc;
     std::string sink;
     std::string source;
     int sanitizer_score;
@@ -136,6 +141,8 @@ private:
     std::string break_out;
     std::string break_in;
     std::string payload;
+    std::string sanitizer_name;
+    std::string sanitizer_loc;
     bool valid_exploit{};
     int begin_taint_url;
     int end_taint_url;
@@ -150,6 +157,8 @@ private:
     bool infinite_regex{};
     bool url_on_rhs_of_replace{};
     bool url_on_lhs_of_replace{};
+    bool url_in_exec_pattern{};
+    bool url_in_match_pattern{};
     bool removed_lr_concats{};
     bool removed_replace_artifacts{};
 

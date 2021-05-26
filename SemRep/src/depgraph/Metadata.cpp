@@ -127,6 +127,11 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->url = value;
         return true;
     }
+    if(key == "Finding.parentloc") {
+        this->initialized = true;
+        this->parentloc = value;
+        return true;
+    }
     if(key == "Finding.sink") {
         this->initialized = true;
         this->sink = value;
@@ -154,6 +159,16 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
     }
     if(key == "Sanitizer.score") {
         this->sanitizer_score = std::stoi(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Sanitizer.name") {
+        this->sanitizer_name = value;
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Sanitizer.location") {
+        this->sanitizer_loc = value;
         this->initialized = true;
         return true;
     }
@@ -334,6 +349,16 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->initialized = true;
         return true;
     }
+    if(key == "Issues.HasUrlInMatchPattern") {
+        this->url_in_match_pattern = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.HasUrlInExecPattern") {
+        this->url_in_exec_pattern = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
     if(key == "Issues.Known_sanitizer") {
         // TODO: add
         return true;
@@ -411,7 +436,15 @@ std::string Metadata::get_original_uuid() const {
 std::string Metadata::get_domain() const {
     return this->domain;
 }
-
+std::string Metadata::get_sanitizer_name() const {
+    return this->sanitizer_name;
+}
+std::string Metadata::get_sanitizer_location() const {
+    return this->sanitizer_loc;
+}
+std::string Metadata::get_parent_loc() const {
+    return this->parentloc;
+}
 int Metadata::get_twenty_five_million_flows_id() const {
     // Make this valid even if there is no exploit data
     if (has_valid_exploit()) {
@@ -469,6 +502,12 @@ bool Metadata::has_url_on_rhs_of_replace() const {
 }
 bool Metadata::has_url_on_lhs_of_replace() const {
     return this->url_on_lhs_of_replace;
+}
+bool Metadata::has_url_in_exec_pattern() const {
+    return this->url_in_exec_pattern;
+}
+bool Metadata::has_url_in_match_pattern() const {
+    return this->url_in_match_pattern;
 }
 bool Metadata::has_removed_lr_concats() const {
     return this->removed_lr_concats;
