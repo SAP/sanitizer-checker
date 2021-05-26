@@ -228,6 +228,7 @@ public:
     bool isSinkContext(const AttackContext& context) const { return (context == getSinkContext()); }
 
     int getCountWithDuplicates() const { return m_duplicate_count; }
+    void incrementDuplicates() { m_duplicate_count++; }
     int getCount() const { return m_metadata.size(); }
     bool addMetadata(const Metadata& metadata);
     std::set<std::string> getUniqueDomains() const;

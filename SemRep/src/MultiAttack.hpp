@@ -84,6 +84,8 @@ private:
     std::vector<CombinedAnalysisResult*> m_results;
     // A map of depgraph hashes to their results
     std::map<int, CombinedAnalysisResult*> m_result_hash_map;
+    // A map of 25M flow hashes to their results
+    std::map<int, CombinedAnalysisResult*> m_result_taintflow_map;
     // A list of all post images
     std::vector<StrangerAutomaton*> m_automata;
     // Results grouped by post image

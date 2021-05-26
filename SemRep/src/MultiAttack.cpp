@@ -45,6 +45,7 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_dot_paths()
   , m_results()
   , m_result_hash_map()
+  , m_result_taintflow_map()
   , m_automata()
   , m_groups()
   , m_analyzed_contexts()
@@ -206,28 +207,40 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
   // Find the result for the given hash
   const std::lock_guard<std::mutex> lock(this->results_mutex);
   CombinedAnalysisResult* result = nullptr;
-  int hash = target_dep_graph.get_metadata().get_sanitizer_hash();
-  auto search = this->m_result_hash_map.find(hash);
-  if(target_dep_graph.get_metadata().is_initialized() && // Legacy failsafe to support depgraphs without the hash field
-     search != this->m_result_hash_map.end()) {
-    if (search->second->addMetadata(target_dep_graph.get_metadata())) {
-      // std::cout << "Incremeted count to " << search->second->getCount() << " for " << search->second->getFileName() << std::endl;
+
+  // First check the 25 million flow hash
+  int taintflow_hash = target_dep_graph.get_metadata().get_twenty_five_million_flows_id();
+  auto taintflow_search = this->m_result_taintflow_map.find(taintflow_hash);
+  // If the 25M flow hash is already in, just completely ignore
+  if (taintflow_search == this->m_result_taintflow_map.end()) {
+
+    // If the 25m flow id is new, then check the sanitizer hash
+    int hash = target_dep_graph.get_metadata().get_sanitizer_hash();
+    auto search = this->m_result_hash_map.find(hash);
+    if(target_dep_graph.get_metadata().is_initialized() && // Legacy failsafe to support depgraphs without the hash field
+       search != this->m_result_hash_map.end()) {
+      if (search->second->addMetadata(target_dep_graph.get_metadata())) {
+        // std::cout << "Incremeted count to " << search->second->getCount() << " for " << search->second->getFileName() << std::endl;
+      } else {
+        // This is a bit too verbose
+        //std::cout << "Discarding duplicate depgraph: " << file.string() << " (total: " << search->second->getCountWithDuplicates() << ")" << std::endl;
+      }
     } else {
-      // This is a bit too verbose
-      //std::cout << "Discarding duplicate depgraph: " << file.string() << " (total: " << search->second->getCountWithDuplicates() << ")" << std::endl;
+      result = new CombinedAnalysisResult(file, target_dep_graph, m_input_name, m_input_automaton);
+      // Start the forward analysis
+      asio::post(pool, std::bind(&MultiAttack::doFwAnalysis, this, result));
+      this->m_results.push_back(result);
+      if (((m_results.size() % 1000) == 0)) {
+        std::cout << "Added " << m_results.size() << " sanitizers to worker queue." << std::endl;
+      }
+      // Only insert into hash map if metadata is initialized
+      if (target_dep_graph.get_metadata().is_initialized()) {
+        this->m_result_hash_map.insert(std::make_pair(hash, result));
+        this->m_result_taintflow_map.insert(std::make_pair(taintflow_hash, result));
+      }
     }
   } else {
-    result = new CombinedAnalysisResult(file, target_dep_graph, m_input_name, m_input_automaton);
-    // Start the forward analysis
-    asio::post(pool, std::bind(&MultiAttack::doFwAnalysis, this, result));
-    this->m_results.push_back(result);
-    if (((m_results.size() % 1000) == 0)) {
-      std::cout << "Added " << m_results.size() << " sanitizers to worker queue." << std::endl;
-    }
-    // Only insert into hash map if metadata is initialized
-    if (target_dep_graph.get_metadata().is_initialized()) {
-      this->m_result_hash_map.insert(std::make_pair(hash, result));
-    }
+    taintflow_search->second->incrementDuplicates();
   }
   return result;
 }
