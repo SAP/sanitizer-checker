@@ -23,6 +23,7 @@
 
 #include "ImageComputer.hpp"
 #include "exceptions/StrangerException.hpp"
+#include "depgraph/RegExpNode.hpp"
 
 using namespace std;
 
@@ -663,7 +664,8 @@ string ImageComputer::getLiteralOrConstantValue( const DepGraphNode* node) {
     if (normalNode == nullptr)
         throw runtime_error("can not cast DepGraphNode into DepGraphNormalNode");
     TacPlace* place = normalNode->getPlace();
-    if (dynamic_cast<Literal*>(place) != nullptr || dynamic_cast<Constant*>(place) != nullptr) {
+    if (dynamic_cast<Literal*>(place) != nullptr || dynamic_cast<Constant*>(place) != nullptr || dynamic_cast<RegExpNode*>(place) !=
+                                                                                                         nullptr) {
         retMe = place->toString();
     }
     else
@@ -679,7 +681,8 @@ bool ImageComputer::isLiteralOrConstant(const DepGraphNode* node, NodesList succ
     if ((dynamic_cast<const DepGraphNormalNode*>(node) != nullptr)  && (successors.empty())){
         const DepGraphNormalNode* normalNode = dynamic_cast<const DepGraphNormalNode*>(node);
         TacPlace* place = normalNode->getPlace();
-        if (dynamic_cast<Literal*>(place) != nullptr || dynamic_cast<Constant*>(place) )
+        if (dynamic_cast<Literal*>(place) != nullptr || dynamic_cast<Constant*>(place) || dynamic_cast<RegExpNode*>(place) !=
+                                                                                          nullptr)
             return true;
         else
             return false;
@@ -693,35 +696,39 @@ StrangerAutomaton* ImageComputer::getLiteralorConstantNodeAuto(const DepGraphNod
     if (normalNode == nullptr)
         throw runtime_error("can not cast DepGraphNode into DepGraphNormalNode");
 	TacPlace* place = normalNode->getPlace();
-	if (dynamic_cast<Literal*>(place) != nullptr || dynamic_cast<Constant*>(place)) {
+	if(dynamic_cast<RegExpNode*>(place) != nullptr) {
+        string value = place->toString();
+        // check if it is a regular expression
+        // Make sure we don't try to parse single chars
+        auto firstSlash = value.find_first_of('/');
+        auto lastSlash = value.find_last_of('/');
+        if ((firstSlash == 0) && (lastSlash != 0) &&
+            (lastSlash  == (value.length() - 1)) &&
+            value.length() > 2) // '//' is a valid string value and should not be parsed as a regex
+        {
+            string regString = value.substr(1, value.length() - 2);
+            if(regString.find_first_of('^') == 0 &&
+               regString.find_last_of('$') == (regString.length() -1)) {
+                regString = "/" + regString.substr( 1,regString.length()-2) + "/";
+            }
+            else if (is_vlab_restrict) {
+                regString = "/.*(" + regString + ").*/";
+            }
+            else {
+                regString = "/" + regString + "/";
+            }
+            retMe = StrangerAutomaton::regExToAuto(regString, true, node->getID());
+        } else {
+            throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Malformed Regex in regexp node, node id: " << node->getID());
+        }
+    } else 	if (dynamic_cast<Literal*>(place) != nullptr || dynamic_cast<Constant*>(place)) {
 		string value = place->toString();
-		// check if it is a regular expression
-                // Make sure we don't try to parse single chars
-                auto firstSlash = value.find_first_of('/');
-                auto lastSlash = value.find_last_of('/');
-		if ((firstSlash == 0) && (lastSlash != 0) &&
-                    (lastSlash  == (value.length() - 1)) &&
-                     value.length() > 2) // '//' is a valid string value and should not be parsed as a regex
-		{
-                    string regString = value.substr(1, value.length() - 2);
-                    if(regString.find_first_of('^') == 0 &&
-                       regString.find_last_of('$') == (regString.length() -1)) {
-                        regString = "/" + regString.substr( 1,regString.length()-2) + "/";
-                    }
-                    else if (is_vlab_restrict) {
-                        regString = "/.*(" + regString + ").*/";
-                    }
-                    else {
-                        regString = "/" + regString + "/";
-                    }
-                    retMe = StrangerAutomaton::regExToAuto(regString, true, node->getID());
-		} else {
-                    if (value == "NUL") {
-                        retMe = StrangerAutomaton::makeChar(0);
-                    } else {
+
+        if (value == "NUL") {
+            retMe = StrangerAutomaton::makeChar(0);
+        } else {
 			retMe = StrangerAutomaton::makeString(value, node->getID());
-                    }
-		}
+        }
 	} else {
 		throw StrangerException(AnalysisError::MalformedDepgraph, stringbuilder() << "Unhandled node type, node id: " << node->getID());
 	}
