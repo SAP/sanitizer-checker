@@ -700,7 +700,9 @@ StrangerAutomaton* ImageComputer::getLiteralorConstantNodeAuto(const DepGraphNod
                 auto firstSlash = value.find_first_of('/');
                 auto lastSlash = value.find_last_of('/');
 		if ((firstSlash == 0) && (lastSlash != 0) &&
-                    (lastSlash  == (value.length() - 1))) {
+                    (lastSlash  == (value.length() - 1)) &&
+                     value.length() > 2) // '//' is a valid string value and should not be parsed as a regex
+		{
                     string regString = value.substr(1, value.length() - 2);
                     if(regString.find_first_of('^') == 0 &&
                        regString.find_last_of('$') == (regString.length() -1)) {
