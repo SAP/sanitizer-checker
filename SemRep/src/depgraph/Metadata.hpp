@@ -92,6 +92,10 @@ public:
     bool has_removed_lr_concats() const;
     bool has_removed_replace_artifacts() const;
     bool has_matching_error() const;
+    bool has_cookie_value_in_match_pattern() const;
+    bool has_cookie_value_in_exec_pattern() const;
+    bool has_cookie_value_on_lhs_of_replace() const;
+    bool has_cookie_value_on_rhs_of_replace() const;
     bool is_initialized() const;
 
 
@@ -159,6 +163,10 @@ private:
     bool url_on_lhs_of_replace{};
     bool url_in_exec_pattern{};
     bool url_in_match_pattern{};
+    bool cookie_value_in_rhs_of_replace{};
+    bool cookie_value_in_lhs_of_replace{};
+    bool cookie_value_in_exec_pattern{};
+    bool cookie_value_in_match_pattern{};
     bool removed_lr_concats{};
     bool removed_replace_artifacts{};
 

@@ -359,6 +359,26 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->initialized = true;
         return true;
     }
+    if(key == "Issues.HasCookieValueInLhsOfreplace") {
+        this->cookie_value_in_lhs_of_replace = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.HasCookieValueInRhsOfreplace") {
+        this->cookie_value_in_rhs_of_replace = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.HasCookieValueInMatchPattern") {
+        this->cookie_value_in_match_pattern = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.HasCookieValueInExecPattern") {
+        this->cookie_value_in_exec_pattern = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
     if(key == "Issues.Known_sanitizer") {
         // TODO: add
         return true;
@@ -515,6 +535,18 @@ bool Metadata::has_removed_lr_concats() const {
 bool Metadata::has_removed_replace_artifacts() const {
     return this->removed_replace_artifacts;
 }
+bool Metadata::has_cookie_value_on_lhs_of_replace() const {
+    return this->cookie_value_in_lhs_of_replace;
+}
+bool Metadata::has_cookie_value_on_rhs_of_replace() const {
+    return this->cookie_value_in_rhs_of_replace;
+}
+bool Metadata::has_cookie_value_in_exec_pattern() const {
+    return this->cookie_value_in_exec_pattern;
+}
+bool Metadata::has_cookie_value_in_match_pattern() const {
+    return this->cookie_value_in_match_pattern;
+}
 
 
 std::string Metadata::default_payload = "taintfoxLog(`xss`)";
@@ -592,7 +624,7 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
 std::string Metadata::generate_attribute_exploit_from_scratch() const {
     return generate_attribute_exploit_from_scratch(default_payload);
 }
-    
+
 std::string Metadata::generate_attribute_exploit_from_scratch(const std::string& function) const {
     std::string payload = "";
     if (is_initialized() && has_valid_exploit() &&
