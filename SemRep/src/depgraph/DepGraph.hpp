@@ -190,6 +190,9 @@ protected:
 
 	void doGetInputRelevantGraph(DepGraphNode* node,
 				DepGraph& inputDepGraph) ;
+
+private:
+        static std::string escapeLiteral(const std::string& litValue);
 };
 
 // Like a Depgraph, but owns its node pointers (and deletes the in the descrutor)

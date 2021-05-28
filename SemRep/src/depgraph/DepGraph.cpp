@@ -235,6 +235,21 @@ bool DepGraph::containsNode(const DepGraphNode* node) {
 	return (it != nodes.end());
 }
 
+std::string DepGraph::escapeLiteral(const std::string& litValue)
+{
+    std::string result = litValue;
+    //if we are not parsing a regular expression then remove escaping
+    //surprisingly, dot special chars (\,") are also special to our
+    // regular expression engine
+    static boost::regex bsDQuote("\\\\\"");//this will match \"
+    std::string newStr = "\"";
+    result = boost::regex_replace(result, bsDQuote, newStr);
+    static boost::regex bsBs("\\\\\\\\");//this will match \\ (do not remove this text. Really unless you remove the two backslashes)
+    newStr = "\\";
+    result = boost::regex_replace(result, bsBs, newStr);
+    return result;
+}
+
 DepGraph DepGraph::parseDotFile(std::string fname) {
     DepGraph depGraph;
 
@@ -291,41 +306,27 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
                     if (boost::regex_match(nodeLabel, sm, regxNodeUninit)){
                         node = new DepGraphUninitNode(nodeID, -1, -1);
                         depGraph.addNode(node);
-                    }
-                    else if (boost::regex_match(nodeLabel, sm, regxNodeVar)){
+                    } else if (boost::regex_match(nodeLabel, sm, regxNodeVar)){
                         varName = sm[1];
                         TacPlace* place = new Variable(varName, "noFunc");
                         node = new DepGraphNormalNode("noFile", -1, nodeID, -1, -1, place);
                         depGraph.addNode(node);
-                    }else if (boost::regex_match(nodeLabel, sm, regxNodeReturn)){
+                    } else if (boost::regex_match(nodeLabel, sm, regxNodeReturn)){
                         varName = sm[1];
                         TacPlace* place = new Variable(varName, "noFunc");
                         node = new DepGraphNormalNode("noFile", -1, nodeID, -1, -1, place);
                         depGraph.addNode(node);
-                    }else if (boost::regex_match(nodeLabel, sm, regxNodeRegExp)){
+                    } else if (boost::regex_match(nodeLabel, sm, regxNodeRegExp)){
                         litValue = sm[1];
-                        cout_local << "RegExp original:  " << litValue << endl;
-                        //if we are not parsing a regular expression then remove escaping
-                        //surprisingly, dot special chars (\,") are also special to our
-                        // regular expression engine
-                        if (!(boost::regex_match(litValue, sm, regxStrangerRegEx))){
-                            boost::regex bsDQuote("\\\\\"");//this will match \"
-                            string newStr = "\"";
-                            litValue = boost::regex_replace(litValue, bsDQuote, newStr);
-//							cout_local << "litval" << litValue << endl;
-                            boost::regex bsBs("\\\\\\\\");//this will match \\ (do not remove this text. Really unless you remove the two backslashes)
-                            newStr = "\\";
-                            litValue = boost::regex_replace(litValue, bsBs, newStr);
-//							cout_local << "litval" << litValue << endl;
-                        }
                         cout_local << "RegExp litval:  " << litValue << endl;
                         TacPlace* place = new RegExpNode(litValue);
                         node = new DepGraphNormalNode("noFile", -1, nodeID, -1, -1, place);
                         depGraph.addNode(node);
-                    }else if (boost::regex_match(nodeLabel, sm, regxNodeLit)){
-						litValue = sm[1];
-						cout_local << "litval original:  " << litValue << endl;
-						cout_local << "result litval:  " << litValue << endl;
+                    } else if (boost::regex_match(nodeLabel, sm, regxNodeLit)){
+                        litValue = sm[1];
+                        cout_local << "litval original:  " << litValue << endl;
+                        litValue = DepGraph::escapeLiteral(litValue);
+                        cout_local << "result litval:  " << litValue << endl;
                         TacPlace* place = new Literal(litValue);
                         node = new DepGraphNormalNode("noFile", -1, nodeID, -1, -1, place);
                         depGraph.addNode(node);
