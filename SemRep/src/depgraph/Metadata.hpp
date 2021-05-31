@@ -98,6 +98,7 @@ public:
     bool has_cookie_value_on_rhs_of_replace() const;
     bool is_initialized() const;
 
+    bool has_correct_exploit_match() const;
 
     void to_dot(std::stringstream &ss) const;
 

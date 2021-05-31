@@ -548,6 +548,27 @@ bool Metadata::has_cookie_value_in_match_pattern() const {
     return this->cookie_value_in_match_pattern;
 }
 
+bool Metadata::has_correct_exploit_match() const {
+    if (this->has_valid_exploit()) {
+        if ((get_sink() == "innerHTML") ||
+            (get_sink() == "outerHTML") ||
+            (get_sink() == "insertAdjacentHTML")) {
+            if (get_break_out().find("<img src=x onerror=") != std::string::npos) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (get_break_out().find("<script>") != std::string::npos) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    // If there is no valid exploit, assume correct
+    return true;
+}
 
 std::string Metadata::default_payload = "taintfoxLog(`xss`)";
 

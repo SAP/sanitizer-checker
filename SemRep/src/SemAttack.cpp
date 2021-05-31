@@ -261,6 +261,7 @@ bool CombinedAnalysisResult::addMetadata(const Metadata& metadata)
     auto search = this->m_finding_metadata_map.find(id);
     if (search != this->m_finding_metadata_map.end()) {
       isNew = false;
+    } else {
     }
   }
 
