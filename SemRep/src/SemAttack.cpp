@@ -703,7 +703,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* input
     // Do some checks on the metadata information
     const Metadata& m = target_dep_graph.get_metadata();
     if (m.is_initialized()) {
-      if (m.get_max_encode_attr_chain_length() > 3) {
+      /* if (m.get_max_encode_attr_chain_length() > 3) {
         throw StrangerException(AnalysisError::LargeEncodeAttrChain,
                                 stringbuilder() << "Large EncodeAttr chain:"
                                 << m.get_max_encode_attr_chain_length());
@@ -711,7 +711,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* input
         throw StrangerException(AnalysisError::LargeEncodeTextChain,
                                 stringbuilder() << "Large EncodeTextFragment chain:"
                                 << m.get_max_encode_text_fragment_chain_length());
-      } /*else if (m.has_infinite_regex()) {
+      } */ /*else if (m.has_infinite_regex()) {
         throw StrangerException(AnalysisError::InfiniteRegex,
                                 stringbuilder() << "Large EncodeTextFragment chain:"
                                 << m.get_max_encode_text_fragment_chain_length());
