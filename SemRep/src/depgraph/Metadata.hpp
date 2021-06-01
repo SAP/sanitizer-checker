@@ -68,6 +68,7 @@ public:
 
     std::string get_original_uuid() const;
     std::string get_domain() const;
+    std::string get_base_domain() const;
     std::string get_parent_loc() const;
     std::string get_sanitizer_name() const;
     std::string get_sanitizer_location() const;
@@ -120,6 +121,7 @@ private:
     std::string uuid;
     std::string url;
     std::string parentloc;
+    std::string base_domain;
     std::string sink;
     std::string source;
     int sanitizer_score;
@@ -170,6 +172,8 @@ private:
     bool cookie_value_in_match_pattern{};
     bool removed_lr_concats{};
     bool removed_replace_artifacts{};
+    bool removed_nop_replaces{};
+    bool merged_splits_and_joins{};
 
 };
 

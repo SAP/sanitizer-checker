@@ -127,6 +127,11 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->url = value;
         return true;
     }
+    if(key == "Finding.base_domain") {
+        this->initialized = true;
+        this->base_domain = value;
+        return true;
+    }
     if(key == "Finding.parentloc") {
         this->initialized = true;
         this->parentloc = value;
@@ -379,6 +384,16 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->initialized = true;
         return true;
     }
+    if(key == "Issues.RemovedNOPreplaces") {
+        this->removed_nop_replaces = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
+    if(key == "Issues.MergedSplitAndJoin") {
+        this->merged_splits_and_joins = ::bool_of_string(value);
+        this->initialized = true;
+        return true;
+    }
     if(key == "Issues.Known_sanitizer") {
         // TODO: add
         return true;
@@ -455,6 +470,9 @@ std::string Metadata::get_original_uuid() const {
 
 std::string Metadata::get_domain() const {
     return this->domain;
+}
+std::string Metadata::get_base_domain() const {
+    return this->base_domain;
 }
 std::string Metadata::get_sanitizer_name() const {
     return this->sanitizer_name;
