@@ -389,7 +389,7 @@ bool Metadata::set_field(const std::string& key, const std::string& value) {
         this->initialized = true;
         return true;
     }
-    if(key == "Issues.MergedSplitAndJoin") {
+    if(key == "Issues.MergedSplitAndJoins") {
         this->merged_splits_and_joins = ::bool_of_string(value);
         this->initialized = true;
         return true;
