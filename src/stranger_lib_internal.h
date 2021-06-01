@@ -91,6 +91,7 @@ DFA *dfa_replace_once_step1_duplicate(DFA *M, int var, int *indices);
 DFA *dfa_replace_step2_match_compliment(DFA *M, int var, int *indices);
 DFA *dfa_replace_once_step2_match_compliment(DFA *M, int var, int *indices);
 DFA *dfa_general_replace_extrabit(DFA* M1, DFA* M2, DFA* M3, int var, int* indices);
+DFA *dfa_general_replace_once_extrabit(DFA* M1, DFA* M2, DFA* M3, int var, int* indices);
 DFA* dfa_pre_replace(DFA* M1, DFA* M2, DFA* M3, int var, int* indices);
 DFA* dfa_pre_replace_str(DFA* M1, DFA* M2, const char *str, int var, int* indices);
 DFA *dfa_replace(DFA *M1, DFA *M2, DFA *M3, int var, int *indices);

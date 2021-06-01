@@ -188,10 +188,9 @@ DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* i
       free(M2_singleton);
       return dfaCopy(M1);
     }
-    free(M2_singleton);
   }
-
-  if((str ==NULL)||strlen(str)==0){
+  // Deletion case
+  if((str == NULL) || strlen(str) == 0) {
       // Check empty intersection
       if (checkOnlyEmptyString(U, var, indices)) {
           // If we are replacing an empty string with empty string
@@ -220,11 +219,20 @@ DFA* dfa_pre_replace_once_str(DFA* M1, DFA* M2, const char *str, int var, int* i
               dfaFree(sMs);
           }
       }
+      // Replace
   } else {
-      result = dfa_general_replace_extrabit(M1, M3, U, var, indices);
+      if (M2_singleton != NULL) {
+          result = dfa_replace_once_extrabit(M1, M3, M2_singleton, var, indices);
+      } else {
+          // TODO: this is probably still not correct
+          result = dfa_general_replace_once_extrabit(M1, M3, M2, var, indices);
+      }
   }
   dfaFree(U);
   dfaFree(M3);
+  if (M2_singleton != NULL) {
+    free(M2_singleton);
+  }
   return result;
 }
 
