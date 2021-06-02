@@ -694,6 +694,14 @@ std::string Metadata::generate_attribute_exploit_from_scratch(const std::string&
             // Create new attribute
             payload += " autofocus foo=";
             payload += get_exploit_quote_type();
+        } else {
+            // Need to break out of attribute
+            payload += get_exploit_quote_type();
+            // insert event handlers
+            payload += " onclick=" + function;
+            // Create new attribute
+            payload += " foo=";
+            payload += get_exploit_quote_type();
         }
     }
     return payload;
