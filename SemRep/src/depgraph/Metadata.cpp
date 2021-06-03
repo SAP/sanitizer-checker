@@ -568,19 +568,28 @@ bool Metadata::has_cookie_value_in_match_pattern() const {
 
 bool Metadata::has_correct_exploit_match() const {
     if (this->has_valid_exploit()) {
-        if ((get_sink() == "innerHTML") ||
-            (get_sink() == "outerHTML") ||
-            (get_sink() == "insertAdjacentHTML")) {
-            if (get_break_out().find("<img src=x onerror=") != std::string::npos) {
-                return true;
+        if (get_exploit_type() == Exploit_Type::Html) {
+            if ((get_sink() == "innerHTML") ||
+                (get_sink() == "outerHTML") ||
+                (get_sink() == "insertAdjacentHTML")) {
+                if (get_break_out().find("<img src=x onerror=") != std::string::npos) {
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
-                return false;
+                if (get_break_out().find("<script>") != std::string::npos) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         } else {
-            if (get_break_out().find("<script>") != std::string::npos) {
-                return true;
-            } else {
+            // Javascript - check there is no HTML breakout
+            if (get_break_out().find("</iframe></style></script></object></embed></textarea>") != std::string::npos) {
                 return false;
+            } else {
+                return true;
             }
         }
     }
@@ -695,13 +704,14 @@ std::string Metadata::generate_attribute_exploit_from_scratch(const std::string&
             payload += " autofocus foo=";
             payload += get_exploit_quote_type();
         } else {
-            // Need to break out of attribute
-            payload += get_exploit_quote_type();
-            // insert event handlers
-            payload += " onclick=" + function;
-            // Create new attribute
-            payload += " foo=";
-            payload += get_exploit_quote_type();
+            // These require user interaction, leave them out
+            // // Need to break out of attribute
+            // payload += get_exploit_quote_type();
+            // // insert event handlers
+            // payload += " onclick=" + function;
+            // // Create new attribute
+            // payload += " foo=";
+            // payload += get_exploit_quote_type();
         }
     }
     return payload;
