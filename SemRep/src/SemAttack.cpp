@@ -122,7 +122,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
 {
   // Create a specific payload for each metadata entry
   unsigned int i = 0;
-  static std::vector<std::string> functions = { "taintfoxLog(`xss`)", "taintfoxLog`xss`" };
+  static std::vector<std::string> functions = { "taintfoxLog(\"xss\")", "taintfoxLog('xss')", "taintfoxLog`xss`" };
   const std::string file = getFileName();
   m_atLeastOnePayloadVulnerable = false;
   m_allPayloadsVulnerable = true;
