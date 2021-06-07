@@ -284,7 +284,7 @@ std::set<std::string> CombinedAnalysisResult::getUniqueDomains() const
   // Depending on how the metadata is added in addMetadata, the
   // domains might be already unique, but loop anyway in case this changes
   for (auto m : m_metadata) {
-    s.insert(m.get_domain());
+    s.insert(m.get_base_domain());
   }
   return s;
 }
