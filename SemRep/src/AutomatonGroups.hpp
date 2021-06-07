@@ -57,6 +57,9 @@ public:
     unsigned int getSanitizersForPayload() const;
     unsigned int getSanitizersWithPayload() const;
     unsigned int getVulnerableSanitizersWithPayload() const;
+    std::set<std::string> getDomainsForPayload() const;
+    std::set<std::string> getDomainsWithPayload() const;
+    std::set<std::string> getVulnerableDomainsWithPayload() const;
     unsigned int getVulnerableSanitizersWithBypass() const;
     unsigned int getErroredSanitizersWithPayload() const;
     unsigned int getEntriesForSinkContext(const AttackContext& context) const;
@@ -111,6 +114,9 @@ public:
     unsigned int getSanitizersForPayload() const;
     unsigned int getSanitizersWithPayload() const;
     unsigned int getVulnerableSanitizersWithPayload() const;
+    unsigned int getDomainsForPayload() const;
+    unsigned int getDomainsWithPayload() const;
+    unsigned int getVulnerableDomainsWithPayload() const;
     unsigned int getVulnerableSanitizersWithBypass() const;
     unsigned int getErroredSanitizersWithPayload() const;
     unsigned int getEntriesForSinkContext(const AttackContext& context) const;

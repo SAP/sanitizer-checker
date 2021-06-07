@@ -184,6 +184,39 @@ unsigned int AutomatonGroup::getVulnerableSanitizersWithBypass() const {
   return total;
 }
 
+std::set<std::string> AutomatonGroup::getDomainsForPayload() const {
+  std::set<std::string> set;
+  for (auto iter : m_graphs) {
+    if (!iter->getFwAnalysis().isErrored()) {
+      std::set<std::string> s = iter->getUniqueDomains();
+      set.insert(s.begin(), s.end());
+    }
+  }
+  return set;
+}
+
+std::set<std::string> AutomatonGroup::getDomainsWithPayload() const {
+  std::set<std::string> set;
+  for (auto iter : m_graphs) {
+    if (!iter->getFwAnalysis().isErrored() && iter->hasAtLeastOnePayload()) {
+      std::set<std::string> s = iter->getUniqueDomains();
+      set.insert(s.begin(), s.end());
+    }
+  }
+  return set;
+}
+
+std::set<std::string> AutomatonGroup::getVulnerableDomainsWithPayload() const {
+  std::set<std::string> set;
+  for (auto iter : m_graphs) {
+    if (!iter->getFwAnalysis().isErrored() && iter->hasAtLeastOneVulnerablePayload()) {
+      std::set<std::string> s = iter->getUniqueDomains();
+      set.insert(s.begin(), s.end());
+    }
+  }
+  return set;
+}
+
 unsigned int AutomatonGroup::getErroredSanitizersWithPayload() const {
   unsigned int total = 0;
   for (auto iter : m_graphs) {
@@ -410,8 +443,6 @@ void AutomatonGroups::printStatus(std::ostream& os) const
      << " --> " << getEntries()
      << " (" << getErrored() << ")"
      << " --> " << getNonZeroGroups() << std::endl;
-  // Across Domains
-  
   // Summary of payload analysis
   os << "# Sanitizers --> Sanitizers with payload -> Vulnerable sanitizers -> Sanitizers with bypass (errored)" << std::endl;
   os << "# " << getSanitizersForPayload();
@@ -419,7 +450,12 @@ void AutomatonGroups::printStatus(std::ostream& os) const
   os << " --> " << getVulnerableSanitizersWithPayload();
   os << " --> " << getVulnerableSanitizersWithBypass();
   os << " (" << getErroredSanitizersWithPayload() << ")";
-
+  os << std::endl; 
+  // Summary of payload analysis
+  os << "# Domains with sanitizer --> Domains with a sanitizer with payload -> Domains with a Vulnerable sanitizer" << std::endl;
+  os << "# " << getDomainsForPayload();
+  os << " --> " << getDomainsWithPayload();
+  os << " --> " << getVulnerableDomainsWithPayload();
   os << std::endl; 
 }
 
@@ -745,6 +781,34 @@ unsigned int AutomatonGroups::getVulnerableSanitizersWithPayload() const {
   }
   return total;
 }
+
+unsigned int AutomatonGroups::getDomainsForPayload() const {
+  std::set<std::string> domains;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    std::set<std::string> s = iter->getDomainsForPayload();
+    domains.insert(s.begin(), s.end());
+  }
+  return domains.size();
+}
+
+unsigned int AutomatonGroups::getDomainsWithPayload() const {
+  std::set<std::string> domains;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    std::set<std::string> s = iter->getDomainsWithPayload();
+    domains.insert(s.begin(), s.end());
+  }
+  return domains.size();
+}
+
+unsigned int AutomatonGroups::getVulnerableDomainsWithPayload() const {
+  std::set<std::string> domains;
+  for (auto iter = m_groups.begin(); iter != m_groups.end(); ++iter) {
+    std::set<std::string> s = iter->getVulnerableDomainsWithPayload();
+    domains.insert(s.begin(), s.end());
+  }
+  return domains.size();
+}
+
 
 unsigned int AutomatonGroups::getVulnerableSanitizersWithBypass() const {
   unsigned int total = 0;
