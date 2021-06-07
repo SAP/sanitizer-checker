@@ -118,14 +118,20 @@ void MultiAttack::writeResultsToFile() const {
   fs::path output_injection_histo(m_output_directory / fs::path("semattack_injection_histo.csv"));
   std::ofstream ofs_inj_histo;
   ofs_inj_histo.open (output_injection_histo.string(), std::ofstream::out);
-  m_groups.printGeneratedPayloads(ofs_inj_histo);
+  m_groups.printInjectionPointHistogram(ofs_inj_histo);
   ofs_inj_histo.close();
 
   fs::path output_domain_histo(m_output_directory / fs::path("semattack_domain_histo.csv"));
   std::ofstream ofs_domain_histo;
   ofs_domain_histo.open (output_domain_histo.string(), std::ofstream::out);
-  m_groups.printGeneratedPayloads(ofs_domain_histo);
+  m_groups.printDomainHistogram(ofs_domain_histo);
   ofs_domain_histo.close();
+
+  fs::path output_sanitizers_per_group_histo(m_output_directory / fs::path("semattack_sanitizers_per_group_histo.csv"));
+  std::ofstream ofs_sanitizers_per_group_histo;
+  ofs_sanitizers_per_group_histo.open (output_sanitizers_per_group_histo.string(), std::ofstream::out);
+  m_groups.printSanitizersPerGroupHistogram(ofs_sanitizers_per_group_histo);
+  ofs_sanitizers_per_group_histo.close();
 
   fs::path output_missing_payloads(m_output_directory / fs::path("semattack_missing_payloads.txt"));
   std::ofstream ofs_miss;

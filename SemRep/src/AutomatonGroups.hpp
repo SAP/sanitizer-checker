@@ -47,7 +47,7 @@ public:
     std::string getName() const;
     const StrangerAutomaton* getAutomaton() const;
     void addCombinedAnalysisResult(const CombinedAnalysisResult* graph);
-    unsigned int getEntries() const { return m_graphs.size(); }
+    size_t getEntries() const { return m_graphs.size(); }
     unsigned int getEntriesWithDuplicates() const;
     unsigned int getNonUniqueEntries() const;
     unsigned int getSuccessfulEntriesForContext(const AttackContext& context) const;
@@ -125,6 +125,7 @@ public:
     // Illustrate how many sanitizers are used for a single injection point
     void printInjectionPointHistogram(std::ostream& os) const;
     void printDomainHistogram(std::ostream& os) const;
+    void printSanitizersPerGroupHistogram(std::ostream& os) const;
   
     void printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent = false) const;
     void printErrorSummary(std::ostream& os) const;
@@ -135,6 +136,7 @@ private:
     int m_id;
     AutomatonGroup* addNewEntry(const StrangerAutomaton* automaton, const CombinedAnalysisResult* graph);
     void printTotals(std::ostream& os, const std::vector<AttackContext>& contexts) const;
+    void printHistogram(std::ostream& os, const std::vector<size_t>& data, size_t max) const;
 };
 
 #endif /* AUTOMATON_GROUPS_HPP_ */

@@ -532,7 +532,7 @@ bool BackwardAnalysisResult::isSafe() const
 bool BackwardAnalysisResult::isContained() const
 {
   const StrangerAutomaton* postImage = m_fwResult.getPostImage();
-  if ((postImage == nullptr || this->m_attack == nullptr)) { 
+  if ((postImage == nullptr || this->m_attack == nullptr)) {
     return m_isContained;
   }
   return postImage->checkInclusion(this->m_attack);

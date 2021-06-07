@@ -410,6 +410,8 @@ void AutomatonGroups::printStatus(std::ostream& os) const
      << " --> " << getEntries()
      << " (" << getErrored() << ")"
      << " --> " << getNonZeroGroups() << std::endl;
+  // Across Domains
+  
   // Summary of payload analysis
   os << "# Sanitizers --> Sanitizers with payload -> Vulnerable sanitizers -> Sanitizers with bypass (errored)" << std::endl;
   os << "# " << getSanitizersForPayload();
@@ -417,6 +419,7 @@ void AutomatonGroups::printStatus(std::ostream& os) const
   os << " --> " << getVulnerableSanitizersWithPayload();
   os << " --> " << getVulnerableSanitizersWithBypass();
   os << " (" << getErroredSanitizersWithPayload() << ")";
+
   os << std::endl; 
 }
 
@@ -472,23 +475,11 @@ void AutomatonGroups::printErrorSummary(std::ostream& os) const
     os << std::endl;
   }
 }
-  
-void AutomatonGroups::printInjectionPointHistogram(std::ostream& os) const
-{
-  // Compute the number of injections points per sanitizer
-  std::vector<int> injection_points;
-  int max = 0;
-  for (auto& g: m_groups) {
-    for (auto& s: g.getUniqueInjectionPoints()) {
-      // Set of injection points for this sanitizer
-      int p = s.size();
-      injection_points.push_back(p);
-      max = std::max(max, p);
-    }
-  }
 
-  std::vector<int> histogram(max, 0);
-  for (int count: injection_points) {
+void AutomatonGroups::printHistogram(std::ostream& os, const std::vector<size_t>& data, size_t max) const
+{
+  std::vector<size_t> histogram(max, 0);
+  for (int count: data) {
     histogram.at(count) += 1;
   }
 
@@ -497,28 +488,48 @@ void AutomatonGroups::printInjectionPointHistogram(std::ostream& os) const
   }
 }
 
+void AutomatonGroups::printInjectionPointHistogram(std::ostream& os) const
+{
+  // Compute the number of injections points per sanitizer
+  std::vector<size_t> injection_points;
+  size_t max = 0;
+  for (auto& g: m_groups) {
+    for (auto& s: g.getUniqueInjectionPoints()) {
+      // Set of injection points for this sanitizer
+      size_t p = s.size();
+      injection_points.push_back(p);
+      max = std::max(max, p);
+    }
+  }
+  printHistogram(os, injection_points, max);
+}
+
 void AutomatonGroups::printDomainHistogram(std::ostream& os) const
 {
   // Compute the number of domains per sanitizer
-  std::vector<int> domains;
-  int max = 0;
+  std::vector<size_t> domains;
+  size_t max = 0;
   for (auto& g: m_groups) {
     for (auto& s: g.getUniqueDomains()) {
       // Set of domains for this sanitizer
-      int p = s.size();
+      size_t p = s.size();
       domains.push_back(p);
       max = std::max(max, p);
     }
   }
+  printHistogram(os, domains, max);
+}
 
-  std::vector<int> histogram(max, 0);
-  for (int count: domains) {
-    histogram.at(count) += 1;
+void AutomatonGroups::printSanitizersPerGroupHistogram(std::ostream& os) const
+{
+  // Compute the number of sanitizers per group
+  std::vector<size_t> sanitizers;
+  size_t max = 0;
+  for (auto& g : m_groups) {
+    sanitizers.push_back(g.getEntries());
+    max = std::max(max, g.getEntries());
   }
-
-  for (int i = 0; i < histogram.size(); i++) {
-    os << i << ", " << histogram.at(i) << std::endl;
-  }
+  printHistogram(os, sanitizers, max);
 }
 
 void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent) const
