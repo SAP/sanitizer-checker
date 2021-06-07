@@ -647,6 +647,9 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
                     (get_source() == "document.documentURI")) {
                     payload = "#" + payload;
                 }
+            } else {
+                // Fall back to existing payload for e.g. Javascript
+                payload = get_generated_exploit(function);
             }
         } else if ((get_sink() == "track.src")  ||
                    (get_sink() == "script.src") ||
@@ -662,9 +665,6 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
                 payload += function;
                 payload += "//";
             }
-        } else {
-            // Fall back to existing payload for e.g. Javascript
-            payload = get_generated_exploit(function);
         }
     }
     return payload;
