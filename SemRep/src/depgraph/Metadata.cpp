@@ -81,7 +81,8 @@ std::string Metadata::get_url() const {
 }
 
 std::string Metadata::get_comma_escaped_url() const {
-    std::string encoded(this->url);
+    // In some cases the url is in the parent loc and not the url
+    std::string encoded = (this->url == "about:blank") ? this->parentloc : this->url;
     replaceAll(encoded, ",", "%2C");
     return encoded;
 }
@@ -593,8 +594,8 @@ bool Metadata::has_correct_exploit_match() const {
             }
         }
     }
-    // If there is no valid exploit, assume correct
-    return true;
+    // If there is no valid exploit, kick out
+    return false;
 }
 
 std::string Metadata::default_payload = "taintfoxLog(`xss`)";

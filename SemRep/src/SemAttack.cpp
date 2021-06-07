@@ -289,6 +289,35 @@ std::set<std::string> CombinedAnalysisResult::getUniqueDomains() const
   return s;
 }
 
+std::set<std::string> CombinedAnalysisResult::getUniqueDomainsWithPayload() const
+{
+  std::set<std::string> s;
+
+  for (auto m : m_metadata) {
+    if (m.has_valid_exploit()) {
+      s.insert(m.get_base_domain());
+    }
+  }
+  return s;
+}
+
+std::set<std::string> CombinedAnalysisResult::getVulnerableDomainsWithPayload() const
+{
+  std::set<std::string> s;
+
+  for (const Metadata &m : m_metadata) {
+    if (m.has_valid_exploit()) {
+      for (const BackwardAnalysisResult* b : m_metadataAnalysisMap.at(&m)) {
+        if (b->isVulnerable()) {
+          s.insert(m.get_base_domain());
+          break;
+        }
+      }
+    }
+  }
+  return s;
+}
+
 std::set<int> CombinedAnalysisResult::getUniqueInjectionPoints() const
 {
   std::set<int> ids;

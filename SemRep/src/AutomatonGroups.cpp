@@ -198,8 +198,8 @@ std::set<std::string> AutomatonGroup::getDomainsForPayload() const {
 std::set<std::string> AutomatonGroup::getDomainsWithPayload() const {
   std::set<std::string> set;
   for (auto iter : m_graphs) {
-    if (!iter->getFwAnalysis().isErrored() && iter->hasAtLeastOnePayload()) {
-      std::set<std::string> s = iter->getUniqueDomains();
+    if (!iter->getFwAnalysis().isErrored()) {
+      std::set<std::string> s = iter->getUniqueDomainsWithPayload();
       set.insert(s.begin(), s.end());
     }
   }
@@ -210,7 +210,7 @@ std::set<std::string> AutomatonGroup::getVulnerableDomainsWithPayload() const {
   std::set<std::string> set;
   for (auto iter : m_graphs) {
     if (!iter->getFwAnalysis().isErrored() && iter->hasAtLeastOneVulnerablePayload()) {
-      std::set<std::string> s = iter->getUniqueDomains();
+      std::set<std::string> s = iter->getVulnerableDomainsWithPayload();
       set.insert(s.begin(), s.end());
     }
   }
