@@ -231,6 +231,7 @@ public:
     int getCount() const { return m_metadata.size(); }
     bool addMetadata(const Metadata& metadata);
     std::set<std::string> getUniqueDomains() const;
+    std::set<int> getUniqueInjectionPoints() const;
 
     bool hasSuccessfulFwAnalysis() const { return !m_metadataAnalysisMap.empty(); }
     bool hasAtLeastOnePayload() const { return !m_stringAnalysisMap.empty(); }

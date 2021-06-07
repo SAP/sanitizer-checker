@@ -65,7 +65,9 @@ public:
     unsigned int getEntriesForSinkContextWeighted(const AttackContext& context) const;
     unsigned int getErrorsForSinkContext(const AttackContext& context) const;
     unsigned int getErrorsForSinkContextAndErrorType(const AttackContext& context, const AnalysisError& error) const;
-    std::set<std::string> getUniqueDomains() const;
+    std::vector<std::set<std::string> > getUniqueDomains() const;
+    int getUniqueDomainsSize() const;
+    std::vector<std::set<int> > getUniqueInjectionPoints() const;
   
     void printMembers(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
     void printSummary(std::ostream& os) const;
@@ -119,6 +121,11 @@ public:
 
     void printGroups(std::ostream& os, bool printAll, const std::vector<AttackContext>& contexts) const;
     void printStatus(std::ostream& os) const;
+
+    // Illustrate how many sanitizers are used for a single injection point
+    void printInjectionPointHistogram(std::ostream& os) const;
+    void printDomainHistogram(std::ostream& os) const;
+  
     void printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent = false) const;
     void printErrorSummary(std::ostream& os) const;
     void printGeneratedPayloads(std::ostream& os) const;

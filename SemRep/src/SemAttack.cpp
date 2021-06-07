@@ -289,6 +289,18 @@ std::set<std::string> CombinedAnalysisResult::getUniqueDomains() const
   return s;
 }
 
+std::set<int> CombinedAnalysisResult::getUniqueInjectionPoints() const
+{
+  std::set<int> ids;
+
+  // Depending on how the metadata is added in addMetadata, the
+  // domains might be already unique, but loop anyway in case this changes
+  for (auto m : m_metadata) {
+    ids.insert(m.get_twenty_five_million_flows_id());
+  }
+  return ids;
+}
+
 bool CombinedAnalysisResult::isFilterSuccessful(const AttackContext& context) const
 {
   bool success = false;

@@ -115,6 +115,18 @@ void MultiAttack::writeResultsToFile() const {
   m_groups.printGeneratedPayloads(ofs_gen);
   ofs_gen.close();
 
+  fs::path output_injection_histo(m_output_directory / fs::path("semattack_injection_histo.csv"));
+  std::ofstream ofs_inj_histo;
+  ofs_inj_histo.open (output_injection_histo.string(), std::ofstream::out);
+  m_groups.printGeneratedPayloads(ofs_inj_histo);
+  ofs_inj_histo.close();
+
+  fs::path output_domain_histo(m_output_directory / fs::path("semattack_domain_histo.csv"));
+  std::ofstream ofs_domain_histo;
+  ofs_domain_histo.open (output_domain_histo.string(), std::ofstream::out);
+  m_groups.printGeneratedPayloads(ofs_domain_histo);
+  ofs_domain_histo.close();
+
   fs::path output_missing_payloads(m_output_directory / fs::path("semattack_missing_payloads.txt"));
   std::ofstream ofs_miss;
   ofs_miss.open (output_missing_payloads.string(), std::ofstream::out);

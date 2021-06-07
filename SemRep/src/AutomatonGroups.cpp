@@ -102,7 +102,7 @@ void AutomatonGroup::printSummary(std::ostream& os) const {
      << getEntriesWithDuplicates() << ", "
      << getNonUniqueEntries() << ", "
      << getEntries() << ", "
-     << getUniqueDomains().size() << ", "
+     << getUniqueDomainsSize() << ", "
      << getSuccessfulValidated();
   for (auto c : m_sink_contexts) {
     os << ", " << getEntriesForSinkContext(c);
@@ -250,13 +250,28 @@ unsigned int AutomatonGroup::getValidatedEntriesForSinkContext(const AttackConte
   return total;
 }
 
-std::set<std::string> AutomatonGroup::getUniqueDomains() const {
-  std::set<std::string> domains;
+std::vector<std::set<std::string> > AutomatonGroup::getUniqueDomains() const {
+  std::vector<std::set<std::string> > domains;
   for (auto g : m_graphs) {
-    std::set<std::string> s = g->getUniqueDomains();
-    domains.insert(s.begin(), s.end());
+    domains.push_back(g->getUniqueDomains());
   }
   return domains;
+}
+
+int AutomatonGroup::getUniqueDomainsSize() const {
+  int n = 0;
+  for (auto& s: getUniqueDomains()) {
+    n += s.size();
+  }
+  return n;
+}
+
+std::vector<std::set<int> > AutomatonGroup::getUniqueInjectionPoints() const {
+  std::vector<std::set<int> > ips;
+  for (auto g : m_graphs) {
+    ips.push_back(g->getUniqueInjectionPoints());
+  }
+  return ips;
 }
 
 unsigned int AutomatonGroup::getNonUniqueEntries() const {
@@ -458,6 +473,53 @@ void AutomatonGroups::printErrorSummary(std::ostream& os) const
   }
 }
   
+void AutomatonGroups::printInjectionPointHistogram(std::ostream& os) const
+{
+  // Compute the number of injections points per sanitizer
+  std::vector<int> injection_points;
+  int max = 0;
+  for (auto& g: m_groups) {
+    for (auto& s: g.getUniqueInjectionPoints()) {
+      // Set of injection points for this sanitizer
+      int p = s.size();
+      injection_points.push_back(p);
+      max = std::max(max, p);
+    }
+  }
+
+  std::vector<int> histogram(max, 0);
+  for (int count: injection_points) {
+    histogram.at(count) += 1;
+  }
+
+  for (int i = 0; i < histogram.size(); i++) {
+    os << i << ", " << histogram.at(i) << std::endl;
+  }
+}
+
+void AutomatonGroups::printDomainHistogram(std::ostream& os) const
+{
+  // Compute the number of domains per sanitizer
+  std::vector<int> domains;
+  int max = 0;
+  for (auto& g: m_groups) {
+    for (auto& s: g.getUniqueDomains()) {
+      // Set of domains for this sanitizer
+      int p = s.size();
+      domains.push_back(p);
+      max = std::max(max, p);
+    }
+  }
+
+  std::vector<int> histogram(max, 0);
+  for (int count: domains) {
+    histogram.at(count) += 1;
+  }
+
+  for (int i = 0; i < histogram.size(); i++) {
+    os << i << ", " << histogram.at(i) << std::endl;
+  }
+}
 
 void AutomatonGroups::printOverlapSummary(std::ostream& os, const std::vector<AttackContext>& contexts, bool percent) const
 {
@@ -722,8 +784,9 @@ unsigned int AutomatonGroups::getValidatedEntriesForSinkContext(const AttackCont
 std::set<std::string> AutomatonGroups::getUniqueDomains() const {
   std::set<std::string> domains;
   for (auto g : m_groups) {
-    std::set<std::string> s = g.getUniqueDomains();
-    domains.insert(s.begin(), s.end());
+    for (auto& s : g.getUniqueDomains()) {
+      domains.insert(s.begin(), s.end());
+    }
   }
   return domains;
 }
