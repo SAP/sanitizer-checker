@@ -478,9 +478,11 @@ void AutomatonGroups::printErrorSummary(std::ostream& os) const
 
 void AutomatonGroups::printHistogram(std::ostream& os, const std::vector<size_t>& data, size_t max) const
 {
-  std::vector<size_t> histogram(max, 0);
-  for (int count: data) {
-    histogram.at(count) += 1;
+  std::vector<size_t> histogram(max + 1, 0);
+  for (size_t count: data) {
+    if (count < histogram.size()) {
+      histogram.at(count) += 1;
+    }
   }
 
   for (int i = 0; i < histogram.size(); i++) {
