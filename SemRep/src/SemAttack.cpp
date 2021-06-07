@@ -281,10 +281,10 @@ std::set<std::string> CombinedAnalysisResult::getUniqueDomains() const
 {
   std::set<std::string> s;
 
-  // Depending on how the metadata is added in addMetadata, the
-  // domains might be already unique, but loop anyway in case this changes
-  for (auto m : m_metadata) {
-    s.insert(m.get_base_domain());
+  if (!getFwAnalysis().isErrored()) {
+      for (auto m : m_metadata) {
+        s.insert(m.get_base_domain());
+      }
   }
   return s;
 }
@@ -293,9 +293,11 @@ std::set<std::string> CombinedAnalysisResult::getUniqueDomainsWithPayload() cons
 {
   std::set<std::string> s;
 
-  for (auto m : m_metadata) {
-    if (m.has_valid_exploit()) {
-      s.insert(m.get_base_domain());
+  if (!getFwAnalysis().isErrored()) {
+    for (auto m : m_metadata) {
+      if (m.has_valid_exploit()) {
+        s.insert(m.get_base_domain());
+      }
     }
   }
   return s;
@@ -305,12 +307,16 @@ std::set<std::string> CombinedAnalysisResult::getVulnerableDomainsWithPayload() 
 {
   std::set<std::string> s;
 
-  for (const Metadata &m : m_metadata) {
-    if (m.has_valid_exploit()) {
-      for (const BackwardAnalysisResult* b : m_metadataAnalysisMap.at(&m)) {
-        if (b->isVulnerable()) {
-          s.insert(m.get_base_domain());
-          break;
+  if (!getFwAnalysis().isErrored()) {
+    for (const Metadata &m : m_metadata) {
+      if (m.has_valid_exploit()) {
+        if (m_metadataAnalysisMap.find(&m) != m_metadataAnalysisMap.end()) {
+          for (const BackwardAnalysisResult* b : m_metadataAnalysisMap.at(&m)) {
+            if (b->isVulnerable()) {
+              s.insert(m.get_base_domain());
+              break;
+            }
+          }
         }
       }
     }
