@@ -578,19 +578,29 @@ bool Metadata::has_correct_exploit_match() const {
                 } else {
                     return false;
                 }
-            } else {
+            } else if ((get_sink() == "document.write") ||
+                       (get_sink() == "document.writeln")) {
                 if (get_break_out().find("<script>") != std::string::npos) {
                     return true;
                 } else {
                     return false;
                 }
+            } else {
+                return false;
             }
         } else {
-            // Javascript - check there is no HTML breakout
-            if (get_break_out().find("</iframe></style></script></object></embed></textarea>") != std::string::npos) {
-                return false;
+            if ((get_sink() == "eval") ||
+                (get_sink() == "script.text") ||
+                (get_sink() == "setTimeout") ||
+                (get_sink() == "Function.ctor")) {
+                // Javascript - check there is no HTML breakout
+                if (get_break_out().find("</iframe></style></script></object></embed></textarea>") != std::string::npos) {
+                    return false;
+                } else {
+                    return true;
+                }
             } else {
-                return true;
+                return false;
             }
         }
     }
