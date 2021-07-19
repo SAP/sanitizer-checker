@@ -521,7 +521,7 @@ void BackwardAnalysisResult::printResult(std::ostream& os, bool printHeader) con
 void BackwardAnalysisResult::writeResultsToFile(const fs::path& dir) const
 {
   fs::create_directories(dir);
-  int with_sink = 1;
+  int with_sink = 0;
   
   if (m_attack) {
     fs::path output_image_file(dir / fs::path("post_image_attack_" + this->getName() + ".dot"));
@@ -776,7 +776,7 @@ AnalysisResult SemAttack::computeTargetFWAnalysis(const StrangerAutomaton* input
     // Copy the input
     targetAnalysisResult.set(target_uninit_field_node->getID(), inputAuto->clone());
 
-    ImageComputer targetAnalyzer(doConcat, false);
+    ImageComputer targetAnalyzer(doConcat, false, inputAuto->clone());
 
     try {
         message("starting forward aalysis for target...");
@@ -848,7 +848,7 @@ AnalysisResult SemAttack::computePreImage(const StrangerAutomaton* intersection,
 {
   try {
     message("starting backward analysis...");
-    ImageComputer analyzer(false, false);
+    ImageComputer analyzer(false, false, nullptr);
     AnalysisResult analysis_result = analyzer.doBackwardAnalysis_GeneralCase(
       this->target_dep_graph, this->target_field_relevant_graph, intersection, result);
     message("...finished backward analysis.");

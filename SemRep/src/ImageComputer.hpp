@@ -31,7 +31,7 @@
 class ImageComputer {
 public:
     ImageComputer();
-    ImageComputer(bool doConcats, bool doSubstr);
+    ImageComputer(bool doConcats, bool doSubstr, StrangerAutomaton* inputAuto);
     virtual ~ImageComputer();
 
     /****************************************************************************************************/
@@ -73,6 +73,7 @@ protected:
 private:
 
     StrangerAutomaton* uninit_node_default_initialization;
+    StrangerAutomaton* m_inputAuto;
     NodesList f_unmodeled;
 
     bool m_doConcats;

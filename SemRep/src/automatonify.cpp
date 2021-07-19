@@ -32,7 +32,12 @@ namespace po = boost::program_options;
 
 void make_automaton(const string& str, const string& output_file, bool do_sink){
 
-  StrangerAutomaton* a = StrangerAutomaton::regExToAuto(str);
+  StrangerAutomaton* a = nullptr;
+  if (str == "") {
+    a = StrangerAutomaton::makeEmptyString();
+  } else {
+    a = StrangerAutomaton::regExToAuto(str);
+  }
   if (a) {
     a->toDotFileAscii(output_file, do_sink ? 1 : 0);
   }

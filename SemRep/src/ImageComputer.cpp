@@ -31,18 +31,24 @@ ImageComputer::ImageComputer()
     : uninit_node_default_initialization(StrangerAutomaton::makePhi())
     , m_doConcats(true)
     , m_doSubstr(true)
+    , m_inputAuto(nullptr)
 {
 }
 
-ImageComputer::ImageComputer(bool doConcats, bool doSubstr)
+ImageComputer::ImageComputer(bool doConcats, bool doSubstr, StrangerAutomaton* inputAuto)
     : uninit_node_default_initialization(StrangerAutomaton::makePhi())
     , m_doConcats(doConcats)
     , m_doSubstr(doSubstr)
+    , m_inputAuto(inputAuto)
 {
 }
 
 ImageComputer::~ImageComputer() {
     delete uninit_node_default_initialization;
+    if (m_inputAuto) {
+        delete m_inputAuto;
+        m_inputAuto = nullptr;
+    }
 }
 
 /**
@@ -1001,10 +1007,13 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
                 const Metadata& m = depGraph.get_metadata();
                 if (m.is_initialized() && (m.has_url_on_lhs_of_replace())) {
                     std::string url = m.get_url();
-                    throw StrangerException(AnalysisError::UrlInReplaceString,
-                                            stringbuilder() << "URL: " << url
-                                                            << " found in pattern string");
-
+                    if (m_inputAuto != nullptr) {
+                        patternAuto = m_inputAuto;
+                    } else {
+                        throw StrangerException(AnalysisError::UrlInReplaceString,
+                                                stringbuilder() << "URL: " << url
+                                                << " found in pattern string");
+                    }
                 }
                 if (m.is_initialized() && (m.has_url_on_rhs_of_replace())) {
                     // Extra check for length to avoid filtering out encoded strings like &quot;
@@ -1047,10 +1056,13 @@ StrangerAutomaton* ImageComputer::makePostImageForOp_GeneralCase(DepGraph& depGr
                 const Metadata& m = depGraph.get_metadata();
                 if (m.is_initialized() && (m.has_url_on_lhs_of_replace())) {
                     std::string url = m.get_url();
-                    throw StrangerException(AnalysisError::UrlInReplaceString,
-                                            stringbuilder() << "URL: " << url
-                                                            << " found in pattern string");
-
+                    if (m_inputAuto != nullptr) {
+                        patternAuto = m_inputAuto;
+                    } else {
+                        throw StrangerException(AnalysisError::UrlInReplaceString,
+                                                stringbuilder() << "URL: " << url
+                                                << " found in pattern string");
+                    }
                 }
                 if (m.is_initialized() && (m.has_url_on_rhs_of_replace())) {
                     // Extra check for length to avoid filtering out encoded strings like &quot;
