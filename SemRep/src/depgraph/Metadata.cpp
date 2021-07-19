@@ -855,6 +855,7 @@ void Metadata::print(std::ostream& os) const {
     os << get_original_uuid() << ",";
     os << get_exploit_uuid() << ",";
     os << get_sanitizer_score() << ",";
+    os << get_sanitizer_location() << ",";
     os << get_domain() << ",";
     os << get_source() << ",";
     os << get_sink() << ",";
@@ -878,6 +879,7 @@ void Metadata::printHeader(std::ostream& os)
     os << "uuid_original,";
     os << "uuid_exploit,";
     os << "sanitizer_score,";
+    os << "sanitizer_loc,";
     os << "domain,";
     os << "source,";
     os << "sink,";
