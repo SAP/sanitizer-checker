@@ -1521,8 +1521,20 @@ StrangerAutomaton* StrangerAutomaton::general_replace(const StrangerAutomaton* p
     boost::posix_time::ptime start_time = perfInfo->current_time();
     StrangerAutomaton* retMe = nullptr;
     if (replaceAuto->isSingleton()) {
-        std::string replaceStr = replaceAuto->getStr();
+      std::string replaceStr = replaceAuto->getStr();
+      if (patternAuto->isSingleton()) {
+        std::string patternStr = patternAuto->getStr();
+        if (replaceAuto == patternAuto) {
+          retMe = new StrangerAutomaton(subjectAuto);
+        } else if ((patternStr.length() == 1) && (replaceStr.length() > 0)) {
+          std::cout << "Trying: replce_char_with_string: " << patternStr << " --> " << replaceStr << std::endl; 
+          retMe = new StrangerAutomaton(dfa_replace_char_with_string(subjectAuto->dfa, num_ascii_track, indices_main, patternStr[0], replaceStr.c_str()));
+        } else {
+          retMe = new StrangerAutomaton(dfa_replace_extrabit(subjectAuto->dfa, patternAuto->dfa, replaceStr.c_str(), num_ascii_track, indices_main));
+        }
+      } else {
         retMe = new StrangerAutomaton(dfa_replace_extrabit(subjectAuto->dfa, patternAuto->dfa, replaceStr.c_str(), num_ascii_track, indices_main));
+      } 
     } else {
         retMe = new StrangerAutomaton(dfa_general_replace_extrabit(subjectAuto->dfa, patternAuto->dfa, replaceAuto->dfa, num_ascii_track, indices_main));
     }
@@ -2134,7 +2146,13 @@ bool StrangerAutomaton::checkEmptyString() const {
 }
 
 bool StrangerAutomaton::isSingleton() const {
-    return (::isSingleton(this->dfa, num_ascii_track, indices_main) != NULL);
+  char *s = ::isSingleton(this->dfa, num_ascii_track, indices_main);
+  if (s == NULL) {
+    return false;
+  } else {
+    free(s);
+    return true;
+  }
 }
 
 string StrangerAutomaton::getStr() const {
@@ -2143,6 +2161,7 @@ string StrangerAutomaton::getStr() const {
         throw StrangerException(AnalysisError::MonaException, "Trying to get a string for an automaton with a nonSingleton language.");
     }
     string retMe(result);
+    free(result);
     return retMe;
 }
 
