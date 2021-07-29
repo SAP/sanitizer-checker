@@ -2992,7 +2992,7 @@ bool checkExtraBitNeeded(DFA *M, int var, int *indices, int state, char *lambda)
     return retMe;
 }
 
-DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char replacedChar, char *string){
+DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char replacedChar, const char *string){
     if (check_emptiness_minimized(M)){
         return dfaCopy(M);
     }
@@ -3277,7 +3277,7 @@ DFA *dfa_replace_char_with_string_once(DFA *M, int var, int *oldIndices, char re
     return result;
 }
 
-DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replacedChar, char *string){
+DFA *dfa_replace_char_with_string(DFA *M, int var, int *oldIndices, char replacedChar, const char *string){
     if (check_emptiness_minimized(M)){
         return dfaCopy(M);
     }
@@ -3642,7 +3642,7 @@ int stringAcceptedFromState(DFA* M, int state, char* string, int var, int* indic
   A state i can go to only one state j on an input string. So from state i there is a maximum of one
   new transition out on replacedChar. This means we will need max 1 extra bit for nondeterminism.
 */
-DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char replacedChar, char *string){
+DFA *dfa_pre_replace_char_with_string(DFA *M, int var, int *oldIndices, char replacedChar, const char *string){
     if (check_emptiness_minimized(M)){
         return dfaCopy(M);
     }
