@@ -123,6 +123,7 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
   // Create a specific payload for each metadata entry
   unsigned int i = 0;
   static std::vector<std::string> functions = { "taintfoxLog(\"xss\")", "taintfoxLog('xss')", "taintfoxLog`xss`" };
+  static std::vector<bool> use_solidus = { false, true };
   const std::string file = getFileName();
   m_atLeastOnePayloadVulnerable = false;
   m_allPayloadsVulnerable = true;
@@ -130,40 +131,42 @@ void CombinedAnalysisResult::doMetadataSpecificAnalysis(const fs::path& output_d
   for (const Metadata &m : m_metadata) {
     std::vector<BackwardAnalysisResult*> bws;
     for (auto& f : functions) {
-      BackwardAnalysisResult* bw = nullptr;
-      // Normal payload
-      std::string payload = m.generate_exploit_from_scratch(f);
-      bw = doBackwardAnalysisForPayload(payload, output_dir, computePreImage, singletonIntersection, outputDotfiles, attack_forward);
-      if (bw != nullptr) {
-        m_atLeastOnePayloadVulnerable |= bw->isVulnerable();
-        if (!bw->isVulnerable()) {
-          m_allPayloadsVulnerable = false;
-        } else {
-          std::cout << file << ": " << payload << " --> " << bw->get_preimage_example() << std::endl;
+      for (bool b : use_solidus) {
+        BackwardAnalysisResult* bw = nullptr;
+        // Normal payload
+        std::string payload = m.generate_exploit_from_scratch(f, b);
+        bw = doBackwardAnalysisForPayload(payload, output_dir, computePreImage, singletonIntersection, outputDotfiles, attack_forward);
+        if (bw != nullptr) {
+          m_atLeastOnePayloadVulnerable |= bw->isVulnerable();
+          if (!bw->isVulnerable()) {
+            m_allPayloadsVulnerable = false;
+          } else {
+            std::cout << file << ": " << payload << " --> " << bw->get_preimage_example() << std::endl;
+          }
+          if (!bw->isErrored()) {
+            m_allPayloadsErrored = false;
+          } else {
+            std::cout << "doMetadataSpecificAnalysis::ERROR computing pre-image for payload:" << payload << " file: " << file << std::endl;
+          }
+          bws.push_back(bw);
         }
-        if (!bw->isErrored()) {
-          m_allPayloadsErrored = false;
-        } else {
-          std::cout << "doMetadataSpecificAnalysis::ERROR computing pre-image for payload:" << payload << " file: " << file << std::endl;
+        // Attribute payload
+        std::string attr_payload = m.generate_attribute_exploit_from_scratch(f, b);
+        bw = doBackwardAnalysisForPayload(attr_payload, output_dir, computePreImage, singletonIntersection, outputDotfiles, attack_forward);
+        if (bw != nullptr) {
+          m_atLeastOnePayloadVulnerable |= bw->isVulnerable();
+          if (!bw->isVulnerable()) {
+            m_allPayloadsVulnerable = false;
+          } else {
+            std::cout << file << ": " << attr_payload << " --> " << bw->get_preimage_example() << std::endl;
+          }
+          if (!bw->isErrored()) {
+            m_allPayloadsErrored = false;
+          } else {
+            std::cout << "doMetadataSpecificAnalysis::ERROR computing pre-image for payload:" << payload << " file: " << file << std::endl;
+          }
+          bws.push_back(bw);
         }
-        bws.push_back(bw);
-      }
-      // Attribute payload
-      std::string attr_payload = m.generate_attribute_exploit_from_scratch(f);
-      bw = doBackwardAnalysisForPayload(attr_payload, output_dir, computePreImage, singletonIntersection, outputDotfiles, attack_forward);
-      if (bw != nullptr) {
-        m_atLeastOnePayloadVulnerable |= bw->isVulnerable();
-        if (!bw->isVulnerable()) {
-          m_allPayloadsVulnerable = false;
-        } else {
-          std::cout << file << ": " << attr_payload << " --> " << bw->get_preimage_example() << std::endl;
-        }
-        if (!bw->isErrored()) {
-          m_allPayloadsErrored = false;
-        } else {
-          std::cout << "doMetadataSpecificAnalysis::ERROR computing pre-image for payload:" << payload << " file: " << file << std::endl;
-        }
-        bws.push_back(bw);
       }
     }
     // Add to map

