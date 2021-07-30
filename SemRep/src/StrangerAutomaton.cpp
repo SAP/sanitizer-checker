@@ -1524,10 +1524,10 @@ StrangerAutomaton* StrangerAutomaton::general_replace(const StrangerAutomaton* p
       std::string replaceStr = replaceAuto->getStr();
       if (patternAuto->isSingleton()) {
         std::string patternStr = patternAuto->getStr();
-        if (replaceAuto == patternAuto) {
+        if ((patternStr.length() == 0) || (replaceStr == patternStr)) {
           retMe = new StrangerAutomaton(subjectAuto);
         } else if ((patternStr.length() == 1) && (replaceStr.length() > 0)) {
-          std::cout << "Trying: replce_char_with_string: " << patternStr << " --> " << replaceStr << std::endl; 
+          std::cout << "Trying: replace_char_with_string: " << patternStr << " --> " << replaceStr << std::endl;
           retMe = new StrangerAutomaton(dfa_replace_char_with_string(subjectAuto->dfa, num_ascii_track, indices_main, patternStr[0], replaceStr.c_str()));
         } else {
           retMe = new StrangerAutomaton(dfa_replace_extrabit(subjectAuto->dfa, patternAuto->dfa, replaceStr.c_str(), num_ascii_track, indices_main));
