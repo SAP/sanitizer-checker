@@ -1040,7 +1040,7 @@ RegExp* RegExp::parseCharOrShortHand() {
 
 char RegExp::parseCharExp() /* //throws(IllegalArgumentException) */
 {
-    static std::string allowedHexChars = "01234567890ABCDEFabcdef";
+    static std::string allowedHexChars = "0123456789ABCDEFabcdef";
     // Loop for escaped chars...
     if (match('\\')) {
         if (match('x')) { // ... of the form \x26

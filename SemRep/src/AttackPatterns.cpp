@@ -26,20 +26,20 @@
 // WARNING: These cannot be copied directly as the quotes and slashes are escaped!
 
 // Just match escaped ampersands
-std::string AttackPatterns::m_htmlEscapedAmpersand       =  "/([^&]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
+std::string AttackPatterns::m_htmlEscapedAmpersand       =  "/([^&]+|(&[a-zA-Z]+;|&#[xX][0-9a-fA-F]+;|&#[0-9]+;)+)+/";
 // Allowed characters according to OWASP
-std::string AttackPatterns::m_htmlEscapedRegExp          =  "/([^<>'\"&\\/]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
+std::string AttackPatterns::m_htmlEscapedRegExp          =  "/([^<>'\"&\\/]+|(&[a-zA-Z]+;|&#[xX][0-9a-fA-F]+;|&#[0-9]+;)+)+/";
 // Just escape tags
 std::string AttackPatterns::m_htmlMinimal                =  "/[^<>]+/";
 // Escape Tags and quotes
 std::string AttackPatterns::m_htmlMedium                 =  "/[^<>'\"]+/";
 // Do not escape slash
-std::string AttackPatterns::m_htmlEscapedNoSlashRegExp   =  "/([^<>'\"&]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
+std::string AttackPatterns::m_htmlEscapedNoSlashRegExp   =  "/([^<>'\"&]+|(&[a-zA-Z]+;|&#[xX][0-9a-fA-F]+;|&#[0-9]+;)+)+/";
 // Also escape backtick
-std::string AttackPatterns::m_htmlEscapedBacktickRegExp  =  "/([^<>'\"&`]+|(&[a-zA-Z]+;|&#[xX][0-9a-zA-Z]+;|&#[0-9]+;)+)+/";
+std::string AttackPatterns::m_htmlEscapedBacktickRegExp  =  "/([^<>'\"&`]+|(&[a-zA-Z]+;|&#[xX][0-9a-fA-F]+;|&#[0-9]+;)+)+/";
 
 // HTML Attributes
-std::string AttackPatterns::m_htmlAttrEscapedRegExp      =  "/([a-zA-Z0-9]+|((&[a-zA-Z]+;|&#[xX][0-9]+;|&#[0-9]+;)))+/";
+std::string AttackPatterns::m_htmlAttrEscapedRegExp      =  "/([a-zA-Z0-9]+|((&[a-zA-Z]+;|&#[xX][0-9a-fA-F]+;|&#[0-9]+;)))+/";
 // Javascript
 std::string AttackPatterns::m_javascriptEscapedRegExp    =  "/([a-zA-Z0-9,._\\s]+|((\\\\u[a-fA-F0-9]{4})|(\\\\x[a-fA-F0-9]{2})))+/";
 std::string AttackPatterns::m_slashEscapeQuotes          =  "/([^\\\\\"']|((\\\\\\\\)|(\\\\\")|(\\\\')))+/";

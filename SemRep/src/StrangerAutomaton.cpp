@@ -277,9 +277,12 @@ StrangerAutomaton* StrangerAutomaton::makeContainsString(const std::string& s)
  * */
 StrangerAutomaton* StrangerAutomaton::makeChar(char c, int id)
 {
-	debug(stringbuilder() << id << " = makeChar(" << c << ") -- start");
-    StrangerAutomaton* retMe = StrangerAutomaton::makeString((stringbuilder() << c), id);
+    debug(stringbuilder() << id << " = makeChar(" << c << ") -- start");
+    StrangerAutomaton* retMe = new StrangerAutomaton(
+      dfa_construct_char(c, num_ascii_track, indices_main));
     debug(stringbuilder() << id << " = makeChar(" << c << ") -- end");
+    //std::cout << std::hex << static_cast<int>(c) << std::dec << std::endl;
+    //retMe->toDotAscii(1);
     {
     	retMe->setID(id);
     	retMe->debugAutomaton();
@@ -1525,10 +1528,13 @@ StrangerAutomaton* StrangerAutomaton::general_replace(const StrangerAutomaton* p
       std::string replaceStr = replaceAuto->getStr();
       if (patternAuto->isSingleton()) {
         std::string patternStr = patternAuto->getStr();
-        if ((patternStr.length() == 0) || (replaceStr == patternStr)) {
+        //std::cout << patternAuto->isEmpty() << ", " << patternStr.length() << ", " <<  replaceStr.length() << std::endl;
+        if ( ((patternStr.length() == 0) && (patternAuto->isEmpty())) || (replaceStr == patternStr)) {
           retMe = new StrangerAutomaton(subjectAuto);
-        } else if ((patternStr.length() == 1) && (replaceStr.length() > 0)) {
-          std::cout << "Trying: replace_char_with_string: " << patternStr << " --> " << replaceStr << std::endl;
+        } else if (((patternStr.length() == 1) ||  // Single character
+                    ((patternStr.length() == 0) && (!patternAuto->isEmpty()))) // Single NULL character (e.g. \x00)
+                   && (replaceStr.length() > 0)) { // Not deleting
+          std::cout << "Trying: replace_char_with_string: 0x" << std::hex << static_cast<int>(patternStr[0]) << std::dec << " --> " << replaceStr << std::endl;
           retMe = new StrangerAutomaton(dfa_replace_char_with_string(subjectAuto->dfa, num_ascii_track, indices_main, patternStr[0], replaceStr.c_str()));
         } else {
           retMe = new StrangerAutomaton(dfa_replace_extrabit(subjectAuto->dfa, patternAuto->dfa, replaceStr.c_str(), num_ascii_track, indices_main));
