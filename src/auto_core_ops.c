@@ -758,11 +758,10 @@ DFA *dfaSharpStringWithExtraBit(int var, int *indices) {
 // the last state is the sink state
 
 DFA *dfa_construct_char(char a, int var, int *indices) {
-  char* binChar;
-  binChar = bintostr((unsigned long) a, var);
+  char* binChar = bintostr((unsigned long) a, var);
   DFABuilder *b = dfaSetup(3, var, indices);
-  dfaAllocExceptions(b, 2);
-  //  dfaStoreException(b, 0, bintostr((unsigned long) a, var)); //test for nondeterminstic
+  dfaAllocExceptions(b, 1);
+  //dfaStoreException(b, 0, bintostr((unsigned long) a, var)); //test for nondeterminstic
   dfaStoreException(b, 1, binChar);
   dfaStoreState(b, 2);
   dfaAllocExceptions(b, 0);
@@ -777,7 +776,7 @@ DFA *dfa_construct_char_extrabit(char a, int var, int *indices) {
   char* binChar;
   binChar = bintostr((unsigned long) a, var);
   DFABuilder *b = dfaSetup(3, var + 1, indices);
-  dfaAllocExceptions(b, 2);
+  dfaAllocExceptions(b, 1);
   //  dfaStoreException(b, 0, bintostr((unsigned long) a, var)); //test for nondeterminstic
   dfaStoreException(b, 1, binChar);
   dfaStoreState(b, 2);

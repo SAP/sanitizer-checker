@@ -182,7 +182,9 @@ extern "C" {
 
     // A DFA that accepts only empty string (epsilon)
     DFA *dfaASCIIOnlyNullString(int var, int *indices);
-    
+
+    DFA *dfa_construct_char(char a, int var, int *indices);
+
     /**
      * outputs a DFA M that accepts string value of *reg
      * outputs DFA M where L(M) = {*reg}
