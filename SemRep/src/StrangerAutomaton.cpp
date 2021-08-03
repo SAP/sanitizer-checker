@@ -492,14 +492,15 @@ StrangerAutomaton* StrangerAutomaton::makePhi() {
 
 std::string StrangerAutomaton::generateSatisfyingExample() const
 {
+    std::string str;
     if (!this->isEmpty()) {
 	char* example = dfaGenerateExample(this->dfa, num_ascii_track, u_indices_main);
-	if (example == NULL) {
-            throw StrangerException(AnalysisError::MonaException, "no satifying example");
+	if (example != NULL) {
+            str = example;
+            free(example);
         }
-        return std::string(example);
     }
-    return std::string();
+    return str;
 }
 
 StrangerAutomaton* StrangerAutomaton::generateSatisfyingSingleton() const
