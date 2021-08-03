@@ -55,6 +55,7 @@ MultiAttack::MultiAttack(const std::string& graph_directory, const std::string& 
   , m_compute_preimage(true)
   , m_output_dotfiles(true)
   , m_attack_forward(false)
+  , m_no_exploit_match(true)
   , m_input_automaton(nullptr)
 {
   if (input_auto == nullptr) {
@@ -224,7 +225,7 @@ CombinedAnalysisResult* MultiAttack::findOrCreateResult(const fs::path& file, De
   // Find the result for the given hash
   const std::lock_guard<std::mutex> lock(this->results_mutex);
   CombinedAnalysisResult* result = nullptr;
-  if (target_dep_graph.get_metadata().has_correct_exploit_match()) {
+  if (target_dep_graph.get_metadata().has_correct_exploit_match() || this->m_no_exploit_match) {
     int hash = target_dep_graph.get_metadata().get_sanitizer_hash();
     auto search = this->m_result_hash_map.find(hash);
     if(target_dep_graph.get_metadata().is_initialized() && // Legacy failsafe to support depgraphs without the hash field

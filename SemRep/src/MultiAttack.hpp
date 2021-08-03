@@ -101,6 +101,7 @@ private:
     bool m_payload_analysis;
     bool m_output_dotfiles;
     bool m_attack_forward;
+    bool m_no_exploit_match;
     StrangerAutomaton* m_input_automaton;
 };
 
