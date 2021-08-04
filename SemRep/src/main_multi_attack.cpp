@@ -70,6 +70,9 @@ void call_sem_attack(const string& target_name, const string& output_dir, const 
           attack.addAttackPattern(AttackContext::Open_Paren);
           attack.addAttackPattern(AttackContext::Closing_paren);
           attack.addAttackPattern(AttackContext::Space);
+          attack.addAttackPattern(AttackContext::Comma);
+          attack.addAttackPattern(AttackContext::FullStop);
+          attack.addAttackPattern(AttackContext::Dash);
           attack.addAttackPattern(AttackContext::Script);
           attack.addAttackPattern(AttackContext::Alert);
           attack.addAttackPattern(AttackContext::HtmlMinimal);

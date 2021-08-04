@@ -39,7 +39,7 @@ std::string AttackPatterns::m_htmlEscapedNoSlashRegExp   =  "/([^<>'\"&]+|(&[a-z
 std::string AttackPatterns::m_htmlEscapedBacktickRegExp  =  "/([^<>'\"&`]+|(&[a-zA-Z]+;|&#[xX][0-9a-fA-F]+;|&#[0-9]+;)+)+/";
 
 // HTML Attributes
-std::string AttackPatterns::m_htmlAttrEscapedRegExp      =  "/([a-zA-Z0-9]+|((&[a-zA-Z]+;|&#[xX][0-9a-fA-F]+;|&#[0-9]+;)))+/";
+std::string AttackPatterns::m_htmlAttrEscapedRegExp      =  "/([^\\s%*+,\\-\\/;<=>\\^'\"\\|]+|((&[a-zA-Z]+;|&#[xX][0-9a-fA-F]+;|&#[0-9]+;)))+/";
 // Javascript
 std::string AttackPatterns::m_javascriptEscapedRegExp    =  "/([a-zA-Z0-9,._\\s]+|((\\\\u[a-fA-F0-9]{4})|(\\\\x[a-fA-F0-9]{2})))+/";
 std::string AttackPatterns::m_slashEscapeQuotes          =  "/([^\\\\\"']|((\\\\\\\\)|(\\\\\")|(\\\\')))+/";
@@ -290,6 +290,12 @@ StrangerAutomaton* AttackPatterns::getAttackPatternForContext(AttackContext cont
         return getSingleCharPattern("\\)");
     case AttackContext::Space:
         return getSingleCharPattern(" ");
+    case AttackContext::Comma:
+        return getSingleCharPattern(",");
+    case AttackContext::FullStop:
+        return getSingleCharPattern(".");
+    case AttackContext::Dash:
+        return getSingleCharPattern("-");
     case AttackContext::Script:
         return getSingleCharPattern("script");
     case AttackContext::Alert:

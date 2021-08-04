@@ -38,7 +38,10 @@
   DO(Open_Paren)                       \
   DO(Closing_paren)                    \
   DO(Space)                            \
-  DO(Backtick)                           \
+  DO(Backtick)                         \
+  DO(FullStop)                         \
+  DO(Comma)                            \
+  DO(Dash)                             \
   DO(Script)                           \
   DO(Alert)                            \
   DO(Html)                             \
