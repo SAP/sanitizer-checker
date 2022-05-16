@@ -41,3 +41,4 @@ autoreconf -f -i
 ./configure ${EXTRA_FLAGS}
 make clean && make -j
 
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
