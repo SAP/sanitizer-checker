@@ -26,7 +26,7 @@ In case you are the maintainer of a new SAP open source project, these are the s
 
 # SemAttack: Generating Sanitizer Bypasses for Client-Side JavaScript
 
-This repository contains source code for SemAttack, a framework which uses symbolic string analysis to evaluate the security of client-side JavaScript sanitizer functions.
+This repository contains source code for SemAttack, a framework which uses symbolic string analysis to evaluate the security of JavaScript sanitizer functions as a protection mechanism against client-side cross-site-scripting.
 
 ## Introduction
 
@@ -120,6 +120,8 @@ After building, SemAttack can be run as follows:
 semattack/src/multiattack --target input --output output --fieldname x
 ```
 
+Note that the analysis will take a while over the entire dataset: The automaton analysis took just under 30 minutes running on an AMD EPYC 7702P 64-Core processor.
+
 ### Docker run
 
 If you are using docker, the input and output directories have to be mounted into the container:
@@ -136,11 +138,44 @@ To get a list of command line flags, run:
 
 ```bash
 semattack/src/multiattack --help
+
+Allowed options:
+  --help                      produce help message
+  -v [ --verbose ] [=arg(=0)] verbosity level
+  -t [ --target ] arg         Path to dependency graph file for target
+                              function.
+  -o [ --output ] arg         Path to output directory.
+  -f [ --fieldname ] arg      Name of the input field for which sanitization
+                              code needs to be repaired.
+  -c [ --concat ] arg (=0)    Compute concat operations
+  -n [ --number ] arg (=-1)   Maximum number of depgraphs to compute
+  -e [ --encode ] arg (=0)    Use URL encoded automaton as analysis input
+                              (default is any string)
+  -s [ --singleton ] arg (=0) Use singletons for post-image computation
+  -p [ --preimage ] arg (=1)  Compute preimages for attack patterns
+  -y [ --payload ] arg (=1)   Use payload string attack patterns
+  -a [ --attack ] arg (=1)    Use fixed attack patterns
+  -k [ --attackfw ] arg (=0)  Do forward analysis with attack pattern if there
+                              is no intersection with post image
+  -d [ --dotfiles ] arg (=1)  Output all dot output files to disk
+
 ```
+
+For example, setting ```preimage```, ```payload``` or ```attack``` to zero will switch off parts of the analysis and speed up results.
+
+If you do not need all detailed output from analysis of each dependency graph, disable ```dotfiles``` to save space.
 
 ## Understanding the Output
 
+Once the analysis is finished, you will be left with lots of files in the output directory, for example:
 
+* *semattack_summary.csv*: This table sorts sanitizers into the injection context in which they are found (e.g. HTML or JavaScript) and whether they protect against each attack pattern considered.
+* *semattack_summary_percent.csv*: As with semattack_summary.csv, but showing the fraction of sanitizers with sufficient protection.
+* *semattack_groups.csv*: The table summarizes the sanitizers, grouping them by the postimage (i.e. the set of all possible output strings of the sanitizer). Information is given on which attack patterns overlap with the postimage.
+* *semattack_files.csv*: The same information as in semattack_groups, but listed for each file analysed.
+* *semattack_generated_payloads.csv*: A list of dependency graphs with their corresponding generated exploits, including a prediction whether the sanitizer protects against the exploit and, if not, a sanitizer bypass.
+
+If the ```dotfiles``` option is enabled, the output directory will also contain a directory tree which mirrors the input directory, including a sub directory for each dependency graph input. This directory contains DFAs (as BDD and dot files) for the postimage, attack patterns, intersections and preimages.
 
 ## Other Tools
 
