@@ -21,10 +21,10 @@ MONA/
 *.exe
 *.out
 *.app
-SemRep/src/semrep
-SemRep/src/semattack
-SemRep/src/semattack_bw
-SemRep/src/multiattack
+semattack/src/semrep
+semattack/src/semattack
+semattack/src/semattack_bw
+semattack/src/multiattack
 
 *.d
 *.launch
