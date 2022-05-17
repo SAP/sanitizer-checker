@@ -1,0 +1,123 @@
+// Finding: 959bea0e-8b94-45bb-98c8-4d3e52fabddb
+// Finding.url: https://example41.com/movies/peredachi/81529-kak-vyjti-zamuzh-7-sezon-9-vypusk-jefir-060523.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('4f4c57f2f31e44e587e580e0025f3a3d')><!--/*
+// Finding.parentloc: https://example41.com/movies/peredachi/81529-kak-vyjti-zamuzh-7-sezon-9-vypusk-jefir-060523.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('4f4c57f2f31e44e587e580e0025f3a3d')><!--/*
+// Finding.domain: example41.com
+// Finding.base_domain: example41.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: i</e.prototype.attrEscape
+// Sanitizer.location: https://example41.com/templates/uteta/js/share.js - i</e.prototype.attrEscape:1:67739
+// Finding.begin: 3270
+// Finding.end: 3564
+// Finding.original_uuid: cdb43573-17b8-42a4-9b0e-65abca12fedf
+// Finding.TwentyFiveMillionFlowsId: -1837939353
+// Finding.script: https://example41.com/templates/uteta/js/share.js
+// Finding.line: 1
+// Exploit.uuid: 4f4c57f2-f31e-44e5-87e5-80e0025f3a3d
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 91
+// Exploit.replace_begin_url: 91
+// Exploit.replace_end_url: 91
+// Exploit.replace_begin_param: 354
+// Exploit.replace_end_param: 354
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 658297017
+// DepGraph.sanitizer_hash: 1942822496
+// Non Finite Regex with function on rhs:  replace({(\w+)}/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(e,n){return void 0!==t[n]?encodeURIComponent(t[n]):""}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace({(\w+)}/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(e,n){return void 0!==t[n]?encodeURIComponent(t[n]):""}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &url="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://example136.com/intent/tweet?text=%D0%9A%D0%B0%D0%BA%20%D0....%BF%D1%83%D1%81%D0%BA)%20(%D0%AD%D1%84%D0%B8%D1%80%2006.05.21)"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &hashtags="];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: &utm_source=share2"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /{(\w+)}/"];
+n13 [shape=box, label="Lit: "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: &amp;"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: https://example136.com/intent/tweet?text=%D0%9A%D0%B0%D0%BA%20%D0....1%83%D1%81%D0%BA)%20(%D0%AD%D1%84%D0%B8%D1%80%2006.05.21)&amp;"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: hashtags=&amp;"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: utm_source=share2"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /[&]/"];
+n25 [shape=box, label="Lit: &amp;"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: /["]/"];
+n29 [shape=box, label="Lit: &quot;"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n14 -> n9;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n15 -> n11;
+n15 -> n16;
+n17 -> n18;
+n17 -> n15;
+n19 -> n17;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n26 -> n21;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n31 -> n27;
+n32 -> n31;
+}

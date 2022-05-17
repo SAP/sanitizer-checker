@@ -1,0 +1,118 @@
+// Finding: cd84310d-916e-4bf2-901d-88bbea96403b
+// Finding.url: https://www.example146.com/events?type=Webinar##%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src=x%20onerror=taintfoxLog('c38c26fe6da04dbf86f5b1ca8d34d911')%3E%3C!--/*
+// Finding.parentloc: https://www.example146.com/events?type=Webinar##%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src=x%20onerror=taintfoxLog('c38c26fe6da04dbf86f5b1ca8d34d911')%3E%3C!--/*
+// Finding.domain: www.example146.com
+// Finding.base_domain: example146.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 209
+// Sanitizer.name: d
+// Sanitizer.location: https://www.example146.com/assets/chunk-58-5015f0538ed82c980cc0.bundle.js - d:1:1247
+// Finding.begin: 20
+// Finding.end: 26
+// Finding.original_uuid: 047e55b7-41fb-413e-bd3c-2c154157f745
+// Finding.TwentyFiveMillionFlowsId: 1081524767
+// Finding.script: https://www.example146.com/assets/chunk-58-5015f0538ed82c980cc0.bundle.js
+// Finding.line: 1
+// Exploit.uuid: c38c26fe-6da0-4dbf-86f5-b1ca8d34d911
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: W
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 8
+// Exploit.end_taint_url: 9
+// Exploit.replace_begin_url: 46
+// Exploit.replace_end_url: 46
+// Exploit.replace_begin_param: 20
+// Exploit.replace_end_param: 20
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -362164908
+// DepGraph.sanitizer_hash: 210451727
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace(^\w/g: 0, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(t){return t.toUpperCase()}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(^\w/g: 0, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(t){return t.toUpperCase()}') - Left hand side has to be a range 
+// Non Finite Regex with function on rhs:  replace(\w\S*/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(js_url: 1, onabort=: 1, onactivate=: 1, onafterprint=: 1, onafterupdate=: 1, onbeforeactivate=: 1, onbeforecopy=: 1, onbeforecut=: 1, onbeforedeactivate=: 1, onbeforeeditfocus=: 1, onbeforepaste=: 1, onbeforeprint=: 1, onbeforeunload=: 1, onbeforeupdate=: 1, onbegin=: 1, onblur=: 1, onbounce=: 1, oncellchange=: 1, onchange=: 1, onclick=: 1, oncontextmenu=: 1, oncontrolselect=: 1, oncopy=: 1, oncut=: 1, ondataavailable=: 1, ondatasetchanged=: 1, ondatasetcomplete=: 1, ondblclick=: 1, ondeactivate=: 1, ondrag=: 1, ondragend=: 1, ondragleave=: 1, ondragenter=: 1, ondragover=: 1, ondragdrop=: 1, ondragstart=: 1, ondrop=: 1, onend=: 1, onerror=: 1, onerrorupdate=: 1, onfilterchange=: 1, onfinish=: 1, onFinish=: 1, onFocus=: 1, onFocusIn=: 1, onFocusOut=: 1, onHashChange=: 1, onHelp=: 1, onInput=: 1, onKeyDown=: 1, onKeyPress=: 1, onKeyUp=: 1, onLayoutComplete=: 1, onLoad=: 1, onLoseCapture=: 1, onMediaComplete=: 1, onMediaError=: 1, onMessage=: 1, onMouseDown=: 1, onMouseEnter=: 1, onMouseLeave=: 1, onMouseMove=: 1, onMouseOut=: 1, onMouseOver=: 1, onMouseUp=: 1, onMouseWheel=: 1, onMove=: 1, onMoveEnd=: 1, onMoveStart=: 1, onOffline=: 1, onOnline=: 1, onOutOfSync=: 1, onPaste=: 1, onPause=: 1, onPopState=: 1, onProgress=: 1, onPropertyChange=: 1, onReadyStateChange=: 1, onRedo=: 1, onRepeat=: 1, onReset=: 1, onResize=: 1, onResizeEnd=: 1, onResizeStart=: 1, onResume=: 1, onReverse=: 1, onRowsEnter=: 1, onRowExit=: 1, onRowDelete=: 1, onRowInserted=: 1, onScroll=: 1, onSeek=: 1, onSelect=: 1, onSelectionChange=: 1, onSelectStart=: 1, onStart=: 1, onStop=: 1, onStorage=: 1, onSyncRestored=: 1, onSubmit=: 1, onTimeError=: 1, onTrackChange=: 1, onUndo=: 1, onUnload=: 1, onURLFlip=: 1), function_rhs: true], 'function(t){return t.replace(/^\w/,(function(t){return t.toUpperCase()}))}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(\w\S*/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(js_url: 1, onabort=: 1, onactivate=: 1, onafterprint=: 1, onafterupdate=: 1, onbeforeactivate=: 1, onbeforecopy=: 1, onbeforecut=: 1, onbeforedeactivate=: 1, onbeforeeditfocus=: 1, onbeforepaste=: 1, onbeforeprint=: 1, onbeforeunload=: 1, onbeforeupdate=: 1, onbegin=: 1, onblur=: 1, onbounce=: 1, oncellchange=: 1, onchange=: 1, onclick=: 1, oncontextmenu=: 1, oncontrolselect=: 1, oncopy=: 1, oncut=: 1, ondataavailable=: 1, ondatasetchanged=: 1, ondatasetcomplete=: 1, ondblclick=: 1, ondeactivate=: 1, ondrag=: 1, ondragend=: 1, ondragleave=: 1, ondragenter=: 1, ondragover=: 1, ondragdrop=: 1, ondragstart=: 1, ondrop=: 1, onend=: 1, onerror=: 1, onerrorupdate=: 1, onfilterchange=: 1, onfinish=: 1, onFinish=: 1, onFocus=: 1, onFocusIn=: 1, onFocusOut=: 1, onHashChange=: 1, onHelp=: 1, onInput=: 1, onKeyDown=: 1, onKeyPress=: 1, onKeyUp=: 1, onLayoutComplete=: 1, onLoad=: 1, onLoseCapture=: 1, onMediaComplete=: 1, onMediaError=: 1, onMessage=: 1, onMouseDown=: 1, onMouseEnter=: 1, onMouseLeave=: 1, onMouseMove=: 1, onMouseOut=: 1, onMouseOver=: 1, onMouseUp=: 1, onMouseWheel=: 1, onMove=: 1, onMoveEnd=: 1, onMoveStart=: 1, onOffline=: 1, onOnline=: 1, onOutOfSync=: 1, onPaste=: 1, onPause=: 1, onPopState=: 1, onProgress=: 1, onPropertyChange=: 1, onReadyStateChange=: 1, onRedo=: 1, onRepeat=: 1, onReset=: 1, onResize=: 1, onResizeEnd=: 1, onResizeStart=: 1, onResume=: 1, onReverse=: 1, onRowsEnter=: 1, onRowExit=: 1, onRowDelete=: 1, onRowInserted=: 1, onScroll=: 1, onSeek=: 1, onSelect=: 1, onSelectionChange=: 1, onSelectStart=: 1, onStart=: 1, onStop=: 1, onStorage=: 1, onSyncRestored=: 1, onSubmit=: 1, onTimeError=: 1, onTrackChange=: 1, onUndo=: 1, onUnload=: 1, onURLFlip=: 1), function_rhs: true], 'function(t){return t.replace(/^\w/,(function(t){return t.toUpperCase()}))}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="split"];
+n5 [shape=box, label="Lit: ="];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /\+/"];
+n9 [shape=box, label="Lit:  "];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="decodeURIComponent"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="regex_exec"];
+n14 [shape=box, label="RegExp: /\w\S*/"];
+n15 [shape=box, label="Lit: 0"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="str_replace_once"];
+n18 [shape=box, label="RegExp: /^\w/"];
+n19 [shape=box, label="Lit: "];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="preg_replace"];
+n22 [shape=box, label="RegExp: /\w\S*/"];
+n23 [shape=box, label="Lit: "];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: 1 result found for "];
+n27 [shape=box, label="Var: x"];
+n28 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n6 -> n1;
+n4 -> n5;
+n4 -> n6;
+n10 -> n4;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n12 -> n7;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n24 -> n17;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n25 -> n26;
+n25 -> n21;
+n27 -> n25;
+n28 -> n27;
+}

@@ -1,0 +1,87 @@
+// Finding: 21e8b916-69fd-4338-ab7e-5755de710ff7
+// Finding.url: https://www.example190.com/esporte/ao-vivo/futebol/corinthians-agora/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('511ef4e91dd54da3abe391306edaa9c0')><!--/*
+// Finding.parentloc: https://www.example190.com/esporte/ao-vivo/futebol/corinthians-agora/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('511ef4e91dd54da3abe391306edaa9c0')><!--/*
+// Finding.domain: www.example190.com
+// Finding.base_domain: example190.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: expose.init
+// Sanitizer.location: https://c.jsexample190.com/assets/?loadComponent=media&contentType=js&tpl=alert,forms,photo,read-more,modal,babel,babel-login,contauol-login,babel-service,comments,suggest,ads,share,tabs,football-ws,match-center-ticker&cache=202105051633 - expose.init:1:68742
+// Finding.begin: 638
+// Finding.end: 840
+// Finding.original_uuid: e37d2785-9fd8-4a44-8b38-ec842a5d142b
+// Finding.TwentyFiveMillionFlowsId: 888395690
+// Finding.script: https://c.jsexample190.com/assets/?loadComponent=media&contentType=js&tpl=assets/dist/libs/jquery.min&cache=202105051633
+// Finding.line: 1
+// Exploit.uuid: 511ef4e9-1dd5-4da3-abe3-91306edaa9c0
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: data-config
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 65
+// Exploit.replace_begin_url: 65
+// Exploit.replace_end_url: 65
+// Exploit.replace_begin_param: 703
+// Exploit.replace_end_param: 703
+// Issues.LargestEncodeAttrStringChain: 2
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: true
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -2074494566
+// DepGraph.sanitizer_hash: -562329867
+// Large chain of EncodeAttrString Operations (2) 
+// Part of the URL ('https://www.example190.com/esporte/ao-vivo/futebol/corinthians-agora/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('511ef4e91dd54da3abe391306edaa9c0')><!--/*?c=card_405350129_1620309544112') found in right hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: ?c="];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: card_405350129_1620309544112"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: {{url}}"];
+n7 [shape=box, label="Lit: https://www.example190.com/esporte/ao-vivo/futebol/corinthians-agora/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('511ef4e91dd54da3abe391306edaa9c0')><!--/*?c=card_405350129_1620309544112"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="JSON.stringify"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="encodeAttrString"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=doubleoctagon, label="Return: x"];
+n1 -> n0;
+n1 -> n2;
+n3 -> n1;
+n3 -> n4;
+n8 -> n3;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n12 -> n9;
+n11 -> n12;
+n13 -> n11;
+n14 -> n13;
+}

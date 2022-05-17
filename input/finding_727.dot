@@ -1,0 +1,117 @@
+// Finding: 9bd2d20c-21a6-4793-8efb-e64cc63bfafc
+// Finding.url: https://www.example420.com/astrology/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b6f4130cc482439ca9903644bf2e4619')><!--/*
+// Finding.parentloc: https://www.example420.com/astrology/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b6f4130cc482439ca9903644bf2e4619')><!--/*
+// Finding.domain: www.example420.com
+// Finding.base_domain: example420.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: 
+// Sanitizer.location: https://s0.example421.com/static/astrology/reports/assets/js/reports.min.js?_=1ea18916 - <anonymous>:14:36
+// Finding.begin: 2730
+// Finding.end: 2731
+// Finding.original_uuid: 091f5d79-3dcf-4c00-bd2f-65c9233c30f7
+// Finding.TwentyFiveMillionFlowsId: 1374412309
+// Finding.script: https://s0.example421.com/static/astrology/reports/assets/js/reports.min.js?_=1ea18916
+// Finding.line: 27
+// Exploit.uuid: b6f4130c-c482-439c-a990-3644bf2e4619
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 18
+// Exploit.end_taint_url: 19
+// Exploit.replace_begin_url: 36
+// Exploit.replace_end_url: 36
+// Exploit.replace_begin_param: 467
+// Exploit.replace_end_param: 467
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -130604757
+// DepGraph.sanitizer_hash: -590567763
+// Non Finite Regex with function on rhs:  replace((^\w{1})|(\s+\w{1})/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(r){return r.toUpperCase()}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace((^\w{1})|(\s+\w{1})/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(r){return r.toUpperCase()}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /https?:\/\/www.example420.com/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="split"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="str_replace_once"];
+n9 [shape=box, label="Lit: .html"];
+n10 [shape=box, label="Lit: "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="str_replace_once"];
+n13 [shape=box, label="Lit: .php"];
+n14 [shape=box, label="Lit: "];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="preg_replace"];
+n17 [shape=box, label="RegExp: /[-]/"];
+n18 [shape=box, label="Lit:  "];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="preg_replace"];
+n21 [shape=box, label="RegExp: /(^\w{1})|(\s+\w{1})/"];
+n22 [shape=box, label="Lit: "];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="preg_replace"];
+n25 [shape=box, label="RegExp: /[ ]/"];
+n26 [shape=box, label="Lit: _"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=box, label="Var: x"];
+n29 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n7 -> n1;
+n5 -> n6;
+n5 -> n7;
+n11 -> n5;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n15 -> n8;
+n12 -> n13;
+n12 -> n14;
+n12 -> n15;
+n19 -> n12;
+n16 -> n17;
+n16 -> n18;
+n16 -> n19;
+n23 -> n16;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n27 -> n20;
+n24 -> n25;
+n24 -> n26;
+n24 -> n27;
+n28 -> n24;
+n29 -> n28;
+}

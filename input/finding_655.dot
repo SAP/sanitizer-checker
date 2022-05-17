@@ -1,0 +1,106 @@
+// Finding: b2ca0990-6eb6-4153-a12e-264deecac372
+// Finding.url: https://www.example329.com/morrowind/mods/
+// Finding.parentloc: https://www.example329.com/morrowind/mods/##'></iframe></style></script></object></embed></textarea><script>taintfoxLog('b5293bad23b14fca9b75180da3946590')</script><!--/*
+// Finding.domain: www.example329.com
+// Finding.base_domain: example329.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: SekindoClientDetections_URL/this.setInfo
+// Sanitizer.location: https://live.example5.com/live/liveView.php?s=103852&cbuster=2124724533&pubUrl=https://www.example329.com/morrowind/mods/%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27b5293bad23b14fca9b75180da3946590%27)%3C/script%3E%3C!--/*&subId=[SUBID_ENCODED]&vp_content=plembed1e2arlkxntwq - SekindoClientDetections_URL/this.setInfo:621:7
+// Finding.begin: 452
+// Finding.end: 629
+// Finding.original_uuid: 8e64521a-62e1-4b6b-8298-7f24439e08c4
+// Finding.TwentyFiveMillionFlowsId: 645402484
+// Finding.script: https://live.example5.com/live/liveView.php?s=103852&cbuster=2124724533&pubUrl=https://www.example329.com/morrowind/mods/%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27b5293bad23b14fca9b75180da3946590%27)%3C/script%3E%3C!--/*&subId=[SUBID_ENCODED]&vp_content=plembed1e2arlkxntwq
+// Finding.line: 914
+// Exploit.uuid: b5293bad-23b1-4fca-9b75-180da3946590
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: script
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 41
+// Exploit.replace_begin_url: 41
+// Exploit.replace_end_url: 41
+// Exploit.replace_begin_param: 269
+// Exploit.replace_end_param: 269
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1358328852
+// DepGraph.sanitizer_hash: -116879495
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &pubUrlAuto="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://live.example5.com/live/liveView.php?s=103852&cbuster=21....BID_ENCODED]&vp_content=plembed1e2arlkxntwq&cbuster=1620032287"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="Lit: SEKXLEN"];
+n9 [shape=box, label="Lit: 650"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: SEKYLEN"];
+n13 [shape=box, label="Lit: 300"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: '"];
+n17 [shape=box, label="Lit: %27"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: &csuuid=608fbb1f076e2"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: &videoType=flow&floatWidth=400&floatHeight=225&floatDirection=....10&floatCloseBtn=1&flowMode=both&flowCloseButtonPosition=right"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n24 -> n23;
+}

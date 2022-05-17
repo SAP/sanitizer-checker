@@ -1,0 +1,123 @@
+// Finding: 9757513a-6649-47e5-a105-2105afb86781
+// Finding.url: https://www.example413.com/us/find-a-workshop/locations##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1c241db09b4a416e8337f1ca92f8a4cf')><!--/*
+// Finding.parentloc: https://www.example413.com/us/find-a-workshop/locations##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1c241db09b4a416e8337f1ca92f8a4cf')><!--/*
+// Finding.domain: www.example413.com
+// Finding.base_domain: example413.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 9
+// Sanitizer.name: qd[7]
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-WBXVMXS - qd[7]:3675:426
+// Finding.begin: 462
+// Finding.end: 494
+// Finding.original_uuid: 4a68147f-17df-4513-90da-abedf0465cee
+// Finding.TwentyFiveMillionFlowsId: -9820347
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-WBXVMXS
+// Finding.line: 3697
+// Exploit.uuid: 1c241db0-9b4a-416e-8337-f1ca92f8a4cf
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: s
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 50
+// Exploit.end_taint_url: 59
+// Exploit.replace_begin_url: 59
+// Exploit.replace_end_url: 59
+// Exploit.replace_begin_param: 326
+// Exploit.replace_end_param: 326
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1648122353
+// DepGraph.sanitizer_hash: 1896644210
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, =: 1), function_rhs: true], 'function(a){return yd[a]}') - Other Exception: ReferenceError: yd is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 30"];
+n4 [shape=ellipse, label="substr"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=box, label="Lit: 0"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="RegExp: /us\/find-a-workshop/"];
+n9 [shape=box, label="Lit: "];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: -"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /\//"];
+n15 [shape=box, label="Lit: -"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: find-a-meeting-"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: visi:us:"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: \x27"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: \x3c"];
+n25 [shape=ellipse, label="preg_replace"];
+n26 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/"];
+n27 [shape=box, label="Lit: "];
+n28 [shape=box, label="Var: x"];
+n29 [shape=box, label="Var: x"];
+n30 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n4 -> n6;
+n10 -> n4;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n11 -> n7;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n17 -> n18;
+n17 -> n13;
+n19 -> n20;
+n19 -> n17;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n28 -> n23;
+n25 -> n26;
+n25 -> n27;
+n25 -> n28;
+n29 -> n25;
+n30 -> n29;
+}

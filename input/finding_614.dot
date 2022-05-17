@@ -1,0 +1,74 @@
+// Finding: 1bc81c6f-c440-44fc-9bf7-00eb1571b52b
+// Finding.url: https://www.example78.com/resources?type[0]=eBook##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c5dcfa51a4004fa8a47f799305ac3789')><!--/*
+// Finding.parentloc: https://www.example78.com/resources?type[0]=eBook##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c5dcfa51a4004fa8a47f799305ac3789')><!--/*
+// Finding.domain: www.example78.com
+// Finding.base_domain: example78.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 110
+// Sanitizer.name: nameToColor
+// Sanitizer.location: https://www.example78.com/themes/custom/ddd/js/custom/resource-finder.js?v=1.2 - renderListItem/<:8:148
+// Finding.begin: 135
+// Finding.end: 140
+// Finding.original_uuid: 7ab2b356-98c7-4857-9416-b538de64b18c
+// Finding.TwentyFiveMillionFlowsId: 796629484
+// Finding.script: https://www.example78.com/themes/custom/ddd/js/custom/resource-finder.js?v=1.2
+// Finding.line: 15
+// Exploit.uuid: c5dcfa51-a400-4fa8-a47f-799305ac3789
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 18
+// Exploit.end_taint_url: 19
+// Exploit.replace_begin_url: 49
+// Exploit.replace_end_url: 49
+// Exploit.replace_begin_param: 112
+// Exploit.replace_end_param: 112
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1847515266
+// DepGraph.sanitizer_hash: 1847515266
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[^A-Z0-9]+/"];
+n3 [shape=box, label="Lit: -"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="strtolower"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n7 -> n5;
+n8 -> n7;
+}

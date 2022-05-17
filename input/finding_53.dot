@@ -1,0 +1,134 @@
+// Finding: a635bc0f-979a-482f-9d76-a64ce690aa38
+// Finding.url: http://example60.com/##'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9ea3ea180f994c0a8ec12960e81b3339')><!--/*
+// Finding.parentloc: http://example60.com/##'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9ea3ea180f994c0a8ec12960e81b3339')><!--/*
+// Finding.domain: example60.com
+// Finding.base_domain: example60.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: pageView
+// Sanitizer.location: http://www.example60.com/script/PTrace.js - pageView:11:19
+// Finding.begin: 61
+// Finding.end: 209
+// Finding.original_uuid: 0b50308d-841c-450d-9f85-e8e7f3660176
+// Finding.TwentyFiveMillionFlowsId: 19011085
+// Finding.script: http://example60.com/skin/2016/js/jquery-1.11.2.js
+// Finding.line: 5599
+// Exploit.uuid: 9ea3ea18-0f99-4c0a-8ec1-2960e81b3339
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: img
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 17
+// Exploit.replace_begin_url: 17
+// Exploit.replace_end_url: 17
+// Exploit.replace_begin_param: 78
+// Exploit.replace_end_param: 78
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1342585826
+// DepGraph.sanitizer_hash: -1939881732
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: &"];
+n3 [shape=box, label="Lit: #"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: <img src='/Common/CommonActionAjax.aspx?Action=PageView&page="];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &title="];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: 中国自动化网-工业互联与智能制造 产业链“互联网+”服务平台"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: &size="];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: 1366"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: *"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: 768"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: &id="];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: &type="];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: &c="];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: &ownerid="];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: &loginedm="];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: null"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: &ref="];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: &key="];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: ' style='display:none;'>"];
+n37 [shape=box, label="Var: x"];
+n38 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n6;
+n5 -> n1;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n33 -> n31;
+n33 -> n34;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n38 -> n37;
+}

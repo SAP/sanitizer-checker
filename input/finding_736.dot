@@ -1,0 +1,100 @@
+// Finding: 07022e7f-88a0-4360-bb98-e2bb4ac2703a
+// Finding.url: https://example426.com/thesaurus/?s=*:winter sport"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a3a3e4c7345b402fba2f506d04a22e98')><!--/*
+// Finding.parentloc: https://example426.com/thesaurus/?s=*:winter sport"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a3a3e4c7345b402fba2f506d04a22e98')><!--/*
+// Finding.domain: example426.com
+// Finding.base_domain: example426.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: thesInit
+// Sanitizer.location: https://example426.com/thesaurus/thesaurus.js?v=69 - thesInit:5:122
+// Finding.begin: 1067
+// Finding.end: 1097
+// Finding.original_uuid: deca0fbd-b595-40dd-b8e4-940e35fad310
+// Finding.TwentyFiveMillionFlowsId: -2069285394
+// Finding.script: https://example184.com/ajax/libs/jquery/3.4.1/jquery.min.js
+// Finding.line: 2
+// Exploit.uuid: a3a3e4c7-345b-402f-ba2f-506d04a22e98
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: *:winter sport"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: *:winter sport"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 33
+// Exploit.end_taint_url: 47
+// Exploit.replace_begin_url: 33
+// Exploit.replace_end_url: 47
+// Exploit.replace_begin_param: 63
+// Exploit.replace_end_param: 77
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1093739567
+// DepGraph.sanitizer_hash: 1863727196
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 31"];
+n4 [shape=ellipse, label="split"];
+n5 [shape=box, label="Lit: ="];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="decodeURIComponent"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /[+]/"];
+n11 [shape=box, label="Lit:  "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[<>=]/"];
+n15 [shape=box, label="Lit: "];
+n16 [shape=box, label="Var: x"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n6 -> n1;
+n4 -> n5;
+n4 -> n6;
+n8 -> n4;
+n7 -> n8;
+n12 -> n7;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n17 -> n13;
+n18 -> n17;
+}

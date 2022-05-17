@@ -1,0 +1,221 @@
+// Finding: e35cfd2f-d087-49cf-8f1b-bf453074172a
+// Finding.url: https://privatebank.example165.com/gl/en/home##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('442314b553b6414eb9000945e075b4af')><!--/*
+// Finding.parentloc: https://privatebank.example165.com/gl/en/home##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('442314b553b6414eb9000945e075b4af')><!--/*
+// Finding.domain: privatebank.example165.com
+// Finding.base_domain: example165.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: c
+// Sanitizer.location: https://assets.example33.com/5517fdc94097/3c80c2bfa0a7/launch-930335bad6c3.min.js - c:4:30873
+// Finding.begin: 159
+// Finding.end: 160
+// Finding.original_uuid: 3711a415-8b14-40fc-8230-b3db947355f2
+// Finding.TwentyFiveMillionFlowsId: -770527787
+// Finding.script: https://assets.example33.com/5517fdc94097/3c80c2bfa0a7/launch-930335bad6c3.min.js
+// Finding.line: 4
+// Exploit.uuid: 442314b5-53b6-414e-b900-0945e075b4af
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: img
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 43
+// Exploit.replace_begin_url: 43
+// Exploit.replace_end_url: 43
+// Exploit.replace_begin_param: 131
+// Exploit.replace_end_param: 131
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1350259863
+// DepGraph.sanitizer_hash: -1577716968
+// Removed LR concats 
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace(([^"]*)"/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(": 1), function_rhs: true], 'function(e,a){return/\\/.test(a)?a+'"':a+'\\"'}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(([^"]*)"/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(": 1), function_rhs: true], 'function(e,a){return/\\/.test(a)?a+'"':a+'\\"'}') - Left hand side has to be a range 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit:  "];
+n3 [shape=ellipse, label="preg_replace"];
+n4 [shape=box, label="RegExp: /\s+/"];
+n5 [shape=box, label="Lit:  "];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="trim"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="strtolower"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: <img src="https://ad.doubleclick.net/ddm/activity/src=9653490;type=globa0;cat=pagev0;u4="];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: ;u5="];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: home"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: ;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;npa=;ord="];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: 2071522634539.0513"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: ?" width="1" height="1" alt=""/>"];
+n23 [shape=ellipse, label="substr"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=box, label="Lit: 135"];
+n26 [shape=ellipse, label="substr"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=box, label="Lit: 9"];
+n29 [shape=ellipse, label="substr"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=box, label="Lit: 8"];
+n32 [shape=ellipse, label="substr"];
+n33 [shape=box, label="Var: x"];
+n34 [shape=box, label="Lit: 9"];
+n35 [shape=ellipse, label="substr"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=box, label="Lit: 9"];
+n38 [shape=ellipse, label="substr"];
+n39 [shape=box, label="Var: x"];
+n40 [shape=box, label="Lit: 8"];
+n41 [shape=ellipse, label="substr"];
+n42 [shape=box, label="Var: x"];
+n43 [shape=box, label="Lit: 11"];
+n44 [shape=ellipse, label="regex_exec"];
+n45 [shape=box, label="RegExp: /^<([\-A-Za-z0-9_]+)((?:\s+[\w\-]+(?:\s*=?\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/"];
+n46 [shape=box, label="Lit: 2"];
+n47 [shape=box, label="Var: x"];
+n48 [shape=ellipse, label="regex_match"];
+n49 [shape=box, label="RegExp: /^<([\-A-Za-z0-9_]+)((?:\s+[\w\-]+(?:\s*=?\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/"];
+n50 [shape=box, label="Lit: 2"];
+n51 [shape=box, label="Var: x"];
+n52 [shape=ellipse, label="regex_exec"];
+n53 [shape=box, label="RegExp: /(?:([\-A-Za-z0-9_]+)\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))|(?:([\-A-Za-z0-9_]+)(\s|$)+)/"];
+n54 [shape=box, label="Lit: 4"];
+n55 [shape=box, label="Var: x"];
+n56 [shape=ellipse, label="preg_replace"];
+n57 [shape=box, label="RegExp: /([^"]*)"/"];
+n58 [shape=box, label="Lit: "];
+n59 [shape=box, label="Var: x"];
+n60 [shape=ellipse, label="."];
+n61 [shape=box, label="Lit: =""];
+n62 [shape=ellipse, label="."];
+n63 [shape=box, label="Lit: \""];
+n64 [shape=ellipse, label="."];
+n65 [shape=box, label="Lit:  onerror"];
+n66 [shape=ellipse, label="."];
+n67 [shape=box, label="Lit: >"];
+n68 [shape=ellipse, label="."];
+n69 [shape=box, label="Lit:  data-ps-id=3 >"];
+n70 [shape=ellipse, label="str_replace_once"];
+n71 [shape=box, label="RegExp: /(\/?>)/"];
+n72 [shape=box, label="Lit:  data-ps-id=3 $1"];
+n73 [shape=box, label="Var: x"];
+n74 [shape=ellipse, label="."];
+n75 [shape=box, label="Lit: "];
+n76 [shape=ellipse, label="."];
+n77 [shape=box, label="Lit: "];
+n78 [shape=box, label="Var: x"];
+n79 [shape=doubleoctagon, label="Return: x"];
+n1 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n8 -> n3;
+n7 -> n8;
+n10 -> n7;
+n9 -> n10;
+n11 -> n12;
+n11 -> n9;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n24 -> n21;
+n23 -> n24;
+n23 -> n25;
+n27 -> n23;
+n26 -> n27;
+n26 -> n28;
+n30 -> n26;
+n29 -> n30;
+n29 -> n31;
+n33 -> n29;
+n32 -> n33;
+n32 -> n34;
+n36 -> n32;
+n35 -> n36;
+n35 -> n37;
+n39 -> n35;
+n38 -> n39;
+n38 -> n40;
+n42 -> n38;
+n41 -> n42;
+n41 -> n43;
+n47 -> n41;
+n44 -> n45;
+n44 -> n46;
+n44 -> n47;
+n51 -> n44;
+n48 -> n49;
+n48 -> n50;
+n48 -> n51;
+n55 -> n48;
+n52 -> n53;
+n52 -> n54;
+n52 -> n55;
+n59 -> n52;
+n56 -> n57;
+n56 -> n58;
+n56 -> n59;
+n60 -> n61;
+n60 -> n56;
+n62 -> n60;
+n62 -> n63;
+n64 -> n62;
+n64 -> n65;
+n66 -> n64;
+n66 -> n67;
+n68 -> n66;
+n68 -> n69;
+n73 -> n68;
+n70 -> n71;
+n70 -> n72;
+n70 -> n73;
+n74 -> n75;
+n74 -> n70;
+n76 -> n74;
+n76 -> n77;
+n78 -> n76;
+n79 -> n78;
+}

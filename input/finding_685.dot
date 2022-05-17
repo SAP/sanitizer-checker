@@ -1,0 +1,167 @@
+// Finding: b7be2993-56d3-44d5-af5f-f2f4d3269b6c
+// Finding.url: https://liuxue.example405.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('50853d43ac184870a8abacb80c9ed4d9')><!--/*
+// Finding.parentloc: https://liuxue.example405.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('50853d43ac184870a8abacb80c9ed4d9')><!--/*
+// Finding.domain: liuxue.example405.com
+// Finding.base_domain: example405.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: hz6d_clicurl/divs_str<
+// Sanitizer.location: https://www30c1.example406.com/kf_new.php?style=1&arg=10214401&land_page=https%3A%2F%2Fliuxue.example405.com%2F%23%23%22%3E%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src%3Dx%20onerror%3DtaintfoxLog('50853d43ac184870a8abacb80c9ed4d9')%3E%3C!--%2F*&from_page=&guest_id=10689497143010&kf_sign=TA1OTMTYyMgxNTEwNjg5NDk3MTQzMDEwNzIyMTQ0MDE%3D&api_uuid=53a9e286ea3f925dbb0563d538ce6be1&ip_long=860968542&time=1621059816042 - hz6d_clicurl/divs_str<:265:45
+// Finding.begin: 1327
+// Finding.end: 1359
+// Finding.original_uuid: 393381aa-8d90-40c6-bd93-55142758b136
+// Finding.TwentyFiveMillionFlowsId: -28346239
+// Finding.script: https://www30c1.example406.com/kf_new.php?style=1&arg=10214401&land_page=https%3A%2F%2Fliuxue.example405.com%2F%23%23%22%3E%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src%3Dx%20onerror%3DtaintfoxLog('50853d43ac184870a8abacb80c9ed4d9')%3E%3C!--%2F*&from_page=&guest_id=10689497143010&kf_sign=TA1OTMTYyMgxNTEwNjg5NDk3MTQzMDEwNzIyMTQ0MDE%3D&api_uuid=53a9e286ea3f925dbb0563d538ce6be1&ip_long=860968542&time=1621059816042
+// Finding.line: 414
+// Exploit.uuid: 50853d43-ac18-4870-a8ab-acb80c9ed4d9
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: onclick
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 22
+// Exploit.replace_begin_url: 22
+// Exploit.replace_end_url: 22
+// Exploit.replace_begin_param: 1124
+// Exploit.replace_end_param: 1124
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 481285958
+// DepGraph.sanitizer_hash: 1126300446
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &referer="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &style=1&language=zh-cn&charset=GBK&kflist=off&kf=37560001&zdk...._overflow=0&callback_id6ds=10360514,10360523,10360524,10360526"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &keyword="];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: &tfrom=1"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: &tpl=crystal_blue"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: &uid=53a9e286ea3f925dbb0563d538ce6be1"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: &is_group=&is_group="];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: window.open('https://www30c1.example406.com/webCompany.php?kf_sign=TA1OTMTYyMgxNTEwNjg5NDk3MTQzMDEwNzIyMTQ0MDE=&arg=10214401"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: ', '_blank', 'height=600,width=800,top=50,left=200,status=yes,....nubar=no,resizable=yes,scrollbars=no,location=no,titlebar=no')"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: setIsinvited();"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /%7Bhz6d_keyword%7D/"];
+n25 [shape=box, label="Lit: %26keyword%3D&tfrom=1"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="encodeURIComponent"];
+n28 [shape=box, label="Var: x"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: #liyc#"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: %2C%20#liyc#"];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: _blank#liyc#"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: %2C%20#liyc#"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: height%3D600%2Cwidth%3D800%2Ctop%3D50%2Cleft%3D200%2Cstatus%3D....%3Dyes%2Cscrollbars%3Dno%2Clocation%3Dno%2Ctitlebar%3Dno#liyc#"];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: )"];
+n41 [shape=ellipse, label="preg_replace"];
+n42 [shape=box, label="RegExp: /[']/"];
+n43 [shape=box, label="Lit: #liyc#"];
+n44 [shape=box, label="Var: x"];
+n45 [shape=ellipse, label="."];
+n46 [shape=box, label="Lit: hz6d_is_exist('"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: ')"];
+n49 [shape=ellipse, label="."];
+n50 [shape=box, label="Lit: onclick=""];
+n51 [shape=ellipse, label="."];
+n52 [shape=box, label="Lit: ;""];
+n53 [shape=box, label="Var: x"];
+n54 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n18;
+n17 -> n15;
+n19 -> n17;
+n19 -> n20;
+n21 -> n22;
+n21 -> n19;
+n26 -> n21;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n28 -> n23;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n33 -> n31;
+n33 -> n34;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n44 -> n39;
+n41 -> n42;
+n41 -> n43;
+n41 -> n44;
+n45 -> n46;
+n45 -> n41;
+n47 -> n45;
+n47 -> n48;
+n49 -> n50;
+n49 -> n47;
+n51 -> n49;
+n51 -> n52;
+n53 -> n51;
+n54 -> n53;
+}

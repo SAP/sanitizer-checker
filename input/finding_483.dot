@@ -1,0 +1,80 @@
+// Finding: 454726cf-1426-4c49-9e33-ba65ab8d7bfd
+// Finding.url: https://www.example317.com/#"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0ba533f008f2485a99548426d51b48e2')><!--/*
+// Finding.parentloc: https://www.example317.com/#"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0ba533f008f2485a99548426d51b48e2')><!--/*
+// Finding.domain: www.example317.com
+// Finding.base_domain: example317.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 24
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 410
+// Finding.end: 424
+// Finding.original_uuid: b647be59-d9b0-41d8-86f7-e3d096bfe11b
+// Finding.TwentyFiveMillionFlowsId: -522684186
+// Finding.script: https://www.example317.com/wp-content/themes/newscorpau-news-dna/dist/javascripts/js-c3po-bundle.js
+// Finding.line: 1
+// Exploit.uuid: 0ba533f0-08f2-485a-9954-8426d51b48e2
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 8
+// Exploit.end_taint_url: 33
+// Exploit.replace_begin_url: 34
+// Exploit.replace_end_url: 34
+// Exploit.replace_begin_param: 511
+// Exploit.replace_end_param: 511
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: true
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: true
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 378191167
+// DepGraph.sanitizer_hash: 1971208851
+// Merged split and join statements 
+// Removed NOP replaces 
+// Cookie value ('?nk=e0a14317dfcc156b071ce576a8817958-1620289190') found in lhs of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: ?nk=e0a14317dfcc156b071ce576a8817958-1620289190"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[.]/"];
+n7 [shape=box, label="Lit: ."];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

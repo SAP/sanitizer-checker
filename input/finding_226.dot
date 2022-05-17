@@ -1,0 +1,104 @@
+// Finding: 97eb1115-7fef-418a-ac75-243d9df39106
+// Finding.url: http://fund.example187.com/fundtheme/index.html#key/95ae87aa3c2c570e6c3011b823e408f4/汽</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c2eb33490f1b4e8f97a0a23a9ba223ac')><!--/*
+// Finding.parentloc: http://fund.example187.com/fundtheme/index.html#key/95ae87aa3c2c570e6c3011b823e408f4/汽</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c2eb33490f1b4e8f97a0a23a9ba223ac')><!--/*
+// Finding.domain: fund.example187.com
+// Finding.base_domain: example187.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: initList
+// Sanitizer.location: http://fund.example187.com/fundtheme/js/fundmian_20210325.js - initList:142:19
+// Finding.begin: 47
+// Finding.end: 49
+// Finding.original_uuid: 40128781-7b3e-40cc-a945-e34642824df5
+// Finding.TwentyFiveMillionFlowsId: -1856717994
+// Finding.script: http://s.example188.com/combo?js/&jquery-1.8.3.min.js&jquery.cookie.min.js&ta.js&ifund/function.js
+// Finding.line: 2
+// Exploit.uuid: c2eb3349-0f1b-4e8f-97a0-a23a9ba223ac
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: 汽
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: 汽</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: 汽</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 84
+// Exploit.end_taint_url: 88
+// Exploit.replace_begin_url: 84
+// Exploit.replace_end_url: 88
+// Exploit.replace_begin_param: 47
+// Exploit.replace_end_param: 51
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 478615395
+// DepGraph.sanitizer_hash: -1006659938
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="split"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="decodeURIComponent"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="preg_replace"];
+n11 [shape=box, label="RegExp: /<img(.*)?(\/)?>(.*)?(<\/img>)?/"];
+n12 [shape=box, label="Lit: "];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="preg_replace"];
+n15 [shape=box, label="RegExp: /<a(.*)?(\/)?>(.*)?(<\/a>)?/"];
+n16 [shape=box, label="Lit: "];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="preg_replace"];
+n19 [shape=box, label="RegExp: /<script(.*)?(\/)?>(.*)?(<\/script>)?/"];
+n20 [shape=box, label="Lit: "];
+n21 [shape=box, label="Var: x"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n7 -> n1;
+n5 -> n6;
+n5 -> n7;
+n9 -> n5;
+n8 -> n9;
+n13 -> n8;
+n10 -> n11;
+n10 -> n12;
+n10 -> n13;
+n17 -> n10;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n21 -> n14;
+n18 -> n19;
+n18 -> n20;
+n18 -> n21;
+n22 -> n18;
+n23 -> n22;
+}

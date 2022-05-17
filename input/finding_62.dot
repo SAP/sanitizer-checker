@@ -1,0 +1,91 @@
+// Finding: 52e3a2a2-21d8-4424-8962-d370a4466ca7
+// Finding.url: http://www.example69.com/questions/3799607-v-pylesose-mogut-zhit-nasekomye-pochemu.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('47782395ca854baeaddc4a2fcec9b40d')><!--/*
+// Finding.parentloc: http://www.example69.com/questions/3799607-v-pylesose-mogut-zhit-nasekomye-pochemu.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('47782395ca854baeaddc4a2fcec9b40d')><!--/*
+// Finding.domain: www.example69.com
+// Finding.base_domain: example69.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: clean/<
+// Sanitizer.location: http://example70.com/js/cached/group_all.js?1610193648 - clean/<:1:10259
+// Finding.begin: 612
+// Finding.end: 891
+// Finding.original_uuid: a0ad77d1-a39e-42ed-9599-92d353040aef
+// Finding.TwentyFiveMillionFlowsId: 1077143429
+// Finding.script: http://example70.com/js/cached/group_all.js?1610193648
+// Finding.line: 1
+// Exploit.uuid: 47782395-ca85-4bae-addc-4a2fcec9b40d
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 90
+// Exploit.replace_begin_url: 90
+// Exploit.replace_end_url: 90
+// Exploit.replace_begin_param: 704
+// Exploit.replace_end_param: 704
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1092296194
+// DepGraph.sanitizer_hash: 805321193
+// Non Finite Regex with function on rhs:  replace((<(\w+)[^>]*?)\/>/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(U,V,T){return T.match(/^(abbr|br|col|img|input|link|meta|param|hr|area|embed)$/i)?U:V+"></"+T+">"}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace((<(\w+)[^>]*?)\/>/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(U,V,T){return T.match(/^(abbr|br|col|img|input|link|meta|param|hr|area|embed)$/i)?U:V+"></"+T+">"}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="escape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: <table><tr>	<td id="likes_vkontakte">		<script type="text/java....>		<iframe src="http://www.facebook.com/plugins/like.php?href="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &send=false&layout=button_count&show_faces=false&action=like&c....ass="like_button" id="likes_showall"></div>	</td></tr></table>"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /(<(\w+)[^>]*?)\/>/"];
+n9 [shape=box, label="Lit: "];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="RegExp: /^\s+/"];
+n13 [shape=box, label="Lit: "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n15 -> n11;
+n16 -> n15;
+}

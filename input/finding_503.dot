@@ -1,0 +1,164 @@
+// Finding: a5eb1d71-30c8-42fb-bf34-4da758b3d5cb
+// Finding.url: https://www.example305.com/search/fullsite-search.html?query=aS</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3098355806ec444a92c1bdb860f4547f')><!--/*tm&resStart=0&resLength=10&toplevel=products-and-services&sublevel=training-courses&
+// Finding.parentloc: https://www.example305.com/search/fullsite-search.html?query=aS</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3098355806ec444a92c1bdb860f4547f')><!--/*tm&resStart=0&resLength=10&toplevel=products-and-services&sublevel=training-courses&
+// Finding.domain: www.example305.com
+// Finding.base_domain: example305.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 210
+// Sanitizer.name: toTitleCase
+// Sanitizer.location: https://www.example305.com/search/js/fullsite-search-lite.js?v7n - toTitleCase:3841:16
+// Finding.begin: 749
+// Finding.end: 750
+// Finding.original_uuid: b62cdb8a-8216-4311-9065-7decd58f9e55
+// Finding.TwentyFiveMillionFlowsId: 21615389
+// Finding.script: https://www.example305.com/search/js/fullsite-search-lite.js?v7n
+// Finding.line: 2478
+// Exploit.uuid: 30983558-06ec-444a-92c1-bdb860f4547f
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: S
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: S</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: S</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 56
+// Exploit.end_taint_url: 57
+// Exploit.replace_begin_url: 56
+// Exploit.replace_end_url: 57
+// Exploit.replace_begin_param: 475
+// Exploit.replace_end_param: 476
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 622751070
+// DepGraph.sanitizer_hash: -1822743065
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace(\w\S*/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(js_url: 1, onabort=: 1, onactivate=: 1, onafterprint=: 1, onafterupdate=: 1, onbeforeactivate=: 1, onbeforecopy=: 1, onbeforecut=: 1, onbeforedeactivate=: 1, onbeforeeditfocus=: 1, onbeforepaste=: 1, onbeforeprint=: 1, onbeforeunload=: 1, onbeforeupdate=: 1, onbegin=: 1, onblur=: 1, onbounce=: 1, oncellchange=: 1, onchange=: 1, onclick=: 1, oncontextmenu=: 1, oncontrolselect=: 1, oncopy=: 1, oncut=: 1, ondataavailable=: 1, ondatasetchanged=: 1, ondatasetcomplete=: 1, ondblclick=: 1, ondeactivate=: 1, ondrag=: 1, ondragend=: 1, ondragleave=: 1, ondragenter=: 1, ondragover=: 1, ondragdrop=: 1, ondragstart=: 1, ondrop=: 1, onend=: 1, onerror=: 1, onerrorupdate=: 1, onfilterchange=: 1, onfinish=: 1, onFinish=: 1, onFocus=: 1, onFocusIn=: 1, onFocusOut=: 1, onHashChange=: 1, onHelp=: 1, onInput=: 1, onKeyDown=: 1, onKeyPress=: 1, onKeyUp=: 1, onLayoutComplete=: 1, onLoad=: 1, onLoseCapture=: 1, onMediaComplete=: 1, onMediaError=: 1, onMessage=: 1, onMouseDown=: 1, onMouseEnter=: 1, onMouseLeave=: 1, onMouseMove=: 1, onMouseOut=: 1, onMouseOver=: 1, onMouseUp=: 1, onMouseWheel=: 1, onMove=: 1, onMoveEnd=: 1, onMoveStart=: 1, onOffline=: 1, onOnline=: 1, onOutOfSync=: 1, onPaste=: 1, onPause=: 1, onPopState=: 1, onProgress=: 1, onPropertyChange=: 1, onReadyStateChange=: 1, onRedo=: 1, onRepeat=: 1, onReset=: 1, onResize=: 1, onResizeEnd=: 1, onResizeStart=: 1, onResume=: 1, onReverse=: 1, onRowsEnter=: 1, onRowExit=: 1, onRowDelete=: 1, onRowInserted=: 1, onScroll=: 1, onSeek=: 1, onSelect=: 1, onSelectionChange=: 1, onSelectStart=: 1, onStart=: 1, onStop=: 1, onStorage=: 1, onSyncRestored=: 1, onSubmit=: 1, onTimeError=: 1, onTrackChange=: 1, onUndo=: 1, onUnload=: 1, onURLFlip=: 1), function_rhs: true], 'function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(\w\S*/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(js_url: 1, onabort=: 1, onactivate=: 1, onafterprint=: 1, onafterupdate=: 1, onbeforeactivate=: 1, onbeforecopy=: 1, onbeforecut=: 1, onbeforedeactivate=: 1, onbeforeeditfocus=: 1, onbeforepaste=: 1, onbeforeprint=: 1, onbeforeunload=: 1, onbeforeupdate=: 1, onbegin=: 1, onblur=: 1, onbounce=: 1, oncellchange=: 1, onchange=: 1, onclick=: 1, oncontextmenu=: 1, oncontrolselect=: 1, oncopy=: 1, oncut=: 1, ondataavailable=: 1, ondatasetchanged=: 1, ondatasetcomplete=: 1, ondblclick=: 1, ondeactivate=: 1, ondrag=: 1, ondragend=: 1, ondragleave=: 1, ondragenter=: 1, ondragover=: 1, ondragdrop=: 1, ondragstart=: 1, ondrop=: 1, onend=: 1, onerror=: 1, onerrorupdate=: 1, onfilterchange=: 1, onfinish=: 1, onFinish=: 1, onFocus=: 1, onFocusIn=: 1, onFocusOut=: 1, onHashChange=: 1, onHelp=: 1, onInput=: 1, onKeyDown=: 1, onKeyPress=: 1, onKeyUp=: 1, onLayoutComplete=: 1, onLoad=: 1, onLoseCapture=: 1, onMediaComplete=: 1, onMediaError=: 1, onMessage=: 1, onMouseDown=: 1, onMouseEnter=: 1, onMouseLeave=: 1, onMouseMove=: 1, onMouseOut=: 1, onMouseOver=: 1, onMouseUp=: 1, onMouseWheel=: 1, onMove=: 1, onMoveEnd=: 1, onMoveStart=: 1, onOffline=: 1, onOnline=: 1, onOutOfSync=: 1, onPaste=: 1, onPause=: 1, onPopState=: 1, onProgress=: 1, onPropertyChange=: 1, onReadyStateChange=: 1, onRedo=: 1, onRepeat=: 1, onReset=: 1, onResize=: 1, onResizeEnd=: 1, onResizeStart=: 1, onResume=: 1, onReverse=: 1, onRowsEnter=: 1, onRowExit=: 1, onRowDelete=: 1, onRowInserted=: 1, onScroll=: 1, onSeek=: 1, onSelect=: 1, onSelectionChange=: 1, onSelectStart=: 1, onStart=: 1, onStop=: 1, onStorage=: 1, onSyncRestored=: 1, onSubmit=: 1, onTimeError=: 1, onTrackChange=: 1, onUndo=: 1, onUnload=: 1, onURLFlip=: 1), function_rhs: true], 'function(txt) {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /\#.+$/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="substr"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Lit: 49"];
+n8 [shape=box, label="Lit: 219"];
+n9 [shape=ellipse, label="split"];
+n10 [shape=box, label="Lit: &"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="split"];
+n13 [shape=box, label="Lit: ="];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /[-]/"];
+n17 [shape=box, label="Lit:  "];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="preg_replace"];
+n20 [shape=box, label="RegExp: /And/"];
+n21 [shape=box, label="Lit: and"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /[_]/"];
+n25 [shape=box, label="Lit:  "];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: /comma/"];
+n29 [shape=box, label="Lit: , "];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="regex_exec"];
+n32 [shape=box, label="RegExp: /\w\S*/"];
+n33 [shape=box, label="Lit: 0"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="char_at"];
+n36 [shape=box, label="Lit: 0"];
+n37 [shape=box, label="Var: x"];
+n38 [shape=ellipse, label="strtoupper"];
+n39 [shape=box, label="Var: x"];
+n40 [shape=ellipse, label="."];
+n41 [shape=box, label="Lit:  "];
+n42 [shape=ellipse, label="preg_replace"];
+n43 [shape=box, label="RegExp: /\w\S*/"];
+n44 [shape=box, label="Lit: "];
+n45 [shape=box, label="Var: x"];
+n46 [shape=ellipse, label="str_replace_once"];
+n47 [shape=box, label="Lit:  And "];
+n48 [shape=box, label="Lit:  and "];
+n49 [shape=box, label="Var: x"];
+n50 [shape=box, label="Var: x"];
+n51 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n11 -> n5;
+n9 -> n10;
+n9 -> n11;
+n14 -> n9;
+n12 -> n13;
+n12 -> n14;
+n18 -> n12;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n34 -> n27;
+n31 -> n32;
+n31 -> n33;
+n31 -> n34;
+n37 -> n31;
+n35 -> n36;
+n35 -> n37;
+n39 -> n35;
+n38 -> n39;
+n40 -> n41;
+n40 -> n38;
+n45 -> n40;
+n42 -> n43;
+n42 -> n44;
+n42 -> n45;
+n49 -> n42;
+n46 -> n47;
+n46 -> n48;
+n46 -> n49;
+n50 -> n46;
+n51 -> n50;
+}

@@ -1,0 +1,122 @@
+// Finding: a9964702-2a5a-46a6-8afa-7b9100d1b691
+// Finding.url: https://www.example38.com/windows-and-user-productivity/mozilla-shrinks-survive-amid-declining-firefox-usage##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e51477364b064ef38bc7dcdc8f42c7ca')><!--/*
+// Finding.parentloc: https://www.example38.com/windows-and-user-productivity/mozilla-shrinks-survive-amid-declining-firefox-usage##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e51477364b064ef38bc7dcdc8f42c7ca')><!--/*
+// Finding.domain: www.example38.com
+// Finding.base_domain: example38.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: getIconStyle
+// Sanitizer.location: https://www.example38.com/sites/example38.com/files/advagg_js/js__ax5VN18vQmrA6FY5TS3SYpdt18hbOFOcJ4xQWmOYupM__u5DPG_1XVzH2mEpVHLnZmd2SNDS23bh-f60R6CO8vAg__dx85Ttf_A0Sq8VDZcItaBSSxlnEE8sGTynBc9WZgKg0.js - getIconStyle:546:91
+// Finding.begin: 1386
+// Finding.end: 1412
+// Finding.original_uuid: 1db087b5-c73a-43ab-aa86-f22a0a8c2326
+// Finding.TwentyFiveMillionFlowsId: 1156167988
+// Finding.script: https://www.example38.com/sites/example38.com/files/advagg_js/js__ax5VN18vQmrA6FY5TS3SYpdt18hbOFOcJ4xQWmOYupM__u5DPG_1XVzH2mEpVHLnZmd2SNDS23bh-f60R6CO8vAg__dx85Ttf_A0Sq8VDZcItaBSSxlnEE8sGTynBc9WZgKg0.js
+// Finding.line: 113
+// Exploit.uuid: e5147736-4b06-4ef3-8bc7-dcdc8f42c7ca
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: style
+// Exploit.quote_type: "
+// Exploit.tag: span
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 26
+// Exploit.replace_begin_url: 109
+// Exploit.replace_end_url: 109
+// Exploit.replace_begin_param: 1412
+// Exploit.replace_end_param: 1412
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1969477882
+// DepGraph.sanitizer_hash: 94419178
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="regex_exec"];
+n2 [shape=box, label="RegExp: /^.*?:\/\/[^\/]*/"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="regex_match"];
+n6 [shape=box, label="RegExp: /^.*?:\/\/[^\/]*/"];
+n7 [shape=box, label="Lit: 0"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: /sites/all/modules/contrib/ckeditor/ckeditor/"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: plugins/icons.png"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: ?t=JB9C"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /[']/"];
+n17 [shape=box, label="Lit: \'"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: background-image:url('"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: ');background-position:0 "];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: -24"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: px;background-size:"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: auto"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: ;"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n18 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n20;
+n19 -> n15;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n32 -> n31;
+}

@@ -1,0 +1,217 @@
+// Finding: b9efc9ad-7c1d-4566-baba-a3e6dd82c86c
+// Finding.url: https://example12.com/terms##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1ed83216ef0948a0937f7b486ce99cdc')><!--/*
+// Finding.parentloc: https://example12.com/terms##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1ed83216ef0948a0937f7b486ce99cdc')><!--/*
+// Finding.domain: example12.com
+// Finding.base_domain: example12.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 26
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 32671
+// Finding.end: 32677
+// Finding.original_uuid: 10ad016e-5639-483b-831e-0d8ac7ee1c05
+// Finding.TwentyFiveMillionFlowsId: -1175349165
+// Finding.script: https://example13.com/package/run_js/17a22aa6ad5fba0290417139214bcf1ede4631cc1609b894c3b6e6ecff4a0a3e/xfalse/x12
+// Finding.line: 5
+// Exploit.uuid: 1ed83216-ef09-48a0-937f-7b486ce99cdc
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: :
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 6
+// Exploit.replace_begin_url: 23
+// Exploit.replace_end_url: 23
+// Exploit.replace_begin_param: 23854
+// Exploit.replace_end_param: 23854
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 290004033
+// DepGraph.sanitizer_hash: 1073805964
+// Merged split and join statements 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /\\/"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: #"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: #"];
+n12 [shape=ellipse, label="trim"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="substr"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=box, label="Lit: 6"];
+n17 [shape=ellipse, label="substr"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Lit: 2"];
+n20 [shape=ellipse, label="substr"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=box, label="Lit: 0"];
+n23 [shape=box, label="Lit: 9"];
+n24 [shape=ellipse, label="strtolower"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: ."];
+n28 [shape=ellipse, label="preg_replace"];
+n29 [shape=box, label="RegExp: /[\x2E\u3002\uFF0E\uFF61]/"];
+n30 [shape=box, label="Lit: ."];
+n31 [shape=box, label="Var: x"];
+n32 [shape=ellipse, label="split"];
+n33 [shape=box, label="Lit: ."];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: ."];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: ."];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: //"];
+n41 [shape=ellipse, label="split"];
+n42 [shape=box, label="Lit: #"];
+n43 [shape=box, label="Var: x"];
+n44 [shape=ellipse, label="preg_replace"];
+n45 [shape=box, label="RegExp: /\\/"];
+n46 [shape=box, label="Lit: /"];
+n47 [shape=box, label="Var: x"];
+n48 [shape=ellipse, label="."];
+n49 [shape=box, label="Lit: #"];
+n50 [shape=ellipse, label="."];
+n51 [shape=box, label="Lit: #"];
+n52 [shape=ellipse, label="trim"];
+n53 [shape=box, label="Var: x"];
+n54 [shape=ellipse, label="substr"];
+n55 [shape=box, label="Var: x"];
+n56 [shape=box, label="Lit: 6"];
+n57 [shape=ellipse, label="substr"];
+n58 [shape=box, label="Var: x"];
+n59 [shape=box, label="Lit: 2"];
+n60 [shape=ellipse, label="substr"];
+n61 [shape=box, label="Var: x"];
+n62 [shape=box, label="Lit: 0"];
+n63 [shape=box, label="Lit: 9"];
+n64 [shape=ellipse, label="strtolower"];
+n65 [shape=box, label="Var: x"];
+n66 [shape=ellipse, label="."];
+n67 [shape=box, label="Lit: ."];
+n68 [shape=ellipse, label="preg_replace"];
+n69 [shape=box, label="RegExp: /[\x2E\u3002\uFF0E\uFF61]/"];
+n70 [shape=box, label="Lit: ."];
+n71 [shape=box, label="Var: x"];
+n72 [shape=ellipse, label="preg_replace"];
+n73 [shape=box, label="RegExp: /[.]/"];
+n74 [shape=box, label="Lit: ."];
+n75 [shape=box, label="Var: x"];
+n76 [shape=box, label="Var: x"];
+n77 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n9;
+n8 -> n4;
+n10 -> n8;
+n10 -> n11;
+n13 -> n10;
+n12 -> n13;
+n15 -> n12;
+n14 -> n15;
+n14 -> n16;
+n18 -> n14;
+n17 -> n18;
+n17 -> n19;
+n21 -> n17;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n25 -> n20;
+n24 -> n25;
+n26 -> n24;
+n26 -> n27;
+n31 -> n26;
+n28 -> n29;
+n28 -> n30;
+n28 -> n31;
+n34 -> n28;
+n32 -> n33;
+n32 -> n34;
+n35 -> n36;
+n35 -> n32;
+n37 -> n35;
+n37 -> n38;
+n39 -> n40;
+n39 -> n37;
+n43 -> n39;
+n41 -> n42;
+n41 -> n43;
+n47 -> n41;
+n44 -> n45;
+n44 -> n46;
+n44 -> n47;
+n48 -> n49;
+n48 -> n44;
+n50 -> n48;
+n50 -> n51;
+n53 -> n50;
+n52 -> n53;
+n55 -> n52;
+n54 -> n55;
+n54 -> n56;
+n58 -> n54;
+n57 -> n58;
+n57 -> n59;
+n61 -> n57;
+n60 -> n61;
+n60 -> n62;
+n60 -> n63;
+n65 -> n60;
+n64 -> n65;
+n66 -> n64;
+n66 -> n67;
+n71 -> n66;
+n68 -> n69;
+n68 -> n70;
+n68 -> n71;
+n75 -> n68;
+n72 -> n73;
+n72 -> n74;
+n72 -> n75;
+n76 -> n72;
+n77 -> n76;
+}

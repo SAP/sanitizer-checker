@@ -1,0 +1,4 @@
+while read p; do
+    echo "$p"
+    scp sanitizer:${p} .
+done < sanitizers.txt

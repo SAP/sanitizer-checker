@@ -1,0 +1,151 @@
+// Finding: 86d2e849-1d01-48ce-9d18-1e3c795b39f4
+// Finding.url: https://www.example132.com/brandlist/all/146##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c8089713e4b64311a25073cfb38f3a9f')><!--/*
+// Finding.parentloc: https://www.example132.com/brandlist/all/146##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c8089713e4b64311a25073cfb38f3a9f')><!--/*
+// Finding.domain: www.example132.com
+// Finding.base_domain: example132.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: In
+// Sanitizer.location: https://static.example133.com/j/jquery.plus.plugins.min.js?f8d44a0551bd7a26 - En:1:226330
+// Finding.begin: 463
+// Finding.end: 710
+// Finding.original_uuid: 3e26931b-5b81-4268-8774-2d35237a4503
+// Finding.TwentyFiveMillionFlowsId: -710973282
+// Finding.script: https://static.example133.com/j/jquery.plus.plugins.min.js?f8d44a0551bd7a26
+// Finding.line: 1
+// Exploit.uuid: c8089713-e4b6-4311-a250-73cfb38f3a9f
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 44
+// Exploit.replace_begin_url: 44
+// Exploit.replace_end_url: 44
+// Exploit.replace_begin_param: 519
+// Exploit.replace_end_param: 519
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1482051070
+// DepGraph.sanitizer_hash: -1425434911
+// Non Finite Regex with function on rhs:  replace(((\/>)|<\/(\w+)>|)(\s*)([#/]\d+(?:_|(\^)))`(\s*)(<\w+(?=[\s\/>]))?|\s*(?:(<\w+(?=[\s\/>]))|<\/(\w+)>(\s*)|(\/>)\s*|(>)|$)/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(>: 1,  : 1), function_rhs: true], 'function(e,t,n,i,o,r,a,s,l,c,u,d,f,p){var h,g,m="";return p?(y=0,e):(b=(l||c||"").toLowerCase(),i=i||u,n=n||f,L&&!n&&(!e||i||b||r&&!y)&&(L=void 0,O=ee.shift()),(i=i||n)&&(i=i.toLowerCase(),L=void(y=0),D&&(n||f?Zt[O]||/;svg;|;math;/.test(";"+ee.join(";")+";")||(h="'<"+O+".../"):Zt[i]?h="'</"+i:ee.length&&i===O||(h="Mismatch: '</"+i),h&&Te(h+">' in:\n"+v)),W=B,O=ee.shift(),B=Jt[O],u=u?"</"+u+">":"",W&&(G+=V,V="",B?G+="-":(m=u+Rt+"@"+G+Ft+(d||""),G=te.shift()))),B&&!y?(r?V+=r:t=u||f||"",b&&(t+=b,V&&(t+=" "+Tt+'="'+V+'"',V=""))):t=r?t+m+o+(y?"":Rt+r+Ft)+s+b:m||e,D&&a&&(y&&Te("{^{ within elem markup ("+y+' ). Use data-link="..."'),"#"===r.charAt(0)?ee.unshift(r.slice(1)):r.slice(1)!==(g=ee.shift())&&Te("Closing tag for {^{...}} under different elem: <"+g+">")),b&&(y=b,ee.unshift(O),O=b.slice(1),D&&ee[0]&&ee[0]===Gt[O]&&ke("Parent of <tr> must be <tbody>"),L=Zt[O],(B=Jt[O])&&!W&&(te.unshift(G),G=""),W=B,G&&B&&(G+="+")),t)}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(((\/>)|<\/(\w+)>|)(\s*)([#/]\d+(?:_|(\^)))`(\s*)(<\w+(?=[\s\/>]))?|\s*(?:(<\w+(?=[\s\/>]))|<\/(\w+)>(\s*)|(\/>)\s*|(>)|$)/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(>: 1,  : 1), function_rhs: true], 'function(e,t,n,i,o,r,a,s,l,c,u,d,f,p){var h,g,m="";return p?(y=0,e):(b=(l||c||"").toLowerCase(),i=i||u,n=n||f,L&&!n&&(!e||i||b||r&&!y)&&(L=void 0,O=ee.shift()),(i=i||n)&&(i=i.toLowerCase(),L=void(y=0),D&&(n||f?Zt[O]||/;svg;|;math;/.test(";"+ee.join(";")+";")||(h="'<"+O+".../"):Zt[i]?h="'</"+i:ee.length&&i===O||(h="Mismatch: '</"+i),h&&Te(h+">' in:\n"+v)),W=B,O=ee.shift(),B=Jt[O],u=u?"</"+u+">":"",W&&(G+=V,V="",B?G+="-":(m=u+Rt+"@"+G+Ft+(d||""),G=te.shift()))),B&&!y?(r?V+=r:t=u||f||"",b&&(t+=b,V&&(t+=" "+Tt+'="'+V+'"',V=""))):t=r?t+m+o+(y?"":Rt+r+Ft)+s+b:m||e,D&&a&&(y&&Te("{^{ within elem markup ("+y+' ). Use data-link="..."'),"#"===r.charAt(0)?ee.unshift(r.slice(1)):r.slice(1)!==(g=ee.shift())&&Te("Closing tag for {^{...}} under different elem: <"+g+">")),b&&(y=b,ee.unshift(O),O=b.slice(1),D&&ee[0]&&ee[0]===Gt[O]&&ke("Parent of <tr> must be <tbody>"),L=Zt[O],(B=Jt[O])&&!W&&(te.unshift(G),G=""),W=B,G&&B&&(G+="+")),t)}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: >"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: <script type="jsv#10_"></script>\n    <div class="navbar-pc__it....</script>\n        <div class="navbar-pc__item">\n            <a"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: \n                <span"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit:  class="navbar-pc__icon navbar-pc__icon--profile">"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: </span>\n                "];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: Войти\n            </a>\n        "];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: </div>\n    <script type="jsv/11_"></script>\n\n    <div"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit:  class="navbar-pc__item j-item-basket">"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: \n        <a"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit:  class="navbar-pc__link" href="/lk/basket">"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: \n            <span"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit:  class="navbar-pc__icon navbar-pc__icon--basket">"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: <script type="jsv#10^"></script>"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: <script type="jsv/10^"></script>"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: </span>\n            "];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: Корзина\n        </a>\n        "];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: <div"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit:  class="navbar-pc__tooltip tooltip-basket j-tooltip-basket">"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: </div>\n    "];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: </div>\n<script type="jsv/10_"></script>"];
+n41 [shape=ellipse, label="preg_replace"];
+n42 [shape=box, label="RegExp: /((\/>)|<\/(\w+)>|)(\s*)([#/]\d+(?:_|(\^)))`(\s*)(<\w+(?=[\s\/>]))?|\s*(?:(<\w+(?=[\s\/>]))|<\/(\w+)>(\s*)|(\/>)\s*|(>)|$)/"];
+n43 [shape=box, label="Lit: "];
+n44 [shape=box, label="Var: x"];
+n45 [shape=box, label="Var: x"];
+n46 [shape=doubleoctagon, label="Return: x"];
+n1 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n33 -> n31;
+n33 -> n34;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n44 -> n39;
+n41 -> n42;
+n41 -> n43;
+n41 -> n44;
+n45 -> n41;
+n46 -> n45;
+}

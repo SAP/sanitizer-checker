@@ -1,0 +1,99 @@
+// Finding: 9fdf7e41-ae4d-472e-8e94-080f6da12a63
+// Finding.url: https://www.example90.com/events/#!view/event/event_id/270586"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('fcfd12efdd2340dd89b6cbba541cb09f')><!--/*
+// Finding.parentloc: https://www.example90.com/events/#!view/event/event_id/270586"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('fcfd12efdd2340dd89b6cbba541cb09f')><!--/*
+// Finding.domain: www.example90.com
+// Finding.base_domain: example90.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: parseUrlArgString
+// Sanitizer.location: https://lwcal.example90.com/live/resource/js/%5Clivewhale%5Cthirdparty%5Cjquery%5Cjquery.browser.js/%5Clivewhale%5Cthirdparty%5Cjquery%5Cjquery.fitvids.js/%5Clivewhale%5Cthirdparty%5Cjqueryui%5Cjquery-ui.widget.js/%5Clivewhale%5Cthirdparty%5Cimagesloaded.js/%5Clivewhale%5Cscripts%5Clwui%5Cjquery.lw-overlay.js/%5Clivewhale%5Cscripts%5Clwui%5Cjquery.lw-slideshow.js/%5Clivewhale%5Cscripts%5Clwui%5Cjquery.lw-hoverbox.js/%5Clivewhale%5Cscripts%5Ccommon.js/%5Clivewhale%5Ctheme%5Ccore%5Cscripts%5Cfrontend.js/%5Clivewhale%5Cthirdparty%5Clodash.min.js/%5Clivewhale%5Cplugins%5Cjquery%5Cjquery.lwGoogleMapsEmbed.js/%5Clivewhale%5Cthirdparty%5Cjquery%5Cjquery.hashchange.min.js/%5Clivewhale%5Ctheme%5Ccore%5Cscripts%5Cpayments.js/%5Clivewhale%5Ctheme%5Ccore%5Cscripts%5Ccalendar.js/%5C_ingredients%5Cthemes%5Ccalendar-bootstrap%5Cscripts%5Ccalendar-custom.js?cache=300 - parseHash:67:13972
+// Finding.begin: 3
+// Finding.end: 11
+// Finding.original_uuid: a652332d-e928-4675-8dba-985e5129cde9
+// Finding.TwentyFiveMillionFlowsId: -154122082
+// Finding.script: https://www.example90.com/assets/public/scu.js
+// Finding.line: 9357
+// Exploit.uuid: fcfd12ef-dd23-40dd-89b6-cbba541cb09f
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: 270586"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: 270586"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 49
+// Exploit.end_taint_url: 55
+// Exploit.replace_begin_url: 49
+// Exploit.replace_end_url: 55
+// Exploit.replace_begin_param: 1283
+// Exploit.replace_end_param: 1289
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1835271931
+// DepGraph.sanitizer_hash: 927955723
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: /"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="decodeURIComponent"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=ellipse, label="."];
+n7 [shape=box, label="Lit: &lt;"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /[<]/"];
+n10 [shape=box, label="Lit: &lt;"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="."];
+n13 [shape=box, label="Lit: &gt;"];
+n14 [shape=ellipse, label="preg_replace"];
+n15 [shape=box, label="RegExp: /[>]/"];
+n16 [shape=box, label="Lit: &gt;"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n6 -> n4;
+n6 -> n7;
+n11 -> n6;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n12 -> n8;
+n12 -> n13;
+n17 -> n12;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n18 -> n14;
+n19 -> n18;
+}

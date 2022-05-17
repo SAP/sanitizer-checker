@@ -1,0 +1,133 @@
+// Finding: d6ad0f72-ff6a-42a3-9f5c-517bbc9c12d8
+// Finding.url: https://maps.example2.com/?trafficLayer=&map=%27%3BtaintfoxLog%28%27fceb3af395394a108afeb86aa7349472%27%29%2F%2F&from=probki
+// Finding.parentloc: https://maps.example2.com/?trafficLayer=&map=%27%3BtaintfoxLog%28%27fceb3af395394a108afeb86aa7349472%27%29%2F%2F&from=probki
+// Finding.domain: maps.example2.com
+// Finding.base_domain: example2.com
+// Finding.source: location.search
+// Finding.sink: eval
+// Sanitizer.score: 239
+// Sanitizer.name: parse_str
+// Sanitizer.location: https://maps.example2.com/static/js/min/public.js?14b4687 - g:151:4868
+// Finding.begin: 32
+// Finding.end: 33
+// Finding.original_uuid: 0428d59d-4999-4cc0-acb4-fcfc6d2f2987
+// Finding.TwentyFiveMillionFlowsId: -1142856077
+// Finding.script: https://maps.example2.com/static/js/min/public.js?14b4687
+// Finding.line: 149
+// Exploit.uuid: fceb3af3-9539-4a10-8afe-b86aa7349472
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: yandex
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: ';
+// Exploit.break_in: //
+// Exploit.payload: ';taintfoxLog(1)//
+// Exploit.begin_taint_url: 38
+// Exploit.end_taint_url: 44
+// Exploit.replace_begin_url: 38
+// Exploit.replace_end_url: 44
+// Exploit.replace_begin_param: 16
+// Exploit.replace_end_param: 22
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1467104734
+// DepGraph.sanitizer_hash: 439245608
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="regex_exec"];
+n2 [shape=box, label="RegExp: /^&?([\s\S]*?)&?$/"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="RegExp: /^&?([\s\S]*?)&?$/"];
+n7 [shape=box, label="Lit: $1"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="split"];
+n10 [shape=box, label="Lit: &"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="split"];
+n13 [shape=box, label="Lit: ="];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="decodeURIComponent"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="decodeURIComponent"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="regex_exec"];
+n20 [shape=box, label="RegExp: /([\\"'])/"];
+n21 [shape=box, label="Lit: 1"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /([\\"'])/"];
+n25 [shape=box, label="Lit: \$1"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: /\n/"];
+n29 [shape=box, label="Lit: \n"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="preg_replace"];
+n32 [shape=box, label="RegExp: /\r/"];
+n33 [shape=box, label="Lit: \r"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=box, label="Var: x"];
+n36 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n11 -> n5;
+n9 -> n10;
+n9 -> n11;
+n14 -> n9;
+n12 -> n13;
+n12 -> n14;
+n16 -> n12;
+n15 -> n16;
+n18 -> n15;
+n17 -> n18;
+n22 -> n17;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n34 -> n27;
+n31 -> n32;
+n31 -> n33;
+n31 -> n34;
+n35 -> n31;
+n36 -> n35;
+}

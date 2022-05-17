@@ -1,0 +1,83 @@
+// Finding: b47eaad9-c950-424b-b37b-44b902e12304
+// Finding.url: https://www.example343.com/weather/2643743?day=0"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('2f350d9eca654ee78f8a5c39cf1e329f')><!--/*
+// Finding.parentloc: https://www.example343.com/weather/2643743?day=0"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('2f350d9eca654ee78f8a5c39cf1e329f')><!--/*
+// Finding.domain: www.example343.com
+// Finding.base_domain: example343.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 8
+// Sanitizer.name: s
+// Sanitizer.location: https://weather.files.example344.com/weather-web-lambda-masthead-renderer/73/js/search.js - s:42:18036
+// Finding.begin: 1077
+// Finding.end: 1088
+// Finding.original_uuid: 1e200e75-fc93-444b-bc65-8080feac27e2
+// Finding.TwentyFiveMillionFlowsId: -941712335
+// Finding.script: https://weather.files.example344.com/weather-web-lambda-masthead-renderer/73/js/search.js
+// Finding.line: 43
+// Exploit.uuid: 2f350d9e-ca65-4ee7-8f8a-5c39cf1e329f
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: 0"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: 0"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 40
+// Exploit.end_taint_url: 41
+// Exploit.replace_begin_url: 40
+// Exploit.replace_end_url: 41
+// Exploit.replace_begin_param: 751
+// Exploit.replace_end_param: 752
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 648310864
+// DepGraph.sanitizer_hash: 1700317806
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>"'`=\/]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, =: 1), function_rhs: true], 'function(e){return _[e]}') - Other Exception: ReferenceError: _ is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURI"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &#x3D;"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[&<>"'`=\/]/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n1;
+n3 -> n4;
+n8 -> n3;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

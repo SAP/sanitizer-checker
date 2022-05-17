@@ -1,0 +1,153 @@
+// Finding: 7639ef67-5b0f-4d97-9da8-7ad44a0b9c8b
+// Finding.url: http://www.example201.com/finance/inc/yimeng_hangqing.htm##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('3d82892bd9ed4ef88ddc4e4183b976e9')</script><!--/*
+// Finding.parentloc: http://www.example201.com/finance/inc/yimeng_hangqing.htm##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('3d82892bd9ed4ef88ddc4e4183b976e9')</script><!--/*
+// Finding.domain: www.example201.com
+// Finding.base_domain: example201.com
+// Finding.source: document.documentURI
+// Finding.sink: document.write
+// Sanitizer.score: 3
+// Sanitizer.name: lz_encode
+// Sanitizer.location: http://www.example201.com/finance/js/tongji.js - lz_main:456:7
+// Finding.begin: 313
+// Finding.end: 316
+// Finding.original_uuid: 856cb544-30df-4eb6-8f2e-2457b61fb332
+// Finding.TwentyFiveMillionFlowsId: -1604532771
+// Finding.script: http://www.example201.com/finance/js/tongji.js
+// Finding.line: 544
+// Exploit.uuid: 3d82892b-d9ed-4ef8-8ddc-4e4183b976e9
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: img
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 1
+// Exploit.replace_begin_url: 55
+// Exploit.replace_end_url: 55
+// Exploit.replace_begin_param: 231
+// Exploit.replace_end_param: 231
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1179468064
+// DepGraph.sanitizer_hash: -1727778380
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="char_at"];
+n2 [shape=box, label="Lit: 101"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="escape"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n6 -> n4;
+n7 -> n6;
+}

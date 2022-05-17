@@ -1,0 +1,109 @@
+// Finding: 301b70a9-9137-4a15-a3da-1e3a266884e6
+// Finding.url: https://platform.example402.com/v1/follow_button.html?button_type=1&tumblelog=s</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('459a611b658343d295f57451b5a1b657')><!--/*&color_scheme=light
+// Finding.parentloc: https://platform.example402.com/v1/follow_button.html?button_type=1&tumblelog=s</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('459a611b658343d295f57451b5a1b657')><!--/*&color_scheme=light
+// Finding.domain: platform.example402.com
+// Finding.base_domain: example402.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: l
+// Sanitizer.location: https://platform.example402.com/v1/follow_button.html?button_type=1&tumblelog=s</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('459a611b658343d295f57451b5a1b657')><!--/*&color_scheme=light - h:32:477
+// Finding.begin: 110
+// Finding.end: 116
+// Finding.original_uuid: 42b6423a-8ff0-4236-beea-52cb7afb0228
+// Finding.TwentyFiveMillionFlowsId: -306432830
+// Finding.script: https://platform.example402.com/v1/follow_button.html?button_type=1&tumblelog=s</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('459a611b658343d295f57451b5a1b657')><!--/*&color_scheme=light
+// Finding.line: 32
+// Exploit.uuid: 459a611b-6583-43d2-95f5-7451b5a1b657
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: s
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: s</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: s</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 74
+// Exploit.end_taint_url: 82
+// Exploit.replace_begin_url: 74
+// Exploit.replace_end_url: 82
+// Exploit.replace_begin_param: 46
+// Exploit.replace_end_param: 54
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -818744130
+// DepGraph.sanitizer_hash: 881856075
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[&]/"];
+n3 [shape=box, label="Lit: &"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &lt;"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /[<]/"];
+n9 [shape=box, label="Lit: &lt;"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: &gt;"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[>]/"];
+n15 [shape=box, label="Lit: &gt;"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /["]/"];
+n19 [shape=box, label="Lit: &quot;"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n5 -> n6;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n11 -> n7;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n22 -> n21;
+}

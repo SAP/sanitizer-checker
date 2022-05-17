@@ -1,0 +1,202 @@
+// Finding: 771d20ef-fcb5-433a-95c4-91f1b2d5b31f
+// Finding.url: https://www.example19.com/en/member-center/join-the-ada?utm_source=adaorg&utm_medium=fbhome##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b63c15c3b56b4207a817ff87a4b63446')><!--/*
+// Finding.parentloc: https://www.example19.com/en/member-center/join-the-ada?utm_source=adaorg&utm_medium=fbhome##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b63c15c3b56b4207a817ff87a4b63446')><!--/*
+// Finding.domain: www.example19.com
+// Finding.base_domain: example19.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 6
+// Sanitizer.name: b
+// Sanitizer.location: https://cdn.example20.com/be_ixf_js_sdk.js - b:1:17139
+// Finding.begin: 574
+// Finding.end: 577
+// Finding.original_uuid: c20e3def-1e92-4a83-be4a-cd21f49881f6
+// Finding.TwentyFiveMillionFlowsId: -1258056350
+// Finding.script: https://cdn.example20.com/be_ixf_js_sdk.js
+// Finding.line: 1
+// Exploit.uuid: b63c15c3-b56b-4207-a817-ff87a4b63446
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: content
+// Exploit.quote_type: "
+// Exploit.tag: meta
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 6
+// Exploit.replace_begin_url: 85
+// Exploit.replace_end_url: 85
+// Exploit.replace_begin_param: 388
+// Exploit.replace_end_param: 388
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1343138207
+// DepGraph.sanitizer_hash: -993844943
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: ?"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /\\/"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: ?"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: ?"];
+n12 [shape=ellipse, label="preg_replace"];
+n13 [shape=box, label="RegExp: /^\s+|\s+$/"];
+n14 [shape=box, label="Lit: "];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="substr"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=box, label="Lit: 6"];
+n19 [shape=ellipse, label="substr"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=box, label="Lit: 2"];
+n22 [shape=ellipse, label="substr"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=box, label="Lit: 0"];
+n25 [shape=box, label="Lit: 11"];
+n26 [shape=ellipse, label="strtolower"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit: ."];
+n30 [shape=ellipse, label="preg_replace"];
+n31 [shape=box, label="RegExp: /[\x2E\u3002\uFF0E\uFF61]/"];
+n32 [shape=box, label="Lit: ."];
+n33 [shape=box, label="Var: x"];
+n34 [shape=ellipse, label="split"];
+n35 [shape=box, label="Lit: ."];
+n36 [shape=box, label="Var: x"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: ."];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: ."];
+n41 [shape=ellipse, label="preg_replace"];
+n42 [shape=box, label="RegExp: /[&]/"];
+n43 [shape=box, label="Lit: &amp;"];
+n44 [shape=box, label="Var: x"];
+n45 [shape=ellipse, label="preg_replace"];
+n46 [shape=box, label="RegExp: /[<]/"];
+n47 [shape=box, label="Lit: &lt;"];
+n48 [shape=box, label="Var: x"];
+n49 [shape=ellipse, label="preg_replace"];
+n50 [shape=box, label="RegExp: /[>]/"];
+n51 [shape=box, label="Lit: &gt;"];
+n52 [shape=box, label="Var: x"];
+n53 [shape=ellipse, label="preg_replace"];
+n54 [shape=box, label="RegExp: /["]/"];
+n55 [shape=box, label="Lit: &quot;"];
+n56 [shape=box, label="Var: x"];
+n57 [shape=ellipse, label="."];
+n58 [shape=box, label="Lit: \n<meta name="be:norm_url" content=""];
+n59 [shape=ellipse, label="."];
+n60 [shape=box, label="Lit: " />"];
+n61 [shape=ellipse, label="."];
+n62 [shape=box, label="Lit: \n<meta name="be:capsule_url" content="https://ixf2-api.example20.com/api/ixf/1.0.0/get_capsule/f00000000181018/02132683701" />"];
+n63 [shape=ellipse, label="."];
+n64 [shape=box, label="Lit: \n<meta name="be:api_dt" content="py_2021; pm_04; pd_21; ph_18; pmh_11; p_epoch:1619053913437" />"];
+n65 [shape=ellipse, label="."];
+n66 [shape=box, label="Lit: \n<meta name="be:mod_dt" content="py_2021; pm_04; pd_21; ph_18; pmh_11; p_epoch:1619053913437" />"];
+n67 [shape=ellipse, label="."];
+n68 [shape=box, label="Lit: \n<meta name="be:messages" content="true" />"];
+n69 [shape=box, label="Var: x"];
+n70 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n9;
+n8 -> n4;
+n10 -> n8;
+n10 -> n11;
+n15 -> n10;
+n12 -> n13;
+n12 -> n14;
+n12 -> n15;
+n17 -> n12;
+n16 -> n17;
+n16 -> n18;
+n20 -> n16;
+n19 -> n20;
+n19 -> n21;
+n23 -> n19;
+n22 -> n23;
+n22 -> n24;
+n22 -> n25;
+n27 -> n22;
+n26 -> n27;
+n28 -> n26;
+n28 -> n29;
+n33 -> n28;
+n30 -> n31;
+n30 -> n32;
+n30 -> n33;
+n36 -> n30;
+n34 -> n35;
+n34 -> n36;
+n37 -> n38;
+n37 -> n34;
+n39 -> n37;
+n39 -> n40;
+n44 -> n39;
+n41 -> n42;
+n41 -> n43;
+n41 -> n44;
+n48 -> n41;
+n45 -> n46;
+n45 -> n47;
+n45 -> n48;
+n52 -> n45;
+n49 -> n50;
+n49 -> n51;
+n49 -> n52;
+n56 -> n49;
+n53 -> n54;
+n53 -> n55;
+n53 -> n56;
+n57 -> n58;
+n57 -> n53;
+n59 -> n57;
+n59 -> n60;
+n61 -> n59;
+n61 -> n62;
+n63 -> n61;
+n63 -> n64;
+n65 -> n63;
+n65 -> n66;
+n67 -> n65;
+n67 -> n68;
+n69 -> n67;
+n70 -> n69;
+}

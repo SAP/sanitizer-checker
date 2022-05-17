@@ -1,0 +1,103 @@
+// Finding: 38ce9e0e-363a-408b-919f-fd3d3eb401fc
+// Finding.url: https://www.example443.com/v/1651087/
+// Finding.parentloc: https://www.example443.com/v/1651087/#%23%22%3E%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src=x%20onerror=taintfoxLog('66b17ace20464d298dcfb91cc305fdd7')%3E%3C!--%2F*
+// Finding.domain: www.example443.com
+// Finding.base_domain: example443.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 24
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 257
+// Finding.end: 260
+// Finding.original_uuid: 52e0afab-d711-4aef-bb11-a420be295692
+// Finding.TwentyFiveMillionFlowsId: 1492195432
+// Finding.script: https://lab3.example444.com/ads_banner.php?usid=36&caid=311&id=4619&code=slrysbjuprhfthf&r=https://adclick.g.doubleclick.net/pcs/click%3Fxai%3DAKAOjstdn8Xyv1ZjaBjxgejFAQjkfR_-D5Zn1edTUiQ38sCOcfvWuUxFwloCvZuE1fV_H7zh_K8WbiQD2IbFVPA1HbwReTd0Jp1s3RefKAgv9XMO2KXt1H0vFjbHf3s-5eeNjf4IYYwofYNo5oPMX7NqCnKwTtInugNdv3OFBsUkf9kkeEOM2_8Ews5bg2B4h_oTsA6l4mIdFi9M57WOQh8Hz3-OZhWJzzIFdex669SxUktZnE_CPfmMqg0bUyrUtimgmJcheHZO4Og1_MAy6GXjP0yz6ommM898hXen9XAABhiWC9tPwXXSQ8yYX_DsFp0YKuPcQAnuxEZBhrPsATOH20J5nfGpMLsaQWJSifoM1GrgyyO1aJiw9w6kFa6sdeQ%26sai%3DAMfl-YQSVHJ9_SzIsTXNcSZby18GeDQLWB_QaokJXBO98LrcMRKj_XWApAVakotDgk3oj-ylxtjh-KDaXFEgSEJQl1nlLj-_4EbnVD-yk3-DL_ckvlL-oKDF75LvICSHSQ4r%26sig%3DCg0ArKJSzBLr6OLx45jnEAE%26fbs_aeid%3D%5Bgw_fbsaeid%5D%26urlfix%3D1%26adurl%3D&ord=88245912&awxparam=landingpage::,utm_source::,utm_medium::,utm_campaign::
+// Finding.line: 1
+// Exploit.uuid: 66b17ace-2046-4d29-8dcf-b91cc305fdd7
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 29
+// Exploit.replace_begin_url: 29
+// Exploit.replace_end_url: 29
+// Exploit.replace_begin_param: 111
+// Exploit.replace_end_param: 111
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -729869893
+// DepGraph.sanitizer_hash: 2039088015
+// Merged split and join statements 
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /%27/"];
+n3 [shape=box, label="Lit: '"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="substr"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Lit: 0"];
+n8 [shape=box, label="Lit: 18"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: /"];
+n11 [shape=ellipse, label="substr"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Lit: 0"];
+n14 [shape=box, label="Lit: 19"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: v/1651087/#%23%22%3E%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%....r=taintfoxLog('66b17ace20464d298dcfb91cc305fdd7')%3E%3C!--%2F*"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[.]/"];
+n19 [shape=box, label="Lit: ."];
+n20 [shape=box, label="Var: x"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n9 -> n10;
+n12 -> n9;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n15 -> n11;
+n15 -> n16;
+n20 -> n15;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n22 -> n21;
+}

@@ -1,0 +1,117 @@
+// Finding: 58a12f94-c65f-4139-9016-cc7510877607
+// Finding.url: https://www.example109.com/community/discussion-forum##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3aa8f29e58f542b5ac88d0b112c25c11')><!--/*
+// Finding.parentloc: https://www.example109.com/community/discussion-forum##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3aa8f29e58f542b5ac88d0b112c25c11')><!--/*
+// Finding.domain: www.example109.com
+// Finding.base_domain: example109.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 7
+// Sanitizer.name: trim
+// Sanitizer.location: https://www.example109.com/Community/utility/jquery/jquery.min.js?_=636760735080000000 - trim:2:2991
+// Finding.begin: 250
+// Finding.end: 256
+// Finding.original_uuid: 4c4404f5-9837-4087-9efe-59b9ac72c837
+// Finding.TwentyFiveMillionFlowsId: -1314551803
+// Finding.script: https://www.example109.com/Community/utility/jquery/jquery.min.js?_=636760735080000000
+// Finding.line: 3
+// Exploit.uuid: 3aa8f29e-58f5-42b5-ac88-d0b112c25c11
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 49
+// Exploit.replace_begin_url: 49
+// Exploit.replace_end_url: 49
+// Exploit.replace_begin_param: 158
+// Exploit.replace_end_param: 158
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 413520375
+// DepGraph.sanitizer_hash: -67387383
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace((&|<|>|"|'|`)/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1), function_rhs: true], 'function(a){return e[a]}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace((&|<|>|"|'|`)/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1), function_rhs: true], 'function(a){return e[a]}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: "];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: "];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &gt;"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &lt;"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: &lt;"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: &lt;"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /(&|<|>|"|'|`)/"];
+n15 [shape=box, label="Lit: "];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: "];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: "];
+n21 [shape=ellipse, label="preg_replace"];
+n22 [shape=box, label="RegExp: /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/"];
+n23 [shape=box, label="Lit: "];
+n24 [shape=box, label="Var: x"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=doubleoctagon, label="Return: x"];
+n1 -> n2;
+n1 -> n0;
+n3 -> n1;
+n3 -> n4;
+n5 -> n3;
+n5 -> n6;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n17 -> n18;
+n17 -> n13;
+n19 -> n17;
+n19 -> n20;
+n24 -> n19;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n25 -> n21;
+n26 -> n25;
+}

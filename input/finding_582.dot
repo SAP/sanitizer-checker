@@ -1,0 +1,110 @@
+// Finding: 71236903-3ce3-47af-a081-92359408476e
+// Finding.url: https://www.example370.com/#?.example370.com%252F%2523%253Fclick%253Dstore_index_dh_mycenter_out%2526click%253Dclick_store_index_dh_mycenter_out"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3263c6cf4c2142e6b626b22f768ea5f6')><!--/*
+// Finding.parentloc: https://www.example370.com/#?.example370.com%252F%2523%253Fclick%253Dstore_index_dh_mycenter_out%2526click%253Dclick_store_index_dh_mycenter_out"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3263c6cf4c2142e6b626b22f768ea5f6')><!--/*
+// Finding.domain: www.example370.com
+// Finding.base_domain: example370.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: renderSite
+// Sanitizer.location: https://www.example370.com/#?.example370.com%252F%2523%253Fclick%253Dstore_index_dh_mycenter_out%2526click%253Dclick_store_index_dh_mycenter_out"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3263c6cf4c2142e6b626b22f768ea5f6')><!--/* - renderSite:138:1040
+// Finding.begin: 4944
+// Finding.end: 5367
+// Finding.original_uuid: 46afb052-5bf9-4665-bdaa-0dd957a4d2b9
+// Finding.TwentyFiveMillionFlowsId: -10972327
+// Finding.script: https://www.example370.com/#?.example370.com%252F%2523%253Fclick%253Dstore_index_dh_mycenter_out%2526click%253Dclick_store_index_dh_mycenter_out"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3263c6cf4c2142e6b626b22f768ea5f6')><!--/*
+// Finding.line: 138
+// Exploit.uuid: 3263c6cf-4c21-42e6-b626-b22f768ea5f6
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: .example370.com%252F%2523%253Fclick%253Dstore_index_dh_mycenter_out%2526click%253Dclick_store_index_dh_mycenter_out"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: .example370.com%252F%2523%253Fclick%253Dstore_index_dh_mycenter_out%2526click%253Dclick_store_index_dh_mycenter_out"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 97
+// Exploit.replace_begin_url: 24
+// Exploit.replace_end_url: 97
+// Exploit.replace_begin_param: 4967
+// Exploit.replace_end_param: 5077
+// Issues.LargestEncodeAttrStringChain: 9
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1853674968
+// DepGraph.sanitizer_hash: 441382757
+// Large chain of EncodeAttrString Operations (9) 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: http://meizu"];
+n3 [shape=box, label="Lit: http://www.meizu"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="encodeURIComponent"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="encodeURIComponent"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: https://login.flyme.cn/vCodeLogin?useruri=http%3A%2F%2Fstore.example370.com%2Fmember%2Flogin.htm?useruri="];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: &sid=unionlogin&service=store&autodirct=true"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: &"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: click=store_index_dh_mycenter_login"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: &"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: click=click_store_index_dh_mycenter_login"];
+n21 [shape=ellipse, label="encodeAttrString"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: <div data-link="hd1" id="meizu-header-sub-hd1" class="meizu-he....fACDE85H10zLMNOPywSTUVrXnlkbjiu9.png" alt=""/></a></div></div>"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n8 -> n5;
+n7 -> n8;
+n9 -> n10;
+n9 -> n7;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n22 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n26 -> n25;
+}

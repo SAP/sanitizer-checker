@@ -1,0 +1,135 @@
+// Finding: 14b5baae-a311-4607-a386-e8a30964e4bd
+// Finding.url: https://scores.example325.com/score_ticker_lt/index.html?sports=NHL|EPL|MLB|NBA|NASCAR|golf"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('22caab59f118443d930f8fbbeef14786')><!--/*
+// Finding.parentloc: https://scores.example325.com/score_ticker_lt/index.html?sports=NHL|EPL|MLB|NBA|NASCAR|golf"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('22caab59f118443d930f8fbbeef14786')><!--/*
+// Finding.domain: scores.example325.com
+// Finding.base_domain: example325.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: SHS.Ticker/this.loadSportsData
+// Sanitizer.location: https://scores.example325.com/score_ticker_lt/scripts/nbc.js - SHS.Ticker/this.loadSportsData:109:31
+// Finding.begin: 192
+// Finding.end: 195
+// Finding.original_uuid: dbc98fc3-f114-44ba-b353-a20bc240fe35
+// Finding.TwentyFiveMillionFlowsId: -579019056
+// Finding.script: https://example184.com/ajax/libs/jquery/1.7.1/jquery.min.js
+// Finding.line: 4
+// Exploit.uuid: 22caab59-f118-443d-930f-8fbbeef14786
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: class
+// Exploit.quote_type: "
+// Exploit.tag: li
+// Exploit.break_out: golf"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: golf"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 86
+// Exploit.end_taint_url: 90
+// Exploit.replace_begin_url: 86
+// Exploit.replace_end_url: 90
+// Exploit.replace_begin_param: 310
+// Exploit.replace_end_param: 314
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1434201300
+// DepGraph.sanitizer_hash: 995704877
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="regex_exec"];
+n2 [shape=box, label="RegExp: /[?&]sports=([^(&<>)]*)/"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="regex_match"];
+n6 [shape=box, label="RegExp: /[?&]sports=([^(&<>)]*)/"];
+n7 [shape=box, label="Lit: 1"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="decodeURIComponent"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: %7C"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[|,]/"];
+n15 [shape=box, label="Lit: %7C"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="split"];
+n18 [shape=box, label="Lit: %7C"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="preg_replace"];
+n21 [shape=box, label="RegExp: /\s/"];
+n22 [shape=box, label="Lit: "];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="strtolower"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit:  si-sports">"];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit: </li>"];
+n30 [shape=ellipse, label="preg_replace"];
+n31 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n32 [shape=box, label="Lit: <$1></$2>"];
+n33 [shape=box, label="Var: x"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n19 -> n13;
+n17 -> n18;
+n17 -> n19;
+n23 -> n17;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n25 -> n20;
+n24 -> n25;
+n26 -> n24;
+n26 -> n27;
+n28 -> n26;
+n28 -> n29;
+n33 -> n28;
+n30 -> n31;
+n30 -> n32;
+n30 -> n33;
+n34 -> n30;
+n35 -> n34;
+}

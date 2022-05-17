@@ -1,0 +1,261 @@
+// Finding: d199c681-4fca-4d1b-9cd8-4014f3287827
+// Finding.url: https://context.example224.com/translation/mobile-app/?utm_source=reversoweb&utm_medium=button&utm_campaign=homepage##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3e095034199845db80c80996f2eed703')><!--/*
+// Finding.parentloc: https://context.example224.com/translation/mobile-app/?utm_source=reversoweb&utm_medium=button&utm_campaign=homepage##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3e095034199845db80c80996f2eed703')><!--/*
+// Finding.domain: context.example224.com
+// Finding.base_domain: example224.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 7
+// Sanitizer.name: Rt
+// Sanitizer.location: https://fast.example7.com/client/2104/30085456/min/v1_gs_lib.js - Rt:2:20896
+// Finding.begin: 13619
+// Finding.end: 13658
+// Finding.original_uuid: 3078b727-7fbf-4657-b878-0220d49fb480
+// Finding.TwentyFiveMillionFlowsId: -840737465
+// Finding.script: https://fast.example7.com/client/2104/30085456/min/v1_gs_lib.js
+// Finding.line: 2
+// Exploit.uuid: 3e095034-1998-45db-80c8-0996f2eed703
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 27
+// Exploit.replace_begin_url: 113
+// Exploit.replace_end_url: 113
+// Exploit.replace_begin_param: 339
+// Exploit.replace_end_param: 339
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: true
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1452679306
+// DepGraph.sanitizer_hash: -151581453
+// Removed NOP replaces 
+// Part of the URL ('##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3e095034199845db80c80996f2eed703')><!--/*') found in left hand side of replace 
+// Part of the URL ('/translation/mobile-app/?utm_source=reversoweb&utm_medium=button&utm_campaign=homepage##') found in left hand side of replace 
+// Approximated Implementation for: replace([!'()*~]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(': 1, *: 1, (: 1, ): 1), function_rhs: true], 'function escape() {    [native code]}') - Other Exception: SyntaxError: Unexpected identifier 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: ##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3e095034199845db80c80996f2eed703')><!--/*"];
+n3 [shape=box, label="Lit: ##"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: /translation/mobile-app/?utm_source=reversoweb&utm_medium=button&utm_campaign=homepage##"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: ##"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="decodeURIComponent"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /\u00AD/"];
+n17 [shape=box, label="Lit: %C2%AD"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="str_replace_once"];
+n20 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n21 [shape=box, label="Lit: "];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="str_replace_once"];
+n24 [shape=box, label="Lit: &"];
+n25 [shape=box, label="Lit: ?"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="str_replace_once"];
+n28 [shape=box, label="RegExp: /#$/"];
+n29 [shape=box, label="Lit: "];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: /translation/mobile-app/?utm_campaign=homepage"];
+n33 [shape=ellipse, label="decodeURIComponent"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="preg_replace"];
+n36 [shape=box, label="RegExp: /\u00AD/"];
+n37 [shape=box, label="Lit: %C2%AD"];
+n38 [shape=box, label="Var: x"];
+n39 [shape=ellipse, label="str_replace_once"];
+n40 [shape=box, label="Lit: ?"];
+n41 [shape=box, label="Lit: &"];
+n42 [shape=box, label="Var: x"];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit: &"];
+n45 [shape=ellipse, label="str_replace_once"];
+n46 [shape=box, label="Lit: &utm_campaign=homepage&"];
+n47 [shape=box, label="Lit: &"];
+n48 [shape=box, label="Var: x"];
+n49 [shape=ellipse, label="str_replace_once"];
+n50 [shape=box, label="Lit: &utm_campaign&"];
+n51 [shape=box, label="Lit: &"];
+n52 [shape=box, label="Var: x"];
+n53 [shape=ellipse, label="substr"];
+n54 [shape=box, label="Var: x"];
+n55 [shape=box, label="Lit: 0"];
+n56 [shape=box, label="Lit: -1"];
+n57 [shape=ellipse, label="str_replace_once"];
+n58 [shape=box, label="Lit: &"];
+n59 [shape=box, label="Lit: ?"];
+n60 [shape=box, label="Var: x"];
+n61 [shape=ellipse, label="str_replace_once"];
+n62 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n63 [shape=box, label="Lit: "];
+n64 [shape=box, label="Var: x"];
+n65 [shape=ellipse, label="str_replace_once"];
+n66 [shape=box, label="Lit: &"];
+n67 [shape=box, label="Lit: ?"];
+n68 [shape=box, label="Var: x"];
+n69 [shape=ellipse, label="."];
+n70 [shape=box, label="Lit: ?"];
+n71 [shape=ellipse, label="."];
+n72 [shape=box, label="Lit: fb_ref="];
+n73 [shape=ellipse, label="."];
+n74 [shape=box, label="Lit: 0zyiYHmtTF"];
+n75 [shape=ellipse, label="."];
+n76 [shape=box, label="Lit: -"];
+n77 [shape=ellipse, label="."];
+n78 [shape=box, label="Lit: S"];
+n79 [shape=ellipse, label="."];
+n80 [shape=box, label="Lit: lack"];
+n81 [shape=ellipse, label="."];
+n82 [shape=box, label="Lit: &utm_source=Slack&utm_medium=ShareButton&utm_campaign=GetSocial"];
+n83 [shape=ellipse, label="encodeURIComponent"];
+n84 [shape=box, label="Var: x"];
+n85 [shape=ellipse, label="."];
+n86 [shape=box, label="Lit: https://api.at.getsocial.io/oauth/slack/callback?shareURL="];
+n87 [shape=ellipse, label="."];
+n88 [shape=box, label="Lit: &shareTitle="];
+n89 [shape=ellipse, label="."];
+n90 [shape=box, label="Lit: Reverso%20Context%20%7C%20Reverso%20translation%20app%20for%20iOS%20and%20Android%2C%20mobile%20translator"];
+n91 [shape=ellipse, label="preg_replace"];
+n92 [shape=box, label="RegExp: /[!'()*~]/"];
+n93 [shape=box, label="Lit: "];
+n94 [shape=box, label="Var: x"];
+n95 [shape=ellipse, label="encodeURIComponent"];
+n96 [shape=box, label="Var: x"];
+n97 [shape=ellipse, label="."];
+n98 [shape=box, label="Lit: https://slack.com/oauth/authorize?scope=incoming-webhook%2Cchat%3Awrite%3Auser&client_id=11072499345.25274635444&redirect_uri="];
+n99 [shape=box, label="Var: x"];
+n100 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n14 -> n9;
+n13 -> n14;
+n18 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n31 -> n27;
+n31 -> n32;
+n34 -> n31;
+n33 -> n34;
+n38 -> n33;
+n35 -> n36;
+n35 -> n37;
+n35 -> n38;
+n42 -> n35;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n43 -> n39;
+n43 -> n44;
+n48 -> n43;
+n45 -> n46;
+n45 -> n47;
+n45 -> n48;
+n52 -> n45;
+n49 -> n50;
+n49 -> n51;
+n49 -> n52;
+n54 -> n49;
+n53 -> n54;
+n53 -> n55;
+n53 -> n56;
+n60 -> n53;
+n57 -> n58;
+n57 -> n59;
+n57 -> n60;
+n64 -> n57;
+n61 -> n62;
+n61 -> n63;
+n61 -> n64;
+n68 -> n61;
+n65 -> n66;
+n65 -> n67;
+n65 -> n68;
+n69 -> n65;
+n69 -> n70;
+n71 -> n69;
+n71 -> n72;
+n73 -> n71;
+n73 -> n74;
+n75 -> n73;
+n75 -> n76;
+n77 -> n75;
+n77 -> n78;
+n79 -> n77;
+n79 -> n80;
+n81 -> n79;
+n81 -> n82;
+n84 -> n81;
+n83 -> n84;
+n85 -> n86;
+n85 -> n83;
+n87 -> n85;
+n87 -> n88;
+n89 -> n87;
+n89 -> n90;
+n94 -> n89;
+n91 -> n92;
+n91 -> n93;
+n91 -> n94;
+n96 -> n91;
+n95 -> n96;
+n97 -> n98;
+n97 -> n95;
+n99 -> n97;
+n100 -> n99;
+}

@@ -1,0 +1,202 @@
+// Finding: 82fc6bc4-4a2d-4ddb-820b-72f641183451
+// Finding.url: https://www.example94.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a6ed2dc9d6684c209efcdd7caa36a064')><!--/*
+// Finding.parentloc: https://www.example94.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a6ed2dc9d6684c209efcdd7caa36a064')><!--/*
+// Finding.domain: www.example94.com
+// Finding.base_domain: example94.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 50
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 331
+// Finding.end: 338
+// Finding.original_uuid: 38e10116-460d-499c-837b-97f93a58c9b1
+// Finding.TwentyFiveMillionFlowsId: 1608481821
+// Finding.script: https://res.example94.com/cacheForever/7444c885b1f4fdab4792eb6eddf46d1c3c326707/commonModern.js
+// Finding.line: 1
+// Exploit.uuid: a6ed2dc9-d668-4c20-9efc-dd7caa36a064
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 24
+// Exploit.replace_begin_url: 24
+// Exploit.replace_end_url: 24
+// Exploit.replace_begin_param: 33
+// Exploit.replace_end_param: 33
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1290870896
+// DepGraph.sanitizer_hash: -1560237643
+// Merged split and join statements 
+// Merged split and join statements 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /\\/"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: #"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: #"];
+n12 [shape=ellipse, label="trim"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="substr"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=box, label="Lit: 6"];
+n17 [shape=ellipse, label="substr"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Lit: 2"];
+n20 [shape=ellipse, label="substr"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=box, label="Lit: 0"];
+n23 [shape=box, label="Lit: 15"];
+n24 [shape=ellipse, label="strtolower"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: ."];
+n28 [shape=ellipse, label="preg_replace"];
+n29 [shape=box, label="RegExp: /[\x2E\u3002\uFF0E\uFF61]/"];
+n30 [shape=box, label="Lit: ."];
+n31 [shape=box, label="Var: x"];
+n32 [shape=ellipse, label="preg_replace"];
+n33 [shape=box, label="RegExp: /[.]/"];
+n34 [shape=box, label="Lit: ."];
+n35 [shape=box, label="Var: x"];
+n36 [shape=ellipse, label="."];
+n37 [shape=box, label="Lit: //"];
+n38 [shape=ellipse, label="."];
+n39 [shape=box, label="Lit: /politique-de-confidentialite"];
+n40 [shape=ellipse, label="preg_replace"];
+n41 [shape=box, label="RegExp: /\\/"];
+n42 [shape=box, label="Lit: /"];
+n43 [shape=box, label="Var: x"];
+n44 [shape=ellipse, label="trim"];
+n45 [shape=box, label="Var: x"];
+n46 [shape=ellipse, label="substr"];
+n47 [shape=box, label="Var: x"];
+n48 [shape=box, label="Lit: 6"];
+n49 [shape=ellipse, label="substr"];
+n50 [shape=box, label="Var: x"];
+n51 [shape=box, label="Lit: 2"];
+n52 [shape=ellipse, label="substr"];
+n53 [shape=box, label="Var: x"];
+n54 [shape=box, label="Lit: 0"];
+n55 [shape=box, label="Lit: 15"];
+n56 [shape=ellipse, label="strtolower"];
+n57 [shape=box, label="Var: x"];
+n58 [shape=ellipse, label="."];
+n59 [shape=box, label="Lit: ."];
+n60 [shape=ellipse, label="preg_replace"];
+n61 [shape=box, label="RegExp: /[\x2E\u3002\uFF0E\uFF61]/"];
+n62 [shape=box, label="Lit: ."];
+n63 [shape=box, label="Var: x"];
+n64 [shape=ellipse, label="preg_replace"];
+n65 [shape=box, label="RegExp: /[.]/"];
+n66 [shape=box, label="Lit: ."];
+n67 [shape=box, label="Var: x"];
+n68 [shape=box, label="Var: x"];
+n69 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n9;
+n8 -> n4;
+n10 -> n8;
+n10 -> n11;
+n13 -> n10;
+n12 -> n13;
+n15 -> n12;
+n14 -> n15;
+n14 -> n16;
+n18 -> n14;
+n17 -> n18;
+n17 -> n19;
+n21 -> n17;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n25 -> n20;
+n24 -> n25;
+n26 -> n24;
+n26 -> n27;
+n31 -> n26;
+n28 -> n29;
+n28 -> n30;
+n28 -> n31;
+n35 -> n28;
+n32 -> n33;
+n32 -> n34;
+n32 -> n35;
+n36 -> n37;
+n36 -> n32;
+n38 -> n36;
+n38 -> n39;
+n43 -> n38;
+n40 -> n41;
+n40 -> n42;
+n40 -> n43;
+n45 -> n40;
+n44 -> n45;
+n47 -> n44;
+n46 -> n47;
+n46 -> n48;
+n50 -> n46;
+n49 -> n50;
+n49 -> n51;
+n53 -> n49;
+n52 -> n53;
+n52 -> n54;
+n52 -> n55;
+n57 -> n52;
+n56 -> n57;
+n58 -> n56;
+n58 -> n59;
+n63 -> n58;
+n60 -> n61;
+n60 -> n62;
+n60 -> n63;
+n67 -> n60;
+n64 -> n65;
+n64 -> n66;
+n64 -> n67;
+n68 -> n64;
+n69 -> n68;
+}

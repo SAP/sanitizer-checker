@@ -1,0 +1,142 @@
+// Finding: 517cd076-dfd5-4f50-8098-5e8893c434f3
+// Finding.url: https://www.example90.com/events/#!view/event/event_id/270586##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('71a7c121dece4432a60134e82f920a7e')><!--/*
+// Finding.parentloc: https://www.example90.com/events/#!view/event/event_id/270586##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('71a7c121dece4432a60134e82f920a7e')><!--/*
+// Finding.domain: www.example90.com
+// Finding.base_domain: example90.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: sanitizeVar
+// Sanitizer.location: https://lwcal.example90.com/live/resource/js/%5Clivewhale%5Cthirdparty%5Cjquery%5Cjquery.browser.js/%5Clivewhale%5Cthirdparty%5Cjquery%5Cjquery.fitvids.js/%5Clivewhale%5Cthirdparty%5Cjqueryui%5Cjquery-ui.widget.js/%5Clivewhale%5Cthirdparty%5Cimagesloaded.js/%5Clivewhale%5Cscripts%5Clwui%5Cjquery.lw-overlay.js/%5Clivewhale%5Cscripts%5Clwui%5Cjquery.lw-slideshow.js/%5Clivewhale%5Cscripts%5Clwui%5Cjquery.lw-hoverbox.js/%5Clivewhale%5Cscripts%5Ccommon.js/%5Clivewhale%5Ctheme%5Ccore%5Cscripts%5Cfrontend.js/%5Clivewhale%5Cthirdparty%5Clodash.min.js/%5Clivewhale%5Cplugins%5Cjquery%5Cjquery.lwGoogleMapsEmbed.js/%5Clivewhale%5Cthirdparty%5Cjquery%5Cjquery.hashchange.min.js/%5Clivewhale%5Ctheme%5Ccore%5Cscripts%5Cpayments.js/%5Clivewhale%5Ctheme%5Ccore%5Cscripts%5Ccalendar.js/%5C_ingredients%5Cthemes%5Ccalendar-bootstrap%5Cscripts%5Ccalendar-custom.js?cache=300 - sanitizeVar:67:11046
+// Finding.begin: 1283
+// Finding.end: 1289
+// Finding.original_uuid: 6483d5da-04ad-44df-a857-81ec32d6b39a
+// Finding.TwentyFiveMillionFlowsId: -1164432020
+// Finding.script: https://www.example90.com/assets/public/scu.js
+// Finding.line: 10704
+// Exploit.uuid: 71a7c121-dece-4432-a601-34e82f920a7e
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: t
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 20
+// Exploit.end_taint_url: 25
+// Exploit.replace_begin_url: 55
+// Exploit.replace_end_url: 55
+// Exploit.replace_begin_param: 8
+// Exploit.replace_end_param: 8
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -12712296
+// DepGraph.sanitizer_hash: -1548315157
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="str_replace_once"];
+n5 [shape=box, label="RegExp: /^!/"];
+n6 [shape=box, label="Lit: "];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="split"];
+n9 [shape=box, label="Lit: /"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="decodeURIComponent"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[<]/"];
+n15 [shape=box, label="Lit: &lt;"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[>]/"];
+n19 [shape=box, label="Lit: &gt;"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: <p>"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: </p>"];
+n25 [shape=ellipse, label="preg_replace"];
+n26 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/"];
+n27 [shape=box, label="Lit: <$1></$2>"];
+n28 [shape=box, label="Var: x"];
+n29 [shape=ellipse, label="preg_replace"];
+n30 [shape=box, label="RegExp: /[>]/"];
+n31 [shape=box, label="Lit: &gt;"];
+n32 [shape=box, label="Var: x"];
+n33 [shape=ellipse, label="preg_replace"];
+n34 [shape=box, label="RegExp: /[<]/"];
+n35 [shape=box, label="Lit: &lt;"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=ellipse, label="preg_replace"];
+n38 [shape=box, label="RegExp: /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/"];
+n39 [shape=box, label="Lit: "];
+n40 [shape=box, label="Var: x"];
+n41 [shape=box, label="Var: x"];
+n42 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n10 -> n4;
+n8 -> n9;
+n8 -> n10;
+n12 -> n8;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n22;
+n21 -> n17;
+n23 -> n21;
+n23 -> n24;
+n28 -> n23;
+n25 -> n26;
+n25 -> n27;
+n25 -> n28;
+n32 -> n25;
+n29 -> n30;
+n29 -> n31;
+n29 -> n32;
+n36 -> n29;
+n33 -> n34;
+n33 -> n35;
+n33 -> n36;
+n40 -> n33;
+n37 -> n38;
+n37 -> n39;
+n37 -> n40;
+n41 -> n37;
+n42 -> n41;
+}

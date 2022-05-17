@@ -1,0 +1,137 @@
+// Finding: b3b0d012-95c7-4480-b91b-d78d9b971716
+// Finding.url: https://chrome.example34.com/webstore/detail/rotowire/caljiholplhibonecblicbgjkakcpmmm?hl%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src=x%20onerror=taintfoxLog('e22637eadcc44953ae5b42eee69533aa')%3E%3C!--/*=en-US
+// Finding.parentloc: https://chrome.example34.com/webstore/detail/rotowire/caljiholplhibonecblicbgjkakcpmmm?hl%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src=x%20onerror=taintfoxLog('e22637eadcc44953ae5b42eee69533aa')%3E%3C!--/*=en-US
+// Finding.domain: chrome.example34.com
+// Finding.base_domain: example34.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 15
+// Sanitizer.name: v
+// Sanitizer.location: https://chrome.example34.com/_/scs/cws-static/_/js/k=cws.main.en_US.-RUUdr_ysv8.O/am=AQ/d=1/rs=AAxzQIXdx8IpZH31Yo5qUenCvC6PHlyFkg/m=consumer - v:366:34
+// Finding.begin: 185
+// Finding.end: 283
+// Finding.original_uuid: 722ff52e-1c3c-4a27-a33c-03865170424e
+// Finding.TwentyFiveMillionFlowsId: 2030881281
+// Finding.script: https://chrome.example34.com/_/scs/cws-static/_/js/k=cws.main.en_US.-RUUdr_ysv8.O/am=AQ/d=1/rs=AAxzQIXdx8IpZH31Yo5qUenCvC6PHlyFkg/m=consumer
+// Finding.line: 114
+// Exploit.uuid: e22637ea-dcc4-4953-ae5b-42eee69533aa
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: hl"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: hl"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 84
+// Exploit.end_taint_url: 86
+// Exploit.replace_begin_url: 84
+// Exploit.replace_end_url: 86
+// Exploit.replace_begin_param: 135
+// Exploit.replace_end_param: 137
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 586344654
+// DepGraph.sanitizer_hash: -1285024706
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00- \x22\x27-\x29\x3c\x3e\\\x7b\x7d\x7f\x85\xa0\u2028\u2029\uff01\uff03\uff04\uff06-\uff0c\uff0f\uff1a\uff1b\uff1d\uff1f\uff20\uff3b\uff3d]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, ": 1, ': 1, \: 1,  : 1, (: 1, ): 1, {: 1, }: 1), function_rhs: true], 'function(a){return nr[a]}') - Other Exception: ReferenceError: nr is not defined 
+// Approximated Implementation for: replace([\x00\x22\x26\x27\x3c\x3e]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1), function_rhs: true], 'function(a){return mr[a]}') - Other Exception: ReferenceError: mr is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="substr"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=box, label="Lit: 0"];
+n7 [shape=box, label="Lit: 66"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /\+/"];
+n10 [shape=box, label="Lit:  "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="decodeURIComponent"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="encodeURIComponent"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="decodeURIComponent"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="encodeURI"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: ?"];
+n22 [shape=ellipse, label="."];
+n23 [shape=box, label="Lit: %28"];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: %27"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: %29"];
+n28 [shape=ellipse, label="preg_replace"];
+n29 [shape=box, label="RegExp: /[\x00- \x22\x27-\x29\x3c\x3e\\\x7b\x7d\x7f\x85\xa0\u2028\u2029\uff01\uff03\uff04\uff06-\uff0c\uff0f\uff1a\uff1b\uff1d\uff1f\uff20\uff3b\uff3d]/"];
+n30 [shape=box, label="Lit: "];
+n31 [shape=box, label="Var: x"];
+n32 [shape=ellipse, label="preg_replace"];
+n33 [shape=box, label="RegExp: /[\x00\x22\x26\x27\x3c\x3e]/"];
+n34 [shape=box, label="Lit: "];
+n35 [shape=box, label="Var: x"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n13 -> n8;
+n12 -> n13;
+n15 -> n12;
+n14 -> n15;
+n17 -> n14;
+n16 -> n17;
+n19 -> n16;
+n18 -> n19;
+n20 -> n21;
+n20 -> n18;
+n22 -> n20;
+n22 -> n23;
+n24 -> n22;
+n24 -> n25;
+n26 -> n24;
+n26 -> n27;
+n31 -> n26;
+n28 -> n29;
+n28 -> n30;
+n28 -> n31;
+n35 -> n28;
+n32 -> n33;
+n32 -> n34;
+n32 -> n35;
+n36 -> n32;
+n37 -> n36;
+}

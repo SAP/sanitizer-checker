@@ -1,0 +1,88 @@
+// Finding: b687e505-3f1f-4c4d-ba7c-7d370203294e
+// Finding.url: https://example144.com/registrar/academics/academic-calendar.php##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('900675e21f174b108f6d3798740f4d91')</script><!--/*
+// Finding.parentloc: https://example144.com/registrar/academics/academic-calendar.php##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('900675e21f174b108f6d3798740f4d91')</script><!--/*
+// Finding.domain: example144.com
+// Finding.base_domain: example144.com
+// Finding.source: location.href
+// Finding.sink: document.writeln
+// Sanitizer.score: 1
+// Sanitizer.name: formatFileName
+// Sanitizer.location: https://example144.com/registrar/academics/academic-calendar.php##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('900675e21f174b108f6d3798740f4d91')</script><!--/* - <anonymous>:253:9
+// Finding.begin: 1322
+// Finding.end: 1330
+// Finding.original_uuid: 05d937d7-01ec-477f-ae47-800717ad2a66
+// Finding.TwentyFiveMillionFlowsId: -1012008139
+// Finding.script: https://example144.com/registrar/academics/academic-calendar.php##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('900675e21f174b108f6d3798740f4d91')</script><!--/*
+// Finding.line: 269
+// Exploit.uuid: 900675e2-1f17-4b10-8f6d-3798740f4d91
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 35
+// Exploit.replace_begin_url: 57
+// Exploit.replace_end_url: 57
+// Exploit.replace_begin_param: 128
+// Exploit.replace_end_param: 128
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 7148143
+// DepGraph.sanitizer_hash: 1678887314
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace((^|\s)[a-z]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(f){return f.toUpperCase();}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace((^|\s)[a-z]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(f){return f.toUpperCase();}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit:  "];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit:  "];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /_|-/"];
+n7 [shape=box, label="Lit:  "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /(^|\s)[a-z]/"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=doubleoctagon, label="Return: x"];
+n1 -> n0;
+n1 -> n2;
+n3 -> n1;
+n3 -> n4;
+n8 -> n3;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n9;
+n14 -> n13;
+}

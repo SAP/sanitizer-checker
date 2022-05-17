@@ -1,0 +1,79 @@
+// Finding: a1977fa4-72a0-496b-bb0c-7f24f7d8901e
+// Finding.url: https://www.example183.com/silver-price-today-usa/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e98fddd75f314d778811b7deb76ca0b4')><!--/*
+// Finding.parentloc: https://www.example183.com/silver-price-today-usa/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e98fddd75f314d778811b7deb76ca0b4')><!--/*
+// Finding.domain: www.example183.com
+// Finding.base_domain: example183.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 25
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 943
+// Finding.end: 948
+// Finding.original_uuid: f78a7a7a-4b9e-41a6-ac30-25e88d450563
+// Finding.TwentyFiveMillionFlowsId: -376439991
+// Finding.script: https://example184.com/ajax/libs/jquery/1.8.0/jquery.min.js
+// Finding.line: 2
+// Exploit.uuid: e98fddd7-5f31-4d77-8811-b7deb76ca0b4
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 8
+// Exploit.end_taint_url: 11
+// Exploit.replace_begin_url: 45
+// Exploit.replace_end_url: 45
+// Exploit.replace_begin_param: 243
+// Exploit.replace_end_param: 243
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1332728795
+// DepGraph.sanitizer_hash: -1416195791
+// Merged split and join statements 
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[.]/"];
+n3 [shape=box, label="Lit: _"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /\//"];
+n7 [shape=box, label="Lit: _"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

@@ -1,0 +1,106 @@
+// Finding: 9bdb5143-7b8d-4777-a0e5-c360735722f9
+// Finding.url: https://static.example336.com/fol/dpa_feed_widgets/my_pw_us20_html/html/index.html?customFont=true&env=www&standalone=ranking&phase=election&view=small"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('28d3d2d9171c473fa0d2cb4bb60354b8')><!--/*&initialWidth=300&childId=pym-0-1ncp0&parentTitle=Ausland - Politik - FOCUS Online&parentUrl=https://www.example336.com/politik/ausland/
+// Finding.parentloc: https://static.example336.com/fol/dpa_feed_widgets/my_pw_us20_html/html/index.html?customFont=true&env=www&standalone=ranking&phase=election&view=small"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('28d3d2d9171c473fa0d2cb4bb60354b8')><!--/*&initialWidth=300&childId=pym-0-1ncp0&parentTitle=Ausland - Politik - FOCUS Online&parentUrl=https://www.example336.com/politik/ausland/
+// Finding.domain: static.example336.com
+// Finding.base_domain: example336.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 673
+// Finding.end: 680
+// Finding.original_uuid: a702cb88-1f79-4f84-bce7-e60fb4120304
+// Finding.TwentyFiveMillionFlowsId: -1236882456
+// Finding.script: https://static.example336.com/fol/dpa_feed_widgets/pw_us/assets/js/jquery-3.1.1.min.js
+// Finding.line: 3
+// Exploit.uuid: 28d3d2d9-171c-473f-a0d2-cb4bb60354b8
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: class
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: small"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: small"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 140
+// Exploit.end_taint_url: 145
+// Exploit.replace_begin_url: 140
+// Exploit.replace_end_url: 145
+// Exploit.replace_begin_param: 611
+// Exploit.replace_end_param: 616
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 431911996
+// DepGraph.sanitizer_hash: -393103431
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 77"];
+n4 [shape=ellipse, label="split"];
+n5 [shape=box, label="Lit: &"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="split"];
+n8 [shape=box, label="Lit: ="];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="preg_replace"];
+n11 [shape=box, label="RegExp: /[<]/"];
+n12 [shape=box, label="Lit: &lt;"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="preg_replace"];
+n15 [shape=box, label="RegExp: /[>]/"];
+n16 [shape=box, label="Lit: &gt;"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="preg_replace"];
+n19 [shape=box, label="RegExp: /["]/"];
+n20 [shape=box, label="Lit: &#34;"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n6 -> n1;
+n4 -> n5;
+n4 -> n6;
+n9 -> n4;
+n7 -> n8;
+n7 -> n9;
+n13 -> n7;
+n10 -> n11;
+n10 -> n12;
+n10 -> n13;
+n17 -> n10;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n21 -> n14;
+n18 -> n19;
+n18 -> n20;
+n18 -> n21;
+n22 -> n18;
+n23 -> n22;
+}

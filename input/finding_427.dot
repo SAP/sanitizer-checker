@@ -1,0 +1,113 @@
+// Finding: a201f109-8727-42ce-ac2c-7df938fb513a
+// Finding.url: http://www.example286.com/media/events/nauchno-metodicheskiy-seminar-referirovanie-i-annotirovanie-tekstov-prakticheskie-aspekty-obucheniya##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('eb24b7c70d1e4b6c959e4071ec74ff3c')><!--/*
+// Finding.parentloc: http://www.example286.com/media/events/nauchno-metodicheskiy-seminar-referirovanie-i-annotirovanie-tekstov-prakticheskie-aspekty-obucheniya##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('eb24b7c70d1e4b6c959e4071ec74ff3c')><!--/*
+// Finding.domain: www.example286.com
+// Finding.base_domain: example286.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 26
+// Sanitizer.name: trim
+// Sanitizer.location: http://www.example286.com/build/js/libs/jquery-1.12.4.min.js - trim:2:3011
+// Finding.begin: 86
+// Finding.end: 93
+// Finding.original_uuid: cf979f27-e078-46fb-8def-dcd34d17e145
+// Finding.TwentyFiveMillionFlowsId: 1459323581
+// Finding.script: http://www.example286.com/build/js/libs/jquery-1.12.4.min.js
+// Finding.line: 3
+// Exploit.uuid: eb24b7c7-0d1e-4b6c-959e-4071ec74ff3c
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 132
+// Exploit.replace_begin_url: 132
+// Exploit.replace_end_url: 132
+// Exploit.replace_begin_param: 470
+// Exploit.replace_end_param: 470
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 93695895
+// DepGraph.sanitizer_hash: -538145597
+// Merged split and join statements 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace(([\0-\x1f\x7f]|^-?\d)|^-$|[^\x80-\uFFFF\w-]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, \: 1, :: 1, =: 1, %: 1, *: 1,  : 1, ,: 1, -: 1, ;: 1, ^: 1, |: 1, (: 1, ): 1, [: 1, ]: 1, {: 1, }: 1), function_rhs: true], 'function(t,e){return e?"\0"===t?"�":t.slice(0,-1)+"\\"+t.charCodeAt(t.length-1).toString(16)+" ":"\\"+t}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(([\0-\x1f\x7f]|^-?\d)|^-$|[^\x80-\uFFFF\w-]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, \: 1, :: 1, =: 1, %: 1, *: 1,  : 1, ,: 1, -: 1, ;: 1, ^: 1, |: 1, (: 1, ): 1, [: 1, ]: 1, {: 1, }: 1), function_rhs: true], 'function(t,e){return e?"\0"===t?"�":t.slice(0,-1)+"\\"+t.charCodeAt(t.length-1).toString(16)+" ":"\\"+t}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /[-]/"];
+n6 [shape=box, label="Lit: -"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /([\0-\x1f\x7f]|^-?\d)|^-$|[^\x80-\uFFFF\w-]/"];
+n10 [shape=box, label="Lit: "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="."];
+n13 [shape=box, label="Lit: [data-fancybox='"];
+n14 [shape=ellipse, label="."];
+n15 [shape=box, label="Lit: ']"];
+n16 [shape=ellipse, label="preg_replace"];
+n17 [shape=box, label="RegExp: /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/"];
+n18 [shape=box, label="Lit: "];
+n19 [shape=box, label="Var: x"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n12 -> n13;
+n12 -> n8;
+n14 -> n12;
+n14 -> n15;
+n19 -> n14;
+n16 -> n17;
+n16 -> n18;
+n16 -> n19;
+n20 -> n16;
+n21 -> n20;
+}

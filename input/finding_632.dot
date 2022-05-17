@@ -1,0 +1,176 @@
+// Finding: edb1a2bf-03b1-46f3-8a9a-70e59d0d03d2
+// Finding.url: https://www.example321.com/shop/buloso/product/A433258/?s-id=RADTop-MerchantRecom-ProductName##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('53b0a1d0d6454096b12c11ddb36d2b5c')><!--/*
+// Finding.parentloc: https://www.example321.com/shop/buloso/product/A433258/?s-id=RADTop-MerchantRecom-ProductName##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('53b0a1d0d6454096b12c11ddb36d2b5c')><!--/*
+// Finding.domain: www.example321.com
+// Finding.base_domain: example321.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 13
+// Sanitizer.name: lb[7]
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-NCZWHJ&l=TagtoodataLayer&t=450297 - lb[7]:1048:426
+// Finding.begin: 445
+// Finding.end: 452
+// Finding.original_uuid: 4adaded5-54d0-4543-a866-afc057e58c34
+// Finding.TwentyFiveMillionFlowsId: 1748953669
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-NCZWHJ&l=TagtoodataLayer&t=450297
+// Finding.line: 1057
+// Exploit.uuid: 53b0a1d0-d645-4096-b12c-11ddb36d2b5c
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: 8
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 47
+// Exploit.end_taint_url: 54
+// Exploit.replace_begin_url: 93
+// Exploit.replace_end_url: 93
+// Exploit.replace_begin_param: 685
+// Exploit.replace_end_param: 685
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 617267206
+// DepGraph.sanitizer_hash: 1980465453
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, =: 1), function_rhs: true], 'function(a){return ub[a]}') - Other Exception: ReferenceError: ub is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: ?"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /\\/"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: ?"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: ?"];
+n12 [shape=ellipse, label="trim"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="substr"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=box, label="Lit: 6"];
+n17 [shape=ellipse, label="substr"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Lit: 2"];
+n20 [shape=ellipse, label="substr"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=box, label="Lit: 18"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /[']/"];
+n25 [shape=box, label="Lit: %27"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: /[<]/"];
+n29 [shape=box, label="Lit: %3C"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="preg_replace"];
+n32 [shape=box, label="RegExp: /[>]/"];
+n33 [shape=box, label="Lit: %3E"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="preg_replace"];
+n36 [shape=box, label="RegExp: /[ ]/"];
+n37 [shape=box, label="Lit: %20"];
+n38 [shape=box, label="Var: x"];
+n39 [shape=ellipse, label="substr"];
+n40 [shape=box, label="Var: x"];
+n41 [shape=box, label="Lit: 0"];
+n42 [shape=box, label="Lit: 67"];
+n43 [shape=ellipse, label="substr"];
+n44 [shape=box, label="Var: x"];
+n45 [shape=box, label="Lit: 0"];
+n46 [shape=box, label="Lit: 29"];
+n47 [shape=ellipse, label="split"];
+n48 [shape=box, label="Lit: /"];
+n49 [shape=box, label="Var: x"];
+n50 [shape=ellipse, label="."];
+n51 [shape=box, label="Lit: rakuten:product:"];
+n52 [shape=ellipse, label="preg_replace"];
+n53 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/"];
+n54 [shape=box, label="Lit: "];
+n55 [shape=box, label="Var: x"];
+n56 [shape=box, label="Var: x"];
+n57 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n9;
+n8 -> n4;
+n10 -> n8;
+n10 -> n11;
+n13 -> n10;
+n12 -> n13;
+n15 -> n12;
+n14 -> n15;
+n14 -> n16;
+n18 -> n14;
+n17 -> n18;
+n17 -> n19;
+n21 -> n17;
+n20 -> n21;
+n20 -> n22;
+n26 -> n20;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n34 -> n27;
+n31 -> n32;
+n31 -> n33;
+n31 -> n34;
+n38 -> n31;
+n35 -> n36;
+n35 -> n37;
+n35 -> n38;
+n40 -> n35;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n44 -> n39;
+n43 -> n44;
+n43 -> n45;
+n43 -> n46;
+n49 -> n43;
+n47 -> n48;
+n47 -> n49;
+n50 -> n51;
+n50 -> n47;
+n55 -> n50;
+n52 -> n53;
+n52 -> n54;
+n52 -> n55;
+n56 -> n52;
+n57 -> n56;
+}

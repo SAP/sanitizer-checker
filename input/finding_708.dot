@@ -1,0 +1,129 @@
+// Finding: 273faa16-1ffc-48c6-8feb-e461001ccf07
+// Finding.url: https://mo.m.example274.com/page_201912120119435#!/footer/full?bizCode=unionMedia&products=true&width=1280&colorBrand=#FF822E"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('eac12425b0984ada8afb5e644407e0b6')><!--/*
+// Finding.parentloc: https://mo.m.example274.com/page_201912120119435#!/footer/full?bizCode=unionMedia&products=true&width=1280&colorBrand=#FF822E"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('eac12425b0984ada8afb5e644407e0b6')><!--/*
+// Finding.domain: mo.m.example274.com
+// Finding.base_domain: example274.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 240
+// Sanitizer.name: tmpl
+// Sanitizer.location: https://g.example27.com/mm/zs_gallery/src/mx-footer/__test__/full.js - tmpl:1:775
+// Finding.begin: 39
+// Finding.end: 49
+// Finding.original_uuid: 2c48c607-06fc-4354-b4cd-144f978b9acb
+// Finding.TwentyFiveMillionFlowsId: 1816409141
+// Finding.script: https://g.example27.com/mm/zs_gallery/index.js
+// Finding.line: 1
+// Exploit.uuid: eac12425-b098-4ada-8afb-5e644407e0b6
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: style
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: #FF822E"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #FF822E"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 114
+// Exploit.end_taint_url: 121
+// Exploit.replace_begin_url: 114
+// Exploit.replace_end_url: 121
+// Exploit.replace_begin_param: 28
+// Exploit.replace_end_param: 35
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -178273652
+// DepGraph.sanitizer_hash: 304659933
+// Part of the URL ('/footer/full') found in left hand side of replace 
+// Approximated Implementation for: replace([!')(*]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(': 1, *: 1, (: 1, ): 1), function_rhs: true], 'function(e){return xt[e]}') - Other Exception: ReferenceError: xt is not defined 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /^[^#]*#?!?/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: /footer/full"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="regex_exec"];
+n10 [shape=box, label="RegExp: /([^=&?\/#]+)=?([^&#?]*)/"];
+n11 [shape=box, label="Lit: 2"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="decodeURIComponent"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="encodeURIComponent"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[!')(*]/"];
+n19 [shape=box, label="Lit: "];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit:  mx-view="mx-footer/index?bizCode="];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: &mode="];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: &width="];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: &products="];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: "></div>"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: <div "];
+n33 [shape=box, label="Var: x"];
+n34 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n14 -> n9;
+n13 -> n14;
+n16 -> n13;
+n15 -> n16;
+n20 -> n15;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n22;
+n21 -> n17;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n32;
+n31 -> n29;
+n33 -> n31;
+n34 -> n33;
+}

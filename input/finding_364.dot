@@ -1,0 +1,139 @@
+// Finding: a37d1584-f28c-4669-9d5b-7fe459333ca0
+// Finding.url: https://chrome.example34.com/webstore/detail/rotowire/caljiholplhibonecblicbgjkakcpmmm?hl"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('dc900d3343884ccf8c0ca46dce60aa47')><!--/*=en-US
+// Finding.parentloc: https://chrome.example34.com/webstore/detail/rotowire/caljiholplhibonecblicbgjkakcpmmm?hl"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('dc900d3343884ccf8c0ca46dce60aa47')><!--/*=en-US
+// Finding.domain: chrome.example34.com
+// Finding.base_domain: example34.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 15
+// Sanitizer.name: Naa
+// Sanitizer.location: https://chrome.example34.com/_/scs/cws-static/_/js/k=cws.main.en_US.-RUUdr_ysv8.O/am=AQ/d=1/rs=AAxzQIXdx8IpZH31Yo5qUenCvC6PHlyFkg/m=consumer - Naa:1850:72
+// Finding.begin: 163
+// Finding.end: 186
+// Finding.original_uuid: 547b3aa1-2648-48b5-bbee-dc7da2d07044
+// Finding.TwentyFiveMillionFlowsId: 2030881281
+// Finding.script: https://chrome.example34.com/_/scs/cws-static/_/js/k=cws.main.en_US.-RUUdr_ysv8.O/am=AQ/d=1/rs=AAxzQIXdx8IpZH31Yo5qUenCvC6PHlyFkg/m=consumer
+// Finding.line: 114
+// Exploit.uuid: dc900d33-4388-4ccf-8c0c-a46dce60aa47
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: hl"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: hl"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 84
+// Exploit.end_taint_url: 86
+// Exploit.replace_begin_url: 84
+// Exploit.replace_end_url: 86
+// Exploit.replace_begin_param: 181
+// Exploit.replace_end_param: 183
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 374561734
+// DepGraph.sanitizer_hash: -1965787308
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00- \x22\x27-\x29\x3c\x3e\\\x7b\x7d\x7f\x85\xa0\u2028\u2029\uff01\uff03\uff04\uff06-\uff0c\uff0f\uff1a\uff1b\uff1d\uff1f\uff20\uff3b\uff3d]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, ": 1, ': 1, \: 1,  : 1, (: 1, ): 1, {: 1, }: 1), function_rhs: true], 'function(a){return nr[a]}') - Other Exception: ReferenceError: nr is not defined 
+// Approximated Implementation for: replace([\x00\x22\x26\x27\x3c\x3e]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1), function_rhs: true], 'function(a){return mr[a]}') - Other Exception: ReferenceError: mr is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="substr"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=box, label="Lit: 67"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /\+/"];
+n9 [shape=box, label="Lit:  "];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="decodeURIComponent"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="encodeURIComponent"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: ="];
+n17 [shape=ellipse, label="decodeURIComponent"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="encodeURI"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: ?"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: %28"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: %27"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: %29"];
+n29 [shape=ellipse, label="preg_replace"];
+n30 [shape=box, label="RegExp: /[\x00- \x22\x27-\x29\x3c\x3e\\\x7b\x7d\x7f\x85\xa0\u2028\u2029\uff01\uff03\uff04\uff06-\uff0c\uff0f\uff1a\uff1b\uff1d\uff1f\uff20\uff3b\uff3d]/"];
+n31 [shape=box, label="Lit: "];
+n32 [shape=box, label="Var: x"];
+n33 [shape=ellipse, label="preg_replace"];
+n34 [shape=box, label="RegExp: /[\x00\x22\x26\x27\x3c\x3e]/"];
+n35 [shape=box, label="Lit: "];
+n36 [shape=box, label="Var: x"];
+n37 [shape=box, label="Var: x"];
+n38 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n4 -> n6;
+n10 -> n4;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n12 -> n7;
+n11 -> n12;
+n14 -> n11;
+n13 -> n14;
+n15 -> n16;
+n15 -> n13;
+n18 -> n15;
+n17 -> n18;
+n20 -> n17;
+n19 -> n20;
+n21 -> n22;
+n21 -> n19;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n32 -> n27;
+n29 -> n30;
+n29 -> n31;
+n29 -> n32;
+n36 -> n29;
+n33 -> n34;
+n33 -> n35;
+n33 -> n36;
+n37 -> n33;
+n38 -> n37;
+}

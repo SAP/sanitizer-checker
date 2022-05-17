@@ -1,0 +1,114 @@
+// Finding: 07eb8634-600e-44a0-8d74-9173c4cdcad4
+// Finding.url: https://applicants.example205.com/enrollmentChances/index.html#|taintfoxLog('e28e8f0b19a14c14b43b5b3381589a8a')//
+// Finding.parentloc: https://applicants.example205.com/enrollmentChances/index.html#|taintfoxLog('e28e8f0b19a14c14b43b5b3381589a8a')//
+// Finding.domain: applicants.example205.com
+// Finding.base_domain: example205.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 5
+// Sanitizer.name: m
+// Sanitizer.location: https://applicants.example205.com/enrollmentChances/bower_components/openui5-sap.ui.core/resources/sap-ui-core.js - s/<:70:4886
+// Finding.begin: 32504
+// Finding.end: 32521
+// Finding.original_uuid: aacc68fc-89c3-4e07-bf3a-8791fc8bc8e9
+// Finding.TwentyFiveMillionFlowsId: -1037515609
+// Finding.script: https://applicants.example205.com/enrollmentChances/bower_components/openui5-sap.ui.core/resources/sap-ui-core.js
+// Finding.line: 82
+// Exploit.uuid: e28e8f0b-19a1-4c14-b43b-5b3381589a8a
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: ExpressionStatement
+// Exploit.content: undefined
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: |
+// Exploit.break_in: //
+// Exploit.payload: |taintfoxLog(1)//
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 59
+// Exploit.replace_end_url: 59
+// Exploit.replace_begin_param: 1786
+// Exploit.replace_end_param: 1786
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1334798664
+// DepGraph.sanitizer_hash: 1334798664
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="preg_replace"];
+n4 [shape=box, label="RegExp: /[!]/"];
+n5 [shape=box, label="Lit: %21"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /[*]/"];
+n9 [shape=box, label="Lit: *"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /[']/"];
+n13 [shape=box, label="Lit: %27"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /[)]/"];
+n17 [shape=box, label="Lit: %29"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="preg_replace"];
+n20 [shape=box, label="RegExp: /[(]/"];
+n21 [shape=box, label="Lit: %28"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /\*/"];
+n25 [shape=box, label="Lit: %2A"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n10 -> n3;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n27 -> n23;
+n28 -> n27;
+}

@@ -1,0 +1,74 @@
+// Finding: 41026765-f532-46e5-97a1-c7c801bbc680
+// Finding.url: https://example308.com/hongkong/lifestyle/canto-hindi-film-my-indian-boyfriend-changes-chinese-title-amid-criticism-over-apparent-racial-slur/##</iframe></style></script></object></embed></textarea><script>taintfoxLog('de876d4334324b448bf4e848906c3255')</script><!--/*
+// Finding.parentloc: https://example308.com/hongkong/lifestyle/canto-hindi-film-my-indian-boyfriend-changes-chinese-title-amid-criticism-over-apparent-racial-slur/##</iframe></style></script></object></embed></textarea><script>taintfoxLog('de876d4334324b448bf4e848906c3255')</script><!--/*
+// Finding.domain: example308.com
+// Finding.base_domain: example308.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 3
+// Sanitizer.name: 
+// Sanitizer.location: https://example308.com/hongkong/lifestyle/canto-hindi-film-my-indian-boyfriend-changes-chinese-title-amid-criticism-over-apparent-racial-slur/##</iframe></style></script></object></embed></textarea><script>taintfoxLog('de876d4334324b448bf4e848906c3255')</script><!--/* - <anonymous>:1473:899
+// Finding.begin: 14
+// Finding.end: 407
+// Finding.original_uuid: 34f8adca-3e86-45e9-8dd7-f11b11a28cb6
+// Finding.TwentyFiveMillionFlowsId: -488409431
+// Finding.script: https://example308.com/hongkong/lifestyle/canto-hindi-film-my-indian-boyfriend-changes-chinese-title-amid-criticism-over-apparent-racial-slur/##</iframe></style></script></object></embed></textarea><script>taintfoxLog('de876d4334324b448bf4e848906c3255')</script><!--/*
+// Finding.line: 1473
+// Exploit.uuid: de876d43-3432-4b44-8bf4-e848906c3255
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: F
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 139
+// Exploit.replace_begin_url: 139
+// Exploit.replace_end_url: 139
+// Exploit.replace_begin_param: 169
+// Exploit.replace_end_param: 169
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 824355387
+// DepGraph.sanitizer_hash: -7238096
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="escape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="encodeURIComponent"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &amp;location="];
+n7 [shape=box, label="Var: x"];
+n8 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n4 -> n1;
+n3 -> n4;
+n5 -> n6;
+n5 -> n3;
+n7 -> n5;
+n8 -> n7;
+}

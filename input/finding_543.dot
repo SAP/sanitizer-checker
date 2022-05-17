@@ -1,0 +1,98 @@
+// Finding: 0a2ed696-972f-4319-97e1-dc2853501e9c
+// Finding.url: https://blog.example348.com/##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('1b1ffc2d822d422da849c154ffa2746d')</script><!--/*
+// Finding.parentloc: https://blog.example348.com/##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('1b1ffc2d822d422da849c154ffa2746d')</script><!--/*
+// Finding.domain: blog.example348.com
+// Finding.base_domain: example348.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 3
+// Sanitizer.name: 
+// Sanitizer.location: https://web.example348.com/js/ads/show.js - <anonymous>:1:215
+// Finding.begin: 137
+// Finding.end: 344
+// Finding.original_uuid: 9c96ba71-94fc-48c7-ab92-b81176e9e51a
+// Finding.TwentyFiveMillionFlowsId: 1073365077
+// Finding.script: https://web.example348.com/js/ads/show.js
+// Finding.line: 1
+// Exploit.uuid: 1b1ffc2d-822d-422d-a849-c154ffa2746d
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 25
+// Exploit.replace_begin_url: 25
+// Exploit.replace_end_url: 25
+// Exploit.replace_begin_param: 164
+// Exploit.replace_end_param: 164
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1296505662
+// DepGraph.sanitizer_hash: 1637690158
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="escape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="substr"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Lit: 0"];
+n6 [shape=box, label="Lit: 512"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &url="];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: https://web.example348.com/impsc.php?cid=2842-3620903507"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: &rnd=1620750970362"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: &output=html"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: <iframe name="adblade_ad_iframe" width="300" height="250" frameborder="0" src=""];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: " marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no"></iframe>"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n4 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n7 -> n8;
+n7 -> n3;
+n9 -> n10;
+n9 -> n7;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n16;
+n15 -> n13;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n20 -> n19;
+}

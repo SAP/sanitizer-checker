@@ -1,0 +1,136 @@
+// Finding: 14e2a0e5-e306-49f3-b616-f6a51043272c
+// Finding.url: https://news.example290.com/js/thirdparty/index.html?opt=&type=a1&id=oa-bookwatch"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0480edea60a1494da948a49b92a8dbcc')><!--/*&v=1
+// Finding.parentloc: https://news.example290.com/js/thirdparty/index.html?opt=&type=a1&id=oa-bookwatch"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0480edea60a1494da948a49b92a8dbcc')><!--/*&v=1
+// Finding.domain: news.example290.com
+// Finding.base_domain: example290.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 6
+// Sanitizer.name: escapeHTML
+// Sanitizer.location: https://news.example290.com/js/thirdparty/index.html?opt=&type=a1&id=oa-bookwatch"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0480edea60a1494da948a49b92a8dbcc')><!--/*&v=1 - renderHTML/template<:30:15
+// Finding.begin: 48
+// Finding.end: 60
+// Finding.original_uuid: 63281528-6f78-499e-b2c9-306994d6e338
+// Finding.TwentyFiveMillionFlowsId: -1696463085
+// Finding.script: https://news.example290.com/js/thirdparty/index.html?opt=&type=a1&id=oa-bookwatch"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0480edea60a1494da948a49b92a8dbcc')><!--/*&v=1
+// Finding.line: 32
+// Exploit.uuid: 0480edea-60a1-494d-a948-a49b92a8dbcc
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: oa-bookwatch"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: oa-bookwatch"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 62
+// Exploit.end_taint_url: 74
+// Exploit.replace_begin_url: 62
+// Exploit.replace_end_url: 74
+// Exploit.replace_begin_param: 48
+// Exploit.replace_end_param: 60
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -529241608
+// DepGraph.sanitizer_hash: 1801405184
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[&]/"];
+n3 [shape=box, label="Lit: &amp;"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &lt;"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /[<]/"];
+n9 [shape=box, label="Lit: &lt;"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: &gt;"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[>]/"];
+n15 [shape=box, label="Lit: &gt;"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: &quot;"];
+n19 [shape=ellipse, label="preg_replace"];
+n20 [shape=box, label="RegExp: /["]/"];
+n21 [shape=box, label="Lit: &quot;"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /[']/"];
+n25 [shape=box, label="Lit: &#x27;"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: /[`]/"];
+n29 [shape=box, label="Lit: &#x60;"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n5 -> n6;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n11 -> n7;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n17 -> n13;
+n17 -> n18;
+n22 -> n17;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n31 -> n27;
+n32 -> n31;
+}

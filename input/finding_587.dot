@@ -1,0 +1,154 @@
+// Finding: b1e599b7-4e37-43a0-a5ce-60012130d324
+// Finding.url: https://www.example221.com/ca/en/aco/home/aeroplan/promotions.html#|taintfoxLog('4e70fa4aacb54132aad4d6bdf8a97bf5')//
+// Finding.parentloc: https://www.example221.com/ca/en/aco/home/aeroplan/promotions.html#|taintfoxLog('4e70fa4aacb54132aad4d6bdf8a97bf5')//
+// Finding.domain: www.example221.com
+// Finding.base_domain: example221.com
+// Finding.source: location.href
+// Finding.sink: script.text
+// Sanitizer.score: 3
+// Sanitizer.name: value/<
+// Sanitizer.location: https://www.example221.com/etc/designs/aircanada/scripts/library/polyfill-es5.2021328179.js - value/<:743:30095
+// Finding.begin: 5081
+// Finding.end: 5100
+// Finding.original_uuid: 1c038eff-a324-4d5f-b862-8c4999c523fa
+// Finding.TwentyFiveMillionFlowsId: -1920498691
+// Finding.script: https://www.example221.com/assets/ae427fbb9e32edec2065f3c335af8c367001194a011
+// Finding.line: 20
+// Exploit.uuid: 4e70fa4a-acb5-4132-aad4-d6bdf8a97bf5
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: ExpressionStatement
+// Exploit.content: undefined
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: |
+// Exploit.break_in: //
+// Exploit.payload: |taintfoxLog(1)//
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 6
+// Exploit.replace_begin_url: 65
+// Exploit.replace_end_url: 65
+// Exploit.replace_begin_param: 200310
+// Exploit.replace_end_param: 200310
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 749764243
+// DepGraph.sanitizer_hash: 1064383741
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="substr"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=box, label="Lit: 0"];
+n7 [shape=box, label="Lit: 50"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /^\s+|\s+$/"];
+n10 [shape=box, label="Lit: "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="regex_exec"];
+n13 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n14 [shape=box, label="Lit: 2"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="regex_match"];
+n17 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n18 [shape=box, label="Lit: 2"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="preg_replace"];
+n21 [shape=box, label="RegExp: /^\s+|\s+$/"];
+n22 [shape=box, label="Lit: "];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="regex_exec"];
+n25 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n26 [shape=box, label="Lit: 2"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=ellipse, label="regex_match"];
+n29 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n30 [shape=box, label="Lit: 2"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=ellipse, label="."];
+n33 [shape=box, label="Lit: /content/dam/aircanada/portal/scripts/js/aepromo/aepromo.js"];
+n34 [shape=ellipse, label="preg_replace"];
+n35 [shape=box, label="RegExp: /^\s+|\s+$/"];
+n36 [shape=box, label="Lit: "];
+n37 [shape=box, label="Var: x"];
+n38 [shape=ellipse, label="regex_exec"];
+n39 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n40 [shape=box, label="Lit: 2"];
+n41 [shape=box, label="Var: x"];
+n42 [shape=ellipse, label="regex_match"];
+n43 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n44 [shape=box, label="Lit: 2"];
+n45 [shape=box, label="Var: x"];
+n46 [shape=box, label="Var: x"];
+n47 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n15 -> n8;
+n12 -> n13;
+n12 -> n14;
+n12 -> n15;
+n19 -> n12;
+n16 -> n17;
+n16 -> n18;
+n16 -> n19;
+n23 -> n16;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n27 -> n20;
+n24 -> n25;
+n24 -> n26;
+n24 -> n27;
+n31 -> n24;
+n28 -> n29;
+n28 -> n30;
+n28 -> n31;
+n32 -> n28;
+n32 -> n33;
+n37 -> n32;
+n34 -> n35;
+n34 -> n36;
+n34 -> n37;
+n41 -> n34;
+n38 -> n39;
+n38 -> n40;
+n38 -> n41;
+n45 -> n38;
+n42 -> n43;
+n42 -> n44;
+n42 -> n45;
+n46 -> n42;
+n47 -> n46;
+}

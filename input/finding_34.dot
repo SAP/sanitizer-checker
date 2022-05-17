@@ -1,0 +1,95 @@
+// Finding: 265a2974-32f4-4c5b-8c66-0d9f97804399
+// Finding.url: https://www.example44.com/studium/qualitaetssicherung/akkreditierung/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5e49a250a6df4f88af56a612db84cbab')><!--/*
+// Finding.parentloc: https://www.example44.com/studium/qualitaetssicherung/akkreditierung/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5e49a250a6df4f88af56a612db84cbab')><!--/*
+// Finding.domain: www.example44.com
+// Finding.base_domain: example44.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: 
+// Sanitizer.location: https://www.example44.com/typo3conf/ext/uos_core/Resources/Public/JavaScripts/docbehaviour.js?1614795201 - <anonymous>:1:134
+// Finding.begin: 110
+// Finding.end: 153
+// Finding.original_uuid: 278e2988-72dd-461d-b970-7132cda31f48
+// Finding.TwentyFiveMillionFlowsId: 143059921
+// Finding.script: https://www.example44.com/typo3conf/ext/uos_core/Resources/Public/JavaScripts/jquery.min.js?1603457983
+// Finding.line: 2
+// Exploit.uuid: 5e49a250-a6df-4f88-af56-a612db84cbab
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 30
+// Exploit.end_taint_url: 73
+// Exploit.replace_begin_url: 73
+// Exploit.replace_end_url: 73
+// Exploit.replace_begin_param: 153
+// Exploit.replace_end_param: 153
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1528815357
+// DepGraph.sanitizer_hash: 794382289
+// Part of the URL ('##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5e49a250a6df4f88af56a612db84cbab')><!--/*') found in left hand side of replace 
+// Part of the URL ('www.example44.com') found in left hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: ##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5e49a250a6df4f88af56a612db84cbab')><!--/*"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: www.example44.com"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: https:"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="str_replace_once"];
+n14 [shape=box, label="RegExp: /\//"];
+n15 [shape=box, label="Lit: /"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n17 -> n13;
+n18 -> n17;
+}

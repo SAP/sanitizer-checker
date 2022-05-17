@@ -1,0 +1,79 @@
+// Finding: a52bc0d7-6cc3-40c0-8672-384516429de0
+// Finding.url: https://shop.example380.com/index.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('d1fb72a53e0e4356ae8317545033794b')><!--/*
+// Finding.parentloc: https://shop.example380.com/index.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('d1fb72a53e0e4356ae8317545033794b')><!--/*
+// Finding.domain: shop.example380.com
+// Finding.base_domain: example380.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: clean/<
+// Sanitizer.location: https://i0.example381.com/j/lib/jquery.js - each:12:7963
+// Finding.begin: 39
+// Finding.end: 270
+// Finding.original_uuid: 6bd30c04-394c-4db9-a37e-25174801216b
+// Finding.TwentyFiveMillionFlowsId: -1718267580
+// Finding.script: https://i0.example381.com/j/lib/jquery.js
+// Finding.line: 12
+// Exploit.uuid: d1fb72a5-3e0e-4356-ae83-17545033794b
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 32
+// Exploit.replace_begin_url: 32
+// Exploit.replace_end_url: 32
+// Exploit.replace_begin_param: 79
+// Exploit.replace_end_param: 79
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1438431117
+// DepGraph.sanitizer_hash: 288270437
+// Non Finite Regex with function on rhs:  replace((<(\w+)[^>]*?)\/>/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(U,V,T){return T.match(/^(abbr|br|col|img|input|link|meta|param|hr|area|embed)$/i)?U:V+"></"+T+">"}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace((<(\w+)[^>]*?)\/>/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(U,V,T){return T.match(/^(abbr|br|col|img|input|link|meta|param|hr|area|embed)$/i)?U:V+"></"+T+">"}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /(<(\w+)[^>]*?)\/>/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="RegExp: /^\s+/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

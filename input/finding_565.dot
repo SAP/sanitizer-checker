@@ -1,0 +1,16 @@
+
+all=("$x" "$y")
+
+KEYWORDS=("encodeTextFragment"
+"encodeAttrString"
+"encodeURIComponent"
+"encodeURI"
+"escape"
+"RegExp:\ \/\[\\\x00\\\x08\-\\\x0d\\\x22\\\x26\\\x27\\\\/\\\x3c\-\\\x3e\\\\\\\\\\\\x85\\\\u2028\\\\u2029]\/"
+)
+
+for w in "${KEYWORDS[@]}"; do
+    COUNT=`grep -lr "label=\"${w}\"" *.dot | wc -l`
+    echo $w $COUNT
+done 
+

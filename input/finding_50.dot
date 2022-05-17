@@ -1,0 +1,387 @@
+// Finding: 312bb0de-0fb0-4fe4-9963-3acb4bc55825
+// Finding.url: https://pub.example26.com/?spm=a2e114.14922392.0.0.4b2575a5qDtVkw#!/index?spm=&curValue=nav_0
+// Finding.parentloc: https://pub.example26.com/?spm=a2e114.14922392.0.0.4b2575a5qDtVkw#!/index?spm=&curValue=nav_0
+// Finding.domain: pub.example26.com
+// Finding.base_domain: example26.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 240
+// Sanitizer.name: tmpl
+// Sanitizer.location: https://g.example27.com/mm/common-minisite/20200528.114942.131/common-minisite/views/pages/index.js - tmpl:1:3437
+// Finding.begin: 238
+// Finding.end: 243
+// Finding.original_uuid: ada26fd9-f802-472d-abf7-ca2699bb31d4
+// Finding.TwentyFiveMillionFlowsId: 1781516244
+// Finding.script: https://g.example27.com/mm/union-minisite/0.0.4/boot.js
+// Finding.line: 1
+// Exploit.uuid: 197d8331-c9cb-4cc9-b9a2-1deec7667cc7
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: mx-view
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: nav_2"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: nav_2"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 81
+// Exploit.end_taint_url: 86
+// Exploit.replace_begin_url: 81
+// Exploit.replace_end_url: 86
+// Exploit.replace_begin_param: 238
+// Exploit.replace_end_param: 243
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1309167972
+// DepGraph.sanitizer_hash: -2081799712
+// Approximated Implementation for: replace([!')(*]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(': 1, *: 1, (: 1, ): 1), function_rhs: true], 'function(e){return wt[e]}') - Other Exception: ReferenceError: wt is not defined 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /^[^#]*#?!?/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: /index"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="regex_exec"];
+n10 [shape=box, label="RegExp: /([^=&?\/#]+)=?([^&#?]*)/"];
+n11 [shape=box, label="Lit: 2"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="decodeURIComponent"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="encodeURIComponent"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[!')(*]/"];
+n19 [shape=box, label="Lit: "];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: <div mxv="navs,biz" mx-navchange="mx_12changeNav()" mx-view="....1oI5rFYr1gK0jSZFDXXb9yVXa-2199-320.png&width=1280&navs=1&cur="];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: &login=true&user="];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: &loginView="];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: common-minisite%2Fviews%2Fpages%2Flogin-already"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: &logoutUrl="];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: &rightView=common-minisite%2Fviews%2Fpages%2Flogin-btn&rightViewData="];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: 2"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: &rightCeilingShow=true"></div>"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: <div mxv class="bokmXvjEjK clearfix" "];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: >"];
+n41 [shape=ellipse, label="."];
+n42 [shape=box, label="Lit:  "];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit:  "];
+n45 [shape=ellipse, label="."];
+n46 [shape=box, label="Lit: <div mxv="info,biz" class="clearfix" mx-view="common-minisite/....ding: 150px 0;"><span class="loading-anim"></span></div></div>"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: </div>"];
+n49 [shape=ellipse, label="."];
+n50 [shape=box, label="Lit: <div mxv class="bokmXvjEjK clearfix" "];
+n51 [shape=ellipse, label="."];
+n52 [shape=box, label="Lit: >"];
+n53 [shape=ellipse, label="."];
+n54 [shape=box, label="Lit:  "];
+n55 [shape=ellipse, label="."];
+n56 [shape=box, label="Lit:  "];
+n57 [shape=ellipse, label="."];
+n58 [shape=box, label="Lit: <div mxv="info,biz" class="clearfix" mx-view="common-minisite/....ding: 150px 0;"><span class="loading-anim"></span></div></div>"];
+n59 [shape=ellipse, label="."];
+n60 [shape=box, label="Lit: </div>"];
+n61 [shape=ellipse, label="."];
+n62 [shape=box, label="Lit: <div mxv class="bokmXvjEjK clearfix" "];
+n63 [shape=ellipse, label="."];
+n64 [shape=box, label="Lit: >"];
+n65 [shape=ellipse, label="."];
+n66 [shape=box, label="Lit:  "];
+n67 [shape=ellipse, label="."];
+n68 [shape=box, label="Lit: <div mxa="bokmXvjE`:_" class="bokmXvjEjR">简单四步，轻松获益</div>"];
+n69 [shape=ellipse, label="."];
+n70 [shape=box, label="Lit:  "];
+n71 [shape=ellipse, label="."];
+n72 [shape=box, label="Lit: <div mxv="info,biz" class="clearfix" mx-view="common-minisite/....ding: 150px 0;"><span class="loading-anim"></span></div></div>"];
+n73 [shape=ellipse, label="."];
+n74 [shape=box, label="Lit: </div>"];
+n75 [shape=ellipse, label="."];
+n76 [shape=box, label="Lit: <div mxv class="bokmXvjEjK clearfix" "];
+n77 [shape=ellipse, label="."];
+n78 [shape=box, label="Lit: >"];
+n79 [shape=ellipse, label="."];
+n80 [shape=box, label="Lit:  "];
+n81 [shape=ellipse, label="."];
+n82 [shape=box, label="Lit:  "];
+n83 [shape=ellipse, label="."];
+n84 [shape=box, label="Lit: <div mxv="info,biz" class="clearfix" mx-view="common-minisite/....ding: 150px 0;"><span class="loading-anim"></span></div></div>"];
+n85 [shape=ellipse, label="."];
+n86 [shape=box, label="Lit: </div>"];
+n87 [shape=ellipse, label="."];
+n88 [shape=box, label="Lit: <div mxv class="bokmXvjEjK clearfix" "];
+n89 [shape=ellipse, label="."];
+n90 [shape=box, label="Lit: >"];
+n91 [shape=ellipse, label="."];
+n92 [shape=box, label="Lit:  "];
+n93 [shape=ellipse, label="."];
+n94 [shape=box, label="Lit:  "];
+n95 [shape=ellipse, label="."];
+n96 [shape=box, label="Lit: <div mxv="info,biz" class="clearfix" mx-view="common-minisite/....ding: 150px 0;"><span class="loading-anim"></span></div></div>"];
+n97 [shape=ellipse, label="."];
+n98 [shape=box, label="Lit: </div>"];
+n99 [shape=ellipse, label="."];
+n100 [shape=box, label="Lit: <div mxv class="bokmXvjEjK clearfix" "];
+n101 [shape=ellipse, label="."];
+n102 [shape=box, label="Lit: >"];
+n103 [shape=ellipse, label="."];
+n104 [shape=box, label="Lit:  "];
+n105 [shape=ellipse, label="."];
+n106 [shape=box, label="Lit:  "];
+n107 [shape=ellipse, label="."];
+n108 [shape=box, label="Lit: <div mxv="info,biz" class="clearfix" mx-view="common-minisite/....ding: 150px 0;"><span class="loading-anim"></span></div></div>"];
+n109 [shape=ellipse, label="."];
+n110 [shape=box, label="Lit: </div>"];
+n111 [shape=ellipse, label="."];
+n112 [shape=box, label="Lit: <div mxv class="bokmXvjEjK clearfix" "];
+n113 [shape=ellipse, label="."];
+n114 [shape=box, label="Lit: >"];
+n115 [shape=ellipse, label="."];
+n116 [shape=box, label="Lit:  "];
+n117 [shape=ellipse, label="."];
+n118 [shape=box, label="Lit:  "];
+n119 [shape=ellipse, label="."];
+n120 [shape=box, label="Lit: <div mxv="info,biz" class="clearfix" mx-view="common-minisite/....ding: 150px 0;"><span class="loading-anim"></span></div></div>"];
+n121 [shape=ellipse, label="."];
+n122 [shape=box, label="Lit: </div>"];
+n123 [shape=ellipse, label="."];
+n124 [shape=box, label="Lit: <div mxv class="bokmXvjEjK clearfix" "];
+n125 [shape=ellipse, label="."];
+n126 [shape=box, label="Lit: >"];
+n127 [shape=ellipse, label="."];
+n128 [shape=box, label="Lit:  "];
+n129 [shape=ellipse, label="."];
+n130 [shape=box, label="Lit:  "];
+n131 [shape=ellipse, label="."];
+n132 [shape=box, label="Lit: <div mxv="info,biz" class="clearfix" mx-view="common-minisite/....ding: 150px 0;"><span class="loading-anim"></span></div></div>"];
+n133 [shape=ellipse, label="."];
+n134 [shape=box, label="Lit: </div>"];
+n135 [shape=ellipse, label="."];
+n136 [shape=box, label="Lit: <div mxv class="bokmXvjEjK clearfix" "];
+n137 [shape=ellipse, label="."];
+n138 [shape=box, label="Lit: >"];
+n139 [shape=ellipse, label="."];
+n140 [shape=box, label="Lit:  "];
+n141 [shape=ellipse, label="."];
+n142 [shape=box, label="Lit: <div mxa="bokmXvjE`:_" class="bokmXvjEjR">学习与支持</div>"];
+n143 [shape=ellipse, label="."];
+n144 [shape=box, label="Lit:  "];
+n145 [shape=ellipse, label="."];
+n146 [shape=box, label="Lit: <div mxv="info,biz" class="clearfix" mx-view="common-minisite/....ding: 150px 0;"><span class="loading-anim"></span></div></div>"];
+n147 [shape=ellipse, label="."];
+n148 [shape=box, label="Lit: </div>"];
+n149 [shape=ellipse, label="."];
+n150 [shape=box, label="Lit: <div mxv class="bokmXvjEjK clearfix" "];
+n151 [shape=ellipse, label="."];
+n152 [shape=box, label="Lit: >"];
+n153 [shape=ellipse, label="."];
+n154 [shape=box, label="Lit:  "];
+n155 [shape=ellipse, label="."];
+n156 [shape=box, label="Lit:  "];
+n157 [shape=ellipse, label="."];
+n158 [shape=box, label="Lit: <div mxv="info,biz" class="clearfix" mx-view="common-minisite/....ding: 150px 0;"><span class="loading-anim"></span></div></div>"];
+n159 [shape=ellipse, label="."];
+n160 [shape=box, label="Lit: </div>"];
+n161 [shape=ellipse, label="."];
+n162 [shape=box, label="Lit: <div class="bokmXvjEjO" mx-view="common-minisite/gallery/mx-footer/index?width=1280&products=true&bizCode=unionMedia"></div>"];
+n163 [shape=box, label="Var: x"];
+n164 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n14 -> n9;
+n13 -> n14;
+n16 -> n13;
+n15 -> n16;
+n20 -> n15;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n22;
+n21 -> n17;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n33 -> n31;
+n33 -> n34;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n41 -> n39;
+n41 -> n42;
+n43 -> n41;
+n43 -> n44;
+n45 -> n43;
+n45 -> n46;
+n47 -> n45;
+n47 -> n48;
+n49 -> n47;
+n49 -> n50;
+n51 -> n49;
+n51 -> n52;
+n53 -> n51;
+n53 -> n54;
+n55 -> n53;
+n55 -> n56;
+n57 -> n55;
+n57 -> n58;
+n59 -> n57;
+n59 -> n60;
+n61 -> n59;
+n61 -> n62;
+n63 -> n61;
+n63 -> n64;
+n65 -> n63;
+n65 -> n66;
+n67 -> n65;
+n67 -> n68;
+n69 -> n67;
+n69 -> n70;
+n71 -> n69;
+n71 -> n72;
+n73 -> n71;
+n73 -> n74;
+n75 -> n73;
+n75 -> n76;
+n77 -> n75;
+n77 -> n78;
+n79 -> n77;
+n79 -> n80;
+n81 -> n79;
+n81 -> n82;
+n83 -> n81;
+n83 -> n84;
+n85 -> n83;
+n85 -> n86;
+n87 -> n85;
+n87 -> n88;
+n89 -> n87;
+n89 -> n90;
+n91 -> n89;
+n91 -> n92;
+n93 -> n91;
+n93 -> n94;
+n95 -> n93;
+n95 -> n96;
+n97 -> n95;
+n97 -> n98;
+n99 -> n97;
+n99 -> n100;
+n101 -> n99;
+n101 -> n102;
+n103 -> n101;
+n103 -> n104;
+n105 -> n103;
+n105 -> n106;
+n107 -> n105;
+n107 -> n108;
+n109 -> n107;
+n109 -> n110;
+n111 -> n109;
+n111 -> n112;
+n113 -> n111;
+n113 -> n114;
+n115 -> n113;
+n115 -> n116;
+n117 -> n115;
+n117 -> n118;
+n119 -> n117;
+n119 -> n120;
+n121 -> n119;
+n121 -> n122;
+n123 -> n121;
+n123 -> n124;
+n125 -> n123;
+n125 -> n126;
+n127 -> n125;
+n127 -> n128;
+n129 -> n127;
+n129 -> n130;
+n131 -> n129;
+n131 -> n132;
+n133 -> n131;
+n133 -> n134;
+n135 -> n133;
+n135 -> n136;
+n137 -> n135;
+n137 -> n138;
+n139 -> n137;
+n139 -> n140;
+n141 -> n139;
+n141 -> n142;
+n143 -> n141;
+n143 -> n144;
+n145 -> n143;
+n145 -> n146;
+n147 -> n145;
+n147 -> n148;
+n149 -> n147;
+n149 -> n150;
+n151 -> n149;
+n151 -> n152;
+n153 -> n151;
+n153 -> n154;
+n155 -> n153;
+n155 -> n156;
+n157 -> n155;
+n157 -> n158;
+n159 -> n157;
+n159 -> n160;
+n161 -> n159;
+n161 -> n162;
+n163 -> n161;
+n164 -> n163;
+}

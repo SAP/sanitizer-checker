@@ -1,0 +1,118 @@
+// Finding: e3f8c1c0-8bb8-4f2f-80eb-f70d46656857
+// Finding.url: http://energy.example225.com/##'></iframe></style></script></object></embed></textarea><script>taintfoxLog('8da24724027b44c3956cca96f6bd37d7')</script><!--/*
+// Finding.parentloc: http://energy.example225.com/##'></iframe></style></script></object></embed></textarea><script>taintfoxLog('8da24724027b44c3956cca96f6bd37d7')</script><!--/*
+// Finding.domain: energy.example225.com
+// Finding.base_domain: example225.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 6
+// Sanitizer.name: 
+// Sanitizer.location: http://energy.example225.com/images/zanyw_20200407_real_calc.js - <anonymous>:104:56
+// Finding.begin: 172
+// Finding.end: 436
+// Finding.original_uuid: 2307d63a-fb6f-4f92-98e9-4db6035f206d
+// Finding.TwentyFiveMillionFlowsId: -1391053074
+// Finding.script: http://energy.example225.com/images/zanyw_20200407_real_calc.js
+// Finding.line: 123
+// Exploit.uuid: 8da24724-027b-44c3-956c-ca96f6bd37d7
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: script
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 28
+// Exploit.replace_begin_url: 28
+// Exploit.replace_end_url: 28
+// Exploit.replace_begin_param: 204
+// Exploit.replace_end_param: 204
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1365796131
+// DepGraph.sanitizer_hash: 285196938
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="escape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="escape"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: agentStr=Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:80.0) Gecko/20100101 Firefox/80.0&referer=&isWx=false&url="];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &javaEnabled="];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: false"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: &screenRes="];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: 1366*768"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: &cookieEnabled="];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: true"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: &platform="];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: Linux x86_64"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: &uid=1620742433383_7695145332&accessType=new"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: <script src='http://search.example225.com:6002/real_calc_w/rcw?"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: '></script>"];
+n29 [shape=box, label="Var: x"];
+n30 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n4 -> n1;
+n3 -> n4;
+n5 -> n6;
+n5 -> n3;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n26;
+n25 -> n23;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n30 -> n29;
+}

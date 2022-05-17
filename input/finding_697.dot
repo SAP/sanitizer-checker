@@ -1,0 +1,93 @@
+// Finding: 273c37d6-bdf1-41ce-9f9c-259f698f367e
+// Finding.url: https://example21.com/admissions/how-to-apply/#";};});taintfoxLog('75efde1005ee4017a5956e59af5353fa')//
+// Finding.parentloc: https://example21.com/admissions/how-to-apply/#";};});taintfoxLog('75efde1005ee4017a5956e59af5353fa')//
+// Finding.domain: example21.com
+// Finding.base_domain: example21.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 32
+// Sanitizer.name: kd[7]
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-W5SR4XD - kd[7]:2528:426
+// Finding.begin: 118
+// Finding.end: 121
+// Finding.original_uuid: 3262de6b-f2ed-4f7d-a3ca-c186a21a0312
+// Finding.TwentyFiveMillionFlowsId: 1588107044
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-W5SR4XD
+// Finding.line: 3
+// Exploit.uuid: 75efde10-05ee-4017-a595-6e59af5353fa
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: =; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;Domain=example21.com
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: ";};});
+// Exploit.break_in: //
+// Exploit.payload: ";};});taintfoxLog(1)//
+// Exploit.begin_taint_url: 8
+// Exploit.end_taint_url: 11
+// Exploit.replace_begin_url: 40
+// Exploit.replace_end_url: 40
+// Exploit.replace_begin_param: 121
+// Exploit.replace_end_param: 121
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 813219999
+// DepGraph.sanitizer_hash: -647452591
+// Merged split and join statements 
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, =: 1), function_rhs: true], 'function(a){return ud[a]}') - Other Exception: ReferenceError: ud is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Lit: 40"];
+n5 [shape=ellipse, label="split"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /[.]/"];
+n10 [shape=box, label="Lit: ."];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="preg_replace"];
+n13 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/"];
+n14 [shape=box, label="Lit: "];
+n15 [shape=box, label="Var: x"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n7 -> n1;
+n5 -> n6;
+n5 -> n7;
+n11 -> n5;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n15 -> n8;
+n12 -> n13;
+n12 -> n14;
+n12 -> n15;
+n16 -> n12;
+n17 -> n16;
+}

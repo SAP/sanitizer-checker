@@ -1,0 +1,84 @@
+// Finding: eb3e217c-d757-4b87-a59b-679d8761089b
+// Finding.url: https://www.example267.com/static/croatia2012/index.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('80f70050faa04d8bbc3e64d61a66b5f6')><!--/*
+// Finding.parentloc: https://www.example267.com/static/croatia2012/index.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('80f70050faa04d8bbc3e64d61a66b5f6')><!--/*
+// Finding.domain: www.example267.com
+// Finding.base_domain: example267.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: b.fn.addSocial/<
+// Sanitizer.location: https://www.example267.com/static/croatia2012/res/skin.min.js?v=4.1.2 - b.fn.addSocial/<:101:336
+// Finding.begin: 69
+// Finding.end: 123
+// Finding.original_uuid: c257d7e5-243e-4792-ae03-dea50cc5e143
+// Finding.TwentyFiveMillionFlowsId: -1612907269
+// Finding.script: https://www.example267.com/static/croatia2012/res/jquery-1.8.3.min.js
+// Finding.line: 2
+// Exploit.uuid: 80f70050-faa0-4d8b-bc3e-64d61a66b5f6
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 54
+// Exploit.replace_begin_url: 54
+// Exploit.replace_end_url: 54
+// Exploit.replace_begin_param: 90
+// Exploit.replace_end_param: 90
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 57812364
+// DepGraph.sanitizer_hash: 1103199522
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /[%]/"];
+n6 [shape=box, label="Lit: %25"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: <a href="mailto:?subject=Check%20this%20out&body=Croatia%202012%0D%0A"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: " class="email">Email</a>"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n9;
+n8 -> n4;
+n10 -> n8;
+n10 -> n11;
+n12 -> n10;
+n13 -> n12;
+}

@@ -1,0 +1,102 @@
+// Finding: c115cfa3-1915-4a7c-99f0-d9c3631cee65
+// Finding.url: https://s.example3.com/embed-widget/forex-cross-rates/?locale=pt#{"width":"300","height":"450","currencies":["A</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b15fe27f69ff43eebedc7966c2749e1c')><!--/*","EUR","USD","ZAR","JPY","GBP","CHF","AUD","CAD","NZD","CNY"],"utm_source":"www.angop.ao","utm_medium":"widget_new","utm_campaign":"forex-cross-rates"}
+// Finding.parentloc: https://s.example3.com/embed-widget/forex-cross-rates/?locale=pt#{"width":"300","height":"450","currencies":["A</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b15fe27f69ff43eebedc7966c2749e1c')><!--/*","EUR","USD","ZAR","JPY","GBP","CHF","AUD","CAD","NZD","CNY"],"utm_source":"www.angop.ao","utm_medium":"widget_new","utm_campaign":"forex-cross-rates"}
+// Finding.domain: s.example3.com
+// Finding.base_domain: example3.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: i
+// Sanitizer.location: https://s.example3.com/static/bundles/embed/embed_forex_cross_rates_widget.07d0228a483172a485ab.js - om86/c</e.prototype._initTable/<:82:1108
+// Finding.begin: 176
+// Finding.end: 179
+// Finding.original_uuid: 1e4326b0-119b-4cab-a6be-4241e1f67821
+// Finding.TwentyFiveMillionFlowsId: -2060528405
+// Finding.script: https://s.example3.com/static/bundles/embed/embed_forex_cross_rates_widget.07d0228a483172a485ab.js
+// Finding.line: 82
+// Exploit.uuid: b15fe27f-69ff-43ee-bedc-7966c2749e1c
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: A
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: A</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: A</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 113
+// Exploit.end_taint_url: 116
+// Exploit.replace_begin_url: 113
+// Exploit.replace_end_url: 116
+// Exploit.replace_begin_param: 44
+// Exploit.replace_end_param: 47
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 514862965
+// DepGraph.sanitizer_hash: 514862965
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[&]/"];
+n3 [shape=box, label="Lit: &#38;"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[>]/"];
+n7 [shape=box, label="Lit: &#62;"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /["]/"];
+n11 [shape=box, label="Lit: &#34;"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[<]/"];
+n15 [shape=box, label="Lit: &#60;"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[']/"];
+n19 [shape=box, label="Lit: &#39;"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n22 -> n21;
+}

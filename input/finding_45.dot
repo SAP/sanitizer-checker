@@ -1,0 +1,125 @@
+// Finding: 12461c2a-d1d8-4738-a67d-6fd379b0da2e
+// Finding.url: https://www.example56.com/uk/thankyou?rppr=explore_realplayer#";});taintfoxLog('ac52021441154a7f84d74c1cc7a1eccd')//
+// Finding.parentloc: https://www.example56.com/uk/thankyou?rppr=explore_realplayer#";});taintfoxLog('ac52021441154a7f84d74c1cc7a1eccd')//
+// Finding.domain: www.example56.com
+// Finding.base_domain: example56.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 9
+// Sanitizer.name: bc
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-NSTXK2 - bc:340:455
+// Finding.begin: 42
+// Finding.end: 50
+// Finding.original_uuid: 5ec3fd80-2eb7-4252-b6ec-deb5babe5b5d
+// Finding.TwentyFiveMillionFlowsId: 1003563657
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-NSTXK2
+// Finding.line: 3
+// Exploit.uuid: ac520214-4115-4a7f-84d7-4c1cc7a1eccd
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: https://www.example56.com/uk/thankyou?rppr=explore_realplayer
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: ";});
+// Exploit.break_in: //
+// Exploit.payload: ";});taintfoxLog(1)//
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 56
+// Exploit.replace_end_url: 56
+// Exploit.replace_begin_param: 26
+// Exploit.replace_end_param: 26
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1826516237
+// DepGraph.sanitizer_hash: 1481085582
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, =: 1), function_rhs: true], 'function(a){return Cb[a]}') - Other Exception: ReferenceError: Cb is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Lit: 56"];
+n5 [shape=ellipse, label="substr"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Lit: 0"];
+n8 [shape=box, label="Lit: 32"];
+n9 [shape=ellipse, label="substr"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=box, label="Lit: 8"];
+n12 [shape=ellipse, label="substr"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=box, label="Lit: 12"];
+n15 [shape=ellipse, label="substr"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=box, label="Lit: 1"];
+n18 [shape=ellipse, label="preg_replace"];
+n19 [shape=box, label="RegExp: /\//"];
+n20 [shape=box, label="Lit: _"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=ellipse, label="."];
+n23 [shape=box, label="Lit: Website:"];
+n24 [shape=ellipse, label="preg_replace"];
+n25 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/"];
+n26 [shape=box, label="Lit: "];
+n27 [shape=box, label="Var: x"];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit: "];
+n30 [shape=ellipse, label="."];
+n31 [shape=box, label="Lit: "];
+n32 [shape=box, label="Var: x"];
+n33 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n9 -> n11;
+n13 -> n9;
+n12 -> n13;
+n12 -> n14;
+n16 -> n12;
+n15 -> n16;
+n15 -> n17;
+n21 -> n15;
+n18 -> n19;
+n18 -> n20;
+n18 -> n21;
+n22 -> n23;
+n22 -> n18;
+n27 -> n22;
+n24 -> n25;
+n24 -> n26;
+n24 -> n27;
+n28 -> n29;
+n28 -> n24;
+n30 -> n28;
+n30 -> n31;
+n32 -> n30;
+n33 -> n32;
+}

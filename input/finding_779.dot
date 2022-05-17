@@ -1,0 +1,126 @@
+// Finding: 6cd8a8b7-7a0a-4148-b103-02adfa2212a8
+// Finding.url: https://example11.com/miniwidgetembed/?Equities=S&P500,NQ100,Dow30,Nikkei225,FTSE100,DAX,CAC40,Hang Seng&Commodities=Emini,Euro,Gold,Oil,Gas,Corn&Bonds=US 2YR,US 10YR,US 30YR,Euro Bund,Euro BTP,Euro BOBL&Forex=FX:EURUSD,FX:GBPUSD,FX:USDJPY,FX:USDCHF,FX:AUDUSD"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('d2245a921fc94a24933ace842cde8a21')><!--/*,FX:USDCAD&tabs=Equities,Commodities,Bonds,Forex&S&P500=SPX500&NQ100=NAS100&Dow30=DOWI&Nikkei225=JPN225&FTSE100=FX:UK100|all&DAX=INDEX:DAX|all&CAC40=INDEX:CAC|all&Hang Seng=INDEX:HSI|all&Emini=ES1!&Euro=E61!&Gold=GC1!&Oil=CL1!&Gas=NG1!&Corn=ZC1!&US 2YR=TUZ2015&US 10YR=TYZ2015&US 30YR=US1!&Euro Bund=FX:BUND&Euro BTP=EUREX:II1!&Euro BOBL=EUREX:HR1!&activeTickerBackgroundColor=#EDF0F3&trendLineColor=#4bafe9&underLineColor=#dbeffb&fontColor=#83888D&gridLineColor=#E9E9EA&large_chart_url=https://www.example3.com/chart/&width=100%&height=100%
+// Finding.parentloc: https://example11.com/miniwidgetembed/?Equities=S&P500,NQ100,Dow30,Nikkei225,FTSE100,DAX,CAC40,Hang Seng&Commodities=Emini,Euro,Gold,Oil,Gas,Corn&Bonds=US 2YR,US 10YR,US 30YR,Euro Bund,Euro BTP,Euro BOBL&Forex=FX:EURUSD,FX:GBPUSD,FX:USDJPY,FX:USDCHF,FX:AUDUSD"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('d2245a921fc94a24933ace842cde8a21')><!--/*,FX:USDCAD&tabs=Equities,Commodities,Bonds,Forex&S&P500=SPX500&NQ100=NAS100&Dow30=DOWI&Nikkei225=JPN225&FTSE100=FX:UK100|all&DAX=INDEX:DAX|all&CAC40=INDEX:CAC|all&Hang Seng=INDEX:HSI|all&Emini=ES1!&Euro=E61!&Gold=GC1!&Oil=CL1!&Gas=NG1!&Corn=ZC1!&US 2YR=TUZ2015&US 10YR=TYZ2015&US 30YR=US1!&Euro Bund=FX:BUND&Euro BTP=EUREX:II1!&Euro BOBL=EUREX:HR1!&activeTickerBackgroundColor=#EDF0F3&trendLineColor=#4bafe9&underLineColor=#dbeffb&fontColor=#83888D&gridLineColor=#E9E9EA&large_chart_url=https://www.example3.com/chart/&width=100%&height=100%
+// Finding.domain: example11.com
+// Finding.base_domain: example11.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 11
+// Sanitizer.name: s/t.escape
+// Sanitizer.location: https://example11.com/static/bundles/embed/embed_mini_widget.4deb8bbb3c5293efed5d.js - s/t.escape:141:395
+// Finding.begin: 177
+// Finding.end: 194
+// Finding.original_uuid: 314e9c5e-97a5-4403-ab1f-b43c081beaf4
+// Finding.TwentyFiveMillionFlowsId: 1562850881
+// Finding.script: https://example11.com/static/bundles/embed/vendors_embed.e8f8312851d14ea7c476.js
+// Finding.line: 24
+// Exploit.uuid: d2245a92-1fc9-4a24-933a-ce842cde8a21
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: title
+// Exploit.quote_type: "
+// Exploit.tag: td
+// Exploit.break_out: FX:AUDUSD"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: FX:AUDUSD"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 265
+// Exploit.end_taint_url: 274
+// Exploit.replace_begin_url: 265
+// Exploit.replace_end_url: 274
+// Exploit.replace_begin_param: 80
+// Exploit.replace_end_param: 89
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1432017487
+// DepGraph.sanitizer_hash: 1989031543
+// Approximated Implementation for: replace([&<>"'`=\/]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, =: 1), function_rhs: true], 'function(t){return u[t]}') - Other Exception: ReferenceError: u is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="regex_exec"];
+n5 [shape=box, label="RegExp: /([^&=]+)=?([^&]*)/"];
+n6 [shape=box, label="Lit: 2"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /\+/"];
+n10 [shape=box, label="Lit:  "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="decodeURIComponent"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="preg_replace"];
+n15 [shape=box, label="RegExp: /<\/?[^>]+(>|$)/"];
+n16 [shape=box, label="Lit: "];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="split"];
+n19 [shape=box, label="Lit: ,"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="encodeURIComponent"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="str_replace_once"];
+n24 [shape=box, label="Lit: {tvprosymbol}"];
+n25 [shape=box, label="Lit: FX%3AAUDUSD%22%3E"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: https:&#x2F;&#x2F;www.example3.com&#x2F;chart&#x2F;?symbol&#x3D;"];
+n29 [shape=ellipse, label="preg_replace"];
+n30 [shape=box, label="RegExp: /[&<>"'`=\/]/"];
+n31 [shape=box, label="Lit: "];
+n32 [shape=box, label="Var: x"];
+n33 [shape=box, label="Var: x"];
+n34 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n13 -> n8;
+n12 -> n13;
+n17 -> n12;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n20 -> n14;
+n18 -> n19;
+n18 -> n20;
+n22 -> n18;
+n21 -> n22;
+n26 -> n21;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n27 -> n28;
+n27 -> n23;
+n32 -> n27;
+n29 -> n30;
+n29 -> n31;
+n29 -> n32;
+n33 -> n29;
+n34 -> n33;
+}

@@ -1,0 +1,98 @@
+// Finding: 85571fcc-3ca5-4543-b3f1-d0eb3dd3c95b
+// Finding.url: https://www.example147.com/a-z/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a7fdceba56714df0ae0eaf07479093ad')><!--/*
+// Finding.parentloc: https://www.example147.com/a-z/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a7fdceba56714df0ae0eaf07479093ad')><!--/*
+// Finding.domain: www.example147.com
+// Finding.base_domain: example147.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: trim
+// Sanitizer.location: https://www.example147.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp - trim:1:3115
+// Finding.begin: 85
+// Finding.end: 90
+// Finding.original_uuid: e96ca6ac-c53b-4ea3-90cf-0723e8d1d506
+// Finding.TwentyFiveMillionFlowsId: -800110785
+// Finding.script: https://www.example147.com/wp-includes/js/jquery/jquery.js?ver=1.12.4-wp
+// Finding.line: 1
+// Exploit.uuid: a7fdceba-5671-4df0-ae0e-af07479093ad
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: button
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 29
+// Exploit.replace_end_url: 29
+// Exploit.replace_begin_param: 66
+// Exploit.replace_end_param: 66
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 2047493340
+// DepGraph.sanitizer_hash: -1657337171
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="decodeURI"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="regex_exec"];
+n4 [shape=box, label="RegExp: /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/"];
+n5 [shape=box, label="Lit: 9"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: #"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: search"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: <button class="link-anchor" title="Click to copy link" href=""];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: "><span class="visuallyhidden">Click to copy link</span></button>"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/"];
+n17 [shape=box, label="Lit: "];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n7 -> n3;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n12;
+n11 -> n9;
+n13 -> n11;
+n13 -> n14;
+n18 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n20 -> n19;
+}

@@ -1,0 +1,94 @@
+// Finding: ba6c0cac-7453-4612-9307-733924a70eff
+// Finding.url: https://store.example345.com/store/results/stamps/_/N-9y93lv?_requestid=2900481##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b2c1575776af4eebb0ca78bfbe0eeac6')><!--/*
+// Finding.parentloc: https://store.example345.com/store/results/stamps/_/N-9y93lv?_requestid=2900481##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b2c1575776af4eebb0ca78bfbe0eeac6')><!--/*
+// Finding.domain: store.example345.com
+// Finding.base_domain: example345.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: prepURL
+// Sanitizer.location: https://store.example345.com/global-elements/header/script/ge-login.js - <anonymous>:22:15
+// Finding.begin: 126
+// Finding.end: 137
+// Finding.original_uuid: 788dd666-974d-4968-96ea-6c4810654396
+// Finding.TwentyFiveMillionFlowsId: 1758173714
+// Finding.script: https://store.example345.com/global-elements/header/script/ge-login.js
+// Finding.line: 254
+// Exploit.uuid: b2c15757-76af-4eeb-b0ca-78bfbe0eeac6
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 54
+// Exploit.end_taint_url: 65
+// Exploit.replace_begin_url: 73
+// Exploit.replace_end_url: 73
+// Exploit.replace_begin_param: 137
+// Exploit.replace_end_param: 137
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1791112428
+// DepGraph.sanitizer_hash: 165300179
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: %3D"];
+n3 [shape=ellipse, label="preg_replace"];
+n4 [shape=box, label="RegExp: /[=]/"];
+n5 [shape=box, label="Lit: %3D"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /[&]/"];
+n9 [shape=box, label="Lit: %26"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: https%3A"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[:]/"];
+n15 [shape=box, label="Lit: %3A"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=doubleoctagon, label="Return: x"];
+n1 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n10 -> n3;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n11 -> n12;
+n11 -> n7;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n17 -> n13;
+n18 -> n17;
+}

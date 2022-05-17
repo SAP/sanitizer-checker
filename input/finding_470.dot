@@ -1,0 +1,134 @@
+// Finding: dfd451c7-0f0d-4a7e-8869-9584b26c566f
+// Finding.url: https://www.example196.com/product/618847/crucial-ballistix-gaming-16gb-(2-x-8gb)-ddr4-3200-pc4-25600-cl16-dual-channel-desktop-memory-kit-bl2k8g32c16u4b-black##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7b6d0273ac3b41f5a35cd608a29daf93')><!--/*
+// Finding.parentloc: https://www.example196.com/product/618847/crucial-ballistix-gaming-16gb-(2-x-8gb)-ddr4-3200-pc4-25600-cl16-dual-channel-desktop-memory-kit-bl2k8g32c16u4b-black##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7b6d0273ac3b41f5a35cd608a29daf93')><!--/*
+// Finding.domain: www.example196.com
+// Finding.base_domain: example196.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 26
+// Sanitizer.name: n.fn.init
+// Sanitizer.location: https://www.example196.com/bundles/js/DesktopAsyncJScompiled?v=6B904175LSdecsgr5nxoTyD4bfjBpkGn2ygEkAIWfes1 - n.fn.init:1:32361
+// Finding.begin: 85
+// Finding.end: 86
+// Finding.original_uuid: 2a7ce3fb-c960-4464-91f8-7075544cd52d
+// Finding.TwentyFiveMillionFlowsId: -1598924776
+// Finding.script: https://www.example196.com/bundles/js/DesktopJScompiled?v=TASp_O1CRHjJHYcOFB_K2bdb8sftmR3fUMn59NgGgWs1
+// Finding.line: 1
+// Exploit.uuid: 7b6d0273-ac3b-41f5-a35c-d608a29daf93
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 27
+// Exploit.replace_begin_url: 160
+// Exploit.replace_end_url: 160
+// Exploit.replace_begin_param: 136
+// Exploit.replace_end_param: 136
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1939154948
+// DepGraph.sanitizer_hash: 228823957
+// Merged split and join statements 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace(([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, \: 1, :: 1, =: 1, %: 1, *: 1,  : 1, ,: 1, -: 1, ;: 1, ^: 1, |: 1, (: 1, ): 1, [: 1, ]: 1, {: 1, }: 1), function_rhs: true], 'function(n,t){return t?"\0"===n?"�":n.slice(0,-1)+"\\"+n.charCodeAt(n.length-1).toString(16)+" ":"\\"+n}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, \: 1, :: 1, =: 1, %: 1, *: 1,  : 1, ,: 1, -: 1, ;: 1, ^: 1, |: 1, (: 1, ): 1, [: 1, ]: 1, {: 1, }: 1), function_rhs: true], 'function(n,t){return t?"\0"===n?"�":n.slice(0,-1)+"\\"+n.charCodeAt(n.length-1).toString(16)+" ":"\\"+n}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /[-]/"];
+n6 [shape=box, label="Lit: -"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="regex_exec"];
+n9 [shape=box, label="RegExp: /([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/"];
+n10 [shape=box, label="Lit: 0"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="."];
+n13 [shape=box, label="Lit: \"];
+n14 [shape=ellipse, label="preg_replace"];
+n15 [shape=box, label="RegExp: /([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/"];
+n16 [shape=box, label="Lit: "];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: [data-fancybox='"];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: ']"];
+n22 [shape=ellipse, label="preg_replace"];
+n23 [shape=box, label="RegExp: /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/"];
+n24 [shape=box, label="Lit: "];
+n25 [shape=box, label="Var: x"];
+n26 [shape=ellipse, label="regex_exec"];
+n27 [shape=box, label="RegExp: /^([^<]*)(<[\w\W]+>)([^>]*)$/"];
+n28 [shape=box, label="Lit: 2"];
+n29 [shape=box, label="Var: x"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n12 -> n13;
+n12 -> n8;
+n17 -> n12;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n18 -> n19;
+n18 -> n14;
+n20 -> n18;
+n20 -> n21;
+n25 -> n20;
+n22 -> n23;
+n22 -> n24;
+n22 -> n25;
+n29 -> n22;
+n26 -> n27;
+n26 -> n28;
+n26 -> n29;
+n30 -> n26;
+n31 -> n30;
+}

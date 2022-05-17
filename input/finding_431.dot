@@ -1,0 +1,102 @@
+// Finding: c1b98532-de9d-43f3-b23b-5babc26ce926
+// Finding.url: https://www.example126.com/entertainment/news/2021/05/14/kiji/20210514s00041000475000c.html##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('2b3cf09efa124e5aa964368fe9b88fcb')</script><!--/*
+// Finding.parentloc: https://www.example126.com/entertainment/news/2021/05/14/kiji/20210514s00041000475000c.html##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('2b3cf09efa124e5aa964368fe9b88fcb')</script><!--/*
+// Finding.domain: www.example126.com
+// Finding.base_domain: example126.com
+// Finding.source: document.documentURI
+// Finding.sink: document.write
+// Sanitizer.score: 5
+// Sanitizer.name: g
+// Sanitizer.location: https://xml.affiliate.example9.com/widget/js/rakuten_widget.js - b:1:16305
+// Finding.begin: 1844
+// Finding.end: 1870
+// Finding.original_uuid: 543fbf8e-5314-419d-8327-63a2d3e204d1
+// Finding.TwentyFiveMillionFlowsId: -241913890
+// Finding.script: https://xml.affiliate.example9.com/widget/js/rakuten_widget.js
+// Finding.line: 1
+// Exploit.uuid: 2b3cf09e-fa12-4e5a-a964-368fe9b88fcb
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 91
+// Exploit.replace_begin_url: 91
+// Exploit.replace_end_url: 91
+// Exploit.replace_begin_param: 1676
+// Exploit.replace_end_param: 1676
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -209211070
+// DepGraph.sanitizer_hash: -1953110809
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[&]/"];
+n3 [shape=box, label="Lit: &amp;"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /["]/"];
+n7 [shape=box, label="Lit: &quot;"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /[<]/"];
+n11 [shape=box, label="Lit: &lt;"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[>]/"];
+n15 [shape=box, label="Lit: &gt;"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /\'/"];
+n19 [shape=box, label="Lit: &#39;"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n22 -> n21;
+}

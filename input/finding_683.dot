@@ -1,0 +1,116 @@
+// Finding: 515a7b0f-7c4a-457a-a908-22d5596717fd
+// Finding.url: https://gphirek.example214.com/f1/galeria/20210507-f1-szikrazo-napsutesben-indult-a-felkeszules-a-spanyol-nagydijra.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c8c0fab6b673438097c22c06d51f3240')><!--/*
+// Finding.parentloc: https://gphirek.example214.com/f1/galeria/20210507-f1-szikrazo-napsutesben-indult-a-felkeszules-a-spanyol-nagydijra.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c8c0fab6b673438097c22c06d51f3240')><!--/*
+// Finding.domain: gphirek.example214.com
+// Finding.base_domain: example214.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 8
+// Sanitizer.name: escapeHtml
+// Sanitizer.location: https://cdn.example215.com/s/js/galeria/gphirek-galeria-v1.min.js - escapeHtml:3:3044
+// Finding.begin: 3523
+// Finding.end: 3555
+// Finding.original_uuid: 981335fa-9a81-479d-8668-fb51fab1f0ef
+// Finding.TwentyFiveMillionFlowsId: -203042986
+// Finding.script: https://cdn.example215.com/s/js/galeria/gphirek-galeria-v1.min.js
+// Finding.line: 3
+// Exploit.uuid: c8c0fab6-b673-4380-97c2-2c06d51f3240
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 114
+// Exploit.replace_begin_url: 114
+// Exploit.replace_end_url: 114
+// Exploit.replace_begin_param: 216
+// Exploit.replace_end_param: 216
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 220126692
+// DepGraph.sanitizer_hash: -754060743
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>"'`=\/]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, =: 1), function_rhs: true], 'function fromEntityMap(s){return entityMap[s]}') - Other Exception: ReferenceError: entityMap is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: http://pinterest.com/pin/create/button/?url="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &media="];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: https%3A%2F%2Fcdn.example215.com%2Fs%2Fimg%2Fi%2F2105%2F20210507forma1-spanyol-nagydij-nyikita-mazepin2.jpg%3Fw%3D1024"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: &description="];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: Mazepin%20p%C3%B6rg%C3%A9s%C3%A9vel%20indult%20az%20edz%C3%A9s%20Barcelon%C3%A1ban%20-%20gal%C3%A9ria"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: &#39;"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: media&#x3D;"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: https%3A%2F%2Fcdn.example215.com%2Fs%2Fimg%2Fi%2F2105%2F20210507forma1-spanyol-nagydij-nyikita-mazepin2.jpg%3Fw%3D1024&amp;"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: description&#x3D;"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: Mazepin%20p%C3%B6rg%C3%A9s%C3%A9vel%20indult%20az%20edz%C3%A9s%20Barcelon%C3%A1ban%20-%20gal%C3%A9ria"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /[&<>"'`=\/]/"];
+n25 [shape=box, label="Lit: "];
+n26 [shape=box, label="Var: x"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n26 -> n21;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n27 -> n23;
+n28 -> n27;
+}

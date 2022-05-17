@@ -1,0 +1,92 @@
+// Finding: 238376c5-ca35-4db6-92b6-d356a9b0261c
+// Finding.url: https://photo.example25.com/album_1_86058_513204.htm?3%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src=x%20onerror%3DtaintfoxLog('c6922ab884474a4ab844c0bd538c1c4d')%3E%3C!--%2F*&vt=4&hd=1
+// Finding.parentloc: https://photo.example25.com/album_1_86058_513204.htm?3%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src=x%20onerror%3DtaintfoxLog('c6922ab884474a4ab844c0bd538c1c4d')%3E%3C!--%2F*&vt=4&hd=1
+// Finding.domain: photo.example25.com
+// Finding.base_domain: example25.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 1542
+// Finding.end: 1847
+// Finding.original_uuid: e94bc5b5-cd5d-4990-aec9-b6669ca1c8e9
+// Finding.TwentyFiveMillionFlowsId: -1521830284
+// Finding.script: https://photo.example25.com/album_1_86058_513204.htm?3%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src=x%20onerror%3DtaintfoxLog('c6922ab884474a4ab844c0bd538c1c4d')%3E%3C!--%2F*&vt=4&hd=1
+// Finding.line: 182
+// Exploit.uuid: c6922ab8-8447-4a4a-b844-c0bd538c1c4d
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: 3
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: 3</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: 3</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 75
+// Exploit.replace_begin_url: 47
+// Exploit.replace_end_url: 75
+// Exploit.replace_begin_param: 1600
+// Exploit.replace_end_param: 1657
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -267055440
+// DepGraph.sanitizer_hash: -911750486
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: ref="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &"];
+n9 [shape=ellipse, label="split"];
+n10 [shape=box, label="Lit: &"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="preg_replace"];
+n13 [shape=box, label="RegExp: /[=]/"];
+n14 [shape=box, label="Lit: "];
+n15 [shape=box, label="Var: x"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n7 -> n5;
+n7 -> n8;
+n11 -> n7;
+n9 -> n10;
+n9 -> n11;
+n15 -> n9;
+n12 -> n13;
+n12 -> n14;
+n12 -> n15;
+n16 -> n12;
+n17 -> n16;
+}

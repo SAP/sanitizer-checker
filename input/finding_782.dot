@@ -1,0 +1,78 @@
+// Finding: 301fe76d-666a-4342-80d9-14b3ba00a008
+// Finding.url: https://example76.com/catalog/Turizm-Gostinicy-Restorany##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('11852de7dd804f1f9563d7d2de6ba319')><!--/*
+// Finding.parentloc: https://example76.com/catalog/Turizm-Gostinicy-Restorany##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('11852de7dd804f1f9563d7d2de6ba319')><!--/*
+// Finding.domain: example76.com
+// Finding.base_domain: example76.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: R.fu
+// Sanitizer.location: https://mc.example77.com/metrika/watch.js - R.fu:171:343
+// Finding.begin: 104
+// Finding.end: 353
+// Finding.original_uuid: b4e4b5d2-3042-4f44-b19e-2eec8c0a776a
+// Finding.TwentyFiveMillionFlowsId: -370970000
+// Finding.script: https://i.example76.com/webpackBuild/155.109fce1bf639e365f204.js
+// Finding.line: 1
+// Exploit.uuid: 11852de7-dd80-4f1f-9563-d7d2de6ba319
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 6
+// Exploit.replace_begin_url: 48
+// Exploit.replace_end_url: 48
+// Exploit.replace_begin_param: 15
+// Exploit.replace_end_param: 15
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -95096814
+// DepGraph.sanitizer_hash: -95096814
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /^\s+|\s+$/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="RegExp: /\/$/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

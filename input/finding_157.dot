@@ -1,0 +1,94 @@
+// Finding: 4358a473-0ccc-4262-8671-4fe2c0a7a806
+// Finding.url: https://www.example42.com/members/mudassar-ali4#</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('d40a87450310473aa80b270934e77f90')><!--/*
+// Finding.parentloc: https://www.example42.com/members/mudassar-ali4#</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('d40a87450310473aa80b270934e77f90')><!--/*
+// Finding.domain: www.example42.com
+// Finding.base_domain: example42.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: inspect
+// Sanitizer.location: https://csharpcorner.example43.com/JavaScripts/Tabbed.js - inspect:131:37
+// Finding.begin: 68
+// Finding.end: 69
+// Finding.original_uuid: 85e35d3f-0e95-4d4b-9032-c39709b4c961
+// Finding.TwentyFiveMillionFlowsId: 228089407
+// Finding.script: https://csharpcorner.example43.com/JQuery/jquery.min-20150912.js
+// Finding.line: 1
+// Exploit.uuid: d40a8745-0310-473a-a80b-270934e77f90
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: r
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 17
+// Exploit.end_taint_url: 18
+// Exploit.replace_begin_url: 51
+// Exploit.replace_end_url: 51
+// Exploit.replace_begin_param: 23
+// Exploit.replace_end_param: 23
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1153506758
+// DepGraph.sanitizer_hash: -1838594410
+// Approximated Implementation for: replace([\x00-\x1f\\]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(\: 1), function_rhs: true], 'function (character) {                if (character in String.specialChar) { return String.specialChar[character]; }                return '\\u00' + character.charCodeAt().toPaddedString(2, 16);            }') - Other Exception: TypeError: Cannot use 'in' operator to search for '0' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '1' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '2' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '3' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '4' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '5' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '6' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '7' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '8' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '9' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for ':' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for ';' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '<' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '=' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '>' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '?' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '@' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'A' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'B' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'C' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'D' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'E' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'F' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'G' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'H' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'I' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'J' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'K' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'L' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'M' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'N' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'O' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'P' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'Q' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'R' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'S' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'T' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'U' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'V' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'W' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'X' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'Y' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'Z' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '[' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '\' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'f' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'x' in undefined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Lit: 2048"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[\x00-\x1f\\]/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /["]/"];
+n11 [shape=box, label="Lit: \""];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: \""];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: \""];
+n17 [shape=box, label="Var: x"];
+n18 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n14;
+n13 -> n9;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n18 -> n17;
+}

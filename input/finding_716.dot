@@ -1,0 +1,125 @@
+// Finding: 190030ce-61fc-4070-94f8-580410d3e787
+// Finding.url: https://www.example221.com/us/en/aco/home.html#|taintfoxLog('8181833cfeba4291bd04cd565ed9ff19')//
+// Finding.parentloc: https://www.example221.com/us/en/aco/home.html#|taintfoxLog('8181833cfeba4291bd04cd565ed9ff19')//
+// Finding.domain: www.example221.com
+// Finding.base_domain: example221.com
+// Finding.source: location.href
+// Finding.sink: script.text
+// Sanitizer.score: 2
+// Sanitizer.name: e
+// Sanitizer.location: https://www.example221.com/etc/designs/aircanada/scripts/library/polyfill-es5.20212262253.js - e:743:25326
+// Finding.begin: 200304
+// Finding.end: 200310
+// Finding.original_uuid: 0cb7a8da-eb3d-4a24-88c5-86a8e1faf91f
+// Finding.TwentyFiveMillionFlowsId: -1920498691
+// Finding.script: https://www.example221.com/assets/eccba2b19e32edec2065f3c335af8c367001194a011
+// Finding.line: 20
+// Exploit.uuid: 8181833c-feba-4291-bd04-cd565ed9ff19
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: ExpressionStatement
+// Exploit.content: undefined
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: |
+// Exploit.break_in: //
+// Exploit.payload: |taintfoxLog(1)//
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 6
+// Exploit.replace_begin_url: 45
+// Exploit.replace_end_url: 45
+// Exploit.replace_begin_param: 42760
+// Exploit.replace_end_param: 42760
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -655444609
+// DepGraph.sanitizer_hash: -1493572062
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="substr"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=box, label="Lit: 0"];
+n7 [shape=box, label="Lit: 36"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /^\s+|\s+$/"];
+n10 [shape=box, label="Lit: "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="regex_exec"];
+n13 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n14 [shape=box, label="Lit: 1"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="regex_match"];
+n17 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n18 [shape=box, label="Lit: 1"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="preg_replace"];
+n21 [shape=box, label="RegExp: /^\s+|\s+$/"];
+n22 [shape=box, label="Lit: "];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="regex_exec"];
+n25 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n26 [shape=box, label="Lit: 1"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=ellipse, label="regex_match"];
+n29 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n30 [shape=box, label="Lit: 1"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=box, label="Var: x"];
+n33 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n15 -> n8;
+n12 -> n13;
+n12 -> n14;
+n12 -> n15;
+n19 -> n12;
+n16 -> n17;
+n16 -> n18;
+n16 -> n19;
+n23 -> n16;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n27 -> n20;
+n24 -> n25;
+n24 -> n26;
+n24 -> n27;
+n31 -> n24;
+n28 -> n29;
+n28 -> n30;
+n28 -> n31;
+n32 -> n28;
+n33 -> n32;
+}

@@ -1,0 +1,165 @@
+// Finding: 0d63f7e9-e3a9-489a-a907-76e3d7f689f9
+// Finding.url: https://www.example454.com/talent/post-a-job?post-a-job%3Ftrk%3Dhomepage-basic_talent-finder-cta"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('376370ea7d1846d0b07c10150a7538c0')><!--/*
+// Finding.parentloc: https://www.example454.com/talent/post-a-job?post-a-job%3Ftrk%3Dhomepage-basic_talent-finder-cta"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('376370ea7d1846d0b07c10150a7538c0')><!--/*
+// Finding.domain: www.example454.com
+// Finding.base_domain: example454.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 13
+// Sanitizer.name: 6/t.exports</c<
+// Sanitizer.location: https://static-exp1.example455.com/sc/h/4x1ot4ohwcst08qbssn1x72xi - 6/t.exports</c<:24686:27769
+// Finding.begin: 368
+// Finding.end: 400
+// Finding.original_uuid: e6fd10a2-2e26-4c08-bb5c-6428e542436a
+// Finding.TwentyFiveMillionFlowsId: 459624132
+// Finding.script: https://static-exp1.example455.com/sc/h/a3uv7celp25b8xsp9bf8x555j
+// Finding.line: 2316
+// Exploit.uuid: 376370ea-7d18-46d0-b07c-10150a7538c0
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: post-a-job%3Ftrk%3Dhomepage-basic_talent-finder-cta"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: post-a-job%3Ftrk%3Dhomepage-basic_talent-finder-cta"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 79
+// Exploit.replace_begin_url: 43
+// Exploit.replace_end_url: 79
+// Exploit.replace_begin_param: 146
+// Exploit.replace_end_param: 197
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1845710765
+// DepGraph.sanitizer_hash: 1580079247
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>"'\u0000\\=]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, \: 1, =: 1), function_rhs: true], 'function(t){return u[t]}') - Other Exception: ReferenceError: u is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: session_redirect="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: ?"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: /uas/login"];
+n13 [shape=ellipse, label="str_replace_once"];
+n14 [shape=box, label="RegExp: /^[	\n\r   ᠎             　\u2028\u2029﻿][	\n\r   ᠎             　\u2028\u2029﻿]*/"];
+n15 [shape=box, label="Lit: "];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="str_replace_once"];
+n18 [shape=box, label="RegExp: /[	\n\r   ᠎             　\u2028\u2029﻿][	\n\r   ᠎             　\u2028\u2029﻿]*$/"];
+n19 [shape=box, label="Lit: "];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="str_replace_once"];
+n22 [shape=box, label="RegExp: /^[	\n\r   ᠎             　\u2028\u2029﻿][	\n\r   ᠎             　\u2028\u2029﻿]*/"];
+n23 [shape=box, label="Lit: "];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="str_replace_once"];
+n26 [shape=box, label="RegExp: /[	\n\r   ᠎             　\u2028\u2029﻿][	\n\r   ᠎             　\u2028\u2029﻿]*$/"];
+n27 [shape=box, label="Lit: "];
+n28 [shape=box, label="Var: x"];
+n29 [shape=ellipse, label="str_replace_once"];
+n30 [shape=box, label="RegExp: /^[	\n\r   ᠎             　\u2028\u2029﻿][	\n\r   ᠎             　\u2028\u2029﻿]*/"];
+n31 [shape=box, label="Lit: "];
+n32 [shape=box, label="Var: x"];
+n33 [shape=ellipse, label="str_replace_once"];
+n34 [shape=box, label="RegExp: /[	\n\r   ᠎             　\u2028\u2029﻿][	\n\r   ᠎             　\u2028\u2029﻿]*$/"];
+n35 [shape=box, label="Lit: "];
+n36 [shape=box, label="Var: x"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: &#39;"];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: source_app&#61;"];
+n41 [shape=ellipse, label="."];
+n42 [shape=box, label="Lit: tsweb&amp;"];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit: trk&#61;"];
+n45 [shape=ellipse, label="."];
+n46 [shape=box, label="Lit: job-posting"];
+n47 [shape=ellipse, label="preg_replace"];
+n48 [shape=box, label="RegExp: /[&<>"'\u0000\\=]/"];
+n49 [shape=box, label="Lit: "];
+n50 [shape=box, label="Var: x"];
+n51 [shape=box, label="Var: x"];
+n52 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n7 -> n5;
+n7 -> n8;
+n9 -> n10;
+n9 -> n7;
+n11 -> n12;
+n11 -> n9;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n24 -> n17;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n28 -> n21;
+n25 -> n26;
+n25 -> n27;
+n25 -> n28;
+n32 -> n25;
+n29 -> n30;
+n29 -> n31;
+n29 -> n32;
+n36 -> n29;
+n33 -> n34;
+n33 -> n35;
+n33 -> n36;
+n37 -> n33;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n41 -> n39;
+n41 -> n42;
+n43 -> n41;
+n43 -> n44;
+n45 -> n43;
+n45 -> n46;
+n50 -> n45;
+n47 -> n48;
+n47 -> n49;
+n47 -> n50;
+n51 -> n47;
+n52 -> n51;
+}

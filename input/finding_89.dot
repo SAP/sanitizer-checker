@@ -1,0 +1,71 @@
+// Finding: f8cae7fe-4804-4223-b703-ea4e8b5b70fa
+// Finding.url: https://example95.com/nong-con-re-no-sung-ban-chet-bo-me-vo-roi-tu-sat-o-son-la-2021042817222559.htm##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1bbeebf718e34d76b3afcf2b469a3830')><!--/*
+// Finding.parentloc: https://example95.com/nong-con-re-no-sung-ban-chet-bo-me-vo-roi-tu-sat-o-son-la-2021042817222559.htm##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1bbeebf718e34d76b3afcf2b469a3830')><!--/*
+// Finding.domain: example95.com
+// Finding.base_domain: example95.com
+// Finding.source: document.documentURI
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: window.__admURL<
+// Sanitizer.location: https://static.example96.com/core/corecontineljs.js - window.__admURL<:237:119
+// Finding.begin: 13226
+// Finding.end: 13503
+// Finding.original_uuid: aa5db346-604b-4f14-b6ae-56fcdcfd59b7
+// Finding.TwentyFiveMillionFlowsId: -150470095
+// Finding.script: https://static.example96.com/core/cpc/self2_300_600.js
+// Finding.line: 1
+// Exploit.uuid: 1bbeebf7-18e3-4d76-b3af-cf2b469a3830
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 94
+// Exploit.replace_begin_url: 94
+// Exploit.replace_end_url: 94
+// Exploit.replace_begin_param: 154
+// Exploit.replace_end_param: 154
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -763262555
+// DepGraph.sanitizer_hash: -1551129989
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /\'/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n6 -> n5;
+}

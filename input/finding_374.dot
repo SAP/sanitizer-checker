@@ -1,0 +1,78 @@
+// Finding: 74cc0b2d-b4b9-4607-bfbe-f670bb79df74
+// Finding.url: https://cdn.example262.com/widgets/media.html?url=https://example136.com/CBBonFOX/status/1349191604326850561&image=https://pbs.example137.com/media/ErlKnKfW4Acowbu.jpg:large&video=https://video.example137.com/amplify_video/1349191545388490752/vid/1280x720/ft0kgSTp9oiDAdxg.mp4?tag=13"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('6ecea16db737453fa7158d41815f3b7d')><!--/*&video_secure=true&type=video/mp4&schema=instagram
+// Finding.parentloc: https://cdn.example262.com/widgets/media.html?url=https://example136.com/CBBonFOX/status/1349191604326850561&image=https://pbs.example137.com/media/ErlKnKfW4Acowbu.jpg:large&video=https://video.example137.com/amplify_video/1349191545388490752/vid/1280x720/ft0kgSTp9oiDAdxg.mp4?tag=13"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('6ecea16db737453fa7158d41815f3b7d')><!--/*&video_secure=true&type=video/mp4&schema=instagram
+// Finding.domain: cdn.example262.com
+// Finding.base_domain: example262.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 13
+// Sanitizer.name: require<[24]</e.sanitize
+// Sanitizer.location: https://cdn.example262.com/widgets/media.html?url=https://example136.com/CBBonFOX/status/1349191604326850561&image=https://pbs.example137.com/media/ErlKnKfW4Acowbu.jpg:large&video=https://video.example137.com/amplify_video/1349191545388490752/vid/1280x720/ft0kgSTp9oiDAdxg.mp4?tag=13"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('6ecea16db737453fa7158d41815f3b7d')><!--/*&video_secure=true&type=video/mp4&schema=instagram - r/<:8:21555
+// Finding.begin: 118
+// Finding.end: 171
+// Finding.original_uuid: e1a339a4-1614-4bff-abab-378d0d5144d0
+// Finding.TwentyFiveMillionFlowsId: 1561684988
+// Finding.script: https://cdn.example262.com/widgets/media.html?url=https://example136.com/CBBonFOX/status/1349191604326850561&image=https://pbs.example137.com/media/ErlKnKfW4Acowbu.jpg:large&video=https://video.example137.com/amplify_video/1349191545388490752/vid/1280x720/ft0kgSTp9oiDAdxg.mp4?tag=13"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('6ecea16db737453fa7158d41815f3b7d')><!--/*&video_secure=true&type=video/mp4&schema=instagram
+// Finding.line: 9
+// Exploit.uuid: 6ecea16d-b737-453f-a715-8d41815f3b7d
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: source
+// Exploit.break_out: https://video.example137.com/amplify_video/1349191545388490752/vid/1280x720/ft0kgSTp9oiDAdxg.mp4?tag=13"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: https://video.example137.com/amplify_video/1349191545388490752/vid/1280x720/ft0kgSTp9oiDAdxg.mp4?tag=13"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 169
+// Exploit.end_taint_url: 267
+// Exploit.replace_begin_url: 169
+// Exploit.replace_end_url: 267
+// Exploit.replace_begin_param: 186
+// Exploit.replace_end_param: 284
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -840598978
+// DepGraph.sanitizer_hash: -840598978
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /#x\d\d;/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[^-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

@@ -1,0 +1,152 @@
+// Finding: 156cd7fb-3de3-41bb-80d8-df755c2159ba
+// Finding.url: https://www.example401.com/hktv/zh/main/B&F/s/H6997001?page=0&q=:relevance:store:H6997001:street:main:##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('2434fbe1857f435c9e9703d310ac6f70')><!--/*
+// Finding.parentloc: https://www.example401.com/hktv/zh/main/B&F/s/H6997001?page=0&q=:relevance:store:H6997001:street:main:##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('2434fbe1857f435c9e9703d310ac6f70')><!--/*
+// Finding.domain: www.example401.com
+// Finding.base_domain: example401.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 7
+// Sanitizer.name: initSearchUI
+// Sanitizer.location: https://www.example401.com/_ui/desktop/common/js/solrSearchNew.js?_=1620661648924 - initSearchUI:2627:47
+// Finding.begin: 3327
+// Finding.end: 3335
+// Finding.original_uuid: 75bb2048-e596-401f-9a9d-e8d18bf62733
+// Finding.TwentyFiveMillionFlowsId: 1601820815
+// Finding.script: https://www.example401.com/_ui/desktop/common/js/jquery-1.7.2.min.js?_=1620661648924
+// Finding.line: 4
+// Exploit.uuid: 2434fbe1-857f-435c-9e97-03d310ac6f70
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: value
+// Exploit.quote_type: "
+// Exploit.tag: input
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 33
+// Exploit.end_taint_url: 37
+// Exploit.replace_begin_url: 100
+// Exploit.replace_end_url: 100
+// Exploit.replace_begin_param: 3347
+// Exploit.replace_end_param: 3347
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1182128833
+// DepGraph.sanitizer_hash: 1616066938
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>"'\/]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1), function_rhs: true], 'function (s) {		  return entityMap[s];		}') - Other Exception: ReferenceError: entityMap is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /\+/"];
+n3 [shape=box, label="Lit: %20"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="split"];
+n6 [shape=box, label="Lit: ?"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="str_replace_once"];
+n9 [shape=box, label="RegExp: /(^\?)/"];
+n10 [shape=box, label="Lit: "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="split"];
+n13 [shape=box, label="Lit: &"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="decodeURIComponent"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="split"];
+n18 [shape=box, label="Lit: ="];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="split"];
+n21 [shape=box, label="Lit: :"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: store:"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: :"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: /\"/"];
+n29 [shape=box, label="Lit: "];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="preg_replace"];
+n32 [shape=box, label="RegExp: /[&<>"'\/]/"];
+n33 [shape=box, label="Lit: "];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: <select class="product-result-sort"></select></div><div class=....="query" name="query" class="inputs query" type="text" value=""];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: " style="display:none"><div class="clear" style="height:10px;"></div>"];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: <button src="" class="squareButton addReport green" id="submitreport2" ><span>提交</span></button>"];
+n41 [shape=ellipse, label="."];
+n42 [shape=box, label="Lit: <div class="clear"></div><div class="clear" style="height:4px;"></div></form></div></div>"];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit: <div class="search-result-breadcrumb"></div><div id="search-co....iv><div class="product-result-sort-container"><span>排序:</span>"];
+n45 [shape=box, label="Var: x"];
+n46 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n7 -> n1;
+n5 -> n6;
+n5 -> n7;
+n11 -> n5;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n14 -> n8;
+n12 -> n13;
+n12 -> n14;
+n16 -> n12;
+n15 -> n16;
+n19 -> n15;
+n17 -> n18;
+n17 -> n19;
+n22 -> n17;
+n20 -> n21;
+n20 -> n22;
+n23 -> n24;
+n23 -> n20;
+n25 -> n23;
+n25 -> n26;
+n30 -> n25;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n34 -> n27;
+n31 -> n32;
+n31 -> n33;
+n31 -> n34;
+n35 -> n36;
+n35 -> n31;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n41 -> n39;
+n41 -> n42;
+n43 -> n44;
+n43 -> n41;
+n45 -> n43;
+n46 -> n45;
+}

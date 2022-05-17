@@ -1,0 +1,84 @@
+// Finding: e1a88969-8dbd-4e81-a0f0-4c3c2968c9d0
+// Finding.url: https://www.example414.com/lifestyle/indoor-style/interior-design/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9092ff5bb0eb4dca857792534442f85f')><!--/*
+// Finding.parentloc: https://www.example414.com/lifestyle/indoor-style/interior-design/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9092ff5bb0eb4dca857792534442f85f')><!--/*
+// Finding.domain: www.example414.com
+// Finding.base_domain: example414.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: d
+// Sanitizer.location: https://safeinator.example415.com/4aec38adc5051708305ba54edabfee655aa7d246/lib/base.min.js - d:1:2149
+// Finding.begin: 1543
+// Finding.end: 1564
+// Finding.original_uuid: e795e29f-746d-4743-8394-e5cbf1913762
+// Finding.TwentyFiveMillionFlowsId: 487337785
+// Finding.script: https://safeinator.example415.com/4aec38adc5051708305ba54edabfee655aa7d246/lib/base.min.js
+// Finding.line: 1
+// Exploit.uuid: 9092ff5b-b0eb-4dca-8577-92534442f85f
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: name
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 69
+// Exploit.replace_begin_url: 69
+// Exploit.replace_end_url: 69
+// Exploit.replace_begin_param: 1646
+// Exploit.replace_end_param: 1646
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 957203579
+// DepGraph.sanitizer_hash: -713590240
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /^#/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="decodeURIComponent"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="split"];
+n8 [shape=box, label="Lit: /"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="escape"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n9 -> n5;
+n7 -> n8;
+n7 -> n9;
+n11 -> n7;
+n10 -> n11;
+n12 -> n10;
+n13 -> n12;
+}

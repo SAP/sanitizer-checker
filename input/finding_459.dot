@@ -1,0 +1,115 @@
+// Finding: 40b587e9-4bac-4a8f-b532-f51bdfe9daa4
+// Finding.url: https://mo.m.example274.com/page_201912120119435#!/footer/full?"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('50c3063cc378408aa68a538798612995')><!--/*?bizCode=unionMedia&products=true&width=1280&colorBrand=#FF822E
+// Finding.parentloc: https://mo.m.example274.com/page_201912120119435#!/footer/full?"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('50c3063cc378408aa68a538798612995')><!--/*?bizCode=unionMedia&products=true&width=1280&colorBrand=#FF822E
+// Finding.domain: mo.m.example274.com
+// Finding.base_domain: example274.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 242
+// Sanitizer.name: tmpl
+// Sanitizer.location: https://g.example27.com/mm/zs_gallery/src/__test__/empty.js - tmpl:1:70872
+// Finding.begin: 32
+// Finding.end: 37
+// Finding.original_uuid: c7c39771-40f3-4c1b-9de7-f0d5019ed76e
+// Finding.TwentyFiveMillionFlowsId: 422273549
+// Finding.script: https://g.example27.com/mm/zs_gallery/index.js
+// Finding.line: 1
+// Exploit.uuid: 50c3063c-c378-408a-a68a-538798612995
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: mx-view
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: "></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: "></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 53
+// Exploit.end_taint_url: 58
+// Exploit.replace_begin_url: 59
+// Exploit.replace_end_url: 58
+// Exploit.replace_begin_param: 37
+// Exploit.replace_end_param: 37
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -180932649
+// DepGraph.sanitizer_hash: -1763278582
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>"'\`]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1), function_rhs: true], 'function(e){return"&"+ht[e]+";"}') - Other Exception: ReferenceError: ht is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /^[^#]*#?!?/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="RegExp: /[#?].*$/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="substr"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=box, label="Lit: 1"];
+n12 [shape=ellipse, label="substr"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=box, label="Lit: 6"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /[&<>"'\`]/"];
+n17 [shape=box, label="Lit: "];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: <div mx-view=""];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: "><div mxa="_zs_galleryh:_" style="display: table; text-align:....link="http://www.w3.org/1999/xlink"><defs><lineargradient id=""];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: 635342909036038_colors" x1="0%" y1="0%" x2="100%" y2="64.9%"><....ing-def-path" cx="36" cy="36" r="16" fill="none" stroke="url(#"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: 635342909036038_colors)" stroke-width="4" stroke-miterlimit="1....0%; margin: auto; line-height: 22px;"></div></div></div></div>"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n9 -> n11;
+n13 -> n9;
+n12 -> n13;
+n12 -> n14;
+n18 -> n12;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n20;
+n19 -> n15;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n28 -> n27;
+}

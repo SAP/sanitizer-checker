@@ -1,0 +1,158 @@
+// Finding: ae71db12-2e7b-440f-85a0-a716fe768377
+// Finding.url: https://promo.example360.com/select_bks/?e</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a1bc4117ba4240f2b5e9aa56cd0729a7')><!--/*
+// Finding.parentloc: https://promo.example360.com/select_bks/?e</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a1bc4117ba4240f2b5e9aa56cd0729a7')><!--/*
+// Finding.domain: promo.example360.com
+// Finding.base_domain: example360.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: z</f.prototype.R/<
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-T9SDZQT - z</f.prototype.R/<:517:226
+// Finding.begin: 110
+// Finding.end: 339
+// Finding.original_uuid: 9ae6853d-65c9-4d83-9775-01ddc5d673a5
+// Finding.TwentyFiveMillionFlowsId: 1076383544
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-T9SDZQT
+// Finding.line: 517
+// Exploit.uuid: a1bc4117-ba42-40f2-b5e9-aa56cd0729a7
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: e
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: e</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: e</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 66
+// Exploit.replace_begin_url: 37
+// Exploit.replace_end_url: 66
+// Exploit.replace_begin_param: 118
+// Exploit.replace_end_param: 170
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -2113717028
+// DepGraph.sanitizer_hash: 578425826
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: <img id='id_shellfish' src='https://bs.nakanohito.jp/b1/?uisv=3&id=31027&mode=default&h=d9d7&rand=9764726&url="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &ref="];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &uigr_1="];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: subsc_lp"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: &uigr_2="];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: &uigr_3="];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: &uigr_4="];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: &uigr_5="];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: dol_only"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: &uigr_6="];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: &uigr_7="];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: &uigr_8="];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: &uigr_9="];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: &uigr_10="];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: &lv="];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: &sb="];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: %E3%83%80%E3%82%A4%E3%83%A4%E3%83%A2%E3%83%B3%E3%83%89%E3%83%B....E3%83%89%E3%83%BB%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: &eflg=1' border='0' width='1' height='1' alt='' />"];
+n39 [shape=ellipse, label="substr"];
+n40 [shape=box, label="Var: x"];
+n41 [shape=box, label="Lit: 0"];
+n42 [shape=box, label="Lit: 763"];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit:  data-ps-id=2 />"];
+n45 [shape=ellipse, label="str_replace_once"];
+n46 [shape=box, label="RegExp: /(\/?>)/"];
+n47 [shape=box, label="Lit:  data-ps-id=2 $1"];
+n48 [shape=box, label="Var: x"];
+n49 [shape=box, label="Var: x"];
+n50 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n33 -> n31;
+n33 -> n34;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n37 -> n38;
+n40 -> n37;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n43 -> n39;
+n43 -> n44;
+n48 -> n43;
+n45 -> n46;
+n45 -> n47;
+n45 -> n48;
+n49 -> n45;
+n50 -> n49;
+}

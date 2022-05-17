@@ -1,0 +1,288 @@
+// Finding: 5eb3b69a-a9e9-4639-8016-406fa7816e35
+// Finding.url: https://example148.com/show/2235##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9cb3b1ecddff45ee8b41b1539bdc7129')><!--/*
+// Finding.parentloc: https://example148.com/show/2235##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9cb3b1ecddff45ee8b41b1539bdc7129')><!--/*
+// Finding.domain: example148.com
+// Finding.base_domain: example148.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 2
+// Sanitizer.name: C/<
+// Sanitizer.location: https://example148.com/js/app.04737ac7.js - C/<:1:265029
+// Finding.begin: 821
+// Finding.end: 831
+// Finding.original_uuid: a3e625f3-de8c-4848-be7c-59801fe6a638
+// Finding.TwentyFiveMillionFlowsId: -1046048949
+// Finding.script: https://example148.com/js/app.04737ac7.js
+// Finding.line: 1
+// Exploit.uuid: 9cb3b1ec-ddff-45ee-8b41-b1539bdc7129
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: content
+// Exploit.quote_type: "
+// Exploit.tag: meta
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 19
+// Exploit.end_taint_url: 29
+// Exploit.replace_begin_url: 29
+// Exploit.replace_end_url: 29
+// Exploit.replace_begin_param: 70
+// Exploit.replace_end_param: 70
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: true
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 861146429
+// DepGraph.sanitizer_hash: 2110725326
+// Removed LR concats 
+// Part of the URL ('/show/2235') found in right hand side of replace 
+// Removed LR concats 
+// Part of the URL ('/show/2235/season/undefined') found in right hand side of replace 
+// Part of the URL ('/show/2235/season/undefined/video/undefined') found in right hand side of replace 
+// Part of the URL ('/show/2235/season/undefined/video/undefined') found in right hand side of replace 
+// Part of the URL ('/show/2235##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9cb3b1ecddff45ee8b41b1539bdc7129')><!--/*') found in right hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="regex_exec"];
+n2 [shape=box, label="RegExp: /^([a-z][a-z0-9.+-]*:)?(\/\/)?([\S\s]*)/"];
+n3 [shape=box, label="Lit: 3"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="substr"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Lit: 0"];
+n8 [shape=box, label="Lit: 21"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: \"];
+n11 [shape=box, label="Lit: /"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="substr"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Lit: 11"];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: " />
+\n<meta property="og:type" content="video.movie"/>
+\n<meta ....R.ONE"/>
+\n<meta property="og:url" content="https://example148.com"];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: " />
+\n<meta property="og:image" content="{{ series.image_poste....content="https://example148.com/uma-api/feeds/338/?format=json"/>"];
+n20 [shape=ellipse, label="preg_replace"];
+n21 [shape=box, label="RegExp: /{{ series.url }}/"];
+n22 [shape=box, label="Lit: /show/2235"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: https://pic.uma.media/pic/cardimage/2d/07/2d072c4016e52ce67209d1dc8acf03b0.jpg"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: "/>
+\n<meta name="twitter:card" content="summary_large_image">
+....content="https://example148.com/uma-api/feeds/338/?format=json"/>"];
+n28 [shape=ellipse, label="preg_replace"];
+n29 [shape=box, label="RegExp: /{{ series.image_poster }}/"];
+n30 [shape=box, label="Lit: https://pic.uma.media/pic/cardimage/2d/07/2d072c4016e52ce67209d1dc8acf03b0.jpg"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=ellipse, label="preg_replace"];
+n33 [shape=box, label="RegExp: /{{ series.description }}/"];
+n34 [shape=box, label="Lit: Самый масштабный российский танцевальный проект. Каждый человек, который считает, что умеет танцевать, может получить звание лучшего танцора страны и стать звездой."];
+n35 [shape=box, label="Var: x"];
+n36 [shape=ellipse, label="preg_replace"];
+n37 [shape=box, label="RegExp: /{{ series.year }}/"];
+n38 [shape=box, label="Lit: 2014"];
+n39 [shape=box, label="Var: x"];
+n40 [shape=ellipse, label="preg_replace"];
+n41 [shape=box, label="RegExp: /{{ season.title }}/"];
+n42 [shape=box, label="Lit: 7 сезон"];
+n43 [shape=box, label="Var: x"];
+n44 [shape=ellipse, label="preg_replace"];
+n45 [shape=box, label="RegExp: /{{ season.url }}/"];
+n46 [shape=box, label="Lit: /show/2235/season/undefined"];
+n47 [shape=box, label="Var: x"];
+n48 [shape=ellipse, label="preg_replace"];
+n49 [shape=box, label="RegExp: /{{ season.number }}/"];
+n50 [shape=box, label="Lit: 7"];
+n51 [shape=box, label="Var: x"];
+n52 [shape=ellipse, label="preg_replace"];
+n53 [shape=box, label="RegExp: /{{ episode.title }}/"];
+n54 [shape=box, label="Lit: 21 выпуск"];
+n55 [shape=box, label="Var: x"];
+n56 [shape=ellipse, label="preg_replace"];
+n57 [shape=box, label="RegExp: /{{ episode.url }}/"];
+n58 [shape=box, label="Lit: /show/2235/season/undefined/video/undefined"];
+n59 [shape=box, label="Var: x"];
+n60 [shape=ellipse, label="preg_replace"];
+n61 [shape=box, label="RegExp: /{{ episode.image_poster }}/"];
+n62 [shape=box, label="Lit: https://pic.uma.media/pic/video/e4/47/e44746d80c640aa05ec932f2fe474f32.jpg"];
+n63 [shape=box, label="Var: x"];
+n64 [shape=ellipse, label="preg_replace"];
+n65 [shape=box, label="RegExp: /{{ episode.description }}/"];
+n66 [shape=box, label="Lit: Финал последнего сезона шоу «ТАНЦЫ»! Сможет ли Ксения Горячева из команды Татьяны Денисовой стать единственной в истории проекта девушкой-победительницей?"];
+n67 [shape=box, label="Var: x"];
+n68 [shape=ellipse, label="preg_replace"];
+n69 [shape=box, label="RegExp: /{{ episode.number }}/"];
+n70 [shape=box, label="Lit: 21"];
+n71 [shape=box, label="Var: x"];
+n72 [shape=ellipse, label="preg_replace"];
+n73 [shape=box, label="RegExp: /{{ episode.date }}/"];
+n74 [shape=box, label="Lit: 24.04.21"];
+n75 [shape=box, label="Var: x"];
+n76 [shape=ellipse, label="preg_replace"];
+n77 [shape=box, label="RegExp: /{{ trailer.title }}/"];
+n78 [shape=box, label="Lit: 21 выпуск"];
+n79 [shape=box, label="Var: x"];
+n80 [shape=ellipse, label="preg_replace"];
+n81 [shape=box, label="RegExp: /{{ trailer.url }}/"];
+n82 [shape=box, label="Lit: /show/2235/season/undefined/video/undefined"];
+n83 [shape=box, label="Var: x"];
+n84 [shape=ellipse, label="preg_replace"];
+n85 [shape=box, label="RegExp: /{{ trailer.image_poster }}/"];
+n86 [shape=box, label="Lit: https://pic.uma.media/pic/video/e4/47/e44746d80c640aa05ec932f2fe474f32.jpg"];
+n87 [shape=box, label="Var: x"];
+n88 [shape=ellipse, label="preg_replace"];
+n89 [shape=box, label="RegExp: /{{ exclusive.title }}/"];
+n90 [shape=box, label="Lit: 21 выпуск"];
+n91 [shape=box, label="Var: x"];
+n92 [shape=ellipse, label="preg_replace"];
+n93 [shape=box, label="RegExp: /{{ exclusive.url }}/"];
+n94 [shape=box, label="Lit: /show/2235##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9cb3b1ecddff45ee8b41b1539bdc7129')><!--/*"];
+n95 [shape=box, label="Var: x"];
+n96 [shape=ellipse, label="preg_replace"];
+n97 [shape=box, label="RegExp: /{{ exclusive.image_poster }}/"];
+n98 [shape=box, label="Lit: https://pic.uma.media/pic/video/e4/47/e44746d80c640aa05ec932f2fe474f32.jpg"];
+n99 [shape=box, label="Var: x"];
+n100 [shape=ellipse, label="regex_exec"];
+n101 [shape=box, label="RegExp: /content="(.*)"/"];
+n102 [shape=box, label="Lit: 1"];
+n103 [shape=box, label="Var: x"];
+n104 [shape=ellipse, label="preg_replace"];
+n105 [shape=box, label="RegExp: /["]/"];
+n106 [shape=box, label="Lit: %22"];
+n107 [shape=box, label="Var: x"];
+n108 [shape=box, label="Var: x"];
+n109 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n14 -> n9;
+n13 -> n14;
+n13 -> n15;
+n16 -> n17;
+n16 -> n13;
+n18 -> n16;
+n18 -> n19;
+n23 -> n18;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n24 -> n20;
+n24 -> n25;
+n26 -> n24;
+n26 -> n27;
+n31 -> n26;
+n28 -> n29;
+n28 -> n30;
+n28 -> n31;
+n35 -> n28;
+n32 -> n33;
+n32 -> n34;
+n32 -> n35;
+n39 -> n32;
+n36 -> n37;
+n36 -> n38;
+n36 -> n39;
+n43 -> n36;
+n40 -> n41;
+n40 -> n42;
+n40 -> n43;
+n47 -> n40;
+n44 -> n45;
+n44 -> n46;
+n44 -> n47;
+n51 -> n44;
+n48 -> n49;
+n48 -> n50;
+n48 -> n51;
+n55 -> n48;
+n52 -> n53;
+n52 -> n54;
+n52 -> n55;
+n59 -> n52;
+n56 -> n57;
+n56 -> n58;
+n56 -> n59;
+n63 -> n56;
+n60 -> n61;
+n60 -> n62;
+n60 -> n63;
+n67 -> n60;
+n64 -> n65;
+n64 -> n66;
+n64 -> n67;
+n71 -> n64;
+n68 -> n69;
+n68 -> n70;
+n68 -> n71;
+n75 -> n68;
+n72 -> n73;
+n72 -> n74;
+n72 -> n75;
+n79 -> n72;
+n76 -> n77;
+n76 -> n78;
+n76 -> n79;
+n83 -> n76;
+n80 -> n81;
+n80 -> n82;
+n80 -> n83;
+n87 -> n80;
+n84 -> n85;
+n84 -> n86;
+n84 -> n87;
+n91 -> n84;
+n88 -> n89;
+n88 -> n90;
+n88 -> n91;
+n95 -> n88;
+n92 -> n93;
+n92 -> n94;
+n92 -> n95;
+n99 -> n92;
+n96 -> n97;
+n96 -> n98;
+n96 -> n99;
+n103 -> n96;
+n100 -> n101;
+n100 -> n102;
+n100 -> n103;
+n107 -> n100;
+n104 -> n105;
+n104 -> n106;
+n104 -> n107;
+n108 -> n104;
+n109 -> n108;
+}

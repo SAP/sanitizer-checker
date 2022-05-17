@@ -1,0 +1,231 @@
+// Finding: d89c3f1f-246e-4cd7-9d6f-c8e17e09eed0
+// Finding.url: https://www.example42.com/members/mahesh-chand#</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b2971b56c2a64cec889e2808efc7d895')><!--/*
+// Finding.parentloc: https://www.example42.com/members/mahesh-chand#</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b2971b56c2a64cec889e2808efc7d895')><!--/*
+// Finding.domain: www.example42.com
+// Finding.base_domain: example42.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: html/<
+// Sanitizer.location: https://csharpcorner.example43.com/JQuery/jquery.min-20150912.js - html/<:1:66305
+// Finding.begin: 77
+// Finding.end: 78
+// Finding.original_uuid: 11d84a66-5ade-4812-b773-2dfeb528c2ba
+// Finding.TwentyFiveMillionFlowsId: 228089407
+// Finding.script: https://csharpcorner.example43.com/JQuery/jquery.min-20150912.js
+// Finding.line: 1
+// Exploit.uuid: b2971b56-c2a6-4cec-889e-2808efc7d895
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: .
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 11
+// Exploit.end_taint_url: 12
+// Exploit.replace_begin_url: 50
+// Exploit.replace_end_url: 50
+// Exploit.replace_begin_param: 58
+// Exploit.replace_end_param: 58
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 1
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1819941906
+// DepGraph.sanitizer_hash: -617381208
+// Large chain of EncodeTextFragment Operations (1) 
+// Approximated Implementation for: replace([\x00-\x1f\\]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(\: 1), function_rhs: true], 'function (character) {                if (character in String.specialChar) { return String.specialChar[character]; }                return '\\u00' + character.charCodeAt().toPaddedString(2, 16);            }') - Other Exception: TypeError: Cannot use 'in' operator to search for '0' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '1' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '2' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '3' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '4' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '5' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '6' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '7' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '8' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '9' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for ':' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for ';' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '<' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '=' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '>' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '?' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '@' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'A' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'B' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'C' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'D' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'E' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'F' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'G' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'H' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'I' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'J' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'K' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'L' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'M' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'N' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'O' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'P' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'Q' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'R' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'S' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'T' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'U' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'V' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'W' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'X' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'Y' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'Z' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '[' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '\' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'f' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'x' in undefined 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Lit: 2048"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[\x00-\x1f\\]/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /["]/"];
+n11 [shape=box, label="Lit: \""];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: \""];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: \""];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: "url": "];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: , "];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: , "];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: {"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: }"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: , "];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: , "];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: ["];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: ]"];
+n35 [shape=ellipse, label="JSON.stringify"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=ellipse, label="JSON.parse"];
+n38 [shape=box, label="Var: x"];
+n39 [shape=ellipse, label="preg_replace"];
+n40 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n41 [shape=box, label="Lit: <$1></$2>"];
+n42 [shape=box, label="Var: x"];
+n43 [shape=ellipse, label="preg_replace"];
+n44 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n45 [shape=box, label="Lit: "];
+n46 [shape=box, label="Var: x"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: r"];
+n49 [shape=ellipse, label="preg_replace"];
+n50 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n51 [shape=box, label="Lit: <$1></$2>"];
+n52 [shape=box, label="Var: x"];
+n53 [shape=ellipse, label="preg_replace"];
+n54 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n55 [shape=box, label="Lit: "];
+n56 [shape=box, label="Var: x"];
+n57 [shape=ellipse, label="preg_replace"];
+n58 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n59 [shape=box, label="Lit: <$1></$2>"];
+n60 [shape=box, label="Var: x"];
+n61 [shape=ellipse, label="preg_replace"];
+n62 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n63 [shape=box, label="Lit: "];
+n64 [shape=box, label="Var: x"];
+n65 [shape=ellipse, label="preg_replace"];
+n66 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n67 [shape=box, label="Lit: <$1></$2>"];
+n68 [shape=box, label="Var: x"];
+n69 [shape=ellipse, label="preg_replace"];
+n70 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n71 [shape=box, label="Lit: "];
+n72 [shape=box, label="Var: x"];
+n73 [shape=ellipse, label="preg_replace"];
+n74 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n75 [shape=box, label="Lit: <$1></$2>"];
+n76 [shape=box, label="Var: x"];
+n77 [shape=ellipse, label="encodeTextFragment"];
+n78 [shape=box, label="Var: x"];
+n79 [shape=ellipse, label="preg_replace"];
+n80 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n81 [shape=box, label="Lit: "];
+n82 [shape=box, label="Var: x"];
+n83 [shape=box, label="Var: x"];
+n84 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n14;
+n13 -> n9;
+n15 -> n13;
+n15 -> n16;
+n17 -> n18;
+n17 -> n15;
+n19 -> n20;
+n19 -> n17;
+n21 -> n19;
+n21 -> n22;
+n23 -> n24;
+n23 -> n21;
+n25 -> n23;
+n25 -> n26;
+n27 -> n28;
+n27 -> n25;
+n29 -> n27;
+n29 -> n30;
+n31 -> n32;
+n31 -> n29;
+n33 -> n31;
+n33 -> n34;
+n36 -> n33;
+n35 -> n36;
+n38 -> n35;
+n37 -> n38;
+n42 -> n37;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n46 -> n39;
+n43 -> n44;
+n43 -> n45;
+n43 -> n46;
+n47 -> n43;
+n47 -> n48;
+n52 -> n47;
+n49 -> n50;
+n49 -> n51;
+n49 -> n52;
+n56 -> n49;
+n53 -> n54;
+n53 -> n55;
+n53 -> n56;
+n60 -> n53;
+n57 -> n58;
+n57 -> n59;
+n57 -> n60;
+n64 -> n57;
+n61 -> n62;
+n61 -> n63;
+n61 -> n64;
+n68 -> n61;
+n65 -> n66;
+n65 -> n67;
+n65 -> n68;
+n72 -> n65;
+n69 -> n70;
+n69 -> n71;
+n69 -> n72;
+n76 -> n69;
+n73 -> n74;
+n73 -> n75;
+n73 -> n76;
+n78 -> n73;
+n77 -> n78;
+n82 -> n77;
+n79 -> n80;
+n79 -> n81;
+n79 -> n82;
+n83 -> n79;
+n84 -> n83;
+}

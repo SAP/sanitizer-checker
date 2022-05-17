@@ -1,0 +1,84 @@
+// Finding: 3c2232fe-bce5-4ef4-b668-082fb19643c3
+// Finding.url: https://www.example371.com/media/releases/2021/a0413-jj-vaccine.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('249f0c3db92642c3b63d4ce4c0e63412')><!--/*
+// Finding.parentloc: https://www.example371.com/media/releases/2021/a0413-jj-vaccine.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('249f0c3db92642c3b63d4ce4c0e63412')><!--/*
+// Finding.domain: www.example371.com
+// Finding.base_domain: example371.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 13
+// Sanitizer.name: r.cleanUrl
+// Sanitizer.location: https://www.example371.com/TemplatePackage/4.0/assets/js/app.min.js?v=21-03-11T21:03:55Z - init:1:184237
+// Finding.begin: 185
+// Finding.end: 217
+// Finding.original_uuid: e186f06e-1d03-4f20-a4eb-92ea905722df
+// Finding.TwentyFiveMillionFlowsId: 374693478
+// Finding.script: https://www.example371.com/TemplatePackage/contrib/libs/jquery/latest/jquery.min.js
+// Finding.line: 2
+// Exploit.uuid: 249f0c3d-b926-42c3-b63d-4ce4c0e63412
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 61
+// Exploit.replace_begin_url: 61
+// Exploit.replace_end_url: 61
+// Exploit.replace_begin_param: 113
+// Exploit.replace_end_param: 113
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1666771915
+// DepGraph.sanitizer_hash: 1046024592
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[^\x20-\x7E]/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[^-A-Za-z0-9+&@#/%?=~_|!:,.;\(\)]+/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="trim"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n11 -> n9;
+n12 -> n11;
+}

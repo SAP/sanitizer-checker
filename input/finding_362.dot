@@ -1,0 +1,125 @@
+// Finding: cc2c7508-295c-4bcc-a095-8dbf638e5a91
+// Finding.url: https://s.example3.com/embed-widget/market-overview/?locale=en#{"showChart":true,"width":"300","whitelabel":true,"height":"430","plotLineColorGrowing":"rgba(60, 188, 152, 1)","plotLineColorFalling":"rgba(255, 74, 104, 1)","gridLineColor":"rgba(233, 233, 234, 1)","scaleFontColor":"rgba(218, 221, 224, 1)","belowLineFillColorGrowing":"rgba(60, 188, 152, 0.05)","belowLineFillColorFalling":"rgba(255, 74, 104, 0.05)","symbolActiveColor":"rgba(242, 250, 254, 1)","tabs":[{"title":"Equities","symbols":[{"s":"NASDAQ:AMZN","d":"Amazon"},{"s":"NAs</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a28ad61bad6f43c394d1113b656a7b25')><!--/*DAQ:AAPL","d":"Apple"},{"s":"NASDAQ:GOOG","d":"Google"},{"s":"NYSE:JNJ","d":"Johnson & Johnson"},{"s":"NYSE:HD","d":"Home Depot"},{"s":"NYSE:WMT","d":"Wal-Mart"},{"s":"NASDAQ:COST","d":"Costco"},{"s":"NYSE:MCD","d":"McDonald's"}]},{"title":"Commodities","symbols":[{"s":"CME_MINI:ES1!","d":"E-Mini S&P"},{"s":"CME:E61!","d":"Euro"},{"s":"COMEX:GC1!","d":"Gold"},{"s":"NYMEX:CL1!","d":"Crude Oil"},{"s":"NYMEX:NG1!","d":"Natural Gas"},{"s":"CBOT:ZC1!","d":"Corn"}]},{"title":"Bonds","symbols":[{"s":"CME:GE1!","d":"Eurodollar"},{"s":"CBOT:ZB1!","d":"T-Bond"},{"s":"CBOT:UD1!","d":"Ultra T-Bond"},{"s":"EUREX:GG1!","d":"Euro Bund"},{"s":"EUREX:II1!","d":"Euro BTP"},{"s":"EUREX:HR1!","d":"Euro BOBL"}]},{"title":"Forex","symbols":[{"s":"FX:EURUSD"},{"s":"FX:GBPUSD"},{"s":"FX:USDJPY"},{"s":"FX:USDCHF"},{"s":"FX:AUDUSD"},{"s":"FX:USDCAD"}]}],"utm_source":"www.newsmax.com","utm_medium":"widget","utm_campaign":"market-overview"}
+// Finding.parentloc: https://s.example3.com/embed-widget/market-overview/?locale=en#{"showChart":true,"width":"300","whitelabel":true,"height":"430","plotLineColorGrowing":"rgba(60, 188, 152, 1)","plotLineColorFalling":"rgba(255, 74, 104, 1)","gridLineColor":"rgba(233, 233, 234, 1)","scaleFontColor":"rgba(218, 221, 224, 1)","belowLineFillColorGrowing":"rgba(60, 188, 152, 0.05)","belowLineFillColorFalling":"rgba(255, 74, 104, 0.05)","symbolActiveColor":"rgba(242, 250, 254, 1)","tabs":[{"title":"Equities","symbols":[{"s":"NASDAQ:AMZN","d":"Amazon"},{"s":"NAs</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a28ad61bad6f43c394d1113b656a7b25')><!--/*DAQ:AAPL","d":"Apple"},{"s":"NASDAQ:GOOG","d":"Google"},{"s":"NYSE:JNJ","d":"Johnson & Johnson"},{"s":"NYSE:HD","d":"Home Depot"},{"s":"NYSE:WMT","d":"Wal-Mart"},{"s":"NASDAQ:COST","d":"Costco"},{"s":"NYSE:MCD","d":"McDonald's"}]},{"title":"Commodities","symbols":[{"s":"CME_MINI:ES1!","d":"E-Mini S&P"},{"s":"CME:E61!","d":"Euro"},{"s":"COMEX:GC1!","d":"Gold"},{"s":"NYMEX:CL1!","d":"Crude Oil"},{"s":"NYMEX:NG1!","d":"Natural Gas"},{"s":"CBOT:ZC1!","d":"Corn"}]},{"title":"Bonds","symbols":[{"s":"CME:GE1!","d":"Eurodollar"},{"s":"CBOT:ZB1!","d":"T-Bond"},{"s":"CBOT:UD1!","d":"Ultra T-Bond"},{"s":"EUREX:GG1!","d":"Euro Bund"},{"s":"EUREX:II1!","d":"Euro BTP"},{"s":"EUREX:HR1!","d":"Euro BOBL"}]},{"title":"Forex","symbols":[{"s":"FX:EURUSD"},{"s":"FX:GBPUSD"},{"s":"FX:USDJPY"},{"s":"FX:USDCHF"},{"s":"FX:AUDUSD"},{"s":"FX:USDCAD"}]}],"utm_source":"www.newsmax.com","utm_medium":"widget","utm_campaign":"market-overview"}
+// Finding.domain: s.example3.com
+// Finding.base_domain: example3.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 8
+// Sanitizer.name: s/t.escape
+// Sanitizer.location: https://s.example3.com/static/bundles/embed/embed_market_overview_widget.d9b77770a47fff042034.js - s/t.escape:127:2484
+// Finding.begin: 2725
+// Finding.end: 2742
+// Finding.original_uuid: ec190501-b331-4f23-b0a4-10d577acf626
+// Finding.TwentyFiveMillionFlowsId: -8267634
+// Finding.script: https://s.example3.com/static/bundles/embed/vendors_embed.e8f8312851d14ea7c476.js
+// Finding.line: 24
+// Exploit.uuid: a28ad61b-ad6f-43c3-94d1-113b656a7b25
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: s
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: s</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: s</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 543
+// Exploit.end_taint_url: 544
+// Exploit.replace_begin_url: 543
+// Exploit.replace_end_url: 544
+// Exploit.replace_begin_param: 13399
+// Exploit.replace_end_param: 13400
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: true
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1313216897
+// DepGraph.sanitizer_hash: -16387555
+// Part of the URL ('NAs%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src%3Dx%20onerror%3DtaintfoxLog('a28ad61bad6f43c394d1113b656a7b25')%3E%3C!--%2F*DAQ') found in right hand side of replace 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>"'`=\/]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, =: 1), function_rhs: true], 'function(t){return c[t]}') - Other Exception: ReferenceError: c is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="decodeURIComponent"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=ellipse, label="JSON.parse"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="split"];
+n9 [shape=box, label="Lit: :"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="encodeURIComponent"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="str_replace_once"];
+n14 [shape=box, label="Lit: {tvexchange}"];
+n15 [shape=box, label="Lit: NAs%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src%3Dx%20onerror%3DtaintfoxLog('a28ad61bad6f43c394d1113b656a7b25')%3E%3C!--%2F*DAQ"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="str_replace_once"];
+n18 [shape=box, label="Lit: {tvsymbol}"];
+n19 [shape=box, label="Lit: AAPL"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="str_replace_once"];
+n22 [shape=box, label="Lit: {tvprosymbol}"];
+n23 [shape=box, label="Lit: "];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: &#x2F;"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: /[&<>"'`=\/]/"];
+n29 [shape=box, label="Lit: "];
+n30 [shape=box, label="Var: x"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n7 -> n4;
+n6 -> n7;
+n10 -> n6;
+n8 -> n9;
+n8 -> n10;
+n12 -> n8;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n24 -> n17;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n25 -> n21;
+n25 -> n26;
+n30 -> n25;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n31 -> n27;
+n32 -> n31;
+}

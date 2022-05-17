@@ -1,0 +1,70 @@
+// Finding: c6aad1e2-b796-424b-ad15-7e0ff0782892
+// Finding.url: https://www.example39.com/news/style_fashion/
+// Finding.parentloc: https://www.example39.com/news/style_fashion/##</iframe></style></script></object></embed></textarea><script>taintfoxLog('8a87bf8002804770bdd8bf2d20ba71e4')</script><!--/*
+// Finding.domain: www.example39.com
+// Finding.base_domain: example39.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: a<
+// Sanitizer.location: https://hbx.example40.com/bidexchange.js?cid=8CUQO9WB8&dn=www.example39.com&version=5.1 - initializeUrlComponents/this.cleanedUrl<:1:44653
+// Finding.begin: 1765
+// Finding.end: 1807
+// Finding.original_uuid: e1301385-6645-46f9-a0a2-c25c02274dd6
+// Finding.TwentyFiveMillionFlowsId: -563316235
+// Finding.script: https://hbx.example40.com/bidexchange.js?cid=8CUQO9WB8&dn=www.example39.com&version=5.1
+// Finding.line: 1
+// Exploit.uuid: 8a87bf80-0280-4770-bdd8-bf2d20ba71e4
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: /
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 42
+// Exploit.replace_begin_url: 42
+// Exploit.replace_end_url: 42
+// Exploit.replace_begin_param: 1808
+// Exploit.replace_end_param: 1808
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1920676617
+// DepGraph.sanitizer_hash: 1920676617
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /;[^\?]*/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n6 -> n5;
+}

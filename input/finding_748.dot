@@ -1,0 +1,180 @@
+// Finding: af765bcc-16bc-4700-99f1-20dbf6d0e4b6
+// Finding.url: https://www.example432.com/icp##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1ca3d723d18041d7a52fd4b5295ad0c8')><!--/*
+// Finding.parentloc: https://www.example432.com/icp##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1ca3d723d18041d7a52fd4b5295ad0c8')><!--/*
+// Finding.domain: www.example432.com
+// Finding.base_domain: example432.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 6
+// Sanitizer.name: cas
+// Sanitizer.location: https://my.example433.com/cas/js/new_cas_ch.js?ver=202104281 - cas:4:22
+// Finding.begin: 403
+// Finding.end: 406
+// Finding.original_uuid: 1acfc1da-d3ec-4fcb-9cb0-19910590c2e8
+// Finding.TwentyFiveMillionFlowsId: -1878643012
+// Finding.script: https://cdn.example432.com/static/beta4/js/lib/jquery-1.7.2.min.js?v=202104281
+// Finding.line: 4
+// Exploit.uuid: 1ca3d723-d180-41d7-a52f-d4b5295ad0c8
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: value
+// Exploit.quote_type: "
+// Exploit.tag: input
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 25
+// Exploit.replace_begin_url: 25
+// Exploit.replace_end_url: 25
+// Exploit.replace_begin_param: 228
+// Exploit.replace_end_param: 228
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1528058886
+// DepGraph.sanitizer_hash: -527115666
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: &lt;"];
+n3 [shape=ellipse, label="preg_replace"];
+n4 [shape=box, label="RegExp: /[<]/"];
+n5 [shape=box, label="Lit: &lt;"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &gt;"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /[>]/"];
+n11 [shape=box, label="Lit: &gt;"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="encodeURIComponent"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: %21"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[!]/"];
+n19 [shape=box, label="Lit: %21"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: %27"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /[']/"];
+n25 [shape=box, label="Lit: %27"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: %28"];
+n29 [shape=ellipse, label="preg_replace"];
+n30 [shape=box, label="RegExp: /\(/"];
+n31 [shape=box, label="Lit: %28"];
+n32 [shape=box, label="Var: x"];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: %29"];
+n35 [shape=ellipse, label="preg_replace"];
+n36 [shape=box, label="RegExp: /\)/"];
+n37 [shape=box, label="Lit: %29"];
+n38 [shape=box, label="Var: x"];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: %2A"];
+n41 [shape=ellipse, label="preg_replace"];
+n42 [shape=box, label="RegExp: /\*/"];
+n43 [shape=box, label="Lit: %2A"];
+n44 [shape=box, label="Var: x"];
+n45 [shape=ellipse, label="preg_replace"];
+n46 [shape=box, label="RegExp: /[~]/"];
+n47 [shape=box, label="Lit: %7E"];
+n48 [shape=box, label="Var: x"];
+n49 [shape=ellipse, label="."];
+n50 [shape=box, label="Lit: +"];
+n51 [shape=ellipse, label="preg_replace"];
+n52 [shape=box, label="RegExp: /%20/"];
+n53 [shape=box, label="Lit: +"];
+n54 [shape=box, label="Var: x"];
+n55 [shape=box, label="Var: x"];
+n56 [shape=doubleoctagon, label="Return: x"];
+n1 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n7 -> n3;
+n7 -> n8;
+n12 -> n7;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n14 -> n9;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n20 -> n15;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n21 -> n22;
+n26 -> n21;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n27 -> n23;
+n27 -> n28;
+n32 -> n27;
+n29 -> n30;
+n29 -> n31;
+n29 -> n32;
+n33 -> n29;
+n33 -> n34;
+n38 -> n33;
+n35 -> n36;
+n35 -> n37;
+n35 -> n38;
+n39 -> n35;
+n39 -> n40;
+n44 -> n39;
+n41 -> n42;
+n41 -> n43;
+n41 -> n44;
+n48 -> n41;
+n45 -> n46;
+n45 -> n47;
+n45 -> n48;
+n49 -> n45;
+n49 -> n50;
+n54 -> n49;
+n51 -> n52;
+n51 -> n53;
+n51 -> n54;
+n55 -> n51;
+n56 -> n55;
+}

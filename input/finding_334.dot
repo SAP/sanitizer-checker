@@ -1,0 +1,86 @@
+// Finding: 665e1d83-72ba-43ed-ba8e-090037718830
+// Finding.url: https://www.example247.com/#"});taintfoxLog('f6cbe6453c8d4b23bc0eb1efc0b0469b')//
+// Finding.parentloc: https://www.example247.com/#"});taintfoxLog('f6cbe6453c8d4b23bc0eb1efc0b0469b')//
+// Finding.domain: www.example247.com
+// Finding.base_domain: example247.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 8
+// Sanitizer.name: mb[7]
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-N56B53J&l=dataLayer - mb[7]:879:426
+// Finding.begin: 116
+// Finding.end: 126
+// Finding.original_uuid: e61713d7-b3ba-4ea8-a9de-b670fd6a5d94
+// Finding.TwentyFiveMillionFlowsId: 1432691367
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-N56B53J&l=dataLayer
+// Finding.line: 3
+// Exploit.uuid: f6cbe645-3c8d-4b23-bc0e-b1efc0b0469b
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: www.example247.com
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: "});
+// Exploit.break_in: //
+// Exploit.payload: "});taintfoxLog(1)//
+// Exploit.begin_taint_url: 8
+// Exploit.end_taint_url: 22
+// Exploit.replace_begin_url: 23
+// Exploit.replace_end_url: 23
+// Exploit.replace_begin_param: 33
+// Exploit.replace_end_param: 33
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 627113229
+// DepGraph.sanitizer_hash: -995875832
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, =: 1), function_rhs: true], 'function(a){return xb[a]}') - Other Exception: ReferenceError: xb is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="regex_exec"];
+n2 [shape=box, label="RegExp: /^(.*?:\/\/)(.*?)([a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})[:[0-9]*]?([\/].*?)?$/"];
+n3 [shape=box, label="Lit: 3"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="regex_match"];
+n6 [shape=box, label="RegExp: /^(.*?:\/\/)(.*?)([a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})[:[0-9]*]?([\/].*?)?$/"];
+n7 [shape=box, label="Lit: 3"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n9;
+n14 -> n13;
+}

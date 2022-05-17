@@ -1,0 +1,116 @@
+// Finding: 3269c53f-4aca-46f9-895b-85d633ab7255
+// Finding.url: https://s.example203.com/images/listing/tool/yads/yads-iframe.html?start_prod_nu"></iframe></style></script></object></embed></textarea><script>taintfoxLog('a3e01566230047cb836d700acc0534b9')</script><!--/*m=0&s=20806_10381&fr_id=yads_9661552-2&p_elem=yads_20806_10381&sb_support=1&enc=UTF-8&u=https://news.yahoo.co.jp/articles/97580664308023c4712f9e87edff6c27e77a5b53&async=1&mb=1&kwe=u&kwm=1&pv_ts=1619690786068&pcat_id=337&shannon_id=97580664308023c4712f9e87edff6c27e77a5b53
+// Finding.parentloc: https://s.example203.com/images/listing/tool/yads/yads-iframe.html?start_prod_nu"></iframe></style></script></object></embed></textarea><script>taintfoxLog('a3e01566230047cb836d700acc0534b9')</script><!--/*m=0&s=20806_10381&fr_id=yads_9661552-2&p_elem=yads_20806_10381&sb_support=1&enc=UTF-8&u=https://news.yahoo.co.jp/articles/97580664308023c4712f9e87edff6c27e77a5b53&async=1&mb=1&kwe=u&kwm=1&pv_ts=1619690786068&pcat_id=337&shannon_id=97580664308023c4712f9e87edff6c27e77a5b53
+// Finding.domain: s.example203.com
+// Finding.base_domain: example203.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 4
+// Sanitizer.name: escapeString
+// Sanitizer.location: https://s.example203.com/images/listing/tool/yads/yads-iframe.html?start_prod_nu"></iframe></style></script></object></embed></textarea><script>taintfoxLog('a3e01566230047cb836d700acc0534b9')</script><!--/*m=0&s=20806_10381&fr_id=yads_9661552-2&p_elem=yads_20806_10381&sb_support=1&enc=UTF-8&u=https://news.yahoo.co.jp/articles/97580664308023c4712f9e87edff6c27e77a5b53&async=1&mb=1&kwe=u&kwm=1&pv_ts=1619690786068&pcat_id=337&shannon_id=97580664308023c4712f9e87edff6c27e77a5b53 - escapeString:1:35
+// Finding.begin: 356
+// Finding.end: 396
+// Finding.original_uuid: 67bbed2c-456d-4a2b-bc60-5ecc094fbec6
+// Finding.TwentyFiveMillionFlowsId: 260950345
+// Finding.script: https://s.example203.com/images/listing/tool/yads/yads-iframe.html?start_prod_nu"></iframe></style></script></object></embed></textarea><script>taintfoxLog('a3e01566230047cb836d700acc0534b9')</script><!--/*m=0&s=20806_10381&fr_id=yads_9661552-2&p_elem=yads_20806_10381&sb_support=1&enc=UTF-8&u=https://news.yahoo.co.jp/articles/97580664308023c4712f9e87edff6c27e77a5b53&async=1&mb=1&kwe=u&kwm=1&pv_ts=1619690786068&pcat_id=337&shannon_id=97580664308023c4712f9e87edff6c27e77a5b53
+// Finding.line: 1
+// Exploit.uuid: a3e01566-2300-47cb-836d-700acc0534b9
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: script
+// Exploit.break_out: u"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: u"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 72
+// Exploit.end_taint_url: 73
+// Exploit.replace_begin_url: 72
+// Exploit.replace_end_url: 73
+// Exploit.replace_begin_param: 289
+// Exploit.replace_end_param: 290
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1130713823
+// DepGraph.sanitizer_hash: -1130713823
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: ?"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="split"];
+n5 [shape=box, label="Lit: &"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="split"];
+n8 [shape=box, label="Lit: ="];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="decodeURIComponent"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="preg_replace"];
+n13 [shape=box, label="RegExp: /[<]/"];
+n14 [shape=box, label="Lit: &lt;"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="preg_replace"];
+n17 [shape=box, label="RegExp: /[>]/"];
+n18 [shape=box, label="Lit: &gt;"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="preg_replace"];
+n21 [shape=box, label="RegExp: /["]/"];
+n22 [shape=box, label="Lit: &quot;"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="preg_replace"];
+n25 [shape=box, label="RegExp: /[']/"];
+n26 [shape=box, label="Lit: &#39;"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=box, label="Var: x"];
+n29 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n6 -> n1;
+n4 -> n5;
+n4 -> n6;
+n9 -> n4;
+n7 -> n8;
+n7 -> n9;
+n11 -> n7;
+n10 -> n11;
+n15 -> n10;
+n12 -> n13;
+n12 -> n14;
+n12 -> n15;
+n19 -> n12;
+n16 -> n17;
+n16 -> n18;
+n16 -> n19;
+n23 -> n16;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n27 -> n20;
+n24 -> n25;
+n24 -> n26;
+n24 -> n27;
+n28 -> n24;
+n29 -> n28;
+}

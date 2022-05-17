@@ -1,0 +1,70 @@
+// Finding: ce466673-a94e-46ad-89f4-9a4318bddbd3
+// Finding.url: https://www.example254.com/us/en/#mm-7#)});taintfoxLog('6fcd66804e76400aa94713b90991a3fd')//
+// Finding.parentloc: https://www.example254.com/us/en/#mm-7#)});taintfoxLog('6fcd66804e76400aa94713b90991a3fd')//
+// Finding.domain: www.example254.com
+// Finding.base_domain: example254.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 20
+// Sanitizer.name: kd[9]
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-5CMWJM - Td:8483:58
+// Finding.begin: 163
+// Finding.end: 165
+// Finding.original_uuid: 83d71cec-5977-41c8-b160-7d218ac27dd5
+// Finding.TwentyFiveMillionFlowsId: 1165040148
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-5CMWJM
+// Finding.line: 3
+// Exploit.uuid: 6fcd6680-4e76-400a-a947-13b90991a3fd
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: undefined
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: )});
+// Exploit.break_in: //
+// Exploit.payload: )});taintfoxLog(1)//
+// Exploit.begin_taint_url: 22
+// Exploit.end_taint_url: 24
+// Exploit.replace_begin_url: 33
+// Exploit.replace_end_url: 33
+// Exploit.replace_begin_param: 21
+// Exploit.replace_end_param: 21
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 66998419
+// DepGraph.sanitizer_hash: -377972158
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x24\x26-\/\x3a\x3c-\x3f\x5b-\x5e\x7b-\x7d\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, :: 1, =: 1, *: 1, ,: 1, -: 1, ^: 1, |: 1, (: 1, ): 1, [: 1, ]: 1, {: 1, }: 1), function_rhs: true], 'function(a){return ud[a]}') - Other Exception: ReferenceError: ud is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x24\x26-\/\x3a\x3c-\x3f\x5b-\x5e\x7b-\x7d\x85\u2028\u2029]/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n6 -> n5;
+}

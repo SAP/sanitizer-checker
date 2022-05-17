@@ -1,0 +1,159 @@
+// Finding: 3c3a22bb-f05a-46b3-9ad8-cc75a2865ddb
+// Finding.url: https://www.example398.com/####"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('275ab6f6f497428da76ebb65f2b1f506')><!--/*
+// Finding.parentloc: https://www.example398.com/####"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('275ab6f6f497428da76ebb65f2b1f506')><!--/*
+// Finding.domain: www.example398.com
+// Finding.base_domain: example398.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: Pt/<
+// Sanitizer.location: https://fast.example7.com/client/2105/05154742/min/v1_gs_lib.js - Pt/<:3:10312
+// Finding.begin: 710
+// Finding.end: 741
+// Finding.original_uuid: c2d26b2e-bf4d-4d89-b29c-c58b2c5abf7a
+// Finding.TwentyFiveMillionFlowsId: -409274689
+// Finding.script: https://fast.example7.com/client/2105/05154742/min/v1_gs_lib.js
+// Finding.line: 3
+// Exploit.uuid: 275ab6f6-f497-428d-a76e-bb65f2b1f506
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: ##"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: ##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 24
+// Exploit.replace_begin_url: 24
+// Exploit.replace_end_url: 24
+// Exploit.replace_begin_param: 1198
+// Exploit.replace_end_param: 1199
+// Issues.LargestEncodeAttrStringChain: 1
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1759504200
+// DepGraph.sanitizer_hash: -1900082219
+// Large chain of EncodeAttrString Operations (1) 
+// Part of the URL ('####"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('275ab6f6f497428da76ebb65f2b1f506')><!--/*') found in left hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: ####"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('275ab6f6f497428da76ebb65f2b1f506')><!--/*"];
+n3 [shape=box, label="Lit: ####"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="decodeURIComponent"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /\u00AD/"];
+n9 [shape=box, label="Lit: %C2%AD"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n13 [shape=box, label="Lit: "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: &"];
+n17 [shape=box, label="Lit: ?"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: ?"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: fb_ref="];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: eCI9gaxhVh"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: -"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: T"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: witter"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: &utm_source=Twitter&utm_medium=ShareButton&utm_campaign=GetSocial"];
+n33 [shape=ellipse, label="encodeURIComponent"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: https://api.at.getsocial.io/s?channel=tw&url="];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: &gsId="];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: a49593"];
+n41 [shape=ellipse, label="."];
+n42 [shape=box, label="Lit: &gsText="];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit: Official%20Site"];
+n45 [shape=ellipse, label="encodeAttrString"];
+n46 [shape=box, label="Var: x"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: <a rel="noreferrer nofollow" data-identifier="facebook:share" ....s-facebook-share gs-tracking  "><i aria-hidden="true"></i></a>"];
+n49 [shape=box, label="Var: x"];
+n50 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n34 -> n31;
+n33 -> n34;
+n35 -> n36;
+n35 -> n33;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n41 -> n39;
+n41 -> n42;
+n43 -> n41;
+n43 -> n44;
+n46 -> n43;
+n45 -> n46;
+n47 -> n48;
+n47 -> n45;
+n49 -> n47;
+n50 -> n49;
+}

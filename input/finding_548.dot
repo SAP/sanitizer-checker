@@ -1,0 +1,193 @@
+// Finding: 07112c8d-395b-4039-99b0-e169ee1cf15b
+// Finding.url: https://trips.example352.com/trip/wild-madagascar##'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a3123b91a9d848cbaf4e0568610684f1')><!--/*
+// Finding.parentloc: https://trips.example352.com/trip/wild-madagascar##'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a3123b91a9d848cbaf4e0568610684f1')><!--/*
+// Finding.domain: trips.example352.com
+// Finding.base_domain: example352.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: i
+// Sanitizer.location: https://trips.example352.com/b5f3d7385249b7380dfdea1e2510facc2ebc547f.js?meteor_js_resource=true - i:323:4233
+// Finding.begin: 73
+// Finding.end: 88
+// Finding.original_uuid: b6dd0418-18e9-4c3a-9756-350171701238
+// Finding.TwentyFiveMillionFlowsId: 2132510786
+// Finding.script: https://trips.example352.com/b5f3d7385249b7380dfdea1e2510facc2ebc547f.js?meteor_js_resource=true
+// Finding.line: 9
+// Exploit.uuid: a3123b91-a9d8-48cb-af4e-0568610684f1
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: content
+// Exploit.quote_type: '
+// Exploit.tag: meta
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 35
+// Exploit.end_taint_url: 50
+// Exploit.replace_begin_url: 50
+// Exploit.replace_end_url: 50
+// Exploit.replace_begin_param: 88
+// Exploit.replace_end_param: 88
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 757310672
+// DepGraph.sanitizer_hash: 562959364
+// Non Finite Regex with function on rhs:  replace((\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(r,o,a,s,c,u,p){if(o=o||"",a=a||"",t=e[s],i=void 0!==t,u&&!i)t="";else if(!i)return void l.push(s);return t=n.isFunction(t)?t.call(e):t,o+a+n.map(String(t).split("/"),function(e){return encodeURIComponent(e)}).join("/")}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace((\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(), function_rhs: true], 'function(r,o,a,s,c,u,p){if(o=o||"",a=a||"",t=e[s],i=void 0!==t,u&&!i)t="";else if(!i)return void l.push(s);return t=n.isFunction(t)?t.call(e):t,o+a+n.map(String(t).split("/"),function(e){return encodeURIComponent(e)}).join("/")}') - Left hand side has to be a range 
+// Non Finite Regex with function on rhs:  replace(\*/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(*: 1), function_rhs: true], 'function(r){if(void 0===e[s])throw new Error("You are trying to access a wild card parameter at index "+s+" but the value of params at that index is undefined");var t=String(e[s++]);return n.map(t.split("/"),function(e){return encodeURIComponent(e)}).join("/")}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(\*/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(*: 1), function_rhs: true], 'function(r){if(void 0===e[s])throw new Error("You are trying to access a wild card parameter at index "+s+" but the value of params at that index is undefined");var t=String(e[s++]);return n.map(t.split("/"),function(e){return encodeURIComponent(e)}).join("/")}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="regex_exec"];
+n2 [shape=box, label="RegExp: /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/"];
+n3 [shape=box, label="Lit: 5"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="regex_match"];
+n6 [shape=box, label="RegExp: /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/"];
+n7 [shape=box, label="Lit: 5"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: "];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: "];
+n13 [shape=ellipse, label="regex_exec"];
+n14 [shape=box, label="RegExp: /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/"];
+n15 [shape=box, label="Lit: 5"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="regex_match"];
+n18 [shape=box, label="RegExp: /^(([^:\/?#]+):)?(\/\/([^\/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?/"];
+n19 [shape=box, label="Lit: 5"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="regex_exec"];
+n22 [shape=box, label="RegExp: /^\/trip\/([^\\/]+?)(?:\/(?=$))?$/"];
+n23 [shape=box, label="Lit: 1"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="preg_replace"];
+n26 [shape=box, label="RegExp: /\+/"];
+n27 [shape=box, label="Lit:  "];
+n28 [shape=box, label="Var: x"];
+n29 [shape=ellipse, label="decodeURIComponent"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="encodeURIComponent"];
+n32 [shape=box, label="Var: x"];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: /"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: /trip"];
+n37 [shape=ellipse, label="preg_replace"];
+n38 [shape=box, label="RegExp: /(\/)?(\.)?:(\w+)(?:(\(.*?\)))?(\?)?/"];
+n39 [shape=box, label="Lit: "];
+n40 [shape=box, label="Var: x"];
+n41 [shape=ellipse, label="preg_replace"];
+n42 [shape=box, label="RegExp: /\*/"];
+n43 [shape=box, label="Lit: "];
+n44 [shape=box, label="Var: x"];
+n45 [shape=ellipse, label="."];
+n46 [shape=box, label="Lit: /trip/"];
+n47 [shape=ellipse, label="preg_replace"];
+n48 [shape=box, label="RegExp: /\/+/"];
+n49 [shape=box, label="Lit: /"];
+n50 [shape=box, label="Var: x"];
+n51 [shape=ellipse, label="preg_replace"];
+n52 [shape=box, label="RegExp: /^(.+)\/$/"];
+n53 [shape=box, label="Lit: $1"];
+n54 [shape=box, label="Var: x"];
+n55 [shape=ellipse, label="."];
+n56 [shape=box, label="Lit: https://trips.example352.com"];
+n57 [shape=ellipse, label="preg_replace"];
+n58 [shape=box, label="RegExp: /[']/"];
+n59 [shape=box, label="Lit: &apos;"];
+n60 [shape=box, label="Var: x"];
+n61 [shape=ellipse, label="preg_replace"];
+n62 [shape=box, label="RegExp: /["]/"];
+n63 [shape=box, label="Lit: &quot;"];
+n64 [shape=box, label="Var: x"];
+n65 [shape=box, label="Var: x"];
+n66 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n10;
+n9 -> n5;
+n11 -> n9;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n24 -> n17;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n28 -> n21;
+n25 -> n26;
+n25 -> n27;
+n25 -> n28;
+n30 -> n25;
+n29 -> n30;
+n32 -> n29;
+n31 -> n32;
+n33 -> n34;
+n33 -> n31;
+n35 -> n36;
+n35 -> n33;
+n40 -> n35;
+n37 -> n38;
+n37 -> n39;
+n37 -> n40;
+n44 -> n37;
+n41 -> n42;
+n41 -> n43;
+n41 -> n44;
+n45 -> n46;
+n45 -> n41;
+n50 -> n45;
+n47 -> n48;
+n47 -> n49;
+n47 -> n50;
+n54 -> n47;
+n51 -> n52;
+n51 -> n53;
+n51 -> n54;
+n55 -> n56;
+n55 -> n51;
+n60 -> n55;
+n57 -> n58;
+n57 -> n59;
+n57 -> n60;
+n64 -> n57;
+n61 -> n62;
+n61 -> n63;
+n61 -> n64;
+n65 -> n61;
+n66 -> n65;
+}

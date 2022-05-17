@@ -1,0 +1,137 @@
+// Finding: c585ae10-7601-4d1e-8d3c-b0feb05f3ca5
+// Finding.url: https://store.example54.com/articles/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('acc5016b677e48b88bff3d6a3269cd98')><!--/*
+// Finding.parentloc: https://store.example54.com/articles/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('acc5016b677e48b88bff3d6a3269cd98')><!--/*
+// Finding.domain: store.example54.com
+// Finding.base_domain: example54.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 126
+// Finding.end: 133
+// Finding.original_uuid: d4b27a39-6635-49f7-9ce6-9857e927aae4
+// Finding.TwentyFiveMillionFlowsId: -99896829
+// Finding.script: https://cdn11.example55.com/s-yneuaokjib/stencil/c0f78270-43b7-0139-825c-0242ac11000a/e/33777490-bd12-0137-07b1-0242ac110005/dist/theme-bundle.main.js
+// Finding.line: 25
+// Exploit.uuid: acc5016b-677e-48b8-8bff-3d6a3269cd98
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 6
+// Exploit.replace_begin_url: 31
+// Exploit.replace_end_url: 31
+// Exploit.replace_begin_param: 43
+// Exploit.replace_end_param: 43
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 2004601825
+// DepGraph.sanitizer_hash: -1778475771
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[#]/"];
+n3 [shape=box, label="Lit: #"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="trim"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="substr"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Lit: 6"];
+n10 [shape=ellipse, label="substr"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=box, label="Lit: 2"];
+n13 [shape=ellipse, label="substr"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Lit: 13"];
+n16 [shape=ellipse, label="preg_replace"];
+n17 [shape=box, label="RegExp: /[']/"];
+n18 [shape=box, label="Lit: %27"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="preg_replace"];
+n21 [shape=box, label="RegExp: /[<]/"];
+n22 [shape=box, label="Lit: %3C"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="preg_replace"];
+n25 [shape=box, label="RegExp: /[>]/"];
+n26 [shape=box, label="Lit: %3E"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=ellipse, label="preg_replace"];
+n29 [shape=box, label="RegExp: /["]/"];
+n30 [shape=box, label="Lit: %22"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=ellipse, label="preg_replace"];
+n33 [shape=box, label="RegExp: /[ ]/"];
+n34 [shape=box, label="Lit: %20"];
+n35 [shape=box, label="Var: x"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n8 -> n5;
+n7 -> n8;
+n7 -> n9;
+n11 -> n7;
+n10 -> n11;
+n10 -> n12;
+n14 -> n10;
+n13 -> n14;
+n13 -> n15;
+n19 -> n13;
+n16 -> n17;
+n16 -> n18;
+n16 -> n19;
+n23 -> n16;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n27 -> n20;
+n24 -> n25;
+n24 -> n26;
+n24 -> n27;
+n31 -> n24;
+n28 -> n29;
+n28 -> n30;
+n28 -> n31;
+n35 -> n28;
+n32 -> n33;
+n32 -> n34;
+n32 -> n35;
+n36 -> n32;
+n37 -> n36;
+}

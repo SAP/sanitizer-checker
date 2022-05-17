@@ -1,0 +1,414 @@
+// Finding: 10a55c4d-b235-43ea-ad93-3f84bdd5ff5f
+// Finding.url: https://www.example422.com/community/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('ec8f11cb160f40a39ee934bfebf6d590')><!--/*
+// Finding.parentloc: https://www.example422.com/community/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('ec8f11cb160f40a39ee934bfebf6d590')><!--/*
+// Finding.domain: www.example422.com
+// Finding.base_domain: example422.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: window.ClickTaleSettings.PTC.cloneNodeIE9
+// Sanitizer.location: https://cdnssl.example423.com/www08/ptc/e0788c4c-07d9-4386-abbd-16076edf2d92.js - window.ClickTaleSettings.PTC.cloneNodeIE9:317:9
+// Finding.begin: 129943
+// Finding.end: 130180
+// Finding.original_uuid: 53f57753-c7e0-437d-9997-85fe45cd1737
+// Finding.TwentyFiveMillionFlowsId: 198255957
+// Finding.script: https://cdnssl.example423.com/www08/ptc/e0788c4c-07d9-4386-abbd-16076edf2d92.js
+// Finding.line: 329
+// Exploit.uuid: ec8f11cb-160f-40a3-9ee9-34bfebf6d590
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: ctdep-img
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 36
+// Exploit.replace_begin_url: 36
+// Exploit.replace_end_url: 36
+// Exploit.replace_begin_param: 131732
+// Exploit.replace_end_param: 131732
+// Issues.LargestEncodeAttrStringChain: 7
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -2123867536
+// DepGraph.sanitizer_hash: -2098466842
+// Large chain of EncodeAttrString Operations (7) 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace(<(area|base|br|col|command|embed|hr|input|keygen|link|menuitem|meta|param|source|track|wbr|img)[^>]*>/g: 1, s: 0, u: 0, m: 0, i: 1 [escapes(<img>: 1), function_rhs: true], 'function(m, g1) {            if (g1) {                var checkReg = new RegExp('<' + g1 + '[^\\w]');                if (checkReg.test(m)) {                    return m + '<\/' + g1 + '>';                }            }            return m        }') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(<(area|base|br|col|command|embed|hr|input|keygen|link|menuitem|meta|param|source|track|wbr|img)[^>]*>/g: 1, s: 0, u: 0, m: 0, i: 1 [escapes(<img>: 1), function_rhs: true], 'function(m, g1) {            if (g1) {                var checkReg = new RegExp('<' + g1 + '[^\\w]');                if (checkReg.test(m)) {                    return m + '<\/' + g1 + '>';                }            }            return m        }') - Left hand side has to be a range 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: p="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: ti=5281288&tm=gtm001&Ver=2&mid=32c6053b-51a4-4200-8493-4dc52b1....0Get%20Answers%20%7C%20Qualtrics%20Community%20%7C%20Page%201&"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: r=&"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: lt=5191&"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: evt=pageLoad&"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: msclkid=N&"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: sv=1&"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: https://bat.bing.com/action/0?"];
+n21 [shape=ellipse, label="substr"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=box, label="Lit: 0"];
+n24 [shape=box, label="Lit: 605"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: &rn="];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: 305321"];
+n29 [shape=ellipse, label="encodeAttrString"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: <div id="ClickTaleDiv" style="display: none;"><script></script></div>"];
+n33 [shape=ellipse, label="str_replace_once"];
+n34 [shape=box, label="RegExp: /(<div id="?ClickTaleDiv"?[^>]+>)\s*<script[^>]+><\/script>\s*(<\/div>)/"];
+n35 [shape=box, label="Lit: $1<script></script>$2"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=ellipse, label="preg_replace"];
+n38 [shape=box, label="RegExp: /(<script\b)([^>]*)(\/>)/"];
+n39 [shape=box, label="Lit: $1$3"];
+n40 [shape=box, label="Var: x"];
+n41 [shape=ellipse, label="."];
+n42 [shape=box, label="Lit: <script></script>"];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit: <img style="display: none;" alt="" src="https://idsync.rlcdn.c....-993d-c2a5ee59d5d5" width="1px" height="1px"><script></script>"];
+n45 [shape=ellipse, label="."];
+n46 [shape=box, label="Lit: <div id="ClickTaleDiv" style="display: none;"><script></script>"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: </div><script></script>"];
+n49 [shape=ellipse, label="."];
+n50 [shape=box, label="Lit: <iframe style="display: none !important; width: 1px !important....cec51ed8e99df6977c199d27812d7.html"></iframe><script></script>"];
+n51 [shape=ellipse, label="."];
+n52 [shape=box, label="Lit: </body><script></script>"];
+n53 [shape=ellipse, label="."];
+n54 [shape=box, label="Lit: <script></script>"];
+n55 [shape=ellipse, label="."];
+n56 [shape=box, label="Lit: <script></script>"];
+n57 [shape=ellipse, label="."];
+n58 [shape=box, label="Lit: <script></script>"];
+n59 [shape=ellipse, label="preg_replace"];
+n60 [shape=box, label="RegExp: /<script\b([^>]*)>([\s\S]*?)<\/script>/"];
+n61 [shape=box, label="Lit: <script></script>"];
+n62 [shape=box, label="Var: x"];
+n63 [shape=ellipse, label="."];
+n64 [shape=box, label="Lit: <script></script>"];
+n65 [shape=ellipse, label="."];
+n66 [shape=box, label="Lit: <img style="display: none;" alt="" src="https://idsync.rlcdn.c....-993d-c2a5ee59d5d5" width="1px" height="1px"><script></script>"];
+n67 [shape=ellipse, label="."];
+n68 [shape=box, label="Lit: <div id="ClickTaleDiv" style="display: none;"><script></script>"];
+n69 [shape=ellipse, label="."];
+n70 [shape=box, label="Lit: </div><script></script>"];
+n71 [shape=ellipse, label="."];
+n72 [shape=box, label="Lit: <iframe style="display: none !important; width: 1px !important....cec51ed8e99df6977c199d27812d7.html"></iframe><script></script>"];
+n73 [shape=ellipse, label="."];
+n74 [shape=box, label="Lit: </body><script></script>"];
+n75 [shape=ellipse, label="."];
+n76 [shape=box, label="Lit: <script></script>"];
+n77 [shape=ellipse, label="."];
+n78 [shape=box, label="Lit: <script></script>"];
+n79 [shape=ellipse, label="."];
+n80 [shape=box, label="Lit: <script></script>"];
+n81 [shape=ellipse, label="preg_replace"];
+n82 [shape=box, label="RegExp: /<script\b([^>]*)>([\s\S]*?)<\/script>/"];
+n83 [shape=box, label="Lit: <script></script>"];
+n84 [shape=box, label="Var: x"];
+n85 [shape=ellipse, label="str_replace_once"];
+n86 [shape=box, label="RegExp: /(<div id="?ClickTaleDiv"?[^>]+>)\s*<script[^>]+><\/script>\s*(<\/div>)/"];
+n87 [shape=box, label="Lit: $1$2"];
+n88 [shape=box, label="Var: x"];
+n89 [shape=ellipse, label="regex_exec"];
+n90 [shape=box, label="RegExp: /<(area|base|br|col|command|embed|hr|input|keygen|link|menuitem|meta|param|source|track|wbr|img)[^>]*>/"];
+n91 [shape=box, label="Lit: 0"];
+n92 [shape=box, label="Var: x"];
+n93 [shape=ellipse, label="."];
+n94 [shape=box, label="Lit: </"];
+n95 [shape=ellipse, label="."];
+n96 [shape=box, label="Lit: img"];
+n97 [shape=ellipse, label="."];
+n98 [shape=box, label="Lit: >"];
+n99 [shape=ellipse, label="."];
+n100 [shape=box, label="Lit: </div><p class="Title CategoryTitle">XM Directory</p><span cla.... display:none; visibility:hidden;" id="batBeacon620030035855">"];
+n101 [shape=ellipse, label="."];
+n102 [shape=box, label="Lit: </div><script></script><img style="display: none;" alt="" src=....4-727f-c823-993d-c2a5ee59d5d5" width="1px" height="1px"></img>"];
+n103 [shape=ellipse, label="."];
+n104 [shape=box, label="Lit: <script></script><div id="ClickTaleDiv" style="display: none;"....t></script><script></script><script></script><script></script>"];
+n105 [shape=ellipse, label="preg_replace"];
+n106 [shape=box, label="RegExp: /<(area|base|br|col|command|embed|hr|input|keygen|link|menuitem|meta|param|source|track|wbr|img)[^>]*>/"];
+n107 [shape=box, label="Lit: "];
+n108 [shape=box, label="Var: x"];
+n109 [shape=ellipse, label="."];
+n110 [shape=box, label="Lit: </ctdep-i"];
+n111 [shape=ellipse, label="."];
+n112 [shape=box, label="Lit: mg></ctdep-d"];
+n113 [shape=ellipse, label="."];
+n114 [shape=box, label="Lit: iv><ctdep-s"];
+n115 [shape=ellipse, label="."];
+n116 [shape=box, label="Lit: cript></ctdep-s"];
+n117 [shape=ellipse, label="."];
+n118 [shape=box, label="Lit: cript><ctdep-i"];
+n119 [shape=ellipse, label="."];
+n120 [shape=box, label="Lit: mg style="display: none;" alt="" src="https://idsync.rlcdn.com....27f-c823-993d-c2a5ee59d5d5" width="1px" height="1px"></ctdep-i"];
+n121 [shape=ellipse, label="."];
+n122 [shape=box, label="Lit: mg><ctdep-s"];
+n123 [shape=ellipse, label="."];
+n124 [shape=box, label="Lit: cript></ctdep-s"];
+n125 [shape=ellipse, label="."];
+n126 [shape=box, label="Lit: cript><ctdep-d"];
+n127 [shape=ellipse, label="."];
+n128 [shape=box, label="Lit: iv id="ClickTaleDiv" style="display: none;"><ctdep-s"];
+n129 [shape=ellipse, label="."];
+n130 [shape=box, label="Lit: cript></ctdep-s"];
+n131 [shape=ellipse, label="."];
+n132 [shape=box, label="Lit: cript></ctdep-d"];
+n133 [shape=ellipse, label="."];
+n134 [shape=box, label="Lit: iv><ctdep-s"];
+n135 [shape=ellipse, label="."];
+n136 [shape=box, label="Lit: cript></ctdep-s"];
+n137 [shape=ellipse, label="."];
+n138 [shape=box, label="Lit: cript><ctdep-i"];
+n139 [shape=ellipse, label="."];
+n140 [shape=box, label="Lit: frame style="display: none !important; width: 1px !important; ....otjar.com/box-5e3cec51ed8e99df6977c199d27812d7.html"></ctdep-i"];
+n141 [shape=ellipse, label="."];
+n142 [shape=box, label="Lit: frame><ctdep-s"];
+n143 [shape=ellipse, label="."];
+n144 [shape=box, label="Lit: cript></ctdep-s"];
+n145 [shape=ellipse, label="."];
+n146 [shape=box, label="Lit: cript></ctdep-b"];
+n147 [shape=ellipse, label="."];
+n148 [shape=box, label="Lit: ody><ctdep-s"];
+n149 [shape=ellipse, label="."];
+n150 [shape=box, label="Lit: cript></ctdep-s"];
+n151 [shape=ellipse, label="."];
+n152 [shape=box, label="Lit: cript><ctdep-s"];
+n153 [shape=ellipse, label="."];
+n154 [shape=box, label="Lit: cript></ctdep-s"];
+n155 [shape=ellipse, label="."];
+n156 [shape=box, label="Lit: cript><ctdep-s"];
+n157 [shape=ellipse, label="."];
+n158 [shape=box, label="Lit: cript></ctdep-s"];
+n159 [shape=ellipse, label="."];
+n160 [shape=box, label="Lit: cript><ctdep-s"];
+n161 [shape=ellipse, label="."];
+n162 [shape=box, label="Lit: cript></ctdep-s"];
+n163 [shape=ellipse, label="."];
+n164 [shape=box, label="Lit: cript>"];
+n165 [shape=ellipse, label="preg_replace"];
+n166 [shape=box, label="RegExp: /(<\/?)([A-Za-z])/"];
+n167 [shape=box, label="Lit: $1ctdep-$2"];
+n168 [shape=box, label="Var: x"];
+n169 [shape=ellipse, label="preg_replace"];
+n170 [shape=box, label="RegExp: /ctdep-style/"];
+n171 [shape=box, label="Lit: style"];
+n172 [shape=box, label="Var: x"];
+n173 [shape=box, label="Var: x"];
+n174 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n7 -> n8;
+n7 -> n5;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n20;
+n19 -> n17;
+n22 -> n19;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n25 -> n21;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n30 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n36 -> n31;
+n33 -> n34;
+n33 -> n35;
+n33 -> n36;
+n40 -> n33;
+n37 -> n38;
+n37 -> n39;
+n37 -> n40;
+n41 -> n37;
+n41 -> n42;
+n43 -> n41;
+n43 -> n44;
+n45 -> n43;
+n45 -> n46;
+n47 -> n45;
+n47 -> n48;
+n49 -> n47;
+n49 -> n50;
+n51 -> n49;
+n51 -> n52;
+n53 -> n51;
+n53 -> n54;
+n55 -> n53;
+n55 -> n56;
+n57 -> n55;
+n57 -> n58;
+n62 -> n57;
+n59 -> n60;
+n59 -> n61;
+n59 -> n62;
+n63 -> n59;
+n63 -> n64;
+n65 -> n63;
+n65 -> n66;
+n67 -> n65;
+n67 -> n68;
+n69 -> n67;
+n69 -> n70;
+n71 -> n69;
+n71 -> n72;
+n73 -> n71;
+n73 -> n74;
+n75 -> n73;
+n75 -> n76;
+n77 -> n75;
+n77 -> n78;
+n79 -> n77;
+n79 -> n80;
+n84 -> n79;
+n81 -> n82;
+n81 -> n83;
+n81 -> n84;
+n88 -> n81;
+n85 -> n86;
+n85 -> n87;
+n85 -> n88;
+n92 -> n85;
+n89 -> n90;
+n89 -> n91;
+n89 -> n92;
+n93 -> n89;
+n93 -> n94;
+n95 -> n93;
+n95 -> n96;
+n97 -> n95;
+n97 -> n98;
+n99 -> n100;
+n99 -> n97;
+n101 -> n99;
+n101 -> n102;
+n103 -> n101;
+n103 -> n104;
+n108 -> n103;
+n105 -> n106;
+n105 -> n107;
+n105 -> n108;
+n109 -> n105;
+n109 -> n110;
+n111 -> n109;
+n111 -> n112;
+n113 -> n111;
+n113 -> n114;
+n115 -> n113;
+n115 -> n116;
+n117 -> n115;
+n117 -> n118;
+n119 -> n117;
+n119 -> n120;
+n121 -> n119;
+n121 -> n122;
+n123 -> n121;
+n123 -> n124;
+n125 -> n123;
+n125 -> n126;
+n127 -> n125;
+n127 -> n128;
+n129 -> n127;
+n129 -> n130;
+n131 -> n129;
+n131 -> n132;
+n133 -> n131;
+n133 -> n134;
+n135 -> n133;
+n135 -> n136;
+n137 -> n135;
+n137 -> n138;
+n139 -> n137;
+n139 -> n140;
+n141 -> n139;
+n141 -> n142;
+n143 -> n141;
+n143 -> n144;
+n145 -> n143;
+n145 -> n146;
+n147 -> n145;
+n147 -> n148;
+n149 -> n147;
+n149 -> n150;
+n151 -> n149;
+n151 -> n152;
+n153 -> n151;
+n153 -> n154;
+n155 -> n153;
+n155 -> n156;
+n157 -> n155;
+n157 -> n158;
+n159 -> n157;
+n159 -> n160;
+n161 -> n159;
+n161 -> n162;
+n163 -> n161;
+n163 -> n164;
+n168 -> n163;
+n165 -> n166;
+n165 -> n167;
+n165 -> n168;
+n172 -> n165;
+n169 -> n170;
+n169 -> n171;
+n169 -> n172;
+n173 -> n169;
+n174 -> n173;
+}

@@ -1,0 +1,98 @@
+// Finding: 746f97dd-261d-4b91-90c4-5a0e6660fb27
+// Finding.url: https://www.example61.com/game/farmheroessupersaga##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('37ba71795c8e4882a63bb8a36493361e')><!--/*
+// Finding.parentloc: https://www.example61.com/game/farmheroessupersaga##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('37ba71795c8e4882a63bb8a36493361e')><!--/*
+// Finding.domain: www.example61.com
+// Finding.base_domain: example61.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: c.trim
+// Sanitizer.location: https://k1.example62.com/js/app.min.js?_v=6w9vj5 - c.trim:2:842419
+// Finding.begin: 53
+// Finding.end: 78
+// Finding.original_uuid: 8b2c4a99-91da-4188-a091-3e61e25540ad
+// Finding.TwentyFiveMillionFlowsId: 1930568099
+// Finding.script: https://k1.example62.com/js/app.min.js?_v=6w9vj5
+// Finding.line: 2
+// Exploit.uuid: 37ba7179-5c8e-4882-a63b-b8a36493361e
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: content
+// Exploit.quote_type: "
+// Exploit.tag: meta
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 45
+// Exploit.replace_end_url: 45
+// Exploit.replace_begin_param: 38
+// Exploit.replace_end_param: 38
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 2013369447
+// DepGraph.sanitizer_hash: -1453325282
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Lit: 45"];
+n5 [shape=ellipse, label="substr"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Lit: 8"];
+n8 [shape=ellipse, label="substr"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=box, label="Lit: 12"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="RegExp: /^[	\n\r   ᠎             　\u2028\u2029﻿][	\n\r   ᠎             　\u2028\u2029﻿]*/"];
+n13 [shape=box, label="Lit: "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="RegExp: /[	\n\r   ᠎             　\u2028\u2029﻿][	\n\r   ᠎             　\u2028\u2029﻿]*$/"];
+n17 [shape=box, label="Lit: "];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n5 -> n7;
+n9 -> n5;
+n8 -> n9;
+n8 -> n10;
+n14 -> n8;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n20 -> n19;
+}

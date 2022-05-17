@@ -1,0 +1,71 @@
+// Finding: 2e56ef34-8d95-4350-8dd0-8aeb4c79eb95
+// Finding.url: https://example140.com/about#join-the-team##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('57cb1547576d4e9d8b8d109d59a37181')><!--/*
+// Finding.parentloc: https://example140.com/about#join-the-team##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('57cb1547576d4e9d8b8d109d59a37181')><!--/*
+// Finding.domain: example140.com
+// Finding.base_domain: example140.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 6
+// Sanitizer.name: n
+// Sanitizer.location: https://w.example140.com/static/client-src-served/widget/55186/rbox_api.js - loadEssential/</t.prototype._name:69:3236
+// Finding.begin: 108
+// Finding.end: 113
+// Finding.original_uuid: 461c4d95-c30d-4013-9ffd-bcfcb9d6db41
+// Finding.TwentyFiveMillionFlowsId: 431552488
+// Finding.script: https://w.example140.com/static/client-src-served/widget/55186/rbox_api.js
+// Finding.line: 59
+// Exploit.uuid: 57cb1547-576d-4e9d-8b8d-109d59a37181
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 44
+// Exploit.replace_end_url: 44
+// Exploit.replace_begin_param: 73
+// Exploit.replace_end_param: 73
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -892672765
+// DepGraph.sanitizer_hash: -2028742094
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>"'\/]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1), function_rhs: true], 'function(D){return b[D]}') - Other Exception: ReferenceError: b is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[&<>"'\/]/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n6 -> n5;
+}

@@ -1,0 +1,102 @@
+// Finding: c928256c-f113-4d78-bd43-0cfba695234e
+// Finding.url: https://www.example281.com/#taintfoxLog('cfb802d73e8f413988a78b006c28882e')
+// Finding.parentloc: https://www.example281.com/#taintfoxLog('cfb802d73e8f413988a78b006c28882e')
+// Finding.domain: www.example281.com
+// Finding.base_domain: example281.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 1
+// Sanitizer.name: 
+// Sanitizer.location: https://www.example281.com/rfiles/js/ahref/ahref.js - <anonymous>:1:57
+// Finding.begin: 5
+// Finding.end: 83
+// Finding.original_uuid: 394b8919-8ac3-4c25-9b66-cb6a3cb54fa3
+// Finding.TwentyFiveMillionFlowsId: -656412188
+// Finding.script: https://www.example281.com/rfiles/js/ahref/ahref.js
+// Finding.line: 1
+// Exploit.uuid: cfb802d7-3e8f-4139-88a7-8b006c28882e
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: 
+// Exploit.content: 
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: 
+// Exploit.break_in: 
+// Exploit.payload: taintfoxLog(1)
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 30
+// Exploit.replace_begin_url: 30
+// Exploit.replace_end_url: 30
+// Exploit.replace_begin_param: 35
+// Exploit.replace_end_param: 35
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 598031478
+// DepGraph.sanitizer_hash: 676053126
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURI"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="str_replace_once"];
+n4 [shape=box, label="RegExp: /.*\?(.*?)/"];
+n5 [shape=box, label="Lit: $1"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="strtolower"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: -"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: var _"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: =""];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: undefined"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: \""];
+n21 [shape=box, label="Var: x"];
+n22 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n8 -> n3;
+n7 -> n8;
+n12 -> n7;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n14;
+n13 -> n9;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n21 -> n19;
+n22 -> n21;
+}

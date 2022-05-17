@@ -1,0 +1,114 @@
+// Finding: 2b57e034-b5d1-45e6-b4ad-04a4b8973588
+// Finding.url: https://www.example329.com/kingdomhearts3/mods/categories/4/
+// Finding.parentloc: https://www.example329.com/kingdomhearts3/mods/categories/4/##'></iframe></style></script></object></embed></textarea><script>taintfoxLog('99198540e321457fa6272a6e7422eb74')</script><!--/*
+// Finding.domain: www.example329.com
+// Finding.base_domain: example329.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: SekindoClientDetections_URL/this.setInfo
+// Sanitizer.location: https://live.example5.com/live/liveView.php?s=103852&cbuster=1477165403&pubUrl=https://www.example329.com/kingdomhearts3/mods/categories/4/%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%2799198540e321457fa6272a6e7422eb74%27)%3C/script%3E%3C!--/*&subId=[SUBID_ENCODED]&vp_content=plembed1e2arlkxntwq - SekindoClientDetections_URL/this.setInfo:621:7
+// Finding.begin: 494
+// Finding.end: 671
+// Finding.original_uuid: ad3682bc-cbd7-4645-97ca-ad68bfa455e6
+// Finding.TwentyFiveMillionFlowsId: 645432275
+// Finding.script: https://live.example5.com/live/liveView.php?s=103852&cbuster=1477165403&pubUrl=https://www.example329.com/kingdomhearts3/mods/categories/4/%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%2799198540e321457fa6272a6e7422eb74%27)%3C/script%3E%3C!--/*&subId=[SUBID_ENCODED]&vp_content=plembed1e2arlkxntwq
+// Finding.line: 915
+// Exploit.uuid: 99198540-e321-457f-a627-2a6e7422eb74
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: script
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 59
+// Exploit.replace_begin_url: 59
+// Exploit.replace_end_url: 59
+// Exploit.replace_begin_param: 311
+// Exploit.replace_end_param: 311
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1103853624
+// DepGraph.sanitizer_hash: 1747527392
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &pubUrlAuto="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://live.example5.com/live/liveView.php?s=103852&cbuster=14....BID_ENCODED]&vp_content=plembed1e2arlkxntwq&cbuster=1619714983"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="Lit: SEKXLEN"];
+n9 [shape=box, label="Lit: 650"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: SEKYLEN"];
+n13 [shape=box, label="Lit: 300"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: '"];
+n17 [shape=box, label="Lit: %27"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="str_replace_once"];
+n20 [shape=box, label="Lit: /liveView.php"];
+n21 [shape=box, label="Lit: /prebid-ads.php"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: &csuuid=608ae3a7c00dc"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: &videoType=flow&floatWidth=400&floatHeight=225&floatDirection=....10&floatCloseBtn=1&flowMode=both&flowCloseButtonPosition=right"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n23 -> n19;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n28 -> n27;
+}

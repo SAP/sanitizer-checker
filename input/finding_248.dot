@@ -1,0 +1,172 @@
+// Finding: 3123b687-89be-4d51-88bb-54f7f4e04e21
+// Finding.url: https://pub.example26.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0cef9b58ac6f4d5fb9e70094adf3aeea')><!--/*
+// Finding.parentloc: https://pub.example26.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0cef9b58ac6f4d5fb9e70094adf3aeea')><!--/*
+// Finding.domain: pub.example26.com
+// Finding.base_domain: example26.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 242
+// Sanitizer.name: tmpl
+// Sanitizer.location: https://g.example27.com/mm/common-minisite/20200528.114942.131/common-minisite/gallery/mx-dialog/login-iframe.js - tmpl:1:1535
+// Finding.begin: 465
+// Finding.end: 497
+// Finding.original_uuid: 0f1e3c31-3d01-422e-8bc9-ff4065b97ee1
+// Finding.TwentyFiveMillionFlowsId: 139229415
+// Finding.script: https://g.example27.com/mm/union-minisite/0.0.4/boot.js
+// Finding.line: 1
+// Exploit.uuid: 0cef9b58-ac6f-4d5f-b9e7-0094adf3aeea
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: mx-view
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 24
+// Exploit.replace_begin_url: 24
+// Exploit.replace_end_url: 24
+// Exploit.replace_begin_param: 417
+// Exploit.replace_end_param: 417
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1116813029
+// DepGraph.sanitizer_hash: 2095693942
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>"'\`]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1), function_rhs: true], 'function(e){return"&"+ft[e]+";"}') - Other Exception: ReferenceError: ft is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /^[^#]*#?!?/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="regex_exec"];
+n6 [shape=box, label="RegExp: /([^=&?\/#]+)=?([^&#?]*)/"];
+n7 [shape=box, label="Lit: 2"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="decodeURIComponent"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="encodeURIComponent"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: "><="];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: ?"];
+n17 [shape=ellipse, label="encodeURIComponent"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: redirectURL="];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: &"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: &"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: https://login.example274.com/member/login.jhtml?"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: &#39;"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: style=mini&amp;"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: full_redirect=true&amp;"];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: newMini2=true&amp;"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: enup=0&amp;"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: qrlogin=1&amp;"];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: keyLogin=true&amp;"];
+n41 [shape=ellipse, label="."];
+n42 [shape=box, label="Lit: sub=true&amp;"];
+n43 [shape=ellipse, label="preg_replace"];
+n44 [shape=box, label="RegExp: /[&<>"'\`]/"];
+n45 [shape=box, label="Lit: "];
+n46 [shape=box, label="Var: x"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: <iframe src=""];
+n49 [shape=ellipse, label="."];
+n50 [shape=box, label="Lit: " frameborder="0" allowtransparency="true" scrolling="no" marg....marginwidth="0" border="0" width="100%" height="400"></iframe>"];
+n51 [shape=ellipse, label="."];
+n52 [shape=box, label="Lit: <div mxv="tabs" class="bokmXvjEcc" mx-change="mx_87changeTab(....minisite/gallery/mx-tabs/index?list=1&selected=taobao"></div>"];
+n53 [shape=box, label="Var: x"];
+n54 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n12 -> n9;
+n11 -> n12;
+n13 -> n14;
+n13 -> n11;
+n15 -> n16;
+n15 -> n13;
+n18 -> n15;
+n17 -> n18;
+n19 -> n20;
+n19 -> n17;
+n21 -> n22;
+n21 -> n19;
+n23 -> n21;
+n23 -> n24;
+n25 -> n26;
+n25 -> n23;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n33 -> n31;
+n33 -> n34;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n41 -> n39;
+n41 -> n42;
+n46 -> n41;
+n43 -> n44;
+n43 -> n45;
+n43 -> n46;
+n47 -> n48;
+n47 -> n43;
+n49 -> n47;
+n49 -> n50;
+n51 -> n52;
+n51 -> n49;
+n53 -> n51;
+n54 -> n53;
+}

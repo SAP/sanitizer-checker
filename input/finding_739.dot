@@ -1,0 +1,70 @@
+// Finding: b5230b52-1d8d-4f7d-aadf-0de8bd10c1a6
+// Finding.url: https://www.example427.com/article/189721##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('aac4c83b1c37463dbdf51c162c80b297')</script><!--/*
+// Finding.parentloc: https://www.example427.com/article/189721##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('aac4c83b1c37463dbdf51c162c80b297')</script><!--/*
+// Finding.domain: www.example427.com
+// Finding.base_domain: example427.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: statistics.tools.betaURI
+// Sanitizer.location: https://static.example427.com/js/statistics.js - statistics.execute:225:180
+// Finding.begin: 177
+// Finding.end: 341
+// Finding.original_uuid: f8f8e4b9-2da6-4433-8dec-1117127169b2
+// Finding.TwentyFiveMillionFlowsId: -258267417
+// Finding.script: https://static.example427.com/js/statistics.js
+// Finding.line: 227
+// Exploit.uuid: aac4c83b-1c37-463d-bdf5-1c162c80b297
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: img
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 36
+// Exploit.replace_begin_url: 36
+// Exploit.replace_end_url: 36
+// Exploit.replace_begin_param: 213
+// Exploit.replace_end_param: 213
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1031606210
+// DepGraph.sanitizer_hash: 1031606210
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[&]/"];
+n3 [shape=box, label="Lit: @"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n6 -> n5;
+}

@@ -1,0 +1,269 @@
+// Finding: 29120107-149e-4e8b-8a32-17cd498c3e3f
+// Finding.url: https://tweetdeck.example136.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0bc2ce9b8fb74821b201b87bc7d7f8e0')><!--/*
+// Finding.parentloc: https://tweetdeck.example136.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0bc2ce9b8fb74821b201b87bc7d7f8e0')><!--/*
+// Finding.domain: tweetdeck.example136.com
+// Finding.base_domain: example136.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 19
+// Sanitizer.name: l.trim
+// Sanitizer.location: https://ton.example137.com/tweetdeck-web/web/dist/vendor.d29713ec1d.js - l.trim:47:113643
+// Finding.begin: 734
+// Finding.end: 737
+// Finding.original_uuid: d891cfc7-7ecb-4227-b6d6-b9a200a08946
+// Finding.TwentyFiveMillionFlowsId: -2039422768
+// Finding.script: https://ton.example137.com/tweetdeck-web/web/dist/vendor.d29713ec1d.js
+// Finding.line: 25
+// Exploit.uuid: 0bc2ce9b-8fb7-4821-b201-b87bc7d7f8e0
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 30
+// Exploit.replace_end_url: 30
+// Exploit.replace_begin_param: 498
+// Exploit.replace_end_param: 498
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 661750807
+// DepGraph.sanitizer_hash: -880095290
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([!'()]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(': 1, (: 1, ): 1), function_rhs: true], 'function escape() {    [native code]}') - Other Exception: SyntaxError: Unexpected identifier 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 31"];
+n4 [shape=ellipse, label="."];
+n5 [shape=box, label="Lit: #"];
+n6 [shape=ellipse, label="encodeURIComponent"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="regex_exec"];
+n9 [shape=box, label="RegExp: /[!'()]/"];
+n10 [shape=box, label="Lit: 0"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="escape"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="preg_replace"];
+n15 [shape=box, label="RegExp: /[!'()]/"];
+n16 [shape=box, label="Lit: "];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: %2A"];
+n20 [shape=ellipse, label="preg_replace"];
+n21 [shape=box, label="RegExp: /\*/"];
+n22 [shape=box, label="Lit: %2A"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="preg_replace"];
+n25 [shape=box, label="RegExp: /[!]/"];
+n26 [shape=box, label="Lit: %21"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=ellipse, label="preg_replace"];
+n29 [shape=box, label="RegExp: /[*]/"];
+n30 [shape=box, label="Lit: *"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=ellipse, label="preg_replace"];
+n33 [shape=box, label="RegExp: /[']/"];
+n34 [shape=box, label="Lit: %27"];
+n35 [shape=box, label="Var: x"];
+n36 [shape=ellipse, label="preg_replace"];
+n37 [shape=box, label="RegExp: /[)]/"];
+n38 [shape=box, label="Lit: %29"];
+n39 [shape=box, label="Var: x"];
+n40 [shape=ellipse, label="preg_replace"];
+n41 [shape=box, label="RegExp: /[(]/"];
+n42 [shape=box, label="Lit: %28"];
+n43 [shape=box, label="Var: x"];
+n44 [shape=ellipse, label="preg_replace"];
+n45 [shape=box, label="RegExp: /\*/"];
+n46 [shape=box, label="Lit: %2A"];
+n47 [shape=box, label="Var: x"];
+n48 [shape=ellipse, label="preg_replace"];
+n49 [shape=box, label="RegExp: /%20/"];
+n50 [shape=box, label="Lit: +"];
+n51 [shape=box, label="Var: x"];
+n52 [shape=ellipse, label="."];
+n53 [shape=box, label="Lit: ="];
+n54 [shape=ellipse, label="."];
+n55 [shape=box, label="Lit: redirect_after_login"];
+n56 [shape=ellipse, label="."];
+n57 [shape=box, label="Lit: &"];
+n58 [shape=ellipse, label="."];
+n59 [shape=box, label="Lit: &hide_message=true"];
+n60 [shape=ellipse, label="substr"];
+n61 [shape=box, label="Var: x"];
+n62 [shape=box, label="Lit: 1"];
+n63 [shape=ellipse, label="."];
+n64 [shape=box, label="Lit: ?"];
+n65 [shape=ellipse, label="."];
+n66 [shape=box, label="Lit: https://mobile.example136.com/login"];
+n67 [shape=ellipse, label="."];
+n68 [shape=box, label="Lit: https://mobile.example136.com/login?hide_message=true&amp;"];
+n69 [shape=ellipse, label="preg_replace"];
+n70 [shape=box, label="RegExp: /[&]/"];
+n71 [shape=box, label="Lit: &amp;"];
+n72 [shape=box, label="Var: x"];
+n73 [shape=ellipse, label="preg_replace"];
+n74 [shape=box, label="RegExp: /[<]/"];
+n75 [shape=box, label="Lit: &lt;"];
+n76 [shape=box, label="Var: x"];
+n77 [shape=ellipse, label="preg_replace"];
+n78 [shape=box, label="RegExp: /[>]/"];
+n79 [shape=box, label="Lit: &gt;"];
+n80 [shape=box, label="Var: x"];
+n81 [shape=ellipse, label="preg_replace"];
+n82 [shape=box, label="RegExp: /\'/"];
+n83 [shape=box, label="Lit: &#39;"];
+n84 [shape=box, label="Var: x"];
+n85 [shape=ellipse, label="preg_replace"];
+n86 [shape=box, label="RegExp: /\"/"];
+n87 [shape=box, label="Lit: &quot;"];
+n88 [shape=box, label="Var: x"];
+n89 [shape=ellipse, label="."];
+n90 [shape=box, label="Lit: <section class="js-login-form form-login startflow-panel-round....dden"> <p class="js-login-error-message"></p> </div> <a href=""];
+n91 [shape=ellipse, label="."];
+n92 [shape=box, label="Lit: " class="Button Button--primary block txt-size--18 txt-center".... target="_blank">Sign up now &raquo;</a></p> </div> </section>"];
+n93 [shape=ellipse, label="str_replace_once"];
+n94 [shape=box, label="RegExp: /^[	\n\r   ᠎             　\u2028\u2029﻿][	\n\r   ᠎             　\u2028\u2029﻿]*/"];
+n95 [shape=box, label="Lit: "];
+n96 [shape=box, label="Var: x"];
+n97 [shape=ellipse, label="str_replace_once"];
+n98 [shape=box, label="RegExp: /[	\n\r   ᠎             　\u2028\u2029﻿][	\n\r   ᠎             　\u2028\u2029﻿]*$/"];
+n99 [shape=box, label="Lit: "];
+n100 [shape=box, label="Var: x"];
+n101 [shape=box, label="Var: x"];
+n102 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n4 -> n5;
+n4 -> n1;
+n7 -> n4;
+n6 -> n7;
+n11 -> n6;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n13 -> n8;
+n12 -> n13;
+n17 -> n12;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n18 -> n14;
+n18 -> n19;
+n23 -> n18;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n27 -> n20;
+n24 -> n25;
+n24 -> n26;
+n24 -> n27;
+n31 -> n24;
+n28 -> n29;
+n28 -> n30;
+n28 -> n31;
+n35 -> n28;
+n32 -> n33;
+n32 -> n34;
+n32 -> n35;
+n39 -> n32;
+n36 -> n37;
+n36 -> n38;
+n36 -> n39;
+n43 -> n36;
+n40 -> n41;
+n40 -> n42;
+n40 -> n43;
+n47 -> n40;
+n44 -> n45;
+n44 -> n46;
+n44 -> n47;
+n51 -> n44;
+n48 -> n49;
+n48 -> n50;
+n48 -> n51;
+n52 -> n53;
+n52 -> n48;
+n54 -> n55;
+n54 -> n52;
+n56 -> n57;
+n56 -> n54;
+n58 -> n59;
+n58 -> n56;
+n61 -> n58;
+n60 -> n61;
+n60 -> n62;
+n63 -> n64;
+n63 -> n60;
+n65 -> n66;
+n65 -> n63;
+n67 -> n68;
+n67 -> n65;
+n72 -> n67;
+n69 -> n70;
+n69 -> n71;
+n69 -> n72;
+n76 -> n69;
+n73 -> n74;
+n73 -> n75;
+n73 -> n76;
+n80 -> n73;
+n77 -> n78;
+n77 -> n79;
+n77 -> n80;
+n84 -> n77;
+n81 -> n82;
+n81 -> n83;
+n81 -> n84;
+n88 -> n81;
+n85 -> n86;
+n85 -> n87;
+n85 -> n88;
+n89 -> n90;
+n89 -> n85;
+n91 -> n89;
+n91 -> n92;
+n96 -> n91;
+n93 -> n94;
+n93 -> n95;
+n93 -> n96;
+n100 -> n93;
+n97 -> n98;
+n97 -> n99;
+n97 -> n100;
+n101 -> n97;
+n102 -> n101;
+}

@@ -1,0 +1,94 @@
+// Finding: 4675229b-9ed2-497a-a88d-f63ae52ccc6e
+// Finding.url: https://www.example337.com/travel/execenrol/public/en_us?source=MNVEXC1join_the_executive_club&campaignCode=HOME01%22/iframe/style/script/object/embed/textareaimg%20src=x%20onerror=taintfoxLog(%27d2cd103430a74af48afc0e416f63d523%27)!--/
+// Finding.parentloc: https://www.example337.com/travel/execenrol/public/en_us?source=MNVEXC1join_the_executive_club&campaignCode=HOME01%22/iframe/style/script/object/embed/textareaimg%20src=x%20onerror=taintfoxLog(%27d2cd103430a74af48afc0e416f63d523%27)!--/
+// Finding.domain: www.example337.com
+// Finding.base_domain: example337.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 22
+// Sanitizer.name: vsSplitParameters
+// Sanitizer.location: https://www.example337.com/cms/global/scripts/applications/tracking/rwdAdobeInsights.js?v=2 - vsDoTracking:109:7
+// Finding.begin: 1296
+// Finding.end: 1326
+// Finding.original_uuid: 0b4eed13-c232-425e-ac38-2457ac1ed5f1
+// Finding.TwentyFiveMillionFlowsId: -2030069909
+// Finding.script: https://www.example337.com/cms/global/ensighten/Bootstrap.js
+// Finding.line: 867
+// Exploit.uuid: d2cd1034-30a7-4af4-8afc-0e416f63d523
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: img
+// Exploit.break_out: HOME01"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: HOME01"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 112
+// Exploit.end_taint_url: 118
+// Exploit.replace_begin_url: 112
+// Exploit.replace_end_url: 118
+// Exploit.replace_begin_param: 1338
+// Exploit.replace_end_param: 1344
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 597221711
+// DepGraph.sanitizer_hash: -1595377865
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 61"];
+n4 [shape=box, label="Lit: 179"];
+n5 [shape=ellipse, label="split"];
+n6 [shape=box, label="Lit: &"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="split"];
+n9 [shape=box, label="Lit: ="];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="decodeURIComponent"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[^a-zA-Z0-9_\-\|.]+/"];
+n15 [shape=box, label="Lit: "];
+n16 [shape=box, label="Var: x"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n7 -> n1;
+n5 -> n6;
+n5 -> n7;
+n10 -> n5;
+n8 -> n9;
+n8 -> n10;
+n12 -> n8;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n17 -> n13;
+n18 -> n17;
+}

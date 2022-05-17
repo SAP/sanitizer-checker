@@ -1,0 +1,86 @@
+// Finding: 6dcc7b10-3c09-4ec7-bb73-422951d7ee5c
+// Finding.url: https://retail-pi.example345.com/retailpi/actions/index.action##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7a5765daffe6413692f129ae88f44380')><!--/*
+// Finding.parentloc: https://retail-pi.example345.com/retailpi/actions/index.action##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7a5765daffe6413692f129ae88f44380')><!--/*
+// Finding.domain: retail-pi.example345.com
+// Finding.base_domain: example345.com
+// Finding.source: document.documentURI
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: cleanURL
+// Sanitizer.location: https://retail-pi.example345.com/global-elements/header/script/ge-login.js - <anonymous>:14:26
+// Finding.begin: 70
+// Finding.end: 126
+// Finding.original_uuid: ef73571f-e04a-4cbe-a54a-d82f376cc286
+// Finding.TwentyFiveMillionFlowsId: 1758173714
+// Finding.script: https://retail-pi.example345.com/global-elements/header/script/ge-login.js
+// Finding.line: 254
+// Exploit.uuid: 7a5765da-ffe6-4136-92f1-29ae88f44380
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 56
+// Exploit.replace_begin_url: 56
+// Exploit.replace_end_url: 56
+// Exploit.replace_begin_param: 126
+// Exploit.replace_end_param: 126
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -139197959
+// DepGraph.sanitizer_hash: -1699832166
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: <"];
+n3 [shape=box, label="Lit: %3C"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: >"];
+n7 [shape=box, label="Lit: %3E"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="substr"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=box, label="Lit: 0"];
+n12 [shape=box, label="Lit: 56"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n9;
+n14 -> n13;
+}

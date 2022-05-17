@@ -1,0 +1,78 @@
+// Finding: 182657ff-dc2c-4bf3-a3f4-991ca02318a5
+// Finding.url: https://www.example162.com/en-EN/formula1/articles/heres-the-sf21##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('6731b66cf6d34cdf83f73bb66118bb2b')><!--/*
+// Finding.parentloc: https://www.example162.com/en-EN/formula1/articles/heres-the-sf21##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('6731b66cf6d34cdf83f73bb66118bb2b')><!--/*
+// Finding.domain: www.example162.com
+// Finding.base_domain: example162.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 21748
+// Finding.end: 21753
+// Finding.original_uuid: 127d6147-7e13-4f8f-abc3-76e9d7eb677c
+// Finding.TwentyFiveMillionFlowsId: 1566790937
+// Finding.script: https://c.example163.com/flx1-jquery/1.11.2-20170607.min.js
+// Finding.line: 2
+// Exploit.uuid: 6731b66c-f6d3-4cdf-83f7-3bb66118bb2b
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: N
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 24
+// Exploit.end_taint_url: 29
+// Exploit.replace_begin_url: 62
+// Exploit.replace_end_url: 62
+// Exploit.replace_begin_param: 37355
+// Exploit.replace_end_param: 37355
+// Issues.LargestEncodeAttrStringChain: 6
+// Issues.LargestTextFragmentEncodeChainLength: 7
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 930535060
+// DepGraph.sanitizer_hash: -2003926252
+// Merged split and join statements 
+// Large chain of EncodeAttrString Operations (6) 
+// Large chain of EncodeTextFragment Operations (7) 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 23"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /\//"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n4;
+n9 -> n8;
+}

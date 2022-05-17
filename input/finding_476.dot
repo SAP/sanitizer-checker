@@ -1,0 +1,86 @@
+// Finding: 8124085f-c2bb-435d-9124-034145dfd04d
+// Finding.url: https://markets.example315.com/crypto/LTC##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b409e2fa6f394d8797f4928fe3247361')><!--/*
+// Finding.parentloc: https://markets.example315.com/crypto/LTC##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b409e2fa6f394d8797f4928fe3247361')><!--/*
+// Finding.domain: markets.example315.com
+// Finding.base_domain: example315.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: t
+// Sanitizer.location: https://cmp.example316.com/AzZdG3SLQ7kq316WM/31d3b1e1-65de-4b6f-ab22-4bfb9eacc157/osano.js - t:3:107166
+// Finding.begin: 0
+// Finding.end: 3
+// Finding.original_uuid: a39192cf-0114-432e-85f1-5cb7b5dcf725
+// Finding.TwentyFiveMillionFlowsId: 1509487872
+// Finding.script: https://cmp.example316.com/AzZdG3SLQ7kq316WM/31d3b1e1-65de-4b6f-ab22-4bfb9eacc157/osano.js
+// Finding.line: 3
+// Exploit.uuid: b409e2fa-6f39-4d87-97f4-928fe3247361
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: C
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 35
+// Exploit.end_taint_url: 38
+// Exploit.replace_begin_url: 38
+// Exploit.replace_end_url: 38
+// Exploit.replace_begin_param: 3
+// Exploit.replace_end_param: 3
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1323150016
+// DepGraph.sanitizer_hash: -1323150016
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /^\s+|\s+$/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="regex_exec"];
+n6 [shape=box, label="RegExp: /^([^:/?#]+:)?(?:\/\/(?:([^:@/?#]*)(?::([^:@/?#]*))?@)?(([^:/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n7 [shape=box, label="Lit: 7"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="regex_match"];
+n10 [shape=box, label="RegExp: /^([^:/?#]+:)?(?:\/\/(?:([^:@/?#]*)(?::([^:@/?#]*))?@)?(([^:/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n11 [shape=box, label="Lit: 7"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n9;
+n14 -> n13;
+}

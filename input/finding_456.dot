@@ -1,0 +1,182 @@
+// Finding: d7745e9a-fe66-400a-a0c7-142909a202f1
+// Finding.url: https://www.example305.com/search/fullsite-search.html?query=aS</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3098355806ec444a92c1bdb860f4547f')><!--/*tm&resStart=0&resLength=10&toplevel=products-and-services&sublevel=training-courses&
+// Finding.parentloc: https://www.example305.com/search/fullsite-search.html?query=aS</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3098355806ec444a92c1bdb860f4547f')><!--/*tm&resStart=0&resLength=10&toplevel=products-and-services&sublevel=training-courses&
+// Finding.domain: www.example305.com
+// Finding.base_domain: example305.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: search
+// Sanitizer.location: https://www.example305.com/search/js/fullsite-search-lite.js?v7n - search:527:32
+// Finding.begin: 79
+// Finding.end: 82
+// Finding.original_uuid: b62cdb8a-8216-4311-9065-7decd58f9e55
+// Finding.TwentyFiveMillionFlowsId: -213108047
+// Finding.script: https://www.example305.com/js/addtl-new.js
+// Finding.line: 12
+// Exploit.uuid: 30983558-06ec-444a-92c1-bdb860f4547f
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: S
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: S</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: S</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 56
+// Exploit.end_taint_url: 57
+// Exploit.replace_begin_url: 56
+// Exploit.replace_end_url: 57
+// Exploit.replace_begin_param: 475
+// Exploit.replace_end_param: 476
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 657197542
+// DepGraph.sanitizer_hash: 1441404662
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /\#.+$/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="substr"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Lit: 49"];
+n8 [shape=box, label="Lit: 219"];
+n9 [shape=ellipse, label="split"];
+n10 [shape=box, label="Lit: &"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="split"];
+n13 [shape=box, label="Lit: ="];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="RegExp: /%97/"];
+n17 [shape=box, label="Lit:  "];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="decodeURIComponent"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="preg_replace"];
+n22 [shape=box, label="RegExp: /[\u2018\u2019]/"];
+n23 [shape=box, label="Lit: '"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="preg_replace"];
+n26 [shape=box, label="RegExp: /[\u201C\u201D]/"];
+n27 [shape=box, label="Lit: \""];
+n28 [shape=box, label="Var: x"];
+n29 [shape=ellipse, label="preg_replace"];
+n30 [shape=box, label="RegExp: /\&/"];
+n31 [shape=box, label="Lit: and"];
+n32 [shape=box, label="Var: x"];
+n33 [shape=ellipse, label="preg_replace"];
+n34 [shape=box, label="RegExp: /^[\s\.\-]+/"];
+n35 [shape=box, label="Lit: "];
+n36 [shape=box, label="Var: x"];
+n37 [shape=ellipse, label="preg_replace"];
+n38 [shape=box, label="RegExp: /\s+/"];
+n39 [shape=box, label="Lit:  "];
+n40 [shape=box, label="Var: x"];
+n41 [shape=ellipse, label="str_replace_once"];
+n42 [shape=box, label="RegExp: /^([a-zA-Z])[ \-]+(\d+)/"];
+n43 [shape=box, label="Lit: $1$2"];
+n44 [shape=box, label="Var: x"];
+n45 [shape=ellipse, label="str_replace_once"];
+n46 [shape=box, label="RegExp: /^(stp)[ \-]+(\d+)/"];
+n47 [shape=box, label="Lit: $1$2"];
+n48 [shape=box, label="Var: x"];
+n49 [shape=ellipse, label="str_replace_once"];
+n50 [shape=box, label="RegExp: /^(uop)[ ]+(\d+)/"];
+n51 [shape=box, label="Lit: $1$2"];
+n52 [shape=box, label="Var: x"];
+n53 [shape=ellipse, label="str_replace_once"];
+n54 [shape=box, label="RegExp: /^\w\*/"];
+n55 [shape=box, label="Lit: "];
+n56 [shape=box, label="Var: x"];
+n57 [shape=ellipse, label="str_replace_once"];
+n58 [shape=box, label="RegExp: / \w\*/"];
+n59 [shape=box, label="Lit: "];
+n60 [shape=box, label="Var: x"];
+n61 [shape=box, label="Var: x"];
+n62 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n11 -> n5;
+n9 -> n10;
+n9 -> n11;
+n14 -> n9;
+n12 -> n13;
+n12 -> n14;
+n18 -> n12;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n20 -> n15;
+n19 -> n20;
+n24 -> n19;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n28 -> n21;
+n25 -> n26;
+n25 -> n27;
+n25 -> n28;
+n32 -> n25;
+n29 -> n30;
+n29 -> n31;
+n29 -> n32;
+n36 -> n29;
+n33 -> n34;
+n33 -> n35;
+n33 -> n36;
+n40 -> n33;
+n37 -> n38;
+n37 -> n39;
+n37 -> n40;
+n44 -> n37;
+n41 -> n42;
+n41 -> n43;
+n41 -> n44;
+n48 -> n41;
+n45 -> n46;
+n45 -> n47;
+n45 -> n48;
+n52 -> n45;
+n49 -> n50;
+n49 -> n51;
+n49 -> n52;
+n56 -> n49;
+n53 -> n54;
+n53 -> n55;
+n53 -> n56;
+n60 -> n53;
+n57 -> n58;
+n57 -> n59;
+n57 -> n60;
+n61 -> n57;
+n62 -> n61;
+}

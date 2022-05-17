@@ -1,0 +1,208 @@
+// Finding: cc725722-9e6e-46a0-a89a-70c0d531c5d3
+// Finding.url: https://www.example91.com/action/tom-cruise-celebrates-top-gun-day-with-a-new-photo-from-his-high-flying-maverick-sequel-a184757#"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7592445fc4be46a58ca31fcf84412a8b')><!--/*
+// Finding.parentloc: https://www.example91.com/action/tom-cruise-celebrates-top-gun-day-with-a-new-photo-from-his-high-flying-maverick-sequel-a184757#"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7592445fc4be46a58ca31fcf84412a8b')><!--/*
+// Finding.domain: www.example91.com
+// Finding.base_domain: example91.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 6
+// Sanitizer.name: st
+// Sanitizer.location: https://fast.example7.com/client/2105/13141925/min/v1_gs_lib.js - st:2:4324
+// Finding.begin: 15890
+// Finding.end: 15932
+// Finding.original_uuid: af90b84a-bdb5-4ae2-8328-675867b9f561
+// Finding.TwentyFiveMillionFlowsId: 439388111
+// Finding.script: https://fast.example7.com/client/2105/13141925/min/v1_gs_lib.js
+// Finding.line: 3
+// Exploit.uuid: 7592445f-c4be-46a5-8ca3-1fcf84412a8b
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 30
+// Exploit.replace_begin_url: 133
+// Exploit.replace_end_url: 133
+// Exploit.replace_begin_param: 2655
+// Exploit.replace_end_param: 2655
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1882256914
+// DepGraph.sanitizer_hash: -2091089712
+// Part of the URL ('#"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7592445fc4be46a58ca31fcf84412a8b')><!--/*') found in left hand side of replace 
+// Part of the URL ('/action/tom-cruise-celebrates-top-gun-day-with-a-new-photo-from-his-high-flying-maverick-sequel-a184757') found in left hand side of replace 
+// Approximated Implementation for: replace([!'()*~]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(': 1, *: 1, (: 1, ): 1), function_rhs: true], 'function escape() {    [native code]}') - Other Exception: SyntaxError: Unexpected identifier 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7592445fc4be46a58ca31fcf84412a8b')><!--/*"];
+n3 [shape=box, label="Lit: #"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: /action/tom-cruise-celebrates-top-gun-day-with-a-new-photo-from-his-high-flying-maverick-sequel-a184757"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="decodeURIComponent"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /\u00AD/"];
+n13 [shape=box, label="Lit: %C2%AD"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n17 [shape=box, label="Lit: "];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="str_replace_once"];
+n20 [shape=box, label="Lit: &"];
+n21 [shape=box, label="Lit: ?"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="str_replace_once"];
+n24 [shape=box, label="RegExp: /#$/"];
+n25 [shape=box, label="Lit: "];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: /action/tom-cruise-celebrates-top-gun-day-with-a-new-photo-from-his-high-flying-maverick-sequel-a184757"];
+n29 [shape=ellipse, label="decodeURIComponent"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="preg_replace"];
+n32 [shape=box, label="RegExp: /\u00AD/"];
+n33 [shape=box, label="Lit: %C2%AD"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="str_replace_once"];
+n36 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n37 [shape=box, label="Lit: "];
+n38 [shape=box, label="Var: x"];
+n39 [shape=ellipse, label="str_replace_once"];
+n40 [shape=box, label="Lit: &"];
+n41 [shape=box, label="Lit: ?"];
+n42 [shape=box, label="Var: x"];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit: ?"];
+n45 [shape=ellipse, label="."];
+n46 [shape=box, label="Lit: fb_ref="];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: zhyA8iPoCM"];
+n49 [shape=ellipse, label="."];
+n50 [shape=box, label="Lit: -"];
+n51 [shape=ellipse, label="."];
+n52 [shape=box, label="Lit: S"];
+n53 [shape=ellipse, label="."];
+n54 [shape=box, label="Lit: lack"];
+n55 [shape=ellipse, label="."];
+n56 [shape=box, label="Lit: &utm_source=Slack&utm_medium=ShareButton&utm_campaign=GetSocial"];
+n57 [shape=ellipse, label="encodeURIComponent"];
+n58 [shape=box, label="Var: x"];
+n59 [shape=ellipse, label="."];
+n60 [shape=box, label="Lit: https://api.at.getsocial.io/oauth/slack/callback?shareURL="];
+n61 [shape=ellipse, label="."];
+n62 [shape=box, label="Lit: &shareTitle="];
+n63 [shape=ellipse, label="."];
+n64 [shape=box, label="Lit: Tom%20Cruise%20Celebrates%20TOP%20GUN%20Day%20With%20A%20New%20Photo%20From%20His%20High-Flying%20MAVERICK%20Sequel"];
+n65 [shape=ellipse, label="preg_replace"];
+n66 [shape=box, label="RegExp: /[!'()*~]/"];
+n67 [shape=box, label="Lit: "];
+n68 [shape=box, label="Var: x"];
+n69 [shape=ellipse, label="encodeURIComponent"];
+n70 [shape=box, label="Var: x"];
+n71 [shape=ellipse, label="."];
+n72 [shape=box, label="Lit: https://slack.com/oauth/authorize?scope=incoming-webhook%2Cchat%3Awrite%3Auser&client_id=11072499345.25274635444&redirect_uri="];
+n73 [shape=box, label="Var: x"];
+n74 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n14 -> n9;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n27 -> n23;
+n27 -> n28;
+n30 -> n27;
+n29 -> n30;
+n34 -> n29;
+n31 -> n32;
+n31 -> n33;
+n31 -> n34;
+n38 -> n31;
+n35 -> n36;
+n35 -> n37;
+n35 -> n38;
+n42 -> n35;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n43 -> n39;
+n43 -> n44;
+n45 -> n43;
+n45 -> n46;
+n47 -> n45;
+n47 -> n48;
+n49 -> n47;
+n49 -> n50;
+n51 -> n49;
+n51 -> n52;
+n53 -> n51;
+n53 -> n54;
+n55 -> n53;
+n55 -> n56;
+n58 -> n55;
+n57 -> n58;
+n59 -> n60;
+n59 -> n57;
+n61 -> n59;
+n61 -> n62;
+n63 -> n61;
+n63 -> n64;
+n68 -> n63;
+n65 -> n66;
+n65 -> n67;
+n65 -> n68;
+n70 -> n65;
+n69 -> n70;
+n71 -> n72;
+n71 -> n69;
+n73 -> n71;
+n74 -> n73;
+}

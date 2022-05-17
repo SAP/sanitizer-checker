@@ -1,0 +1,99 @@
+// Finding: a6d01249-70a4-430b-8324-e1cead1d8a00
+// Finding.url: https://secure-ds.example282.com/burstingres/cdprojects/customTags/MultiDynamicTagV3.html?MMData=[{"CID":204682,"TID":3315,"TVAL":"nodealertcom"},{"CID":246132,"TID":4673,"TVAL":"nodealertcom'></iframe></style></script></object></embed></textarea><script>taintfoxLog('b075ac82e3d34a4a90bf6c8f5090d4e9')</script><!--/*"},{"CID":245807,"TID":4662,"TVAL":"nodealertcom"}]
+// Finding.parentloc: https://secure-ds.example282.com/burstingres/cdprojects/customTags/MultiDynamicTagV3.html?MMData=[{"CID":204682,"TID":3315,"TVAL":"nodealertcom"},{"CID":246132,"TID":4673,"TVAL":"nodealertcom'></iframe></style></script></object></embed></textarea><script>taintfoxLog('b075ac82e3d34a4a90bf6c8f5090d4e9')</script><!--/*"},{"CID":245807,"TID":4662,"TVAL":"nodealertcom"}]
+// Finding.domain: secure-ds.example282.com
+// Finding.base_domain: example282.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 12
+// Sanitizer.name: setState
+// Sanitizer.location: https://secure-ds.example282.com/burstingres/cdprojects/customTags/JS_multiDynamicTagV13.js? - init:67:20
+// Finding.begin: 636
+// Finding.end: 648
+// Finding.original_uuid: 59b8e70d-0a76-4420-818c-b04e5ccd4299
+// Finding.TwentyFiveMillionFlowsId: 1439440802
+// Finding.script: https://secure-ds.example282.com/burstingres/cdprojects/customTags/MultiDynamicTagV3.html?MMData=[{"CID":204682,"TID":3315,"TVAL":"nodealertcom"},{"CID":246132,"TID":4673,"TVAL":"nodealertcom'></iframe></style></script></object></embed></textarea><script>taintfoxLog('b075ac82e3d34a4a90bf6c8f5090d4e9')</script><!--/*"},{"CID":245807,"TID":4662,"TVAL":"nodealertcom"}]
+// Finding.line: 60
+// Exploit.uuid: b075ac82-e3d3-4a4a-90bf-6c8f5090d4e9
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: script
+// Exploit.break_out: nodealertcom'></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: nodealertcom'></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 180
+// Exploit.end_taint_url: 192
+// Exploit.replace_begin_url: 180
+// Exploit.replace_end_url: 192
+// Exploit.replace_begin_param: 91
+// Exploit.replace_end_param: 103
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 736291027
+// DepGraph.sanitizer_hash: 1519880170
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: https://bs.example282.com/BurstingPipe/adServer.bs?cn=SetState&campaignid=204682&statevalue="];
+n3 [shape=ellipse, label="escape"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="escape"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="Lit: https%253A//"];
+n9 [shape=box, label="Lit: https%3A//"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="escape"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="escape"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: https%253A//"];
+n17 [shape=box, label="Lit: https%3A//"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=doubleoctagon, label="Return: x"];
+n1 -> n2;
+n1 -> n0;
+n4 -> n1;
+n3 -> n4;
+n6 -> n3;
+n5 -> n6;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n12 -> n7;
+n11 -> n12;
+n14 -> n11;
+n13 -> n14;
+n18 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n20 -> n19;
+}

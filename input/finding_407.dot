@@ -1,0 +1,172 @@
+// Finding: 893ad7c2-728b-4986-a86d-471601ec522d
+// Finding.url: https://example276.com/search?country=MY&l.ll=3.0915%2C101.6721&l.text=Kuala%20Lumpur&p=1&size=10&v=3.4&tag_ids=5</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a816a16fb1ee463cb251e3b157fbd131')><!--/*&dr=
+// Finding.parentloc: https://example276.com/search?country=MY&l.ll=3.0915%2C101.6721&l.text=Kuala%20Lumpur&p=1&size=10&v=3.4&tag_ids=5</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a816a16fb1ee463cb251e3b157fbd131')><!--/*&dr=
+// Finding.domain: example276.com
+// Finding.base_domain: example276.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 10
+// Sanitizer.name: mb[7]
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-KVNRF7 - mb[7]:1088:426
+// Finding.begin: 803
+// Finding.end: 808
+// Finding.original_uuid: be7c58f2-eecb-48e9-acd5-72048c66544d
+// Finding.TwentyFiveMillionFlowsId: -1115627095
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-KVNRF7
+// Finding.line: 1097
+// Exploit.uuid: a816a16f-b1ee-463c-b251-e3b157fbd131
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: 5
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: 5</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: 5</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 104
+// Exploit.end_taint_url: 108
+// Exploit.replace_begin_url: 104
+// Exploit.replace_end_url: 108
+// Exploit.replace_begin_param: 330
+// Exploit.replace_end_param: 334
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1359680882
+// DepGraph.sanitizer_hash: -634609343
+// Merged split and join statements 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, =: 1), function_rhs: true], 'function(a){return xb[a]}') - Other Exception: ReferenceError: xb is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 8"];
+n4 [shape=ellipse, label="trim"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=ellipse, label="str_replace_once"];
+n7 [shape=box, label="RegExp: /^(\?|#|&)/"];
+n8 [shape=box, label="Lit: "];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="split"];
+n11 [shape=box, label="Lit: &"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /\+/"];
+n15 [shape=box, label="Lit:  "];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[=]/"];
+n19 [shape=box, label="Lit: ="];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="decodeURIComponent"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: \x3e"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: \x3c"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: \/"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: \x3c"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: \/"];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: \x3c"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: \/"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: \x3c"];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: \/"];
+n41 [shape=ellipse, label="."];
+n42 [shape=box, label="Lit: \x3c"];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit: \x3c"];
+n45 [shape=ellipse, label="preg_replace"];
+n46 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/"];
+n47 [shape=box, label="Lit: "];
+n48 [shape=box, label="Var: x"];
+n49 [shape=box, label="Var: x"];
+n50 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n9 -> n4;
+n6 -> n7;
+n6 -> n8;
+n6 -> n9;
+n12 -> n6;
+n10 -> n11;
+n10 -> n12;
+n16 -> n10;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n22 -> n17;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n33 -> n31;
+n33 -> n34;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n41 -> n39;
+n41 -> n42;
+n43 -> n41;
+n43 -> n44;
+n48 -> n43;
+n45 -> n46;
+n45 -> n47;
+n45 -> n48;
+n49 -> n45;
+n50 -> n49;
+}

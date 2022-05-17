@@ -1,0 +1,124 @@
+// Finding: e1bd0256-615f-4809-b8e0-6d1dda52935e
+// Finding.url: https://www.example245.com/student-loans/#'});taintfoxLog('d0c7f208b74e4bc5b3ae433ccb7298c2')//
+// Finding.parentloc: https://www.example245.com/student-loans/#'});taintfoxLog('d0c7f208b74e4bc5b3ae433ccb7298c2')//
+// Finding.domain: www.example245.com
+// Finding.base_domain: example245.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 5
+// Sanitizer.name: K/<
+// Sanitizer.location: https://s.example98.com/tag.js#site=xLmQsbf&referrer=https%3A%2F%2Fwww.example245.com%2Fstudent-loans%2F%23'%7D)%3BtaintfoxLog('d0c7f208b74e4bc5b3ae433ccb7298c2')%2F%2F - K/<:8:317
+// Finding.begin: 75
+// Finding.end: 128
+// Finding.original_uuid: dec0f3ba-b9b0-417e-9f23-2b1191476978
+// Finding.TwentyFiveMillionFlowsId: -2117345261
+// Finding.script: https://s.example98.com/tag.js#site=xLmQsbf&referrer=https%3A%2F%2Fwww.example245.com%2Fstudent-loans%2F%23'%7D)%3BtaintfoxLog('d0c7f208b74e4bc5b3ae433ccb7298c2')%2F%2F
+// Finding.line: 8
+// Exploit.uuid: d0c7f208-b74e-4bc5-b3ae-433ccb7298c2
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: https://www.example245.com/student-loans/
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: '});
+// Exploit.break_in: //
+// Exploit.payload: '});taintfoxLog(1)//
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 39
+// Exploit.replace_begin_url: 39
+// Exploit.replace_end_url: 39
+// Exploit.replace_begin_param: 114
+// Exploit.replace_end_param: 114
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1249929945
+// DepGraph.sanitizer_hash: 1594609560
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[']/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /\(/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /\)/"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /alert/"];
+n15 [shape=box, label="Lit: "];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: ',\n    'send_to': 'DC-3853263/global/allpgu+unique'\n  });\n</script>\n\n<!-- End of event snippet: Please do not remove -->"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: <br/>"];
+n21 [shape=ellipse, label="str_replace_once"];
+n22 [shape=box, label="RegExp: /^\s\s*/"];
+n23 [shape=box, label="Lit: "];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="str_replace_once"];
+n26 [shape=box, label="RegExp: /\s\s*$/"];
+n27 [shape=box, label="Lit: "];
+n28 [shape=box, label="Var: x"];
+n29 [shape=box, label="Var: x"];
+n30 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n17 -> n13;
+n17 -> n18;
+n19 -> n20;
+n19 -> n17;
+n24 -> n19;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n28 -> n21;
+n25 -> n26;
+n25 -> n27;
+n25 -> n28;
+n29 -> n25;
+n30 -> n29;
+}

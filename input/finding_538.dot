@@ -1,0 +1,92 @@
+// Finding: c90c5382-6c27-4053-ae85-94d451389e56
+// Finding.url: https://www.example347.com/rent-vs-buy-calculator?qlsource=taintfoxLog('7c31cfb4d31c4158a519da941dd4e4e8')
+// Finding.parentloc: https://www.example347.com/rent-vs-buy-calculator?qlsource=taintfoxLog('7c31cfb4d31c4158a519da941dd4e4e8')
+// Finding.domain: www.example347.com
+// Finding.base_domain: example347.com
+// Finding.source: location.search
+// Finding.sink: script.text
+// Sanitizer.score: 1
+// Sanitizer.name: parse
+// Sanitizer.location: https://assets.example33.com/b14636b10888/06b103bf29d9/launch-d49919c821c9.min.js - script/e.exports:6:10289
+// Finding.begin: 640
+// Finding.end: 687
+// Finding.original_uuid: 99b962b0-86a0-4191-81fc-bd815b2a93ea
+// Finding.TwentyFiveMillionFlowsId: -1569145271
+// Finding.script: https://www.example347.com/qlbff/8-es2015.650ee97370d46a97f959.js
+// Finding.line: 1
+// Exploit.uuid: 7c31cfb4-d31c-4158-a519-da941dd4e4e8
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: 
+// Exploit.content: 
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: 
+// Exploit.break_in: 
+// Exploit.payload: taintfoxLog(1)
+// Exploit.begin_taint_url: 61
+// Exploit.end_taint_url: 64
+// Exploit.replace_begin_url: 61
+// Exploit.replace_end_url: 64
+// Exploit.replace_begin_param: 640
+// Exploit.replace_end_param: 643
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -941343928
+// DepGraph.sanitizer_hash: -1369631631
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="trim"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="str_replace_once"];
+n4 [shape=box, label="RegExp: /^[?#&]/"];
+n5 [shape=box, label="Lit: "];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /\+/"];
+n9 [shape=box, label="Lit: %20"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="substr"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Lit: 9"];
+n14 [shape=ellipse, label="decodeURIComponent"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n10 -> n3;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n12 -> n7;
+n11 -> n12;
+n11 -> n13;
+n15 -> n11;
+n14 -> n15;
+n16 -> n14;
+n17 -> n16;
+}

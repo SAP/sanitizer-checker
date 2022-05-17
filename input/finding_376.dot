@@ -1,0 +1,120 @@
+// Finding: 7405509c-f75b-4993-aabf-24e260f515ec
+// Finding.url: https://pcshop.example263.com/promo/catalogue/10rescue/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0d82a9cee8674bc6882a7ca239635295')><!--/*
+// Finding.parentloc: https://pcshop.example263.com/promo/catalogue/10rescue/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0d82a9cee8674bc6882a7ca239635295')><!--/*
+// Finding.domain: pcshop.example263.com
+// Finding.base_domain: example263.com
+// Finding.source: document.documentURI
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: url_encode_rfc3986
+// Sanitizer.location: https://pcshop.example263.com/service/common/js/jquery.socialbutton.js - socialbutton_facebook_like:274:7
+// Finding.begin: 60
+// Finding.end: 269
+// Finding.original_uuid: f866ce0b-e95b-44ce-9029-b9fafc8b008b
+// Finding.TwentyFiveMillionFlowsId: -1471350004
+// Finding.script: https://pcshop.example263.com/service/common/script/jquery.js
+// Finding.line: 993
+// Exploit.uuid: 0d82a9ce-e867-4bc6-882a-7ca239635295
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 53
+// Exploit.replace_begin_url: 53
+// Exploit.replace_end_url: 53
+// Exploit.replace_begin_param: 252
+// Exploit.replace_end_param: 252
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1391024048
+// DepGraph.sanitizer_hash: 1066674622
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: %28"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: %27"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: %29"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /[!]/"];
+n11 [shape=box, label="Lit: %21"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[)]/"];
+n15 [shape=box, label="Lit: %29"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[*]/"];
+n19 [shape=box, label="Lit: %2a"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="preg_replace"];
+n22 [shape=box, label="RegExp: /[(]/"];
+n23 [shape=box, label="Lit: %28"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="preg_replace"];
+n26 [shape=box, label="RegExp: /[']/"];
+n27 [shape=box, label="Lit: %27"];
+n28 [shape=box, label="Var: x"];
+n29 [shape=box, label="Var: x"];
+n30 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n1;
+n3 -> n4;
+n5 -> n3;
+n5 -> n6;
+n7 -> n5;
+n7 -> n8;
+n12 -> n7;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n24 -> n17;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n28 -> n21;
+n25 -> n26;
+n25 -> n27;
+n25 -> n28;
+n29 -> n25;
+n30 -> n29;
+}

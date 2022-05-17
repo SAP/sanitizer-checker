@@ -1,0 +1,92 @@
+// Finding: 2df3a6a7-b921-4342-8f71-d5af978c7dd9
+// Finding.url: http://weekly.example275.com/Article/ArchiveView.php?weekly_year=2021&weekly_month=03&weekly_day=22##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('8befc525c1644aa887ec9dfc1f4ab467')</script><!--/*
+// Finding.parentloc: http://weekly.example275.com/Article/ArchiveView.php?weekly_year=2021&weekly_month=03&weekly_day=22##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('8befc525c1644aa887ec9dfc1f4ab467')</script><!--/*
+// Finding.domain: weekly.example275.com
+// Finding.base_domain: example275.com
+// Finding.source: location.search
+// Finding.sink: document.writeln
+// Sanitizer.score: 1
+// Sanitizer.name: LoginOut
+// Sanitizer.location: http://weekly.example275.com/js/v02/weekly.js?v=0003 - LoginOut:228:10
+// Finding.begin: 128
+// Finding.end: 145
+// Finding.original_uuid: 29acedaf-ac62-478c-9cbf-5f1948a7ef7d
+// Finding.TwentyFiveMillionFlowsId: -415037466
+// Finding.script: http://weekly.example275.com/js/v02/weekly.js?v=0003
+// Finding.line: 233
+// Exploit.uuid: 8befc525-c164-4aa8-87ec-9dfc1f4ab467
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 50
+// Exploit.end_taint_url: 67
+// Exploit.replace_begin_url: 97
+// Exploit.replace_end_url: 97
+// Exploit.replace_begin_param: 145
+// Exploit.replace_end_param: 145
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 407404200
+// DepGraph.sanitizer_hash: -752483797
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: %26"];
+n3 [shape=ellipse, label="preg_replace"];
+n4 [shape=box, label="RegExp: /[&]/"];
+n5 [shape=box, label="Lit: %26"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: <a href="https://login.example275.com/login.php?path=0503&home=weekly.example275.com&url="];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: " target="_top" class=""];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: btn-login"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: ">로그인</a></div>"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=doubleoctagon, label="Return: x"];
+n1 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n7 -> n8;
+n7 -> n3;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n16 -> n15;
+}

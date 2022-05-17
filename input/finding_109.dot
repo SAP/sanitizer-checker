@@ -1,0 +1,98 @@
+// Finding: df6fc7db-3992-4d08-9b64-9282d30eed6c
+// Finding.url: https://www.example45.com/#/stream/movie/3495647"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5fc347e81d8344d7ae66e56a61454160')><!--/*/int-homepage-6648
+// Finding.parentloc: https://www.example45.com/#/stream/movie/3495647"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5fc347e81d8344d7ae66e56a61454160')><!--/*/int-homepage-6648
+// Finding.domain: www.example45.com
+// Finding.base_domain: example45.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 1814
+// Finding.end: 1821
+// Finding.original_uuid: 899a3fd0-4f6f-4157-a64b-00eb5799c77f
+// Finding.TwentyFiveMillionFlowsId: 1312578637
+// Finding.script: https://www.example45.com/www/sho/javascripts/sho.min.js?v=7.221.0
+// Finding.line: 44
+// Exploit.uuid: 5fc347e8-1d83-44d7-ae66-e56a61454160
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: 3495647"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: 3495647"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 35
+// Exploit.end_taint_url: 42
+// Exploit.replace_begin_url: 35
+// Exploit.replace_end_url: 42
+// Exploit.replace_begin_param: 1026
+// Exploit.replace_end_param: 1033
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 2060589556
+// DepGraph.sanitizer_hash: -574890901
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="regex_exec"];
+n2 [shape=box, label="RegExp: /^#\/([^\/?]+)\/*([^\/?]+)*\/*([^\/?]+)*\/*([^\/?]+)*\/*([^\/?]+)*\/*([^\/?]+)*\/*/"];
+n3 [shape=box, label="Lit: 3"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: /"];
+n9 [shape=ellipse, label="decodeURI"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /[<>"']/"];
+n13 [shape=box, label="Lit: "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /\//"];
+n17 [shape=box, label="Lit: /"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n6;
+n5 -> n1;
+n7 -> n5;
+n7 -> n8;
+n10 -> n7;
+n9 -> n10;
+n14 -> n9;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n20 -> n19;
+}

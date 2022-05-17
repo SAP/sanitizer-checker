@@ -1,0 +1,90 @@
+// Finding: 4bf31ccd-d338-412b-b1cd-1ca0d32d385a
+// Finding.url: https://bj.example372.com/sale.shtml##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('f2fd908baeb644bca0d11b7df1c30a35')><!--/*
+// Finding.parentloc: https://bj.example372.com/sale.shtml##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('f2fd908baeb644bca0d11b7df1c30a35')><!--/*
+// Finding.domain: bj.example372.com
+// Finding.base_domain: example372.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: value
+// Sanitizer.location: https://j1.example373.com/huangye/pc/homePage.b87963f.js - value:1:17556
+// Finding.begin: 45
+// Finding.end: 262
+// Finding.original_uuid: 4454d444-cd3c-48bf-b4c0-28105eddfa03
+// Finding.TwentyFiveMillionFlowsId: 1032553320
+// Finding.script: https://j1.example373.com/huangye/pc/homePage.b87963f.js
+// Finding.line: 1
+// Exploit.uuid: f2fd908b-aeb6-44bc-a0d1-1b7df1c30a35
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 28
+// Exploit.replace_begin_url: 28
+// Exploit.replace_end_url: 28
+// Exploit.replace_begin_param: 75
+// Exploit.replace_end_param: 75
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: true
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -54757726
+// DepGraph.sanitizer_hash: 1460713687
+// Part of the URL ('https%3A//bj.example372.com/sale.shtml%23%23%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src%3Dx%20onerror%3DtaintfoxLog%28%27f2fd908baeb644bca0d11b7df1c30a35%27%29%3E%3C%21--/*') found in right hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="escape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: <a href="https://passport.example372.com/login/?path="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: " target="_self">登录</a><span class="gap">|</span><a href="https://passport.example372.com/reg/" target="_self">注册</a>"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /\{0\}/"];
+n9 [shape=box, label="Lit: https%3A//bj.example372.com/sale.shtml%23%23%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src%3Dx%20onerror%3DtaintfoxLog%28%27f2fd908baeb644bca0d11b7df1c30a35%27%29%3E%3C%21--/*"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /\{1\}/"];
+n13 [shape=box, label="Lit: bj"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n15 -> n11;
+n16 -> n15;
+}

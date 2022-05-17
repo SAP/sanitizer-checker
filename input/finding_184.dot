@@ -1,0 +1,251 @@
+// Finding: 32489e0f-b38f-4807-a20e-0991964fe82b
+// Finding.url: https://dss.example35.com/fsd/fstamp/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('62a0cdf3035542859febb526543f2a07')><!--/*
+// Finding.parentloc: https://dss.example35.com/fsd/fstamp/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('62a0cdf3035542859febb526543f2a07')><!--/*
+// Finding.domain: dss.example35.com
+// Finding.base_domain: example35.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: 
+// Sanitizer.location: https://dss.example35.com/assets/js/breadcrumbs.js - <anonymous>:1:704
+// Finding.begin: 806
+// Finding.end: 807
+// Finding.original_uuid: 9a83b1fe-8f48-4019-9b4e-0c11ccfceee8
+// Finding.TwentyFiveMillionFlowsId: -1779830531
+// Finding.script: https://dss.example35.com/assets/js/breadcrumbs.js
+// Finding.line: 6
+// Exploit.uuid: 62a0cdf3-0355-4285-9feb-b526543f2a07
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: p
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 23
+// Exploit.end_taint_url: 29
+// Exploit.replace_begin_url: 30
+// Exploit.replace_end_url: 30
+// Exploit.replace_begin_param: 185
+// Exploit.replace_end_param: 185
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 506222142
+// DepGraph.sanitizer_hash: 1644346890
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Part of the URL ('dss.example35.com') found in left hand side of replace 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 8"];
+n4 [shape=ellipse, label="substr"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=box, label="Lit: 150"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /[-]/"];
+n9 [shape=box, label="Lit:  "];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit:  » "];
+n13 [shape=ellipse, label="substr"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Lit: 3"];
+n16 [shape=ellipse, label="str_replace_once"];
+n17 [shape=box, label="Lit: dss.example35.com"];
+n18 [shape=box, label="Lit: home"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="preg_replace"];
+n21 [shape=box, label="RegExp: /cbec/"];
+n22 [shape=box, label="Lit: coordinating board for early childhood"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="preg_replace"];
+n25 [shape=box, label="RegExp: /cd/"];
+n26 [shape=box, label="Lit: children's division"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=ellipse, label="preg_replace"];
+n29 [shape=box, label="RegExp: /cs/"];
+n30 [shape=box, label="Lit: clinical services"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=ellipse, label="preg_replace"];
+n33 [shape=box, label="RegExp: /cse/"];
+n34 [shape=box, label="Lit: child support"];
+n35 [shape=box, label="Var: x"];
+n36 [shape=ellipse, label="preg_replace"];
+n37 [shape=box, label="RegExp: /ddo/"];
+n38 [shape=box, label="Lit: office of the director"];
+n39 [shape=box, label="Var: x"];
+n40 [shape=ellipse, label="preg_replace"];
+n41 [shape=box, label="RegExp: /dfas/"];
+n42 [shape=box, label="Lit: division of finance and administrative services"];
+n43 [shape=box, label="Var: x"];
+n44 [shape=ellipse, label="preg_replace"];
+n45 [shape=box, label="RegExp: /dls/"];
+n46 [shape=box, label="Lit: division of legal services"];
+n47 [shape=box, label="Var: x"];
+n48 [shape=ellipse, label="preg_replace"];
+n49 [shape=box, label="RegExp: /dys/"];
+n50 [shape=box, label="Lit: division of youth services"];
+n51 [shape=box, label="Var: x"];
+n52 [shape=ellipse, label="."];
+n53 [shape=box, label="Lit: <a href="./../../../../../../../../../" title="Go Back one Dir..../../../" title="Go Back one Directory">family support division"];
+n54 [shape=ellipse, label="preg_replace"];
+n55 [shape=box, label="RegExp: /fsd/"];
+n56 [shape=box, label="Lit: family support division"];
+n57 [shape=box, label="Var: x"];
+n58 [shape=ellipse, label="preg_replace"];
+n59 [shape=box, label="RegExp: /hrc/"];
+n60 [shape=box, label="Lit: human resource center"];
+n61 [shape=box, label="Var: x"];
+n62 [shape=ellipse, label="preg_replace"];
+n63 [shape=box, label="RegExp: /index/"];
+n64 [shape=box, label="Lit:  "];
+n65 [shape=box, label="Var: x"];
+n66 [shape=ellipse, label="preg_replace"];
+n67 [shape=box, label="RegExp: /mc/"];
+n68 [shape=box, label="Lit: managed care"];
+n69 [shape=box, label="Var: x"];
+n70 [shape=ellipse, label="preg_replace"];
+n71 [shape=box, label="RegExp: /mhd/"];
+n72 [shape=box, label="Lit: mo healthnet division"];
+n73 [shape=box, label="Var: x"];
+n74 [shape=ellipse, label="preg_replace"];
+n75 [shape=box, label="RegExp: /mhk/"];
+n76 [shape=box, label="Lit: mo healthnet for kids"];
+n77 [shape=box, label="Var: x"];
+n78 [shape=ellipse, label="preg_replace"];
+n79 [shape=box, label="RegExp: /mohealthnet/"];
+n80 [shape=box, label="Lit: mo healthnet"];
+n81 [shape=box, label="Var: x"];
+n82 [shape=ellipse, label="preg_replace"];
+n83 [shape=box, label="RegExp: /[~]/"];
+n84 [shape=box, label="Lit:  and "];
+n85 [shape=box, label="Var: x"];
+n86 [shape=ellipse, label="preg_replace"];
+n87 [shape=box, label="RegExp: /[_]/"];
+n88 [shape=box, label="Lit: /"];
+n89 [shape=box, label="Var: x"];
+n90 [shape=box, label="Var: x"];
+n91 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n4 -> n6;
+n10 -> n4;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n11 -> n12;
+n11 -> n7;
+n14 -> n11;
+n13 -> n14;
+n13 -> n15;
+n19 -> n13;
+n16 -> n17;
+n16 -> n18;
+n16 -> n19;
+n23 -> n16;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n27 -> n20;
+n24 -> n25;
+n24 -> n26;
+n24 -> n27;
+n31 -> n24;
+n28 -> n29;
+n28 -> n30;
+n28 -> n31;
+n35 -> n28;
+n32 -> n33;
+n32 -> n34;
+n32 -> n35;
+n39 -> n32;
+n36 -> n37;
+n36 -> n38;
+n36 -> n39;
+n43 -> n36;
+n40 -> n41;
+n40 -> n42;
+n40 -> n43;
+n47 -> n40;
+n44 -> n45;
+n44 -> n46;
+n44 -> n47;
+n51 -> n44;
+n48 -> n49;
+n48 -> n50;
+n48 -> n51;
+n52 -> n53;
+n52 -> n48;
+n57 -> n52;
+n54 -> n55;
+n54 -> n56;
+n54 -> n57;
+n61 -> n54;
+n58 -> n59;
+n58 -> n60;
+n58 -> n61;
+n65 -> n58;
+n62 -> n63;
+n62 -> n64;
+n62 -> n65;
+n69 -> n62;
+n66 -> n67;
+n66 -> n68;
+n66 -> n69;
+n73 -> n66;
+n70 -> n71;
+n70 -> n72;
+n70 -> n73;
+n77 -> n70;
+n74 -> n75;
+n74 -> n76;
+n74 -> n77;
+n81 -> n74;
+n78 -> n79;
+n78 -> n80;
+n78 -> n81;
+n85 -> n78;
+n82 -> n83;
+n82 -> n84;
+n82 -> n85;
+n89 -> n82;
+n86 -> n87;
+n86 -> n88;
+n86 -> n89;
+n90 -> n86;
+n91 -> n90;
+}

@@ -1,0 +1,116 @@
+// Finding: c574ea50-a83a-4cea-9c2d-ed78597ae5e6
+// Finding.url: https://en.example88.com/index.html?spm=ZW4ueWl3dWdvLmNvbS8="></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('acbdf17cc2ca4bbbb6e8bd3d494133b9')><!--/*
+// Finding.parentloc: https://en.example88.com/index.html?spm=ZW4ueWl3dWdvLmNvbS8="></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('acbdf17cc2ca4bbbb6e8bd3d494133b9')><!--/*
+// Finding.domain: en.example88.com
+// Finding.base_domain: example88.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: Swiper/D.createLoop
+// Sanitizer.location: https://static.example89.com/yiwugou/enweb/js/swiper2.7.6.min.js?t=20210330 - Swiper/D.createLoop:16:5010
+// Finding.begin: 19162
+// Finding.end: 19316
+// Finding.original_uuid: 55f83e0c-51c3-4a38-9596-746c21d4658e
+// Finding.TwentyFiveMillionFlowsId: -1691161726
+// Finding.script: https://static.example89.com/yiwugou/enweb/js/swiper2.7.6.min.js?t=20210330
+// Finding.line: 16
+// Exploit.uuid: acbdf17c-c2ca-4bbb-b6e8-bd3d494133b9
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: ZW4ueWl3dWdvLmNvbS8="></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: ZW4ueWl3dWdvLmNvbS8="></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 37
+// Exploit.end_taint_url: 57
+// Exploit.replace_begin_url: 37
+// Exploit.replace_end_url: 57
+// Exploit.replace_begin_param: 6209
+// Exploit.replace_end_param: 6229
+// Issues.LargestEncodeAttrStringChain: 10
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1987819212
+// DepGraph.sanitizer_hash: 2062103894
+// Large chain of EncodeAttrString Operations (10) 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURI"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="substr"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Lit: 1"];
+n6 [shape=ellipse, label="regex_exec"];
+n7 [shape=box, label="RegExp: /(^|&)spm=([^&]*)(&|$)/"];
+n8 [shape=box, label="Lit: 2"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="regex_match"];
+n11 [shape=box, label="RegExp: /(^|&)spm=([^&]*)(&|$)/"];
+n12 [shape=box, label="Lit: 2"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="unescape"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: ."];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: ZW4ueWl3dWdvLmNvbS9pbmRleC5odG1s"];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: //en.example88.com/product/detail/923656511.html?spm="];
+n22 [shape=ellipse, label="encodeAttrString"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: <div class="branditem swiper-slide swiper-slide-duplicate">\n		...._1024h.jpg" width="100" height="100">\n							</a>\n						</div>"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: <div class="branditem swiper-slide swiper-slide-duplicate">\n		....c44265.jpg" width="100" height="100">\n							</a>\n						</div>"];
+n28 [shape=box, label="Var: x"];
+n29 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n4 -> n1;
+n3 -> n4;
+n3 -> n5;
+n9 -> n3;
+n6 -> n7;
+n6 -> n8;
+n6 -> n9;
+n13 -> n6;
+n10 -> n11;
+n10 -> n12;
+n10 -> n13;
+n15 -> n10;
+n14 -> n15;
+n16 -> n14;
+n16 -> n17;
+n18 -> n16;
+n18 -> n19;
+n20 -> n21;
+n20 -> n18;
+n23 -> n20;
+n22 -> n23;
+n24 -> n25;
+n24 -> n22;
+n26 -> n24;
+n26 -> n27;
+n28 -> n26;
+n29 -> n28;
+}

@@ -1,0 +1,255 @@
+// Finding: 58e824bd-1ab6-44af-9b21-0a9d16dfa5c1
+// Finding.url: https://example10.com/login.html?fetchUrl=true&utm_source=newsletter&utm_campaign=NotificationBars_offer_april_nologin&utm_term=body%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src=x%20onerror=taintfoxLog(%27221e3be7d932461481d24665f3e60922%27)%3E%3C!--/*&utm_content=all
+// Finding.parentloc: https://example10.com/login.html?fetchUrl=true&utm_source=newsletter&utm_campaign=NotificationBars_offer_april_nologin&utm_term=body%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src=x%20onerror=taintfoxLog(%27221e3be7d932461481d24665f3e60922%27)%3E%3C!--/*&utm_content=all
+// Finding.domain: example10.com
+// Finding.base_domain: example10.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 14
+// Sanitizer.name: e
+// Sanitizer.location: https://webst.example10.com/_js/chunk.route.Login.js?9fa8027c1abe861a0528 - e:2:379100
+// Finding.begin: 3050
+// Finding.end: 3051
+// Finding.original_uuid: 96816b6c-81ba-4d28-99ac-b3dbdebcd1d3
+// Finding.TwentyFiveMillionFlowsId: -367644390
+// Finding.script: https://webst.example10.com/_js/vendors.js?9fa8027c1abe861a0528
+// Finding.line: 2
+// Exploit.uuid: 221e3be7-d932-4614-81d2-4665f3e60922
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: action
+// Exploit.quote_type: "
+// Exploit.tag: form
+// Exploit.break_out: body"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: body"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 132
+// Exploit.end_taint_url: 136
+// Exploit.replace_begin_url: 132
+// Exploit.replace_end_url: 136
+// Exploit.replace_begin_param: 582
+// Exploit.replace_end_param: 586
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1428444330
+// DepGraph.sanitizer_hash: 1086436763
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace(&(?!#?\w+;)|<|>|"|'|\//g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1), function_rhs: true], 'function(e){return t[e]||e}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(&(?!#?\w+;)|<|>|"|'|\//g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1), function_rhs: true], 'function(e){return t[e]||e}') - Left hand side has to be a range 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /\\/"];
+n3 [shape=box, label="Lit: /"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="trim"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="substr"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Lit: 6"];
+n10 [shape=ellipse, label="substr"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=box, label="Lit: 2"];
+n13 [shape=ellipse, label="substr"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Lit: 17"];
+n16 [shape=ellipse, label="substr"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=box, label="Lit: 12"];
+n19 [shape=ellipse, label="split"];
+n20 [shape=box, label="Lit: &"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=ellipse, label="preg_replace"];
+n23 [shape=box, label="RegExp: /\+/"];
+n24 [shape=box, label="Lit: %20"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=ellipse, label="substr"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=box, label="Lit: 9"];
+n29 [shape=ellipse, label="decodeURIComponent"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="preg_replace"];
+n32 [shape=box, label="RegExp: /[&]/"];
+n33 [shape=box, label="Lit: &amp;"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="preg_replace"];
+n36 [shape=box, label="RegExp: /[<]/"];
+n37 [shape=box, label="Lit: &lt;"];
+n38 [shape=box, label="Var: x"];
+n39 [shape=ellipse, label="preg_replace"];
+n40 [shape=box, label="RegExp: /[>]/"];
+n41 [shape=box, label="Lit: &gt;"];
+n42 [shape=box, label="Var: x"];
+n43 [shape=ellipse, label="preg_replace"];
+n44 [shape=box, label="RegExp: /["]/"];
+n45 [shape=box, label="Lit: &quot;"];
+n46 [shape=box, label="Var: x"];
+n47 [shape=ellipse, label="preg_replace"];
+n48 [shape=box, label="RegExp: /[']/"];
+n49 [shape=box, label="Lit: &#x27;"];
+n50 [shape=box, label="Var: x"];
+n51 [shape=ellipse, label="preg_replace"];
+n52 [shape=box, label="RegExp: /\//"];
+n53 [shape=box, label="Lit: &#x2F;"];
+n54 [shape=box, label="Var: x"];
+n55 [shape=ellipse, label="encodeURIComponent"];
+n56 [shape=box, label="Var: x"];
+n57 [shape=ellipse, label="."];
+n58 [shape=box, label="Lit: utm_term="];
+n59 [shape=ellipse, label="."];
+n60 [shape=box, label="Lit: &"];
+n61 [shape=ellipse, label="."];
+n62 [shape=box, label="Lit: &"];
+n63 [shape=ellipse, label="."];
+n64 [shape=box, label="Lit: ?"];
+n65 [shape=ellipse, label="str_replace_once"];
+n66 [shape=box, label="Lit: #"];
+n67 [shape=box, label="Lit: %23"];
+n68 [shape=box, label="Var: x"];
+n69 [shape=ellipse, label="."];
+n70 [shape=box, label="Lit: /signup.html"];
+n71 [shape=ellipse, label="preg_replace"];
+n72 [shape=box, label="RegExp: /=((&)|$)/"];
+n73 [shape=box, label="Lit: $2"];
+n74 [shape=box, label="Var: x"];
+n75 [shape=ellipse, label="."];
+n76 [shape=box, label="Lit: &#38;"];
+n77 [shape=ellipse, label="preg_replace"];
+n78 [shape=box, label="RegExp: /&(?!#?\w+;)|<|>|"|'|\//"];
+n79 [shape=box, label="Lit: "];
+n80 [shape=box, label="Var: x"];
+n81 [shape=ellipse, label="."];
+n82 [shape=box, label="Lit: " href=""];
+n83 [shape=ellipse, label="."];
+n84 [shape=box, label="Lit: ">"];
+n85 [shape=ellipse, label="."];
+n86 [shape=box, label="Lit: Not Registered?"];
+n87 [shape=ellipse, label="."];
+n88 [shape=box, label="Lit:  <span class="login-user__link-text">"];
+n89 [shape=ellipse, label="."];
+n90 [shape=box, label="Lit: Create Account!"];
+n91 [shape=ellipse, label="."];
+n92 [shape=box, label="Lit: </span></a></div></div>"];
+n93 [shape=box, label="Var: x"];
+n94 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n8 -> n5;
+n7 -> n8;
+n7 -> n9;
+n11 -> n7;
+n10 -> n11;
+n10 -> n12;
+n14 -> n10;
+n13 -> n14;
+n13 -> n15;
+n17 -> n13;
+n16 -> n17;
+n16 -> n18;
+n21 -> n16;
+n19 -> n20;
+n19 -> n21;
+n25 -> n19;
+n22 -> n23;
+n22 -> n24;
+n22 -> n25;
+n27 -> n22;
+n26 -> n27;
+n26 -> n28;
+n30 -> n26;
+n29 -> n30;
+n34 -> n29;
+n31 -> n32;
+n31 -> n33;
+n31 -> n34;
+n38 -> n31;
+n35 -> n36;
+n35 -> n37;
+n35 -> n38;
+n42 -> n35;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n46 -> n39;
+n43 -> n44;
+n43 -> n45;
+n43 -> n46;
+n50 -> n43;
+n47 -> n48;
+n47 -> n49;
+n47 -> n50;
+n54 -> n47;
+n51 -> n52;
+n51 -> n53;
+n51 -> n54;
+n56 -> n51;
+n55 -> n56;
+n57 -> n58;
+n57 -> n55;
+n59 -> n60;
+n59 -> n57;
+n61 -> n59;
+n61 -> n62;
+n63 -> n64;
+n63 -> n61;
+n68 -> n63;
+n65 -> n66;
+n65 -> n67;
+n65 -> n68;
+n69 -> n70;
+n69 -> n65;
+n74 -> n69;
+n71 -> n72;
+n71 -> n73;
+n71 -> n74;
+n75 -> n71;
+n75 -> n76;
+n80 -> n75;
+n77 -> n78;
+n77 -> n79;
+n77 -> n80;
+n81 -> n82;
+n81 -> n77;
+n83 -> n81;
+n83 -> n84;
+n85 -> n83;
+n85 -> n86;
+n87 -> n85;
+n87 -> n88;
+n89 -> n87;
+n89 -> n90;
+n91 -> n89;
+n91 -> n92;
+n93 -> n91;
+n94 -> n93;
+}

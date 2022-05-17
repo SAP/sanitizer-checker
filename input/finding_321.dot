@@ -1,0 +1,94 @@
+// Finding: e3c589b7-5b8e-4768-9c63-6e55c96d6b00
+// Finding.url: https://example241.com/2582042/informatika/sistema_mathcad
+// Finding.parentloc: https://example241.com/2582042/informatika/sistema_mathcad##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('f55b87cff12141beac2bd8ec6efb4842')><!--/*
+// Finding.domain: example241.com
+// Finding.base_domain: example241.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 235
+// Sanitizer.name: VpaidVideoPlayer.prototype.initAd
+// Sanitizer.location: https://cdn-rtb.example242.com/js/vast/vpaid-ssp.min.js - VpaidVideoPlayer.prototype.initAd:4:91
+// Finding.begin: 357
+// Finding.end: 370
+// Finding.original_uuid: 7ff66295-9986-473b-a28b-62f0d6db19b8
+// Finding.TwentyFiveMillionFlowsId: 1431758610
+// Finding.script: https://cdn-rtb.example242.com/js/vast/vpaid-ssp.min.js
+// Finding.line: 7
+// Exploit.uuid: f55b87cf-f121-41be-ac2b-d8ec6efb4842
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: onclick
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 57
+// Exploit.replace_begin_url: 57
+// Exploit.replace_end_url: 57
+// Exploit.replace_begin_param: 372
+// Exploit.replace_end_param: 372
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1270096726
+// DepGraph.sanitizer_hash: -1500035079
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="regex_exec"];
+n2 [shape=box, label="RegExp: /^(?:(?:[a-z]+:)?\/\/|\/)?([^/]+).*$/"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="RegExp: /^(?:(?:[a-z]+:)?\/\/|\/)?([^/]+).*$/"];
+n7 [shape=box, label="Lit: $1"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="JSON.stringify"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: <script type="text/javascript">(function(d,b,a){(b[a]=b[a]||[]....81900,clickmap:!1,trackLinks:!1,accurateTrackBounce:!0,params:"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: })}catch(f){}});var e=d.getElementsByTagName("script")[0],c=d.....1):a()})(document,window,"yandex_metrika_callbacks");</script>"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: <iframe src="https://www.acint.net/mc/?dp=131" style="width:1p....;display:none;" frameborder="0" width="0" height="0"></iframe>"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n11 -> n12;
+n11 -> n9;
+n13 -> n11;
+n13 -> n14;
+n15 -> n16;
+n15 -> n13;
+n17 -> n15;
+n18 -> n17;
+}

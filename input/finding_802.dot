@@ -1,0 +1,133 @@
+// Finding: 74e42a32-5dff-4753-8d17-c031c3fdd73f
+// Finding.url: https://example10.com/subscribe.html?backURL[page]=%2F%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src=x%20onerror=taintfoxLog(%2716f7ffe85d1345dab407b62b345b3419%27)%3E%3C!--/*
+// Finding.parentloc: https://example10.com/subscribe.html?backURL[page]=%2F%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src=x%20onerror=taintfoxLog(%2716f7ffe85d1345dab407b62b345b3419%27)%3E%3C!--/*
+// Finding.domain: example10.com
+// Finding.base_domain: example10.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: urlFormat
+// Sanitizer.location: https://webst.example10.com/_js/router.js?9fa8027c1abe861a0528 - urlFormat:1:444651
+// Finding.begin: 8243
+// Finding.end: 8258
+// Finding.original_uuid: a2175210-f7bf-4433-8356-9cc0920a7437
+// Finding.TwentyFiveMillionFlowsId: 1685279481
+// Finding.script: https://webst.example10.com/_js/vendors.js?9fa8027c1abe861a0528
+// Finding.line: 2
+// Exploit.uuid: 16f7ffe8-5d13-45da-b407-b62b345b3419
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: %2F"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: %2F"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 55
+// Exploit.end_taint_url: 56
+// Exploit.replace_begin_url: 55
+// Exploit.replace_end_url: 56
+// Exploit.replace_begin_param: 295
+// Exploit.replace_end_param: 298
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -756802918
+// DepGraph.sanitizer_hash: 409994752
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /\\/"];
+n3 [shape=box, label="Lit: /"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="trim"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="substr"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Lit: 6"];
+n10 [shape=ellipse, label="substr"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=box, label="Lit: 2"];
+n13 [shape=ellipse, label="substr"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Lit: 17"];
+n16 [shape=ellipse, label="substr"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=box, label="Lit: 0"];
+n19 [shape=box, label="Lit: 15"];
+n20 [shape=ellipse, label="str_replace_once"];
+n21 [shape=box, label="Lit: null"];
+n22 [shape=box, label="Lit: "];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="preg_replace"];
+n25 [shape=box, label="RegExp: /[?]/"];
+n26 [shape=box, label="Lit: %3F"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=ellipse, label="preg_replace"];
+n29 [shape=box, label="RegExp: /[#]/"];
+n30 [shape=box, label="Lit: %23"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=ellipse, label="preg_replace"];
+n33 [shape=box, label="RegExp: /=((&)|$)/"];
+n34 [shape=box, label="Lit: $2"];
+n35 [shape=box, label="Var: x"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n8 -> n5;
+n7 -> n8;
+n7 -> n9;
+n11 -> n7;
+n10 -> n11;
+n10 -> n12;
+n14 -> n10;
+n13 -> n14;
+n13 -> n15;
+n17 -> n13;
+n16 -> n17;
+n16 -> n18;
+n16 -> n19;
+n23 -> n16;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n27 -> n20;
+n24 -> n25;
+n24 -> n26;
+n24 -> n27;
+n31 -> n24;
+n28 -> n29;
+n28 -> n30;
+n28 -> n31;
+n35 -> n28;
+n32 -> n33;
+n32 -> n34;
+n32 -> n35;
+n36 -> n32;
+n37 -> n36;
+}

@@ -1,0 +1,90 @@
+// Finding: 2e469dc2-4183-47ef-adc1-667f511c10ed
+// Finding.url: https://www.example217.com/domain-reviews/##%22%3E%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src=x%20onerror=taintfoxLog('8ea0194be6b245c7a2c1f721c8bc13ed')%3E%3C!--%2F*
+// Finding.parentloc: https://www.example217.com/domain-reviews/##%22%3E%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src=x%20onerror=taintfoxLog('8ea0194be6b245c7a2c1f721c8bc13ed')%3E%3C!--%2F*
+// Finding.domain: www.example217.com
+// Finding.base_domain: example217.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 24
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 141
+// Finding.end: 144
+// Finding.original_uuid: 95ad6618-d5ad-4e15-9b13-c198e8cf7163
+// Finding.TwentyFiveMillionFlowsId: -218840502
+// Finding.script: https://cdn.example218.com/endurance/donotsell/assets/js/donotsell.min.js
+// Finding.line: 1
+// Exploit.uuid: 8ea0194b-e6b2-45c7-a2c1-f721c8bc13ed
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 42
+// Exploit.replace_begin_url: 42
+// Exploit.replace_end_url: 42
+// Exploit.replace_begin_param: 314
+// Exploit.replace_end_param: 314
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1415941057
+// DepGraph.sanitizer_hash: 295381731
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /%27/"];
+n3 [shape=box, label="Lit: '"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="substr"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Lit: 0"];
+n8 [shape=box, label="Lit: 42"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: ##%22%3E%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobje....r=taintfoxLog('8ea0194be6b245c7a2c1f721c8bc13ed')%3E%3C!--%2F*"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /[.]/"];
+n13 [shape=box, label="Lit: ."];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n9 -> n10;
+n14 -> n9;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n15 -> n11;
+n16 -> n15;
+}

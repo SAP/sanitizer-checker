@@ -1,0 +1,79 @@
+// Finding: b41807b0-6748-415e-bd29-94dbd86b4c0f
+// Finding.url: https://pub.example26.com/?spm=a2e114.14922392.0.0.4b2575a5qDtVkw#!%2Findex%3FcurValue%3Dnav_2%26spm%3D"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('4e5d34b9e4bf4e2f9d2d97a783b7201c')><!--/*
+// Finding.parentloc: https://pub.example26.com/?spm=a2e114.14922392.0.0.4b2575a5qDtVkw#!%2Findex%3FcurValue%3Dnav_2%26spm%3D"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('4e5d34b9e4bf4e2f9d2d97a783b7201c')><!--/*
+// Finding.domain: pub.example26.com
+// Finding.base_domain: example26.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: Tt
+// Sanitizer.location: https://g.example27.com/mm/common-minisite/20200528.114942.131/common-minisite/views/pages/index.js - tmpl:1:3515
+// Finding.begin: 701
+// Finding.end: 706
+// Finding.original_uuid: ada26fd9-f802-472d-abf7-ca2699bb31d4
+// Finding.TwentyFiveMillionFlowsId: -457058269
+// Finding.script: https://g.example27.com/mm/union-minisite/0.0.4/boot.js
+// Finding.line: 1
+// Exploit.uuid: 4e5d34b9-e4bf-4e2f-9d2d-97a783b7201c
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: mx-view
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: %2Findex%3FcurValue%3Dnav_2%26spm%3D"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: %2Findex%3FcurValue%3Dnav_2%26spm%3D"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 65
+// Exploit.end_taint_url: 91
+// Exploit.replace_begin_url: 65
+// Exploit.replace_end_url: 91
+// Exploit.replace_begin_param: 466
+// Exploit.replace_end_param: 502
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1414460513
+// DepGraph.sanitizer_hash: 78474769
+// Removed LR concats 
+// Approximated Implementation for: replace([!')(*]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(': 1, *: 1, (: 1, ): 1), function_rhs: true], 'function(e){return wt[e]}') - Other Exception: ReferenceError: wt is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: %2A"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[!')(*]/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n1;
+n3 -> n4;
+n8 -> n3;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

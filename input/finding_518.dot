@@ -1,0 +1,102 @@
+// Finding: db52b35f-1e9b-4eb2-9f4d-4c5691f39674
+// Finding.url: https://www.example334.com/brands?sortBy=S##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9a8ca7306a2b441a994663ea67c14ffd')><!--/*
+// Finding.parentloc: https://www.example334.com/brands?sortBy=S##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9a8ca7306a2b441a994663ea67c14ffd')><!--/*
+// Finding.domain: www.example334.com
+// Finding.base_domain: example334.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: [3]</c.escape
+// Sanitizer.location: https://cdn-tp3.example335.com/24645-37138/js/hyprlive-min.js?cacheKey=35841db6e6408baf88564d9f06cc8ae4 line 8 > Function - anonymous:7:20
+// Finding.begin: 58
+// Finding.end: 59
+// Finding.original_uuid: dca599d4-d109-468e-8677-95b291b2ab8c
+// Finding.TwentyFiveMillionFlowsId: 1124313011
+// Finding.script: https://cdn-tp3.example335.com/24645-37138/compiled/scripts/vendor/jquery/jquery.min.js?theme=~38574~39329&cacheKey=35841db6e6408baf88564d9f06cc8ae4
+// Finding.line: 3
+// Exploit.uuid: 9a8ca730-6a2b-441a-9946-63ea67c14ffd
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: s
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 4
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 43
+// Exploit.replace_end_url: 43
+// Exploit.replace_begin_param: 59
+// Exploit.replace_end_param: 59
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1402985862
+// DepGraph.sanitizer_hash: -1402985862
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /&(?!amp;|lt;|gt;|quot;|#39;)/"];
+n3 [shape=box, label="Lit: &amp;"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[<]/"];
+n7 [shape=box, label="Lit: &lt;"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /[>]/"];
+n11 [shape=box, label="Lit: &gt;"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /["]/"];
+n15 [shape=box, label="Lit: &quot;"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[']/"];
+n19 [shape=box, label="Lit: &#39;"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n22 -> n21;
+}

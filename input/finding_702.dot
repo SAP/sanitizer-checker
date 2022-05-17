@@ -1,0 +1,82 @@
+// Finding: 0c41870b-5858-42cd-ad54-c6c73d149b6c
+// Finding.url: https://interactive.example161.com/embed/from-tool/series/index.html?vertical=News&opinion-tint=false&title=O</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('96f3c29f8f3d4000bf6e820dc01f6550')><!--/*&description=Investigating inequalities in America’s broken food system and efforts to fix it&read-more-link=https://www.theguardian.com/environment/series/our-unequal-earth&links=false
+// Finding.parentloc: https://interactive.example161.com/embed/from-tool/series/index.html?vertical=News&opinion-tint=false&title=O</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('96f3c29f8f3d4000bf6e820dc01f6550')><!--/*&description=Investigating inequalities in America’s broken food system and efforts to fix it&read-more-link=https://www.theguardian.com/environment/series/our-unequal-earth&links=false
+// Finding.domain: interactive.example161.com
+// Finding.base_domain: example161.com
+// Finding.source: location.href
+// Finding.sink: outerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: init/<
+// Sanitizer.location: https://interactive.example161.com/embed/from-tool/handlebars.min.js line 28 > Function - anonymous:6:108
+// Finding.begin: 38
+// Finding.end: 42
+// Finding.original_uuid: 714df7d4-f528-40e0-9ad4-2e64c52db618
+// Finding.TwentyFiveMillionFlowsId: -231290339
+// Finding.script: https://interactive.example161.com/embed/from-tool/series/index.html?vertical=News&opinion-tint=false&title=O</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('96f3c29f8f3d4000bf6e820dc01f6550')><!--/*&description=Investigating inequalities in Americaâs broken food system and efforts to fix it&read-more-link=https://www.theguardian.com/environment/series/our-unequal-earth&links=false
+// Finding.line: 482
+// Exploit.uuid: 96f3c29f-8f3d-4000-bf6e-820dc01f6550
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: O
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: O</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: O</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 104
+// Exploit.end_taint_url: 127
+// Exploit.replace_begin_url: 104
+// Exploit.replace_end_url: 127
+// Exploit.replace_begin_param: 188
+// Exploit.replace_end_param: 211
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -2048387390
+// DepGraph.sanitizer_hash: -2048387390
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="strtolower"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="preg_replace"];
+n4 [shape=box, label="RegExp: /[ ]/"];
+n5 [shape=box, label="Lit: -"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /\//"];
+n9 [shape=box, label="Lit: "];
+n10 [shape=box, label="Var: x"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n10 -> n3;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n11 -> n7;
+n12 -> n11;
+}

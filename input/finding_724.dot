@@ -1,0 +1,80 @@
+// Finding: 72ae2593-5387-4dab-b5e9-633276589f44
+// Finding.url: https://www.example418.com/technology/council-bill-would-require-delivery-apps-share-data-restaurants#adunit_path=news/technology"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7530c86163e94b8fa0812026c7d26e54')><!--/*
+// Finding.parentloc: https://www.example418.com/technology/council-bill-would-require-delivery-apps-share-data-restaurants#adunit_path=news/technology"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7530c86163e94b8fa0812026c7d26e54')><!--/*
+// Finding.domain: www.example418.com
+// Finding.base_domain: example418.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: html/<
+// Sanitizer.location: https://detroit.example419.com/api/scripts/jquery.min.js - html/<:3:16001
+// Finding.begin: 24839
+// Finding.end: 24923
+// Finding.original_uuid: e3f0b457-8dba-4e7c-acaa-c8f2f23330fd
+// Finding.TwentyFiveMillionFlowsId: -532374414
+// Finding.script: https://detroit.example419.com/api/scripts/jquery.min.js
+// Finding.line: 3
+// Exploit.uuid: 7530c861-63e9-4b8f-a081-2026c7d26e54
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: data-dfp-unit
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: news/technology"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: news/technology"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 117
+// Exploit.end_taint_url: 132
+// Exploit.replace_begin_url: 117
+// Exploit.replace_end_url: 132
+// Exploit.replace_begin_param: 6186
+// Exploit.replace_end_param: 6201
+// Issues.LargestEncodeAttrStringChain: 1
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1502365750
+// DepGraph.sanitizer_hash: 1114219431
+// Large chain of EncodeAttrString Operations (1) 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: ="];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="."];
+n5 [shape=box, label="Lit: /"];
+n6 [shape=ellipse, label="."];
+n7 [shape=box, label="Lit: /"];
+n8 [shape=ellipse, label="encodeAttrString"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n4 -> n5;
+n4 -> n1;
+n6 -> n4;
+n6 -> n7;
+n9 -> n6;
+n8 -> n9;
+n10 -> n8;
+n11 -> n10;
+}

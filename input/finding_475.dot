@@ -1,0 +1,80 @@
+// Finding: 0ce35507-928f-48ac-adb7-e6803c022baf
+// Finding.url: https://example71.com/grants/awarded-grants?field_recipient_type[Grants+to+State+Libraries]"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7abb9f95d7d2461294d689689e3aec13')><!--/*=Grants+to+State+Libraries&field_fiscal_year_text[1]=1
+// Finding.parentloc: https://example71.com/grants/awarded-grants?field_recipient_type[Grants+to+State+Libraries]"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7abb9f95d7d2461294d689689e3aec13')><!--/*=Grants+to+State+Libraries&field_fiscal_year_text[1]=1
+// Finding.domain: example71.com
+// Finding.base_domain: example71.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 162
+// Finding.end: 232
+// Finding.original_uuid: fe53293b-8422-4df5-a8cd-ed80b6fb59c4
+// Finding.TwentyFiveMillionFlowsId: -2075392594
+// Finding.script: https://example71.com/core/assets/vendor/jquery/jquery.min.js?v=3.5.1
+// Finding.line: 2
+// Exploit.uuid: 7abb9f95-d7d2-4612-94d6-89689e3aec13
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: id
+// Exploit.quote_type: "
+// Exploit.tag: span
+// Exploit.break_out: Libraries]"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: Libraries]"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 76
+// Exploit.end_taint_url: 86
+// Exploit.replace_begin_url: 76
+// Exploit.replace_end_url: 86
+// Exploit.replace_begin_param: 97
+// Exploit.replace_end_param: 107
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1047726849
+// DepGraph.sanitizer_hash: 338309480
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="decodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="url_params_key"];
+n4 [shape=box, label="Lit: field_recipient_type[Grants to State Libraries]"></iframe></style></script></object></embed></textarea><img src"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=ellipse, label="preg_replace"];
+n7 [shape=box, label="RegExp: /[ ]/"];
+n8 [shape=box, label="Lit: -"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n5 -> n1;
+n3 -> n4;
+n3 -> n5;
+n9 -> n3;
+n6 -> n7;
+n6 -> n8;
+n6 -> n9;
+n10 -> n6;
+n11 -> n10;
+}

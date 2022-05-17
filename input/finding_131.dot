@@ -1,0 +1,115 @@
+// Finding: 4dcdf936-80e7-4ea9-a648-a24b4d306cef
+// Finding.url: https://example131.com/orlando/tickets/military-discount/veterans/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b03a30a4439646b8bd56475551ee3ff4')><!--/*
+// Finding.parentloc: https://example131.com/orlando/tickets/military-discount/veterans/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b03a30a4439646b8bd56475551ee3ff4')><!--/*
+// Finding.domain: example131.com
+// Finding.base_domain: example131.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: z</f.prototype.R/<
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-5D4M6P - z</f.prototype.R/<:4213:226
+// Finding.begin: 200
+// Finding.end: 201
+// Finding.original_uuid: 828b818d-8ac3-4f5d-b2a7-47732268904d
+// Finding.TwentyFiveMillionFlowsId: -335522535
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-5D4M6P
+// Finding.line: 4213
+// Exploit.uuid: b03a30a4-4396-46b8-bd56-475551ee3ff4
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 64
+// Exploit.replace_begin_url: 64
+// Exploit.replace_end_url: 64
+// Exploit.replace_begin_param: 183
+// Exploit.replace_end_param: 183
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1504156750
+// DepGraph.sanitizer_hash: 931192285
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="decodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="str_replace_once"];
+n4 [shape=box, label="RegExp: /([^.@\s]+)(\.[^.@\s]+)*@([^.@\s]+\.)+([^.@\s]+)/"];
+n5 [shape=box, label="Lit: "];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: <iframe src="https://6258894.fls.doubleclick.net/activityi;src=6258894;type=remar0;cat=seawo0;u10=seaworld orlando;u14="];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: ;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;ord="];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: 1727454035634.1572"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: ?" width="1" height="1" frameborder="0" style="display:none"></iframe>"];
+n15 [shape=ellipse, label="substr"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=box, label="Lit: 0"];
+n18 [shape=box, label="Lit: 196"];
+n19 [shape=ellipse, label="regex_exec"];
+n20 [shape=box, label="RegExp: /(\/?>)/"];
+n21 [shape=box, label="Lit: 1"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="str_replace_once"];
+n24 [shape=box, label="RegExp: /(\/?>)/"];
+n25 [shape=box, label="Lit:  data-ps-id=2 $1"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n7 -> n8;
+n7 -> n3;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n16 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n27 -> n23;
+n28 -> n27;
+}

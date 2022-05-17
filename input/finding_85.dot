@@ -1,0 +1,122 @@
+// Finding: f70555e0-9040-4a63-bd48-6f13956fc82e
+// Finding.url: https://www.example92.com/office365?siteid=100&clickid=1000000000&channelid="};taintfoxLog('95acf9da60cf4ef1b06ba7d355a6c2ad')//&promo=GET25
+// Finding.parentloc: https://www.example92.com/office365?siteid=100&clickid=1000000000&channelid="};taintfoxLog('95acf9da60cf4ef1b06ba7d355a6c2ad')//&promo=GET25
+// Finding.domain: www.example92.com
+// Finding.base_domain: example92.com
+// Finding.source: location.search
+// Finding.sink: eval
+// Sanitizer.score: 3
+// Sanitizer.name: k
+// Sanitizer.location: https://assets.example33.com/530368109655/f1f8bc547915/launch-7859547d8660.min.js - k:26:5396
+// Finding.begin: 347
+// Finding.end: 400
+// Finding.original_uuid: cb77d905-3531-4a95-a955-f0b8e5a5211d
+// Finding.TwentyFiveMillionFlowsId: -189214733
+// Finding.script: https://customerservice.example92.com/prweb/app/default/?pyActivity=pzIncludeMashupScripts
+// Finding.line: 68
+// Exploit.uuid: 95acf9da-60cf-4ef1-b06b-a7d355a6c2ad
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: P181C100S500N0B11A1D38E0000V781
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: "};
+// Exploit.break_in: //
+// Exploit.payload: "};taintfoxLog(1)//
+// Exploit.begin_taint_url: 83
+// Exploit.end_taint_url: 114
+// Exploit.replace_begin_url: 83
+// Exploit.replace_end_url: 114
+// Exploit.replace_begin_param: 325
+// Exploit.replace_end_param: 356
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 943023724
+// DepGraph.sanitizer_hash: -968398899
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="trim"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="str_replace_once"];
+n4 [shape=box, label="RegExp: /^[?#&]/"];
+n5 [shape=box, label="Lit: "];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="split"];
+n8 [shape=box, label="Lit: &"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="preg_replace"];
+n11 [shape=box, label="RegExp: /\+/"];
+n12 [shape=box, label="Lit: %20"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="substr"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=box, label="Lit: 10"];
+n17 [shape=ellipse, label="decodeURIComponent"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="preg_replace"];
+n20 [shape=box, label="RegExp: /\s+/"];
+n21 [shape=box, label="Lit:  "];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="trim"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="preg_replace"];
+n26 [shape=box, label="RegExp: /\s+/"];
+n27 [shape=box, label="Lit:  "];
+n28 [shape=box, label="Var: x"];
+n29 [shape=ellipse, label="trim"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n9 -> n3;
+n7 -> n8;
+n7 -> n9;
+n13 -> n7;
+n10 -> n11;
+n10 -> n12;
+n10 -> n13;
+n15 -> n10;
+n14 -> n15;
+n14 -> n16;
+n18 -> n14;
+n17 -> n18;
+n22 -> n17;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n24 -> n19;
+n23 -> n24;
+n28 -> n23;
+n25 -> n26;
+n25 -> n27;
+n25 -> n28;
+n30 -> n25;
+n29 -> n30;
+n31 -> n29;
+n32 -> n31;
+}

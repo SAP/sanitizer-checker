@@ -1,0 +1,185 @@
+// Finding: 9bdc5ed9-3023-43c8-935e-429c841387f5
+// Finding.url: https://chrome.example34.com/webstore/detail/rotowire/caljiholplhibonecblicbgjkakcpmmm?hl%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src=x%20onerror=taintfoxLog('dc900d3343884ccf8c0ca46dce60aa47')%3E%3C!--/*=en-US
+// Finding.parentloc: https://chrome.example34.com/webstore/detail/rotowire/caljiholplhibonecblicbgjkakcpmmm?hl%22%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cimg%20src=x%20onerror=taintfoxLog('dc900d3343884ccf8c0ca46dce60aa47')%3E%3C!--/*=en-US
+// Finding.domain: chrome.example34.com
+// Finding.base_domain: example34.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 16
+// Sanitizer.name: FQ
+// Sanitizer.location: https://chrome.example34.com/_/scs/cws-static/_/js/k=cws.main.en_US.-RUUdr_ysv8.O/am=AQ/d=1/rs=AAxzQIXdx8IpZH31Yo5qUenCvC6PHlyFkg/m=consumer - FQ:1469:72
+// Finding.begin: 1624
+// Finding.end: 1629
+// Finding.original_uuid: 547b3aa1-2648-48b5-bbee-dc7da2d07044
+// Finding.TwentyFiveMillionFlowsId: 2030881281
+// Finding.script: https://chrome.example34.com/_/scs/cws-static/_/js/k=cws.main.en_US.-RUUdr_ysv8.O/am=AQ/d=1/rs=AAxzQIXdx8IpZH31Yo5qUenCvC6PHlyFkg/m=consumer
+// Finding.line: 114
+// Exploit.uuid: dc900d33-4388-4ccf-8c0c-a46dce60aa47
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: hl"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: hl"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 84
+// Exploit.end_taint_url: 86
+// Exploit.replace_begin_url: 84
+// Exploit.replace_end_url: 86
+// Exploit.replace_begin_param: 181
+// Exploit.replace_end_param: 183
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 798765836
+// DepGraph.sanitizer_hash: -1743155974
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00- \x22\x27-\x29\x3c\x3e\\\x7b\x7d\x7f\x85\xa0\u2028\u2029\uff01\uff03\uff04\uff06-\uff0c\uff0f\uff1a\uff1b\uff1d\uff1f\uff20\uff3b\uff3d]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, ": 1, ': 1, \: 1,  : 1, (: 1, ): 1, {: 1, }: 1), function_rhs: true], 'function(a){return nr[a]}') - Other Exception: ReferenceError: nr is not defined 
+// Approximated Implementation for: replace([\x00\x22\x26\x27\x3c\x3e]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1), function_rhs: true], 'function(a){return mr[a]}') - Other Exception: ReferenceError: mr is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="regex_exec"];
+n2 [shape=box, label="RegExp: /^(?:([^:/?#.]+):)?(?:\/\/(?:([^\\/?#]*)@)?([^\\/?#]*?)(?::([0-9]+))?(?=[\\/?#]|$))?([^?#]+)?(?:\?([^#]*))?(?:#([\s\S]*))?$/"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="regex_match"];
+n6 [shape=box, label="RegExp: /^(?:([^:/?#.]+):)?(?:\/\/(?:([^\\/?#]*)@)?([^\\/?#]*?)(?::([0-9]+))?(?=[\\/?#]|$))?([^?#]+)?(?:\?([^#]*))?(?:#([\s\S]*))?$/"];
+n7 [shape=box, label="Lit: 1"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /%25/"];
+n11 [shape=box, label="Lit: %2525"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="decodeURI"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="RegExp: /:$/"];
+n17 [shape=box, label="Lit: "];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: :"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: //"];
+n23 [shape=ellipse, label="encodeURIComponent"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: ="];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: continue"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: &"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: &"];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: ?"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: %28"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: %27"];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: %29"];
+n41 [shape=ellipse, label="preg_replace"];
+n42 [shape=box, label="RegExp: /[\x00- \x22\x27-\x29\x3c\x3e\\\x7b\x7d\x7f\x85\xa0\u2028\u2029\uff01\uff03\uff04\uff06-\uff0c\uff0f\uff1a\uff1b\uff1d\uff1f\uff20\uff3b\uff3d]/"];
+n43 [shape=box, label="Lit: "];
+n44 [shape=box, label="Var: x"];
+n45 [shape=ellipse, label="."];
+n46 [shape=box, label="Lit: &amp;"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: service=chromewebstore&amp;"];
+n49 [shape=ellipse, label="."];
+n50 [shape=box, label="Lit: sarp=1"];
+n51 [shape=ellipse, label="preg_replace"];
+n52 [shape=box, label="RegExp: /[\x00\x22\x26\x27\x3c\x3e]/"];
+n53 [shape=box, label="Lit: "];
+n54 [shape=box, label="Var: x"];
+n55 [shape=ellipse, label="."];
+n56 [shape=box, label="Lit: <a class="h-Td-vb-re-y" href=""];
+n57 [shape=ellipse, label="."];
+n58 [shape=box, label="Lit: " target="_parent">Sign in</a> to rate"];
+n59 [shape=box, label="Var: x"];
+n60 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n14 -> n9;
+n13 -> n14;
+n18 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n24 -> n21;
+n23 -> n24;
+n25 -> n26;
+n25 -> n23;
+n27 -> n28;
+n27 -> n25;
+n29 -> n30;
+n29 -> n27;
+n31 -> n29;
+n31 -> n32;
+n33 -> n34;
+n33 -> n31;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n44 -> n39;
+n41 -> n42;
+n41 -> n43;
+n41 -> n44;
+n45 -> n41;
+n45 -> n46;
+n47 -> n45;
+n47 -> n48;
+n49 -> n47;
+n49 -> n50;
+n54 -> n49;
+n51 -> n52;
+n51 -> n53;
+n51 -> n54;
+n55 -> n56;
+n55 -> n51;
+n57 -> n55;
+n57 -> n58;
+n59 -> n57;
+n60 -> n59;
+}

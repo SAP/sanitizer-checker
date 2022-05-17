@@ -1,0 +1,627 @@
+// Finding: d89c3f1f-246e-4cd7-9d6f-c8e17e09eed0
+// Finding.url: https://www.example42.com/members/mahesh-chand#</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b2971b56c2a64cec889e2808efc7d895')><!--/*
+// Finding.parentloc: https://www.example42.com/members/mahesh-chand#</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b2971b56c2a64cec889e2808efc7d895')><!--/*
+// Finding.domain: www.example42.com
+// Finding.base_domain: example42.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: html/<
+// Sanitizer.location: https://csharpcorner.example43.com/JQuery/jquery.min-20150912.js - html/<:1:66305
+// Finding.begin: 56
+// Finding.end: 57
+// Finding.original_uuid: 11d84a66-5ade-4812-b773-2dfeb528c2ba
+// Finding.TwentyFiveMillionFlowsId: 228089407
+// Finding.script: https://csharpcorner.example43.com/JQuery/jquery.min-20150912.js
+// Finding.line: 1
+// Exploit.uuid: b2971b56-c2a6-4cec-889e-2808efc7d895
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: .
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 11
+// Exploit.end_taint_url: 12
+// Exploit.replace_begin_url: 50
+// Exploit.replace_end_url: 50
+// Exploit.replace_begin_param: 58
+// Exploit.replace_end_param: 58
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 1
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1261110737
+// DepGraph.sanitizer_hash: 2013854193
+// Large chain of EncodeTextFragment Operations (1) 
+// Approximated Implementation for: replace([\x00-\x1f\\]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(\: 1), function_rhs: true], 'function (character) {                if (character in String.specialChar) { return String.specialChar[character]; }                return '\\u00' + character.charCodeAt().toPaddedString(2, 16);            }') - Other Exception: TypeError: Cannot use 'in' operator to search for '0' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '1' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '2' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '3' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '4' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '5' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '6' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '7' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '8' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '9' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for ':' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for ';' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '<' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '=' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '>' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '?' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '@' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'A' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'B' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'C' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'D' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'E' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'F' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'G' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'H' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'I' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'J' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'K' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'L' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'M' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'N' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'O' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'P' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'Q' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'R' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'S' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'T' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'U' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'V' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'W' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'X' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'Y' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'Z' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '[' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for '\' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'f' in undefined, Other Exception: TypeError: Cannot use 'in' operator to search for 'x' in undefined 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Lit: 2048"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[\x00-\x1f\\]/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /["]/"];
+n11 [shape=box, label="Lit: \""];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: \""];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: \""];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: "url": "];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: , "];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: , "];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: {"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: }"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: , "];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: , "];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: ["];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: ]"];
+n35 [shape=ellipse, label="JSON.stringify"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=ellipse, label="JSON.parse"];
+n38 [shape=box, label="Var: x"];
+n39 [shape=ellipse, label="preg_replace"];
+n40 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n41 [shape=box, label="Lit: <$1></$2>"];
+n42 [shape=box, label="Var: x"];
+n43 [shape=ellipse, label="preg_replace"];
+n44 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n45 [shape=box, label="Lit: "];
+n46 [shape=box, label="Var: x"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: ."];
+n49 [shape=ellipse, label="preg_replace"];
+n50 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n51 [shape=box, label="Lit: <$1></$2>"];
+n52 [shape=box, label="Var: x"];
+n53 [shape=ellipse, label="preg_replace"];
+n54 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n55 [shape=box, label="Lit: "];
+n56 [shape=box, label="Var: x"];
+n57 [shape=ellipse, label="preg_replace"];
+n58 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n59 [shape=box, label="Lit: <$1></$2>"];
+n60 [shape=box, label="Var: x"];
+n61 [shape=ellipse, label="preg_replace"];
+n62 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n63 [shape=box, label="Lit: "];
+n64 [shape=box, label="Var: x"];
+n65 [shape=ellipse, label="preg_replace"];
+n66 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n67 [shape=box, label="Lit: <$1></$2>"];
+n68 [shape=box, label="Var: x"];
+n69 [shape=ellipse, label="preg_replace"];
+n70 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n71 [shape=box, label="Lit: "];
+n72 [shape=box, label="Var: x"];
+n73 [shape=ellipse, label="preg_replace"];
+n74 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n75 [shape=box, label="Lit: <$1></$2>"];
+n76 [shape=box, label="Var: x"];
+n77 [shape=ellipse, label="preg_replace"];
+n78 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n79 [shape=box, label="Lit: "];
+n80 [shape=box, label="Var: x"];
+n81 [shape=ellipse, label="."];
+n82 [shape=box, label="Lit: a"];
+n83 [shape=ellipse, label="preg_replace"];
+n84 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n85 [shape=box, label="Lit: <$1></$2>"];
+n86 [shape=box, label="Var: x"];
+n87 [shape=ellipse, label="preg_replace"];
+n88 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n89 [shape=box, label="Lit: "];
+n90 [shape=box, label="Var: x"];
+n91 [shape=ellipse, label="."];
+n92 [shape=box, label="Lit: r"];
+n93 [shape=ellipse, label="preg_replace"];
+n94 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n95 [shape=box, label="Lit: <$1></$2>"];
+n96 [shape=box, label="Var: x"];
+n97 [shape=ellipse, label="preg_replace"];
+n98 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n99 [shape=box, label="Lit: "];
+n100 [shape=box, label="Var: x"];
+n101 [shape=ellipse, label="."];
+n102 [shape=box, label="Lit: n"];
+n103 [shape=ellipse, label="preg_replace"];
+n104 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n105 [shape=box, label="Lit: <$1></$2>"];
+n106 [shape=box, label="Var: x"];
+n107 [shape=ellipse, label="preg_replace"];
+n108 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n109 [shape=box, label="Lit: "];
+n110 [shape=box, label="Var: x"];
+n111 [shape=ellipse, label="preg_replace"];
+n112 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n113 [shape=box, label="Lit: <$1></$2>"];
+n114 [shape=box, label="Var: x"];
+n115 [shape=ellipse, label="preg_replace"];
+n116 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n117 [shape=box, label="Lit: "];
+n118 [shape=box, label="Var: x"];
+n119 [shape=ellipse, label="."];
+n120 [shape=box, label="Lit: W"];
+n121 [shape=ellipse, label="preg_replace"];
+n122 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n123 [shape=box, label="Lit: <$1></$2>"];
+n124 [shape=box, label="Var: x"];
+n125 [shape=ellipse, label="preg_replace"];
+n126 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n127 [shape=box, label="Lit: "];
+n128 [shape=box, label="Var: x"];
+n129 [shape=ellipse, label="."];
+n130 [shape=box, label="Lit: h"];
+n131 [shape=ellipse, label="preg_replace"];
+n132 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n133 [shape=box, label="Lit: <$1></$2>"];
+n134 [shape=box, label="Var: x"];
+n135 [shape=ellipse, label="preg_replace"];
+n136 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n137 [shape=box, label="Lit: "];
+n138 [shape=box, label="Var: x"];
+n139 [shape=ellipse, label="."];
+n140 [shape=box, label="Lit: a"];
+n141 [shape=ellipse, label="preg_replace"];
+n142 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n143 [shape=box, label="Lit: <$1></$2>"];
+n144 [shape=box, label="Var: x"];
+n145 [shape=ellipse, label="preg_replace"];
+n146 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n147 [shape=box, label="Lit: "];
+n148 [shape=box, label="Var: x"];
+n149 [shape=ellipse, label="."];
+n150 [shape=box, label="Lit: t"];
+n151 [shape=ellipse, label="preg_replace"];
+n152 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n153 [shape=box, label="Lit: <$1></$2>"];
+n154 [shape=box, label="Var: x"];
+n155 [shape=ellipse, label="preg_replace"];
+n156 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n157 [shape=box, label="Lit: "];
+n158 [shape=box, label="Var: x"];
+n159 [shape=ellipse, label="preg_replace"];
+n160 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n161 [shape=box, label="Lit: <$1></$2>"];
+n162 [shape=box, label="Var: x"];
+n163 [shape=ellipse, label="preg_replace"];
+n164 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n165 [shape=box, label="Lit: "];
+n166 [shape=box, label="Var: x"];
+n167 [shape=ellipse, label="."];
+n168 [shape=box, label="Lit: I"];
+n169 [shape=ellipse, label="preg_replace"];
+n170 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n171 [shape=box, label="Lit: <$1></$2>"];
+n172 [shape=box, label="Var: x"];
+n173 [shape=ellipse, label="preg_replace"];
+n174 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n175 [shape=box, label="Lit: "];
+n176 [shape=box, label="Var: x"];
+n177 [shape=ellipse, label="."];
+n178 [shape=box, label="Lit: t"];
+n179 [shape=ellipse, label="preg_replace"];
+n180 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n181 [shape=box, label="Lit: <$1></$2>"];
+n182 [shape=box, label="Var: x"];
+n183 [shape=ellipse, label="preg_replace"];
+n184 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n185 [shape=box, label="Lit: "];
+n186 [shape=box, label="Var: x"];
+n187 [shape=ellipse, label="preg_replace"];
+n188 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n189 [shape=box, label="Lit: <$1></$2>"];
+n190 [shape=box, label="Var: x"];
+n191 [shape=ellipse, label="preg_replace"];
+n192 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n193 [shape=box, label="Lit: "];
+n194 [shape=box, label="Var: x"];
+n195 [shape=ellipse, label="."];
+n196 [shape=box, label="Lit: I"];
+n197 [shape=ellipse, label="preg_replace"];
+n198 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n199 [shape=box, label="Lit: <$1></$2>"];
+n200 [shape=box, label="Var: x"];
+n201 [shape=ellipse, label="preg_replace"];
+n202 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n203 [shape=box, label="Lit: "];
+n204 [shape=box, label="Var: x"];
+n205 [shape=ellipse, label="."];
+n206 [shape=box, label="Lit: s"];
+n207 [shape=ellipse, label="preg_replace"];
+n208 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n209 [shape=box, label="Lit: <$1></$2>"];
+n210 [shape=box, label="Var: x"];
+n211 [shape=ellipse, label="preg_replace"];
+n212 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n213 [shape=box, label="Lit: "];
+n214 [shape=box, label="Var: x"];
+n215 [shape=ellipse, label="preg_replace"];
+n216 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n217 [shape=box, label="Lit: <$1></$2>"];
+n218 [shape=box, label="Var: x"];
+n219 [shape=ellipse, label="preg_replace"];
+n220 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n221 [shape=box, label="Lit: "];
+n222 [shape=box, label="Var: x"];
+n223 [shape=ellipse, label="."];
+n224 [shape=box, label="Lit: h"];
+n225 [shape=ellipse, label="preg_replace"];
+n226 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n227 [shape=box, label="Lit: <$1></$2>"];
+n228 [shape=box, label="Var: x"];
+n229 [shape=ellipse, label="preg_replace"];
+n230 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n231 [shape=box, label="Lit: "];
+n232 [shape=box, label="Var: x"];
+n233 [shape=ellipse, label="preg_replace"];
+n234 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n235 [shape=box, label="Lit: <$1></$2>"];
+n236 [shape=box, label="Var: x"];
+n237 [shape=ellipse, label="preg_replace"];
+n238 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n239 [shape=box, label="Lit: "];
+n240 [shape=box, label="Var: x"];
+n241 [shape=ellipse, label="."];
+n242 [shape=box, label="Lit: r"];
+n243 [shape=ellipse, label="preg_replace"];
+n244 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n245 [shape=box, label="Lit: <$1></$2>"];
+n246 [shape=box, label="Var: x"];
+n247 [shape=ellipse, label="preg_replace"];
+n248 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n249 [shape=box, label="Lit: "];
+n250 [shape=box, label="Var: x"];
+n251 [shape=ellipse, label="preg_replace"];
+n252 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n253 [shape=box, label="Lit: <$1></$2>"];
+n254 [shape=box, label="Var: x"];
+n255 [shape=ellipse, label="preg_replace"];
+n256 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n257 [shape=box, label="Lit: "];
+n258 [shape=box, label="Var: x"];
+n259 [shape=ellipse, label="preg_replace"];
+n260 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n261 [shape=box, label="Lit: <$1></$2>"];
+n262 [shape=box, label="Var: x"];
+n263 [shape=ellipse, label="preg_replace"];
+n264 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n265 [shape=box, label="Lit: "];
+n266 [shape=box, label="Var: x"];
+n267 [shape=ellipse, label="preg_replace"];
+n268 [shape=box, label="RegExp: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/"];
+n269 [shape=box, label="Lit: <$1></$2>"];
+n270 [shape=box, label="Var: x"];
+n271 [shape=ellipse, label="encodeTextFragment"];
+n272 [shape=box, label="Var: x"];
+n273 [shape=ellipse, label="preg_replace"];
+n274 [shape=box, label="RegExp: / jQuery\d+="(?:\d+|null)"/"];
+n275 [shape=box, label="Lit: "];
+n276 [shape=box, label="Var: x"];
+n277 [shape=box, label="Var: x"];
+n278 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n14;
+n13 -> n9;
+n15 -> n13;
+n15 -> n16;
+n17 -> n18;
+n17 -> n15;
+n19 -> n20;
+n19 -> n17;
+n21 -> n19;
+n21 -> n22;
+n23 -> n24;
+n23 -> n21;
+n25 -> n23;
+n25 -> n26;
+n27 -> n28;
+n27 -> n25;
+n29 -> n27;
+n29 -> n30;
+n31 -> n32;
+n31 -> n29;
+n33 -> n31;
+n33 -> n34;
+n36 -> n33;
+n35 -> n36;
+n38 -> n35;
+n37 -> n38;
+n42 -> n37;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n46 -> n39;
+n43 -> n44;
+n43 -> n45;
+n43 -> n46;
+n47 -> n43;
+n47 -> n48;
+n52 -> n47;
+n49 -> n50;
+n49 -> n51;
+n49 -> n52;
+n56 -> n49;
+n53 -> n54;
+n53 -> n55;
+n53 -> n56;
+n60 -> n53;
+n57 -> n58;
+n57 -> n59;
+n57 -> n60;
+n64 -> n57;
+n61 -> n62;
+n61 -> n63;
+n61 -> n64;
+n68 -> n61;
+n65 -> n66;
+n65 -> n67;
+n65 -> n68;
+n72 -> n65;
+n69 -> n70;
+n69 -> n71;
+n69 -> n72;
+n76 -> n69;
+n73 -> n74;
+n73 -> n75;
+n73 -> n76;
+n80 -> n73;
+n77 -> n78;
+n77 -> n79;
+n77 -> n80;
+n81 -> n77;
+n81 -> n82;
+n86 -> n81;
+n83 -> n84;
+n83 -> n85;
+n83 -> n86;
+n90 -> n83;
+n87 -> n88;
+n87 -> n89;
+n87 -> n90;
+n91 -> n87;
+n91 -> n92;
+n96 -> n91;
+n93 -> n94;
+n93 -> n95;
+n93 -> n96;
+n100 -> n93;
+n97 -> n98;
+n97 -> n99;
+n97 -> n100;
+n101 -> n97;
+n101 -> n102;
+n106 -> n101;
+n103 -> n104;
+n103 -> n105;
+n103 -> n106;
+n110 -> n103;
+n107 -> n108;
+n107 -> n109;
+n107 -> n110;
+n114 -> n107;
+n111 -> n112;
+n111 -> n113;
+n111 -> n114;
+n118 -> n111;
+n115 -> n116;
+n115 -> n117;
+n115 -> n118;
+n119 -> n115;
+n119 -> n120;
+n124 -> n119;
+n121 -> n122;
+n121 -> n123;
+n121 -> n124;
+n128 -> n121;
+n125 -> n126;
+n125 -> n127;
+n125 -> n128;
+n129 -> n125;
+n129 -> n130;
+n134 -> n129;
+n131 -> n132;
+n131 -> n133;
+n131 -> n134;
+n138 -> n131;
+n135 -> n136;
+n135 -> n137;
+n135 -> n138;
+n139 -> n135;
+n139 -> n140;
+n144 -> n139;
+n141 -> n142;
+n141 -> n143;
+n141 -> n144;
+n148 -> n141;
+n145 -> n146;
+n145 -> n147;
+n145 -> n148;
+n149 -> n145;
+n149 -> n150;
+n154 -> n149;
+n151 -> n152;
+n151 -> n153;
+n151 -> n154;
+n158 -> n151;
+n155 -> n156;
+n155 -> n157;
+n155 -> n158;
+n162 -> n155;
+n159 -> n160;
+n159 -> n161;
+n159 -> n162;
+n166 -> n159;
+n163 -> n164;
+n163 -> n165;
+n163 -> n166;
+n167 -> n163;
+n167 -> n168;
+n172 -> n167;
+n169 -> n170;
+n169 -> n171;
+n169 -> n172;
+n176 -> n169;
+n173 -> n174;
+n173 -> n175;
+n173 -> n176;
+n177 -> n173;
+n177 -> n178;
+n182 -> n177;
+n179 -> n180;
+n179 -> n181;
+n179 -> n182;
+n186 -> n179;
+n183 -> n184;
+n183 -> n185;
+n183 -> n186;
+n190 -> n183;
+n187 -> n188;
+n187 -> n189;
+n187 -> n190;
+n194 -> n187;
+n191 -> n192;
+n191 -> n193;
+n191 -> n194;
+n195 -> n191;
+n195 -> n196;
+n200 -> n195;
+n197 -> n198;
+n197 -> n199;
+n197 -> n200;
+n204 -> n197;
+n201 -> n202;
+n201 -> n203;
+n201 -> n204;
+n205 -> n201;
+n205 -> n206;
+n210 -> n205;
+n207 -> n208;
+n207 -> n209;
+n207 -> n210;
+n214 -> n207;
+n211 -> n212;
+n211 -> n213;
+n211 -> n214;
+n218 -> n211;
+n215 -> n216;
+n215 -> n217;
+n215 -> n218;
+n222 -> n215;
+n219 -> n220;
+n219 -> n221;
+n219 -> n222;
+n223 -> n219;
+n223 -> n224;
+n228 -> n223;
+n225 -> n226;
+n225 -> n227;
+n225 -> n228;
+n232 -> n225;
+n229 -> n230;
+n229 -> n231;
+n229 -> n232;
+n236 -> n229;
+n233 -> n234;
+n233 -> n235;
+n233 -> n236;
+n240 -> n233;
+n237 -> n238;
+n237 -> n239;
+n237 -> n240;
+n241 -> n237;
+n241 -> n242;
+n246 -> n241;
+n243 -> n244;
+n243 -> n245;
+n243 -> n246;
+n250 -> n243;
+n247 -> n248;
+n247 -> n249;
+n247 -> n250;
+n254 -> n247;
+n251 -> n252;
+n251 -> n253;
+n251 -> n254;
+n258 -> n251;
+n255 -> n256;
+n255 -> n257;
+n255 -> n258;
+n262 -> n255;
+n259 -> n260;
+n259 -> n261;
+n259 -> n262;
+n266 -> n259;
+n263 -> n264;
+n263 -> n265;
+n263 -> n266;
+n270 -> n263;
+n267 -> n268;
+n267 -> n269;
+n267 -> n270;
+n272 -> n267;
+n271 -> n272;
+n276 -> n271;
+n273 -> n274;
+n273 -> n275;
+n273 -> n276;
+n277 -> n273;
+n278 -> n277;
+}

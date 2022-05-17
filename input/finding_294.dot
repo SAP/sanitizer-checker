@@ -1,0 +1,110 @@
+// Finding: 15bebf38-a129-4da4-8470-cad43532e226
+// Finding.url: https://onlinekat.example229.com/blaetterkatalog-frontend/onlinekat/WH_0521_DE_S/index.html##'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('334438694ba54e699ee19bf41bccd9ce')><!--/*
+// Finding.parentloc: https://onlinekat.example229.com/blaetterkatalog-frontend/onlinekat/WH_0521_DE_S/index.html##'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('334438694ba54e699ee19bf41bccd9ce')><!--/*
+// Finding.domain: onlinekat.example229.com
+// Finding.base_domain: example229.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: Metacharacter
+// Sanitizer.location: https://onlinekat.example229.com/blaetterkatalog-frontend/onlinekat/WH_0521_DE_S/javascript/main.js - Metacharacter:356:115
+// Finding.begin: 263
+// Finding.end: 270
+// Finding.original_uuid: b629127d-19d8-44d8-a02a-fc651d3c792b
+// Finding.TwentyFiveMillionFlowsId: -1494926087
+// Finding.script: https://onlinekat.example229.com/blaetterkatalog-frontend/onlinekat/WH_0521_DE_S/javascript/jquery-1.9.1.min.js
+// Finding.line: 4
+// Exploit.uuid: 33443869-4ba5-4e69-9ee1-9bf41bccd9ce
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: '
+// Exploit.tag: a
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 88
+// Exploit.replace_end_url: 88
+// Exploit.replace_begin_param: 73
+// Exploit.replace_end_param: 73
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 801464647
+// DepGraph.sanitizer_hash: 801464647
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /\//"];
+n3 [shape=box, label="Lit: %2F"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[ ]/"];
+n7 [shape=box, label="Lit: %20"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /[#]/"];
+n11 [shape=box, label="Lit: %23"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[=]/"];
+n15 [shape=box, label="Lit: %3D"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[:]/"];
+n19 [shape=box, label="Lit: %3A"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="preg_replace"];
+n22 [shape=box, label="RegExp: /[']/"];
+n23 [shape=box, label="Lit: %27"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n24 -> n17;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n25 -> n21;
+n26 -> n25;
+}

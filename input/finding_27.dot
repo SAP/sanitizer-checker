@@ -1,0 +1,246 @@
+// Finding: 36ef38d5-b7ae-4df1-b80e-a943947fe84d
+// Finding.url: https://example10.com/subscribe.html?backURL[page]=/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('df61c326b41a4949a32fe7a1e8b6d046')><!--/*
+// Finding.parentloc: https://example10.com/subscribe.html?backURL[page]=/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('df61c326b41a4949a32fe7a1e8b6d046')><!--/*
+// Finding.domain: example10.com
+// Finding.base_domain: example10.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 9
+// Sanitizer.name: urlFormat
+// Sanitizer.location: https://webst.example10.com/_js/router.js?9fa8027c1abe861a0528 - urlFormat:1:444651
+// Finding.begin: 75
+// Finding.end: 92
+// Finding.original_uuid: a2175210-f7bf-4433-8356-9cc0920a7437
+// Finding.TwentyFiveMillionFlowsId: 1429751567
+// Finding.script: https://webst.example10.com/_js/vendors.js?9fa8027c1abe861a0528
+// Finding.line: 2
+// Exploit.uuid: df61c326-b41a-4949-a32f-e7a1e8b6d046
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 8
+// Exploit.end_taint_url: 21
+// Exploit.replace_begin_url: 56
+// Exploit.replace_end_url: 56
+// Exploit.replace_begin_param: 257
+// Exploit.replace_end_param: 257
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -930700256
+// DepGraph.sanitizer_hash: 134359966
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: ?"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /\\/"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: ?"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: ?"];
+n12 [shape=ellipse, label="trim"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="substr"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=box, label="Lit: 6"];
+n17 [shape=ellipse, label="substr"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Lit: 2"];
+n20 [shape=ellipse, label="substr"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=box, label="Lit: 17"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /[']/"];
+n25 [shape=box, label="Lit: %27"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: /[<]/"];
+n29 [shape=box, label="Lit: %3C"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="preg_replace"];
+n32 [shape=box, label="RegExp: /[>]/"];
+n33 [shape=box, label="Lit: %3E"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="preg_replace"];
+n36 [shape=box, label="RegExp: /["]/"];
+n37 [shape=box, label="Lit: %22"];
+n38 [shape=box, label="Var: x"];
+n39 [shape=ellipse, label="preg_replace"];
+n40 [shape=box, label="RegExp: /[ ]/"];
+n41 [shape=box, label="Lit: %20"];
+n42 [shape=box, label="Var: x"];
+n43 [shape=ellipse, label="substr"];
+n44 [shape=box, label="Var: x"];
+n45 [shape=box, label="Lit: 0"];
+n46 [shape=box, label="Lit: 31"];
+n47 [shape=ellipse, label="substr"];
+n48 [shape=box, label="Var: x"];
+n49 [shape=box, label="Lit: 0"];
+n50 [shape=box, label="Lit: 15"];
+n51 [shape=ellipse, label="preg_replace"];
+n52 [shape=box, label="RegExp: /\\/"];
+n53 [shape=box, label="Lit: /"];
+n54 [shape=box, label="Var: x"];
+n55 [shape=ellipse, label="trim"];
+n56 [shape=box, label="Var: x"];
+n57 [shape=ellipse, label="regex_exec"];
+n58 [shape=box, label="RegExp: /^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]*)?$/"];
+n59 [shape=box, label="Lit: 1"];
+n60 [shape=box, label="Var: x"];
+n61 [shape=ellipse, label="preg_replace"];
+n62 [shape=box, label="RegExp: /[?]/"];
+n63 [shape=box, label="Lit: %3F"];
+n64 [shape=box, label="Var: x"];
+n65 [shape=ellipse, label="preg_replace"];
+n66 [shape=box, label="RegExp: /[#]/"];
+n67 [shape=box, label="Lit: %23"];
+n68 [shape=box, label="Var: x"];
+n69 [shape=ellipse, label="."];
+n70 [shape=box, label="Lit: ?backURL%5Bpage%5D=%26%23x2F%3B"];
+n71 [shape=ellipse, label="preg_replace"];
+n72 [shape=box, label="RegExp: /=((&)|$)/"];
+n73 [shape=box, label="Lit: $2"];
+n74 [shape=box, label="Var: x"];
+n75 [shape=ellipse, label="encodeURIComponent"];
+n76 [shape=box, label="Var: x"];
+n77 [shape=ellipse, label="."];
+n78 [shape=box, label="Lit: backURL%5Bpage%5D="];
+n79 [shape=ellipse, label="."];
+n80 [shape=box, label="Lit: ?"];
+n81 [shape=ellipse, label="str_replace_once"];
+n82 [shape=box, label="Lit: #"];
+n83 [shape=box, label="Lit: %23"];
+n84 [shape=box, label="Var: x"];
+n85 [shape=ellipse, label="."];
+n86 [shape=box, label="Lit: /subscribe/corporate.html"];
+n87 [shape=ellipse, label="preg_replace"];
+n88 [shape=box, label="RegExp: /=((&)|$)/"];
+n89 [shape=box, label="Lit: $2"];
+n90 [shape=box, label="Var: x"];
+n91 [shape=box, label="Var: x"];
+n92 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n9;
+n8 -> n4;
+n10 -> n8;
+n10 -> n11;
+n13 -> n10;
+n12 -> n13;
+n15 -> n12;
+n14 -> n15;
+n14 -> n16;
+n18 -> n14;
+n17 -> n18;
+n17 -> n19;
+n21 -> n17;
+n20 -> n21;
+n20 -> n22;
+n26 -> n20;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n34 -> n27;
+n31 -> n32;
+n31 -> n33;
+n31 -> n34;
+n38 -> n31;
+n35 -> n36;
+n35 -> n37;
+n35 -> n38;
+n42 -> n35;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n44 -> n39;
+n43 -> n44;
+n43 -> n45;
+n43 -> n46;
+n48 -> n43;
+n47 -> n48;
+n47 -> n49;
+n47 -> n50;
+n54 -> n47;
+n51 -> n52;
+n51 -> n53;
+n51 -> n54;
+n56 -> n51;
+n55 -> n56;
+n60 -> n55;
+n57 -> n58;
+n57 -> n59;
+n57 -> n60;
+n64 -> n57;
+n61 -> n62;
+n61 -> n63;
+n61 -> n64;
+n68 -> n61;
+n65 -> n66;
+n65 -> n67;
+n65 -> n68;
+n69 -> n65;
+n69 -> n70;
+n74 -> n69;
+n71 -> n72;
+n71 -> n73;
+n71 -> n74;
+n76 -> n71;
+n75 -> n76;
+n77 -> n78;
+n77 -> n75;
+n79 -> n80;
+n79 -> n77;
+n84 -> n79;
+n81 -> n82;
+n81 -> n83;
+n81 -> n84;
+n85 -> n86;
+n85 -> n81;
+n90 -> n85;
+n87 -> n88;
+n87 -> n89;
+n87 -> n90;
+n91 -> n87;
+n92 -> n91;
+}

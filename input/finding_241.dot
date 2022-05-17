@@ -1,0 +1,141 @@
+// Finding: 4db21648-d354-44d1-8ed3-c77ef3853dd6
+// Finding.url: https://www.example196.com/product/632433/aoc-27g2-27-full-hd-144hz-hdmi-dp-vga-freesync-g-sync-compatible-ips-led-gaming-monitor##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('863e6613effa4e2e9676b1e057e39a3a')><!--/*
+// Finding.parentloc: https://www.example196.com/product/632433/aoc-27g2-27-full-hd-144hz-hdmi-dp-vga-freesync-g-sync-compatible-ips-led-gaming-monitor##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('863e6613effa4e2e9676b1e057e39a3a')><!--/*
+// Finding.domain: www.example196.com
+// Finding.base_domain: example196.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 26
+// Sanitizer.name: n.fn.init
+// Sanitizer.location: https://www.example196.com/bundles/js/DesktopAsyncJScompiled?v=6B904175LSdecsgr5nxoTyD4bfjBpkGn2ygEkAIWfes1 - n.fn.init:1:32361
+// Finding.begin: 3
+// Finding.end: 9
+// Finding.original_uuid: b2cc0cb0-d161-4a0f-9fcf-dc64d2d7aac6
+// Finding.TwentyFiveMillionFlowsId: -1598924776
+// Finding.script: https://www.example196.com/bundles/js/DesktopJScompiled?v=TASp_O1CRHjJHYcOFB_K2bdb8sftmR3fUMn59NgGgWs1
+// Finding.line: 1
+// Exploit.uuid: 863e6613-effa-4e2e-9676-b1e057e39a3a
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 27
+// Exploit.replace_begin_url: 130
+// Exploit.replace_end_url: 130
+// Exploit.replace_begin_param: 136
+// Exploit.replace_end_param: 136
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1563530788
+// DepGraph.sanitizer_hash: -1662603551
+// Merged split and join statements 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace(([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, \: 1, :: 1, =: 1, %: 1, *: 1,  : 1, ,: 1, -: 1, ;: 1, ^: 1, |: 1, (: 1, ): 1, [: 1, ]: 1, {: 1, }: 1), function_rhs: true], 'function(n,t){return t?"\0"===n?"�":n.slice(0,-1)+"\\"+n.charCodeAt(n.length-1).toString(16)+" ":"\\"+n}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, \: 1, :: 1, =: 1, %: 1, *: 1,  : 1, ,: 1, -: 1, ;: 1, ^: 1, |: 1, (: 1, ): 1, [: 1, ]: 1, {: 1, }: 1), function_rhs: true], 'function(n,t){return t?"\0"===n?"�":n.slice(0,-1)+"\\"+n.charCodeAt(n.length-1).toString(16)+" ":"\\"+n}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /[-]/"];
+n6 [shape=box, label="Lit: -"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /([\0-\x1f\x7f]|^-?\d)|^-$|[^\0-\x1f\x7f-\uFFFF\w-]/"];
+n10 [shape=box, label="Lit: "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="."];
+n13 [shape=box, label="Lit: [data-fancybox='"];
+n14 [shape=ellipse, label="."];
+n15 [shape=box, label="Lit: ']"];
+n16 [shape=ellipse, label="preg_replace"];
+n17 [shape=box, label="RegExp: /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/"];
+n18 [shape=box, label="Lit: "];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="regex_exec"];
+n21 [shape=box, label="RegExp: /^([^<]*)(<[\w\W]+>)([^>]*)$/"];
+n22 [shape=box, label="Lit: 2"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n12 -> n13;
+n12 -> n8;
+n14 -> n12;
+n14 -> n15;
+n19 -> n14;
+n16 -> n17;
+n16 -> n18;
+n16 -> n19;
+n23 -> n16;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n24 -> n20;
+n25 -> n24;
+}

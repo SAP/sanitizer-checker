@@ -1,0 +1,86 @@
+// Finding: 8ef31c0b-52e4-437d-aa9f-4e70f445fbd2
+// Finding.url: https://www.example118.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e012cdea697648ef97530799becdbc2f')><!--/*
+// Finding.parentloc: https://www.example118.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e012cdea697648ef97530799becdbc2f')><!--/*
+// Finding.domain: www.example118.com
+// Finding.base_domain: example118.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 9
+// Sanitizer.name: _
+// Sanitizer.location: https://s.example119.com/rq/darla/4-6-0/js/g-r-min.js - _:1:3618
+// Finding.begin: 306
+// Finding.end: 633
+// Finding.original_uuid: d3c12ce9-7d9f-4073-8066-48427bfa8e31
+// Finding.TwentyFiveMillionFlowsId: -1692515070
+// Finding.script: https://s.example119.com/rq/darla/4-6-0/js/g-r-min.js
+// Finding.line: 1
+// Exploit.uuid: e012cdea-6976-48ef-9753-0799becdbc2f
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: name
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 22
+// Exploit.replace_end_url: 22
+// Exploit.replace_begin_param: 12682
+// Exploit.replace_end_param: 12682
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -648402814
+// DepGraph.sanitizer_hash: 1963948272
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="escape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="escape"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: "];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: "];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: https://www.example118.com/sdarla/php/fc.php?"];
+n11 [shape=ellipse, label="escape"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n4 -> n1;
+n3 -> n4;
+n5 -> n6;
+n5 -> n3;
+n7 -> n5;
+n7 -> n8;
+n9 -> n10;
+n9 -> n7;
+n12 -> n9;
+n11 -> n12;
+n13 -> n11;
+n14 -> n13;
+}

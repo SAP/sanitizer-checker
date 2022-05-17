@@ -1,0 +1,163 @@
+// Finding: acc93415-ab6d-44ac-a8c8-0dbe9f30e09f
+// Finding.url: https://www.example239.com/offerings/application-services/enterprise-scale-agile-and-devops-solutions#"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('8689e8980e00422a82a9bf7160a3e164')><!--/*
+// Finding.parentloc: https://www.example239.com/offerings/application-services/enterprise-scale-agile-and-devops-solutions#"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('8689e8980e00422a82a9bf7160a3e164')><!--/*
+// Finding.domain: www.example239.com
+// Finding.base_domain: example239.com
+// Finding.source: document.documentURI
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: 
+// Sanitizer.location: https://www.example239.com/offerings/application-services/enterprise-scale-agile-and-devops-solutions##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('8689e8980e00422a82a9bf7160a3e164')><!--/* - <anonymous>:76:18
+// Finding.begin: 128
+// Finding.end: 129
+// Finding.original_uuid: b5b157e2-ebb5-4e41-bbbd-c26af2851abd
+// Finding.TwentyFiveMillionFlowsId: -1647355666
+// Finding.script: https://www.example239.com/Style Library/unisys/js/jquery-3.5.1.min.js
+// Finding.line: 2
+// Exploit.uuid: 8689e898-0e00-422a-82a9-bf7160a3e164
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: img
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 97
+// Exploit.replace_begin_url: 97
+// Exploit.replace_end_url: 97
+// Exploit.replace_begin_param: 271
+// Exploit.replace_end_param: 271
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -169667080
+// DepGraph.sanitizer_hash: -333596015
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="decodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="preg_replace"];
+n4 [shape=box, label="RegExp: /<!--[\s\S]*?-->/"];
+n5 [shape=box, label="Lit: "];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="substr"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Lit: 0"];
+n10 [shape=box, label="Lit: 100"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /[<]/"];
+n13 [shape=box, label="Lit: &lt;"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: &gt;"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[>]/"];
+n19 [shape=box, label="Lit: &gt;"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: [/removed]"];
+n23 [shape=ellipse, label="substr"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=box, label="Lit: 0"];
+n26 [shape=box, label="Lit: 103"];
+n27 [shape=ellipse, label="encodeURIComponent"];
+n28 [shape=box, label="Var: x"];
+n29 [shape=ellipse, label="decodeURIComponent"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="str_replace_once"];
+n32 [shape=box, label="Lit: //"];
+n33 [shape=box, label="Lit: /"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="split"];
+n36 [shape=box, label="Lit: /"];
+n37 [shape=box, label="Var: x"];
+n38 [shape=ellipse, label="split"];
+n39 [shape=box, label="Lit: -id-"];
+n40 [shape=box, label="Var: x"];
+n41 [shape=ellipse, label="preg_replace"];
+n42 [shape=box, label="RegExp: /[-]/"];
+n43 [shape=box, label="Lit:  "];
+n44 [shape=box, label="Var: x"];
+n45 [shape=ellipse, label="substr"];
+n46 [shape=box, label="Var: x"];
+n47 [shape=box, label="Lit: 0"];
+n48 [shape=box, label="Lit: 1"];
+n49 [shape=ellipse, label="strtoupper"];
+n50 [shape=box, label="Var: x"];
+n51 [shape=box, label="Var: x"];
+n52 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n8 -> n3;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n15 -> n11;
+n15 -> n16;
+n20 -> n15;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n21 -> n22;
+n24 -> n21;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n28 -> n23;
+n27 -> n28;
+n30 -> n27;
+n29 -> n30;
+n34 -> n29;
+n31 -> n32;
+n31 -> n33;
+n31 -> n34;
+n37 -> n31;
+n35 -> n36;
+n35 -> n37;
+n40 -> n35;
+n38 -> n39;
+n38 -> n40;
+n44 -> n38;
+n41 -> n42;
+n41 -> n43;
+n41 -> n44;
+n46 -> n41;
+n45 -> n46;
+n45 -> n47;
+n45 -> n48;
+n50 -> n45;
+n49 -> n50;
+n51 -> n49;
+n52 -> n51;
+}

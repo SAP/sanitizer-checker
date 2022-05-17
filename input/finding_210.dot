@@ -1,0 +1,88 @@
+// Finding: aef6d808-6b1b-4ebe-8d42-5b6f528b20b1
+// Finding.url: http://travauxphotos.example179.com/?cref=om_coop_footerdarty_lientexte_33291"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('f4c4d979b9064edfaf1440fd93ce450b')><!--/*
+// Finding.parentloc: http://travauxphotos.example179.com/?cref=om_coop_footerdarty_lientexte_33291"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('f4c4d979b9064edfaf1440fd93ce450b')><!--/*
+// Finding.domain: travauxphotos.example179.com
+// Finding.base_domain: example179.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: CEWE.URL</a.getQueryArray
+// Sanitizer.location: https://cs.example180.com/web/cops2010/js/new-cops3.min.js?ver=1 - CEWE.URL</a.getQueryArray:17:16355
+// Finding.begin: 158
+// Finding.end: 166
+// Finding.original_uuid: a37f9d02-b8fe-4ad6-a0a0-c1ce2398a9ba
+// Finding.TwentyFiveMillionFlowsId: 1957746437
+// Finding.script: https://cs.example180.com/web/cops2010/js/new-cops3.min.js?ver=1
+// Finding.line: 5
+// Exploit.uuid: f4c4d979-b906-4edf-af14-40fd93ce450b
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: om_coop_footerdarty_lientexte_33291"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: om_coop_footerdarty_lientexte_33291"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 37
+// Exploit.end_taint_url: 72
+// Exploit.replace_begin_url: 37
+// Exploit.replace_end_url: 72
+// Exploit.replace_begin_param: 88
+// Exploit.replace_end_param: 123
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -2036285259
+// DepGraph.sanitizer_hash: 1805385883
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="split"];
+n5 [shape=box, label="Lit: ="];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="decodeURIComponent"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /<([^>]+?)([^>]*?)>(.*?)<\/\1>|<|>|"/"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n6 -> n1;
+n4 -> n5;
+n4 -> n6;
+n8 -> n4;
+n7 -> n8;
+n12 -> n7;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n9;
+n14 -> n13;
+}

@@ -1,0 +1,136 @@
+// Finding: ac0606a5-6b6c-483e-bbd3-90c176a54c40
+// Finding.url: https://search.example326.com/search?w=tot&q=로제+누적판매량&DA=NPI&rtmaxcoll=NNS"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('50f363509e87469bbac7c5a1d5b8d7d2')><!--/*
+// Finding.parentloc: https://search.example326.com/search?w=tot&q=로제+누적판매량&DA=NPI&rtmaxcoll=NNS"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('50f363509e87469bbac7c5a1d5b8d7d2')><!--/*
+// Finding.domain: search.example326.com
+// Finding.base_domain: example326.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 7
+// Sanitizer.name: escapeExpression
+// Sanitizer.location: https://search1.example327.com/search/statics/common/js/fe/tot-search/vendor/p/common/vendor.p.common.20200309132140.min.js - escapeExpression:1:127222
+// Finding.begin: 130
+// Finding.end: 241
+// Finding.original_uuid: 9bac0257-11ba-45e1-8f5b-b0527b7671b7
+// Finding.TwentyFiveMillionFlowsId: -327550020
+// Finding.script: https://search1.example327.com/search/statics/common/js/fe/tot-search/vendor/p/common/vendor.p.common.20200309132140.min.js
+// Finding.line: 1
+// Exploit.uuid: 50f36350-9e87-469b-bac7-c5a1d5b8d7d2
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: NNS"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: NNS"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 65
+// Exploit.end_taint_url: 68
+// Exploit.replace_begin_url: 65
+// Exploit.replace_end_url: 68
+// Exploit.replace_begin_param: 129
+// Exploit.replace_end_param: 132
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -835845909
+// DepGraph.sanitizer_hash: -2082808609
+// Approximated Implementation for: replace([&<>"'`=]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, =: 1), function_rhs: true], 'function escapeChar(e){return n[e]}') - Other Exception: ReferenceError: n is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="split"];
+n5 [shape=box, label="Lit: &"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="split"];
+n8 [shape=box, label="Lit: ="];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="decodeURIComponent"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="encodeURIComponent"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="."];
+n15 [shape=box, label="Lit: rtmaxcoll="];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: &"];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: &"];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: ?"];
+n22 [shape=ellipse, label="."];
+n23 [shape=box, label="Lit: &amp;"];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: ?w&#x3D;img&amp;DA&#x3D;IIM&amp;rtmaxcoll&#x3D;"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: q&#x3D;"];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit: %EB%A1%9C%EC%A0%9C%20%EB%88%84%EC%A0%81%ED%8C%90%EB%A7%A4%EB%9F%89&amp;"];
+n30 [shape=ellipse, label="."];
+n31 [shape=box, label="Lit: docid&#x3D;"];
+n32 [shape=ellipse, label="."];
+n33 [shape=box, label="Lit: 33zUH6TaYDd33sptF0"];
+n34 [shape=ellipse, label="preg_replace"];
+n35 [shape=box, label="RegExp: /[&<>"'`=]/"];
+n36 [shape=box, label="Lit: "];
+n37 [shape=box, label="Var: x"];
+n38 [shape=box, label="Var: x"];
+n39 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n6 -> n1;
+n4 -> n5;
+n4 -> n6;
+n9 -> n4;
+n7 -> n8;
+n7 -> n9;
+n11 -> n7;
+n10 -> n11;
+n13 -> n10;
+n12 -> n13;
+n14 -> n15;
+n14 -> n12;
+n16 -> n17;
+n16 -> n14;
+n18 -> n16;
+n18 -> n19;
+n20 -> n21;
+n20 -> n18;
+n22 -> n20;
+n22 -> n23;
+n24 -> n25;
+n24 -> n22;
+n26 -> n24;
+n26 -> n27;
+n28 -> n26;
+n28 -> n29;
+n30 -> n28;
+n30 -> n31;
+n32 -> n30;
+n32 -> n33;
+n37 -> n32;
+n34 -> n35;
+n34 -> n36;
+n34 -> n37;
+n38 -> n34;
+n39 -> n38;
+}

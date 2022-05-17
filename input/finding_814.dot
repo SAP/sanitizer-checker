@@ -1,0 +1,216 @@
+// Finding: 9a9d6dca-aab5-49ba-8575-8c1c2ebb72c0
+// Finding.url: https://www.example382.com/ca/accessibility-policies/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('ad92a176dea14adda49e3249a959bb3e')><!--/*
+// Finding.parentloc: https://www.example382.com/ca/accessibility-policies/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('ad92a176dea14adda49e3249a959bb3e')><!--/*
+// Finding.domain: www.example382.com
+// Finding.base_domain: example382.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 10
+// Sanitizer.name: b
+// Sanitizer.location: https://cdn.example20.com/be_ixf_js_sdk.js - b:1:17139
+// Finding.begin: 542
+// Finding.end: 569
+// Finding.original_uuid: b109903a-f860-4794-bc6c-916176654459
+// Finding.TwentyFiveMillionFlowsId: 1033970686
+// Finding.script: https://cdn.example20.com/be_ixf_js_sdk.js
+// Finding.line: 1
+// Exploit.uuid: ad92a176-dea1-4add-a49e-3249a959bb3e
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: content
+// Exploit.quote_type: "
+// Exploit.tag: meta
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 46
+// Exploit.replace_begin_url: 46
+// Exploit.replace_end_url: 46
+// Exploit.replace_begin_param: 300
+// Exploit.replace_end_param: 300
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1539800578
+// DepGraph.sanitizer_hash: -1595152834
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+// Merged split and join statements 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /\\/"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: #"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: #"];
+n12 [shape=ellipse, label="trim"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="substr"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=box, label="Lit: 6"];
+n17 [shape=ellipse, label="substr"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Lit: 2"];
+n20 [shape=ellipse, label="substr"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=box, label="Lit: 11"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /[']/"];
+n25 [shape=box, label="Lit: %27"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: /[<]/"];
+n29 [shape=box, label="Lit: %3C"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="preg_replace"];
+n32 [shape=box, label="RegExp: /[>]/"];
+n33 [shape=box, label="Lit: %3E"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="preg_replace"];
+n36 [shape=box, label="RegExp: /["]/"];
+n37 [shape=box, label="Lit: %22"];
+n38 [shape=box, label="Var: x"];
+n39 [shape=ellipse, label="preg_replace"];
+n40 [shape=box, label="RegExp: /[ ]/"];
+n41 [shape=box, label="Lit: %20"];
+n42 [shape=box, label="Var: x"];
+n43 [shape=ellipse, label="substr"];
+n44 [shape=box, label="Var: x"];
+n45 [shape=box, label="Lit: 0"];
+n46 [shape=box, label="Lit: 27"];
+n47 [shape=ellipse, label="preg_replace"];
+n48 [shape=box, label="RegExp: /[&]/"];
+n49 [shape=box, label="Lit: &amp;"];
+n50 [shape=box, label="Var: x"];
+n51 [shape=ellipse, label="preg_replace"];
+n52 [shape=box, label="RegExp: /[<]/"];
+n53 [shape=box, label="Lit: &lt;"];
+n54 [shape=box, label="Var: x"];
+n55 [shape=ellipse, label="preg_replace"];
+n56 [shape=box, label="RegExp: /[>]/"];
+n57 [shape=box, label="Lit: &gt;"];
+n58 [shape=box, label="Var: x"];
+n59 [shape=ellipse, label="preg_replace"];
+n60 [shape=box, label="RegExp: /["]/"];
+n61 [shape=box, label="Lit: &quot;"];
+n62 [shape=box, label="Var: x"];
+n63 [shape=ellipse, label="."];
+n64 [shape=box, label="Lit: \n<meta name="be:norm_url" content=""];
+n65 [shape=ellipse, label="."];
+n66 [shape=box, label="Lit: " />"];
+n67 [shape=ellipse, label="."];
+n68 [shape=box, label="Lit: \n<meta name="be:capsule_url" content="https://ixf2-api.example20.com/api/ixf/1.0.0/get_capsule/f00000000148720/1798551913" />"];
+n69 [shape=ellipse, label="."];
+n70 [shape=box, label="Lit: \n<meta name="be:api_dt" content="py_2020; pm_12; pd_15; ph_23; pmh_21; p_epoch:1608103291725" />"];
+n71 [shape=ellipse, label="."];
+n72 [shape=box, label="Lit: \n<meta name="be:mod_dt" content="py_2020; pm_12; pd_15; ph_23; pmh_21; p_epoch:1608103291725" />"];
+n73 [shape=ellipse, label="."];
+n74 [shape=box, label="Lit: \n<meta name="be:messages" content="true" />"];
+n75 [shape=box, label="Var: x"];
+n76 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n9;
+n8 -> n4;
+n10 -> n8;
+n10 -> n11;
+n13 -> n10;
+n12 -> n13;
+n15 -> n12;
+n14 -> n15;
+n14 -> n16;
+n18 -> n14;
+n17 -> n18;
+n17 -> n19;
+n21 -> n17;
+n20 -> n21;
+n20 -> n22;
+n26 -> n20;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n34 -> n27;
+n31 -> n32;
+n31 -> n33;
+n31 -> n34;
+n38 -> n31;
+n35 -> n36;
+n35 -> n37;
+n35 -> n38;
+n42 -> n35;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n44 -> n39;
+n43 -> n44;
+n43 -> n45;
+n43 -> n46;
+n50 -> n43;
+n47 -> n48;
+n47 -> n49;
+n47 -> n50;
+n54 -> n47;
+n51 -> n52;
+n51 -> n53;
+n51 -> n54;
+n58 -> n51;
+n55 -> n56;
+n55 -> n57;
+n55 -> n58;
+n62 -> n55;
+n59 -> n60;
+n59 -> n61;
+n59 -> n62;
+n63 -> n64;
+n63 -> n59;
+n65 -> n63;
+n65 -> n66;
+n67 -> n65;
+n67 -> n68;
+n69 -> n67;
+n69 -> n70;
+n71 -> n69;
+n71 -> n72;
+n73 -> n71;
+n73 -> n74;
+n75 -> n73;
+n76 -> n75;
+}

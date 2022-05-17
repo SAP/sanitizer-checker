@@ -1,0 +1,340 @@
+// Finding: 074ee979-2bdf-4e1b-ad3b-f837fe66b0d4
+// Finding.url: https://3voor12.example59.com/artikelen/overzicht/2021/gearmaand/Muzikanten-over-hun-meest-dierbare-instrument.html#|taintfoxLog('47cf4ab472cc4838835eb9cc6fe5ffc2')//
+// Finding.parentloc: https://3voor12.example59.com/artikelen/overzicht/2021/gearmaand/Muzikanten-over-hun-meest-dierbare-instrument.html#|taintfoxLog('47cf4ab472cc4838835eb9cc6fe5ffc2')//
+// Finding.domain: 3voor12.example59.com
+// Finding.base_domain: example59.com
+// Finding.source: document.baseURI
+// Finding.sink: eval
+// Sanitizer.score: 27
+// Sanitizer.name: i
+// Sanitizer.location: https://3voor12.example59.com/.resources/vpro/themes/vpronl/js/jspm_packages/system.js line 4 > eval - i:1:653940
+// Finding.begin: 473
+// Finding.end: 479
+// Finding.original_uuid: b38e818c-6f00-42e6-94c1-f1f54e27c605
+// Finding.TwentyFiveMillionFlowsId: 1369830437
+// Finding.script: https://3voor12.example59.com/.resources/vpro/themes/vpronl/js/jspm_packages/system.js
+// Finding.line: 4
+// Exploit.uuid: 47cf4ab4-72cc-4838-835e-b9cc6fe5ffc2
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: ExpressionStatement
+// Exploit.content: undefined
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: |
+// Exploit.break_in: //
+// Exploit.payload: |taintfoxLog(1)//
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 23
+// Exploit.replace_begin_url: 109
+// Exploit.replace_end_url: 109
+// Exploit.replace_begin_param: 424
+// Exploit.replace_end_param: 424
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -68434057
+// DepGraph.sanitizer_hash: 354777670
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace([-\s]+(.)?/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes( : 1, -: 1), function_rhs: true], 'function(a,b){return b?b.toUpperCase():""}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace([-\s]+(.)?/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes( : 1, -: 1), function_rhs: true], 'function(a,b){return b?b.toUpperCase():""}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="substr"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=box, label="Lit: 0"];
+n7 [shape=box, label="Lit: 59"];
+n8 [shape=ellipse, label="substr"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=box, label="Lit: 0"];
+n11 [shape=box, label="Lit: 23"];
+n12 [shape=ellipse, label="."];
+n13 [shape=box, label="Lit: /.resources/vpro/themes/vpronl/js/"];
+n14 [shape=ellipse, label="."];
+n15 [shape=box, label="Lit: jspm_packages/npm/systemjs-plugin-babel@0.0.25"];
+n16 [shape=ellipse, label="trim"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="regex_exec"];
+n19 [shape=box, label="RegExp: /^(https:\/\/3voor12\.vpro\.nl\/\.resources\/vpro\/themes\/vpronl\/js\/jspm_packages\/npm\/[^\/]+)(\/|$)/"];
+n20 [shape=box, label="Lit: 1"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=ellipse, label="regex_match"];
+n23 [shape=box, label="RegExp: /^(https:\/\/3voor12\.vpro\.nl\/\.resources\/vpro\/themes\/vpronl\/js\/jspm_packages\/npm\/[^\/]+)(\/|$)/"];
+n24 [shape=box, label="Lit: 1"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: /"];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit: plugin-babel.js"];
+n30 [shape=ellipse, label="substr"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=box, label="Lit: 0"];
+n33 [shape=box, label="Lit: 24"];
+n34 [shape=ellipse, label="."];
+n35 [shape=box, label="Lit: .resources/vpro/themes/vpronl/js/jspm_packages/npm/systemjs-plugin-babel@0.0.25/babel-helpers/"];
+n36 [shape=ellipse, label="regex_exec"];
+n37 [shape=box, label="RegExp: /^(https:\/\/3voor12\.vpro\.nl\/\.resources\/vpro\/themes\/vpronl\/js\/jspm_packages\/npm\/[^\/]+)(\/|$)/"];
+n38 [shape=box, label="Lit: 1"];
+n39 [shape=box, label="Var: x"];
+n40 [shape=ellipse, label="regex_match"];
+n41 [shape=box, label="RegExp: /^(https:\/\/3voor12\.vpro\.nl\/\.resources\/vpro\/themes\/vpronl\/js\/jspm_packages\/npm\/[^\/]+)(\/|$)/"];
+n42 [shape=box, label="Lit: 1"];
+n43 [shape=box, label="Var: x"];
+n44 [shape=ellipse, label="."];
+n45 [shape=box, label="Lit: /"];
+n46 [shape=ellipse, label="."];
+n47 [shape=box, label="Lit: babel-helpers/"];
+n48 [shape=ellipse, label="."];
+n49 [shape=box, label="Lit: classCallCheck"];
+n50 [shape=ellipse, label="."];
+n51 [shape=box, label="Lit: .js"];
+n52 [shape=ellipse, label="."];
+n53 [shape=box, label="Lit: -"];
+n54 [shape=ellipse, label="."];
+n55 [shape=box, label="Lit: -"];
+n56 [shape=ellipse, label="."];
+n57 [shape=box, label="Lit: resources-"];
+n58 [shape=ellipse, label="."];
+n59 [shape=box, label="Lit: vpro-"];
+n60 [shape=ellipse, label="."];
+n61 [shape=box, label="Lit: themes-"];
+n62 [shape=ellipse, label="."];
+n63 [shape=box, label="Lit: vpronl-"];
+n64 [shape=ellipse, label="."];
+n65 [shape=box, label="Lit: js-"];
+n66 [shape=ellipse, label="."];
+n67 [shape=box, label="Lit: jspm_packages-"];
+n68 [shape=ellipse, label="."];
+n69 [shape=box, label="Lit: npm-"];
+n70 [shape=ellipse, label="."];
+n71 [shape=box, label="Lit: systemjs-"];
+n72 [shape=ellipse, label="."];
+n73 [shape=box, label="Lit: plugin-"];
+n74 [shape=ellipse, label="."];
+n75 [shape=box, label="Lit: babel-"];
+n76 [shape=ellipse, label="."];
+n77 [shape=box, label="Lit: 0-"];
+n78 [shape=ellipse, label="."];
+n79 [shape=box, label="Lit: 0-"];
+n80 [shape=ellipse, label="."];
+n81 [shape=box, label="Lit: 25-"];
+n82 [shape=ellipse, label="."];
+n83 [shape=box, label="Lit: babel-"];
+n84 [shape=ellipse, label="."];
+n85 [shape=box, label="Lit: helpers-"];
+n86 [shape=ellipse, label="."];
+n87 [shape=box, label="Lit: classCallCheck-"];
+n88 [shape=ellipse, label="."];
+n89 [shape=box, label="Lit: js"];
+n90 [shape=ellipse, label="preg_replace"];
+n91 [shape=box, label="RegExp: /[^a-zA-Z0-9$_]/"];
+n92 [shape=box, label="Lit: -"];
+n93 [shape=box, label="Var: x"];
+n94 [shape=ellipse, label="str_replace_once"];
+n95 [shape=box, label="RegExp: /^[-0-9]+/"];
+n96 [shape=box, label="Lit: "];
+n97 [shape=box, label="Var: x"];
+n98 [shape=ellipse, label="."];
+n99 [shape=box, label="Lit: esourcesV"];
+n100 [shape=ellipse, label="."];
+n101 [shape=box, label="Lit: proT"];
+n102 [shape=ellipse, label="."];
+n103 [shape=box, label="Lit: hemesV"];
+n104 [shape=ellipse, label="."];
+n105 [shape=box, label="Lit: pronlJ"];
+n106 [shape=ellipse, label="."];
+n107 [shape=box, label="Lit: sJ"];
+n108 [shape=ellipse, label="."];
+n109 [shape=box, label="Lit: spm_packagesN"];
+n110 [shape=ellipse, label="."];
+n111 [shape=box, label="Lit: pmS"];
+n112 [shape=ellipse, label="."];
+n113 [shape=box, label="Lit: ystemjsP"];
+n114 [shape=ellipse, label="."];
+n115 [shape=box, label="Lit: luginB"];
+n116 [shape=ellipse, label="."];
+n117 [shape=box, label="Lit: abel0"];
+n118 [shape=ellipse, label="."];
+n119 [shape=box, label="Lit: 0"];
+n120 [shape=ellipse, label="."];
+n121 [shape=box, label="Lit: 2"];
+n122 [shape=ellipse, label="."];
+n123 [shape=box, label="Lit: 5B"];
+n124 [shape=ellipse, label="."];
+n125 [shape=box, label="Lit: abelH"];
+n126 [shape=ellipse, label="."];
+n127 [shape=box, label="Lit: elpersC"];
+n128 [shape=ellipse, label="."];
+n129 [shape=box, label="Lit: lassCallCheckJ"];
+n130 [shape=ellipse, label="."];
+n131 [shape=box, label="Lit: s"];
+n132 [shape=ellipse, label="preg_replace"];
+n133 [shape=box, label="RegExp: /[-\s]+(.)?/"];
+n134 [shape=box, label="Lit: "];
+n135 [shape=box, label="Var: x"];
+n136 [shape=box, label="Var: x"];
+n137 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n9 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n12 -> n8;
+n12 -> n13;
+n14 -> n12;
+n14 -> n15;
+n17 -> n14;
+n16 -> n17;
+n21 -> n16;
+n18 -> n19;
+n18 -> n20;
+n18 -> n21;
+n25 -> n18;
+n22 -> n23;
+n22 -> n24;
+n22 -> n25;
+n26 -> n22;
+n26 -> n27;
+n28 -> n26;
+n28 -> n29;
+n31 -> n28;
+n30 -> n31;
+n30 -> n32;
+n30 -> n33;
+n34 -> n30;
+n34 -> n35;
+n39 -> n34;
+n36 -> n37;
+n36 -> n38;
+n36 -> n39;
+n43 -> n36;
+n40 -> n41;
+n40 -> n42;
+n40 -> n43;
+n44 -> n40;
+n44 -> n45;
+n46 -> n44;
+n46 -> n47;
+n48 -> n46;
+n48 -> n49;
+n50 -> n48;
+n50 -> n51;
+n52 -> n50;
+n52 -> n53;
+n54 -> n52;
+n54 -> n55;
+n56 -> n54;
+n56 -> n57;
+n58 -> n56;
+n58 -> n59;
+n60 -> n58;
+n60 -> n61;
+n62 -> n60;
+n62 -> n63;
+n64 -> n62;
+n64 -> n65;
+n66 -> n64;
+n66 -> n67;
+n68 -> n66;
+n68 -> n69;
+n70 -> n68;
+n70 -> n71;
+n72 -> n70;
+n72 -> n73;
+n74 -> n72;
+n74 -> n75;
+n76 -> n74;
+n76 -> n77;
+n78 -> n76;
+n78 -> n79;
+n80 -> n78;
+n80 -> n81;
+n82 -> n80;
+n82 -> n83;
+n84 -> n82;
+n84 -> n85;
+n86 -> n84;
+n86 -> n87;
+n88 -> n86;
+n88 -> n89;
+n93 -> n88;
+n90 -> n91;
+n90 -> n92;
+n90 -> n93;
+n97 -> n90;
+n94 -> n95;
+n94 -> n96;
+n94 -> n97;
+n98 -> n94;
+n98 -> n99;
+n100 -> n98;
+n100 -> n101;
+n102 -> n100;
+n102 -> n103;
+n104 -> n102;
+n104 -> n105;
+n106 -> n104;
+n106 -> n107;
+n108 -> n106;
+n108 -> n109;
+n110 -> n108;
+n110 -> n111;
+n112 -> n110;
+n112 -> n113;
+n114 -> n112;
+n114 -> n115;
+n116 -> n114;
+n116 -> n117;
+n118 -> n116;
+n118 -> n119;
+n120 -> n118;
+n120 -> n121;
+n122 -> n120;
+n122 -> n123;
+n124 -> n122;
+n124 -> n125;
+n126 -> n124;
+n126 -> n127;
+n128 -> n126;
+n128 -> n129;
+n130 -> n128;
+n130 -> n131;
+n135 -> n130;
+n132 -> n133;
+n132 -> n134;
+n132 -> n135;
+n136 -> n132;
+n137 -> n136;
+}

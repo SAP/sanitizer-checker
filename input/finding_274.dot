@@ -1,0 +1,94 @@
+// Finding: bcf99b71-01a1-4235-a09f-5acdca51a82a
+// Finding.url: https://www.us.example209.com/us/prolocator/proLocator.jsp##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('fabaf8e5abcd4b1cb94103dfab540f1a')><!--/*
+// Finding.parentloc: https://www.us.example209.com/us/prolocator/proLocator.jsp##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('fabaf8e5abcd4b1cb94103dfab540f1a')><!--/*
+// Finding.domain: www.us.example209.com
+// Finding.base_domain: example209.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: t/w.shareTipHTML<
+// Sanitizer.location: https://www.us.example209.com/webassets/js/global.js?ver=v2.0.127.1 - t/w.shareTipHTML<:1:164504
+// Finding.begin: 1279
+// Finding.end: 1343
+// Finding.original_uuid: 55ad51a2-70e6-4a85-9e3b-0ee9d1380516
+// Finding.TwentyFiveMillionFlowsId: 1292323030
+// Finding.script: https://www.us.example209.com/webassets/js/global.js?ver=v2.0.127.1
+// Finding.line: 1
+// Exploit.uuid: fabaf8e5-abcd-4b1c-b941-03dfab540f1a
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 54
+// Exploit.replace_begin_url: 54
+// Exploit.replace_end_url: 54
+// Exploit.replace_begin_param: 803
+// Exploit.replace_end_param: 803
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -2090124277
+// DepGraph.sanitizer_hash: -1344754546
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: ="];
+n3 [shape=box, label="Lit: |"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: <li><a class="showroom-share showroom-model-triger" href="javascript:void(0);" data-url="globalShare=yes&currentUrl="];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &title="];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: undefined"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: " title="Share with a Kohler Showroom">Share with a Kohler Showroom</a></li>"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: "];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: "];
+n17 [shape=box, label="Var: x"];
+n18 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n6;
+n5 -> n1;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n14;
+n13 -> n11;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n18 -> n17;
+}

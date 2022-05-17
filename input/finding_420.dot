@@ -1,0 +1,87 @@
+// Finding: 15158c09-ff08-40bd-9512-5b20c45b1943
+// Finding.url: https://secure-ds.example282.com/burstingres/cdprojects/customTags/MultiDynamicTagV3.html?MMData=[{"CID":204682,"TID":3315,"TVAL":"nodealertcom'></iframe></style></script></object></embed></textarea><script>taintfoxLog('1268a0db19354d3daed60034a8798275')</script><!--/*"},{"CID":246132,"TID":4673,"TVAL":"nodealertcom"},{"CID":245807,"TID":4662,"TVAL":"nodealertcom"}]
+// Finding.parentloc: https://secure-ds.example282.com/burstingres/cdprojects/customTags/MultiDynamicTagV3.html?MMData=[{"CID":204682,"TID":3315,"TVAL":"nodealertcom'></iframe></style></script></object></embed></textarea><script>taintfoxLog('1268a0db19354d3daed60034a8798275')</script><!--/*"},{"CID":246132,"TID":4673,"TVAL":"nodealertcom"},{"CID":245807,"TID":4662,"TVAL":"nodealertcom"}]
+// Finding.domain: secure-ds.example282.com
+// Finding.base_domain: example282.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 6
+// Sanitizer.name: setState
+// Sanitizer.location: https://secure-ds.example282.com/burstingres/cdprojects/customTags/JS_multiDynamicTagV13.js? - init:67:20
+// Finding.begin: 242
+// Finding.end: 254
+// Finding.original_uuid: 59b8e70d-0a76-4420-818c-b04e5ccd4299
+// Finding.TwentyFiveMillionFlowsId: 1439440802
+// Finding.script: https://secure-ds.example282.com/burstingres/cdprojects/customTags/MultiDynamicTagV3.html?MMData=[{"CID":204682,"TID":3315,"TVAL":"nodealertcom'></iframe></style></script></object></embed></textarea><script>taintfoxLog('1268a0db19354d3daed60034a8798275')</script><!--/*"},{"CID":246132,"TID":4673,"TVAL":"nodealertcom"},{"CID":245807,"TID":4662,"TVAL":"nodealertcom"}]
+// Finding.line: 60
+// Exploit.uuid: 1268a0db-1935-4d3d-aed6-0034a8798275
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: script
+// Exploit.break_out: nodealertcom'></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: nodealertcom'></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 132
+// Exploit.end_taint_url: 144
+// Exploit.replace_begin_url: 132
+// Exploit.replace_end_url: 144
+// Exploit.replace_begin_param: 91
+// Exploit.replace_end_param: 103
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 645407855
+// DepGraph.sanitizer_hash: -666637232
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: https://bs.example282.com/BurstingPipe/adServer.bs?cn=SetState&campaignid=246132&statevalue="];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &rtu="];
+n5 [shape=ellipse, label="escape"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="escape"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: https%253A//"];
+n11 [shape=box, label="Lit: https%3A//"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=doubleoctagon, label="Return: x"];
+n1 -> n2;
+n1 -> n0;
+n3 -> n1;
+n3 -> n4;
+n6 -> n3;
+n5 -> n6;
+n8 -> n5;
+n7 -> n8;
+n12 -> n7;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n9;
+n14 -> n13;
+}

@@ -1,0 +1,79 @@
+// Finding: db191e68-40fd-419b-bf2e-7d17a6b7bc37
+// Finding.url: https://www.example181.com/genres/childrens?original_shelf=children-s##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0f27b1a17d6946aa990f33d9a27f1072')><!--/*
+// Finding.parentloc: https://www.example181.com/genres/childrens?original_shelf=children-s##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0f27b1a17d6946aa990f33d9a27f1072')><!--/*
+// Finding.domain: www.example181.com
+// Finding.base_domain: example181.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: i
+// Sanitizer.location: https://s.example182.com/assets/react_client_side/external_dependencies-2e2b90fafc.js - i:3041:66
+// Finding.begin: 16055
+// Finding.end: 16085
+// Finding.original_uuid: bb5cc8cd-b71b-440c-ba6f-f4f17fc8eb98
+// Finding.TwentyFiveMillionFlowsId: 526796826
+// Finding.script: https://s.example182.com/assets/react_client_side/external_dependencies-2e2b90fafc.js
+// Finding.line: 3232
+// Exploit.uuid: 0f27b1a1-7d69-46aa-990f-33d9a27f1072
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 42
+// Exploit.end_taint_url: 68
+// Exploit.replace_begin_url: 68
+// Exploit.replace_end_url: 68
+// Exploit.replace_begin_param: 16085
+// Exploit.replace_end_param: 16085
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1521634572
+// DepGraph.sanitizer_hash: 1817164525
+// Removed LR concats 
+// Approximated Implementation for: replace([&><"']/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1), function_rhs: true], 'function r(e){return o[e]}') - Other Exception: ReferenceError: o is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: /user/sign_in?returnurl="];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[&><"']/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n8 -> n3;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

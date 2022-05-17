@@ -1,0 +1,106 @@
+// Finding: 97e36e8a-50ef-41fa-8c25-a0d58814b99f
+// Finding.url: https://www.example99.com/CustomerService/RequestCatalog?d</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('ba5b2490c787491ea59d0e086c5f912a')><!--/*=2
+// Finding.parentloc: https://www.example99.com/CustomerService/RequestCatalog?d</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('ba5b2490c787491ea59d0e086c5f912a')><!--/*=2
+// Finding.domain: www.example99.com
+// Finding.base_domain: example99.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 8
+// Sanitizer.name: mb[7]
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-TKLCNW - mb[7]:8351:426
+// Finding.begin: 543
+// Finding.end: 551
+// Finding.original_uuid: 7ce18b98-8917-4112-9249-20b251b9bcc9
+// Finding.TwentyFiveMillionFlowsId: -1188516655
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-TKLCNW
+// Finding.line: 8361
+// Exploit.uuid: ba5b2490-c787-491e-a59d-0e086c5f912a
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: d
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: d</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: d</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 53
+// Exploit.end_taint_url: 56
+// Exploit.replace_begin_url: 53
+// Exploit.replace_end_url: 56
+// Exploit.replace_begin_param: 265
+// Exploit.replace_end_param: 268
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1890936226
+// DepGraph.sanitizer_hash: 1644446670
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, =: 1), function_rhs: true], 'function(a){return xb[a]}') - Other Exception: ReferenceError: xb is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 53"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /[^&@\\?\/=]+@[^&\/]+/"];
+n6 [shape=box, label="Lit: [REDACTED EMAIL]"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: \x3e"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: \x3c"];
+n12 [shape=ellipse, label="."];
+n13 [shape=box, label="Lit: \x3c"];
+n14 [shape=ellipse, label="preg_replace"];
+n15 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/"];
+n16 [shape=box, label="Lit: "];
+n17 [shape=box, label="Var: x"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n4;
+n8 -> n9;
+n10 -> n8;
+n10 -> n11;
+n12 -> n10;
+n12 -> n13;
+n17 -> n12;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n18 -> n14;
+n19 -> n18;
+}

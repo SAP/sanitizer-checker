@@ -1,0 +1,97 @@
+// Finding: 90b13358-1ad3-430b-84d1-d82b00a274e4
+// Finding.url: https://www.example245.com/student-loans/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('210e9efa49ad4ce3a920974f88c7c594')><!--/*
+// Finding.parentloc: https://www.example245.com/student-loans/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('210e9efa49ad4ce3a920974f88c7c594')><!--/*
+// Finding.domain: www.example245.com
+// Finding.base_domain: example245.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: 
+// Sanitizer.location: https://s.example98.com/tag.js#site=xLmQsbf&referrer=https%3A%2F%2Fwww.example245.com%2Fstudent-loans%2F%23%23%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src%3Dx%20onerror%3DtaintfoxLog('210e9efa49ad4ce3a920974f88c7c594')%3E%3C!--%2F* line 1 > eval - <anonymous>:1:0
+// Finding.begin: 527
+// Finding.end: 684
+// Finding.original_uuid: 9ee0ddb8-138b-4a6f-bc09-918cc94fe1c2
+// Finding.TwentyFiveMillionFlowsId: -1723050306
+// Finding.script: https://s.example98.com/tag.js#site=xLmQsbf&referrer=https%3A%2F%2Fwww.example245.com%2Fstudent-loans%2F%23%23%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src%3Dx%20onerror%3DtaintfoxLog('210e9efa49ad4ce3a920974f88c7c594')%3E%3C!--%2F*
+// Finding.line: 47
+// Exploit.uuid: 210e9efa-49ad-4ce3-a920-974f88c7c594
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: /
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 39
+// Exploit.replace_begin_url: 39
+// Exploit.replace_end_url: 39
+// Exploit.replace_begin_param: 246
+// Exploit.replace_end_param: 246
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 421815134
+// DepGraph.sanitizer_hash: 1455054376
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[']/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /\(/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /\)/"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /alert/"];
+n15 [shape=box, label="Lit: "];
+n16 [shape=box, label="Var: x"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n17 -> n13;
+n18 -> n17;
+}

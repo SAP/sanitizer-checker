@@ -1,0 +1,169 @@
+// Finding: 8efb8a8a-d4a3-404a-97b7-a005794ed12d
+// Finding.url: https://www.example235.com/pbb/pagina-inicial/perguntas-frequentes?utm_source=Portal&utm_medium=Footer"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('ed54f3e830d640a09de405fbd39e77b3')><!--/*&utm_campaign=FaleConosco#/
+// Finding.parentloc: https://www.example235.com/pbb/pagina-inicial/perguntas-frequentes?utm_source=Portal&utm_medium=Footer"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('ed54f3e830d640a09de405fbd39e77b3')><!--/*&utm_campaign=FaleConosco#/
+// Finding.domain: www.example235.com
+// Finding.base_domain: example235.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: html/<
+// Sanitizer.location: https://www.example235.com/pbb/app/docs/dist/js/componentes/jQuery/dist/jquery.min.js?v=202104011 - html/<:3:15961
+// Finding.begin: 101
+// Finding.end: 112
+// Finding.original_uuid: 66458721-d7f5-404d-b8bb-c8632e6d1d4d
+// Finding.TwentyFiveMillionFlowsId: 1978972754
+// Finding.script: https://www.example235.com/pbb/app/docs/dist/js/componentes/jQuery/dist/jquery.min.js?v=202104011
+// Finding.line: 3
+// Exploit.uuid: ed54f3e8-30d6-40a0-9de4-05fbd39e77b3
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: ng-href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: Footer"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: Footer"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 91
+// Exploit.end_taint_url: 97
+// Exploit.replace_begin_url: 91
+// Exploit.replace_end_url: 97
+// Exploit.replace_begin_param: 148
+// Exploit.replace_end_param: 154
+// Issues.LargestEncodeAttrStringChain: 4
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -873485340
+// DepGraph.sanitizer_hash: -483097681
+// Large chain of EncodeAttrString Operations (4) 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Part of the URL ('utm_campaign') found in left hand side of replace 
+// Part of the URL ('utm_source') found in left hand side of replace 
+// Part of the URL ('utm_medium') found in left hand side of replace 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: #/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="substr"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Lit: 62"];
+n8 [shape=box, label="Lit: 189"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /\+/"];
+n11 [shape=box, label="Lit:  "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="split"];
+n14 [shape=box, label="Lit: &"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="split"];
+n17 [shape=box, label="Lit: ="];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="decodeURIComponent"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="str_replace_once"];
+n22 [shape=box, label="Lit: utm_campaign"];
+n23 [shape=box, label="Lit: pk_campaign"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="str_replace_once"];
+n26 [shape=box, label="Lit: utm_source"];
+n27 [shape=box, label="Lit: pk_source"];
+n28 [shape=box, label="Var: x"];
+n29 [shape=ellipse, label="str_replace_once"];
+n30 [shape=box, label="Lit: utm_medium"];
+n31 [shape=box, label="Lit: pk_medium"];
+n32 [shape=box, label="Var: x"];
+n33 [shape=ellipse, label="str_replace_once"];
+n34 [shape=box, label="Lit: utm_term"];
+n35 [shape=box, label="Lit: pk_kwd"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=ellipse, label="str_replace_once"];
+n38 [shape=box, label="Lit: utm_content"];
+n39 [shape=box, label="Lit: pk_content"];
+n40 [shape=box, label="Var: x"];
+n41 [shape=ellipse, label="str_replace_once"];
+n42 [shape=box, label="Lit: utm_id"];
+n43 [shape=box, label="Lit: pk_cid"];
+n44 [shape=box, label="Var: x"];
+n45 [shape=ellipse, label="."];
+n46 [shape=box, label="Lit: &"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: https://www2.bancobrasil.com.br/aapf/login.jsp?aapf.IDH=sim&perfil=1"];
+n49 [shape=ellipse, label="encodeAttrString"];
+n50 [shape=box, label="Var: x"];
+n51 [shape=box, label="Var: x"];
+n52 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n15 -> n9;
+n13 -> n14;
+n13 -> n15;
+n18 -> n13;
+n16 -> n17;
+n16 -> n18;
+n20 -> n16;
+n19 -> n20;
+n24 -> n19;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n28 -> n21;
+n25 -> n26;
+n25 -> n27;
+n25 -> n28;
+n32 -> n25;
+n29 -> n30;
+n29 -> n31;
+n29 -> n32;
+n36 -> n29;
+n33 -> n34;
+n33 -> n35;
+n33 -> n36;
+n40 -> n33;
+n37 -> n38;
+n37 -> n39;
+n37 -> n40;
+n44 -> n37;
+n41 -> n42;
+n41 -> n43;
+n41 -> n44;
+n45 -> n41;
+n45 -> n46;
+n47 -> n48;
+n47 -> n45;
+n50 -> n47;
+n49 -> n50;
+n51 -> n49;
+n52 -> n51;
+}

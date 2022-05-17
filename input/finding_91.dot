@@ -1,0 +1,99 @@
+// Finding: 3731442b-31ad-4079-9e34-b594a10483bc
+// Finding.url: https://www.example6.com/#megaMenu12626##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3c254a9ab209448b8da4133a91831042')><!--/*
+// Finding.parentloc: https://www.example6.com/#megaMenu12626##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3c254a9ab209448b8da4133a91831042')><!--/*
+// Finding.domain: www.example6.com
+// Finding.base_domain: example6.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 1
+// Sanitizer.name: ot
+// Sanitizer.location: https://fast.example7.com/client/2105/05154742/min/v1_gs_lib.js - ot:1:30191
+// Finding.begin: 10611
+// Finding.end: 10646
+// Finding.original_uuid: d9ca8153-4654-408a-ba57-06562446d7aa
+// Finding.TwentyFiveMillionFlowsId: -1790008696
+// Finding.script: https://fast.example7.com/client/2105/05154742/min/v1_gs_lib.js
+// Finding.line: 2
+// Exploit.uuid: 3c254a9a-b209-448b-8da4-133a91831042
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 27
+// Exploit.end_taint_url: 41
+// Exploit.replace_begin_url: 41
+// Exploit.replace_end_url: 41
+// Exploit.replace_begin_param: 2490
+// Exploit.replace_end_param: 2490
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: true
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1843588647
+// DepGraph.sanitizer_hash: -911009648
+// Part of the URL ('#megaMenu12626##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3c254a9ab209448b8da4133a91831042')><!--/*') found in left hand side of replace 
+// Part of the URL ('#megaMenu12626##') found in right hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: #megaMenu12626##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3c254a9ab209448b8da4133a91831042')><!--/*"];
+n3 [shape=box, label="Lit: #megaMenu12626##"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="decodeURIComponent"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /\u00AD/"];
+n9 [shape=box, label="Lit: %C2%AD"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n13 [shape=box, label="Lit: "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: &"];
+n17 [shape=box, label="Lit: ?"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n20 -> n19;
+}

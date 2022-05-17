@@ -1,0 +1,112 @@
+// Finding: f48bb50b-8719-42a6-8278-7af3bd26f500
+// Finding.url: https://www.example245.com/personal-loans/contact-us/?'});taintfoxLog('8db1a4436498477d855ee5e009f92db9')//
+// Finding.parentloc: https://www.example245.com/personal-loans/contact-us/?'});taintfoxLog('8db1a4436498477d855ee5e009f92db9')//
+// Finding.domain: www.example245.com
+// Finding.base_domain: example245.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 3
+// Sanitizer.name: K/<
+// Sanitizer.location: https://s.example98.com/tag.js#site=drmpxxM&referrer=https%3A%2F%2Fwww.example245.com%2Fpersonal-loans%2Fcontact-us%2F%3F'%7D)%3BtaintfoxLog('8db1a4436498477d855ee5e009f92db9')%2F%2F - K/<:8:338
+// Finding.begin: 378
+// Finding.end: 410
+// Finding.original_uuid: e729ee31-015f-4890-90d1-42b122bb474f
+// Finding.TwentyFiveMillionFlowsId: -2117345261
+// Finding.script: https://s.example98.com/tag.js#site=drmpxxM&referrer=https%3A%2F%2Fwww.example245.com%2Fpersonal-loans%2Fcontact-us%2F%3F'%7D)%3BtaintfoxLog('8db1a4436498477d855ee5e009f92db9')%2F%2F
+// Finding.line: 8
+// Exploit.uuid: 8db1a443-6498-477d-855e-e5e009f92db9
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: https://www.example245.com/personal-loans/contact-us/?ICMPGN=PUB_HNAV_LOANS_DPL_CONTACT
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: '});
+// Exploit.break_in: //
+// Exploit.payload: '});taintfoxLog(1)//
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 85
+// Exploit.replace_begin_url: 52
+// Exploit.replace_end_url: 85
+// Exploit.replace_begin_param: 127
+// Exploit.replace_end_param: 161
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1236656363
+// DepGraph.sanitizer_hash: -358140006
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[']/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: ',\n  'send_to': 'DC-4774501/global/allpu+unique'\n});\n</script>\n\n"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: <br/>"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="RegExp: /^\s\s*/"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="str_replace_once"];
+n14 [shape=box, label="RegExp: /\s\s*$/"];
+n15 [shape=box, label="Lit: "];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="str_replace_once"];
+n18 [shape=box, label="RegExp: /^\x3c!--/"];
+n19 [shape=box, label="Lit: "];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="str_replace_once"];
+n22 [shape=box, label="RegExp: /--\x3e$/"];
+n23 [shape=box, label="Lit: "];
+n24 [shape=box, label="Var: x"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n5 -> n6;
+n7 -> n8;
+n7 -> n5;
+n12 -> n7;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n24 -> n17;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n25 -> n21;
+n26 -> n25;
+}

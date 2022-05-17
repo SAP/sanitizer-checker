@@ -1,0 +1,76 @@
+// Finding: 3c208622-196b-4d3a-a6cf-2fed3114c110
+// Finding.url: https://www.example254.com/us/en/ca/jewelry-watches/fashion-jewelry/fashion-earrings-c-jewelry-watches-fashion-jewelry-earrings#)});taintfoxLog('bb422ca7723c43e280c503170e3bbaae')//
+// Finding.parentloc: https://www.example254.com/us/en/ca/jewelry-watches/fashion-jewelry/fashion-earrings-c-jewelry-watches-fashion-jewelry-earrings#)});taintfoxLog('bb422ca7723c43e280c503170e3bbaae')//
+// Finding.domain: www.example254.com
+// Finding.base_domain: example254.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 8
+// Sanitizer.name: kd[7]
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-5CMWJM - kd[7]:8475:426
+// Finding.begin: 1801
+// Finding.end: 1803
+// Finding.original_uuid: 700b0b73-e6e2-418d-9cef-c36262c2e092
+// Finding.TwentyFiveMillionFlowsId: 1165040148
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-5CMWJM
+// Finding.line: 3
+// Exploit.uuid: bb422ca7-723c-43e2-80c5-03170e3bbaae
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: undefined
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: )});
+// Exploit.break_in: //
+// Exploit.payload: )});taintfoxLog(1)//
+// Exploit.begin_taint_url: 22
+// Exploit.end_taint_url: 24
+// Exploit.replace_begin_url: 122
+// Exploit.replace_end_url: 122
+// Exploit.replace_begin_param: 21
+// Exploit.replace_end_param: 21
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1357913762
+// DepGraph.sanitizer_hash: -1689768029
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, =: 1), function_rhs: true], 'function(a){return ud[a]}') - Other Exception: ReferenceError: ud is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: /"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/"];
+n6 [shape=box, label="Lit: "];
+n7 [shape=box, label="Var: x"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n4;
+n9 -> n8;
+}

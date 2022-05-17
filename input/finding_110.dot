@@ -1,0 +1,129 @@
+// Finding: 7e6bb32b-3d98-4f55-b992-6cd16c04bcbf
+// Finding.url: https://www.example110.com/newsroom?##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('330059938a5848608d02916eba8b46b2')><!--/*
+// Finding.parentloc: https://www.example110.com/newsroom?##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('330059938a5848608d02916eba8b46b2')><!--/*
+// Finding.domain: www.example110.com
+// Finding.base_domain: example110.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: c.prototype.makeStyleSheet
+// Sanitizer.location: https://cdn.example111.com/files/cmslibrary-v1.7.js - c.prototype.makeStyleSheet:1:9467
+// Finding.begin: 114
+// Finding.end: 151
+// Finding.original_uuid: 639f62e8-13fb-44a6-8ba0-59f53f96831a
+// Finding.TwentyFiveMillionFlowsId: 457063294
+// Finding.script: https://cdn.example111.com/files/cmslibrary-v1.7.js
+// Finding.line: 1
+// Exploit.uuid: 33005993-8a58-4860-8d02-916eba8b46b2
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: script
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 6
+// Exploit.replace_begin_url: 30
+// Exploit.replace_end_url: 30
+// Exploit.replace_begin_param: 28
+// Exploit.replace_end_param: 28
+// Issues.LargestEncodeAttrStringChain: 1
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -754453309
+// DepGraph.sanitizer_hash: -2019559614
+// Large chain of EncodeAttrString Operations (1) 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: ?"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="encodeURIComponent"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=ellipse, label="."];
+n7 [shape=box, label="Lit: //engage.example110.com/index.php/form/getForm?munchkinId=480-LFM-113&form=1048&url="];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: &callback=?"];
+n10 [shape=ellipse, label="str_replace_once"];
+n11 [shape=box, label="RegExp: /#.*$/"];
+n12 [shape=box, label="Lit: "];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="str_replace_once"];
+n15 [shape=box, label="RegExp: /^\/\//"];
+n16 [shape=box, label="Lit: https://"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: =jQuery112403399005880271745_1619595346269"];
+n20 [shape=ellipse, label="str_replace_once"];
+n21 [shape=box, label="RegExp: /(=)\?(?=&|$)|\?\?/"];
+n22 [shape=box, label="Lit: $1jQuery112403399005880271745_1619595346269"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: &"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: _="];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit: 1619595346270"];
+n30 [shape=ellipse, label="encodeAttrString"];
+n31 [shape=box, label="Var: x"];
+n32 [shape=ellipse, label="."];
+n33 [shape=box, label="Lit: <link rel="stylesheet" href="https://cdn.example79.com/npm/progressive-image.js/dist/progressive-image.css">"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n6 -> n7;
+n6 -> n4;
+n8 -> n6;
+n8 -> n9;
+n13 -> n8;
+n10 -> n11;
+n10 -> n12;
+n10 -> n13;
+n17 -> n10;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n18 -> n14;
+n18 -> n19;
+n23 -> n18;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n24 -> n20;
+n24 -> n25;
+n26 -> n24;
+n26 -> n27;
+n28 -> n26;
+n28 -> n29;
+n31 -> n28;
+n30 -> n31;
+n32 -> n30;
+n32 -> n33;
+n34 -> n32;
+n35 -> n34;
+}

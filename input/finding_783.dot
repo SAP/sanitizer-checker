@@ -1,0 +1,78 @@
+// Finding: ab985fbb-35da-45a7-b909-41747fd4a089
+// Finding.url: http://gongyi.example448.com/default/##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('6b5d5798ab4f4c4894c38b760d736e26')</script><!--/*
+// Finding.parentloc: http://gongyi.example448.com/default/##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('6b5d5798ab4f4c4894c38b760d736e26')</script><!--/*
+// Finding.domain: gongyi.example448.com
+// Finding.base_domain: example448.com
+// Finding.source: location.href
+// Finding.sink: document.writeln
+// Sanitizer.score: 3
+// Sanitizer.name: 
+// Sanitizer.location: http://images.example448.com/include/portal/gnb.js - <anonymous>:148:0
+// Finding.begin: 131
+// Finding.end: 348
+// Finding.original_uuid: f85ba116-034f-46a9-8362-2d99cc2b7fe6
+// Finding.TwentyFiveMillionFlowsId: -767586851
+// Finding.script: http://images.example448.com/include/portal/gnb.js
+// Finding.line: 148
+// Exploit.uuid: 6b5d5798-ab4f-4c48-94c3-8b760d736e26
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 35
+// Exploit.replace_begin_url: 35
+// Exploit.replace_end_url: 35
+// Exploit.replace_begin_param: 168
+// Exploit.replace_end_param: 168
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1847460620
+// DepGraph.sanitizer_hash: 706164451
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="unescape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="escape"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: <td width="190" nowrap="nowrap" align="right"><iframe width="1....ght="35" src="https://passport.example448.com/header/index?from="];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: " marginheight="0" marginwidth="0" frameborder="0" scrolling="....cy="true" id="login_header" name="login_header"></iframe></td>"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n4 -> n1;
+n3 -> n4;
+n5 -> n6;
+n5 -> n3;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n10 -> n9;
+}

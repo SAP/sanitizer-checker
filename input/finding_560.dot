@@ -1,0 +1,104 @@
+// Finding: 8c85a021-22f5-4248-9758-aaf4f9c6b2f5
+// Finding.url: https://compete.example359.com/en-us/?smcid=pdc:en-us:primary nav:msg-games:competition-center##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('17697f36cdfc4f2e9ad23cd30b1947de')><!--/*
+// Finding.parentloc: https://compete.example359.com/en-us/?smcid=pdc:en-us:primary nav:msg-games:competition-center##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('17697f36cdfc4f2e9ad23cd30b1947de')><!--/*
+// Finding.domain: compete.example359.com
+// Finding.base_domain: example359.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: so/P/o.prototype.parse
+// Sanitizer.location: https://compete.example359.com/_next/static/chunks/commons.7affa92f80b4284452dd.js - so/P/o.prototype.parse:1:967562
+// Finding.begin: 222
+// Finding.end: 224
+// Finding.original_uuid: 16bcd5fd-b30a-4511-8685-89a6bf544fe8
+// Finding.TwentyFiveMillionFlowsId: 1790208811
+// Finding.script: https://compete.example359.com/static/vendor/jetstream/shared-nav.js
+// Finding.line: 1
+// Exploit.uuid: 17697f36-cdfc-4f2e-9ad2-3cd30b1947de
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 32
+// Exploit.end_taint_url: 34
+// Exploit.replace_begin_url: 95
+// Exploit.replace_end_url: 95
+// Exploit.replace_begin_param: 219
+// Exploit.replace_end_param: 219
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -689941191
+// DepGraph.sanitizer_hash: -307202290
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 31"];
+n4 [shape=ellipse, label="regex_exec"];
+n5 [shape=box, label="RegExp: /\/(\w{2})-(\w{2})\//"];
+n6 [shape=box, label="Lit: 2"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: /"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: /news/189913"];
+n12 [shape=ellipse, label="preg_replace"];
+n13 [shape=box, label="RegExp: /\\/"];
+n14 [shape=box, label="Lit: /"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="trim"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="regex_exec"];
+n19 [shape=box, label="RegExp: /^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]*)?$/"];
+n20 [shape=box, label="Lit: 1"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n9;
+n8 -> n4;
+n10 -> n8;
+n10 -> n11;
+n15 -> n10;
+n12 -> n13;
+n12 -> n14;
+n12 -> n15;
+n17 -> n12;
+n16 -> n17;
+n21 -> n16;
+n18 -> n19;
+n18 -> n20;
+n18 -> n21;
+n22 -> n18;
+n23 -> n22;
+}

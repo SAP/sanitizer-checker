@@ -1,0 +1,78 @@
+// Finding: 8aa973f6-28ec-432d-afcc-94ae40ac82e3
+// Finding.url: https://www.example280.com/linen-blend-lucie-smocked-midi-dress-MD141.html?dwvar_MD141_color=BK5229##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1dfae4c6707747c7bf269df569c60c47')><!--/*
+// Finding.parentloc: https://www.example280.com/linen-blend-lucie-smocked-midi-dress-MD141.html?dwvar_MD141_color=BK5229##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1dfae4c6707747c7bf269df569c60c47')><!--/*
+// Finding.domain: www.example280.com
+// Finding.base_domain: example280.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 225
+// Finding.end: 236
+// Finding.original_uuid: 08b32e31-daa4-4069-b90b-0b28d7d02e34
+// Finding.TwentyFiveMillionFlowsId: -462631962
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-X5LW
+// Finding.line: 2970
+// Exploit.uuid: 1dfae4c6-7077-47c7-bf26-9df569c60c47
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 24
+// Exploit.replace_begin_url: 97
+// Exploit.replace_end_url: 97
+// Exploit.replace_begin_param: 135
+// Exploit.replace_end_param: 135
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -925537651
+// DepGraph.sanitizer_hash: -1713850506
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: https://"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /\//"];
+n7 [shape=box, label="Lit: /"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

@@ -1,0 +1,121 @@
+// Finding: 196a9b80-3b43-4b58-b9a2-3c810541e39f
+// Finding.url: https://www.example56.com/uk/stories#";});taintfoxLog('51bce0cda1fb44048b02f197c751df10')//
+// Finding.parentloc: https://www.example56.com/uk/stories#";});taintfoxLog('51bce0cda1fb44048b02f197c751df10')//
+// Finding.domain: www.example56.com
+// Finding.base_domain: example56.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 9
+// Sanitizer.name: Zb
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-NSTXK2 - Zb:340:455
+// Finding.begin: 39
+// Finding.end: 41
+// Finding.original_uuid: eacfef5e-5b33-4bf1-8ae8-aabcb94aea38
+// Finding.TwentyFiveMillionFlowsId: 1003563657
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-NSTXK2
+// Finding.line: 3
+// Exploit.uuid: 51bce0cd-a1fb-4404-8b02-f197c751df10
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: https://www.example56.com/uk/stories
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: ";});
+// Exploit.break_in: //
+// Exploit.payload: ";});taintfoxLog(1)//
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 31
+// Exploit.replace_end_url: 31
+// Exploit.replace_begin_param: 26
+// Exploit.replace_end_param: 26
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 475586781
+// DepGraph.sanitizer_hash: 1541533789
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, =: 1), function_rhs: true], 'function(a){return xb[a]}') - Other Exception: ReferenceError: xb is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Lit: 31"];
+n5 [shape=ellipse, label="substr"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Lit: 8"];
+n8 [shape=ellipse, label="substr"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=box, label="Lit: 12"];
+n11 [shape=ellipse, label="substr"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=box, label="Lit: 1"];
+n14 [shape=ellipse, label="."];
+n15 [shape=box, label="Lit: _"];
+n16 [shape=ellipse, label="preg_replace"];
+n17 [shape=box, label="RegExp: /\//"];
+n18 [shape=box, label="Lit: _"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: Website:"];
+n22 [shape=ellipse, label="preg_replace"];
+n23 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/"];
+n24 [shape=box, label="Lit: "];
+n25 [shape=box, label="Var: x"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: "];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit: "];
+n30 [shape=box, label="Var: x"];
+n31 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n5 -> n7;
+n9 -> n5;
+n8 -> n9;
+n8 -> n10;
+n12 -> n8;
+n11 -> n12;
+n11 -> n13;
+n14 -> n11;
+n14 -> n15;
+n19 -> n14;
+n16 -> n17;
+n16 -> n18;
+n16 -> n19;
+n20 -> n21;
+n20 -> n16;
+n25 -> n20;
+n22 -> n23;
+n22 -> n24;
+n22 -> n25;
+n26 -> n27;
+n26 -> n22;
+n28 -> n26;
+n28 -> n29;
+n30 -> n28;
+n31 -> n30;
+}

@@ -1,0 +1,125 @@
+// Finding: 9e900ec8-8457-4b96-8482-69814938c1e1
+// Finding.url: https://mo.m.example274.com/page_201912120119435#!/footer/full?bizCode=unionMedia"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0fe38aa7e717413a8165fa17dcbe1959')><!--/*&products=true&width=1280&colorBrand=#FF822E
+// Finding.parentloc: https://mo.m.example274.com/page_201912120119435#!/footer/full?bizCode=unionMedia"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0fe38aa7e717413a8165fa17dcbe1959')><!--/*&products=true&width=1280&colorBrand=#FF822E
+// Finding.domain: mo.m.example274.com
+// Finding.base_domain: example274.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 242
+// Sanitizer.name: tmpl
+// Sanitizer.location: https://g.example27.com/mm/zs_gallery/src/__test__/empty.js - tmpl:1:70872
+// Finding.begin: 17
+// Finding.end: 23
+// Finding.original_uuid: 2c48c607-06fc-4354-b4cd-144f978b9acb
+// Finding.TwentyFiveMillionFlowsId: 1992970968
+// Finding.script: https://g.example27.com/mm/zs_gallery/index.js
+// Finding.line: 1
+// Exploit.uuid: 0fe38aa7-e717-413a-8165-fa17dcbe1959
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: mx-view
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: unionMedia"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: unionMedia"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 67
+// Exploit.end_taint_url: 77
+// Exploit.replace_begin_url: 67
+// Exploit.replace_end_url: 77
+// Exploit.replace_begin_param: 72
+// Exploit.replace_end_param: 82
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1598333371
+// DepGraph.sanitizer_hash: -1134451381
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>"'\`]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1), function_rhs: true], 'function(e){return"&"+ht[e]+";"}') - Other Exception: ReferenceError: ht is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /^[^#]*#?!?/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="RegExp: /[#?].*$/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="substr"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=box, label="Lit: 1"];
+n12 [shape=ellipse, label="substr"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=box, label="Lit: 0"];
+n15 [shape=box, label="Lit: 6"];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: mx-"];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: /__test__"];
+n20 [shape=ellipse, label="preg_replace"];
+n21 [shape=box, label="RegExp: /[&<>"'\`]/"];
+n22 [shape=box, label="Lit: "];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: <div mx-view=""];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: "><div mxa="_zs_galleryh:_" style="display: table; text-align:....link="http://www.w3.org/1999/xlink"><defs><lineargradient id=""];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit: 635342909036038_colors" x1="0%" y1="0%" x2="100%" y2="64.9%"><....ing-def-path" cx="36" cy="36" r="16" fill="none" stroke="url(#"];
+n30 [shape=ellipse, label="."];
+n31 [shape=box, label="Lit: 635342909036038_colors)" stroke-width="4" stroke-miterlimit="1....0%; margin: auto; line-height: 22px;"></div></div></div></div>"];
+n32 [shape=box, label="Var: x"];
+n33 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n9 -> n11;
+n13 -> n9;
+n12 -> n13;
+n12 -> n14;
+n12 -> n15;
+n16 -> n17;
+n16 -> n12;
+n18 -> n16;
+n18 -> n19;
+n23 -> n18;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n24 -> n25;
+n24 -> n20;
+n26 -> n24;
+n26 -> n27;
+n28 -> n26;
+n28 -> n29;
+n30 -> n28;
+n30 -> n31;
+n32 -> n30;
+n33 -> n32;
+}

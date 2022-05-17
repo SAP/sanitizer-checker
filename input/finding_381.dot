@@ -1,0 +1,102 @@
+// Finding: 728d7cd7-14ee-49b2-81b0-e3a2cc7da307
+// Finding.url: https://example266.com/news/1617717304##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('65db96ee53a7439fa509af9074158c6e')><!--/*
+// Finding.parentloc: https://example266.com/news/1617717304##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('65db96ee53a7439fa509af9074158c6e')><!--/*
+// Finding.domain: example266.com
+// Finding.base_domain: example266.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: r</e.prototype.attrEscape
+// Sanitizer.location: https://example68.com/share2/share.js - r</e.prototype.attrEscape:1:115942
+// Finding.begin: 8897
+// Finding.end: 9133
+// Finding.original_uuid: 5555bdf7-f159-4d1e-9784-0507f33812ea
+// Finding.TwentyFiveMillionFlowsId: -1525301687
+// Finding.script: https://example68.com/share2/share.js
+// Finding.line: 1
+// Exploit.uuid: 65db96ee-53a7-439f-a509-af9074158c6e
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 35
+// Exploit.replace_begin_url: 35
+// Exploit.replace_end_url: 35
+// Exploit.replace_begin_param: 371
+// Exploit.replace_end_param: 371
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -416798042
+// DepGraph.sanitizer_hash: 1147616379
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: url="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &utm_source=share2"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: https://web.skype.com/share?"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: &amp;"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: utm_source=share2"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[&]/"];
+n15 [shape=box, label="Lit: &amp;"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /["]/"];
+n19 [shape=box, label="Lit: &quot;"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n7 -> n8;
+n7 -> n5;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n16 -> n11;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n22 -> n21;
+}

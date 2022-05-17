@@ -1,0 +1,90 @@
+// Finding: e9c235e3-6943-4a8f-a894-701861acf1a6
+// Finding.url: https://portal-static.static-origin.example369.com/_shared/video-player/sf.html?query=dmlkZW9faWQ9aHR0cHMlM0ElMkYlMkZ2YW0tc3RyZWFtaW5nLm1lZGlhLnN5bi1jZG4uY29tJTJGNTglMkZkNyUyRndpYmJpdHolMkY3MTEzYmZjOGY2MzA3ZDA1M2I4ZDA0Y2I0YTI5MzVhNl8xMDAway5tcDQubXBkJm1wNF91cmw9aHR0cHM6Ly92YW0tdmlkZW8ubWVkaWEuc3luLWNkbi5jb20vNTgvZDcvd2liYml0ei83MTEzYmZjOGY2MzA3ZDA1M2I4ZDA0Y2I0YTI5MzVhNl8xMDAway5tcDQmcGxheWVyX3VybD0vX3NoYXJlZC92aWRlby1wbGF5ZXIvc2NyaXB0cy9qd3BsYXllci9qd3BsYXllci04LjE2LjMuanMmY2NfdXJsPSZhdXRvcGxheV9uZXh0PXRydWUmc3luZGljYXRvcl9pZD1qdlZhbFhkZ1pIYW1IcUVTR2p2UUpaWHdjTHBST0I4cGJSeWdPUT09JmF1dG9zdGFydD10cnVlJnByb3RvY29sPWh0dHBzJnByb3ZpZGVyPXZlbGVwaGFudA==&us_privacy=1NNN##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9161feb845504122bcdd25201d82dbd4')><!--/*
+// Finding.parentloc: https://portal-static.static-origin.example369.com/_shared/video-player/sf.html?query=dmlkZW9faWQ9aHR0cHMlM0ElMkYlMkZ2YW0tc3RyZWFtaW5nLm1lZGlhLnN5bi1jZG4uY29tJTJGNTglMkZkNyUyRndpYmJpdHolMkY3MTEzYmZjOGY2MzA3ZDA1M2I4ZDA0Y2I0YTI5MzVhNl8xMDAway5tcDQubXBkJm1wNF91cmw9aHR0cHM6Ly92YW0tdmlkZW8ubWVkaWEuc3luLWNkbi5jb20vNTgvZDcvd2liYml0ei83MTEzYmZjOGY2MzA3ZDA1M2I4ZDA0Y2I0YTI5MzVhNl8xMDAway5tcDQmcGxheWVyX3VybD0vX3NoYXJlZC92aWRlby1wbGF5ZXIvc2NyaXB0cy9qd3BsYXllci9qd3BsYXllci04LjE2LjMuanMmY2NfdXJsPSZhdXRvcGxheV9uZXh0PXRydWUmc3luZGljYXRvcl9pZD1qdlZhbFhkZ1pIYW1IcUVTR2p2UUpaWHdjTHBST0I4cGJSeWdPUT09JmF1dG9zdGFydD10cnVlJnByb3RvY29sPWh0dHBzJnByb3ZpZGVyPXZlbGVwaGFudA==&us_privacy=1NNN##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9161feb845504122bcdd25201d82dbd4')><!--/*
+// Finding.domain: portal-static.static-origin.example369.com
+// Finding.base_domain: example369.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: decodeUrl
+// Sanitizer.location: https://portal-static.static-origin.example369.com/_shared/video-player/sf.html?query=dmlkZW9faWQ9aHR0cHMlM0ElMkYlMkZ2YW0tc3RyZWFtaW5nLm1lZGlhLnN5bi1jZG4uY29tJTJGNTglMkZkNyUyRndpYmJpdHolMkY3MTEzYmZjOGY2MzA3ZDA1M2I4ZDA0Y2I0YTI5MzVhNl8xMDAway5tcDQubXBkJm1wNF91cmw9aHR0cHM6Ly92YW0tdmlkZW8ubWVkaWEuc3luLWNkbi5jb20vNTgvZDcvd2liYml0ei83MTEzYmZjOGY2MzA3ZDA1M2I4ZDA0Y2I0YTI5MzVhNl8xMDAway5tcDQmcGxheWVyX3VybD0vX3NoYXJlZC92aWRlby1wbGF5ZXIvc2NyaXB0cy9qd3BsYXllci9qd3BsYXllci04LjE2LjMuanMmY2NfdXJsPSZhdXRvcGxheV9uZXh0PXRydWUmc3luZGljYXRvcl9pZD1qdlZhbFhkZ1pIYW1IcUVTR2p2UUpaWHdjTHBST0I4cGJSeWdPUT09JmF1dG9zdGFydD10cnVlJnByb3RvY29sPWh0dHBzJnByb3ZpZGVyPXZlbGVwaGFudA==&us_privacy=1NNN##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9161feb845504122bcdd25201d82dbd4')><!--/* - window.onload:187:31
+// Finding.begin: 0
+// Finding.end: 57
+// Finding.original_uuid: be57c34a-cb6a-413a-9ec7-0ea95f9d985d
+// Finding.TwentyFiveMillionFlowsId: 838695090
+// Finding.script: https://portal-static.static-origin.example369.com/_shared/video-player/scripts/utilities.js
+// Finding.line: 11
+// Exploit.uuid: 9161feb8-4550-4122-bcdd-25201d82dbd4
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: s
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 667
+// Exploit.replace_end_url: 667
+// Exploit.replace_begin_param: 5
+// Exploit.replace_end_param: 5
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1932099016
+// DepGraph.sanitizer_hash: -1932099016
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[-]/"];
+n3 [shape=box, label="Lit: +"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[_]/"];
+n7 [shape=box, label="Lit: /"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /[,]/"];
+n11 [shape=box, label="Lit: ="];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="atob"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n14 -> n9;
+n13 -> n14;
+n15 -> n13;
+n16 -> n15;
+}

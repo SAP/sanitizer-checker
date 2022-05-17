@@ -1,0 +1,129 @@
+// Finding: 4063368e-92e2-45c4-b3a1-d77005016c39
+// Finding.url: https://www.example252.com/us/web/en/models.html?bytype=Coupes and Convertibles##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('70344967d3cd4d68b0a37b6c5d39636a')><!--/*
+// Finding.parentloc: https://www.example252.com/us/web/en/models.html?bytype=Coupes and Convertibles##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('70344967d3cd4d68b0a37b6c5d39636a')><!--/*
+// Finding.domain: www.example252.com
+// Finding.base_domain: example252.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: _E
+// Sanitizer.location: https://s.example98.com/lib/c62ca8252dfe0f4a4366bbab27843eb56060e72f.js?v=2 - _E:1:268322
+// Finding.begin: 0
+// Finding.end: 14
+// Finding.original_uuid: fcad59c0-624e-4c30-a424-78b9aa57b1a7
+// Finding.TwentyFiveMillionFlowsId: -2097047554
+// Finding.script: https://s.example98.com/lib/c62ca8252dfe0f4a4366bbab27843eb56060e72f.js?v=2
+// Finding.line: 1
+// Exploit.uuid: 70344967-d3cd-4d68-b0a3-7b6c5d39636a
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: s
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 45
+// Exploit.end_taint_url: 76
+// Exploit.replace_begin_url: 76
+// Exploit.replace_end_url: 76
+// Exploit.replace_begin_param: 35
+// Exploit.replace_end_param: 35
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 299288676
+// DepGraph.sanitizer_hash: 1319399028
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[®™©]/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit:  "];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /\s/"];
+n9 [shape=box, label="Lit:  "];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: / {2,}/"];
+n13 [shape=box, label="Lit:  "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="trim"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[®™©]/"];
+n19 [shape=box, label="Lit: "];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit:  "];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /\s/"];
+n25 [shape=box, label="Lit:  "];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: / {2,}/"];
+n29 [shape=box, label="Lit:  "];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="trim"];
+n32 [shape=box, label="Var: x"];
+n33 [shape=box, label="Var: x"];
+n34 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n5 -> n6;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n16 -> n11;
+n15 -> n16;
+n20 -> n15;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n21 -> n22;
+n26 -> n21;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n32 -> n27;
+n31 -> n32;
+n33 -> n31;
+n34 -> n33;
+}

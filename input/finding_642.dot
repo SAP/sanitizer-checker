@@ -1,0 +1,85 @@
+// Finding: e900790c-9884-4fdc-8bf4-5936b9ad0017
+// Finding.url: https://www.example392.com/CN/home#")});taintfoxLog('b31340463c2c41df974a83780d7dcd30')//
+// Finding.parentloc: https://www.example392.com/CN/home#")});taintfoxLog('b31340463c2c41df974a83780d7dcd30')//
+// Finding.domain: www.example392.com
+// Finding.base_domain: example392.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 8
+// Sanitizer.name: id[7]
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-TZ67BQ - id[7]:1825:426
+// Finding.begin: 176
+// Finding.end: 187
+// Finding.original_uuid: f87f782c-3da0-478d-9b84-d4b99b4e079e
+// Finding.TwentyFiveMillionFlowsId: 826229041
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-TZ67BQ
+// Finding.line: 3
+// Exploit.uuid: b3134046-3c2c-41df-974a-83780d7dcd30
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: https://www.example392.com/CN/home
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: ")});
+// Exploit.break_in: //
+// Exploit.payload: ")});taintfoxLog(1)//
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 27
+// Exploit.replace_end_url: 27
+// Exploit.replace_begin_param: 21
+// Exploit.replace_end_param: 21
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1313905902
+// DepGraph.sanitizer_hash: -1530774000
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, =: 1), function_rhs: true], 'function(a){return wd[a]}') - Other Exception: ReferenceError: wd is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Lit: 27"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: \/"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/"];
+n9 [shape=box, label="Lit: "];
+n10 [shape=box, label="Var: x"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n5 -> n6;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n11 -> n7;
+n12 -> n11;
+}

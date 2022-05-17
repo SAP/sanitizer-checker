@@ -1,0 +1,78 @@
+// Finding: daea76d0-4857-4ecb-99ed-748db58d349c
+// Finding.url: https://www.example97.com/product/art/MIN-UM4-DNA/paramount?color=A&shape=#'}]});taintfoxLog('49043cadf2a243e48c842663dd38f4a8')//
+// Finding.parentloc: https://www.example97.com/product/art/MIN-UM4-DNA/paramount?color=A&shape=#'}]});taintfoxLog('49043cadf2a243e48c842663dd38f4a8')//
+// Finding.domain: www.example97.com
+// Finding.base_domain: example97.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 2
+// Sanitizer.name: w
+// Sanitizer.location: https://s.example98.com/tag.js#site=KN9R7w0&referrer=https%3A%2F%2Fwww.example97.com%2Fproduct%2Fart%2FMIN-UM4-DNA%2Fparamount%3Fcolor%3DA%26shape%3D%23'%7D%5D%7D)%3BtaintfoxLog('49043cadf2a243e48c842663dd38f4a8')%2F%2F - K/<:8:338
+// Finding.begin: 481
+// Finding.end: 492
+// Finding.original_uuid: 3d822bef-9046-4651-a375-756fba9b54c3
+// Finding.TwentyFiveMillionFlowsId: -124404565
+// Finding.script: https://s.example98.com/tag.js#site=KN9R7w0&referrer=https%3A%2F%2Fwww.example97.com%2Fproduct%2Fart%2FMIN-UM4-DNA%2Fparamount%3Fcolor%3DA%26shape%3D%23'%7D%5D%7D)%3BtaintfoxLog('49043cadf2a243e48c842663dd38f4a8')%2F%2F
+// Finding.line: 8
+// Exploit.uuid: 49043cad-f2a2-43e4-8c84-2663dd38f4a8
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: MIN-UM4-DNA
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: '}]});
+// Exploit.break_in: //
+// Exploit.payload: '}]});taintfoxLog(1)//
+// Exploit.begin_taint_url: 35
+// Exploit.end_taint_url: 46
+// Exploit.replace_begin_url: 71
+// Exploit.replace_end_url: 71
+// Exploit.replace_begin_param: 492
+// Exploit.replace_end_param: 492
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1586409302
+// DepGraph.sanitizer_hash: -1586409302
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /^\s\s*/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="RegExp: /\s\s*$/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

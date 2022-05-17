@@ -1,0 +1,104 @@
+// Finding: 6433cef8-15cc-4fde-a6ab-16c3e940483c
+// Finding.url: https://www.example254.com/us/en/ca/women/handbags/precious-handbags-for-women-c-women-handbags-exotics#)});taintfoxLog('8f9ba024041d40b4bcde0d7b440c88b7')//
+// Finding.parentloc: https://www.example254.com/us/en/ca/women/handbags/precious-handbags-for-women-c-women-handbags-exotics#)});taintfoxLog('8f9ba024041d40b4bcde0d7b440c88b7')//
+// Finding.domain: www.example254.com
+// Finding.base_domain: example254.com
+// Finding.source: location.href
+// Finding.sink: eval
+// Sanitizer.score: 9
+// Sanitizer.name: kd[7]
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-5CMWJM - kd[7]:8475:426
+// Finding.begin: 2189
+// Finding.end: 2191
+// Finding.original_uuid: 34dff968-1595-46fb-b155-652319d416b2
+// Finding.TwentyFiveMillionFlowsId: 1165040148
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-5CMWJM
+// Finding.line: 3
+// Exploit.uuid: 8f9ba024-041d-40b4-bcde-0d7b440c88b7
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: undefined
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: )});
+// Exploit.break_in: //
+// Exploit.payload: )});taintfoxLog(1)//
+// Exploit.begin_taint_url: 22
+// Exploit.end_taint_url: 24
+// Exploit.replace_begin_url: 98
+// Exploit.replace_end_url: 98
+// Exploit.replace_begin_param: 597
+// Exploit.replace_end_param: 597
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1228421341
+// DepGraph.sanitizer_hash: -389400126
+// Merged split and join statements 
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, /: 1, \: 1, =: 1), function_rhs: true], 'function(a){return ud[a]}') - Other Exception: ReferenceError: ud is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /\//"];
+n3 [shape=box, label="Lit: /"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: \/"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: \/"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: ca\/"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: women\/"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: handbags\/"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: precious-handbags-for-women-c-women-handbags-exotics"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /[\x00\x08-\x0d\x22\x26\x27\/\x3c-\x3e\\\x85\u2028\u2029]/"];
+n19 [shape=box, label="Lit: "];
+n20 [shape=box, label="Var: x"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n5 -> n6;
+n7 -> n8;
+n7 -> n5;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n20 -> n15;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n22 -> n21;
+}

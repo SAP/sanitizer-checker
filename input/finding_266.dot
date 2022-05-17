@@ -1,0 +1,136 @@
+// Finding: 204b4894-3901-49a6-a6bf-78310b5f16cb
+// Finding.url: https://example23.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('394a3a21557f4a46a5c8140f9ac9dc84')><!--/*
+// Finding.parentloc: example24.com
+// Finding.domain: example23.com
+// Finding.base_domain: example23.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: g</t.prototype._buildChunk
+// Sanitizer.location: https://tr.example23.com/icmt.js?id=ICM-246-1907 - g</t.prototype._buildChunk:5:4782
+// Finding.begin: 108
+// Finding.end: 277
+// Finding.original_uuid: 24467c6a-e9ef-44f4-a25c-17e02a5fbc55
+// Finding.TwentyFiveMillionFlowsId: 629190008
+// Finding.script: https://tr.example23.com/icmt.js?id=ICM-246-1907
+// Finding.line: 5
+// Exploit.uuid: 394a3a21-557f-4a46-a5c8-140f9ac9dc84
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: img
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 18
+// Exploit.replace_begin_url: 18
+// Exploit.replace_end_url: 18
+// Exploit.replace_begin_param: 134
+// Exploit.replace_end_param: 134
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1390515350
+// DepGraph.sanitizer_hash: 1396098107
+// Non Finite Regex with function on rhs:  replace(([^"]*)"/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(": 1), function_rhs: true], 'function(t,e){return/\\/.test(e)?e+'"':e+'\\"'}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(([^"]*)"/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(": 1), function_rhs: true], 'function(t,e){return/\\/.test(e)?e+'"':e+'\\"'}') - Left hand side has to be a range 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: <img width='1px' style='display:none;' height='1px' src='https://tr.example23.com/icm-beacon/246?referrer=&href="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: '>"];
+n7 [shape=ellipse, label="regex_exec"];
+n8 [shape=box, label="RegExp: /^<([\-A-Za-z0-9_]+)((?:\s+[\w\-]+(?:\s*=?\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/"];
+n9 [shape=box, label="Lit: 2"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="regex_match"];
+n12 [shape=box, label="RegExp: /^<([\-A-Za-z0-9_]+)((?:\s+[\w\-]+(?:\s*=?\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/"];
+n13 [shape=box, label="Lit: 2"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="regex_exec"];
+n16 [shape=box, label="RegExp: /(?:([\-A-Za-z0-9_]+)\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))|(?:([\-A-Za-z0-9_]+)(\s|$)+)/"];
+n17 [shape=box, label="Lit: 3"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="preg_replace"];
+n20 [shape=box, label="RegExp: /([^"]*)"/"];
+n21 [shape=box, label="Lit: "];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: =""];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: \""];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: <img width="1px" style="display:none;" height="1px" src"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: >"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit:  data-ps-id=1 >"];
+n33 [shape=ellipse, label="str_replace_once"];
+n34 [shape=box, label="RegExp: /(\/?>)/"];
+n35 [shape=box, label="Lit:  data-ps-id=1 $1"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=box, label="Var: x"];
+n38 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n23 -> n24;
+n23 -> n19;
+n25 -> n23;
+n25 -> n26;
+n27 -> n28;
+n27 -> n25;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n36 -> n31;
+n33 -> n34;
+n33 -> n35;
+n33 -> n36;
+n37 -> n33;
+n38 -> n37;
+}

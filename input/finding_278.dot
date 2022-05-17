@@ -1,0 +1,70 @@
+// Finding: 58b5d502-a792-4872-af6c-87f7acc5c050
+// Finding.url: https://www.example214.com/sport/futball/20210507-falfestmennyel-varjak-a-szurkolok-jose-mourinhot-romaban-as-roma.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5eb7bc160ff4425d94902042e507e894')><!--/*
+// Finding.parentloc: https://www.example214.com/sport/futball/20210507-falfestmennyel-varjak-a-szurkolok-jose-mourinhot-romaban-as-roma.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('5eb7bc160ff4425d94902042e507e894')><!--/*
+// Finding.domain: www.example214.com
+// Finding.base_domain: example214.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: urlSegmentArray
+// Sanitizer.location: https://cdn.example215.com/s/js/core/utils.min.js - urlSegmentArray:3:13241
+// Finding.begin: 43
+// Finding.end: 48
+// Finding.original_uuid: 2e84744e-45b4-4d4b-8adc-a96a1f1c84bb
+// Finding.TwentyFiveMillionFlowsId: 1957509236
+// Finding.script: https://cdn.example215.com/s/js/lib/jquery-1.12.4.min.js
+// Finding.line: 3
+// Exploit.uuid: 5eb7bc16-0ff4-425d-9490-2042e507e894
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: data-type
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 12
+// Exploit.end_taint_url: 17
+// Exploit.replace_begin_url: 113
+// Exploit.replace_end_url: 113
+// Exploit.replace_begin_param: 48
+// Exploit.replace_end_param: 48
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 338486066
+// DepGraph.sanitizer_hash: 338486066
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /(^http[s]?:\/\/)|(:\d*)|(\/$)/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n6 -> n5;
+}

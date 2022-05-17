@@ -1,0 +1,94 @@
+// Finding: a2e2c475-4bcd-4af1-981d-c9cfda7289f5
+// Finding.url: https://s.example203.com/images/listing/tool/yads/yads-iframe.html?start_prod_num=0&s=30671_12053&fr_id=yads_35410"></iframe></style></script></object></embed></textarea><script>taintfoxLog('325bd3dc192d43dbb89a191c8bb73d4e')</script><!--/*40-0&sb_support=1&enc=UTF-8&u=https://www.example126.com/entertainment/news/2021/05/14/kiji/20210514s00041000475000c.html&async=0&mb=1&kwe=u&kwm=1&pv_ts=1621009608298
+// Finding.parentloc: https://s.example203.com/images/listing/tool/yads/yads-iframe.html?start_prod_num=0&s=30671_12053&fr_id=yads_35410"></iframe></style></script></object></embed></textarea><script>taintfoxLog('325bd3dc192d43dbb89a191c8bb73d4e')</script><!--/*40-0&sb_support=1&enc=UTF-8&u=https://www.example126.com/entertainment/news/2021/05/14/kiji/20210514s00041000475000c.html&async=0&mb=1&kwe=u&kwm=1&pv_ts=1621009608298
+// Finding.domain: s.example203.com
+// Finding.base_domain: example203.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 4
+// Sanitizer.name: escapeString
+// Sanitizer.location: https://s.example203.com/images/listing/tool/yads/yads-iframe.html?start_prod_num=0&s=30671_12053&fr_id=yads_35410"></iframe></style></script></object></embed></textarea><script>taintfoxLog('325bd3dc192d43dbb89a191c8bb73d4e')</script><!--/*40-0&sb_support=1&enc=UTF-8&u=https://www.example126.com/entertainment/news/2021/05/14/kiji/20210514s00041000475000c.html&async=0&mb=1&kwe=u&kwm=1&pv_ts=1621009608298 - printScript:1:769
+// Finding.begin: 595
+// Finding.end: 596
+// Finding.original_uuid: 949a3068-433d-4755-9fbb-9717d8e785f3
+// Finding.TwentyFiveMillionFlowsId: 1379060078
+// Finding.script: https://s.example203.com/images/listing/tool/yads/yads-iframe.html?start_prod_num=0&s=30671_12053&fr_id=yads_35410"></iframe></style></script></object></embed></textarea><script>taintfoxLog('325bd3dc192d43dbb89a191c8bb73d4e')</script><!--/*40-0&sb_support=1&enc=UTF-8&u=https://www.example126.com/entertainment/news/2021/05/14/kiji/20210514s00041000475000c.html&async=0&mb=1&kwe=u&kwm=1&pv_ts=1621009608298
+// Finding.line: 1
+// Exploit.uuid: 325bd3dc-192d-43db-b89a-191c8bb73d4e
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: script
+// Exploit.break_out: 0"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: 0"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 106
+// Exploit.end_taint_url: 107
+// Exploit.replace_begin_url: 106
+// Exploit.replace_end_url: 107
+// Exploit.replace_begin_param: 269
+// Exploit.replace_end_param: 270
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1345043996
+// DepGraph.sanitizer_hash: -1345043996
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[<]/"];
+n3 [shape=box, label="Lit: &lt;"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[>]/"];
+n7 [shape=box, label="Lit: &gt;"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /["]/"];
+n11 [shape=box, label="Lit: &quot;"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /[']/"];
+n15 [shape=box, label="Lit: &#39;"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n17 -> n13;
+n18 -> n17;
+}

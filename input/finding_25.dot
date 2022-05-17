@@ -1,0 +1,171 @@
+// Finding: 76c32acc-6823-4607-8acc-6bd8b5d434d5
+// Finding.url: https://chrome.example34.com/webstore/detail/rotowire/caljiholplhibonecblicbgjkakcpmmm?hl=en-US##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('34fa6dcf1c074dd8a95302cea02473ad')><!--/*
+// Finding.parentloc: https://chrome.example34.com/webstore/detail/rotowire/caljiholplhibonecblicbgjkakcpmmm?hl=en-US##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('34fa6dcf1c074dd8a95302cea02473ad')><!--/*
+// Finding.domain: chrome.example34.com
+// Finding.base_domain: example34.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 15
+// Sanitizer.name: FQ
+// Sanitizer.location: https://chrome.example34.com/_/scs/cws-static/_/js/k=cws.main.en_US.-RUUdr_ysv8.O/am=AQ/d=1/rs=AAxzQIXdx8IpZH31Yo5qUenCvC6PHlyFkg/m=consumer - FQ:1469:72
+// Finding.begin: 1734
+// Finding.end: 1736
+// Finding.original_uuid: d8f5b049-e407-42e0-95ea-acaa56515628
+// Finding.TwentyFiveMillionFlowsId: -405045954
+// Finding.script: https://chrome.example34.com/_/scs/cws-static/_/js/k=cws.main.en_US.-RUUdr_ysv8.O/am=AQ/d=1/rs=AAxzQIXdx8IpZH31Yo5qUenCvC6PHlyFkg/m=consumer
+// Finding.line: 114
+// Exploit.uuid: 34fa6dcf-1c07-4dd8-a953-02cea02473ad
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 92
+// Exploit.replace_end_url: 92
+// Exploit.replace_begin_param: 86
+// Exploit.replace_end_param: 86
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -253262281
+// DepGraph.sanitizer_hash: -886863299
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([\x00- \x22\x27-\x29\x3c\x3e\\\x7b\x7d\x7f\x85\xa0\u2028\u2029\uff01\uff03\uff04\uff06-\uff0c\uff0f\uff1a\uff1b\uff1d\uff1f\uff20\uff3b\uff3d]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, ": 1, ': 1, \: 1,  : 1, (: 1, ): 1, {: 1, }: 1), function_rhs: true], 'function(a){return nr[a]}') - Other Exception: ReferenceError: nr is not defined 
+// Approximated Implementation for: replace([\x00\x22\x26\x27\x3c\x3e]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1), function_rhs: true], 'function(a){return mr[a]}') - Other Exception: ReferenceError: mr is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="substr"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=box, label="Lit: 0"];
+n7 [shape=box, label="Lit: 2"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /\+/"];
+n10 [shape=box, label="Lit:  "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="decodeURIComponent"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="encodeURIComponent"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: =en-US"];
+n18 [shape=ellipse, label="decodeURIComponent"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="encodeURI"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=ellipse, label="."];
+n23 [shape=box, label="Lit: ?"];
+n24 [shape=ellipse, label="encodeURIComponent"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: ="];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit: continue"];
+n30 [shape=ellipse, label="."];
+n31 [shape=box, label="Lit: &"];
+n32 [shape=ellipse, label="."];
+n33 [shape=box, label="Lit: &"];
+n34 [shape=ellipse, label="."];
+n35 [shape=box, label="Lit: ?"];
+n36 [shape=ellipse, label="preg_replace"];
+n37 [shape=box, label="RegExp: /[\x00- \x22\x27-\x29\x3c\x3e\\\x7b\x7d\x7f\x85\xa0\u2028\u2029\uff01\uff03\uff04\uff06-\uff0c\uff0f\uff1a\uff1b\uff1d\uff1f\uff20\uff3b\uff3d]/"];
+n38 [shape=box, label="Lit: "];
+n39 [shape=box, label="Var: x"];
+n40 [shape=ellipse, label="."];
+n41 [shape=box, label="Lit: &amp;"];
+n42 [shape=ellipse, label="."];
+n43 [shape=box, label="Lit: service=chromewebstore&amp;"];
+n44 [shape=ellipse, label="."];
+n45 [shape=box, label="Lit: sarp=1"];
+n46 [shape=ellipse, label="preg_replace"];
+n47 [shape=box, label="RegExp: /[\x00\x22\x26\x27\x3c\x3e]/"];
+n48 [shape=box, label="Lit: "];
+n49 [shape=box, label="Var: x"];
+n50 [shape=ellipse, label="."];
+n51 [shape=box, label="Lit: <a class="h-Td-vb-re-y" href=""];
+n52 [shape=ellipse, label="."];
+n53 [shape=box, label="Lit: " target="_parent">Sign in</a> to rate"];
+n54 [shape=box, label="Var: x"];
+n55 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n13 -> n8;
+n12 -> n13;
+n15 -> n12;
+n14 -> n15;
+n16 -> n14;
+n16 -> n17;
+n19 -> n16;
+n18 -> n19;
+n21 -> n18;
+n20 -> n21;
+n22 -> n23;
+n22 -> n20;
+n25 -> n22;
+n24 -> n25;
+n26 -> n27;
+n26 -> n24;
+n28 -> n29;
+n28 -> n26;
+n30 -> n31;
+n30 -> n28;
+n32 -> n30;
+n32 -> n33;
+n34 -> n35;
+n34 -> n32;
+n39 -> n34;
+n36 -> n37;
+n36 -> n38;
+n36 -> n39;
+n40 -> n36;
+n40 -> n41;
+n42 -> n40;
+n42 -> n43;
+n44 -> n42;
+n44 -> n45;
+n49 -> n44;
+n46 -> n47;
+n46 -> n48;
+n46 -> n49;
+n50 -> n51;
+n50 -> n46;
+n52 -> n50;
+n52 -> n53;
+n54 -> n52;
+n55 -> n54;
+}

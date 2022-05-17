@@ -1,0 +1,96 @@
+// Finding: 6276708b-9df8-4c6d-ad06-5cfc004e2b40
+// Finding.url: https://www.example48.com/item/59975553/?ba_af=pc_top#'});taintfoxLog('647c2ec00cd34b62b83e1d4c3d2e6e00')//
+// Finding.parentloc: https://www.example48.com/item/59975553/?ba_af=pc_top#'});taintfoxLog('647c2ec00cd34b62b83e1d4c3d2e6e00')//
+// Finding.domain: www.example48.com
+// Finding.base_domain: example48.com
+// Finding.source: document.documentURI
+// Finding.sink: eval
+// Sanitizer.score: 2
+// Sanitizer.name: trim
+// Sanitizer.location: https://s.example49.com/tag.js#site=fsUqaTt - trim:1:2900
+// Finding.begin: 52
+// Finding.end: 60
+// Finding.original_uuid: 9971058d-5460-4bc5-be42-a5f4cc455e03
+// Finding.TwentyFiveMillionFlowsId: 1133747586
+// Finding.script: https://s.example49.com/tag.js#site=fsUqaTt
+// Finding.line: 1
+// Exploit.uuid: 647c2ec0-0cd3-4b62-b83e-1d4c3d2e6e00
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: Literal
+// Exploit.content: 59975553
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: '});
+// Exploit.break_in: //
+// Exploit.payload: '});taintfoxLog(1)//
+// Exploit.begin_taint_url: 27
+// Exploit.end_taint_url: 35
+// Exploit.replace_begin_url: 49
+// Exploit.replace_end_url: 49
+// Exploit.replace_begin_param: 525
+// Exploit.replace_end_param: 525
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 174190020
+// DepGraph.sanitizer_hash: -177168263
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: /"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="."];
+n5 [shape=box, label="Lit: <!-- LINE Tag Base Code -->\n<!-- Do Not Modify -->\n<script>\n(f....\n<script>\n_lt('send', 'cv', { \ntype: 'dpa_detail', \nitemIds: '"];
+n6 [shape=ellipse, label="."];
+n7 [shape=box, label="Lit: '.split(',')}, \n{ dpa: true }, \n['98c0f4df-f005-4d99-9507-2c84c2c6ce68']);\n</script>"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: <br/>"];
+n10 [shape=ellipse, label="str_replace_once"];
+n11 [shape=box, label="RegExp: /^\s\s*/"];
+n12 [shape=box, label="Lit: "];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="str_replace_once"];
+n15 [shape=box, label="RegExp: /\s\s*$/"];
+n16 [shape=box, label="Lit: "];
+n17 [shape=box, label="Var: x"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n4 -> n5;
+n4 -> n1;
+n6 -> n4;
+n6 -> n7;
+n8 -> n9;
+n8 -> n6;
+n13 -> n8;
+n10 -> n11;
+n10 -> n12;
+n10 -> n13;
+n17 -> n10;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n18 -> n14;
+n19 -> n18;
+}

@@ -1,0 +1,90 @@
+// Finding: 1dc2e557-f8b6-40f9-a2a0-c76cfb0cba16
+// Finding.url: https://www.example6.com/provincial-nomination-program.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0e38b10582f14949921b8095ba5d5d45')><!--/*
+// Finding.parentloc: https://www.example6.com/provincial-nomination-program.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0e38b10582f14949921b8095ba5d5d45')><!--/*
+// Finding.domain: www.example6.com
+// Finding.base_domain: example6.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: et
+// Sanitizer.location: https://fast.example7.com/client/2105/13141925/min/v1_gs_lib.js - nt:2:1474
+// Finding.begin: 2043
+// Finding.end: 2069
+// Finding.original_uuid: 9b12f14c-98e9-47eb-b49e-6846126ce7bd
+// Finding.TwentyFiveMillionFlowsId: -903483276
+// Finding.script: https://fast.example7.com/client/2105/13141925/min/v1_gs_lib.js
+// Finding.line: 3
+// Exploit.uuid: 0e38b105-82f1-4949-921b-8095ba5d5d45
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 26
+// Exploit.replace_begin_url: 61
+// Exploit.replace_end_url: 61
+// Exploit.replace_begin_param: 2069
+// Exploit.replace_end_param: 2069
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 234562037
+// DepGraph.sanitizer_hash: 234562037
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="decodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="preg_replace"];
+n4 [shape=box, label="RegExp: /\u00AD/"];
+n5 [shape=box, label="Lit: %C2%AD"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n9 [shape=box, label="Lit: "];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: &"];
+n13 [shape=box, label="Lit: ?"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n10 -> n3;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n15 -> n11;
+n16 -> n15;
+}

@@ -1,0 +1,169 @@
+// Finding: 837e23de-0495-406a-8133-f458e7edd7c0
+// Finding.url: https://www.example204.com/search.html?interestArea=Press&sort=recency'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('dfd4fb4341fd40b881d1e4cf49e1cb1b')><!--/*
+// Finding.parentloc: https://www.example204.com/search.html?interestArea=Press&sort=recency'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('dfd4fb4341fd40b881d1e4cf49e1cb1b')><!--/*
+// Finding.domain: www.example204.com
+// Finding.base_domain: example204.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: l
+// Sanitizer.location: https://assets.example33.com/3e79a7f00488/04f604fda4ad/launch-4dd043aa3d36.min.js - l:3:8470
+// Finding.begin: 170
+// Finding.end: 171
+// Finding.original_uuid: 631bc32a-1467-40af-b5ef-4422eee60f13
+// Finding.TwentyFiveMillionFlowsId: -15778954
+// Finding.script: https://assets.example33.com/3e79a7f00488/04f604fda4ad/launch-4dd043aa3d36.min.js
+// Finding.line: 3
+// Exploit.uuid: dfd4fb43-41fd-40b8-81d1-e4cf49e1cb1b
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: '
+// Exploit.tag: a
+// Exploit.break_out: recency'></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: recency'></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 58
+// Exploit.end_taint_url: 65
+// Exploit.replace_begin_url: 58
+// Exploit.replace_end_url: 65
+// Exploit.replace_begin_param: 90
+// Exploit.replace_end_param: 97
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 630006007
+// DepGraph.sanitizer_hash: 2004674737
+// Non Finite Regex with function on rhs:  replace(([^"]*)"/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(": 1), function_rhs: true], 'function(e,t){return/\\/.test(t)?t+'"':t+'\\"'}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace(([^"]*)"/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(": 1), function_rhs: true], 'function(e,t){return/\\/.test(t)?t+'"':t+'\\"'}') - Left hand side has to be a range 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: <img src="https://ad.doubleclick.net/ddm/activity/src=6731501;type=pagev0;cat=aicpa00d;u1="];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: ;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;npa=;ord="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: 8478873616317.849"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: ?" width="1" height="1" alt=""/>"];
+n9 [shape=ellipse, label="regex_exec"];
+n10 [shape=box, label="RegExp: /^<([\-A-Za-z0-9_]+)((?:\s+[\w\-]+(?:\s*=?\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/"];
+n11 [shape=box, label="Lit: 2"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="regex_match"];
+n14 [shape=box, label="RegExp: /^<([\-A-Za-z0-9_]+)((?:\s+[\w\-]+(?:\s*=?\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/"];
+n15 [shape=box, label="Lit: 2"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="regex_exec"];
+n18 [shape=box, label="RegExp: /(?:([\-A-Za-z0-9_]+)\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))|(?:([\-A-Za-z0-9_]+)(\s|$)+)/"];
+n19 [shape=box, label="Lit: 2"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="preg_replace"];
+n22 [shape=box, label="RegExp: /([^"]*)"/"];
+n23 [shape=box, label="Lit: "];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: =""];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: \""];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: <img src"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit:  width"];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: ="1""];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit:  height"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: ="1""];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit:  alt"];
+n41 [shape=ellipse, label="."];
+n42 [shape=box, label="Lit: ="""];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit: />"];
+n45 [shape=ellipse, label="regex_exec"];
+n46 [shape=box, label="RegExp: /(\/?>)/"];
+n47 [shape=box, label="Lit: 1"];
+n48 [shape=box, label="Var: x"];
+n49 [shape=ellipse, label="str_replace_once"];
+n50 [shape=box, label="RegExp: /(\/?>)/"];
+n51 [shape=box, label="Lit:  data-ps-id=2 $1"];
+n52 [shape=box, label="Var: x"];
+n53 [shape=box, label="Var: x"];
+n54 [shape=doubleoctagon, label="Return: x"];
+n1 -> n2;
+n1 -> n0;
+n3 -> n1;
+n3 -> n4;
+n5 -> n3;
+n5 -> n6;
+n7 -> n5;
+n7 -> n8;
+n12 -> n7;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n24 -> n17;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n25 -> n26;
+n25 -> n21;
+n27 -> n25;
+n27 -> n28;
+n29 -> n30;
+n29 -> n27;
+n31 -> n29;
+n31 -> n32;
+n33 -> n31;
+n33 -> n34;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n41 -> n39;
+n41 -> n42;
+n43 -> n41;
+n43 -> n44;
+n48 -> n43;
+n45 -> n46;
+n45 -> n47;
+n45 -> n48;
+n52 -> n45;
+n49 -> n50;
+n49 -> n51;
+n49 -> n52;
+n53 -> n49;
+n54 -> n53;
+}

@@ -1,0 +1,112 @@
+// Finding: 936c4fdf-ef03-49fe-895a-3903867e4fb6
+// Finding.url: https://example265.com/ru/news/2021/5/7/421431/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('6bce56c98d4b4b77bcb3f740676f61eb')><!--/*
+// Finding.parentloc: https://example265.com/ru/news/2021/5/7/421431/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('6bce56c98d4b4b77bcb3f740676f61eb')><!--/*
+// Finding.domain: example265.com
+// Finding.base_domain: example265.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: pluso.html
+// Sanitizer.location: https://share.example85.com/pluso-like.js - pluso.html:1:26690
+// Finding.begin: 398
+// Finding.end: 444
+// Finding.original_uuid: 6926956a-87d9-4a2b-b230-cd4b52aed0d2
+// Finding.TwentyFiveMillionFlowsId: 928728872
+// Finding.script: https://share.example85.com/pluso-like.js
+// Finding.line: 1
+// Exploit.uuid: 6bce56c9-8d4b-4b77-bcb3-f740676f61eb
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 46
+// Exploit.replace_begin_url: 46
+// Exploit.replace_end_url: 46
+// Exploit.replace_begin_param: 146
+// Exploit.replace_end_param: 146
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1428617030
+// DepGraph.sanitizer_hash: -700969722
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /["]/"];
+n6 [shape=box, label="Lit: &quot;"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: <a href=""];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: " title=""];
+n12 [shape=ellipse, label="."];
+n13 [shape=box, label="Lit: Одноклассники"];
+n14 [shape=ellipse, label="."];
+n15 [shape=box, label="Lit: " class="pluso-"];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: odnoklassniki"];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: \""];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: ></a>"];
+n22 [shape=ellipse, label="."];
+n23 [shape=box, label="Lit: "];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: "];
+n26 [shape=box, label="Var: x"];
+n27 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n9;
+n8 -> n4;
+n10 -> n8;
+n10 -> n11;
+n12 -> n10;
+n12 -> n13;
+n14 -> n12;
+n14 -> n15;
+n16 -> n14;
+n16 -> n17;
+n18 -> n16;
+n18 -> n19;
+n20 -> n18;
+n20 -> n21;
+n22 -> n23;
+n22 -> n20;
+n24 -> n22;
+n24 -> n25;
+n26 -> n24;
+n27 -> n26;
+}

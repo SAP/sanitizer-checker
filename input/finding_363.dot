@@ -1,0 +1,116 @@
+// Finding: 4ace0ba8-99b6-4558-a0f1-94ec73534a4a
+// Finding.url: https://example10.com/452863546/stock-photo-national-art-museum-catalonia-barcelona.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1955d79cccd34160b991ecbd8cd4b7f6')><!--/*
+// Finding.parentloc: https://example10.com/452863546/stock-photo-national-art-museum-catalonia-barcelona.html##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('1955d79cccd34160b991ecbd8cd4b7f6')><!--/*
+// Finding.domain: example10.com
+// Finding.base_domain: example10.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: urlFormat
+// Sanitizer.location: https://webst.example10.com/_js/router.js?aeb125beff27870895eb - urlFormat:1:443881
+// Finding.begin: 482
+// Finding.end: 488
+// Finding.original_uuid: 1653f87d-ed34-4206-9df7-b33916703cc3
+// Finding.TwentyFiveMillionFlowsId: 1429751567
+// Finding.script: https://webst.example10.com/_js/vendors.js?aeb125beff27870895eb
+// Finding.line: 2
+// Exploit.uuid: 1955d79c-ccd3-4160-b991-ecbd8cd4b7f6
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 25
+// Exploit.end_taint_url: 92
+// Exploit.replace_begin_url: 92
+// Exploit.replace_end_url: 92
+// Exploit.replace_begin_param: 481
+// Exploit.replace_end_param: 481
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -167955694
+// DepGraph.sanitizer_hash: 686335548
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /\\/"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: #"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: #"];
+n12 [shape=ellipse, label="trim"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="regex_exec"];
+n15 [shape=box, label="RegExp: /^([a-z0-9.+-]+:)/"];
+n16 [shape=box, label="Lit: 0"];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="strtolower"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: //st2.example10.com"];
+n22 [shape=ellipse, label="."];
+n23 [shape=box, label="Lit: /15113232/45286/i/1600/depositphotos_452863546-stock-photo-national-art-museum-catalonia-barcelona.jpg"];
+n24 [shape=ellipse, label="preg_replace"];
+n25 [shape=box, label="RegExp: /=((&)|$)/"];
+n26 [shape=box, label="Lit: $2"];
+n27 [shape=box, label="Var: x"];
+n28 [shape=box, label="Var: x"];
+n29 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n9;
+n8 -> n4;
+n10 -> n8;
+n10 -> n11;
+n13 -> n10;
+n12 -> n13;
+n17 -> n12;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n19 -> n14;
+n18 -> n19;
+n20 -> n18;
+n20 -> n21;
+n22 -> n20;
+n22 -> n23;
+n27 -> n22;
+n24 -> n25;
+n24 -> n26;
+n24 -> n27;
+n28 -> n24;
+n29 -> n28;
+}

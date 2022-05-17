@@ -1,0 +1,397 @@
+// Finding: 519930c9-7b21-4135-9389-21dc0b3431c3
+// Finding.url: https://www.example424.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('bc0d10915b534afbbcbe0dc597fc33a9')><!--/*
+// Finding.parentloc: https://www.example424.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('bc0d10915b534afbbcbe0dc597fc33a9')><!--/*
+// Finding.domain: www.example424.com
+// Finding.base_domain: example424.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 241
+// Sanitizer.name: code
+// Sanitizer.location: https://cdn.example425.com/js/ntp-promotion.js - code:6:8745
+// Finding.begin: 530
+// Finding.end: 531
+// Finding.original_uuid: 0dd25614-6486-46eb-92b9-6ce307124e7e
+// Finding.TwentyFiveMillionFlowsId: 1614481969
+// Finding.script: https://cdn.example425.com/js/ntp-promotion.js
+// Finding.line: 6
+// Exploit.uuid: bc0d1091-5b53-4afb-bcbe-0dc597fc33a9
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 12
+// Exploit.end_taint_url: 24
+// Exploit.replace_begin_url: 24
+// Exploit.replace_end_url: 24
+// Exploit.replace_begin_param: 352
+// Exploit.replace_end_param: 352
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -184209282
+// DepGraph.sanitizer_hash: 600673856
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /[^.]*./"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: utm_source="];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &utm_medium=promoScript&utm_campaign="];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: mncty"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: https://go.example425.com/mancity?"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: &utm_content=overlay"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: &amp;"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: utm_medium=promoScript&amp;"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: utm_campaign=mncty&amp;"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: utm_content=overlay"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /[&]/"];
+n25 [shape=box, label="Lit: &amp;"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: &lt;"];
+n29 [shape=ellipse, label="preg_replace"];
+n30 [shape=box, label="RegExp: /[<]/"];
+n31 [shape=box, label="Lit: &lt;"];
+n32 [shape=box, label="Var: x"];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: &gt;"];
+n35 [shape=ellipse, label="preg_replace"];
+n36 [shape=box, label="RegExp: /[>]/"];
+n37 [shape=box, label="Lit: &gt;"];
+n38 [shape=box, label="Var: x"];
+n39 [shape=ellipse, label="preg_replace"];
+n40 [shape=box, label="RegExp: /\'/"];
+n41 [shape=box, label="Lit: &#39;"];
+n42 [shape=box, label="Var: x"];
+n43 [shape=ellipse, label="preg_replace"];
+n44 [shape=box, label="RegExp: /\"/"];
+n45 [shape=box, label="Lit: &quot;"];
+n46 [shape=box, label="Var: x"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: <div class="dialogue__space" style="z-index: 999;">\n  <div cla....__overlay" style="margin: 1em;">\n      <div>\n        <a href=""];
+n49 [shape=ellipse, label="."];
+n50 [shape=box, label="Lit: " target="_blank"><img src=""];
+n51 [shape=ellipse, label="."];
+n52 [shape=box, label="Lit: https://json-server-brandturbo.herokuapp.com/mancity-browser.webp"];
+n53 [shape=ellipse, label="."];
+n54 [shape=box, label="Lit: " /></a>"];
+n55 [shape=ellipse, label="."];
+n56 [shape=box, label="Lit: \n"];
+n57 [shape=ellipse, label="."];
+n58 [shape=box, label="Lit:       </div>"];
+n59 [shape=ellipse, label="."];
+n60 [shape=box, label="Lit: \n"];
+n61 [shape=ellipse, label="."];
+n62 [shape=box, label="Lit:       <div class="dialogue__content">"];
+n63 [shape=ellipse, label="."];
+n64 [shape=box, label="Lit: \n"];
+n65 [shape=ellipse, label="."];
+n66 [shape=box, label="Lit:         <a href=""];
+n67 [shape=ellipse, label="."];
+n68 [shape=box, label="Lit: " class="dialogue__clickArea" target="_blank"></a>"];
+n69 [shape=ellipse, label="."];
+n70 [shape=box, label="Lit: \n"];
+n71 [shape=ellipse, label="."];
+n72 [shape=box, label="Lit:         <div class="dialogue__title"><b>"];
+n73 [shape=ellipse, label="."];
+n74 [shape=box, label="Lit: Get the Manchester City start page for latest updates"];
+n75 [shape=ellipse, label="."];
+n76 [shape=box, label="Lit: </b></div>"];
+n77 [shape=ellipse, label="."];
+n78 [shape=box, label="Lit: \n"];
+n79 [shape=ellipse, label="."];
+n80 [shape=box, label="Lit:         <div class="dialogue__desc">"];
+n81 [shape=ellipse, label="."];
+n82 [shape=box, label="Lit: Exclusive videos, latest news and many more surprises; now on your browser. Show your support with every new tab."];
+n83 [shape=ellipse, label="."];
+n84 [shape=box, label="Lit: </div>"];
+n85 [shape=ellipse, label="."];
+n86 [shape=box, label="Lit: \n"];
+n87 [shape=ellipse, label="."];
+n88 [shape=box, label="Lit:         <div class="dialogue__buttons">"];
+n89 [shape=ellipse, label="."];
+n90 [shape=box, label="Lit: \n"];
+n91 [shape=ellipse, label="."];
+n92 [shape=box, label="Lit:           <a"];
+n93 [shape=ellipse, label="."];
+n94 [shape=box, label="Lit: \n"];
+n95 [shape=ellipse, label="."];
+n96 [shape=box, label="Lit:             href=""];
+n97 [shape=ellipse, label="."];
+n98 [shape=box, label="Lit: \""];
+n99 [shape=ellipse, label="."];
+n100 [shape=box, label="Lit: \n"];
+n101 [shape=ellipse, label="."];
+n102 [shape=box, label="Lit:             class="dialogue__snippet-button dialogue__button-primary" style="background-color: "];
+n103 [shape=ellipse, label="."];
+n104 [shape=box, label="Lit: #1976d2"];
+n105 [shape=ellipse, label="."];
+n106 [shape=box, label="Lit: ; border-color: "];
+n107 [shape=ellipse, label="."];
+n108 [shape=box, label="Lit: #1976d2"];
+n109 [shape=ellipse, label="."];
+n110 [shape=box, label="Lit: \""];
+n111 [shape=ellipse, label="."];
+n112 [shape=box, label="Lit: \n"];
+n113 [shape=ellipse, label="."];
+n114 [shape=box, label="Lit:             target="_blank""];
+n115 [shape=ellipse, label="."];
+n116 [shape=box, label="Lit: \n"];
+n117 [shape=ellipse, label="."];
+n118 [shape=box, label="Lit:             ><span class="dialogue__detect-browser"></span>"];
+n119 [shape=ellipse, label="."];
+n120 [shape=box, label="Lit: \n"];
+n121 [shape=ellipse, label="."];
+n122 [shape=box, label="Lit:             "];
+n123 [shape=ellipse, label="."];
+n124 [shape=box, label="Lit: Add to Browser"];
+n125 [shape=ellipse, label="."];
+n126 [shape=box, label="Lit: </a"];
+n127 [shape=ellipse, label="."];
+n128 [shape=box, label="Lit: \n"];
+n129 [shape=ellipse, label="."];
+n130 [shape=box, label="Lit:           >"];
+n131 [shape=ellipse, label="."];
+n132 [shape=box, label="Lit: \n"];
+n133 [shape=ellipse, label="."];
+n134 [shape=box, label="Lit:           <a class="dialogue__button-secondary"> "];
+n135 [shape=ellipse, label="."];
+n136 [shape=box, label="Lit: Not Now"];
+n137 [shape=ellipse, label="."];
+n138 [shape=box, label="Lit:  </a>"];
+n139 [shape=ellipse, label="."];
+n140 [shape=box, label="Lit: \n"];
+n141 [shape=ellipse, label="."];
+n142 [shape=box, label="Lit:         </div>"];
+n143 [shape=ellipse, label="."];
+n144 [shape=box, label="Lit: \n"];
+n145 [shape=ellipse, label="."];
+n146 [shape=box, label="Lit:       </div>"];
+n147 [shape=ellipse, label="."];
+n148 [shape=box, label="Lit: \n"];
+n149 [shape=ellipse, label="."];
+n150 [shape=box, label="Lit:     </div>"];
+n151 [shape=ellipse, label="."];
+n152 [shape=box, label="Lit: \n"];
+n153 [shape=ellipse, label="."];
+n154 [shape=box, label="Lit:     <!-- Edit here -->"];
+n155 [shape=ellipse, label="."];
+n156 [shape=box, label="Lit: \n"];
+n157 [shape=ellipse, label="."];
+n158 [shape=box, label="Lit:   </div>"];
+n159 [shape=ellipse, label="."];
+n160 [shape=box, label="Lit: \n"];
+n161 [shape=ellipse, label="."];
+n162 [shape=box, label="Lit: </div>"];
+n163 [shape=ellipse, label="."];
+n164 [shape=box, label="Lit: \n"];
+n165 [shape=box, label="Var: x"];
+n166 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n6;
+n5 -> n1;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n12;
+n11 -> n9;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n26 -> n21;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n27 -> n23;
+n27 -> n28;
+n32 -> n27;
+n29 -> n30;
+n29 -> n31;
+n29 -> n32;
+n33 -> n29;
+n33 -> n34;
+n38 -> n33;
+n35 -> n36;
+n35 -> n37;
+n35 -> n38;
+n42 -> n35;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n46 -> n39;
+n43 -> n44;
+n43 -> n45;
+n43 -> n46;
+n47 -> n48;
+n47 -> n43;
+n49 -> n47;
+n49 -> n50;
+n51 -> n49;
+n51 -> n52;
+n53 -> n51;
+n53 -> n54;
+n55 -> n53;
+n55 -> n56;
+n57 -> n55;
+n57 -> n58;
+n59 -> n57;
+n59 -> n60;
+n61 -> n59;
+n61 -> n62;
+n63 -> n61;
+n63 -> n64;
+n65 -> n63;
+n65 -> n66;
+n67 -> n65;
+n67 -> n68;
+n69 -> n67;
+n69 -> n70;
+n71 -> n69;
+n71 -> n72;
+n73 -> n71;
+n73 -> n74;
+n75 -> n73;
+n75 -> n76;
+n77 -> n75;
+n77 -> n78;
+n79 -> n77;
+n79 -> n80;
+n81 -> n79;
+n81 -> n82;
+n83 -> n81;
+n83 -> n84;
+n85 -> n83;
+n85 -> n86;
+n87 -> n85;
+n87 -> n88;
+n89 -> n87;
+n89 -> n90;
+n91 -> n89;
+n91 -> n92;
+n93 -> n91;
+n93 -> n94;
+n95 -> n93;
+n95 -> n96;
+n97 -> n95;
+n97 -> n98;
+n99 -> n97;
+n99 -> n100;
+n101 -> n99;
+n101 -> n102;
+n103 -> n101;
+n103 -> n104;
+n105 -> n103;
+n105 -> n106;
+n107 -> n105;
+n107 -> n108;
+n109 -> n107;
+n109 -> n110;
+n111 -> n109;
+n111 -> n112;
+n113 -> n111;
+n113 -> n114;
+n115 -> n113;
+n115 -> n116;
+n117 -> n115;
+n117 -> n118;
+n119 -> n117;
+n119 -> n120;
+n121 -> n119;
+n121 -> n122;
+n123 -> n121;
+n123 -> n124;
+n125 -> n123;
+n125 -> n126;
+n127 -> n125;
+n127 -> n128;
+n129 -> n127;
+n129 -> n130;
+n131 -> n129;
+n131 -> n132;
+n133 -> n131;
+n133 -> n134;
+n135 -> n133;
+n135 -> n136;
+n137 -> n135;
+n137 -> n138;
+n139 -> n137;
+n139 -> n140;
+n141 -> n139;
+n141 -> n142;
+n143 -> n141;
+n143 -> n144;
+n145 -> n143;
+n145 -> n146;
+n147 -> n145;
+n147 -> n148;
+n149 -> n147;
+n149 -> n150;
+n151 -> n149;
+n151 -> n152;
+n153 -> n151;
+n153 -> n154;
+n155 -> n153;
+n155 -> n156;
+n157 -> n155;
+n157 -> n158;
+n159 -> n157;
+n159 -> n160;
+n161 -> n159;
+n161 -> n162;
+n163 -> n161;
+n163 -> n164;
+n165 -> n163;
+n166 -> n165;
+}

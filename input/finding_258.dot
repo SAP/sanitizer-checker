@@ -1,0 +1,100 @@
+// Finding: 5cbc7c1d-d39e-415e-b51e-05e52a19ebe5
+// Finding.url: https://example68.com/tableau/tableau.html?service-id=metrika&device=desktop&lang=ru&domain=ua&services=radar+direct+webmaster+mediametrica+appmetrica+audience+surveys"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('4d169a18dd1c4faba68308ab8784154c')><!--/*+telephony+market.advertising+sprav+partners+clickhouse
+// Finding.parentloc: https://example68.com/tableau/tableau.html?service-id=metrika&device=desktop&lang=ru&domain=ua&services=radar+direct+webmaster+mediametrica+appmetrica+audience+surveys"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('4d169a18dd1c4faba68308ab8784154c')><!--/*+telephony+market.advertising+sprav+partners+clickhouse
+// Finding.domain: example68.com
+// Finding.base_domain: example68.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: u/<
+// Sanitizer.location: https://example68.com/tableau/tableau.html?service-id=metrika&device=desktop&lang=ru&domain=ua&services=radar+direct+webmaster+mediametrica+appmetrica+audience+surveys"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('4d169a18dd1c4faba68308ab8784154c')><!--/*+telephony+market.advertising+sprav+partners+clickhouse - u/<:1:16486
+// Finding.begin: 1567
+// Finding.end: 1575
+// Finding.original_uuid: 862f130e-a6e7-41f1-9b66-a58ddaba3298
+// Finding.TwentyFiveMillionFlowsId: 89357054
+// Finding.script: https://example68.com/tableau/tableau.html?service-id=metrika&device=desktop&lang=ru&domain=ua&services=radar+direct+webmaster+mediametrica+appmetrica+audience+surveys"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('4d169a18dd1c4faba68308ab8784154c')><!--/*+telephony+market.advertising+sprav+partners+clickhouse
+// Finding.line: 1
+// Exploit.uuid: 4d169a18-dd1c-4fab-a683-08ab8784154c
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: class
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: surveys"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: surveys"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 159
+// Exploit.end_taint_url: 166
+// Exploit.replace_begin_url: 159
+// Exploit.replace_end_url: 166
+// Exploit.replace_begin_param: 1755
+// Exploit.replace_end_param: 1762
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1070392918
+// DepGraph.sanitizer_hash: 828853467
+// Approximated Implementation for: replace(["&<>]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1), function_rhs: true], 'function(e){return s[e]||e}') - Other Exception: ReferenceError: s is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /^\?/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="split"];
+n6 [shape=box, label="Lit: &"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="split"];
+n9 [shape=box, label="Lit: ="];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="decodeURIComponent"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="split"];
+n14 [shape=box, label="Lit: +"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="preg_replace"];
+n17 [shape=box, label="RegExp: /["&<>]/"];
+n18 [shape=box, label="Lit: "];
+n19 [shape=box, label="Var: x"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n7 -> n1;
+n5 -> n6;
+n5 -> n7;
+n10 -> n5;
+n8 -> n9;
+n8 -> n10;
+n12 -> n8;
+n11 -> n12;
+n15 -> n11;
+n13 -> n14;
+n13 -> n15;
+n19 -> n13;
+n16 -> n17;
+n16 -> n18;
+n16 -> n19;
+n20 -> n16;
+n21 -> n20;
+}

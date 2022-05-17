@@ -1,0 +1,70 @@
+// Finding: 87396753-2c58-43c1-aa35-23a729e46bde
+// Finding.url: https://www.example57.com/en/phuket/millennium-resort-patong-phuket/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('723fadb5b5514097b8bd5a62715a5e86')><!--/*
+// Finding.parentloc: https://www.example57.com/en/phuket/millennium-resort-patong-phuket/##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('723fadb5b5514097b8bd5a62715a5e86')><!--/*
+// Finding.domain: www.example57.com
+// Finding.base_domain: example57.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 3243
+// Finding.end: 3249
+// Finding.original_uuid: 037945de-98b7-4a6a-9773-1e4c3ec87e38
+// Finding.TwentyFiveMillionFlowsId: 1631600261
+// Finding.script: https://www.example57.com/assets/lib/jquery.min.js
+// Finding.line: 2
+// Exploit.uuid: 723fadb5-b551-4097-b8bd-5a62715a5e86
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: comment
+// Exploit.content: Not a Member yet? <a class='pc-a' id='opt-sign-up' href='https://www.example57.com/en/my-millennium/sign-up#callbackurl=/en/phuket/millennium-resort-patong-phuket/'>Register Now</a> and get discounts right away.
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 6
+// Exploit.replace_begin_url: 75
+// Exploit.replace_end_url: 75
+// Exploit.replace_begin_param: 3731
+// Exploit.replace_end_param: 3731
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -918222095
+// DepGraph.sanitizer_hash: 67508634
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /\//"];
+n3 [shape=box, label="Lit: /"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n6 -> n5;
+}

@@ -1,0 +1,106 @@
+// Finding: 169a13a0-6ff9-4779-a45d-3aca7bf1f294
+// Finding.url: https://www.example178.com/page/2/
+// Finding.parentloc: https://www.example178.com/page/2/##'></iframe></style></script></object></embed></textarea><script>taintfoxLog('e1070c64911e416b8dec6f9699a00b2e')</script><!--/*
+// Finding.domain: www.example178.com
+// Finding.base_domain: example178.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: SekindoClientDetections_URL/this.setInfo
+// Sanitizer.location: https://live.example5.com/live/liveView.php?s=93368&cbuster=817544269&pubUrl=https://www.example178.com/page/2/%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27e1070c64911e416b8dec6f9699a00b2e%27)%3C/script%3E%3C!--/*&x=336&y=291&vp_content=plembed2c9myktsivhg&vp_template=93&schain=1.0,1!snigelweb.com,7021,1,,UQNIC%20NETWORK%20PTE%20LTD,example178.com - SekindoClientDetections_URL/this.setInfo:621:7
+// Finding.begin: 472
+// Finding.end: 528
+// Finding.original_uuid: c1afc888-e57c-4b66-853a-f6e1b7fcefbf
+// Finding.TwentyFiveMillionFlowsId: -1257929817
+// Finding.script: https://live.example5.com/live/liveView.php?s=93368&cbuster=817544269&pubUrl=https://www.example178.com/page/2/%23%23%27%3E%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%27e1070c64911e416b8dec6f9699a00b2e%27)%3C/script%3E%3C!--/*&x=336&y=291&vp_content=plembed2c9myktsivhg&vp_template=93&schain=1.0,1!snigelweb.com,7021,1,,UQNIC%20NETWORK%20PTE%20LTD,example178.com
+// Finding.line: 914
+// Exploit.uuid: e1070c64-911e-416b-8dec-6f9699a00b2e
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: script
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 38
+// Exploit.replace_begin_url: 38
+// Exploit.replace_end_url: 38
+// Exploit.replace_begin_param: 348
+// Exploit.replace_end_param: 348
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 588184103
+// DepGraph.sanitizer_hash: -1173560683
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &pubUrlAuto="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://live.example5.com/live/liveView.php?s=93368&cbuster=817....IC%20NETWORK%20PTE%20LTD,example178.com&cbuster=1621066603"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="Lit: SEKXLEN"];
+n9 [shape=box, label="Lit: 336"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: SEKYLEN"];
+n13 [shape=box, label="Lit: 291"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: '"];
+n17 [shape=box, label="Lit: %27"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: &csuuid=609f836bad2ec"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: &videoType=normal"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n24 -> n23;
+}

@@ -1,0 +1,84 @@
+// Finding: e199372b-0f9e-4352-8189-45cf1f7dfc73
+// Finding.url: https://example36.com/#s</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('d98d278bc1ae48e8b8f2b1e092ad450b')><!--/*
+// Finding.parentloc: https://example36.com/#s</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('d98d278bc1ae48e8b8f2b1e092ad450b')><!--/*
+// Finding.domain: example36.com
+// Finding.base_domain: example36.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: 
+// Sanitizer.location: https://static.cdn.example37.com/prismic.min.js - <anonymous>:28:182581
+// Finding.begin: 108
+// Finding.end: 284
+// Finding.original_uuid: 3aaaf712-421f-4610-b9d6-b289785985cc
+// Finding.TwentyFiveMillionFlowsId: -1076609784
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-54XWBQ4
+// Finding.line: 180
+// Exploit.uuid: d98d278b-c1ae-48e8-b8f2-b1e092ad450b
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: s
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: s</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: s</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 22
+// Exploit.end_taint_url: 38
+// Exploit.replace_begin_url: 22
+// Exploit.replace_end_url: 38
+// Exploit.replace_begin_param: 108
+// Exploit.replace_end_param: 124
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1850823720
+// DepGraph.sanitizer_hash: -724237724
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="escape"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=ellipse, label="."];
+n7 [shape=box, label="Lit: &utmxhash="];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: <script src="https://ssl.google-analytics.com/ga_exp.js?utmxkey=124032727-9&utmx=&utmxx=&utmxtime=1620636067927"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: " type="text/javascript" charset="utf-8"></script>"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n6 -> n7;
+n6 -> n4;
+n8 -> n9;
+n8 -> n6;
+n10 -> n8;
+n10 -> n11;
+n12 -> n10;
+n13 -> n12;
+}

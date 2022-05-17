@@ -1,0 +1,210 @@
+// Finding: 2abc1751-40cc-442f-80a7-5a6098c1e7ef
+// Finding.url: https://www.example296.com/news/Culture/article/all/20210428/106645360/1?ref=main##'></iframe></style></script></object></embed></textarea><script>taintfoxLog('85005e8195c1414e95e7c2e1e9c3c4d1')</script><!--/*
+// Finding.parentloc: https://www.example296.com/news/Culture/article/all/20210428/106645360/1?ref=main##'></iframe></style></script></object></embed></textarea><script>taintfoxLog('85005e8195c1414e95e7c2e1e9c3c4d1')</script><!--/*
+// Finding.domain: www.example296.com
+// Finding.base_domain: example296.com
+// Finding.source: location.href
+// Finding.sink: document.writeln
+// Sanitizer.score: 3
+// Sanitizer.name: 
+// Sanitizer.location: https://wr.example297.com/thumbnail/wrcatad.t2.banner.js?madvc=wcr_donga_542&adwcfg=542 - <anonymous>:25:18
+// Finding.begin: 140
+// Finding.end: 186
+// Finding.original_uuid: 78e2afcb-cabb-40d5-a9ad-0b1a2d223639
+// Finding.TwentyFiveMillionFlowsId: -1399097629
+// Finding.script: https://wr.example297.com/thumbnail/wrcatad.t2.banner.js?madvc=wcr_donga_542&adwcfg=542
+// Finding.line: 83
+// Exploit.uuid: 85005e81-95c1-414e-95e7-c2e1e9c3c4d1
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: '
+// Exploit.tag: iframe
+// Exploit.break_out: #'></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #'></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 8
+// Exploit.end_taint_url: 21
+// Exploit.replace_begin_url: 76
+// Exploit.replace_end_url: 76
+// Exploit.replace_begin_param: 130
+// Exploit.replace_end_param: 130
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 737720643
+// DepGraph.sanitizer_hash: -1628339738
+// Part of the URL ('www.example296.com') found in left hand side of replace 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: http://"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: https://"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: www.example296.com"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="split"];
+n14 [shape=box, label="Lit: ?"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: ?"];
+n18 [shape=ellipse, label="escape"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: &madvc="];
+n22 [shape=ellipse, label="."];
+n23 [shape=box, label="Lit: wcr_donga_542"];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: &cpp="];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: 1"];
+n28 [shape=ellipse, label="."];
+n29 [shape=box, label="Lit: &cpc="];
+n30 [shape=ellipse, label="."];
+n31 [shape=box, label="Lit: 0"];
+n32 [shape=ellipse, label="."];
+n33 [shape=box, label="Lit: &dAC="];
+n34 [shape=ellipse, label="."];
+n35 [shape=box, label="Lit: 4"];
+n36 [shape=ellipse, label="."];
+n37 [shape=box, label="Lit: &dW="];
+n38 [shape=ellipse, label="."];
+n39 [shape=box, label="Lit: 120"];
+n40 [shape=ellipse, label="."];
+n41 [shape=box, label="Lit: &dH="];
+n42 [shape=ellipse, label="."];
+n43 [shape=box, label="Lit: 90"];
+n44 [shape=ellipse, label="."];
+n45 [shape=box, label="Lit: &fsize="];
+n46 [shape=ellipse, label="."];
+n47 [shape=box, label="Lit: &fw="];
+n48 [shape=ellipse, label="."];
+n49 [shape=box, label="Lit: &fs="];
+n50 [shape=ellipse, label="."];
+n51 [shape=box, label="Lit: &fh="];
+n52 [shape=ellipse, label="."];
+n53 [shape=box, label="Lit: &popupYn="];
+n54 [shape=ellipse, label="."];
+n55 [shape=box, label="Lit: 0"];
+n56 [shape=ellipse, label="."];
+n57 [shape=box, label="Lit: &popupUrl="];
+n58 [shape=ellipse, label="."];
+n59 [shape=box, label="Lit: &BannerType="];
+n60 [shape=ellipse, label="."];
+n61 [shape=box, label="Lit: 18"];
+n62 [shape=ellipse, label="."];
+n63 [shape=box, label="Lit: <iframe id="wcr_571042" name="adthumbnail" src='//wr.example297.com/thumbnail/wrcatad.t2.thumbnail_banner.asp?"];
+n64 [shape=ellipse, label="."];
+n65 [shape=box, label="Lit: ' marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" bordercolor="#000000" width='"];
+n66 [shape=ellipse, label="."];
+n67 [shape=box, label="Lit: 300"];
+n68 [shape=ellipse, label="."];
+n69 [shape=box, label="Lit: ' height='"];
+n70 [shape=ellipse, label="."];
+n71 [shape=box, label="Lit: 330"];
+n72 [shape=ellipse, label="."];
+n73 [shape=box, label="Lit: '></iframe>"];
+n74 [shape=box, label="Var: x"];
+n75 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n15 -> n9;
+n13 -> n14;
+n13 -> n15;
+n16 -> n13;
+n16 -> n17;
+n19 -> n16;
+n18 -> n19;
+n20 -> n18;
+n20 -> n21;
+n22 -> n20;
+n22 -> n23;
+n24 -> n22;
+n24 -> n25;
+n26 -> n24;
+n26 -> n27;
+n28 -> n26;
+n28 -> n29;
+n30 -> n28;
+n30 -> n31;
+n32 -> n30;
+n32 -> n33;
+n34 -> n32;
+n34 -> n35;
+n36 -> n34;
+n36 -> n37;
+n38 -> n36;
+n38 -> n39;
+n40 -> n38;
+n40 -> n41;
+n42 -> n40;
+n42 -> n43;
+n44 -> n42;
+n44 -> n45;
+n46 -> n44;
+n46 -> n47;
+n48 -> n46;
+n48 -> n49;
+n50 -> n48;
+n50 -> n51;
+n52 -> n50;
+n52 -> n53;
+n54 -> n52;
+n54 -> n55;
+n56 -> n54;
+n56 -> n57;
+n58 -> n56;
+n58 -> n59;
+n60 -> n58;
+n60 -> n61;
+n62 -> n63;
+n62 -> n60;
+n64 -> n62;
+n64 -> n65;
+n66 -> n64;
+n66 -> n67;
+n68 -> n66;
+n68 -> n69;
+n70 -> n68;
+n70 -> n71;
+n72 -> n70;
+n72 -> n73;
+n74 -> n72;
+n75 -> n74;
+}

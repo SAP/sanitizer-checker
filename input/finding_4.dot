@@ -1,0 +1,106 @@
+// Finding: 37f89eed-31e7-4bee-b972-dab0fb9d9aed
+// Finding.url: https://www.example4.com/performance-maintenance/179223-wake-up-sleep-mode.html?s=d974900b5fc66cee1566b39ee6e10d49
+// Finding.parentloc: https://www.example4.com/performance-maintenance/179223-wake-up-sleep-mode.html?s=d974900b5fc66cee1566b39ee6e10d49##</iframe></style></script></object></embed></textarea><script>taintfoxLog('5d622a5dbfbb4afd8d39c926526a6426')</script><!--/*
+// Finding.domain: www.example4.com
+// Finding.base_domain: example4.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 1
+// Sanitizer.name: SekindoClientDetections_URL/this.setInfo
+// Sanitizer.location: https://live.example5.com/live/liveView.php?s=103745&cbuster=1265934359&pubUrl=https://www.example4.com/performance-maintenance/179223-wake-up-sleep-mode.html%3Fs%3Dd974900b5fc66cee1566b39ee6e10d49%23%23%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%275d622a5dbfbb4afd8d39c926526a6426%27)%3C/script%3E%3C!--/*&subId=[SUBID_ENCODED]&vp_content=plembed1f12qvhwnjmp&schain=1.0,1!snigelweb.com,7152,1 - SekindoClientDetections_URL/this.setInfo:621:7
+// Finding.begin: 748
+// Finding.end: 807
+// Finding.original_uuid: 12e9ae65-7a04-4b82-aff3-213811a6bd31
+// Finding.TwentyFiveMillionFlowsId: 1576659740
+// Finding.script: https://live.example5.com/live/liveView.php?s=103745&cbuster=1265934359&pubUrl=https://www.example4.com/performance-maintenance/179223-wake-up-sleep-mode.html%3Fs%3Dd974900b5fc66cee1566b39ee6e10d49%23%23%3C/iframe%3E%3C/style%3E%3C/script%3E%3C/object%3E%3C/embed%3E%3C/textarea%3E%3Cscript%3EtaintfoxLog(%275d622a5dbfbb4afd8d39c926526a6426%27)%3C/script%3E%3C!--/*&subId=[SUBID_ENCODED]&vp_content=plembed1f12qvhwnjmp&schain=1.0,1!snigelweb.com,7152,1
+// Finding.line: 914
+// Exploit.uuid: 5d622a5d-bfbb-4afd-8d39-c926526a6426
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: m
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 8
+// Exploit.end_taint_url: 25
+// Exploit.replace_begin_url: 115
+// Exploit.replace_end_url: 115
+// Exploit.replace_begin_param: 258
+// Exploit.replace_end_param: 258
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1680371172
+// DepGraph.sanitizer_hash: 404979221
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &pubUrlAuto="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: https://live.example5.com/live/liveView.php?s=103745&cbuster=12....2qvhwnjmp&schain=1.0,1!snigelweb.com,7152,1&cbuster=1621058260"];
+n7 [shape=ellipse, label="str_replace_once"];
+n8 [shape=box, label="Lit: SEKXLEN"];
+n9 [shape=box, label="Lit: 690"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="str_replace_once"];
+n12 [shape=box, label="Lit: SEKYLEN"];
+n13 [shape=box, label="Lit: 311"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="Lit: '"];
+n17 [shape=box, label="Lit: %27"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: &csuuid=609f62d470b3f"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: &videoType=flow&floatWidth=400&floatHeight=225&floatDirection=....1&floatCloseBtn=1&flowMode=below&flowCloseButtonPosition=right"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n6;
+n5 -> n3;
+n10 -> n5;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n15;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n24 -> n23;
+}

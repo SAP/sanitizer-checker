@@ -1,0 +1,74 @@
+// Finding: 734d49a7-3eff-462f-aecd-7fd7b85eda6a
+// Finding.url: https://www.example260.com/en/news/international/1620245324-g7-ends-talks-with-criticism-of-china-russia-iran##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('edffa9375bcd41578030f9b43a5e39bb')><!--/*
+// Finding.parentloc: https://www.example260.com/en/news/international/1620245324-g7-ends-talks-with-criticism-of-china-russia-iran##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('edffa9375bcd41578030f9b43a5e39bb')><!--/*
+// Finding.domain: www.example260.com
+// Finding.base_domain: example260.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 1
+// Sanitizer.name: ht
+// Sanitizer.location: https://www.example260.com/static/js/main.82b4b178.chunk.js - pt:1:78554
+// Finding.begin: 47
+// Finding.end: 154
+// Finding.original_uuid: c510f27d-3252-4cab-8c3b-3a35c0b61b71
+// Finding.TwentyFiveMillionFlowsId: 525076379
+// Finding.script: https://www.example260.com/static/js/main.82b4b178.chunk.js
+// Finding.line: 1
+// Exploit.uuid: edffa937-5bcd-4157-8030-f9b43a5e39bb
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: content
+// Exploit.quote_type: "
+// Exploit.tag: meta
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 105
+// Exploit.replace_begin_url: 105
+// Exploit.replace_end_url: 105
+// Exploit.replace_begin_param: 162
+// Exploit.replace_end_param: 162
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -704490991
+// DepGraph.sanitizer_hash: 1566332028
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: &quot;"];
+n3 [shape=ellipse, label="preg_replace"];
+n4 [shape=box, label="RegExp: /["]/"];
+n5 [shape=box, label="Lit: &quot;"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=doubleoctagon, label="Return: x"];
+n1 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n7 -> n3;
+n8 -> n7;
+}

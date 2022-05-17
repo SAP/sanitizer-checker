@@ -1,0 +1,147 @@
+// Finding: c08ec4a5-05af-4a52-977d-84a3e9ecf411
+// Finding.url: https://www.example436.com/indonesia/read/4538544/adu-tajam-penyerang-persija-vs-persib-di-piala-menpora-menanti-ledakan-bomber-bomber-moncer??HouseAds"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9932c115a43b4671b4d71f9b1f84e09b')><!--/*&campaign=sportbites_Home__STS1
+// Finding.parentloc: https://www.example436.com/indonesia/read/4538544/adu-tajam-penyerang-persija-vs-persib-di-piala-menpora-menanti-ledakan-bomber-bomber-moncer??HouseAds"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9932c115a43b4671b4d71f9b1f84e09b')><!--/*&campaign=sportbites_Home__STS1
+// Finding.domain: www.example436.com
+// Finding.base_domain: example436.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 10
+// Sanitizer.name: main
+// Sanitizer.location: https://cdn-production-assets-kly.example437.com/builds/bola.4a68a507.js - main:16:10785
+// Finding.begin: 5467
+// Finding.end: 5473
+// Finding.original_uuid: e70326e3-57c1-4aa9-a2fe-e9c030a60345
+// Finding.TwentyFiveMillionFlowsId: 2022655048
+// Finding.script: https://example184.com/ajax/libs/jquery/2.1.0/jquery.min.js
+// Finding.line: 3
+// Exploit.uuid: 9932c115-a43b-4671-b4d7-1f9b1f84e09b
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: data-share-url
+// Exploit.quote_type: "
+// Exploit.tag: figure
+// Exploit.break_out: ?HouseAds"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: ?HouseAds"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 144
+// Exploit.replace_begin_url: 136
+// Exploit.replace_end_url: 144
+// Exploit.replace_begin_param: 887
+// Exploit.replace_end_param: 896
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1078114234
+// DepGraph.sanitizer_hash: 2023102465
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>"'`]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1), function_rhs: true], 'function n(e){return c[e]}') - Other Exception: ReferenceError: c is not defined 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: %21"];
+n5 [shape=ellipse, label="preg_replace"];
+n6 [shape=box, label="RegExp: /[!]/"];
+n7 [shape=box, label="Lit: %21"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /[']/"];
+n11 [shape=box, label="Lit: %27"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="preg_replace"];
+n14 [shape=box, label="RegExp: /\(/"];
+n15 [shape=box, label="Lit: %28"];
+n16 [shape=box, label="Var: x"];
+n17 [shape=ellipse, label="preg_replace"];
+n18 [shape=box, label="RegExp: /\)/"];
+n19 [shape=box, label="Lit: %29"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: %2A"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /\*/"];
+n25 [shape=box, label="Lit: %2A"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="preg_replace"];
+n28 [shape=box, label="RegExp: /[&<>"'`]/"];
+n29 [shape=box, label="Lit: "];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: ">\n        <span class="read-page--photo-gallery--item__share-....d-page--photo-gallery--item__share-button js-copy-link" href=""];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: ">\n        <span class="read-page--photo-gallery--item__share-....y i-gallery-copy-link"></span>\n      </a>\n    </div>\n  </div>\n"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit:   <figcaption class="read-page--photo-gallery--item__caption">....bu (31/3/2021). (Bola.com/M Iqbal Ichsan)</span></figcaption>\n"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: </figure>\n"];
+n39 [shape=box, label="Var: x"];
+n40 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n1;
+n3 -> n4;
+n8 -> n3;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n16 -> n9;
+n13 -> n14;
+n13 -> n15;
+n13 -> n16;
+n20 -> n13;
+n17 -> n18;
+n17 -> n19;
+n17 -> n20;
+n21 -> n17;
+n21 -> n22;
+n26 -> n21;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n31 -> n27;
+n31 -> n32;
+n33 -> n31;
+n33 -> n34;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n40 -> n39;
+}

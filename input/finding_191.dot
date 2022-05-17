@@ -1,0 +1,70 @@
+// Finding: 3ada1bc8-2453-4eb2-87c1-83118869ad9a
+// Finding.url: https://www.niehs.example166.com/health/topics/agents/allergens/index.cfm##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('db788cd6c71e4eb2bcf0d32bd7a72edd')><!--/*
+// Finding.parentloc: https://www.niehs.example166.com/health/topics/agents/allergens/index.cfm##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('db788cd6c71e4eb2bcf0d32bd7a72edd')><!--/*
+// Finding.domain: www.niehs.example166.com
+// Finding.base_domain: example166.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: 
+// Sanitizer.location: https://www.niehs.example166.com/web-resources/javascript/scripts.js?version=20210421 - <anonymous>:1:2406
+// Finding.begin: 0
+// Finding.end: 74
+// Finding.original_uuid: f4a215ba-f747-4e00-85e4-9dfb07c6727e
+// Finding.TwentyFiveMillionFlowsId: -1293359608
+// Finding.script: https://code.example167.com/jquery-3.5.1.min.js
+// Finding.line: 2
+// Exploit.uuid: db788cd6-c71e-4eb2-bcf0-d32bd7a72edd
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: m
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 66
+// Exploit.replace_begin_url: 66
+// Exploit.replace_end_url: 66
+// Exploit.replace_begin_param: 66
+// Exploit.replace_end_param: 66
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 225502609
+// DepGraph.sanitizer_hash: -710558346
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /<.*>/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n6 -> n5;
+}

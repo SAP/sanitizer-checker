@@ -1,0 +1,82 @@
+// Finding: 43c069f8-4c67-42ed-bdb1-01594320e2a6
+// Finding.url: https://example309.com/1h9y94h/9k0jriz/iframe##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('5e0fe3a5172545f59130711de09f49a8')</script><!--/*
+// Finding.parentloc: https://example309.com/1h9y94h/9k0jriz/iframe##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('5e0fe3a5172545f59130711de09f49a8')</script><!--/*
+// Finding.domain: example309.com
+// Finding.base_domain: example309.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 3
+// Sanitizer.name: 
+// Sanitizer.location: https://i.example310.com/s/so_sg.js?pb=1&sgid=69751 - <anonymous>:38:2
+// Finding.begin: 93
+// Finding.end: 351
+// Finding.original_uuid: badecc6f-558f-44d8-a9f2-4c92b79cb807
+// Finding.TwentyFiveMillionFlowsId: 234280096
+// Finding.script: https://i.example310.com/s/so_sg.js?pb=1&sgid=69751
+// Finding.line: 43
+// Exploit.uuid: 5e0fe3a5-1725-45f5-9130-711de09f49a8
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: script
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 60
+// Exploit.replace_begin_url: 60
+// Exploit.replace_end_url: 60
+// Exploit.replace_begin_param: 165
+// Exploit.replace_end_param: 165
+// Issues.LargestEncodeAttrStringChain: 1
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 363549803
+// DepGraph.sanitizer_hash: -292072249
+// Large chain of EncodeAttrString Operations (1) 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="encodeURIComponent"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: &tp="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &pp="];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: https://tg.example310.com/sa/js?said=sg69751-s&t=1"];
+n9 [shape=ellipse, label="encodeAttrString"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n7 -> n8;
+n7 -> n5;
+n10 -> n7;
+n9 -> n10;
+n11 -> n9;
+n12 -> n11;
+}

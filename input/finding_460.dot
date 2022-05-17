@@ -1,0 +1,111 @@
+// Finding: 0241a0ee-f9df-4c32-b3a2-d62fec567c7e
+// Finding.url: https://blog.example307.com/the-future-of-cloud-delivered-security-lookout-to-acquire-ciphercloud?utm_source=LKW&utm_medium=WB"></iframe></style></script></object></embed></textarea><script>taintfoxLog('ca95dcda60694cb2863b1f9bb37ca7cb')</script><!--/*&utm_campaign=WW-MU-MU-MU-MU-P_NON-Lookout_Homepage_Center_tile
+// Finding.parentloc: https://blog.example307.com/the-future-of-cloud-delivered-security-lookout-to-acquire-ciphercloud?utm_source=LKW&utm_medium=WB"></iframe></style></script></object></embed></textarea><script>taintfoxLog('ca95dcda60694cb2863b1f9bb37ca7cb')</script><!--/*&utm_campaign=WW-MU-MU-MU-MU-P_NON-Lookout_Homepage_Center_tile
+// Finding.domain: blog.example307.com
+// Finding.base_domain: example307.com
+// Finding.source: document.documentURI
+// Finding.sink: document.write
+// Sanitizer.score: 5
+// Sanitizer.name: escapeHtml
+// Sanitizer.location: https://blog.example307.com/the-future-of-cloud-delivered-security-lookout-to-acquire-ciphercloud?utm_source=LKW&utm_medium=WB"></iframe></style></script></object></embed></textarea><script>taintfoxLog('ca95dcda60694cb2863b1f9bb37ca7cb')</script><!--/*&utm_campaign=WW-MU-MU-MU-MU-P_NON-Lookout_Homepage_Center_tile - <anonymous>:179:119
+// Finding.begin: 328
+// Finding.end: 333
+// Finding.original_uuid: e754401d-4493-4f00-bcb2-3d2dc96fbb92
+// Finding.TwentyFiveMillionFlowsId: 1224512719
+// Finding.script: https://blog.example307.com/the-future-of-cloud-delivered-security-lookout-to-acquire-ciphercloud?utm_source=LKW&utm_medium=WB"></iframe></style></script></object></embed></textarea><script>taintfoxLog('ca95dcda60694cb2863b1f9bb37ca7cb')</script><!--/*&utm_campaign=WW-MU-MU-MU-MU-P_NON-Lookout_Homepage_Center_tile
+// Finding.line: 179
+// Exploit.uuid: ca95dcda-6069-4cb2-863b-1f9bb37ca7cb
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: data-url
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: utm_medium=WB"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: utm_medium=WB"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 110
+// Exploit.end_taint_url: 123
+// Exploit.replace_begin_url: 110
+// Exploit.replace_end_url: 123
+// Exploit.replace_begin_param: 167
+// Exploit.replace_end_param: 180
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1721044749
+// DepGraph.sanitizer_hash: -1916872905
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: &"];
+n3 [shape=ellipse, label="preg_replace"];
+n4 [shape=box, label="RegExp: /[&]/"];
+n5 [shape=box, label="Lit: &"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="preg_replace"];
+n8 [shape=box, label="RegExp: /[<]/"];
+n9 [shape=box, label="Lit: &lt;"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /[>]/"];
+n13 [shape=box, label="Lit: >"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /["]/"];
+n17 [shape=box, label="Lit: \""];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="preg_replace"];
+n20 [shape=box, label="RegExp: /[']/"];
+n21 [shape=box, label="Lit: '"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=doubleoctagon, label="Return: x"];
+n1 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n10 -> n3;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n23 -> n19;
+n24 -> n23;
+}

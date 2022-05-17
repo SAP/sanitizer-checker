@@ -1,0 +1,218 @@
+// Finding: ea9efebb-bdc0-46ee-bf8c-fefc662c4f01
+// Finding.url: https://www.example91.com/x-men/dark-phoenix-director-simon-kinberg-celebrates-x-men-day-with-new-behind-the-scenes-photos-a184773#os-a184773%23gs.0tsm6f"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('142b5471454d4c3fa7277e0ef860c51a')><!--/*
+// Finding.parentloc: https://www.example91.com/x-men/dark-phoenix-director-simon-kinberg-celebrates-x-men-day-with-new-behind-the-scenes-photos-a184773#os-a184773%23gs.0tsm6f"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('142b5471454d4c3fa7277e0ef860c51a')><!--/*
+// Finding.domain: www.example91.com
+// Finding.base_domain: example91.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: zt/<
+// Sanitizer.location: https://fast.example7.com/client/2105/13141925/min/v1_gs_lib.js - zt/<:3:12987
+// Finding.begin: 671
+// Finding.end: 707
+// Finding.original_uuid: 43e6d76b-20d2-44ee-bce4-f10e29949641
+// Finding.TwentyFiveMillionFlowsId: -2340558
+// Finding.script: https://fast.example7.com/client/2105/13141925/min/v1_gs_lib.js
+// Finding.line: 3
+// Exploit.uuid: 142b5471-454d-4c3f-a727-7e0ef860c51a
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: os-a184773%23gs.0tsm6f"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: os-a184773%23gs.0tsm6f"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 145
+// Exploit.replace_begin_url: 136
+// Exploit.replace_end_url: 145
+// Exploit.replace_begin_param: 236
+// Exploit.replace_end_param: 258
+// Issues.LargestEncodeAttrStringChain: 1
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: true
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -206659063
+// DepGraph.sanitizer_hash: 1234369372
+// Large chain of EncodeAttrString Operations (1) 
+// Part of the URL ('#os-a184773%23gs.0tsm6f"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('142b5471454d4c3fa7277e0ef860c51a')><!--/*') found in left hand side of replace 
+// Part of the URL ('#os-a184773%23gs.0tsm6f') found in right hand side of replace 
+// Part of the URL ('/x-men/dark-phoenix-director-simon-kinberg-celebrates-x-men-day-with-new-behind-the-scenes-photos-a184773#os-a184773%23gs.0tsm6f') found in left hand side of replace 
+// Part of the URL ('#os-a184773%23gs.0tsm6f') found in left hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: #os-a184773%23gs.0tsm6f"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('142b5471454d4c3fa7277e0ef860c51a')><!--/*"];
+n3 [shape=box, label="Lit: #os-a184773%23gs.0tsm6f"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: /x-men/dark-phoenix-director-simon-kinberg-celebrates-x-men-day-with-new-behind-the-scenes-photos-a184773#os-a184773%23gs.0tsm6f"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: #os-a184773%23gs.0tsm6f"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="decodeURIComponent"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /\u00AD/"];
+n17 [shape=box, label="Lit: %C2%AD"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="str_replace_once"];
+n20 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n21 [shape=box, label="Lit: "];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="str_replace_once"];
+n24 [shape=box, label="Lit: &"];
+n25 [shape=box, label="Lit: ?"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="str_replace_once"];
+n28 [shape=box, label="RegExp: /#$/"];
+n29 [shape=box, label="Lit: "];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: /i/6482206/68259/0/0/0/1"];
+n33 [shape=ellipse, label="decodeURIComponent"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=ellipse, label="preg_replace"];
+n36 [shape=box, label="RegExp: /\u00AD/"];
+n37 [shape=box, label="Lit: %C2%AD"];
+n38 [shape=box, label="Var: x"];
+n39 [shape=ellipse, label="str_replace_once"];
+n40 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n41 [shape=box, label="Lit: "];
+n42 [shape=box, label="Var: x"];
+n43 [shape=ellipse, label="str_replace_once"];
+n44 [shape=box, label="Lit: &"];
+n45 [shape=box, label="Lit: ?"];
+n46 [shape=box, label="Var: x"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: ?"];
+n49 [shape=ellipse, label="."];
+n50 [shape=box, label="Lit: fb_ref="];
+n51 [shape=ellipse, label="."];
+n52 [shape=box, label="Lit: mEVADld9Yr"];
+n53 [shape=ellipse, label="."];
+n54 [shape=box, label="Lit: -"];
+n55 [shape=ellipse, label="."];
+n56 [shape=box, label="Lit: P"];
+n57 [shape=ellipse, label="."];
+n58 [shape=box, label="Lit: interest"];
+n59 [shape=ellipse, label="."];
+n60 [shape=box, label="Lit: &utm_source=Pinterest&utm_medium=ShareButton&utm_campaign=GetSocial"];
+n61 [shape=ellipse, label="encodeURIComponent"];
+n62 [shape=box, label="Var: x"];
+n63 [shape=ellipse, label="."];
+n64 [shape=box, label="Lit: http://pinterest.com/pin/create/link/?url="];
+n65 [shape=ellipse, label="."];
+n66 [shape=box, label="Lit: &description="];
+n67 [shape=ellipse, label="."];
+n68 [shape=box, label="Lit: 20th%20Century%20Fox%20named%20May%2013%20%22X-Men%20Day%22%20....0marked%20the%20occasion%20with%20some%20new%20BTS%20photos..."];
+n69 [shape=ellipse, label="."];
+n70 [shape=box, label="Lit: &media="];
+n71 [shape=ellipse, label="."];
+n72 [shape=box, label="Lit: https%3A%2F%2Fimg5.zergnet.com%2F6482206_300.jpg"];
+n73 [shape=ellipse, label="encodeAttrString"];
+n74 [shape=box, label="Var: x"];
+n75 [shape=ellipse, label="."];
+n76 [shape=box, label="Lit: <a rel="noreferrer nofollow" data-identifier="facebook:share" ....s-facebook-share gs-tracking  "><i aria-hidden="true"></i></a>"];
+n77 [shape=box, label="Var: x"];
+n78 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n14 -> n9;
+n13 -> n14;
+n18 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n31 -> n27;
+n31 -> n32;
+n34 -> n31;
+n33 -> n34;
+n38 -> n33;
+n35 -> n36;
+n35 -> n37;
+n35 -> n38;
+n42 -> n35;
+n39 -> n40;
+n39 -> n41;
+n39 -> n42;
+n46 -> n39;
+n43 -> n44;
+n43 -> n45;
+n43 -> n46;
+n47 -> n43;
+n47 -> n48;
+n49 -> n47;
+n49 -> n50;
+n51 -> n49;
+n51 -> n52;
+n53 -> n51;
+n53 -> n54;
+n55 -> n53;
+n55 -> n56;
+n57 -> n55;
+n57 -> n58;
+n59 -> n57;
+n59 -> n60;
+n62 -> n59;
+n61 -> n62;
+n63 -> n64;
+n63 -> n61;
+n65 -> n63;
+n65 -> n66;
+n67 -> n65;
+n67 -> n68;
+n69 -> n67;
+n69 -> n70;
+n71 -> n69;
+n71 -> n72;
+n74 -> n71;
+n73 -> n74;
+n75 -> n76;
+n75 -> n73;
+n77 -> n75;
+n78 -> n77;
+}

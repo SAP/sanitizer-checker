@@ -1,0 +1,90 @@
+// Finding: f3bddf4d-5beb-45a3-8eb2-70933559236f
+// Finding.url: https://s.example3.com/embed-widget/market-overview/?locale=en#{"showChart":true,"width":"300","whitelabel":true,"height":"430","plotLineColorGrowing":"rgba(60, 188, 152, 1)","plotLineColorFalling":"rgba(255, 74, 104, 1)","gridLineColor":"rgba(233, 233, 234, 1)","scaleFontColor":"rgba(218, 221, 224, 1)","belowLineFillColorGrowing":"rgba(60, 188, 152, 0.05)","belowLineFillColorFalling":"rgba(255, 74, 104, 0.05)","symbolActiveColor":"rgba(242, 250, 254, 1)","tabs":[{"title":"Equities","symbols":[{"s":"NASDAQ:AMZN","d":"Amazon"},{"s":"NASDAQ:AAPL","d":"Apple"},{"s":"NASDAQ:GOOG","d":"Google"},{"s":"NYSE:JNJ","d":"Johnson & Johnson"},{"s":"NYSE:HD","d":"Home Depot"},{"s":"NYs</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('541be5ad542e4b53a4135a30aef6049d')><!--/*E:WMT","d":"Wal-Mart"},{"s":"NASDAQ:COST","d":"Costco"},{"s":"NYSE:MCD","d":"McDonald's"}]},{"title":"Commodities","symbols":[{"s":"CME_MINI:ES1!","d":"E-Mini S&P"},{"s":"CME:E61!","d":"Euro"},{"s":"COMEX:GC1!","d":"Gold"},{"s":"NYMEX:CL1!","d":"Crude Oil"},{"s":"NYMEX:NG1!","d":"Natural Gas"},{"s":"CBOT:ZC1!","d":"Corn"}]},{"title":"Bonds","symbols":[{"s":"CME:GE1!","d":"Eurodollar"},{"s":"CBOT:ZB1!","d":"T-Bond"},{"s":"CBOT:UD1!","d":"Ultra T-Bond"},{"s":"EUREX:GG1!","d":"Euro Bund"},{"s":"EUREX:II1!","d":"Euro BTP"},{"s":"EUREX:HR1!","d":"Euro BOBL"}]},{"title":"Forex","symbols":[{"s":"FX:EURUSD"},{"s":"FX:GBPUSD"},{"s":"FX:USDJPY"},{"s":"FX:USDCHF"},{"s":"FX:AUDUSD"},{"s":"FX:USDCAD"}]}],"utm_source":"www.newsmax.com","utm_medium":"widget","utm_campaign":"market-overview"}
+// Finding.parentloc: https://s.example3.com/embed-widget/market-overview/?locale=en#{"showChart":true,"width":"300","whitelabel":true,"height":"430","plotLineColorGrowing":"rgba(60, 188, 152, 1)","plotLineColorFalling":"rgba(255, 74, 104, 1)","gridLineColor":"rgba(233, 233, 234, 1)","scaleFontColor":"rgba(218, 221, 224, 1)","belowLineFillColorGrowing":"rgba(60, 188, 152, 0.05)","belowLineFillColorFalling":"rgba(255, 74, 104, 0.05)","symbolActiveColor":"rgba(242, 250, 254, 1)","tabs":[{"title":"Equities","symbols":[{"s":"NASDAQ:AMZN","d":"Amazon"},{"s":"NASDAQ:AAPL","d":"Apple"},{"s":"NASDAQ:GOOG","d":"Google"},{"s":"NYSE:JNJ","d":"Johnson & Johnson"},{"s":"NYSE:HD","d":"Home Depot"},{"s":"NYs</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('541be5ad542e4b53a4135a30aef6049d')><!--/*E:WMT","d":"Wal-Mart"},{"s":"NASDAQ:COST","d":"Costco"},{"s":"NYSE:MCD","d":"McDonald's"}]},{"title":"Commodities","symbols":[{"s":"CME_MINI:ES1!","d":"E-Mini S&P"},{"s":"CME:E61!","d":"Euro"},{"s":"COMEX:GC1!","d":"Gold"},{"s":"NYMEX:CL1!","d":"Crude Oil"},{"s":"NYMEX:NG1!","d":"Natural Gas"},{"s":"CBOT:ZC1!","d":"Corn"}]},{"title":"Bonds","symbols":[{"s":"CME:GE1!","d":"Eurodollar"},{"s":"CBOT:ZB1!","d":"T-Bond"},{"s":"CBOT:UD1!","d":"Ultra T-Bond"},{"s":"EUREX:GG1!","d":"Euro Bund"},{"s":"EUREX:II1!","d":"Euro BTP"},{"s":"EUREX:HR1!","d":"Euro BOBL"}]},{"title":"Forex","symbols":[{"s":"FX:EURUSD"},{"s":"FX:GBPUSD"},{"s":"FX:USDJPY"},{"s":"FX:USDCHF"},{"s":"FX:AUDUSD"},{"s":"FX:USDCAD"}]}],"utm_source":"www.newsmax.com","utm_medium":"widget","utm_campaign":"market-overview"}
+// Finding.domain: s.example3.com
+// Finding.base_domain: example3.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 8
+// Sanitizer.name: s/t.escape
+// Sanitizer.location: https://s.example3.com/static/bundles/embed/embed_market_overview_widget.ef3c7c4d2ec64315a98e.js - s/t.escape:127:2484
+// Finding.begin: 6094
+// Finding.end: 6097
+// Finding.original_uuid: ec190501-b331-4f23-b0a4-10d577acf626
+// Finding.TwentyFiveMillionFlowsId: -8267634
+// Finding.script: https://s.example3.com/static/bundles/embed/vendors_embed.e8f8312851d14ea7c476.js
+// Finding.line: 24
+// Exploit.uuid: 541be5ad-542e-4b53-a413-5a30aef6049d
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: s
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: s</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: s</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 682
+// Exploit.end_taint_url: 683
+// Exploit.replace_begin_url: 682
+// Exploit.replace_end_url: 683
+// Exploit.replace_begin_param: 13399
+// Exploit.replace_end_param: 13400
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1619026577
+// DepGraph.sanitizer_hash: 1475924372
+// Approximated Implementation for: replace([&<>"'`=\/]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, =: 1), function_rhs: true], 'function(t){return c[t]}') - Other Exception: ReferenceError: c is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="decodeURIComponent"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=ellipse, label="JSON.parse"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="split"];
+n9 [shape=box, label="Lit: :"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /[&<>"'`=\/]/"];
+n13 [shape=box, label="Lit: "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n5 -> n1;
+n4 -> n5;
+n7 -> n4;
+n6 -> n7;
+n10 -> n6;
+n8 -> n9;
+n8 -> n10;
+n14 -> n8;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n15 -> n11;
+n16 -> n15;
+}

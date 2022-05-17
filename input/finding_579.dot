@@ -1,0 +1,131 @@
+// Finding: 8da0af51-4958-4854-9163-86aedfa73a5a
+// Finding.url: https://www.example221.com/ca/en/aco/home.html?isAuth=true#|taintfoxLog('7b12cdc78e334d46970d2ed8257b7a05')//
+// Finding.parentloc: https://www.example221.com/ca/en/aco/home.html?isAuth=true#|taintfoxLog('7b12cdc78e334d46970d2ed8257b7a05')//
+// Finding.domain: www.example221.com
+// Finding.base_domain: example221.com
+// Finding.source: location.href
+// Finding.sink: script.text
+// Sanitizer.score: 2
+// Sanitizer.name: value
+// Sanitizer.location: https://www.example221.com/etc/designs/aircanada/scripts/library/polyfill-es5.2021328179.js - value:743:29944
+// Finding.begin: 36707
+// Finding.end: 36713
+// Finding.original_uuid: e486899d-728f-4475-84e5-7689d0a9fe94
+// Finding.TwentyFiveMillionFlowsId: -1920498691
+// Finding.script: https://www.example221.com/assets/ae427fbb9e32edec2065f3c335af8c367001194a011
+// Finding.line: 20
+// Exploit.uuid: 7b12cdc7-8e33-4d46-970d-2ed8257b7a05
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: ExpressionStatement
+// Exploit.content: undefined
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: |
+// Exploit.break_in: //
+// Exploit.payload: |taintfoxLog(1)//
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 6
+// Exploit.replace_begin_url: 57
+// Exploit.replace_end_url: 57
+// Exploit.replace_begin_param: 36713
+// Exploit.replace_end_param: 36713
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1265407989
+// DepGraph.sanitizer_hash: 444188888
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="split"];
+n5 [shape=box, label="Lit: ?"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="substr"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Lit: 0"];
+n10 [shape=box, label="Lit: 36"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /^\s+|\s+$/"];
+n13 [shape=box, label="Lit: "];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="regex_exec"];
+n16 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n17 [shape=box, label="Lit: 1"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="regex_match"];
+n20 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n21 [shape=box, label="Lit: 1"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=ellipse, label="preg_replace"];
+n24 [shape=box, label="RegExp: /^\s+|\s+$/"];
+n25 [shape=box, label="Lit: "];
+n26 [shape=box, label="Var: x"];
+n27 [shape=ellipse, label="regex_exec"];
+n28 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n29 [shape=box, label="Lit: 1"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=ellipse, label="regex_match"];
+n32 [shape=box, label="RegExp: /^([^:\/?#]+:)?(\/\/(?:[^:@\/?#]*(?::[^:@\/?#]*)?@)?(([^:\/?#]*)(?::(\d*))?))?([^?#]*)(\?[^#]*)?(#[\s\S]*)?/"];
+n33 [shape=box, label="Lit: 1"];
+n34 [shape=box, label="Var: x"];
+n35 [shape=box, label="Var: x"];
+n36 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n6 -> n1;
+n4 -> n5;
+n4 -> n6;
+n8 -> n4;
+n7 -> n8;
+n7 -> n9;
+n7 -> n10;
+n14 -> n7;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n26 -> n19;
+n23 -> n24;
+n23 -> n25;
+n23 -> n26;
+n30 -> n23;
+n27 -> n28;
+n27 -> n29;
+n27 -> n30;
+n34 -> n27;
+n31 -> n32;
+n31 -> n33;
+n31 -> n34;
+n35 -> n31;
+n36 -> n35;
+}

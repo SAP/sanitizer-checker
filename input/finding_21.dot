@@ -1,0 +1,71 @@
+// Finding: a490e0a2-b6f8-466f-a845-d992db614e29
+// Finding.url: https://northstarclassicregistration.example28.com/register/form/144930525##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('97f6c976ab0146c4a33f8a084dc74dae')><!--/*
+// Finding.parentloc: https://northstarclassicregistration.example28.com/register/form/144930525##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('97f6c976ab0146c4a33f8a084dc74dae')><!--/*
+// Finding.domain: northstarclassicregistration.example28.com
+// Finding.base_domain: example28.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 5
+// Sanitizer.name: r/e<
+// Sanitizer.location: https://ngin-bar.example28.com/nginbar.js - r:542:12064
+// Finding.begin: 376
+// Finding.end: 390
+// Finding.original_uuid: 9d097c71-beee-4cef-8498-6a383b0720cf
+// Finding.TwentyFiveMillionFlowsId: -2022803929
+// Finding.script: https://ngin-bar.example28.com/nginbar.js
+// Finding.line: 83
+// Exploit.uuid: 97f6c976-ab01-46c4-a33f-8a084dc74dae
+// Exploit.success: false
+// Exploit.status: failure
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 74
+// Exploit.replace_begin_url: 74
+// Exploit.replace_end_url: 74
+// Exploit.replace_begin_param: 191
+// Exploit.replace_end_param: 191
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1796827874
+// DepGraph.sanitizer_hash: -895984817
+// Removed LR concats 
+// Approximated Implementation for: replace([&<>'"]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1), function_rhs: true], 'function a(t){return i[t]||t}') - Other Exception: ReferenceError: i is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /[&<>'"]/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=box, label="Var: x"];
+n6 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n6 -> n5;
+}

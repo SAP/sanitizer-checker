@@ -1,0 +1,112 @@
+// Finding: 1ec74485-1228-4c45-85e0-4cc8e8dd3d7a
+// Finding.url: https://www.example292.com/ticket/online3/calendar.jsp?venue_id=7978&language=en&country=US&queryString=language=en&country=US&venue_id=7978&partner_id=430&year=null&month=null##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c25fe0e0c89b425682691e029acf71dc')><!--/*
+// Finding.parentloc: https://www.example292.com/ticket/online3/calendar.jsp?venue_id=7978&language=en&country=US&queryString=language=en&country=US&venue_id=7978&partner_id=430&year=null&month=null##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c25fe0e0c89b425682691e029acf71dc')><!--/*
+// Finding.domain: www.example292.com
+// Finding.base_domain: example292.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: _appendShareMenuItems
+// Sanitizer.location: https://www.example292.com/ticket/online3/js/jquery.etix-cal.js?v=202012151506 - _appendShareMenuItems:622:20
+// Finding.begin: 673
+// Finding.end: 677
+// Finding.original_uuid: 9723a684-ae53-4ed6-98b5-0bc1b2aab2f5
+// Finding.TwentyFiveMillionFlowsId: 65738479
+// Finding.script: https://example184.com/ajax/libs/jquery/3.5.1/jquery.min.js
+// Finding.line: 2
+// Exploit.uuid: c25fe0e0-c89b-4256-8269-1e029acf71dc
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 28
+// Exploit.replace_begin_url: 170
+// Exploit.replace_end_url: 170
+// Exploit.replace_begin_param: 138
+// Exploit.replace_end_param: 138
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1978789664
+// DepGraph.sanitizer_hash: 1918180805
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: online3/calendar.jsp"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="regex_exec"];
+n5 [shape=box, label="RegExp: /.*venue_id=(\d+)\&*.*/"];
+n6 [shape=box, label="Lit: 1"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="str_replace_once"];
+n9 [shape=box, label="RegExp: /.*venue_id=(\d+)\&*.*/"];
+n10 [shape=box, label="Lit: $1"];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="escape"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="."];
+n15 [shape=box, label="Lit: ', '_blank', 'width=500, height=300, toolbar=0, location=0, menubar=0, modal=yes, top=0, left="];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: 554"];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: '); return false;">"];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: </a></li>"];
+n22 [shape=ellipse, label="."];
+n23 [shape=box, label="Lit: </ul>"];
+n24 [shape=box, label="Var: x"];
+n25 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n13 -> n8;
+n12 -> n13;
+n14 -> n12;
+n14 -> n15;
+n16 -> n14;
+n16 -> n17;
+n18 -> n16;
+n18 -> n19;
+n20 -> n18;
+n20 -> n21;
+n22 -> n20;
+n22 -> n23;
+n24 -> n22;
+n25 -> n24;
+}

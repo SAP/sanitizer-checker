@@ -1,0 +1,84 @@
+// Finding: b964de52-d876-4abe-a4bf-c5670ebdad13
+// Finding.url: https://webchat.example399.com/view/moor_chat.html?v=20210420&clientId=&urlTitle=向日葵-简单好用的远程控制软件|远程控制桌面连接|远程控制电脑|远程开机唤醒-贝锐向日葵官网&fromUrl=https://sunlogin.oray.com/hardware/kongkong2&serviceStates=1&accessId=f6abfad0-fbe5-11ea-9b98-4947dea401c2&styleColor=3</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7b035e66911f4689990585b315ac9e87')><!--/*&peers=[]&sessionLastToPeer=&otherParams=&seoSource=站内&seoKeywords=&xstKeywords=&companyName=贝锐科技&seoUrl=&language=zh-CN&href=https://sunlogin.oray.com/hardware/kongkong2&priority=false&showAnnexUrl=false&unionAccessId=undefined
+// Finding.parentloc: https://webchat.example399.com/view/moor_chat.html?v=20210420&clientId=&urlTitle=向日葵-简单好用的远程控制软件|远程控制桌面连接|远程控制电脑|远程开机唤醒-贝锐向日葵官网&fromUrl=https://sunlogin.oray.com/hardware/kongkong2&serviceStates=1&accessId=f6abfad0-fbe5-11ea-9b98-4947dea401c2&styleColor=3</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7b035e66911f4689990585b315ac9e87')><!--/*&peers=[]&sessionLastToPeer=&otherParams=&seoSource=站内&seoKeywords=&xstKeywords=&companyName=贝锐科技&seoUrl=&language=zh-CN&href=https://sunlogin.oray.com/hardware/kongkong2&priority=false&showAnnexUrl=false&unionAccessId=undefined
+// Finding.domain: webchat.example399.com
+// Finding.base_domain: example399.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: String.prototype.trim
+// Sanitizer.location: https://webchat.example399.com/view/moor_chat.html?v=20210420&clientId=&urlTitle=￥ﾐﾑ￦ﾗﾥ￨ﾑﾵ-￧ﾮﾀ￥ﾍﾕ￥ﾥﾽ￧ﾔﾨ￧ﾚﾄ￨﾿ﾜ￧ﾨﾋ￦ﾎﾧ￥ﾈﾶ￨ﾽﾯ￤ﾻﾶ|￨﾿ﾜ￧ﾨﾋ￦ﾎﾧ￥ﾈﾶ￦ﾡﾌ￩ﾝﾢ￨﾿ﾞ￦ﾎﾥ|￨﾿ﾜ￧ﾨﾋ￦ﾎﾧ￥ﾈﾶ￧ﾔﾵ￨ﾄﾑ|￨﾿ﾜ￧ﾨﾋ￥ﾼﾀ￦ﾜﾺ￥ﾔﾤ￩ﾆﾒ-￨ﾴﾝ￩ﾔﾐ￥ﾐﾑ￦ﾗﾥ￨ﾑﾵ￥ﾮﾘ￧ﾽﾑ&fromUrl=https://sunlogin.oray.com/hardware/kongkong2&serviceStates=1&accessId=f6abfad0-fbe5-11ea-9b98-4947dea401c2&styleColor=3</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('7b035e66911f4689990585b315ac9e87')><!--/*&peers=[]&sessionLastToPeer=&otherParams=&seoSource=￧ﾫﾙ￥ﾆﾅ&seoKeywords=&xstKeywords=&companyName=￨ﾴﾝ￩ﾔﾐ￧ﾧﾑ￦ﾊﾀ&seoUrl=&language=zh-CN&href=https://sunlogin.oray.com/hardware/kongkong2&priority=false&showAnnexUrl=false&unionAccessId=undefined - String.prototype.trim:5:3207
+// Finding.begin: 1845
+// Finding.end: 1908
+// Finding.original_uuid: a5b63621-e0ac-4a65-ab94-cb84dea51899
+// Finding.TwentyFiveMillionFlowsId: 1203156032
+// Finding.script: https://fs-im-kefu.example400.com/im/f5f042b0-6cdc-11ea-b9e9-11f72acca0b4/2020-06-05%2011:44:42/1591328682791/m7AllQuote.js
+// Finding.line: 496
+// Exploit.uuid: 7b035e66-911f-4689-9905-85b315ac9e87
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: 3
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: 3</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: 3</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 249
+// Exploit.end_taint_url: 255
+// Exploit.replace_begin_url: 249
+// Exploit.replace_end_url: 255
+// Exploit.replace_begin_param: 114
+// Exploit.replace_end_param: 120
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1689122938
+// DepGraph.sanitizer_hash: 1378647614
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 46"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /^\s*/"];
+n6 [shape=box, label="Lit: "];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /\s*$/"];
+n10 [shape=box, label="Lit: "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n12 -> n8;
+n13 -> n12;
+}
