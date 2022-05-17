@@ -4,7 +4,7 @@
 *.o
 *.obj
 *.class
-MONA/*
+MONA/
 
 # Compiled Dynamic libraries
 *.so
