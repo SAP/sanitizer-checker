@@ -1,34 +1,7 @@
 SemAttack
-========
-SemAttack is a version of SemRep for comparing attack patterns with sanitization functions.
+=========
 
-Building
----------
-To build the development container, use Docker:
-```bash
-$> docker build --buildarg gitremote=GIT_REMOTE --target semrep-dev -t semrep-dev .
-$> docker run -it --rm -v /mnt/workspace/stranger/SemRep:/work/SemRep --entrypoint="/bin/bash" semrep-dev
-$> cd SemRep
-$> autoreconf -i -f
-&> ./configure
-&> make -j
-```
-where GIT_REMOTE is the git remote of MONA, SemRep and LibStranger.
-
-Running tests
----------
-Get a shell in the docker container:
-```bash
-$> docker run -it --rm -v /mnt/workspace/stranger/SemRep:/work/SemRep --entrypoint="/bin/bash" semrep-dev
-```
-SemAttack compares a dot file to the XSS attack pattern (currently hard-coded in StrangerAutomaton.cpp:getUndesiredXSSTest()).
-```bash
-$> export LD_LIBRARY_PATH=/usr/local/lib
-$> cd test
-$> ../src/semattack --fieldname x --target single_replace.dot
-```
-will compare with a sanitization funtion that contains a single replace operation.
-
+This subdirectory contains source code for SemAttack, which is based on SemRep. The original SemRep documentation is reproduced below for reference, although not all (if any) of the functionality will work in this fork.
 
 SemRep
 =========
