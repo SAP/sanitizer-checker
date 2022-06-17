@@ -1,8 +1,11 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /* vim: set ts=8 sts=2 et sw=2 tw=80: */
 /*
- * Main multi attack
+ * automatonify.cpp
+ *
  * Copyright (C) 2013-2014 University of California Santa Barbara.
+ *
+ * Modifications Copyright SAP SE. 2020-2022.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
