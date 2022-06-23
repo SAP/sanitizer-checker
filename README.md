@@ -1,5 +1,7 @@
 # Sanitizer Checker
 
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP/sanitizer-checker)](https://api.reuse.software/info/github.com/SAP/sanitizer-checker)
+
 This repository contains source code for Sanitizer Checker, a research prototype which uses symbolic string analysis to evaluate the security of JavaScript sanitizer functions as a protection mechanism against client-side cross-site-scripting.
 
 ## Introduction
