@@ -35,3 +35,12 @@ console_output
 \#*\#
 .\#*
 
+# nodelib
+nodelib/node_modules
+nodelib/build
+
+#stranger
+stranger
+
+#build
+build
