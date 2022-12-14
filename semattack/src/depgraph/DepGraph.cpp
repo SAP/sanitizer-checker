@@ -252,7 +252,7 @@ std::string DepGraph::escapeLiteral(const std::string& litValue)
     return result;
 }
 
-DepGraph DepGraph::parseDotFile(std::string fname) {
+DepGraph DepGraph::parseDotFile(const std::string& fname) {
     std::ifstream ifs;
     try {
         ifs.open(fname, std::ifstream::in);
@@ -267,7 +267,7 @@ DepGraph DepGraph::parseDotFile(std::string fname) {
     }
 }
 
-DepGraph DepGraph::parseString(std::string str) {
+DepGraph DepGraph::parseString(const std::string& str) {
     cout << endl << "\t------ Got string " << str << " ------" << endl;
     stringstream ss;
     ss  << str;
