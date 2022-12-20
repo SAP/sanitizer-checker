@@ -44,3 +44,7 @@ stranger
 
 #build
 build
+
+#tests
+input2
+nodelib/test/output
