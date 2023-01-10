@@ -1,0 +1,112 @@
+// Finding: dd70aa15-a4b0-460a-8d00-68744cf6547d
+// Finding.url: https://s.example3.com/mediumwidgetembed/?symbols=C</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9b598a00f16e4d76ae42ec78a0e92b2f')><!--/*&COP=COP&locale=en&trendLineColor=#4bafe9&underLineColor=#dbeffb&fontColor=#83888D&gridLineColor=#e9e9ea&width=1000px&height=360px&colorTheme=undefined&utm_source=www.zippia.com&utm_medium=widget&utm_campaign=symbol-overview
+// Finding.parentloc: https://s.example3.com/mediumwidgetembed/?symbols=C</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('9b598a00f16e4d76ae42ec78a0e92b2f')><!--/*&COP=COP&locale=en&trendLineColor=#4bafe9&underLineColor=#dbeffb&fontColor=#83888D&gridLineColor=#e9e9ea&width=1000px&height=360px&colorTheme=undefined&utm_source=www.zippia.com&utm_medium=widget&utm_campaign=symbol-overview
+// Finding.domain: s.example3.com
+// Finding.base_domain: example3.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 12
+// Sanitizer.name: s/g.prototype.escapedValue
+// Sanitizer.location: https://s.example3.com/static/bundles/embed/embed_medium_widget.7a85969fb7fc18899125.js - s/g.prototype.escapedValue:152:431
+// Finding.begin: 237
+// Finding.end: 238
+// Finding.original_uuid: 66fdf717-b4a5-4679-99c2-59fdb8e1ab1a
+// Finding.TwentyFiveMillionFlowsId: -678939554
+// Finding.script: https://s.example3.com/static/bundles/embed/vendors_embed.e8f8312851d14ea7c476.js
+// Finding.line: 24
+// Exploit.uuid: 9b598a00-f16e-4d76-ae42-ec78a0e92b2f
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: C
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: C</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: C</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 53
+// Exploit.end_taint_url: 56
+// Exploit.replace_begin_url: 53
+// Exploit.replace_end_url: 56
+// Exploit.replace_begin_param: 237
+// Exploit.replace_end_param: 240
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 609411698
+// DepGraph.sanitizer_hash: -1988318219
+// Approximated Implementation for: replace([&<>"'`=\/]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, =: 1), function_rhs: true], 'function(t){return u[t]}') - Other Exception: ReferenceError: u is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="regex_exec"];
+n5 [shape=box, label="RegExp: /([^&=]+)=?([^&]*)/"];
+n6 [shape=box, label="Lit: 2"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /\+/"];
+n10 [shape=box, label="Lit:  "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="decodeURIComponent"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="preg_replace"];
+n15 [shape=box, label="RegExp: /<\/?[^>]+(>|$)/"];
+n16 [shape=box, label="Lit: "];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="str_replace_once"];
+n19 [shape=box, label="RegExp: /^(.+:)/"];
+n20 [shape=box, label="Lit: "];
+n21 [shape=box, label="Var: x"];
+n22 [shape=ellipse, label="preg_replace"];
+n23 [shape=box, label="RegExp: /[&<>"'`=\/]/"];
+n24 [shape=box, label="Lit: "];
+n25 [shape=box, label="Var: x"];
+n26 [shape=box, label="Var: x"];
+n27 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n13 -> n8;
+n12 -> n13;
+n17 -> n12;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n21 -> n14;
+n18 -> n19;
+n18 -> n20;
+n18 -> n21;
+n25 -> n18;
+n22 -> n23;
+n22 -> n24;
+n22 -> n25;
+n26 -> n22;
+n27 -> n26;
+}

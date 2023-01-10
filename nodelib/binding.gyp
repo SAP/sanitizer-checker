@@ -43,7 +43,10 @@
         "<!@(find /usr/lib/x86_64-linux-gnu/ | grep 'libboost' | grep '\.so$')"
     ],
       'conditions': [
+        ['OS=="win"', { 'defines': [ '_HAS_EXCEPTIONS=1' ] }],
+        ['OS=="linux"', { 'defines': [ '_HAS_EXCEPTIONS=1' ] }],
         ['OS=="mac"', {
+          'defines': [ '_HAS_EXCEPTIONS=1' ],
           'xcode_settings': {
             'OTHER_CPLUSPLUSFLAGS' : ['-std=c++11','-stdlib=libc++', '-v'],
             'OTHER_LDFLAGS': ['-stdlib=libc++'],

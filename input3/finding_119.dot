@@ -1,0 +1,106 @@
+// Finding: 02422463-139c-44b0-b30a-50d6c996b0ce
+// Finding.url: https://www.example122.com/products/capabilities/outbound-contact-center#taintfoxLog('8186ace50477410e9781c2e358141706')
+// Finding.parentloc: https://www.example122.com/products/capabilities/outbound-contact-center#taintfoxLog('8186ace50477410e9781c2e358141706')
+// Finding.domain: www.example122.com
+// Finding.base_domain: example122.com
+// Finding.source: location.href
+// Finding.sink: script.text
+// Sanitizer.score: 2
+// Sanitizer.name: pushBreadcrumb
+// Sanitizer.location: https://www.example122.com/products/capabilities/outbound-contact-center#taintfoxLog('8186ace50477410e9781c2e358141706') - pushBreadcrumb:146:20
+// Finding.begin: 383
+// Finding.end: 395
+// Finding.original_uuid: 9c04d461-35ac-407e-a4cc-7165a4b6b31c
+// Finding.TwentyFiveMillionFlowsId: -1059390440
+// Finding.script: https://www.example122.com/products/capabilities/outbound-contact-center#taintfoxLog('8186ace50477410e9781c2e358141706')
+// Finding.line: 184
+// Exploit.uuid: 8186ace5-0477-410e-9781-c2e358141706
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: 
+// Exploit.content: 
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: 
+// Exploit.break_in: 
+// Exploit.payload: taintfoxLog(1)
+// Exploit.begin_taint_url: 22
+// Exploit.end_taint_url: 30
+// Exploit.replace_begin_url: 67
+// Exploit.replace_end_url: 67
+// Exploit.replace_begin_param: 232
+// Exploit.replace_end_param: 232
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -657118138
+// DepGraph.sanitizer_hash: -1371293269
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /^(?:\/\/|[^/]+)*\//"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="split"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="str_replace_once"];
+n9 [shape=box, label="Lit: -"];
+n10 [shape=box, label="Lit:  "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="."];
+n13 [shape=box, label="Lit: \n      {\n        "@type" : "ListItem",\n        "position" : "2",\n        "name" : ""];
+n14 [shape=ellipse, label="."];
+n15 [shape=box, label="Lit: ",\n        "item" : ""];
+n16 [shape=ellipse, label="."];
+n17 [shape=box, label="Lit: "\n      },\n      "];
+n18 [shape=ellipse, label="."];
+n19 [shape=box, label="Lit: {"@context" : "http://schema.org",\n                  "@type" :....,\n                  "itemListElement" : [\n                    "];
+n20 [shape=ellipse, label="."];
+n21 [shape=box, label="Lit: \n                  ]}"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n7 -> n1;
+n5 -> n6;
+n5 -> n7;
+n11 -> n5;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n12 -> n13;
+n12 -> n8;
+n14 -> n12;
+n14 -> n15;
+n16 -> n14;
+n16 -> n17;
+n18 -> n19;
+n18 -> n16;
+n20 -> n18;
+n20 -> n21;
+n22 -> n20;
+n23 -> n22;
+}

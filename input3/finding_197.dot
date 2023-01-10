@@ -1,0 +1,120 @@
+// Finding: 5b4313cd-8c5f-4654-9a8f-e747c6bca32e
+// Finding.url: https://example11.com/miniwidgetembed/?Equities=S&P500,NQ100,Dow30,Nikkei225,FTSE100,DAX,CAC40,Hang Seng&Commodities=Emini,Euro,Gold,Oil,Gas,Corn&Bonds=US 2YR,US 10YR,US 30YR,Euro Bund,Euro BTP,Euro BOBL&Forex=FX:EURUSD,FX:GBPUSD,FX:USDJPY,FX:USDCHF,FX:AUDUSD,FX:USDCAD&tabs=Equities,Commodities,Bonds,Forex&S&P500=SPX500&NQ100=NAS100&Dow30=DOWI&Nikkei225=JPN225&FTSE100=FX:UK100|all&DAX=INDEX:DAX|all&CAC40=INDEX:CAC|all&Hang Seng=INDEX:HSI|all&Emini=ES1!&Euro=E61!&Gold=GC1!&Oil=CL1!&Gas=NG1!&Corn=ZC1!&US 2YR=TUZ2015&US 10YR=TYZ2015&US 30YR=US1!&Euro Bund=FX:BUND"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('4592e225db9b43f98a8c5ff4e5523263')><!--/*&Euro BTP=EUREX:II1!&Euro BOBL=EUREX:HR1!&activeTickerBackgroundColor=#EDF0F3&trendLineColor=#4bafe9&underLineColor=#dbeffb&fontColor=#83888D&gridLineColor=#E9E9EA&large_chart_url=https://www.example3.com/chart/&width=100%&height=100%
+// Finding.parentloc: https://example11.com/miniwidgetembed/?Equities=S&P500,NQ100,Dow30,Nikkei225,FTSE100,DAX,CAC40,Hang Seng&Commodities=Emini,Euro,Gold,Oil,Gas,Corn&Bonds=US 2YR,US 10YR,US 30YR,Euro Bund,Euro BTP,Euro BOBL&Forex=FX:EURUSD,FX:GBPUSD,FX:USDJPY,FX:USDCHF,FX:AUDUSD,FX:USDCAD&tabs=Equities,Commodities,Bonds,Forex&S&P500=SPX500&NQ100=NAS100&Dow30=DOWI&Nikkei225=JPN225&FTSE100=FX:UK100|all&DAX=INDEX:DAX|all&CAC40=INDEX:CAC|all&Hang Seng=INDEX:HSI|all&Emini=ES1!&Euro=E61!&Gold=GC1!&Oil=CL1!&Gas=NG1!&Corn=ZC1!&US 2YR=TUZ2015&US 10YR=TYZ2015&US 30YR=US1!&Euro Bund=FX:BUND"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('4592e225db9b43f98a8c5ff4e5523263')><!--/*&Euro BTP=EUREX:II1!&Euro BOBL=EUREX:HR1!&activeTickerBackgroundColor=#EDF0F3&trendLineColor=#4bafe9&underLineColor=#dbeffb&fontColor=#83888D&gridLineColor=#E9E9EA&large_chart_url=https://www.example3.com/chart/&width=100%&height=100%
+// Finding.domain: example11.com
+// Finding.base_domain: example11.com
+// Finding.source: location.search
+// Finding.sink: innerHTML
+// Sanitizer.score: 11
+// Sanitizer.name: s/t.escape
+// Sanitizer.location: https://example11.com/static/bundles/embed/embed_mini_widget.4deb8bbb3c5293efed5d.js - s/t.escape:141:395
+// Finding.begin: 175
+// Finding.end: 190
+// Finding.original_uuid: 7ad259e6-15e4-46f5-83a4-663ba9591f41
+// Finding.TwentyFiveMillionFlowsId: -90596300
+// Finding.script: https://example11.com/static/bundles/embed/vendors_embed.e8f8312851d14ea7c476.js
+// Finding.line: 24
+// Exploit.uuid: 4592e225-db9b-43f9-8a8c-5ff4e5523263
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: title
+// Exploit.quote_type: "
+// Exploit.tag: td
+// Exploit.break_out: FX:BUND"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: FX:BUND"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 574
+// Exploit.end_taint_url: 581
+// Exploit.replace_begin_url: 574
+// Exploit.replace_end_url: 581
+// Exploit.replace_begin_param: 80
+// Exploit.replace_end_param: 87
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1078730622
+// DepGraph.sanitizer_hash: -640242513
+// Approximated Implementation for: replace([&<>"'`=\/]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(<: 1, >: 1, &: 1, ": 1, ': 1, `: 1, /: 1, =: 1), function_rhs: true], 'function(t){return u[t]}') - Other Exception: ReferenceError: u is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="regex_exec"];
+n5 [shape=box, label="RegExp: /([^&=]+)=?([^&]*)/"];
+n6 [shape=box, label="Lit: 2"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /\+/"];
+n10 [shape=box, label="Lit:  "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=ellipse, label="decodeURIComponent"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="preg_replace"];
+n15 [shape=box, label="RegExp: /<\/?[^>]+(>|$)/"];
+n16 [shape=box, label="Lit: "];
+n17 [shape=box, label="Var: x"];
+n18 [shape=ellipse, label="encodeURIComponent"];
+n19 [shape=box, label="Var: x"];
+n20 [shape=ellipse, label="str_replace_once"];
+n21 [shape=box, label="Lit: {tvprosymbol}"];
+n22 [shape=box, label="Lit: FX%3ABUND%22%3E"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=ellipse, label="."];
+n25 [shape=box, label="Lit: https:&#x2F;&#x2F;www.example3.com&#x2F;chart&#x2F;?symbol&#x3D;"];
+n26 [shape=ellipse, label="preg_replace"];
+n27 [shape=box, label="RegExp: /[&<>"'`=\/]/"];
+n28 [shape=box, label="Lit: "];
+n29 [shape=box, label="Var: x"];
+n30 [shape=box, label="Var: x"];
+n31 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n11 -> n4;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n13 -> n8;
+n12 -> n13;
+n17 -> n12;
+n14 -> n15;
+n14 -> n16;
+n14 -> n17;
+n19 -> n14;
+n18 -> n19;
+n23 -> n18;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n24 -> n25;
+n24 -> n20;
+n29 -> n24;
+n26 -> n27;
+n26 -> n28;
+n26 -> n29;
+n30 -> n26;
+n31 -> n30;
+}

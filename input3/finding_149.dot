@@ -1,0 +1,193 @@
+// Finding: 5490ced9-36ac-477d-9053-ef14c696df5a
+// Finding.url: https://www.example29.com/newsmd/wellness/7018071-Fargo-baby-girl-saved-in-utero-by-blood-transfusion##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c005c8e758224b2096626d4a2c6d25d6')><!--/*
+// Finding.parentloc: https://www.example29.com/newsmd/wellness/7018071-Fargo-baby-girl-saved-in-utero-by-blood-transfusion##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('c005c8e758224b2096626d4a2c6d25d6')><!--/*
+// Finding.domain: www.example29.com
+// Finding.base_domain: example29.com
+// Finding.source: location.href
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 5
+// Sanitizer.name: T
+// Sanitizer.location: https://cdn.example20.com/autopilot/f00000000234283/autopilot_sdk.js - T:1:17173
+// Finding.begin: 596
+// Finding.end: 599
+// Finding.original_uuid: df33720d-e035-481a-bcf5-4e8356f8183d
+// Finding.TwentyFiveMillionFlowsId: 1561191570
+// Finding.script: https://cdn.example20.com/autopilot/f00000000234283/autopilot_sdk.js
+// Finding.line: 1
+// Exploit.uuid: c005c8e7-5822-4b20-9662-6d4a2c6d25d6
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: content
+// Exploit.quote_type: "
+// Exploit.tag: meta
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 99
+// Exploit.replace_begin_url: 99
+// Exploit.replace_end_url: 99
+// Exploit.replace_begin_param: 353
+// Exploit.replace_end_param: 353
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -483833716
+// DepGraph.sanitizer_hash: -1802500128
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="split"];
+n2 [shape=box, label="Lit: #"];
+n3 [shape=box, label="Var: x"];
+n4 [shape=ellipse, label="preg_replace"];
+n5 [shape=box, label="RegExp: /\\/"];
+n6 [shape=box, label="Lit: /"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=ellipse, label="."];
+n9 [shape=box, label="Lit: #"];
+n10 [shape=ellipse, label="."];
+n11 [shape=box, label="Lit: #"];
+n12 [shape=ellipse, label="trim"];
+n13 [shape=box, label="Var: x"];
+n14 [shape=ellipse, label="substr"];
+n15 [shape=box, label="Var: x"];
+n16 [shape=box, label="Lit: 6"];
+n17 [shape=ellipse, label="substr"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=box, label="Lit: 2"];
+n20 [shape=ellipse, label="substr"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=box, label="Lit: 0"];
+n23 [shape=box, label="Lit: 15"];
+n24 [shape=ellipse, label="strtolower"];
+n25 [shape=box, label="Var: x"];
+n26 [shape=ellipse, label="preg_replace"];
+n27 [shape=box, label="RegExp: /[\x2E\u3002\uFF0E\uFF61]/"];
+n28 [shape=box, label="Lit: ."];
+n29 [shape=box, label="Var: x"];
+n30 [shape=ellipse, label="split"];
+n31 [shape=box, label="Lit: ."];
+n32 [shape=box, label="Var: x"];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: ."];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: ."];
+n37 [shape=ellipse, label="preg_replace"];
+n38 [shape=box, label="RegExp: /[&]/"];
+n39 [shape=box, label="Lit: &amp;"];
+n40 [shape=box, label="Var: x"];
+n41 [shape=ellipse, label="preg_replace"];
+n42 [shape=box, label="RegExp: /[<]/"];
+n43 [shape=box, label="Lit: &lt;"];
+n44 [shape=box, label="Var: x"];
+n45 [shape=ellipse, label="preg_replace"];
+n46 [shape=box, label="RegExp: /[>]/"];
+n47 [shape=box, label="Lit: &gt;"];
+n48 [shape=box, label="Var: x"];
+n49 [shape=ellipse, label="preg_replace"];
+n50 [shape=box, label="RegExp: /["]/"];
+n51 [shape=box, label="Lit: &quot;"];
+n52 [shape=box, label="Var: x"];
+n53 [shape=ellipse, label="."];
+n54 [shape=box, label="Lit: \n<meta name="be:norm_url" content=""];
+n55 [shape=ellipse, label="."];
+n56 [shape=box, label="Lit: " />"];
+n57 [shape=ellipse, label="."];
+n58 [shape=box, label="Lit: \n<meta name="be:capsule_url" content="https://ixfd-api.example20.com/api/ixf/1.0.0/get_capsule/f00000000234283/359964953" />"];
+n59 [shape=ellipse, label="."];
+n60 [shape=box, label="Lit: \n<meta name="be:api_dt" content="py_2021; pm_04; pd_05; ph_12; pmh_53; p_epoch:1617652409038" />"];
+n61 [shape=ellipse, label="."];
+n62 [shape=box, label="Lit: \n<meta name="be:mod_dt" content="py_2021; pm_04; pd_05; ph_12; pmh_53; p_epoch:1617652409038" />"];
+n63 [shape=ellipse, label="."];
+n64 [shape=box, label="Lit: \n<meta name="be:messages" content="true" />"];
+n65 [shape=box, label="Var: x"];
+n66 [shape=doubleoctagon, label="Return: x"];
+n3 -> n0;
+n1 -> n2;
+n1 -> n3;
+n7 -> n1;
+n4 -> n5;
+n4 -> n6;
+n4 -> n7;
+n8 -> n9;
+n8 -> n4;
+n10 -> n8;
+n10 -> n11;
+n13 -> n10;
+n12 -> n13;
+n15 -> n12;
+n14 -> n15;
+n14 -> n16;
+n18 -> n14;
+n17 -> n18;
+n17 -> n19;
+n21 -> n17;
+n20 -> n21;
+n20 -> n22;
+n20 -> n23;
+n25 -> n20;
+n24 -> n25;
+n29 -> n24;
+n26 -> n27;
+n26 -> n28;
+n26 -> n29;
+n32 -> n26;
+n30 -> n31;
+n30 -> n32;
+n33 -> n34;
+n33 -> n30;
+n35 -> n33;
+n35 -> n36;
+n40 -> n35;
+n37 -> n38;
+n37 -> n39;
+n37 -> n40;
+n44 -> n37;
+n41 -> n42;
+n41 -> n43;
+n41 -> n44;
+n48 -> n41;
+n45 -> n46;
+n45 -> n47;
+n45 -> n48;
+n52 -> n45;
+n49 -> n50;
+n49 -> n51;
+n49 -> n52;
+n53 -> n54;
+n53 -> n49;
+n55 -> n53;
+n55 -> n56;
+n57 -> n55;
+n57 -> n58;
+n59 -> n57;
+n59 -> n60;
+n61 -> n59;
+n61 -> n62;
+n63 -> n61;
+n63 -> n64;
+n65 -> n63;
+n66 -> n65;
+}

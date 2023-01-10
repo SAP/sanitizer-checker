@@ -1,0 +1,118 @@
+// Finding: 9845bab8-3df9-43e9-8760-6a97ebc3c0f4
+// Finding.url: https://uz.example168.com/20210309/Belorusskiy-MAZ-organizuet-v-Uzbekistane-sborochnoe-proizvodstvo-16155678.html##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0cce3305b13543048e68a92bbddaf1f6')><!--/*
+// Finding.parentloc: https://uz.example168.com/20210309/Belorusskiy-MAZ-organizuet-v-Uzbekistane-sborochnoe-proizvodstvo-16155678.html##</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('0cce3305b13543048e68a92bbddaf1f6')><!--/*
+// Finding.domain: uz.example168.com
+// Finding.base_domain: example168.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 4
+// Sanitizer.name: z</f.prototype.R/<
+// Sanitizer.location: https://www.example22.com/gtm.js?id=GTM-NWC7VN - z</f.prototype.R/<:739:226
+// Finding.begin: 61
+// Finding.end: 357
+// Finding.original_uuid: c8b48420-fb50-4da0-894a-1f23cfa133ce
+// Finding.TwentyFiveMillionFlowsId: 617285166
+// Finding.script: https://www.example22.com/gtm.js?id=GTM-NWC7VN
+// Finding.line: 739
+// Exploit.uuid: 0cce3305-b135-4304-8e68-a92bbddaf1f6
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: text
+// Exploit.content: l
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: #</iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #</iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 113
+// Exploit.replace_begin_url: 113
+// Exploit.replace_end_url: 113
+// Exploit.replace_begin_param: 166
+// Exploit.replace_end_param: 166
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1722285391
+// DepGraph.sanitizer_hash: -1570920764
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="escape"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=ellipse, label="."];
+n4 [shape=box, label="Lit: id=45383&r=&pg="];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit: &c=Y"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: &j=N"];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: &wh=1366x768&px=24"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: &js=1.3"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: <img src="https://cnt0.www.uz/counter/collect?"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: &col=340F6E&t=ffffff&p=BD6F6F"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: " width=0 height=0 border=0 />"];
+n19 [shape=ellipse, label="substr"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=box, label="Lit: 0"];
+n22 [shape=box, label="Lit: 449"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit:  data-ps-id=6 />"];
+n25 [shape=ellipse, label="str_replace_once"];
+n26 [shape=box, label="RegExp: /(\/?>)/"];
+n27 [shape=box, label="Lit:  data-ps-id=6 $1"];
+n28 [shape=box, label="Var: x"];
+n29 [shape=box, label="Var: x"];
+n30 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n3 -> n4;
+n3 -> n1;
+n5 -> n3;
+n5 -> n6;
+n7 -> n5;
+n7 -> n8;
+n9 -> n7;
+n9 -> n10;
+n11 -> n9;
+n11 -> n12;
+n13 -> n14;
+n13 -> n11;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n20 -> n17;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n23 -> n19;
+n23 -> n24;
+n28 -> n23;
+n25 -> n26;
+n25 -> n27;
+n25 -> n28;
+n29 -> n25;
+n30 -> n29;
+}
