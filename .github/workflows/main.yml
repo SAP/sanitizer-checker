@@ -45,7 +45,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./nodelib
-        run: npm install
+        run: npm install node-addon-api chai
 
       - name: Configure Library
         working-directory: ./nodelib
