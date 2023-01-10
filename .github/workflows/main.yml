@@ -1,0 +1,59 @@
+name: "Build C++ Code"
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Update
+        run: sudo apt-get update
+
+      - name: Build SemAttack
+        run: bash build.sh
+  
+  gyp-build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Update
+        run: sudo apt-get update
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install mocha
+        run: npm -g install mocha
+
+      - name: Install node-gyp
+        run: npm -g install node-gyp
+
+      - name: Install dependencies
+        working-directory: ./nodelib
+        run: npm install
+
+      - name: Configure Library
+        working-directory: ./nodelib
+        run: node-gyp configure
+
+      - name: Build Library
+        working-directory: ./nodelib
+        run: node-gyp build
+
+      - name: Run Tests
+        working-directory: ./nodelib
+        run: npm test
