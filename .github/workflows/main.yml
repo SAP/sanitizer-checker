@@ -66,8 +66,8 @@ jobs:
         working-directory: ./nodelib
         run: node-gyp build
 
-      - name: Listing lib files
-        run: ls /usr/local/lib
+      - name: Creating hard link for libmonabdd.so.1
+        run: ln -s /usr/local/lib/libmonabdd.so.1 /lib/libmonabdd.so.1
 
       - name: Run Tests
         working-directory: ./nodelib
