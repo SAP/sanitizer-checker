@@ -35,6 +35,9 @@ jobs:
       - name: Build SemAttack
         run: bash build.sh
 
+      - name: Exporting lib path
+        run: export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -62,6 +65,9 @@ jobs:
       - name: Build Library
         working-directory: ./nodelib
         run: node-gyp build
+
+      - name: Listing lib files
+        run: ls /usr/local/lib
 
       - name: Run Tests
         working-directory: ./nodelib
