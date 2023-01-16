@@ -34,7 +34,6 @@ using namespace std;
 using namespace boost;
 namespace po = boost::program_options;
 
-
 std::string call_sem_attack(string target_name, string dep_graph, string field_name){
     try {
         cout << endl << "\t------ Starting Analysis for: " << field_name << " ------" << endl;
@@ -62,7 +61,7 @@ std::string call_sem_attack(string target_name, string dep_graph, string field_n
         cout << endl << "\t------ END RESULT for: " << field_name << " ------" << endl;
     } catch (StrangerException const &e) {
         cerr << e.what();
-        exit(EXIT_FAILURE);
+        // exit(EXIT_FAILURE);
     }
 
     return "";

@@ -32,6 +32,9 @@ jobs:
       - name: Update
         run: sudo apt-get update
 
+      - name: Build SemAttack
+        run: bash build.sh
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:

@@ -2,7 +2,7 @@ const assert = require('assert');
 const path = require("path");
 const fs = require("fs");
 const sanitizerChecker = require('../build/Release/sanitizerchecker.node');
-const inputFolder = __dirname + '/../../input3';
+const inputFolder = __dirname + '/../../input';
 
 fs.readdir(inputFolder, (err, files) => {
     files.forEach(file => {
@@ -15,3 +15,4 @@ fs.readdir(inputFolder, (err, files) => {
         });
     });
   });
+  
