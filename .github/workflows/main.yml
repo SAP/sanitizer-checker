@@ -66,6 +66,12 @@ jobs:
         working-directory: ./nodelib
         run: node-gyp build
 
+      - name: checking LD_LIBRARY_PATH
+        run: echo $LD_LIBRARY_PATH
+
+      - name: checking lib directory
+        run: ls /usr/local/lib
+
       # - name: Creating hard link for libmonabdd.so.1
       #   run: ln -s /usr/local/lib/libmonabdd.so.1 /lib/libmonabdd.so.1
 
