@@ -7,6 +7,9 @@ on:
 
   workflow_dispatch:
 
+env:
+  LD_LIBRARY_PATH: /usr/local/lib
+
 jobs:
   # build:
   #   runs-on: ubuntu-latest
@@ -21,6 +24,7 @@ jobs:
   #     - name: Build SemAttack
   #       run: bash build.sh
   
+
   gyp-build-test:
     # needs: build
     runs-on: ubuntu-latest
@@ -66,7 +70,7 @@ jobs:
         working-directory: ./nodelib
         run: node-gyp build
 
-      - name: Exporting lib path
+      - name: Exporting lib path 2
         run: export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
 
       - name: checking LD_LIBRARY_PATH
