@@ -34,7 +34,7 @@ using namespace std;
 using namespace boost;
 namespace po = boost::program_options;
 
-std::string call_sem_attack(string target_name, string dep_graph, string field_name){
+std::string call_sem_attack(const std::string& target_name, const std::string& dep_graph, const std::string& field_name, std::string& exploit_string){
     try {
         cout << endl << "\t------ Starting Analysis for: " << field_name << " ------" << endl;
         cout << endl << "\t       Target: " << target_name  << endl;
@@ -59,12 +59,14 @@ std::string call_sem_attack(string target_name, string dep_graph, string field_n
         semAttack.printResults();
 
         cout << endl << "\t------ END RESULT for: " << field_name << " ------" << endl;
-    } catch (StrangerException const &e) {
+        //TODO: update exploit string
+    } catch (const StrangerException &e) {
         cerr << e.what();
+        return AnalysisErrorHelper::getName(e.getError());
         // exit(EXIT_FAILURE);
     }
 
-    return "";
+    return AnalysisErrorHelper::getName(AnalysisError::None);
 }
 
 
@@ -112,13 +114,15 @@ int main(int argc, char *argv[]) {
 
         po::notify(vm);
 
+        std::string exploit = "";
+
         if (vm.count("digraph") && vm.count("fieldname") && !vm.count("target"))
         {
-            call_sem_attack("", vm["digraph"].as<string>(), vm["fieldname"].as<string>());
+            call_sem_attack("", vm["digraph"].as<string>(), vm["fieldname"].as<string>(), exploit);
         }
         else if (vm.count("target") && vm.count("fieldname") && !vm.count("digraph"))
         {
-            call_sem_attack(vm["target"].as<string>(), "", vm["fieldname"].as<string>());
+            call_sem_attack(vm["target"].as<string>(), "", vm["fieldname"].as<string>(), exploit);
         }
         else if (vm.count("digraph") && vm.count("target")) {
             cerr << "either a digraph or a target file has to be provided, but not both" << "\n";

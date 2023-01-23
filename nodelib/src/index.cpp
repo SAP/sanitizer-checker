@@ -8,10 +8,11 @@ Napi::String parseDepString(const Napi::CallbackInfo& info) {
 
     std::string depgraph = (std::string) info[0].ToString();
     std::string fieldName = (std::string) info[1].ToString();
+    std::string exploit = "";
     std::string result;
     std::cout.setstate(std::ios_base::failbit);
     try {
-        result = call_sem_attack("", depgraph, fieldName);
+        result = call_sem_attack("", depgraph, fieldName, exploit);
     } catch (...) {
         Napi::Error::New(env, "Example exception").ThrowAsJavaScriptException();
         return Napi::String::New(env, "error");
