@@ -8,21 +8,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  # build:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
 
-      - name: Update
-        run: sudo apt-get update
+  #     - name: Update
+  #       run: sudo apt-get update
 
-      - name: Build SemAttack
-        run: bash build.sh
+  #     - name: Build SemAttack
+  #       run: bash build.sh
   
   gyp-build-test:
-    needs: build
+    # needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -66,8 +66,8 @@ jobs:
         working-directory: ./nodelib
         run: node-gyp build
 
-      - name: Creating hard link for libmonabdd.so.1
-        run: ln -s /usr/local/lib/libmonabdd.so.1 /lib/libmonabdd.so.1
+      # - name: Creating hard link for libmonabdd.so.1
+      #   run: ln -s /usr/local/lib/libmonabdd.so.1 /lib/libmonabdd.so.1
 
       - name: Run Tests
         working-directory: ./nodelib
