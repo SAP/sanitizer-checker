@@ -66,6 +66,9 @@ jobs:
         working-directory: ./nodelib
         run: node-gyp build
 
+      - name: Exporting lib path
+        run: export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+
       - name: checking LD_LIBRARY_PATH
         run: echo $LD_LIBRARY_PATH
 
