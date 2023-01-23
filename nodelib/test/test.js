@@ -3,7 +3,7 @@ const expect = require('chai').expect;
 const path = require("path");
 const fs = require("fs");
 const sanitizerChecker = require('../build/Release/sanitizerchecker.node');
-const inputFolder = __dirname + '/../../input';
+const inputFolder = __dirname + '/../../input3';
 
 fs.readdir(inputFolder, (err, files) => {
   const errors = ['None', 'InfiniteRegex', 'NotImplemented', 'Other', 'UnsupportedFunction', 'MalformedDepgraph', 'UrlInReplaceString', 'UrlInReplaceString', 'LargeEncodeAttrChain', 'LargeEncodeTextChain', 'RegExpParseError', 'MonaException', 'InvalidArgument', 'InfiniteLength'];
