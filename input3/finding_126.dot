@@ -1,0 +1,138 @@
+// Finding: e836d0f0-4cba-4744-a411-160a99e625f6
+// Finding.url: https://www.example126.com/society/news/2021/05/14/kiji/20210514s00042000138000c.html
+// Finding.parentloc: https://www.example126.com/society/news/2021/05/14/kiji/20210514s00042000138000c.html##"></iframe></style></script></object></embed></textarea><script>taintfoxLog('fe38fe24256f4d0faf099344282c129e')</script><!--/*
+// Finding.domain: www.example126.com
+// Finding.base_domain: example126.com
+// Finding.source: location.href
+// Finding.sink: document.write
+// Sanitizer.score: 3
+// Sanitizer.name: serialize
+// Sanitizer.location: https://sportsnippon-d.example127.com/w/1.0/jstag - serialize:2:8334
+// Finding.begin: 141
+// Finding.end: 408
+// Finding.original_uuid: de41633a-446f-4c2f-a070-d0b53f6b49be
+// Finding.TwentyFiveMillionFlowsId: 645408002
+// Finding.script: https://sportsnippon-d.example127.com/w/1.0/jstag
+// Finding.line: 2
+// Exploit.uuid: fe38fe24-256f-4d0f-af09-9344282c129e
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><script>
+// Exploit.break_in: </script><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><script>taintfoxLog(1)</script><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 85
+// Exploit.replace_begin_url: 85
+// Exploit.replace_end_url: 85
+// Exploit.replace_begin_param: 1670
+// Exploit.replace_end_param: 1670
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1665142839
+// DepGraph.sanitizer_hash: 1869984607
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="Lit: http:"];
+n3 [shape=box, label="Lit: https:"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="escape"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=ellipse, label="."];
+n8 [shape=box, label="Lit: ju="];
+n9 [shape=ellipse, label="."];
+n10 [shape=box, label="Lit: &"];
+n11 [shape=ellipse, label="."];
+n12 [shape=box, label="Lit: o=6120846205&callback=OX_6120846205&"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: jr=&"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: auid=540834176&"];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: dims=1108x694&"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: adxy=761%2C565&"];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: res=1366x768x24&"];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: plg=pm&"];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit: ch=UTF-8&"];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit: tz=0&"];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit: ws=300x250&"];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit: ifr=1&"];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: tws=1108x694&"];
+n35 [shape=ellipse, label="substr"];
+n36 [shape=box, label="Var: x"];
+n37 [shape=box, label="Lit: 0"];
+n38 [shape=box, label="Lit: 421"];
+n39 [shape=box, label="Var: x"];
+n40 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n7 -> n8;
+n7 -> n5;
+n9 -> n7;
+n9 -> n10;
+n11 -> n12;
+n11 -> n9;
+n13 -> n11;
+n13 -> n14;
+n15 -> n13;
+n15 -> n16;
+n17 -> n15;
+n17 -> n18;
+n19 -> n17;
+n19 -> n20;
+n21 -> n19;
+n21 -> n22;
+n23 -> n21;
+n23 -> n24;
+n25 -> n23;
+n25 -> n26;
+n27 -> n25;
+n27 -> n28;
+n29 -> n27;
+n29 -> n30;
+n31 -> n29;
+n31 -> n32;
+n33 -> n31;
+n33 -> n34;
+n36 -> n33;
+n35 -> n36;
+n35 -> n37;
+n35 -> n38;
+n39 -> n35;
+n40 -> n39;
+}

@@ -1,0 +1,87 @@
+name: "Build C++ Code"
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+env:
+  LD_LIBRARY_PATH: /usr/local/lib
+
+jobs:
+  # build:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+
+  #     - name: Update
+  #       run: sudo apt-get update
+
+  #     - name: Build SemAttack
+  #       run: bash build.sh
+  
+
+  gyp-build-test:
+    # needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Update
+        run: sudo apt-get update
+
+      - name: Build SemAttack
+        run: bash build.sh
+
+      - name: Exporting lib path
+        run: export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+
+      - name: Install mocha
+        run: npm -g install mocha
+
+      - name: Install node-gyp
+        run: npm -g install node-gyp
+
+      - name: Install dependencies
+        working-directory: ./nodelib
+        run: npm install node-addon-api chai
+
+      - name: Configure Library
+        working-directory: ./nodelib
+        run: node-gyp configure
+
+      - name: Build Library
+        working-directory: ./nodelib
+        run: node-gyp build
+
+      - name: Exporting lib path 2
+        run: export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib
+
+      - name: checking LD_LIBRARY_PATH
+        run: echo $LD_LIBRARY_PATH
+
+      - name: checking lib directory
+        run: ls /usr/local/lib
+
+      # - name: Creating hard link for libmonabdd.so.1
+      #   run: ln -s /usr/local/lib/libmonabdd.so.1 /lib/libmonabdd.so.1
+
+      - name: Run Tests
+        working-directory: ./nodelib
+        run: npm test

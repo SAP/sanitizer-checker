@@ -1,0 +1,106 @@
+// Finding: 79f92407-5d04-40c2-b783-c2b29fd3efe7
+// Finding.url: https://www.example6.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3267e5f14d0a492a9e224f414c158ca1')><!--/*
+// Finding.parentloc: https://www.example6.com/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3267e5f14d0a492a9e224f414c158ca1')><!--/*
+// Finding.domain: www.example6.com
+// Finding.base_domain: example6.com
+// Finding.source: location.hash
+// Finding.sink: insertAdjacentHTML
+// Sanitizer.score: 1
+// Sanitizer.name: ct
+// Sanitizer.location: https://fast.example7.com/client/2105/10091346/min/v1_gs_lib.js - ct:1:30924
+// Finding.begin: 3799
+// Finding.end: 3805
+// Finding.original_uuid: d8b93d61-1c5e-4737-bb97-7df8e05bee76
+// Finding.TwentyFiveMillionFlowsId: -1789143885
+// Finding.script: https://fast.example7.com/client/2105/10091346/min/v1_gs_lib.js
+// Finding.line: 2
+// Exploit.uuid: 3267e5f1-4d0a-492a-9e22-4f414c158ca1
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: href
+// Exploit.quote_type: "
+// Exploit.tag: a
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 27
+// Exploit.replace_begin_url: 27
+// Exploit.replace_end_url: 27
+// Exploit.replace_begin_param: 341
+// Exploit.replace_end_param: 341
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: true
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1831861856
+// DepGraph.sanitizer_hash: 1692853290
+// Part of the URL ('##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3267e5f14d0a492a9e224f414c158ca1')><!--/*') found in left hand side of replace 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="substr"];
+n2 [shape=box, label="Var: x"];
+n3 [shape=box, label="Lit: 0"];
+n4 [shape=box, label="Lit: 2"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="Lit: ##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('3267e5f14d0a492a9e224f414c158ca1')><!--/*"];
+n7 [shape=box, label="Lit: ##"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="decodeURIComponent"];
+n10 [shape=box, label="Var: x"];
+n11 [shape=ellipse, label="preg_replace"];
+n12 [shape=box, label="RegExp: /\u00AD/"];
+n13 [shape=box, label="Lit: %C2%AD"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="str_replace_once"];
+n16 [shape=box, label="RegExp: /#gs\.(.)*/"];
+n17 [shape=box, label="Lit: "];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="str_replace_once"];
+n20 [shape=box, label="Lit: &"];
+n21 [shape=box, label="Lit: ?"];
+n22 [shape=box, label="Var: x"];
+n23 [shape=box, label="Var: x"];
+n24 [shape=doubleoctagon, label="Return: x"];
+n2 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n10 -> n5;
+n9 -> n10;
+n14 -> n9;
+n11 -> n12;
+n11 -> n13;
+n11 -> n14;
+n18 -> n11;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n22 -> n15;
+n19 -> n20;
+n19 -> n21;
+n19 -> n22;
+n23 -> n19;
+n24 -> n23;
+}

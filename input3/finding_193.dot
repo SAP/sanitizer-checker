@@ -1,0 +1,218 @@
+// Finding: 5f25ed75-b784-4b08-9dfd-233266620aee
+// Finding.url: https://www.example169.com/collections/index##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b4dcf35e5f2a4d2daa3c12fa7c0c23de')><!--/*
+// Finding.parentloc: https://www.example169.com/collections/index##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('b4dcf35e5f2a4d2daa3c12fa7c0c23de')><!--/*
+// Finding.domain: www.example169.com
+// Finding.base_domain: example169.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: r/n</v.prototype._init
+// Sanitizer.location: https://g.example27.com/mm/iconfont-plus-bp/2.11.4/app/libs/pat.js - r/n</v.prototype._init:1:1348
+// Finding.begin: 618
+// Finding.end: 636
+// Finding.original_uuid: f2595218-4a5e-4981-b58d-141e31bc14d6
+// Finding.TwentyFiveMillionFlowsId: 1733138
+// Finding.script: https://g.example27.com/mm/iconfont-plus-bp/2.11.4/app/libs/pat.js
+// Finding.line: 1
+// Exploit.uuid: b4dcf35e-5f2a-4d2d-aa3c-12fa7c0c23de
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: mx-view
+// Exploit.quote_type: "
+// Exploit.tag: div
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 23
+// Exploit.end_taint_url: 41
+// Exploit.replace_begin_url: 41
+// Exploit.replace_end_url: 41
+// Exploit.replace_begin_param: 636
+// Exploit.replace_end_param: 636
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: false
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: false
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: -317957156
+// DepGraph.sanitizer_hash: -956371725
+
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="preg_replace"];
+n2 [shape=box, label="RegExp: /(?:^.+\/\/[^\/]+|#.*$)/"];
+n3 [shape=box, label="Lit: "];
+n4 [shape=box, label="Var: x"];
+n5 [shape=ellipse, label="str_replace_once"];
+n6 [shape=box, label="RegExp: /[#?].*$/"];
+n7 [shape=box, label="Lit: "];
+n8 [shape=box, label="Var: x"];
+n9 [shape=ellipse, label="str_replace_once"];
+n10 [shape=box, label="Lit: /plus"];
+n11 [shape=box, label="Lit: "];
+n12 [shape=box, label="Var: x"];
+n13 [shape=ellipse, label="."];
+n14 [shape=box, label="Lit: app/views"];
+n15 [shape=ellipse, label="preg_replace"];
+n16 [shape=box, label="RegExp: /["]/"];
+n17 [shape=box, label="Lit: &quot;"];
+n18 [shape=box, label="Var: x"];
+n19 [shape=ellipse, label="."];
+n20 [shape=box, label="Lit: \""];
+n21 [shape=ellipse, label="."];
+n22 [shape=box, label="Lit: \""];
+n23 [shape=ellipse, label="."];
+n24 [shape=box, label="Lit: mx-view="];
+n25 [shape=ellipse, label="."];
+n26 [shape=box, label="Lit:  "];
+n27 [shape=ellipse, label="."];
+n28 [shape=box, label="Lit:  "];
+n29 [shape=ellipse, label="."];
+n30 [shape=box, label="Lit:  id="magix_vf_main" "];
+n31 [shape=ellipse, label="."];
+n32 [shape=box, label="Lit:  p-id="10""];
+n33 [shape=ellipse, label="."];
+n34 [shape=box, label="Lit: <div"];
+n35 [shape=ellipse, label="."];
+n36 [shape=box, label="Lit: >"];
+n37 [shape=ellipse, label="."];
+n38 [shape=box, label="Lit: <div class="spinner"  p-id="11"><div class="three-bounce"  p-i....id="14"></div><div class="three"  p-id="15"></div></div></div>"];
+n39 [shape=ellipse, label="."];
+n40 [shape=box, label="Lit: </"];
+n41 [shape=ellipse, label="."];
+n42 [shape=box, label="Lit: div"];
+n43 [shape=ellipse, label="."];
+n44 [shape=box, label="Lit: >"];
+n45 [shape=ellipse, label="."];
+n46 [shape=box, label="Lit: <div id="inmain"  class="inmain inmain-padding"  p-id="9">"];
+n47 [shape=ellipse, label="."];
+n48 [shape=box, label="Lit: </"];
+n49 [shape=ellipse, label="."];
+n50 [shape=box, label="Lit: div"];
+n51 [shape=ellipse, label="."];
+n52 [shape=box, label="Lit: >"];
+n53 [shape=ellipse, label="."];
+n54 [shape=box, label="Lit: <div class="main"  p-id="8">"];
+n55 [shape=ellipse, label="."];
+n56 [shape=box, label="Lit: </"];
+n57 [shape=ellipse, label="."];
+n58 [shape=box, label="Lit: div"];
+n59 [shape=ellipse, label="."];
+n60 [shape=box, label="Lit: >"];
+n61 [shape=ellipse, label="."];
+n62 [shape=box, label="Lit: <div mx-view="app/views/common/header"  id="magix_vf_header"  ..../views/common/sidebar"  id="magix_vf_sidebar"  p-id="7"></div>"];
+n63 [shape=ellipse, label="."];
+n64 [shape=box, label="Lit: <div class="footer"  id="magix_vf_footer"  mx-view="app/views/common/footer"  p-id="16"></div>"];
+n65 [shape=ellipse, label="."];
+n66 [shape=box, label="Lit: <div class="wrapper"  data-spm="1998910419"  p-id="5">"];
+n67 [shape=ellipse, label="."];
+n68 [shape=box, label="Lit: </"];
+n69 [shape=ellipse, label="."];
+n70 [shape=box, label="Lit: div"];
+n71 [shape=ellipse, label="."];
+n72 [shape=box, label="Lit: >"];
+n73 [shape=ellipse, label="."];
+n74 [shape=box, label="Lit: <div class="block-switch-loading"  data-spm="1998910417"  p-id....ex"  id="magix_vf_tip"  data-spm="1998910420"  p-id="4"></div>"];
+n75 [shape=ellipse, label="preg_replace"];
+n76 [shape=box, label="RegExp: /(^\s*)|(\s*$)/"];
+n77 [shape=box, label="Lit: "];
+n78 [shape=box, label="Var: x"];
+n79 [shape=box, label="Var: x"];
+n80 [shape=doubleoctagon, label="Return: x"];
+n4 -> n0;
+n1 -> n2;
+n1 -> n3;
+n1 -> n4;
+n8 -> n1;
+n5 -> n6;
+n5 -> n7;
+n5 -> n8;
+n12 -> n5;
+n9 -> n10;
+n9 -> n11;
+n9 -> n12;
+n13 -> n14;
+n13 -> n9;
+n18 -> n13;
+n15 -> n16;
+n15 -> n17;
+n15 -> n18;
+n19 -> n20;
+n19 -> n15;
+n21 -> n19;
+n21 -> n22;
+n23 -> n24;
+n23 -> n21;
+n25 -> n26;
+n25 -> n23;
+n27 -> n25;
+n27 -> n28;
+n29 -> n30;
+n29 -> n27;
+n31 -> n29;
+n31 -> n32;
+n33 -> n34;
+n33 -> n31;
+n35 -> n33;
+n35 -> n36;
+n37 -> n35;
+n37 -> n38;
+n39 -> n37;
+n39 -> n40;
+n41 -> n39;
+n41 -> n42;
+n43 -> n41;
+n43 -> n44;
+n45 -> n46;
+n45 -> n43;
+n47 -> n45;
+n47 -> n48;
+n49 -> n47;
+n49 -> n50;
+n51 -> n49;
+n51 -> n52;
+n53 -> n54;
+n53 -> n51;
+n55 -> n53;
+n55 -> n56;
+n57 -> n55;
+n57 -> n58;
+n59 -> n57;
+n59 -> n60;
+n61 -> n62;
+n61 -> n59;
+n63 -> n61;
+n63 -> n64;
+n65 -> n66;
+n65 -> n63;
+n67 -> n65;
+n67 -> n68;
+n69 -> n67;
+n69 -> n70;
+n71 -> n69;
+n71 -> n72;
+n73 -> n74;
+n73 -> n71;
+n78 -> n73;
+n75 -> n76;
+n75 -> n77;
+n75 -> n78;
+n79 -> n75;
+n80 -> n79;
+}

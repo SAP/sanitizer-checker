@@ -1,0 +1,77 @@
+// Finding: a61dc03b-e2a7-47c1-8f3a-22decb51bf7e
+// Finding.url: https://www.example152.com/shows/focus-on-parenting-podcast/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a90cc8f6e6f847dbbd4ebc3fcc3dd604')><!--/*
+// Finding.parentloc: https://www.example152.com/shows/focus-on-parenting-podcast/##"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog('a90cc8f6e6f847dbbd4ebc3fcc3dd604')><!--/*
+// Finding.domain: www.example152.com
+// Finding.base_domain: example152.com
+// Finding.source: location.href
+// Finding.sink: innerHTML
+// Sanitizer.score: 2
+// Sanitizer.name: i/this.jsString
+// Sanitizer.location: https://epiphany.example153.com/containers/45954263-b894-48fc-b0bb-40979513431a.js - n:10:24398
+// Finding.begin: 304
+// Finding.end: 390
+// Finding.original_uuid: 7d78ccf9-ffa5-45c1-9898-6201d0b7294b
+// Finding.TwentyFiveMillionFlowsId: 1288634050
+// Finding.script: https://epiphany.example153.com/containers/45954263-b894-48fc-b0bb-40979513431a.js
+// Finding.line: 10
+// Exploit.uuid: a90cc8f6-e6f8-47db-bd4e-bc3fcc3dd604
+// Exploit.success: false
+// Exploit.status: validated
+// Exploit.method: C
+// Exploit.type: html
+// Exploit.token: attribute
+// Exploit.content: src
+// Exploit.quote_type: "
+// Exploit.tag: img
+// Exploit.break_out: #"></iframe></style></script></object></embed></textarea><img src=x onerror=
+// Exploit.break_in: ><!--/*
+// Exploit.payload: #"></iframe></style></script></object></embed></textarea><img src=x onerror=taintfoxLog(1)><!--/*
+// Exploit.begin_taint_url: 0
+// Exploit.end_taint_url: 66
+// Exploit.replace_begin_url: 66
+// Exploit.replace_end_url: 66
+// Exploit.replace_begin_param: 123
+// Exploit.replace_end_param: 123
+// Issues.LargestEncodeAttrStringChain: 0
+// Issues.LargestTextFragmentEncodeChainLength: 0
+// Issues.HasApproximation: true
+// Issues.HasMissingImplementation: false
+// Issues.HasInfiniteRegexWithFunctionReplacer: false
+// Issues.MergedSplitAndJoins: false
+// Issues.HasUrlInRhsOfReplace: false
+// Issues.HasUrlInLhsOfReplace: false
+// Issues.HasCookieValueInLhsOfreplace: false
+// Issues.HasCookieValueInRhsOfreplace: false
+// Issues.HasCookieValueInMatchPattern: false
+// Issues.HasCookieValueInExecPattern: false
+// Issues.RemovedLRConcats: true
+// Issues.RemovedReplaceArtifacts: false
+// Issues.HasUrlInMatchPattern: false
+// Issues.HasUrlInExecPattern: false
+// Issues.RemovedNOPreplaces: false
+// Issues.Known_sanitizer: false
+// DepGraph.hash: 1571536517
+// DepGraph.sanitizer_hash: -50002363
+// Removed LR concats 
+// Removed LR concats 
+// Removed LR concats 
+// Approximated Implementation for: replace(["'\n\r]/g: 1, s: 0, u: 0, m: 0, i: 0 [escapes(": 1, ': 1), function_rhs: true], 'function(e){return n[e]}') - Other Exception: ReferenceError: n is not defined 
+digraph cfg {
+n0 [shape=house, label="Input: x"];
+n1 [shape=ellipse, label="."];
+n2 [shape=box, label="Lit: \x27"];
+n3 [shape=ellipse, label="preg_replace"];
+n4 [shape=box, label="RegExp: /["'\n\r]/"];
+n5 [shape=box, label="Lit: "];
+n6 [shape=box, label="Var: x"];
+n7 [shape=box, label="Var: x"];
+n8 [shape=doubleoctagon, label="Return: x"];
+n1 -> n0;
+n1 -> n2;
+n6 -> n1;
+n3 -> n4;
+n3 -> n5;
+n3 -> n6;
+n7 -> n3;
+n8 -> n7;
+}
