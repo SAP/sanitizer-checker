@@ -1,18 +1,23 @@
 #include <napi.h>
 #include <string>
+#include <tuple>
 #include <iostream>
 #include <sstream>
+#include <cassert>
 #include "../../semattack/src/main_attack.hpp"
 
 void printToJSConsole(Napi::Env env, const char* text);
+const char* resultStatusToString(const ResultStatus status);
 
-Napi::String parseDepString(const Napi::CallbackInfo& info) {
+napi_value parseDepString(const Napi::CallbackInfo& info) {
+    napi_status status;
     Napi::Env env = info.Env();
 
     std::string depgraph = (std::string) info[0].ToString();
     std::string fieldName = (std::string) info[1].ToString();
     std::string exploit = (std::string) info[2].ToString();
-    std::string result;
+    std::string resultExploitString;
+    ResultStatus resultStatus;
     std::ostringstream oss;
 
     // Redirect stdout to our stringstream buffer
@@ -24,7 +29,9 @@ Napi::String parseDepString(const Napi::CallbackInfo& info) {
     std::cerr.rdbuf(oss.rdbuf());
 
     try {
-        result = call_sem_attack("", depgraph, fieldName, exploit);
+        std::tuple<ResultStatus, std::string> result = call_sem_attack("", depgraph, fieldName, exploit);
+        resultStatus = std::get<0>(result);
+        resultExploitString = std::get<1>(result);
     } catch (std::exception& e) {
         Napi::Error::New(env, e.what()).ThrowAsJavaScriptException();
         // Don't forget to restore the original stream
@@ -37,9 +44,27 @@ Napi::String parseDepString(const Napi::CallbackInfo& info) {
     std::cout.rdbuf(oldCoutStreamBuf);
     std::cerr.rdbuf(oldCerrStreamBuf);
 
+    napi_value obj;
+    status = napi_create_object(env, &obj);
+    assert(status == napi_ok);
+
+    napi_value resultStatusValue;
+    status = napi_create_string_utf8(env, resultStatusToString(resultStatus), NAPI_AUTO_LENGTH, &resultStatusValue);
+    assert(status == napi_ok);
+
+    napi_value resultExploitStringValue;
+    status = napi_create_string_utf8(env, resultExploitString.c_str(), NAPI_AUTO_LENGTH, &resultExploitStringValue);
+    assert(status == napi_ok);
+
+    status = napi_set_named_property(env, obj, "resultStatus", resultStatusValue);
+    assert(status == napi_ok);
+
+    status = napi_set_named_property(env, obj, "resultExploitString", resultExploitStringValue);
+    assert(status == napi_ok);
+
 
     printToJSConsole(env, oss.str().c_str());
-    return Napi::String::New(env, result);
+    return obj;
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
@@ -74,6 +99,16 @@ void printToJSConsole(Napi::Env env, const char* text) {
 
     // Call the function
     status = napi_call_function(env, console, log, 1, argv, &result2);
+}
+
+const char* resultStatusToString(const ResultStatus status) {
+    switch(status) {
+        case VULNERABLE_SANITIZER_FOUND: return "VULNERABLE_SANITIZER_FOUND";
+        case VULNERABLE_NO_SANITIZER_FOUND: return "VULNERABLE_NO_SANITIZER_FOUND";
+        case NOT_VULNERABLE: return "NOT_VULNERABLE";
+        case ERROR: return "ERROR";
+        default: return "UNKNOWN";
+    }
 }
 
 NODE_API_MODULE(sanitizerchecker, Init);

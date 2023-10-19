@@ -34,7 +34,7 @@ using namespace std;
 using namespace boost;
 namespace po = boost::program_options;
 
-std::string call_sem_attack(const std::string& target_name, const std::string& dep_graph, const std::string& field_name, std::string& exploit_string){
+std::tuple<ResultStatus, std::string> call_sem_attack(const std::string& target_name, const std::string& dep_graph, const std::string& field_name, const std::string& exploit_string){
     try {
         cout << endl << "\t------ Starting Analysis for: " << field_name << " ------" << endl;
         cout << endl << "\t       Target: " << target_name  << endl;
@@ -67,13 +67,11 @@ std::string call_sem_attack(const std::string& target_name, const std::string& d
             // Intersection not empty, so vulnerable
             // Do backward analysis
 
-            AnalysisResult preImageResult = semAttack.computePreImage(intersection, result);
+            AnalysisResult preImageResult = semAttack.computePreImage(intersection.get(), result);
             const StrangerAutomaton* preImage = semAttack.getPreImage(preImageResult);
             std::string m_preimage_example = preImage->generateSatisfyingExample();
-            return "Vulnerable! Statisfying example "+m_preimage_example;
+            return {ResultStatus::VULNERABLE_SANITIZER_FOUND, m_preimage_example};
 
-        } else {
-            return "Not vulnerable!";
         }
 
         cout << endl << "\t------ OVERALL RESULT for: " << field_name << " ------" << endl;
@@ -83,13 +81,16 @@ std::string call_sem_attack(const std::string& target_name, const std::string& d
 
         cout << endl << "\t------ END RESULT for: " << field_name << " ------" << endl;
 
+        return {ResultStatus::NOT_VULNERABLE, nullptr};
+
     } catch (const StrangerException &e) {
         cerr << e.what();
-        return AnalysisErrorHelper::getName(e.getError());
-        // exit(EXIT_FAILURE);
+        cout << AnalysisErrorHelper::getName(e.getError());
+        return {ResultStatus::ERROR, AnalysisErrorHelper::getName(e.getError())};
     }
 
-    return AnalysisErrorHelper::getName(AnalysisError::None);
+    cout << AnalysisErrorHelper::getName(AnalysisError::None);
+    return {ResultStatus::ERROR, AnalysisErrorHelper::getName(AnalysisError::None)};
 }
 
 
