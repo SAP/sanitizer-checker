@@ -58,9 +58,9 @@ std::string call_sem_attack(const std::string& target_name, const std::string& d
         //cout << "\n";
 
         // Turn the exploit_string into an automaton
-        StrangerAutomaton* exploit = StrangerAutomaton::makeContainsString(exploit_string);
+        std::unique_ptr<StrangerAutomaton> exploit(StrangerAutomaton::makeContainsString(exploit_string));
 
-        StrangerAutomaton* intersection = semAttack.computeAttackPatternOverlap(postImage, exploit);
+        std::unique_ptr<StrangerAutomaton> intersection(semAttack.computeAttackPatternOverlap(postImage, exploit.get()));
 
         // Check if intersection is empty
         if(!intersection->isEmpty()) {
