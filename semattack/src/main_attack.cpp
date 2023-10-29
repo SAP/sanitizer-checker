@@ -34,39 +34,63 @@ using namespace std;
 using namespace boost;
 namespace po = boost::program_options;
 
-std::string call_sem_attack(const std::string& target_name, const std::string& dep_graph, const std::string& field_name, std::string& exploit_string){
+std::tuple<ResultStatus, std::string> call_sem_attack(const std::string& target_name, const std::string& dep_graph, const std::string& field_name, const std::string& exploit_string){
     try {
         cout << endl << "\t------ Starting Analysis for: " << field_name << " ------" << endl;
         cout << endl << "\t       Target: " << target_name  << endl;
         DepGraph target_dep_graph;
         if (dep_graph != "") {
             target_dep_graph = DepGraph::parseString(dep_graph);
-        } else 
+        } else
         {
             target_dep_graph = DepGraph::parseDotFile(target_name);
         }
+
+        // Compute sink post image for target
         SemAttack semAttack(target_name, target_dep_graph, field_name);
         semAttack.setPrintDots(true);
         semAttack.init();
+
         AnalysisResult result = semAttack.computeTargetFWAnalysis();
         const StrangerAutomaton* postImage = semAttack.getPostImage(result);
-        StrangerAutomaton* attackPattern = AttackPatterns::getHtmlPattern();
-        StrangerAutomaton* intersection = semAttack.computeAttackPatternOverlap(postImage, attackPattern);
-// bw = doBackwardAnalysisForPayload(attr_payload, output_dir, computePreImage, singletonIntersection, outputDotfiles, attack_forward)
+
+        //cout << "Statsifying example of post Image " + postImage->generateSatisfyingExample();
+        //cout << "\n";
+
+        // Turn the exploit_string into an automaton
+        std::unique_ptr<StrangerAutomaton> exploit(StrangerAutomaton::makeContainsString(exploit_string));
+
+        std::unique_ptr<StrangerAutomaton> intersection(semAttack.computeAttackPatternOverlap(postImage, exploit.get()));
+
+        // Check if intersection is empty
+        if(!intersection->isEmpty()) {
+            // Intersection not empty, so vulnerable
+            // Do backward analysis
+
+            AnalysisResult preImageResult = semAttack.computePreImage(intersection.get(), result);
+            const StrangerAutomaton* preImage = semAttack.getPreImage(preImageResult);
+            std::string m_preimage_example = preImage->generateSatisfyingExample();
+            return {ResultStatus::VULNERABLE_SANITIZER_FOUND, m_preimage_example};
+
+        }
+
         cout << endl << "\t------ OVERALL RESULT for: " << field_name << " ------" << endl;
         cout << "\t    Target: " << target_name << endl;
 
         semAttack.printResults();
 
         cout << endl << "\t------ END RESULT for: " << field_name << " ------" << endl;
-        //TODO: update exploit string
+
+        return {ResultStatus::NOT_VULNERABLE, ""};
+
     } catch (const StrangerException &e) {
         cerr << e.what();
-        return AnalysisErrorHelper::getName(e.getError());
-        // exit(EXIT_FAILURE);
+        cout << AnalysisErrorHelper::getName(e.getError());
+        return {ResultStatus::ERROR, AnalysisErrorHelper::getName(e.getError())};
     }
 
-    return AnalysisErrorHelper::getName(AnalysisError::None);
+    cout << AnalysisErrorHelper::getName(AnalysisError::None);
+    return {ResultStatus::ERROR, AnalysisErrorHelper::getName(AnalysisError::None)};
 }
 
 
