@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chai": "^4.3.7",
-    "node-addon-api": "^5.0.0"
+    "chai": "^4.3.10",
+    "node-addon-api": "^5.1.0"
   }
 }
