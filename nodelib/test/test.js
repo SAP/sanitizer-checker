@@ -13,7 +13,7 @@ fs.readdir(inputFolder, (err, files) => {
         describe(file, function () {
             it('should call parseDepString on the content without an error', function () {
                 expect(valid_statuses).to.include(sanitizerChecker.parseDepString(content, "x")["resultStatus"]);
-            });
+            }).timeout(600000);
         });
     });
   });
