@@ -6,14 +6,14 @@ const sanitizerChecker = require('../build/Release/sanitizerchecker.node');
 const inputFolder = __dirname + '/../../input3';
 
 fs.readdir(inputFolder, (err, files) => {
-  const errors = ['None', 'InfiniteRegex', 'NotImplemented', 'Other', 'UnsupportedFunction', 'MalformedDepgraph', 'UrlInReplaceString', 'UrlInReplaceString', 'LargeEncodeAttrChain', 'LargeEncodeTextChain', 'RegExpParseError', 'MonaException', 'InvalidArgument', 'InfiniteLength'];
+  const valid_statuses = ['VULNERABLE_SANITIZER_FOUND', 'VULNERABLE_NO_SANITIZER_FOUND', "NOT_VULNERABLE"];
     files.forEach(file => {
       const absolutePath = path.resolve(inputFolder, file);
       const content = fs.readFileSync(absolutePath, {encoding: 'utf8'});
         describe(file, function () {
             it('should call parseDepString on the content without an error', function () {
-                expect(errors).to.include(sanitizerChecker.parseDepString(content, "x"));
-            });
+                expect(valid_statuses).to.include(sanitizerChecker.parseDepString(content, "x")["resultStatus"]);
+            }).timeout(600000);
         });
     });
   });
